@@ -1,14 +1,28 @@
+import { LoginPage } from "./Pages/index";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import './index.css';
-function App() {
+const routerConfig = createBrowserRouter([
+  {
+    path: "/",
+    element: <LoginPage />,
+  },
+  {
+    path: "/login",
+    element: <LoginPage />,
+  },
+  {
+    // path: "/register",
+    // element: <RegistrationPage />
+  },
+]);
 
+function App() {
   return (
-    <>
-      <div>
-        <h1 className="text-[100px] text-center underline">
-          Hello, Tailwind!
-        </h1>
+    <div className="">
+      <div className="container">
+        <RouterProvider router={routerConfig} />
       </div>
-    </>
+    </div>
   )
 }
 

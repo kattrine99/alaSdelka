@@ -1,5 +1,5 @@
 
-import { Header, Input } from '../../components/index'
+import { Header, Heading, Input } from '../../components/index'
 import * as yup from "yup";
 import { Controller, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -40,77 +40,91 @@ export const LoginPage = () => {
     };
 
     return (
-        <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
+        <>
             <Header />
-            <div className="w-full max-w-md bg-white shadow-lg rounded-2xl p-10 flex flex-col items-center text-center">
-                <h1 className="text-2xl font-bold text-blue-700 mb-5">Вход в личный кабинет</h1>
-                <form className="w-full flex flex-col gap-4">
-                    {/* Поле Email */}
-                    <Controller
-                        name="useremail"
-                        control={control}
-                        render={({ field }) => (
-                            <div>
-                                <Input
-                                    isError={!!errors.useremail}
-                                    errorMessage={errors.useremail?.message}
-                                    type="text"
-                                    placeholder="Email"
-                                    {...field}
-                                    className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none transition-all"
-                                />
-                            </div>
-                        )}
-                    />
+            <div className="min-w-screen min-h-screen flex items-center justify-center px-6 pt-[140px] md:pt-[100px] sm:pt-[80px] transition-all duration-300">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-12 max-w-[85%] lg:max-w-[80%] md:max-w-[85%] sm:max-w-[90%] w-full items-center transition-all duration-500">
 
-                    {/* Поле Пароль */}
-                    <Controller
-                        name="userpassword"
-                        control={control}
-                        render={({ field }) => (
-                            <div className="relative w-full">
-                                <Input
-                                    isError={!!errors.userpassword}
-                                    errorMessage={errors.userpassword?.message}
-                                    type={isPasswordVisible ? "text" : "password"}
-                                    placeholder="Пароль"
-                                    {...field}
-                                    className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none transition-all"
+                    {/* Левая часть: Форма логина */}
+                    <div className="flex justify-center w-full transition-all duration-300">
+                        <div className="w-full max-w-[700px] lg:max-w-[600px] md:max-w-[500px] sm:max-w-[360px] min-w-[320px] shadow-lg rounded-2xl p-[clamp(30px,4vw,70px)] flex flex-col items-center text-center transition-all duration-500">
+                            <Heading className="text-[clamp(24px,2.2vw,44px)] font-bold text-blue-700 mb-[clamp(18px,2.2vw,36px)]" text={'Вход в личный кабинет'} level={1} />
+                            <form className="w-full flex flex-col gap-[clamp(14px,1.8vw,28px)]">
+                                <Controller
+                                    name="useremail"
+                                    control={control}
+                                    render={({ field }) => (
+                                        <div>
+                                            <Input
+                                                isError={!!errors.useremail}
+                                                errorMessage={errors.useremail?.message}
+                                                type="text"
+                                                placeholder="Email"
+                                                {...field}
+                                                className="w-full px-[clamp(16px,2.5vw,26px)] py-[clamp(12px,1.8vw,22px)] border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none transition-all duration-500"
+                                            />
+                                        </div>
+                                    )}
                                 />
-                                <span
-                                    onClick={togglePasswordVisibility}
-                                    className="absolute right-4 top-4 cursor-pointer text-blue-500"
+                                <Controller
+                                    name="userpassword"
+                                    control={control}
+                                    render={({ field }) => (
+                                        <div className="relative w-full">
+                                            <Input
+                                                isError={!!errors.userpassword}
+                                                errorMessage={errors.userpassword?.message}
+                                                type={isPasswordVisible ? "text" : "password"}
+                                                placeholder="Пароль"
+                                                {...field}
+                                                className="w-full px-[clamp(16px,2.5vw,26px)] py-[clamp(12px,1.8vw,22px)] border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none transition-all duration-500"
+                                            />
+                                            <span
+                                                onClick={togglePasswordVisibility}
+                                                className="absolute right-5 top-[clamp(12px,1.8vw,22px)] cursor-pointer text-blue-500 transition-all duration-300"
+                                            >
+                                                {isPasswordVisible ? <FaRegEyeSlash /> : <FaRegEye />}
+                                            </span>
+                                        </div>
+                                    )}
+                                />
+                                <Button
+                                    type="submit"
+                                    className="w-full py-[clamp(14px,2vw,24px)] text-white bg-gradient-to-r from-blue-600 to-blue-400 rounded-lg font-bold hover:from-blue-700 hover:to-blue-500 transition-all duration-500"
                                 >
-                                    {isPasswordVisible ? <FaRegEyeSlash /> : <FaRegEye />}
-                                </span>
+                                    Войти
+                                </Button>
+                            </form>
+                            <p className="text-[clamp(14px,1.7vw,18px)] text-gray-600 mt-4 transition-all duration-300">
+                                Еще нет аккаунта?
+                                <a href="#" className="text-blue-600 hover:underline ml-1">Зарегистрироваться</a>
+                            </p>
+
+                            <div className="mt-6 w-full">
+                                <button className="w-full flex items-center justify-center gap-3 bg-white border border-gray-300 rounded-lg px-5 py-[clamp(14px,2vw,24px)] shadow-md text-gray-700 font-semibold transition-all duration-500 hover:bg-gray-100 hover:shadow-lg active:">
+                                    <img src="/public/images/google_icon.png" alt="Google" className="w-[clamp(22px,2.2vw,34px)] h-[clamp(22px,2.2vw,34px)]" />
+                                    Войти с помощью Google
+                                </button>
                             </div>
-                        )}
-                    />
-
-                    {/* Кнопка Вход */}
-                    <Button
-                        type="submit"
-                        className="w-full py-3 text-white bg-gradient-to-r from-blue-600 to-blue-400 rounded-lg font-bold hover:from-blue-700 hover:to-blue-500 transition-all"
-                    >
-                        Войти
-                    </Button>
-                </form>
-
-                {/* Ссылка на регистрацию */}
-                <p className="text-sm text-gray-600 mt-4">
-                    Еще нет аккаунта?
-                    <a href="#" className="text-blue-600 hover:underline ml-1">Зарегистрироваться</a>
-                </p>
-
-                {/* Социальный логин */}
-                <div className="mt-6">
-                    <p className="text-sm text-gray-600">Или войдите через:</p>
-                    <div className="flex justify-center gap-4 mt-2">
-                        <img src="/images/google-icon.png" alt="Google" className="w-8 h-8 cursor-pointer hover:scale-110 transition-transform" />
-                        <img src="/images/facebook-icon.png" alt="Facebook" className="w-8 h-8 cursor-pointer hover:scale-110 transition-transform" />
+                        </div>
                     </div>
+
+                    {/* Правая часть: Контактная информация */}
+                    <div className="flex justify-center w-full transition-all duration-500 order-2 md:order-2 lg:order-1">
+                        <div className="text-center flex flex-col items-center">
+                            <img src="/public/images/ru.png" alt="Need_help" className="max-w-[650px] lg:max-w-[550px] md:max-w-[450px] sm:max-w-[320px] w-full transition-all duration-500" />
+                            <p className="max-w-[650px] lg:max-w-[550px] md:max-w-[450px] sm:max-w-[320px] mt-[clamp(14px,1.8vw,24px)] text-gray-700 text-[clamp(16px,2vw,24px)] transition-all duration-500">
+                                Обращайтесь по номеру <span className="font-bold text-blue-600">+998 71 789 78 78</span> или
+                                напишите нам на почту <span className="font-bold text-blue-600">info@name-com.uz</span>
+                            </p>
+                        </div>
+                    </div>
+
                 </div>
-            </div>
-        </div>
+            </div >
+        </>
+
+
+
     );
 };

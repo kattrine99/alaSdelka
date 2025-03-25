@@ -92,7 +92,7 @@ export const Header = () => {
                             <div className="mt-4 flex flex-col gap-2">
                                 {isAuthenticated ? (
                                     <>
-                                        <Link to="/favorites" className="flex items-center gap-2 pl-4 text-gray-700 hover:text-[#28B13D]">
+                                        <Link to="/favorites" className="flex items-center gap-2 text-gray-700 hover:text-[#28B13D]">
                                             <FaRegHeart /> Избранное
                                         </Link>
                                         <Link to="/profile" className="flex items-center gap-2 text-gray-700 hover:text-[#28B13D]">
@@ -104,7 +104,7 @@ export const Header = () => {
                                         <Link to="/login" className="text-sm text-gray-700 hover:underline">
                                             Войти
                                         </Link>
-                                        <Link to="/register" className="text-sm text-green-600 font-medium hover:underline">
+                                        <Link to="/register" className="text-sm text-[#28B13D] font-medium hover:underline">
                                             Зарегистрироваться
                                         </Link>
                                     </>

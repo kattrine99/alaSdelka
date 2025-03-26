@@ -1,5 +1,6 @@
-import { Header, Heading, Paragraph, NavLinks } from "../../components";
+import { Header, Heading, Paragraph, NavLinks, Cards } from "../../components";
 import { useState } from "react";
+import { detailedBusinessCardsMock } from "./TempBusinessDb"
 
 export const MainPage = () => {
     const [selectedCategory, setSelectedCategory] = useState("");
@@ -92,6 +93,10 @@ export const MainPage = () => {
                         />
                     </div>
                 </div>
+            </section>
+            <section>
+                <Heading text={"Бизнес"} level={2} />
+                <Cards cards={detailedBusinessCardsMock} />
             </section>
         </div>
     );

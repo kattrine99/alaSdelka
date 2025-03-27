@@ -1,7 +1,7 @@
 export const detailedBusinessCardsMock = [
     {
         id: 1,
-        image: "/images/mock/business1.jpg",
+        image: "/images/business_abstract.jpg",
         price: "1 780 000 000 сум",
         title: "Готовый бизнес по доставке еды",
         address: "г. Ташкент, ул. Якуба Коласа, 2",
@@ -10,7 +10,7 @@ export const detailedBusinessCardsMock = [
     },
     {
         id: 2,
-        image: null,
+        image: "/images/business_abstract.jpg",
         price: "940 000 000 сум",
         title: "Мини-пекарня у метро",
         address: "г. Самарканд, ул. Амир Темур, 17",
@@ -19,7 +19,7 @@ export const detailedBusinessCardsMock = [
     },
     {
         id: 3,
-        image: "/images/mock/business3.jpg",
+        image: "/images/business_abstract.jpg",
         price: "2 250 000 000 сум",
         title: "Магазин одежды премиум класса",
         address: "г. Бухара, ул. Нафиса, 4А",
@@ -28,7 +28,7 @@ export const detailedBusinessCardsMock = [
     },
     {
         id: 4,
-        image: "/images/mock/business4.jpg",
+        image: "/images/business_abstract.jpg",
         price: "1 300 000 000 сум",
         title: "Детский развивающий центр",
         address: "г. Фергана, ул. Навои, 11",
@@ -37,7 +37,7 @@ export const detailedBusinessCardsMock = [
     },
     {
         id: 5,
-        image: "/images/mock/business5.jpg",
+        image: "/images/business_abstract.jpg",
         price: "580 000 000 сум",
         title: "Кофейня в центре города",
         address: "г. Ташкент, ул. Шота Руставели, 10",
@@ -46,7 +46,7 @@ export const detailedBusinessCardsMock = [
     },
     {
         id: 6,
-        image: null,
+        image: "/images/business_abstract.jpg",
         price: "3 100 000 000 сум",
         title: "Сеть автомоек",
         address: "г. Андижан, ул. Гулистон, 22",
@@ -55,7 +55,7 @@ export const detailedBusinessCardsMock = [
     },
     {
         id: 7,
-        image: "/images/mock/business7.jpg",
+        image: "/images/business_abstract.jpg",
         price: "870 000 000 сум",
         title: "Салон красоты с оборудованием",
         address: "г. Нукус, ул. Хамза, 9",
@@ -64,7 +64,7 @@ export const detailedBusinessCardsMock = [
     },
     {
         id: 8,
-        image: "/images/mock/business8.jpg",
+        image: "/images/business_abstract.jpg",
         price: "1 000 000 000 сум",
         title: "Магазин бытовой техники",
         address: "г. Джизак, ул. Мустакиллик, 14",
@@ -73,7 +73,7 @@ export const detailedBusinessCardsMock = [
     },
     {
         id: 9,
-        image: "/images/mock/business9.jpg",
+        image: "/images/business_abstract.jpg",
         price: "620 000 000 сум",
         title: "Цветочный бутик",
         address: "г. Термез, ул. Фарход, 6",
@@ -82,7 +82,7 @@ export const detailedBusinessCardsMock = [
     },
     {
         id: 10,
-        image: "/images/mock/business10.jpg",
+        image: "/images/business_abstract.jpg",
         price: "2 900 000 000 сум",
         title: "Производство мебели",
         address: "г. Наманган, ул. Алишера Навои, 20",
@@ -91,7 +91,7 @@ export const detailedBusinessCardsMock = [
     },
     {
         id: 11,
-        image: null,
+        image: "/images/business_abstract.jpg",
         price: "710 000 000 сум",
         title: "Швейный цех",
         address: "г. Карши, ул. Буюк Ипак Йули, 5",
@@ -100,7 +100,7 @@ export const detailedBusinessCardsMock = [
     },
     {
         id: 12,
-        image: "/images/mock/business12.jpg",
+        image: "/images/business_abstract.jpg",
         price: "1 500 000 000 сум",
         title: "Фастфуд в торговом центре",
         address: "г. Ташкент, ТРЦ Mega Planet",
@@ -109,7 +109,7 @@ export const detailedBusinessCardsMock = [
     },
     {
         id: 13,
-        image: "/images/mock/business13.jpg",
+        image: "/images/business_abstract.jpg",
         price: "2 150 000 000 сум",
         title: "Фитнес клуб с клиентской базой",
         address: "г. Ургенч, ул. Спорт, 7",

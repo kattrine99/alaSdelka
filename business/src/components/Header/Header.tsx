@@ -19,14 +19,14 @@ export const Header = () => {
     ];
 
     return (
-        <div className="w-full fixed top-0 left-0 z-50 bg-white shadow">
+        <div className="font-[Inter] font-medium w-full fixed top-0 left-0 z-50 bg-white shadow">
             <div className="flex justify-end items-center px-6 py-5">
                 <div className="md:flex gap-6 text-sm text-gray-700 ">
-                    <Paragraph className="flex items-center gap-1 text-green-brand font-medium">
+                    <Paragraph className="flex istems-center gap-1 text-[#232323] font-medium">
                         <FaPhone className="text-[#28B13D] text-base" />
                         +998 71 789 78 78
                     </Paragraph>
-                    <Paragraph className="flex items-center gap-1  font-medium">
+                    <Paragraph className="flex items-center gap-1 text-[#232323] font-medium">
                         <IoIosMail className="text-[#28B13D] text-base" />
                         info@name-com.uz
                     </Paragraph>
@@ -38,10 +38,10 @@ export const Header = () => {
                         <Link to="/main" className="flex items-center gap-2">
                             <img src="/images/investin_logo.png" alt="Logo" className="h-10 w-auto object-contain" />
                         </Link>
-                        <div className="hidden md:flex gap-6 items-center">
+                        <div className="hidden md:flex gap-8.5 items-center">
                             <NavLinks
                                 links={navItems}
-                                linkClassName="text-gray-800 text-[clamp(14px,1.4vw,18px)] relative text-gray-800 hover:text-[#28B13D] transition-all duration-200 before:content-[''] before:absolute before:left-0 before:bottom-[-2px] before:w-0 hover:before:w-full before:h-[2px] before:bg-[#28B13D] before:transition-all before:duration-3=400"
+                                linkClassName="text-[#232323] text-[clamp(14px,1.4vw,18px)] relative text-[#232323] hover:text-[#28B13D] transition-all duration-200 before:content-[''] before:absolute before:left-0 before:bottom-[-2px] before:w-0 hover:before:w-full before:h-[2px] before:bg-[#28B13D] before:transition-all before:duration-400"
                             />
                         </div>
 

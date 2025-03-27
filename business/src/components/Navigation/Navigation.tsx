@@ -8,9 +8,9 @@ interface NavLinksProps {
 
 export const NavLinks: React.FC<NavLinksProps> = ({ links, className = "", linkClassName = "" }) => {
     return (
-        <nav className={`flex flex-wrap gap-4 ${className}`}>
+        <nav className={`flex flex-wrap gap-8.5 font-medium${className}`}>
             {links.map((link, idx) => (
-                <Applink key={idx} to={link.to} className={`text-gray-700 ${linkClassName}`}>
+                <Applink key={idx} to={link.to} className={`text-[#232323] ${linkClassName}`}>
                     {link.label}
                 </Applink>
             ))}

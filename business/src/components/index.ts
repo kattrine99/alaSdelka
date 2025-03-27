@@ -5,4 +5,5 @@ export { Paragraph } from "./Typography/Paragraph/Paragraph"
 export { Button } from "./Button/Button"
 export { Applink } from "./AppLink/AppLink"
 export { NavLinks } from "./Navigation/Navigation"
-export {Cards} from "./Cards/Cards"
+export { Cards } from "./Cards/Cards"
+export { CardSection } from './CardsSection/CardSection'

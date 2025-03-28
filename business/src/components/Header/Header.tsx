@@ -1,13 +1,15 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { FaBars, FaTimes, FaRegUser, FaRegHeart, FaPhone } from "react-icons/fa";
+import { FaBars, FaTimes, FaRegUser, FaRegHeart, FaPhone, FaSearch } from "react-icons/fa";
 import { IoIosMail } from "react-icons/io";
-import { Paragraph, NavLinks } from "../index";
+import { motion, AnimatePresence } from "framer-motion";
+import { Paragraph, NavLinks, Input } from "../index";
 
 export const Header = () => {
     const [menuOpen, setMenuOpen] = useState(false);
-    const [isAuthenticated, setIsAuthenticated] = useState(true);
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
     const { pathname } = useLocation();
+    const [showSearch, setShowSearch] = useState(false);
 
     const toggleMenu = () => setMenuOpen(!menuOpen);
 
@@ -19,29 +21,29 @@ export const Header = () => {
     ];
 
     return (
-        <div className="font-[Inter] font-medium w-full fixed top-0 left-0 z-50 bg-white shadow">
-            <div className="flex justify-end items-center px-6 py-5">
-                <div className="md:flex gap-6 text-sm text-gray-700 ">
-                    <Paragraph className="flex istems-center gap-1 text-[#232323] font-medium">
-                        <FaPhone className="text-[#28B13D] text-base" />
-                        +998 71 789 78 78
-                    </Paragraph>
-                    <Paragraph className="flex items-center gap-1 text-[#232323] font-medium">
+        <div className="font-[Inter] font-medium w-full bg-white shadow ">
+            <div className="flex justify-end items-center py-[25px] px-[96px] border-b border-[#E9E9E9]">
+                <div className="md:flex gap-6 text-sm ">
+                    <Paragraph className="flex items-center gap-1 text-[#232323] font-openSans font-normal text-[16px] leading-[125%]">
                         <IoIosMail className="text-[#28B13D] text-base" />
                         info@name-com.uz
+                    </Paragraph>
+                    <Paragraph className="flex items-center gap-1 text-[#232323] font-inter font-normal text-[16px] leading-[125%]">
+                        <FaPhone className="text-[#28B13D] text-base" />
+                        +998 71 789 78 78
                     </Paragraph>
                 </div>
             </div>
             {!pathname.includes("login") && !pathname.includes("register") && (
                 <>
-                    <div className="flex justify-between items-center px-6 py-3 bg-white">
+                    <div className="flex justify-between items-center  bg-white py-[20px] px-[96px] border-b border-[#E9E9E9]">
                         <Link to="/main" className="flex items-center gap-2">
-                            <img src="/images/investin_logo.png" alt="Logo" className="h-10 w-auto object-contain" />
+                            <img src="/images/investin_logo.png" alt="Logo" className="h-[56px] w-auto object-contain" />
                         </Link>
                         <div className="hidden md:flex gap-8.5 items-center">
                             <NavLinks
                                 links={navItems}
-                                linkClassName="text-[#232323] text-[clamp(14px,1.4vw,18px)] relative text-[#232323] hover:text-[#28B13D] transition-all duration-200 before:content-[''] before:absolute before:left-0 before:bottom-[-2px] before:w-0 hover:before:w-full before:h-[2px] before:bg-[#28B13D] before:transition-all before:duration-400"
+                                linkClassName="font-inter leading-[100%] text-[#232323] text-[clamp(14px,1.4vw,18px)] relative hover:text-[#28B13D] transition-all duration-500 before:content-[''] before:absolute before:left-0 before:bottom-[-2px] before:w-0 hover:before:w-full before:h-[2px] before:bg-[#28B13D] before:transition-all before:duration-500"
                             />
                         </div>
 
@@ -52,6 +54,34 @@ export const Header = () => {
                             </button>
                         </div>
                         <div className="hidden md:flex gap-3 items-center">
+                            <div className="relative">
+                                <button
+                                    onClick={() => setShowSearch(!showSearch)}
+                                    className="text-2xl font-normal text-gray-600 hover:text-[#28B13D]"
+                                >
+                                    <FaSearch />
+                                </button>
+
+                                <AnimatePresence>
+                                    {showSearch && (
+                                        <motion.div
+                                            initial={{ opacity: 0, x: -10 }}
+                                            animate={{ opacity: 1, x: 0 }}
+                                            exit={{ opacity: 0, x: -10 }}
+                                            transition={{ duration: 0.3 }}
+                                            className="absolute right-[120%] top-1/2 -translate-y-1/2 z-50"
+                                        >
+                                            <Input
+                                                type="text"
+                                                placeholder="Поиск..."
+                                                className="w-[clamp(160px,20vw,240px)] h-[36px] border border-gray-300 rounded px-3 py-1 focus:outline-none focus:ring-2 focus:ring-green-400 bg-white shadow transition"
+                                                isError={false}
+                                            />
+                                        </motion.div>
+                                    )}
+                                </AnimatePresence>
+                            </div>
+
                             {isAuthenticated ? (
                                 <>
                                     <Link to="/favorites" className="text-2xl text-gray-700 hover:text-[#28B13D] pr-2">

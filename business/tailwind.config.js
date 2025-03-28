@@ -9,12 +9,10 @@ export default {
     ],
     theme: {
         extend: {
-
-            colors: {
-                greenBrand: '#28B13D',
-                'green-brand-dark': '#219834',
-                'green-brand-light': '#4CDA61',
-            }
+            fontFamily: {
+                inter: ['Inter', 'sans-serif'],
+                openSans: ['"Open Sans"', 'sans-serif'],
+            },
         },
     },
     safelist: ['text-green-brand'],

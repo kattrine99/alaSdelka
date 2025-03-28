@@ -7,3 +7,4 @@ export { Applink } from "./AppLink/AppLink"
 export { NavLinks } from "./Navigation/Navigation"
 export { Cards } from "./Cards/Cards"
 export { CardSection } from './CardsSection/CardSection'
+export { FilterBar } from './FilterBar/FilterBar'

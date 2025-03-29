@@ -3,8 +3,8 @@ import { Button, Heading, Paragraph } from "../index";
 import { FaRegHeart, FaHeart, FaArrowRight } from "react-icons/fa";
 import { FaLocationDot, FaLocationCrosshairs } from "react-icons/fa6";
 
-
 export interface ICard {
+    type: "бизнес" | "франшиза" | "стартап" | "инвестиции";
     id: number;
     image: string | null;
     price: string;
@@ -23,7 +23,14 @@ interface ICards {
     cardTextClass?: string;
 }
 
-export const Cards: React.FC<ICards> = ({ cards, cardWrapperClass, cardIconClass, cardHeadingClass, cardTextClass, containerClass = "grid gap-6 sm:[grid-template-columns:repeat(auto-fit,minmax(360px,1fr))] " }) => {
+export const Cards: React.FC<ICards> = ({
+    cards,
+    cardWrapperClass,
+    cardIconClass,
+    cardHeadingClass,
+    cardTextClass,
+    containerClass,
+}) => {
     const [favorites, setFavorites] = useState<number[]>([]);
 
     const toggleFavorite = (id: number) => {
@@ -34,44 +41,62 @@ export const Cards: React.FC<ICards> = ({ cards, cardWrapperClass, cardIconClass
 
     return (
         <div className={containerClass}>
-            {cards.map((card) => (
-                <div
-                    key={card.id}
-                    className={`relative rounded-lg shadow-md bg-white ${cardWrapperClass ?? ""}`}
-                >
-                    <div className={` ${cardIconClass ?? ""}`}>
-                        <img src={card.image || ''} alt={`${card.id}`} />
-                    </div>
-                    <button
-                        onClick={() => toggleFavorite(card.id)}
-                        className="absolute top-[160px] right-[18px] text-[#28B13D] bg-white rounded-full border-1 p-3 shadow-sm"
+            {cards
+                .slice()
+                .sort((a, b) => Number(b.popular) - Number(a.popular)) // популярные — первыми
+                .map((card) => (
+                    <div
+                        key={card.id}
+                        className={`relative rounded-lg shadow-lg bg-white ${cardWrapperClass ?? ""}`}
                     >
-                        {favorites.includes(card.id) ? <FaHeart /> : <FaRegHeart />}
-                    </button>
+                        {card.popular && (
+                            <div className="absolute right-3 w-[125px] text-center font-openSans translate-y-[-50%] bg-white border border-[#28B13D] text-[#28B13D] text-s px-4 py-1.5 rounded-md font-semibold z-10 shadow-sm">
+                                Популярное
+                            </div>
+                        )}
+                        <div className={`relative ${cardIconClass ?? ""}`}>
 
-                    <div className="px-[18px] py-[21px] flex flex-col justify-between">
-                        <div>
-                            <Heading
-                                text={card.price}
-                                level={2}
-                                className={`text-[24px] leading-[22px] font-bold font-inter text-[#28B13D] mb-[8px] ${cardHeadingClass ?? ""}`}
-                            />
-                            <Heading
-                                text={card.title}
-                                level={3}
-                                className={`text-[18px] leading-[22px] font-bold font-inter  mb-[12px] ${cardHeadingClass ?? ""}`}
-                            />
-                            <Paragraph className={`text-gray-600 flex gap-x-2 font-inter text-[14px] font-medium mb-[6px] ${cardTextClass ?? ""}`}>
-                                <FaLocationDot className="text-[#28B13D] h-[16px]" />Адрес: <span className="font-bold">{card.address}</span>
-                            </Paragraph>
-                            <Paragraph className={`text-gray-600 flex gap-x-2 font-inter text-[14px] font-medium mb-[18px] ${cardTextClass ?? ""}`}>
-                                <FaLocationCrosshairs className="text-[#28B13D] h-[16px]" />{card.area}
-                            </Paragraph>
+                            <img src={card.image || ""} alt={`${card.id}`} className="w-full h-auto object-cover" />
+                            <button
+                                onClick={() => toggleFavorite(card.id)}
+                                className="absolute bottom-6 right-[18px] text-[#28B13D] bg-white rounded-full border p-3 shadow-sm"
+                            >
+                                {favorites.includes(card.id) ? <FaHeart /> : <FaRegHeart />}
+                            </button>
                         </div>
-                        <Button className={" w-full py-[12px] bg-[#28B13D] text-white font-medium rounded-md flex items-center justify-center gap-2 hover:bg-green-600 transition"}>Просмотреть <FaArrowRight /></Button>
+
+                        <div className="px-[18px] py-[21px] flex flex-col justify-between">
+                            <div>
+                                <Heading
+                                    text={card.price}
+                                    level={2}
+                                    className={`text-[24px] leading-[22px] font-bold font-inter text-[#28B13D] mb-[8px] ${cardHeadingClass ?? ""}`}
+                                />
+                                <Heading
+                                    text={card.title}
+                                    level={3}
+                                    className={`text-[18px] leading-[22px] font-bold font-inter mb-[12px] ${cardHeadingClass ?? ""}`}
+                                />
+                                <Paragraph
+                                    className={`text-gray-600 flex gap-x-2 font-inter text-[14px] font-medium mb-[6px] ${cardTextClass ?? ""}`}
+                                >
+                                    <FaLocationDot className="text-[#28B13D] h-[16px]" />
+                                    Адрес: <span className="font-bold">{card.address}</span>
+                                </Paragraph>
+                                <Paragraph
+                                    className={`text-gray-600 flex gap-x-2 font-inter text-[14px] font-medium mb-[18px] ${cardTextClass ?? ""}`}
+                                >
+                                    <FaLocationCrosshairs className="text-[#28B13D] h-[16px]" />
+                                    {card.area}
+                                </Paragraph>
+                            </div>
+
+                            <Button className="w-full py-[12px] bg-[#28B13D] text-white font-medium rounded-md flex items-center justify-center gap-2 hover:bg-green-600 transition">
+                                Просмотреть <FaArrowRight />
+                            </Button>
+                        </div>
                     </div>
-                </div>
-            ))}
+                ))}
         </div>
     );
 };

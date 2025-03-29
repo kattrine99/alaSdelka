@@ -3,7 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import { FaBars, FaTimes, FaRegUser, FaRegHeart, FaPhone, FaSearch } from "react-icons/fa";
 import { IoIosMail } from "react-icons/io";
 import { motion, AnimatePresence } from "framer-motion";
-import { Paragraph, NavLinks, Input } from "../index";
+import { Paragraph, NavLinks, categories, Input } from "../index";
 
 export const Header = () => {
     const [menuOpen, setMenuOpen] = useState(false);
@@ -13,12 +13,6 @@ export const Header = () => {
 
     const toggleMenu = () => setMenuOpen(!menuOpen);
 
-    const navItems = [
-        { label: "Бизнес", to: "#" },
-        { label: "Франшиза", to: "#" },
-        { label: "Стартап", to: "#" },
-        { label: "Инвестиции", to: "#" },
-    ];
 
     return (
         <div className="font-[Inter] font-medium w-full bg-white shadow ">
@@ -42,7 +36,8 @@ export const Header = () => {
                         </Link>
                         <div className="hidden md:flex gap-8.5 items-center">
                             <NavLinks
-                                links={navItems}
+                                links={categories}
+                                className="flex flex-wrap gap-x-8.5 font-medium"
                                 linkClassName="font-inter leading-[100%] text-[#232323] text-[clamp(14px,1.4vw,18px)] relative hover:text-[#28B13D] transition-all duration-500 before:content-[''] before:absolute before:left-0 before:bottom-[-2px] before:w-0 hover:before:w-full before:h-[2px] before:bg-[#28B13D] before:transition-all before:duration-500"
                             />
                         </div>
@@ -114,7 +109,7 @@ export const Header = () => {
                     {menuOpen && (
                         <div className="md:hidden bg-white px-6 pb-4 shadow-md">
                             <NavLinks
-                                links={navItems}
+                                links={categories}
                                 className="flex flex-col gap-4"
                                 linkClassName="text-gray-800 text-[clamp(14px,1.4vw,18px)] relative text-gray-800 hover:text-[#28B13D] transition-all duration-200 before:content-[''] before:absolute before:left-0 before:bottom-[-2px] before:w-0 hover:before:w-full before:h-[2px] before:bg-[#28B13D] before:transition-all before:duration-3=400"
                             />

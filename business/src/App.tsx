@@ -1,23 +1,26 @@
-import { LoginPage, RegistrationPage, MainPage } from "./Pages/index";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { LoginPage, RegistrationPage, MainPage, CategoryPage } from "./Pages/index";
+import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
 import './index.css';
+import { ScrollToTop } from "./components/ScrollTop/ScrollTop";
+const Layout = () => (
+  <>
+    <ScrollToTop />
+    <Outlet />
+  </>
+);
+
 const routerConfig = createBrowserRouter([
   {
     path: "/",
-    element: <MainPage />,
-  },
-  {
-    path: "/login",
-    element: <LoginPage />,
-  },
-  {
-    path: "/register",
-    element: <RegistrationPage />
-  },
-  {
-    path: "/main",
-    element: <MainPage />
-  },
+    element: <Layout />, // всё вложено в Layout, внутри — ScrollToTop
+    children: [
+      { index: true, element: <MainPage /> },
+      { path: "main", element: <MainPage /> },
+      { path: "login", element: <LoginPage /> },
+      { path: "register", element: <RegistrationPage /> },
+      { path: ":category", element: <CategoryPage /> }
+    ]
+  }
 ]);
 
 function App() {

@@ -1,4 +1,4 @@
-import { Applink } from "../index";
+import { Applink, Button } from "../index";
 
 interface NavLinksProps {
     links: { label: string; to: string }[];
@@ -7,6 +7,9 @@ interface NavLinksProps {
     onClick?: (label: string) => void;
     activeLabel?: string;
     variant?: "header" | "tabs";
+    activeClassName?: string;
+    inactiveClassName?: string;
+    underlineColor?: string;
 }
 
 export const NavLinks: React.FC<NavLinksProps> = ({
@@ -15,31 +18,33 @@ export const NavLinks: React.FC<NavLinksProps> = ({
     linkClassName = "",
     onClick,
     activeLabel,
-    variant = "header", // по умолчанию — обычная навигация
+    variant = "header",
+    activeClassName = "text-[#28B13D]",
+    inactiveClassName = "text-[#787878] hover:text-[#28B13D]",
+    underlineColor = "bg-[#28B13D]",
 }) => {
     return (
-        <nav className={`flex flex-wrap gap-x-8.5 font-medium ${className}`}>
+        <nav className={className}>
             {links.map((link, idx) => {
                 const isActive = link.label === activeLabel;
 
-                // Tabs-режим: кнопки с нижней линией
                 if (variant === "tabs") {
+                    const baseClasses = `relative`;
+                    const activeClasses = isActive
+                        ? `${activeClassName} after:content-[''] after:absolute after:left-0 after:bottom-0 after:h-[2px] after:${underlineColor}`
+                        : inactiveClassName;
+
                     return (
-                        <button
+                        <Button
                             key={idx}
                             onClick={() => onClick?.(link.label)}
-                            className={`relative pb-2 text-[18px] font-semibold transition-all
-                ${isActive ? "text-[#28B13D]" : "text-[#787878] hover:text-[#28B13D]"}
-                ${isActive ? "after:content-[''] after:absolute after:left-0 after:bottom-0 after:h-[2px] after:w-full after:bg-[#28B13D]" : ""}
-                ${linkClassName}
-              `}
+                            className={`${baseClasses} ${activeClasses} ${linkClassName}`}
                         >
                             {link.label}
-                        </button>
+                        </Button>
                     );
                 }
 
-                // Header-режим: обычные ссылки
                 return (
                     <Applink
                         key={idx}

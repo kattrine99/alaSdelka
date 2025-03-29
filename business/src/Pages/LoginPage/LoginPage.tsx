@@ -42,13 +42,13 @@ export const LoginPage = () => {
     };
 
     return (
-        <>
+        <div className='min-w-screen min-h-screen'>
             <Header />
-            <div className="min-w-screen min-h-screen flex items-center justify-center px-6 pt-[140px] md:pt-[100px] sm:pt-[80px] transition-all duration-300">
+            <div className=" flex items-center justify-center px-6 pt-[140px] md:pt-[100px] sm:pt-[80px] transition-all duration-300">
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-12 max-w-[85%] lg:max-w-[80%] md:max-w-[85%] sm:max-w-[90%] w-full items-center transition-all duration-500">
                     <div className="flex justify-center w-full transition-all duration-300">
                         <div className="w-full max-w-[700px] lg:max-w-[600px] md:max-w-[500px] sm:max-w-[360px] min-w-[320px] shadow-lg rounded-2xl p-[clamp(30px,4vw,70px)] flex flex-col items-center text-center transition-all duration-300">
-                            <Heading className="text-[clamp(24px,2.2vw,44px)] font-bold text-blue-700 mb-[clamp(18px,2.2vw,36px)]" text={'Вход в личный кабинет'} level={1} />
+                            <Heading className="text-[clamp(24px,2.2vw,44px)] font-bold text-[#28B13D] mb-[clamp(18px,2.2vw,36px)]" text={'Вход в личный кабинет'} level={1} />
                             <form className="w-full flex flex-col gap-[clamp(14px,1.8vw,28px)]">
                                 <Controller
                                     name="useremail"
@@ -61,7 +61,7 @@ export const LoginPage = () => {
                                                 type="text"
                                                 placeholder="Email"
                                                 {...field}
-                                                className="w-full px-[clamp(16px,2.5vw,26px)] py-[clamp(12px,1.8vw,22px)] border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none transition-all duration-500"
+                                                className="w-full px-[clamp(16px,2.5vw,26px)] py-[clamp(12px,1.8vw,22px)] border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-[#28B13D] focus:outline-none transition-all duration-500"
                                             />
                                         </div>
                                     )}
@@ -77,11 +77,11 @@ export const LoginPage = () => {
                                                 type={isPasswordVisible ? "text" : "password"}
                                                 placeholder="Пароль"
                                                 {...field}
-                                                className="w-full px-[clamp(16px,2.5vw,26px)] py-[clamp(12px,1.8vw,22px)] border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none transition-all duration-500"
+                                                className="w-full px-[clamp(16px,2.5vw,26px)] py-[clamp(12px,1.8vw,22px)] border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-[#28B13D] focus:outline-none transition-all duration-500"
                                             />
                                             <span
                                                 onClick={togglePasswordVisibility}
-                                                className="absolute right-5 top-[clamp(12px,1.8vw,22px)] cursor-pointer text-blue-500 transition-all duration-300"
+                                                className="absolute right-5 top-[clamp(12px,1.8vw,22px)] cursor-pointer text-[#28B13D] transition-all duration-300"
                                             >
                                                 {isPasswordVisible ? <FaRegEyeSlash /> : <FaRegEye />}
                                             </span>
@@ -90,14 +90,14 @@ export const LoginPage = () => {
                                 />
                                 <Button
                                     type="submit"
-                                    className="w-full py-[clamp(14px,2vw,24px)] text-white bg-gradient-to-r from-blue-600 to-blue-400 rounded-lg font-bold hover:from-blue-700 hover:to-blue-500 transition-all duration-500"
+                                    className="w-full py-[clamp(14px,2vw,24px)] text-white bg-gradient-to-r from-[#109223] to-[#28B13D] rounded-lg font-bold hover:from-[#0e7b1e] hover:to-[#2c9a3d] transition-all duration-500"
                                 >
                                     Войти
                                 </Button>
                             </form>
                             <Paragraph className="text-[clamp(14px,1.7vw,18px)] text-gray-600 mt-4 transition-all duration-300">
                                 Еще нет аккаунта?
-                                <Applink to='/register' className="text-blue-600 hover:underline ml-1 transition duration-500">Зарегистрироваться</Applink>
+                                <Applink to='/register' className="text-[#28B13D] hover:underline ml-1 transition duration-500">Зарегистрироваться</Applink>
                             </Paragraph>
                             <div className="mt-6 w-full">
                                 <button className="w-full flex items-center justify-center gap-3 bg-white border border-gray-300 rounded-lg px-5 py-[clamp(14px,2vw,24px)] shadow-md text-gray-700 font-semibold transition-all duration-500 hover:bg-gray-100 hover:shadow-lg active:">
@@ -110,7 +110,7 @@ export const LoginPage = () => {
                     <NeedHelp />
                 </div>
             </div >
-        </>
+        </div>
 
 
 

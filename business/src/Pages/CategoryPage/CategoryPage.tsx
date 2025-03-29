@@ -1,11 +1,9 @@
 import { useParams } from "react-router-dom";
 import { useState } from "react";
-import { Breadcrumbs, CardSection, Header, Pagination } from "../../components";
+import { Breadcrumbs, CardSection, Header, Pagination, PopularSliderSection, Footer } from "../../components";
 import { ICard } from "../../components/Cards/Cards";
 import { TempBusinessCardsMock } from "../../utils/TempBusinessCardsMock";
 import { urlToTypeMap, typeToTitleMap } from "../../utils/categoryMap";
-import { Footer } from "../../components/Footer/Footer";
-// import { PopularSliderSection } from "../../components/PopularSection/PopularSliderSection";
 
 export const CategoryPage = () => {
     const { category } = useParams();
@@ -68,10 +66,10 @@ export const CategoryPage = () => {
                         totalPages={totalPages}
                         onPageChange={(page: number) => setCurrentPage(page)}
                     />
-                    {/* <PopularSliderSection cards={TempBusinessCardsMock as ICard[]} /> */}
-                </main>
 
+                </main>
             </div>
+            <PopularSliderSection cards={TempBusinessCardsMock as ICard[]} />
             <Footer />
         </div>
     );

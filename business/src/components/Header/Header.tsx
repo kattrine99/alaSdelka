@@ -4,8 +4,11 @@ import { FaBars, FaTimes, FaRegUser, FaRegHeart, FaPhone, FaSearch } from "react
 import { IoIosMail } from "react-icons/io";
 import { motion, AnimatePresence } from "framer-motion";
 import { Paragraph, NavLinks, categories, Input } from "../index";
+interface HeaderProps {
+    showLogo?: boolean;
+}
 
-export const Header = () => {
+export const Header: React.FC<HeaderProps> = ({ showLogo = true }) => {
     const [menuOpen, setMenuOpen] = useState(false);
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const { pathname } = useLocation();
@@ -15,9 +18,21 @@ export const Header = () => {
 
 
     return (
-        <div className="font-[Inter] font-medium w-full bg-white shadow ">
-            <div className="flex justify-end items-center py-[25px] px-[96px] border-b border-[#E9E9E9]">
-                <div className="md:flex gap-6 text-sm ">
+        <div className="font-inter font-medium w-full bg-white shadow ">
+
+            <div className="flex justify-between items-center py-[25px] px-[96px] border-b border-[#E9E9E9]">
+                <div>
+                    {showLogo && (
+                        <Link to="/main" className="flex items-center gap-2">
+                            <img
+                                src="/images/investin_logo.png"
+                                alt="Logo"
+                                className="h-[56px] w-auto object-contain"
+                            />
+                        </Link>
+                    )}
+                </div>
+                <div className="md:flex gap-6 ">
                     <Paragraph className="flex items-center gap-1 text-[#232323] font-openSans font-normal text-[16px] leading-[125%]">
                         <IoIosMail className="text-[#28B13D] text-base" />
                         info@name-com.uz

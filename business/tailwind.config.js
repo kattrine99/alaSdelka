@@ -12,6 +12,7 @@ export default {
             fontFamily: {
                 inter: ['Inter', 'sans-serif'],
                 openSans: ['"Open Sans"', 'sans-serif'],
+                Urbanist: ["Urbanist", 'sans-serif'],
             },
         },
     },

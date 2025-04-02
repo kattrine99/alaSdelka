@@ -11,33 +11,19 @@ export const MainPage = () => {
     return (
         <div className="font-openSans min-h-screen w-screen overflow-x-hidden">
             <Header showLogo={false} />
-            <section className="relative overflow-hidden bg-gradient-to-br from-[#F8FFF5] to-[#FAFFF9]">
-                <div className="py-[70px] px-4 sm:px-8 md:px-[96px] xl:px-[192px] bg-[url(/images/House.png)] bg-no-repeat bg-[length:924px] bg-[position:right_bottom_-20rem]">
+            <section className="relative overflow-hidden bg-gradient-to-tr from-[#16503A] to-[#31B683]">
+                <div className="absolute right-[-80px] bottom-[-9rem] w-[850px] h-[850px] bg-[url('/images/Check.png')] bg-no-repeat bg-contain rotate-[12deg] pointer-events-none z-0"></div>
+                <div className="relative py-[70px] px-4 sm:px-8 md:px-[96px] xl:px-[192px] overflow-hidden">
                     {/* Текст */}
-                    <div className="z-10 order-2 lg:order-1 flex flex-col gap-6 max-w-2xl w-full">
+                    <div className="order-2 lg:order-1 flex flex-col gap-6 max-w-2xl w-full">
                         <Heading
                             level={1}
                             text="Купите, продайте или инвестируйте в бизнес"
-                            className="text-[clamp(32px,4vw,60px)] font-bold leading-tight text-black"
+                            className="text-[clamp(32px,4vw,60px)] font-bold leading-tight text-white"
                         />
-                        <Paragraph className="text-[clamp(16px,1.5vw,18px)] text-gray-700">
-                            <span className="text-[#28B13D] font-semibold">Invest In</span> — первая в Узбекистане специализированная площадка для размещения объявлений о продаже готового бизнеса, стартапов, франшиз и инвестиционных проектов.
+                        <Paragraph className="text-[clamp(16px,1.5vw,18px)] text-white font-semibold text-xl">
+                            <span className="text-[40px] font-bold">Invest In</span> — первая в Узбекистане специализированная площадка для размещения объявлений о продаже готового бизнеса, стартапов, франшиз и инвестиционных проектов.
                         </Paragraph>
-
-                        <div className="flex gap-10 pt-2">
-                            <div>
-                                <Paragraph className="text-[#28B13D] text-[40px] font-bold">1000+</Paragraph>
-                                <Paragraph className="text-[20px] font-bold">партнеров</Paragraph>
-                            </div>
-                            <div>
-                                <Paragraph className="text-[#28B13D] text-[40px] font-bold">2000+</Paragraph>
-                                <Paragraph className="text-[20px] font-bold">сделок</Paragraph>
-                            </div>
-                            <div>
-                                <Paragraph className="text-[#28B13D] text-[40px] font-bold">10000</Paragraph>
-                                <Paragraph className="text-[20px] font-bold">объявлений</Paragraph>
-                            </div>
-                        </div>
 
                         {/* Поиск */}
                         <div className="mt-4 w-full flex flex-col max-w-6xl relative">
@@ -48,17 +34,15 @@ export const MainPage = () => {
                                     variant="tabs"
                                     activeLabel={selectedCategory}
                                     onClick={setSelectedCategory}
-                                    className="flex text-[18px] h-[55px]  font-openSans font-semibold"
-                                    activeClassName="text-[#28B13D] py-[14px] px-[17px]  border-b"
-                                    inactiveClassName="text-[#787878] py-[14px] px-[17px] hover:text-[#28B13D] "
-                                    underlineColor="bg-[#28B13D]"
+                                    className="flex text-[18px] font-openSans font-semibold"
+                                    activeClassName="text-[#2EAA7B] w-[136px] py-[14px] px-[17px]  border-b"
+                                    inactiveClassName="text-[#787878] w-[136px] py-[14px] px-[17px] hover:text-[#2EAA7B] "
+                                    underlineColor="bg-[#2EAA7B]"
                                 />
                             </div>
 
                             {/* Фильтр Поиск*/}
-                            <div className="w-full">
-                                <FilterBar />
-                            </div>
+                            <FilterBar />
                         </div>
                     </div>
                 </div>

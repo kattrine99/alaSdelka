@@ -1,9 +1,11 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { FaBars, FaTimes, FaRegUser, FaRegHeart, FaPhone, FaSearch } from "react-icons/fa";
+import { FaBars, FaTimes, FaRegUser, FaRegHeart, FaPhone, FaWhatsapp } from "react-icons/fa";
 import { IoIosMail } from "react-icons/io";
-import { motion, AnimatePresence } from "framer-motion";
-import { Paragraph, NavLinks, categories, Input } from "../index";
+import { FaTelegram } from "react-icons/fa6";
+import { Paragraph, NavLinks, categories, Button } from "../index";
+import { MdOutlineArrowDropDown } from "react-icons/md";
+
 interface HeaderProps {
     showLogo?: boolean;
 }
@@ -20,7 +22,7 @@ export const Header: React.FC<HeaderProps> = ({ showLogo = true }) => {
     return (
         <div className="font-inter font-medium w-full bg-white shadow ">
 
-            <div className="flex justify-between items-center py-[25px] px-[96px] border-b border-[#E9E9E9]">
+            <div className="flex justify-between items-center py-[19px] px-[192px] border-b border-[#E9E9E9]">
                 <div>
                     {showLogo && (
                         <Link to="/main" className="flex items-center gap-2">
@@ -32,7 +34,7 @@ export const Header: React.FC<HeaderProps> = ({ showLogo = true }) => {
                         </Link>
                     )}
                 </div>
-                <div className="md:flex gap-6 ">
+                <div className="md:flex gap-[50px]">
                     <Paragraph className="flex items-center gap-1 text-[#232323] font-openSans font-normal text-[16px] leading-[125%]">
                         <IoIosMail className="text-[#28B13D] text-base" />
                         info@name-com.uz
@@ -41,7 +43,16 @@ export const Header: React.FC<HeaderProps> = ({ showLogo = true }) => {
                         <FaPhone className="text-[#28B13D] text-base" />
                         +998 71 789 78 78
                     </Paragraph>
+                    <div className="md:flex gap-3 ">
+                        <Link to="#">
+                            <FaTelegram className="w-8 h-8 text-[#229ED9]" />
+                        </Link>
+                        <Link to="#" className="w-8 h-8 rounded-full bg-[#0DC143] flex items-center px-[7.23px]" >
+                            <FaWhatsapp className="w-[18.58px] h-[18.58px] text-white " />
+                        </Link>
+                    </div>
                 </div>
+
             </div>
             {!pathname.includes("login") && !pathname.includes("register") && (
                 <>
@@ -59,39 +70,31 @@ export const Header: React.FC<HeaderProps> = ({ showLogo = true }) => {
 
                         {/* Mobile burger */}
                         <div className="md:hidden flex items-center">
-                            <button onClick={toggleMenu} className="text-2xl">
+                            <Button onClick={toggleMenu} className="text-2xl">
                                 {menuOpen ? <FaTimes /> : <FaBars />}
-                            </button>
+                            </Button>
                         </div>
                         <div className="hidden md:flex gap-3 items-center">
                             <div className="relative">
-                                <button
+                                <Button
                                     onClick={() => setShowSearch(!showSearch)}
                                     className="text-2xl font-normal text-gray-600 hover:text-[#28B13D]"
                                 >
-                                    <FaSearch />
-                                </button>
-
-                                <AnimatePresence>
-                                    {showSearch && (
-                                        <motion.div
-                                            initial={{ opacity: 0, x: -10 }}
-                                            animate={{ opacity: 1, x: 0 }}
-                                            exit={{ opacity: 0, x: -10 }}
-                                            transition={{ duration: 0.3 }}
-                                            className="absolute right-[120%] top-1/2 -translate-y-1/2 z-50"
-                                        >
-                                            <Input
-                                                type="text"
-                                                placeholder="Поиск..."
-                                                className="w-[clamp(160px,20vw,240px)] h-[36px] border border-gray-300 rounded px-3 py-1 focus:outline-none focus:ring-2 focus:ring-green-400 bg-white shadow transition"
-                                                isError={false}
-                                            />
-                                        </motion.div>
-                                    )}
-                                </AnimatePresence>
+                                </Button>
                             </div>
-
+                            <div className="relative w-[139px] h-[49px]">
+                                <select
+                                    name="Languages"
+                                    className="w-full h-full px-4 pr-10 border border-[#C9CCCF] rounded-[10px] outline-none text-[#191919] font-medium appearance-none"
+                                >
+                                    <option id="RU">Русский</option>
+                                    <option id="UZ">O'zbek</option>
+                                    <option id="EN">English</option>
+                                </select>
+                                <MdOutlineArrowDropDown
+                                    className="absolute right-3 top-1/2 -translate-y-1/2 text-xl text-[#191919] pointer-events-none"
+                                />
+                            </div>
                             {isAuthenticated ? (
                                 <>
                                     <Link to="/favorites" className="text-2xl text-gray-700 hover:text-[#28B13D] pr-2">
@@ -100,18 +103,19 @@ export const Header: React.FC<HeaderProps> = ({ showLogo = true }) => {
                                     <Link to="/profile" className="text-2xl text-gray-700 hover:text-[#28B13D] pr-5">
                                         <FaRegUser />
                                     </Link>
+
                                 </>
                             ) : (
                                 <>
                                     <Link
                                         to="/login"
-                                        className="border border-gray-300 rounded px-4 py-2 hover:bg-gray-100 text-sm font-medium"
+                                        className="border border-[#31B683] rounded-[10px] px-5 py-3 hover:bg-[#2EAA7B] hover:text-white text-sm font-medium"
                                     >
                                         Войти
                                     </Link>
                                     <Link
                                         to="/register"
-                                        className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 text-sm font-medium"
+                                        className="bg-[#31B683] text-white px-5 py-3 rounded-[10px] hover:bg-[#2EAA7B] text-sm font-medium"
                                     >
                                         Зарегистрироваться
                                     </Link>
@@ -130,6 +134,7 @@ export const Header: React.FC<HeaderProps> = ({ showLogo = true }) => {
                             />
 
                             <div className="mt-4 flex flex-col gap-2">
+
                                 {isAuthenticated ? (
                                     <>
                                         <Link to="/favorites" className="flex items-center gap-2 text-gray-700 hover:text-[#28B13D]">

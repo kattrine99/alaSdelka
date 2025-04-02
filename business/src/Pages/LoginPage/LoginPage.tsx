@@ -11,6 +11,7 @@ import { NeedHelp } from '../../components/NeedHelp/NeedHelp';
 import { Applink } from '../../components/AppLink/AppLink';
 
 
+
 // interface ILoginForm {
 //     useremail: string;
 //     userpassword: string;
@@ -90,7 +91,7 @@ export const LoginPage = () => {
                                 />
                                 <Button
                                     type="submit"
-                                    className="w-full py-[clamp(14px,2vw,24px)] text-white bg-gradient-to-r from-[#109223] to-[#28B13D] rounded-lg font-bold hover:from-[#0e7b1e] hover:to-[#2c9a3d] transition-all duration-500"
+                                    className="w-full py-[clamp(14px,2vw,24px)] text-main-green bg-gradient-to-r from-[#109223] to-[#28B13D] rounded-lg font-bold hover:from-[#0e7b1e] hover:to-[#2c9a3d] transition-all duration-500"
                                 >
                                     Войти
                                 </Button>

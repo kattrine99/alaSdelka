@@ -50,7 +50,7 @@ export const Cards: React.FC<ICards> = ({
                         className={`relative rounded-lg shadow-lg bg-white ${cardWrapperClass ?? ""}`}
                     >
                         {card.popular && (
-                            <div className="absolute right-3 w-[125px] text-center font-openSans translate-y-[-50%] bg-white border border-[#28B13D] text-[#28B13D] text-s px-4 py-1.5 rounded-md font-semibold z-10 shadow-sm">
+                            <div className="absolute right-3 w-[125px] text-center font-openSans translate-y-[-50%] bg-white border border-[#FD6A0D] text-[#FD6A0D] text-s px-4 py-1.5 rounded-md font-semibold z-10 shadow-sm">
                                 Популярное
                             </div>
                         )}

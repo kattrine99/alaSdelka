@@ -41,7 +41,7 @@ export const CardSection: React.FC<CardSectionProps> = ({
         </div>
         {!hideViewAllButton && <Button
           onClick={handleViewAll}
-          className="bg-black text-white text-sm px-[20px] py-[14px] rounded hover:bg-gray-800 transition"
+          className="bg-black text-white text-sm px-[20px] py-[px] rounded hover:bg-gray-800 transition"
         >
           Посмотреть все
         </Button>

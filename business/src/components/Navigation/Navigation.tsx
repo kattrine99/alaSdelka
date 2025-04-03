@@ -19,9 +19,9 @@ export const NavLinks: React.FC<NavLinksProps> = ({
     onClick,
     activeLabel,
     variant = "header",
-    activeClassName = "text-[#28B13D]",
-    inactiveClassName = "text-[#787878] hover:text-[#28B13D]",
-    underlineColor = "bg-[#28B13D]",
+    activeClassName = "text-[#2EAA7B]",
+    inactiveClassName = "text-[#787878] hover:text-[#2EAA7B]",
+    underlineColor = "bg-[#2EAA7B]",
 }) => {
     return (
         <nav className={className}>
@@ -49,7 +49,7 @@ export const NavLinks: React.FC<NavLinksProps> = ({
                     <Applink
                         key={idx}
                         to={link.to}
-                        className={`text-[#232323] hover:text-[#28B13D] transition-all ${linkClassName}`}
+                        className={`text-[#232323] hover:text-[#2EAA7B] transition-all ${linkClassName}`}
                     >
                         {link.label}
                     </Applink>

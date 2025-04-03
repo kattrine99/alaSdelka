@@ -7,7 +7,7 @@ interface HeadingProps {
     className?: string;
 }
 
-export const Heading = ({ text, level, className }: HeadingProps) => {
+export const Heading = ({ text, children, level, className }: HeadingProps) => {
     let Tag: keyof JSX.IntrinsicElements;
 
     switch (level) {
@@ -33,5 +33,7 @@ export const Heading = ({ text, level, className }: HeadingProps) => {
             Tag = "h6"; // Если уровень вне диапазона 1-6, используем h6 как запасной вариант
     }
 
-    return <Tag className={className}>{text}</Tag>;
+    return <Tag className={className} >
+        {children ? children : text}
+    </Tag>;
 };

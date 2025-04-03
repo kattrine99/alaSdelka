@@ -1,7 +1,11 @@
 import { useState } from "react";
 import { Button, Heading, Paragraph } from "../index";
-import { FaRegHeart, FaHeart, FaArrowRight } from "react-icons/fa";
+import { FaArrowRight } from "react-icons/fa";
 import { FaLocationDot, FaLocationCrosshairs } from "react-icons/fa6";
+import FireIcon from '../../assets/fire.svg?react';
+import HeartIcon from '../../assets/heart.svg?react';
+import SolidHeartIcon from '../../assets/Solidheart.svg?react';
+
 
 export interface ICard {
     type: "бизнес" | "франшиза" | "стартап" | "инвестиции";
@@ -43,15 +47,18 @@ export const Cards: React.FC<ICards> = ({
         <div className={containerClass}>
             {cards
                 .slice()
-                .sort((a, b) => Number(b.popular) - Number(a.popular)) // популярные — первыми
+                .sort((a, b) => Number(b.popular) - Number(a.popular))
                 .map((card) => (
                     <div
                         key={card.id}
                         className={`relative rounded-lg shadow-lg bg-white ${cardWrapperClass ?? ""}`}
                     >
                         {card.popular && (
-                            <div className="absolute right-3 w-[125px] text-center font-openSans translate-y-[-50%] bg-white border border-[#FD6A0D] text-[#FD6A0D] text-s px-4 py-1.5 rounded-md font-semibold z-10 shadow-sm">
-                                Популярное
+                            <div className="absolute w-[125px] left-5 font-openSans translate-y-[-50%] bg-white border border-[#FD6A0D] text-[#FD6A0D] py-[5px] px-1.5 rounded-md font-semibold z-10 shadow-sm flex">
+                                <FireIcon className="z-10 w-5 h-5 text-[#FD6A0D]" />
+                                <Paragraph className="">
+                                    Популярное
+                                </Paragraph>
                             </div>
                         )}
                         <div className={`relative ${cardIconClass ?? ""}`}>
@@ -59,9 +66,13 @@ export const Cards: React.FC<ICards> = ({
                             <img src={card.image || ""} alt={`${card.id}`} className="w-full h-auto object-cover" />
                             <button
                                 onClick={() => toggleFavorite(card.id)}
-                                className="absolute bottom-6 right-[18px] text-[#28B13D] bg-white rounded-full border p-3 shadow-sm"
+                                className="absolute top-5 right-[18px] px-[7px] py-2 text-[#28B13D] bg-white rounded-full border-2 border-[#28B13D] shadow-sm"
                             >
-                                {favorites.includes(card.id) ? <FaHeart /> : <FaRegHeart />}
+                                {favorites.includes(card.id) ?
+                                    <SolidHeartIcon className="w-8 h-7 border-1.5 border-[#FF1D1D] text-[#FF1D1D]" />
+                                    :
+                                    <HeartIcon className="w-8 h-7 text-center border-1.5" />
+                                }
                             </button>
                         </div>
 
@@ -70,7 +81,7 @@ export const Cards: React.FC<ICards> = ({
                                 <Heading
                                     text={card.price}
                                     level={2}
-                                    className={`text-[24px] leading-[22px] font-bold font-inter text-[#28B13D] mb-[8px] ${cardHeadingClass ?? ""}`}
+                                    className={`text-[24px] leading-[22px] font-bold font-inter text-[#232323] mb-[8px] ${cardHeadingClass ?? ""}`}
                                 />
                                 <Heading
                                     text={card.title}
@@ -80,18 +91,18 @@ export const Cards: React.FC<ICards> = ({
                                 <Paragraph
                                     className={`text-gray-600 flex gap-x-2 font-inter text-[14px] font-medium mb-[6px] ${cardTextClass ?? ""}`}
                                 >
-                                    <FaLocationDot className="text-[#28B13D] h-[16px]" />
+                                    <FaLocationDot className="text-[#2EAA7B] h-[16px]" />
                                     Адрес: <span className="font-bold">{card.address}</span>
                                 </Paragraph>
                                 <Paragraph
                                     className={`text-gray-600 flex gap-x-2 font-inter text-[14px] font-medium mb-[18px] ${cardTextClass ?? ""}`}
                                 >
-                                    <FaLocationCrosshairs className="text-[#28B13D] h-[16px]" />
+                                    <FaLocationCrosshairs className="text-[#2EAA7B] h-[16px]" />
                                     {card.area}
                                 </Paragraph>
                             </div>
 
-                            <Button className="w-full py-[12px] bg-[#28B13D] text-white font-medium rounded-md flex items-center justify-center gap-2 hover:bg-green-600 transition">
+                            <Button className="w-full py-[12px] bg-[#2EAA7B] text-white font-medium rounded-md flex items-center justify-center gap-2 hover:bg-[#31B683] transition duration-300 cursor-pointer">
                                 Просмотреть <FaArrowRight />
                             </Button>
                         </div>

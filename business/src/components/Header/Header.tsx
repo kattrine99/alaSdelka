@@ -36,11 +36,11 @@ export const Header: React.FC<HeaderProps> = ({ showLogo = true }) => {
                 </div>
                 <div className="md:flex gap-[50px]">
                     <Paragraph className="flex items-center gap-1 text-[#232323] font-openSans font-normal text-[16px] leading-[125%]">
-                        <IoIosMail className="text-[#28B13D] text-base" />
+                        <IoIosMail className="text-[#2EAA7B] text-base" />
                         info@name-com.uz
                     </Paragraph>
                     <Paragraph className="flex items-center gap-1 text-[#232323] font-inter font-normal text-[16px] leading-[125%]">
-                        <FaPhone className="text-[#28B13D] text-base" />
+                        <FaPhone className="text-[#2EAA7B] text-base" />
                         +998 71 789 78 78
                     </Paragraph>
                     <div className="md:flex gap-3 ">
@@ -64,7 +64,7 @@ export const Header: React.FC<HeaderProps> = ({ showLogo = true }) => {
                             <NavLinks
                                 links={categories}
                                 className="flex flex-wrap gap-x-8.5 font-medium"
-                                linkClassName="font-inter leading-[100%] text-[#232323] text-[clamp(14px,1.4vw,18px)] relative hover:text-[#28B13D] transition-all duration-500 before:content-[''] before:absolute before:left-0 before:bottom-[-2px] before:w-0 hover:before:w-full before:h-[2px] before:bg-[#28B13D] before:transition-all before:duration-500"
+                                linkClassName="font-inter leading-[100%] text-[#232323] text-[clamp(14px,1.4vw,18px)] hover:text-[#2EAA7B] transition-all duration-500"
                             />
                         </div>
 
@@ -78,7 +78,7 @@ export const Header: React.FC<HeaderProps> = ({ showLogo = true }) => {
                             <div className="relative">
                                 <Button
                                     onClick={() => setShowSearch(!showSearch)}
-                                    className="text-2xl font-normal text-gray-600 hover:text-[#28B13D]"
+                                    className="text-2xl font-normal text-gray-600 hover:text-[#2EAA7B]"
                                 >
                                 </Button>
                             </div>
@@ -97,10 +97,10 @@ export const Header: React.FC<HeaderProps> = ({ showLogo = true }) => {
                             </div>
                             {isAuthenticated ? (
                                 <>
-                                    <Link to="/favorites" className="text-2xl text-gray-700 hover:text-[#28B13D] pr-2">
+                                    <Link to="/favorites" className="text-2xl text-gray-700 hover:text-[#2EAA7B] pr-2">
                                         <FaRegHeart />
                                     </Link>
-                                    <Link to="/profile" className="text-2xl text-gray-700 hover:text-[#28B13D] pr-5">
+                                    <Link to="/profile" className="text-2xl text-gray-700 hover:text-[#2EAA7B] pr-5">
                                         <FaRegUser />
                                     </Link>
 
@@ -130,17 +130,17 @@ export const Header: React.FC<HeaderProps> = ({ showLogo = true }) => {
                             <NavLinks
                                 links={categories}
                                 className="flex flex-col gap-4"
-                                linkClassName="text-gray-800 text-[clamp(14px,1.4vw,18px)] relative text-gray-800 hover:text-[#28B13D] transition-all duration-200 before:content-[''] before:absolute before:left-0 before:bottom-[-2px] before:w-0 hover:before:w-full before:h-[2px] before:bg-[#28B13D] before:transition-all before:duration-3=400"
+                                linkClassName="text-gray-800 text-[clamp(14px,1.4vw,18px)] relative text-gray-800 hover:text-[#2EAA7B] transition-all duration-200 before:content-[''] before:absolute before:left-0 before:bottom-[-2px] before:w-0 hover:before:w-full before:h-[2px] before:bg-[#28B13D] before:transition-all before:duration-3=400"
                             />
 
                             <div className="mt-4 flex flex-col gap-2">
 
                                 {isAuthenticated ? (
                                     <>
-                                        <Link to="/favorites" className="flex items-center gap-2 text-gray-700 hover:text-[#28B13D]">
+                                        <Link to="/favorites" className="flex items-center gap-2 text-gray-700 hover:text-[#2EAA7B]">
                                             <FaRegHeart /> Избранное
                                         </Link>
-                                        <Link to="/profile" className="flex items-center gap-2 text-gray-700 hover:text-[#28B13D]">
+                                        <Link to="/profile" className="flex items-center gap-2 text-gray-700 hover:text-[#2EAA7B]">
                                             <FaRegUser /> Профиль
                                         </Link>
                                     </>
@@ -149,7 +149,7 @@ export const Header: React.FC<HeaderProps> = ({ showLogo = true }) => {
                                         <Link to="/login" className="text-sm text-gray-700 hover:underline">
                                             Войти
                                         </Link>
-                                        <Link to="/register" className="text-sm text-[#28B13D] font-medium hover:underline">
+                                        <Link to="/register" className="text-sm text-[#2EAA7B] font-medium hover:underline">
                                             Зарегистрироваться
                                         </Link>
                                     </>

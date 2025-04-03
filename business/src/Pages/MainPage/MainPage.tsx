@@ -1,12 +1,13 @@
-import { Header, Heading, Paragraph, NavLinks, CardSection, FilterBar, categories } from "../../components";
+import { Header, Heading, Paragraph, NavLinks, CardSection, FilterBar, categories, Button, Footer } from "../../components";
 import { useState } from "react";
 import { TempBusinessCardsMock } from "../../utils/TempBusinessCardsMock";
 import { ICard } from "../../components/Cards/Cards";
-import { Footer } from "../../components/Footer/Footer";
 import { titleToTypeMap } from "../../utils/categoryMap";
+import { useNavigate } from "react-router-dom";
 
 export const MainPage = () => {
     const [selectedCategory, setSelectedCategory] = useState("Бизнес");
+    const navigate = useNavigate();
 
     return (
         <div className="font-openSans min-h-screen w-screen overflow-x-hidden">
@@ -50,16 +51,48 @@ export const MainPage = () => {
 
             {/* Карточки */}
             <section className="mt-[50px]">
-                <CardSection title="Бизнес" description="Описание" cards={TempBusinessCardsMock as ICard[]} to="/business" maxVisible={8} Class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-y-10 gap-x-8 transition duration-600" />
+                <div className="px-[192px]" >
+                    <Button onClick={() => {
+                        navigate("/business")
+                    }} className={""}>
+                        <Heading level={2} text="Бизнес" className="font-openSans font-bold hover:text-[#2EAA7B] hover:underline hover:decoration-1 transition duration-500 text-3xl cursor-pointer" />
+                    </Button>
+                    <Paragraph className="text-[16px] mt-1.5 text-[#787878]">Описание</Paragraph>
+                </div>
+                <CardSection title="Бизнес" cards={TempBusinessCardsMock as ICard[]} maxVisible={8} Class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-y-10 gap-x-8 transition duration-600" />
             </section>
             <section className="mt-[50px]">
-                <CardSection title="Франшиза" description="Описание" cards={TempBusinessCardsMock as ICard[]} to="/franchise" maxVisible={8} Class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-y-10 gap-x-8 transition duration-600" />
+                <div className="px-[192px]">
+                    <Button onClick={() => {
+                        navigate("/franchise")
+                    }} className={""}>
+                        <Heading level={2} text="Франшиза" className="font-openSans font-bold hover:text-[#2EAA7B] hover:underline hover:decoration-1 transition duration-500 text-3xl cursor-pointer" />
+                    </Button>
+                    <Paragraph className="text-[16px] mt-1.5 text-[#787878]">Описание</Paragraph>
+                </div>
+                <CardSection title="Франшиза" cards={TempBusinessCardsMock as ICard[]} maxVisible={8} Class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-y-10 gap-x-8 transition duration-600" />
             </section>
             <section className="mt-[50px]">
-                <CardSection title="Стартапы" description="Описание" cards={TempBusinessCardsMock as ICard[]} to="/startups" maxVisible={8} Class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-y-10 gap-x-8 transition duration-600" />
+                <div className="px-[192px]">
+                    <Button onClick={() => {
+                        navigate("/startups")
+                    }} className={""}>
+                        <Heading level={2} text="Стартапы" className="font-openSans font-bold hover:text-[#2EAA7B] hover:underline hover:decoration-1 transition duration-500 text-3xl cursor-pointer" />
+                    </Button>
+                    <Paragraph className="text-[16px] mt-1.5 text-[#787878]">Описание</Paragraph>
+                </div>
+                <CardSection title="Стартапы" cards={TempBusinessCardsMock as ICard[]} maxVisible={8} Class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-y-10 gap-x-8 transition duration-600" />
             </section>
             <section className="my-[50px] ">
-                <CardSection title="Инвестиции" description="Описание" cards={TempBusinessCardsMock as ICard[]} to="/investments" maxVisible={4} Class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-y-10 gap-x-8 transition duration-600" />
+                <div className="px-[192px]">
+                    <Button onClick={() => {
+                        navigate('/investments')
+                    }} className={""}>
+                        <Heading level={2} text="Инвестиции" className="font-openSans font-bold text-3xl hover:text-[#2EAA7B] hover:underline hover:decoration-1 transition duration-500 cursor-pointer" />
+                    </Button>
+                    <Paragraph className="text-[16px] mt-1.5 text-[#787878]">Описание</Paragraph>
+                </div>
+                <CardSection title="Инвестиции" cards={TempBusinessCardsMock as ICard[]} maxVisible={4} Class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-y-10 gap-x-8 transition duration-600" />
             </section>
             {/* Города */}
             <section className="relative min-h-[610px] w-screen overflow-hidden bg-gradient-to-br from-[#F8FFF5] to-[#FAFFF9]">
@@ -70,7 +103,6 @@ export const MainPage = () => {
                             level={2}
                             className="font-openSans font-bold text-3xl leading-[100%] mb-[25px]"
                         />
-
                         {/* КАТЕГОРИИ */}
                         <NavLinks
                             links={categories}
@@ -78,8 +110,8 @@ export const MainPage = () => {
                             activeLabel={selectedCategory}
                             onClick={setSelectedCategory}
                             className="flex gap-4 text-[24px] text-start font-openSans mb-[25px] font-bold"
-                            activeClassName="w-[234px] px-6 py-4 bg-[#28B13D] text-white rounded-xl"
-                            inactiveClassName="w-[234px] bg-white font-openSans text-[#232323] border border-[#28B13D] rounded-xl hover:bg-[#28B13D]/10"
+                            activeClassName="w-[234px] px-6 py-4 bg-[#2EAA7B] text-white rounded-xl"
+                            inactiveClassName="w-[234px] bg-white font-openSans text-[#232323] border border-[#2EAA7B] rounded-xl hover:bg-[#31B683]/10"
                         />
 
                         {/* ГОРОДА */}
@@ -95,8 +127,7 @@ export const MainPage = () => {
                             ).map(([city, count], idx) => (
                                 <div
                                     key={idx}
-                                    className="bg-black font-openSans text-white w-[234px] rounded-xl px-6 py-4 flex flex-col items-start"
-                                >
+                                    className="bg-black font-openSans text-white w-[234px] rounded-xl px-6 py-4 flex flex-col items-start">
                                     <span className="text-2xl leading-[150%] font-bold">{city}</span>
                                     <span className="font-bold leading-[150%] font-Urbanist text-[40px] ">{count.toLocaleString("ru-RU")}</span>
                                 </div>
@@ -106,15 +137,60 @@ export const MainPage = () => {
                 </div>
             </section>
 
-            <section className="relative min-h-[783px] w-screen overflow-hidden bg-white">
-                <div className="py-[70px] px-[192px]">
-                    <Heading text={"Описание о нас"} level={2} className="font-openSans font-bold text-3xl leading-[100%]" />
+            {/*Почему Invest In*/}
+            <section className="relative overflow-hidden  w-full h-[907px] bg-[url('/images/Mask.png')] bg-repeat">
+                <div className="absolute right-[197px] top-[61px] w-[702px] h-full bg-[url('/images/WhyInvestIn.png')] bg-no-repeat bg-contain px-[192px]" ></div>
+                <div className="relative py-[70px] px-4 sm:px-8 md:px-[96px] xl:px-[192px] overflow-hidden">
+                    <div className="order-2 lg:order-1 flex flex-col gap-6 max-w-2xl w-full">
+                        <Heading
+                            level={1}
+                            className="text-[clamp(32px,4vw,45px)] font-bold leading-tight text-black" text={""}>
+                            Почему <span className="text-[#31B683]">Invest In — лучший инструмент</span><br />
+                            для продажи бизнеса?
+                        </Heading>
+
+                        <Paragraph className="w-[893px] mt-[35px] text-[#232323] font-inter font-normal leading-[125%] text-3xl">
+                            С Invest In благодаря поддержке на всех этапах сделки вы сможете продать свой бизнес на условиях, которые будут выгодны и удобны для вас. На нашем сайте уже:
+                        </Paragraph>
+                    </div>
+                    {/*Цифры*/}
+                    <div className="flex justify-start gap-5 mt-[58px]">
+                        <div className="flex flex-col gap-[20px]">
+                            <div className="bg-white font-inter text-black w-[260px] flex flex-col items-center rounded-[30px] py-6 shadow-[0px_4px_21.2px_rgba(46,170,123,0.2)]">
+                                <Paragraph className="text-[40px] text-center font-bold leading-none">
+                                    1900<span className="text-[#2EAA7B]">+</span>
+                                </Paragraph>
+                                <Paragraph className="font-normal text-base mt-2">объявлений</Paragraph>
+                            </div>
+
+                            <div className="bg-white font-inter text-black w-[260px] flex flex-col items-center rounded-[30px] py-6 shadow-[0px_4px_21.2px_rgba(46,170,123,0.2)]">
+                                <Paragraph className="text-[40px] text-center font-bold leading-none">
+                                    1200<span className="text-[#2EAA7B]">+</span>
+                                </Paragraph>
+                                <Paragraph className="font-normal text-base mt-2">сделок</Paragraph>
+                            </div>
+                        </div>
+                        <div className="flex flex-col gap-[20px]">
+                            <div className="bg-white font-inter text-black w-[260px] flex flex-col items-center rounded-[30px] py-6 shadow-[0px_4px_21.2px_rgba(46,170,123,0.2)]">
+                                <Paragraph className="text-[40px] text-center font-bold leading-none">
+                                    120
+                                </Paragraph>
+                                <Paragraph className="font-normal text-base mt-2">партнёров</Paragraph>
+                            </div>
+
+                            <div className="bg-white font-inter text-black w-[260px] flex flex-col items-center rounded-[30px] py-6 shadow-[0px_4px_21.2px_rgba(46,170,123,0.2)]">
+                                <Paragraph className="text-[40px] text-center font-bold leading-none">
+                                    2 млн <span className="text-[#2EAA7B]">$</span>
+                                </Paragraph>
+                                <Paragraph className="font-normal text-base mt-2">продано бизнесов</Paragraph>
+                            </div>
+                        </div>
+                    </div>
+
+
                 </div>
-                <div className="text-center items-center pb-[50px]">
-                    <Paragraph className="font-bold uppercase text-7xl"> Soon...</Paragraph>
-                </div>
-            </section>
+            </section >
             <Footer />
-        </div>
+        </div >
     );
 };

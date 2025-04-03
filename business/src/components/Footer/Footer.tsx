@@ -15,16 +15,16 @@ export const Footer = () => {
                     <NavLinks
                         links={categories}
                         className="flex flex-wrap gap-x-8.5 font-medium"
-                        linkClassName="font-inter leading-[100%] text-[#232323] text-[clamp(14px,1.4vw,18px)] relative hover:text-[#28B13D] transition-all duration-500 before:content-[''] before:absolute before:left-0 before:bottom-[-2px] before:w-0 hover:before:w-full before:h-[2px] before:bg-[#28B13D] before:transition-all before:duration-500"
+                        linkClassName="font-inter leading-[100%] text-[#232323] text-[clamp(14px,1.4vw,18px)] relative hover:text-[#2EAA7B] transition-all duration-500 "
                     />
                 </div>
                 <div className="md:flex gap-6 text-sm ">
                     <Paragraph className="flex items-center gap-1 text-[#232323] font-openSans font-normal text-[16px] leading-[125%]">
-                        <IoIosMail className="text-[#28B13D] text-base" />
+                        <IoIosMail className="text-[#2EAA7B] text-base" />
                         info@name-com.uz
                     </Paragraph>
                     <Paragraph className="flex items-center gap-1 text-[#232323] font-inter font-normal text-[16px] leading-[125%]">
-                        <FaPhone className="text-[#28B13D] text-base" />
+                        <FaPhone className="text-[#2EAA7B] text-base" />
                         +998 71 789 78 78
                     </Paragraph>
                 </div>

@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
 import { useState } from "react";
-import { Breadcrumbs, CardSection, Header, Pagination, PopularSliderSection, Footer } from "../../components";
+import { Breadcrumbs, CardSection, Header, Pagination, PopularSliderSection, Footer, Heading } from "../../components";
 import { ICard } from "../../components/Cards/Cards";
 import { TempBusinessCardsMock } from "../../utils/TempBusinessCardsMock";
 import { urlToTypeMap, typeToTitleMap } from "../../utils/categoryMap";
@@ -32,7 +32,7 @@ export const CategoryPage = () => {
                 <Breadcrumbs current={pageTitle} />
             </div>
             <div className="flex pt-[100px] px-[192px] pb-10 gap-10 items-start">
-
+                <Heading text={pageTitle} level={2} className="text-[30px] font-bold mb-1 text-black" />
                 <aside className="w-[280px] space-y-6">
                     <div>
                         <h3 className="text-lg font-semibold mb-2">Город</h3>

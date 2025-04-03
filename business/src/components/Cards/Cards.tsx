@@ -10,7 +10,7 @@ import SolidHeartIcon from '../../assets/Solidheart.svg?react';
 export interface ICard {
     type: "бизнес" | "франшиза" | "стартап" | "инвестиции";
     id: number;
-    image: string | null;
+    image?: string | null;
     price: string;
     title: string;
     address: string;

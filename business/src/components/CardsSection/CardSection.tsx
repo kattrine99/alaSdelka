@@ -1,4 +1,4 @@
-import { Button, Cards } from "../index";
+import { Cards } from "../index";
 import { ICard } from "../Cards/Cards";
 import { titleToTypeMap } from "../../utils/categoryMap";
 
@@ -8,30 +8,24 @@ interface CardSectionProps {
   maxVisible?: number;
   hideViewAllButton?: boolean;
   Class: string;
+  ClassName: string;
 }
 
 export const CardSection: React.FC<CardSectionProps> = ({
   title,
   cards,
   maxVisible,
-  hideViewAllButton = false,
   Class,
+  ClassName,
 }) => {
+
 
 
   const typeFilter = titleToTypeMap[title] || "";
   const filteredCards = cards.filter((card) => card.type === typeFilter);
 
   return (
-    <div className="px-[192px]">
-      <div className="flex items-start justify-between mb-6">
-        {!hideViewAllButton && <Button
-          className="text-sm px-[20px] rounded"
-        >
-          Посмотреть все
-        </Button>
-        }
-      </div>
+    <div className={ClassName}>
       <Cards
         cards={filteredCards.slice(0, maxVisible)}
         containerClass={Class}

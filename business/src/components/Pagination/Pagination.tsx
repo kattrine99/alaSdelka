@@ -1,4 +1,6 @@
 // components/Pagination.tsx
+import { FaArrowLeftLong, FaArrowRightLong } from "react-icons/fa6";
+
 interface PaginationProps {
     currentPage: number;
     totalPages: number;
@@ -13,13 +15,13 @@ export const Pagination: React.FC<PaginationProps> = ({
     if (totalPages <= 1) return null;
 
     return (
-        <div className="flex justify-center items-center gap-3 mt-8 flex-wrap">
+        <div className="flex justify-end items-center gap-3 mt-8 flex-wrap">
             <button
                 onClick={() => onPageChange(currentPage - 1)}
                 disabled={currentPage === 1}
-                className="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300 disabled:opacity-50"
+                className="w-10 h-10 text-[#68727D] bg-white border-1 border-[#EAEBF0] rounded hover:bg-[#2EAA7B] hover:text-white"
             >
-                Назад
+                <FaArrowLeftLong className="m-2.5" />
             </button>
 
             {[...Array(totalPages)].map((_, idx) => {
@@ -28,9 +30,9 @@ export const Pagination: React.FC<PaginationProps> = ({
                     <button
                         key={pageNum}
                         onClick={() => onPageChange(pageNum)}
-                        className={`px-3 py-1 rounded text-sm font-semibold transition ${currentPage === pageNum
-                                ? "bg-[#28B13D] text-white"
-                                : "bg-gray-100 hover:bg-gray-300"
+                        className={`w-10 h-10 text-[#68727D] bg-white border-1 border-[#EAEBF0] rounded text-sm font-semibold transition ${currentPage === pageNum
+                            ? "bg-[#2EAA7B] text-[#68727D]"
+                            : "bg-[#2EAA7B] text-[#68727D] hover:bg-[#2EAA7B] hover:text-white"
                             }`}
                     >
                         {pageNum}
@@ -41,9 +43,9 @@ export const Pagination: React.FC<PaginationProps> = ({
             <button
                 onClick={() => onPageChange(currentPage + 1)}
                 disabled={currentPage === totalPages}
-                className="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300 disabled:opacity-50"
+                className="w-10 h-10 text-[#68727D] bg-white border-1 border-[#EAEBF0] rounded hover:bg-[#2EAA7B] hover:text-white"
             >
-                Вперёд
+                <FaArrowRightLong className="m-2.5" />
             </button>
         </div>
     );

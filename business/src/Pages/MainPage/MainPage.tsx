@@ -4,6 +4,7 @@ import { TempBusinessCardsMock } from "../../utils/TempBusinessCardsMock";
 import { ICard } from "../../components/Cards/Cards";
 import { titleToTypeMap } from "../../utils/categoryMap";
 import { useNavigate } from "react-router-dom";
+import ShopIcon from '../../assets/shop.svg?react';
 
 export const MainPage = () => {
     const [selectedCategory, setSelectedCategory] = useState("Бизнес");
@@ -50,40 +51,80 @@ export const MainPage = () => {
             </section>
 
             {/* Карточки */}
-            <section className="mt-[50px]">
-                <div className="px-[192px]" >
-                    <Button onClick={() => {
-                        navigate("/business")
-                    }} className={""}>
-                        <Heading level={2} text="Бизнес" className="font-openSans font-bold hover:text-[#2EAA7B] hover:underline hover:decoration-1 transition duration-500 text-3xl cursor-pointer" />
-                    </Button>
-                    <Paragraph className="text-[16px] mt-1.5 text-[#787878]">Описание</Paragraph>
+            <section className="mt-[50px] mb-[35px]">
+                <div className="px-[192px] flex justify-start gap-[272px]" >
+                    <div>
+                        <Button onClick={() => {
+                            navigate("/business")
+                        }} className={""}>
+                            <Heading level={2} text="Бизнес" className="font-openSans font-bold hover:text-[#2EAA7B] hover:underline hover:decoration-1 transition duration-500 text-3xl cursor-pointer" />
+                        </Button>
+                        <Paragraph className="text-[16px] mt-1.5 text-[#787878]">Описание</Paragraph>
+                    </div>
+                    <div className="flex gap-[42px] text-center">
+                        <Button className="flex items-center justify-center gap-x-2 rounded-[8px] h-[52px] w-[364px] border border-[#2EAA7B] text-[#2EAA7B] text-[16px] hover:bg-[#2EAA7B] hover:text-white transition duration-500 font-inter leading-[150%] font-semibold">
+                            <ShopIcon className="w-5 h-5 hover:text-white" />
+                            Покупка бизнеса
+                        </Button>
+
+                        <Button className="flex items-center justify-center gap-x-2 rounded-[8px] h-[52px] w-[364px] border border-[#2EAA7B] text-[#2EAA7B] text-[16px] hover:bg-[#2EAA7B] hover:text-white transition duration-500 font-inter leading-[150%] font-semibold">
+                            <ShopIcon className="w-5 h-5 hover:text-white" />
+                            Продажа бизнеса
+                        </Button>
+                    </div>
+
                 </div>
-                <CardSection title="Бизнес" cards={TempBusinessCardsMock as ICard[]} maxVisible={8} Class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-y-10 gap-x-8 transition duration-600" />
+                <CardSection title="Бизнес" cards={TempBusinessCardsMock as ICard[]} maxVisible={8} Class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-y-10 gap-x-8 transition duration-600" ClassName={"px-[192px] py-[30px]"} />
             </section>
-            <section className="mt-[50px]">
-                <div className="px-[192px]">
-                    <Button onClick={() => {
-                        navigate("/franchise")
-                    }} className={""}>
-                        <Heading level={2} text="Франшиза" className="font-openSans font-bold hover:text-[#2EAA7B] hover:underline hover:decoration-1 transition duration-500 text-3xl cursor-pointer" />
-                    </Button>
-                    <Paragraph className="text-[16px] mt-1.5 text-[#787878]">Описание</Paragraph>
+            <section className="mt-[50px] mb-[35px]">
+                <div className="px-[192px] flex justify-start gap-[272px]">
+                    <div>
+                        <Button onClick={() => {
+                            navigate("/franchise")
+                        }} className={""}>
+                            <Heading level={2} text="Франшиза" className="font-openSans font-bold hover:text-[#2EAA7B] hover:underline hover:decoration-1 transition duration-500 text-3xl cursor-pointer" />
+                        </Button>
+                        <Paragraph className="text-[16px] mt-1.5 text-[#787878]">Описание</Paragraph>
+                    </div>
+                    <div className="flex gap-[42px] text-center">
+                        <Button className="flex items-center justify-center gap-x-2 rounded-[8px] h-[52px] w-[364px] border border-[#2EAA7B] text-[#2EAA7B] hover:bg-[#2EAA7B] hover:text-white transition duration-500 text-[16px] font-inter leading-[150%] font-semibold">
+                            <ShopIcon className="w-5 h-5 hover:text-white" />
+                            Покупка франшизы
+                        </Button>
+
+                        <Button className="flex items-center justify-center gap-x-2 rounded-[8px] h-[52px] w-[364px] border border-[#2EAA7B] text-[#2EAA7B] hover:bg-[#2EAA7B] hover:text-white transition duration-500 text-[16px] font-inter leading-[150%] font-semibold">
+                            <ShopIcon className="w-5 h-5 hover:text-white" />
+                            Продажа франшизы
+                        </Button>
+                    </div>
                 </div>
-                <CardSection title="Франшиза" cards={TempBusinessCardsMock as ICard[]} maxVisible={8} Class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-y-10 gap-x-8 transition duration-600" />
+                <CardSection title="Франшиза" cards={TempBusinessCardsMock as ICard[]} maxVisible={8} Class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-y-10 gap-x-8 transition duration-600" ClassName={"px-[192px] py-[30px]"} />
             </section>
-            <section className="mt-[50px]">
-                <div className="px-[192px]">
-                    <Button onClick={() => {
-                        navigate("/startups")
-                    }} className={""}>
-                        <Heading level={2} text="Стартапы" className="font-openSans font-bold hover:text-[#2EAA7B] hover:underline hover:decoration-1 transition duration-500 text-3xl cursor-pointer" />
-                    </Button>
-                    <Paragraph className="text-[16px] mt-1.5 text-[#787878]">Описание</Paragraph>
+            <section className="mt-[50px] mb-[35px]">
+                <div className="px-[192px] flex justify-start gap-[272px]">
+                    <div>
+                        <Button onClick={() => {
+                            navigate("/startups")
+                        }} className={""}>
+                            <Heading level={2} text="Стартапы" className="font-openSans font-bold hover:text-[#2EAA7B] hover:underline hover:decoration-1 transition duration-500 text-3xl cursor-pointer" />
+                        </Button>
+                        <Paragraph className="text-[16px] mt-1.5 text-[#787878]">Описание</Paragraph>
+                    </div>
+                    <div className="flex gap-[42px] text-center">
+                        <Button className="flex items-center justify-center gap-x-2 rounded-[8px] h-[52px] w-[364px] border border-[#2EAA7B] text-[#2EAA7B] hover:bg-[#2EAA7B] hover:text-white transition duration-500 text-[16px] font-inter leading-[150%] font-semibold">
+                            <ShopIcon className="w-5 h-5 hover:text-white" />
+                            Покупка стартапа
+                        </Button>
+
+                        <Button className="flex items-center justify-center gap-x-2 rounded-[8px] h-[52px] w-[364px] border border-[#2EAA7B] text-[#2EAA7B] hover:bg-[#2EAA7B] hover:text-white transition duration-500 text-[16px] font-inter leading-[150%] font-semibold">
+                            <ShopIcon className="w-5 h-5 hover:text-white" />
+                            Продажа стартапа
+                        </Button>
+                    </div>
                 </div>
-                <CardSection title="Стартапы" cards={TempBusinessCardsMock as ICard[]} maxVisible={8} Class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-y-10 gap-x-8 transition duration-600" />
+                <CardSection title="Стартапы" cards={TempBusinessCardsMock as ICard[]} maxVisible={8} Class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-y-10 gap-x-8 transition duration-600" ClassName={"px-[192px] py-[30px]"} />
             </section>
-            <section className="my-[50px] ">
+            <section className="my-[50px] mb-[35px]">
                 <div className="px-[192px]">
                     <Button onClick={() => {
                         navigate('/investments')
@@ -92,7 +133,7 @@ export const MainPage = () => {
                     </Button>
                     <Paragraph className="text-[16px] mt-1.5 text-[#787878]">Описание</Paragraph>
                 </div>
-                <CardSection title="Инвестиции" cards={TempBusinessCardsMock as ICard[]} maxVisible={4} Class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-y-10 gap-x-8 transition duration-600" />
+                <CardSection title="Инвестиции" cards={TempBusinessCardsMock as ICard[]} maxVisible={4} Class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-y-10 gap-x-8 transition duration-600" ClassName={"px-[192px] py-[30px]"} />
             </section>
             {/* Города */}
             <section className="relative min-h-[610px] w-screen overflow-hidden bg-gradient-to-br from-[#F8FFF5] to-[#FAFFF9]">

@@ -42,7 +42,7 @@ export const LoginPage = () => {
 
 
     return (
-        <div className='min-w-screen min-h-screen'>
+        <div className="min-w-screen min-h-screen bg-[url('public/images/grid.png')] bg-contain bg-no-repeat bg-right">
             <Header />
             <div className=" flex items-center justify-center py-[62px] transition-all duration-300">
                 <div className="w-full flex px-[192px] transition-all duration-500">
@@ -116,11 +116,13 @@ export const LoginPage = () => {
                                     <img src="/images/benefits-img-1.png" className="w-[250px] h-auto relative z-10" />
                                 </div>
                                 <div>
-                                    <h3 className="text-[#252525] text-inter text-[36px] font-semibold mb-[15px] relative z-10">Описание</h3>
+                                    <h3 className="text-[#252525] font-inter text-[36px] font-semibold mb-[15px] relative z-10">Описание</h3>
                                     <p className="text-[#252525] font-inter font-normal text-[16px] text-sm relative z-10">
                                         Gain access to AAA-funded accounts with the capacity to hold up to 400k in funded accounts within 72 hours of successfully completing the evaluation stage.
                                     </p>
+                                    <span className="absolute top-[350px] font-actay text-[160px] leading-[105%] opacity-[10%] font-bold text-[#252525] z-0">01</span>
                                 </div>
+
                             </div>
                             {/* Card 02 */}
                             <div className="relative flex flex-col mt-[154px] text-left">
@@ -132,7 +134,10 @@ export const LoginPage = () => {
                                     <p className="text-[#252525] font-inter font-normal text-[16px] text-sm relative z-10">
                                         Gain access to AAA-funded accounts with the capacity to hold up to 400k in funded accounts within 72 hours of successfully completing the evaluation stage.
                                     </p>
+                                    <span className="absolute bottom-[350px] right-[33px] text-[160px] font-bold text-[#252525] leading-[105%] opacity-[10%] z-0">02</span>
+
                                 </div>
+
                             </div>
                             {/* Card 03 */}
                             <div className="relative flex flex-col text-left">
@@ -143,6 +148,8 @@ export const LoginPage = () => {
                                 <p className="text-[#252525] font-inter font-normal text-[16px] text-sm relative z-10">
                                     Gain access to AAA-funded accounts with the capacity to hold up to 400k in funded accounts within 72 hours of successfully completing the evaluation stage.
                                 </p>
+                                <span className="absolute top-[397px] right-[9px] text-[160px] font-bold text-[#252525] leading-[105%] opacity-[10%] z-0">03</span>
+
                             </div>
                         </div>
                     </div>

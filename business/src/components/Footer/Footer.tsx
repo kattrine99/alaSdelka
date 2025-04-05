@@ -44,9 +44,9 @@ export const Footer: React.FC<FooterProps> = ({ showSmallFooter }) => {
                             </Paragraph>
                         </div>
                     </div></>)}
-            {showSmallFooter && (<div className="flex justify-between px-[192px] border-t border-[#E9E9E9]">
-                <div className="md:flex gap-[50px] text-sm ">
-                    <Link to="/main" className="flex mr-[99px]">
+            {showSmallFooter && (<div className="flex  h-[119px] justify-between px-[192px] border-t border-[#E9E9E9]">
+                <div className="flex gap-[50px] items-center justify-center ">
+                    <Link to="/main" className="flex ">
                         <img src="/images/investin_logo.png" alt="Logo" className="h-[56px] w-auto object-contain" />
                     </Link>
                     <div className="flex gap-x-[50px]">

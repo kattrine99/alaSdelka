@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Button, Input, Heading, Header, Footer } from "../../components";
+import { Button, Input, Heading, Header, Footer, Paragraph, Applink } from "../../components";
 import { Controller, useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -61,17 +61,18 @@ export const RegistrationPage = () => {
     };
 
     return (
-        <div className="w-screen font-openSans">
+        <div className="w-screen font-openSans bg-[url('public/images/grid.png')] bg-contain bg-no-repeat bg-right">
             <Header />
             <div className="flex px-[192px] pt-20">
-                <div className="w-full max-w-md">
-                    <Heading level={1} className="text-3xl font-bold text-center text-[#28B13D]" text={""}>
-                        Регистрация
+                <div className="w-full max-w-[518px]">
+                    <Heading level={1} className="text-[32px] font-inter leading-[110%] mb-[28px] font-bold text-black" text={""}>
+                        Зарегистрируйтесь сейчас,
+                        чтобы присоединиться к Sdelka
                     </Heading>
 
                     {step === 1 && (
-                        <div>
-                            <form onSubmit={handleSubmit(handleNext)} className="">
+                        <div className="w-[410px]">
+                            <form onSubmit={handleSubmit(handleNext)} className="flex flex-col gap-y-3.5">
                                 <Controller
                                     name="username"
                                     control={control}
@@ -96,13 +97,25 @@ export const RegistrationPage = () => {
                                     render={({ field }) => (
                                         <Input {...field} placeholder="Подтверждение пароля" type="password" isError={!!errors.confirmPassword} errorMessage={errors.confirmPassword?.message} />
                                     )} />
-                                <Button type="submit" disabled={!isValid} className={`w-full ${!isValid && "opacity-50 cursor-not-allowed"}`}>
-                                    Зарегистрироваться
-                                </Button>
                             </form>
+                            <Button type="submit" disabled={!isValid} className={`w-full mt-6 h-[56px] rounded-2xl text-[16px] text-white font-inter font-medium leading-[130%] ${!isValid && "bg-[#AFAFAF] cursor-not-allowed"}`}>
+                                Зарегистрироваться
+                            </Button>
+                            <div className='w-full flex flex-col items-center'>
+                                <div className='w-[237px] border border-[#DFDFDF] mt-[38px]'></div>
+                                <div className="mt-[30px] w-full">
+                                    <Button className="w-[378px] h-[56px] flex items-center gap-x-3 justify-center bg-white border border-[#C9CCCF] rounded-2xl text-[#232323] font-semibold  font-inter leading-[24px] transition-all duration-500 hover:bg-gray-100 hover:shadow-lg active:">
+                                        <img src="/images/google_icon.png" alt="Google" className="w-[24px] h-[24px]" />
+                                        Зарегистрироваться через Google
+                                    </Button>
+                                </div>
+                                <Paragraph className="text-[16px] font-inter text-[#232323] leading-[130%] mt-10 transition-all duration-300">
+                                    У вас уже есть аккаунт?
+                                    <Applink to='/login' className="text-[#2EAA7B] hover:underline ml-1 font-semibold transition duration-500">Авторизоваться</Applink>
+                                </Paragraph>
+                            </div>
                         </div>
                     )}
-
                     {step === 2 && (
                         <div className="">
                             <button onClick={handleBack} className="flex items-center gap-2 text-[#28B13D] hover:underline">
@@ -184,7 +197,7 @@ export const RegistrationPage = () => {
                             <p className="text-[#252525] font-inter font-normal text-[16px] text-sm relative z-10">
                                 Gain access to AAA-funded accounts with the capacity to hold up to 400k in funded accounts within 72 hours of successfully completing the evaluation stage.
                             </p>
-                            <span className="absolute top-[350px] font-actay text-[160px] leading-[105%] opacity-[10%] text-[#252525] z-0">01</span>
+                            <span className="absolute top-[350px] font-actay text-[160px] leading-[105%] opacity-[10%] font-bold text-[#252525] z-0">01</span>
                         </div>
 
                     </div>
@@ -198,14 +211,13 @@ export const RegistrationPage = () => {
                             <p className="text-[#252525] font-inter font-normal text-[16px] text-sm relative z-10">
                                 Gain access to AAA-funded accounts with the capacity to hold up to 400k in funded accounts within 72 hours of successfully completing the evaluation stage.
                             </p>
-                            <span className="absolute bottom-[340px] right-[33px] text-[clamp(64px,12vw,130px)] font-bold text-gray-200 z-0">02</span>
+                            <span className="absolute bottom-[350px] right-[33px] text-[160px] font-bold text-[#252525] leading-[105%] opacity-[10%] z-0">02</span>
 
                         </div>
 
                     </div>
                     {/* Card 03 */}
                     <div className="relative flex flex-col text-left">
-                        {/* <span className="absolute top-[397px] right-[9px] text-[clamp(64px,12vw,130px)] font-bold text-gray-200 z-0">03</span> */}
                         <div className="mx-8.25 mb-7.75">
                             <img src="/images/benefits-img-3.png" className="w-[250px] h-auto mb-4 relative z-10" />
                         </div>
@@ -213,11 +225,13 @@ export const RegistrationPage = () => {
                         <p className="text-[#252525] font-inter font-normal text-[16px] text-sm relative z-10">
                             Gain access to AAA-funded accounts with the capacity to hold up to 400k in funded accounts within 72 hours of successfully completing the evaluation stage.
                         </p>
+                        <span className="absolute top-[397px] right-[9px] text-[160px] font-bold text-[#252525] leading-[105%] opacity-[10%] z-0">03</span>
+
                     </div>
                 </div>
 
             </div>
-            <Footer showSmallFooter={false} />
+            <Footer showSmallFooter={true} />
         </div>
     );
 };

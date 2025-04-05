@@ -3,10 +3,11 @@ interface ButtonPage {
     className: string
     onClick?: () => void;
     children?: React.ReactNode;
+    disabled?: boolean;
 }
 
-export const Button = ({ className, children, type, onClick }: ButtonPage) => {
+export const Button = ({ className, children, type, onClick, disabled }: ButtonPage) => {
     return (
-        <button className={className} onClick={onClick} type={type}>{children}</button>
+        <button className={className} onClick={onClick} type={type} disabled={disabled} >{children}</button>
     )
 }

@@ -13,6 +13,7 @@ export default ({
                 inter: ['Inter', 'sans-serif'],
                 openSans: ['"Open Sans"', 'sans-serif'],
                 Urbanist: ["Urbanist", 'sans-serif'],
+                actay: ['"Actay Wide"', 'sans-serif'],
             },
             colors: {
                 'main-green': "#2EAA7B",

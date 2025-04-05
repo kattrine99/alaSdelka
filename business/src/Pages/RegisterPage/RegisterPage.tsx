@@ -4,6 +4,7 @@ import { Controller, useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FaArrowLeft } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
 const stepOneSchema = yup.object({
     username: yup
@@ -37,13 +38,12 @@ export const RegistrationPage = () => {
         control,
         handleSubmit,
         formState: { errors, isValid },
-        watch,
     } = useForm({
         resolver: yupResolver(stepOneSchema),
         mode: "onChange",
     });
 
-    const formData = watch();
+    const navigate = useNavigate();
 
     useEffect(() => {
         if (!canResend && step === 2 && timer > 0) {
@@ -57,7 +57,9 @@ export const RegistrationPage = () => {
     const handleBack = () => setStep((prev) => prev - 1);
 
     const onSubmit = () => {
-        console.log("Регистрация завершена", { ...formData, role: selectedRole });
+        return (
+            navigate('/main')
+        )
     };
 
     return (
@@ -65,59 +67,63 @@ export const RegistrationPage = () => {
             <Header />
             <div className="flex px-[192px] pt-20">
                 <div className="w-full max-w-[518px]">
-                    <Heading level={1} className="text-[32px] font-inter leading-[110%] mb-[28px] font-bold text-black" text={""}>
-                        Зарегистрируйтесь сейчас,
-                        чтобы присоединиться к Sdelka
-                    </Heading>
 
                     {step === 1 && (
-                        <div className="w-[410px]">
-                            <form onSubmit={handleSubmit(handleNext)} className="flex flex-col gap-y-3.5">
-                                <Controller
-                                    name="username"
-                                    control={control}
-                                    render={({ field }) => (
-                                        <Input {...field} placeholder="Имя" isError={!!errors.username} errorMessage={errors.username?.message} />
-                                    )} />
-                                <Controller
-                                    name="userphone"
-                                    control={control}
-                                    render={({ field }) => (
-                                        <Input {...field} placeholder="Телефон (+998...)" isError={!!errors.userphone} errorMessage={errors.userphone?.message} />
-                                    )} />
-                                <Controller
-                                    name="userpassword"
-                                    control={control}
-                                    render={({ field }) => (
-                                        <Input {...field} placeholder="Пароль" type="password" isError={!!errors.userpassword} errorMessage={errors.userpassword?.message} />
-                                    )} />
-                                <Controller
-                                    name="confirmPassword"
-                                    control={control}
-                                    render={({ field }) => (
-                                        <Input {...field} placeholder="Подтверждение пароля" type="password" isError={!!errors.confirmPassword} errorMessage={errors.confirmPassword?.message} />
-                                    )} />
-                            </form>
-                            <Button type="submit" disabled={!isValid} className={`w-full mt-6 h-[56px] rounded-2xl text-[16px] text-white font-inter font-medium leading-[130%] ${!isValid && "bg-[#AFAFAF] cursor-not-allowed"}`}>
-                                Зарегистрироваться
-                            </Button>
-                            <div className='w-full flex flex-col items-center'>
-                                <div className='w-[237px] border border-[#DFDFDF] mt-[38px]'></div>
-                                <div className="mt-[30px] w-full">
-                                    <Button className="w-[378px] h-[56px] flex items-center gap-x-3 justify-center bg-white border border-[#C9CCCF] rounded-2xl text-[#232323] font-semibold  font-inter leading-[24px] transition-all duration-500 hover:bg-gray-100 hover:shadow-lg active:">
-                                        <img src="/images/google_icon.png" alt="Google" className="w-[24px] h-[24px]" />
-                                        Зарегистрироваться через Google
-                                    </Button>
+                        <><Heading level={2} className="text-[32px] font-inter leading-[110%] mb-[28px] font-bold text-black" text={""}>
+                            Зарегистрируйтесь сейчас,
+                            чтобы присоединиться к InvestIn
+                        </Heading>
+                            <div className="w-[410px]">
+                                <form className="flex flex-col gap-y-3.5">
+                                    <Controller
+                                        name="username"
+                                        control={control}
+                                        render={({ field }) => (
+                                            <Input {...field} placeholder="Имя" isError={!!errors.username} errorMessage={errors.username?.message} />
+                                        )} />
+                                    <Controller
+                                        name="userphone"
+                                        control={control}
+                                        render={({ field }) => (
+                                            <Input {...field} placeholder="Телефон (+998...)" isError={!!errors.userphone} errorMessage={errors.userphone?.message} />
+                                        )} />
+                                    <Controller
+                                        name="userpassword"
+                                        control={control}
+                                        render={({ field }) => (
+                                            <Input {...field} placeholder="Пароль" type="password" isError={!!errors.userpassword} errorMessage={errors.userpassword?.message} />
+                                        )} />
+                                    <Controller
+                                        name="confirmPassword"
+                                        control={control}
+                                        render={({ field }) => (
+                                            <Input {...field} placeholder="Подтверждение пароля" type="password" isError={!!errors.confirmPassword} errorMessage={errors.confirmPassword?.message} />
+                                        )} />
+                                </form>
+                                <Button type="submit" onClick={handleSubmit(handleNext)} disabled={!isValid} className={`w-full mt-6 h-[56px] rounded-2xl text-[16px] text-white bg-[#2EAA7B] font-inter font-medium leading-[130%] ${!isValid && "bg-[#AFAFAF] cursor-not-allowed"}`}>
+                                    Зарегистрироваться
+                                </Button>
+                                <div className='w-full max-w-[518px] flex flex-col items-center'>
+                                    <div className='w-[237px] border border-[#DFDFDF] mt-[38px]'></div>
+                                    <div className="mt-[30px] justify-center">
+                                        <Button className="w-[378px] h-[56px] flex items-center gap-x-3 justify-center bg-white border border-[#C9CCCF] rounded-2xl text-[#232323] font-semibold  font-inter leading-[24px] transition-all duration-500 hover:bg-gray-100 hover:shadow-lg">
+                                            <img src="/images/google_icon.png" alt="Google" className="w-[24px] h-[24px]" />
+                                            Зарегистрироваться через Google
+                                        </Button>
+                                    </div>
+                                    <Paragraph className="text-[16px] font-inter text-[#232323] leading-[130%] mt-10 transition-all duration-300">
+                                        У вас уже есть аккаунт?
+                                        <Applink to='/login' className="text-[#2EAA7B] hover:underline ml-1 font-semibold transition duration-500">Авторизоваться</Applink>
+                                    </Paragraph>
                                 </div>
-                                <Paragraph className="text-[16px] font-inter text-[#232323] leading-[130%] mt-10 transition-all duration-300">
-                                    У вас уже есть аккаунт?
-                                    <Applink to='/login' className="text-[#2EAA7B] hover:underline ml-1 font-semibold transition duration-500">Авторизоваться</Applink>
-                                </Paragraph>
-                            </div>
-                        </div>
+                            </div></>
                     )}
                     {step === 2 && (
-                        <div className="">
+                        <div className="w-full">
+                            <Heading level={2} className="text-[32px] font-inter leading-[110%] mb-[28px] font-bold text-black" text={""}>
+                                Мы отправили вам код для подтверждения
+                                вашего аккаунта на ваш номер
+                            </Heading>
                             <button onClick={handleBack} className="flex items-center gap-2 text-[#28B13D] hover:underline">
                                 <FaArrowLeft /> Назад
                             </button>
@@ -127,7 +133,7 @@ export const RegistrationPage = () => {
                                 value={code}
                                 onChange={(e) => setCode(e.target.value)} isError={false} />
 
-                            <Button onClick={() => setStep(3)} className="w-full">
+                            <Button onClick={() => setStep(3)} className={`w-full mt-6 h-[56px] rounded-2xl text-[16px] text-white bg-[#2EAA7B] font-inter font-medium leading-[130%] ${!isValid && "bg-[#AFAFAF] cursor-not-allowed"}`}>
                                 Подтвердить
                             </Button>
 
@@ -145,44 +151,79 @@ export const RegistrationPage = () => {
                     )}
 
                     {step === 3 && (
-                        <div className="">
-                            <button onClick={handleBack} className="flex items-center gap-2 text-[#28B13D] hover:underline">
+                        <div className="w-full max-w-[410px]">
+                            <button onClick={handleBack} className="flex items-center gap-2 text-[#28B13D] hover:underline mb-6">
                                 <FaArrowLeft /> Назад
                             </button>
 
-                            <p className="text-center font-semibold">Выберите вашу роль:</p>
-                            <div className="flex gap-4">
-                                <Button
-                                    onClick={() => {
-                                        setSelectedRole("buyer");
-                                        setRoleError(false);
-                                    }}
-                                    className={`w-full ${selectedRole === "buyer" ? "bg-green-100 border border-[#28B13D] text-[#28B13D]" : "border"}`}
-                                >
-                                    Покупатель
-                                </Button>
-                                <Button
+                            <Heading level={2} className="text-[28px] md:text-[32px] font-inter leading-[110%] mb-[28px] font-bold text-black" text={""}>
+                                Выберите свою роль
+                            </Heading>
+
+                            <div className="flex flex-col gap-4">
+                                <button
                                     onClick={() => {
                                         setSelectedRole("partner");
                                         setRoleError(false);
                                     }}
-                                    className={`w-full ${selectedRole === "partner" ? "bg-green-100 border border-[#28B13D] text-[#28B13D]" : "border"}`}
+                                    className={`relative w-full text-left rounded-xl border p-5 pt-8 pb-5 pl-6 pr-5 transition-all duration-300 ${selectedRole === "partner"
+                                        ? "border-[#2EAA7B] bg-white"
+                                        : "border-[#C9CCCF] hover:border-[#2EAA7B]"
+                                        }`}
                                 >
-                                    Партнёр
-                                </Button>
+                                    <span
+                                        className={`absolute top-4 left-4 w-[14px] h-[14px] rounded-full border-2 ${selectedRole === "partner"
+                                            ? "border-[#2EAA7B] bg-[#2EAA7B]"
+                                            : "border-[#C9CCCF] bg-white"
+                                            }`}
+                                    />
+
+                                    <div className="ml-4">
+                                        <p className="font-bold text-[#232323] mb-1">Продавец</p>
+                                        <p className="text-[#6B6B6B] text-sm">Продать свой бизнес, разместить объявление о продаже</p>
+                                    </div>
+                                </button>
+                                <button
+                                    onClick={() => {
+                                        setSelectedRole("buyer");
+                                        setRoleError(false);
+                                    }}
+                                    className={`relative w-full text-left rounded-xl border p-5 pt-8 pb-5 pl-6 pr-5 transition-all duration-300 ${selectedRole === "buyer"
+                                        ? "border-[#2EAA7B] bg-white"
+                                        : "border-[#C9CCCF] hover:border-[#2EAA7B]"
+                                        }`}
+                                >
+                                    <span
+                                        className={`absolute top-4 left-4 w-[14px] h-[14px] rounded-full border-2 ${selectedRole === "buyer"
+                                            ? "border-[#2EAA7B] bg-[#2EAA7B]"
+                                            : "border-[#C9CCCF] bg-white"
+                                            }`}
+                                    />
+
+                                    <div className="ml-4">
+                                        <p className="font-bold text-[#232323] mb-1">Покупатель</p>
+                                        <p className="text-[#6B6B6B] text-sm">Купить бизнес, посмотреть предложения</p>
+                                    </div>
+                                </button>
+
                             </div>
-                            {roleError && <p className="text-red-500 text-sm">Пожалуйста, выберите роль</p>}
+
+                            {roleError && <p className="text-red-500 text-sm mt-2">Пожалуйста, выберите роль</p>}
+
                             <Button
                                 onClick={() => {
                                     if (!selectedRole) setRoleError(true);
                                     else onSubmit();
                                 }}
-                                className="w-full"
+                                disabled={!selectedRole}
+                                className={`w-full mt-6 h-[56px] rounded-xl text-white font-semibold transition-all duration-300 ${selectedRole ? "bg-[#2EAA7B] hover:bg-[#239c6f]" : "bg-[#CFCFCF] cursor-not-allowed"
+                                    }`}
                             >
-                                Завершить регистрацию
+                                Далee
                             </Button>
                         </div>
                     )}
+
                 </div>
 
                 {/*Описание*/}

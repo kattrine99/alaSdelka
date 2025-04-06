@@ -3,8 +3,10 @@ import { Button, Input, Heading, Header, Footer, Paragraph, Applink } from "../.
 import { Controller, useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { FaArrowLeft } from "react-icons/fa";
+import { GoArrowLeft } from "react-icons/go";
 import { useNavigate } from "react-router-dom";
+import { Description } from "./Description";
+import { code } from "framer-motion/client";
 
 const stepOneSchema = yup.object({
     username: yup
@@ -28,21 +30,26 @@ const stepOneSchema = yup.object({
 
 export const RegistrationPage = () => {
     const [step, setStep] = useState(1);
-    const [code, setCode] = useState("");
     const [timer, setTimer] = useState(60);
     const [canResend, setCanResend] = useState(false);
     const [selectedRole, setSelectedRole] = useState<"buyer" | "partner" | null>(null);
     const [roleError, setRoleError] = useState(false);
+    const codeIsValid = code.length === 4;
+
+
 
     const {
         control,
         handleSubmit,
-        formState: { errors, isValid },
+        watch, // <-- вот это нужный watch
+        formState: { errors, isValid }
     } = useForm({
         resolver: yupResolver(stepOneSchema),
         mode: "onChange",
     });
 
+    const phone = watch("userphone");
+    const maskedPhone = phone ? `+998******${phone.slice(-4)}` : "";
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -63,16 +70,16 @@ export const RegistrationPage = () => {
     };
 
     return (
-        <div className="w-screen font-openSans bg-[url('public/images/grid.png')] bg-contain bg-no-repeat bg-right">
+        <><div className="w-screen font-openSans bg-[url('public/images/grid.png')] bg-contain bg-no-repeat bg-right">
             <Header />
-            <div className="flex px-[192px] pt-20">
-                <div className="w-full max-w-[518px]">
-
-                    {step === 1 && (
-                        <><Heading level={2} className="text-[32px] font-inter leading-[110%] mb-[28px] font-bold text-black" text={""}>
-                            Зарегистрируйтесь сейчас,
-                            чтобы присоединиться к InvestIn
-                        </Heading>
+            <div className=" px-[192px] pt-20">
+                {step === 1 && (
+                    <>
+                        <div className="w-full max-w-[518px]">
+                            <Heading level={2} className="text-[32px] font-inter leading-[110%] mb-[28px] font-bold text-black" text={""}>
+                                Зарегистрируйтесь сейчас,
+                                чтобы присоединиться к InvestIn
+                            </Heading>
                             <div className="w-[410px]">
                                 <form className="flex flex-col gap-y-3.5">
                                     <Controller
@@ -116,49 +123,76 @@ export const RegistrationPage = () => {
                                         <Applink to='/login' className="text-[#2EAA7B] hover:underline ml-1 font-semibold transition duration-500">Авторизоваться</Applink>
                                     </Paragraph>
                                 </div>
-                            </div></>
-                    )}
-                    {step === 2 && (
-                        <div className="w-full">
-                            <Heading level={2} className="text-[32px] font-inter leading-[110%] mb-[28px] font-bold text-black" text={""}>
-                                Мы отправили вам код для подтверждения
-                                вашего аккаунта на ваш номер
-                            </Heading>
-                            <button onClick={handleBack} className="flex items-center gap-2 text-[#28B13D] hover:underline">
-                                <FaArrowLeft /> Назад
-                            </button>
 
-                            <Input
-                                placeholder="Введите код из SMS"
-                                value={code}
-                                onChange={(e) => setCode(e.target.value)} isError={false} />
-
-                            <Button onClick={() => setStep(3)} className={`w-full mt-6 h-[56px] rounded-2xl text-[16px] text-white bg-[#2EAA7B] font-inter font-medium leading-[130%] ${!isValid && "bg-[#AFAFAF] cursor-not-allowed"}`}>
-                                Подтвердить
-                            </Button>
-
-                            <button
-                                disabled={!canResend}
-                                onClick={() => {
-                                    setTimer(60);
-                                    setCanResend(false);
-                                }}
-                                className={`text-sm ${canResend ? "text-[#28B13D] hover:underline" : "text-gray-400 cursor-not-allowed"}`}
-                            >
-                                {canResend ? "Отправить код повторно" : `Повтор через ${timer} сек`}
-                            </button>
+                            </div>
                         </div>
-                    )}
+                        <Description showCards={true} showLaptop={false} showContact={false} />
+                    </>
+                )}
 
-                    {step === 3 && (
+                {step === 2 && (
+                    <div className="flex">
+                        <div >
+                            <div className="flex gap-7 items-center mb-[28px]">
+                                <Button onClick={handleBack} className="text-black outline-none">
+                                    <GoArrowLeft className="w-[24px] h-[24px]" />
+                                </Button>
+                                <Heading level={2} className=" w-[702px] text-[32px] font-inter leading-[110%] font-bold text-black" text={""}>
+                                    Мы отправили вам код для подтверждения
+                                    вашего аккаунта на ваш номер
+                                </Heading>
+                            </div>
+                            <div className="w-[410px] flex flex-col items-center gap-6">
+                                <p className="text-sm text-gray-500 w-full text-left">
+                                    Введите код отправленный на номер <span className="text-black font-semibold">{maskedPhone}</span>
+                                </p>
+
+                                <div className="flex gap-4 justify-between w-full">
+                                    {Array.from({ length: 4 }).map((_, index) => (
+                                        <input
+                                            key={index}
+                                            maxLength={1}
+                                            className="w-[60px] h-[72px] text-center text-[32px] rounded-[10px] border border-[#D9D9D9] focus:outline-none focus:border-[#2EAA7B] font-semibold text-black"
+                                            type="text"
+                                        />
+                                    ))}
+                                </div>
+
+                                <div className="text-center text-[14px] text-[#28B13D] font-semibold">
+                                    {canResend ? (
+                                        <button onClick={() => { setTimer(60); setCanResend(false); }} className="hover:underline">
+                                            Отправить снова
+                                        </button>
+                                    ) : (
+                                        <span>Отправить снова <span className="font-bold">{`0:${timer.toString().padStart(2, "0")}`}</span></span>
+                                    )}
+                                </div>
+
+                                <Button
+                                    onClick={() => setStep(3)}
+                                    disabled={codeIsValid}
+                                    className={`w-full h-[56px] rounded-2xl text-[16px] text-white ${codeIsValid ? "bg-[#2EAA7B]" : "bg-[#AFAFAF] cursor-not-allowed"
+                                        } font-inter font-medium leading-[130%]`}
+                                >
+                                    Подтвердить
+                                </Button>
+                            </div>
+                        </div>
+                        <Description showCards={false} showLaptop={true} showContact={false} />
+                    </div>
+                )}
+
+                {step === 3 && (
+                    <div className="flex gap-x-[424px]">
                         <div className="w-full max-w-[410px]">
-                            <button onClick={handleBack} className="flex items-center gap-2 text-[#28B13D] hover:underline mb-6">
-                                <FaArrowLeft /> Назад
-                            </button>
-
-                            <Heading level={2} className="text-[28px] md:text-[32px] font-inter leading-[110%] mb-[28px] font-bold text-black" text={""}>
-                                Выберите свою роль
-                            </Heading>
+                            <div className="flex gap-7 items-center mb-[28px]">
+                                <button onClick={handleBack} className="text-black outline-none">
+                                    <GoArrowLeft className="w-[24px] h-[24px]" />
+                                </button>
+                                <Heading level={2} className="text-[28px] md:text-[32px] font-inter leading-[110%] font-bold text-black" text={""}>
+                                    Выберите свою роль
+                                </Heading>
+                            </div>
 
                             <div className="flex flex-col gap-4">
                                 <button
@@ -168,15 +202,12 @@ export const RegistrationPage = () => {
                                     }}
                                     className={`relative w-full text-left rounded-xl border p-5 pt-8 pb-5 pl-6 pr-5 transition-all duration-300 ${selectedRole === "partner"
                                         ? "border-[#2EAA7B] bg-white"
-                                        : "border-[#C9CCCF] hover:border-[#2EAA7B]"
-                                        }`}
+                                        : "border-[#C9CCCF] hover:border-[#2EAA7B]"}`}
                                 >
                                     <span
                                         className={`absolute top-4 left-4 w-[14px] h-[14px] rounded-full border-2 ${selectedRole === "partner"
                                             ? "border-[#2EAA7B] bg-[#2EAA7B]"
-                                            : "border-[#C9CCCF] bg-white"
-                                            }`}
-                                    />
+                                            : "border-[#C9CCCF] bg-white"}`} />
 
                                     <div className="ml-4">
                                         <p className="font-bold text-[#232323] mb-1">Продавец</p>
@@ -190,24 +221,19 @@ export const RegistrationPage = () => {
                                     }}
                                     className={`relative w-full text-left rounded-xl border p-5 pt-8 pb-5 pl-6 pr-5 transition-all duration-300 ${selectedRole === "buyer"
                                         ? "border-[#2EAA7B] bg-white"
-                                        : "border-[#C9CCCF] hover:border-[#2EAA7B]"
-                                        }`}
+                                        : "border-[#C9CCCF] hover:border-[#2EAA7B]"}`}
                                 >
                                     <span
                                         className={`absolute top-4 left-4 w-[14px] h-[14px] rounded-full border-2 ${selectedRole === "buyer"
                                             ? "border-[#2EAA7B] bg-[#2EAA7B]"
-                                            : "border-[#C9CCCF] bg-white"
-                                            }`}
-                                    />
+                                            : "border-[#C9CCCF] bg-white"}`} />
 
                                     <div className="ml-4">
                                         <p className="font-bold text-[#232323] mb-1">Покупатель</p>
                                         <p className="text-[#6B6B6B] text-sm">Купить бизнес, посмотреть предложения</p>
                                     </div>
                                 </button>
-
                             </div>
-
                             {roleError && <p className="text-red-500 text-sm mt-2">Пожалуйста, выберите роль</p>}
 
                             <Button
@@ -216,63 +242,19 @@ export const RegistrationPage = () => {
                                     else onSubmit();
                                 }}
                                 disabled={!selectedRole}
-                                className={`w-full mt-6 h-[56px] rounded-xl text-white font-semibold transition-all duration-300 ${selectedRole ? "bg-[#2EAA7B] hover:bg-[#239c6f]" : "bg-[#CFCFCF] cursor-not-allowed"
-                                    }`}
+                                className={`w-full mt-6 h-[56px] rounded-xl text-white font-semibold transition-all duration-300 ${selectedRole ? "bg-[#2EAA7B] hover:bg-[#239c6f]" : "bg-[#CFCFCF] cursor-not-allowed"}`}
                             >
                                 Далee
                             </Button>
                         </div>
-                    )}
-
-                </div>
-
-                {/*Описание*/}
-                <div className="grid grid-cols-3 pb-[123px] pl-[37px] w-full relative">
-                    {/* Card 01 */}
-                    <div className="relative flex flex-col text-left">
-                        <div className="mx-8.25 mb-7.75">
-                            <img src="/images/benefits-img-1.png" className="w-[250px] h-auto relative z-10" />
-                        </div>
-                        <div>
-                            <h3 className="text-[#252525] font-inter text-[36px] font-semibold mb-[15px] relative z-10">Описание</h3>
-                            <p className="text-[#252525] font-inter font-normal text-[16px] text-sm relative z-10">
-                                Gain access to AAA-funded accounts with the capacity to hold up to 400k in funded accounts within 72 hours of successfully completing the evaluation stage.
-                            </p>
-                            <span className="absolute top-[350px] font-actay text-[160px] leading-[105%] opacity-[10%] font-bold text-[#252525] z-0">01</span>
-                        </div>
-
+                        <Description showCards={false} showLaptop={false} showContact={true} />
                     </div>
-                    {/* Card 02 */}
-                    <div className="relative flex flex-col mt-[154px] text-left">
-                        <div className="mx-8.25 mb-7.75">
-                            <img src="/images/benefits-img-2.png" className="w-[250px] h-auto mb-4 relative z-10" />
-                        </div>
-                        <div>
-                            <h3 className="text-[#252525] text-inter text-[36px] font-semibold mb-[15px] relative z-10">Описание</h3>
-                            <p className="text-[#252525] font-inter font-normal text-[16px] text-sm relative z-10">
-                                Gain access to AAA-funded accounts with the capacity to hold up to 400k in funded accounts within 72 hours of successfully completing the evaluation stage.
-                            </p>
-                            <span className="absolute bottom-[350px] right-[33px] text-[160px] font-bold text-[#252525] leading-[105%] opacity-[10%] z-0">02</span>
-
-                        </div>
-
-                    </div>
-                    {/* Card 03 */}
-                    <div className="relative flex flex-col text-left">
-                        <div className="mx-8.25 mb-7.75">
-                            <img src="/images/benefits-img-3.png" className="w-[250px] h-auto mb-4 relative z-10" />
-                        </div>
-                        <h3 className="text-[#252525] text-inter text-[36px] font-semibold mb-[15px] relative z-10">Описание</h3>
-                        <p className="text-[#252525] font-inter font-normal text-[16px] text-sm relative z-10">
-                            Gain access to AAA-funded accounts with the capacity to hold up to 400k in funded accounts within 72 hours of successfully completing the evaluation stage.
-                        </p>
-                        <span className="absolute top-[397px] right-[9px] text-[160px] font-bold text-[#252525] leading-[105%] opacity-[10%] z-0">03</span>
-
-                    </div>
-                </div>
+                )}
 
             </div>
-            <Footer showSmallFooter={true} />
-        </div>
+        </div><Footer showSmallFooter={true} />
+        </>
     );
 };
+
+

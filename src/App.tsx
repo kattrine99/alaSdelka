@@ -1,4 +1,4 @@
-import { LoginPage, RegistrationPage, MainPage, CategoryPage } from "./Pages/index";
+import { LoginPage, RegistrationPage, MainPage, CategoryPage, ProfilePage } from "./Pages/index";
 import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
 import './index.css';
 import { ScrollToTop } from "./components/ScrollTop/ScrollTop";
@@ -12,13 +12,15 @@ const Layout = () => (
 const routerConfig = createBrowserRouter([
   {
     path: "/",
-    element: <Layout />, // всё вложено в Layout, внутри — ScrollToTop
+    element: <Layout />,
     children: [
       { index: true, element: <MainPage /> },
       { path: "main", element: <MainPage /> },
       { path: "login", element: <LoginPage /> },
       { path: "register", element: <RegistrationPage /> },
-      { path: ":category", element: <CategoryPage /> }
+      { path: ":category", element: <CategoryPage /> },
+      { path: "profile", element: <ProfilePage /> },
+
     ]
   }
 ]);

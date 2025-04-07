@@ -12,7 +12,7 @@ export const MainPage = () => {
 
     return (
         <div className="font-openSans min-h-screen w-screen overflow-x-hidden">
-            <Header/>
+            <Header />
             <section className="relative overflow-hidden bg-gradient-to-tr from-[#16503A] to-[#31B683]">
                 <div className="absolute right-[-80px] bottom-[-9rem] w-[850px] h-[850px] bg-[url('/images/Check.png')] bg-no-repeat bg-contain rotate-[12deg] pointer-events-none z-0"></div>
                 <div className="relative py-[70px] px-4 sm:px-8 md:px-[96px] xl:px-[192px] overflow-hidden">
@@ -231,7 +231,7 @@ export const MainPage = () => {
 
                 </div>
             </section >
-            <Footer />
+            <Footer showSmallFooter={true} />
         </div >
     );
 };

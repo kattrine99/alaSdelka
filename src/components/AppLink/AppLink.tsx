@@ -1,7 +1,8 @@
+import { ReactNode } from "react"
 import { Link } from "react-router-dom"
 interface ApplinkProps {
     to: string
-    children: string
+    children?: ReactNode
     className?: string
 }
 export const Applink = ({ to, children, className }: ApplinkProps) => {

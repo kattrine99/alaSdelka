@@ -42,8 +42,8 @@ export const LoginPage = () => {
 
 
     return (
-        <div className="min-w-screen min-h-screen bg-[url('public/images/grid.png')] bg-contain bg-no-repeat bg-right">
-            <Header />
+        <div className="min-w-screen bg-[url('/images/grid.png')] bg-contain bg-no-repeat bg-right">
+            <Header showNavLinks={false} showAuthButtons={false} />
             <div className=" flex items-center justify-center py-[62px] transition-all duration-300">
                 <div className="w-full flex px-[192px] transition-all duration-500">
                     <div className="w-full p-[clamp(30px,4vw,70px)] flex flex-col items-start text-start transition-all duration-300">

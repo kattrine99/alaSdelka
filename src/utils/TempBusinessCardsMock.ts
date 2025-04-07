@@ -8,6 +8,7 @@ export const TempBusinessCardsMock = [
     "city": "Ташкент",
     "area": "150 кв. м.",
     "popular": true,
+    "category": "Недвижимость",
     "type": "франшиза"
   },
   {
@@ -19,6 +20,7 @@ export const TempBusinessCardsMock = [
     "city": "Самарканд",
     "area": "60 кв. м.",
     "popular": false,
+    "category": "Фитнес",
     "type": "франшиза"
   },
   {
@@ -30,6 +32,7 @@ export const TempBusinessCardsMock = [
     "city": "Бухара",
     "area": "120 кв. м.",
     "popular": true,
+    "category": "Фитнес",
     "type": "стартап"
   },
   {
@@ -41,6 +44,7 @@ export const TempBusinessCardsMock = [
     "city": "Фергана",
     "area": "90 кв. м.",
     "popular": true,
+    "category": "Услуги",
     "type": "бизнес"
   },
   {
@@ -52,6 +56,7 @@ export const TempBusinessCardsMock = [
     "city": "Ташкент",
     "area": "45 кв. м.",
     "popular": false,
+    "category": "Фитнес",
     "type": "бизнес"
   },
   {
@@ -63,6 +68,7 @@ export const TempBusinessCardsMock = [
     "city": "Андижан",
     "area": "300 кв. м.",
     "popular": true,
+    "category": "Пекарня",
     "type": "стартап"
   },
   {
@@ -74,6 +80,7 @@ export const TempBusinessCardsMock = [
     "city": "Нукус",
     "area": "75 кв. м.",
     "popular": true,
+    "category": "Интернет",
     "type": "бизнес"
   },
   {
@@ -85,6 +92,7 @@ export const TempBusinessCardsMock = [
     "city": "Джизак",
     "area": "110 кв. м.",
     "popular": false,
+    "category": "Пекарня",
     "type": "инвестиции"
   },
   {
@@ -96,6 +104,7 @@ export const TempBusinessCardsMock = [
     "city": "Термез",
     "area": "35 кв. м.",
     "popular": false,
+    "category": "Медицина",
     "type": "франшиза"
   },
   {
@@ -107,6 +116,7 @@ export const TempBusinessCardsMock = [
     "city": "Наманган",
     "area": "250 кв. м.",
     "popular": true,
+    "category": "Ресторан",
     "type": "франшиза"
   },
   {
@@ -118,6 +128,7 @@ export const TempBusinessCardsMock = [
     "city": "Карши",
     "area": "100 кв. м.",
     "popular": false,
+    "category": "Ресторан",
     "type": "стартап"
   },
   {
@@ -129,6 +140,7 @@ export const TempBusinessCardsMock = [
     "city": "Ташкент",
     "area": "80 кв. м.",
     "popular": true,
+    "category": "Услуги",
     "type": "инвестиции"
   },
   {
@@ -140,6 +152,7 @@ export const TempBusinessCardsMock = [
     "city": "Ургенч",
     "area": "180 кв. м.",
     "popular": true,
+    "category": "IT",
     "type": "инвестиции"
   },
   {
@@ -151,6 +164,7 @@ export const TempBusinessCardsMock = [
     "city": "Андижан",
     "area": "77 кв. м.",
     "popular": true,
+    "category": "Образование",
     "type": "инвестиции"
   },
   {
@@ -162,6 +176,7 @@ export const TempBusinessCardsMock = [
     "city": "Самарканд",
     "area": "116 кв. м.",
     "popular": false,
+    "category": "Услуги",
     "type": "бизнес"
   },
   {
@@ -173,6 +188,7 @@ export const TempBusinessCardsMock = [
     "city": "Термез",
     "area": "120 кв. м.",
     "popular": true,
+    "category": "Ресторан",
     "type": "инвестиции"
   },
   {
@@ -184,6 +200,7 @@ export const TempBusinessCardsMock = [
     "city": "Нукус",
     "area": "339 кв. м.",
     "popular": false,
+    "category": "Ресторан",
     "type": "бизнес"
   },
   {
@@ -195,6 +212,7 @@ export const TempBusinessCardsMock = [
     "city": "Джизак",
     "area": "175 кв. м.",
     "popular": true,
+    "category": "Недвижимость",
     "type": "инвестиции"
   },
   {
@@ -206,6 +224,7 @@ export const TempBusinessCardsMock = [
     "city": "Фергана",
     "area": "175 кв. м.",
     "popular": true,
+    "category": "Образование",
     "type": "франшиза"
   },
   {
@@ -217,6 +236,7 @@ export const TempBusinessCardsMock = [
     "city": "Наманган",
     "area": "198 кв. м.",
     "popular": false,
+    "category": "IT",
     "type": "франшиза"
   },
   {
@@ -228,6 +248,7 @@ export const TempBusinessCardsMock = [
     "city": "Термез",
     "area": "284 кв. м.",
     "popular": false,
+    "category": "Коворкинг",
     "type": "инвестиции"
   },
   {
@@ -239,6 +260,7 @@ export const TempBusinessCardsMock = [
     "city": "Фергана",
     "area": "233 кв. м.",
     "popular": true,
+    "category": "Кафе",
     "type": "стартап"
   },
   {
@@ -250,6 +272,7 @@ export const TempBusinessCardsMock = [
     "city": "Андижан",
     "area": "311 кв. м.",
     "popular": false,
+    "category": "Ресторан",
     "type": "стартап"
   },
   {
@@ -261,6 +284,7 @@ export const TempBusinessCardsMock = [
     "city": "Ургенч",
     "area": "194 кв. м.",
     "popular": true,
+    "category": "Пекарня",
     "type": "стартап"
   },
   {
@@ -272,6 +296,7 @@ export const TempBusinessCardsMock = [
     "city": "Термез",
     "area": "142 кв. м.",
     "popular": true,
+    "category": "Фитнес",
     "type": "франшиза"
   },
   {
@@ -283,6 +308,7 @@ export const TempBusinessCardsMock = [
     "city": "Самарканд",
     "area": "111 кв. м.",
     "popular": false,
+    "category": "Интернет",
     "type": "франшиза"
   },
   {
@@ -294,6 +320,7 @@ export const TempBusinessCardsMock = [
     "city": "Андижан",
     "area": "277 кв. м.",
     "popular": true,
+    "category": "Авто",
     "type": "бизнес"
   },
   {
@@ -305,6 +332,7 @@ export const TempBusinessCardsMock = [
     "city": "Ташкент",
     "area": "74 кв. м.",
     "popular": true,
+    "category": "Торговля",
     "type": "франшиза"
   },
   {
@@ -316,6 +344,7 @@ export const TempBusinessCardsMock = [
     "city": "Карши",
     "area": "197 кв. м.",
     "popular": false,
+    "category": "Производство",
     "type": "стартап"
   },
   {
@@ -327,6 +356,7 @@ export const TempBusinessCardsMock = [
     "city": "Самарканд",
     "area": "50 кв. м.",
     "popular": false,
+    "category": "IT",
     "type": "стартап"
   },
   {
@@ -338,6 +368,7 @@ export const TempBusinessCardsMock = [
     "city": "Бухара",
     "area": "173 кв. м.",
     "popular": true,
+    "category": "Медицина",
     "type": "франшиза"
   },
   {
@@ -349,6 +380,7 @@ export const TempBusinessCardsMock = [
     "city": "Бухара",
     "area": "258 кв. м.",
     "popular": true,
+    "category": "Медицина",
     "type": "франшиза"
   },
   {
@@ -360,6 +392,7 @@ export const TempBusinessCardsMock = [
     "city": "Бухара",
     "area": "147 кв. м.",
     "popular": true,
+    "category": "Ресторан",
     "type": "бизнес"
   },
   {
@@ -371,6 +404,7 @@ export const TempBusinessCardsMock = [
     "city": "Джизак",
     "area": "125 кв. м.",
     "popular": false,
+    "category": "Коворкинг",
     "type": "бизнес"
   },
   {
@@ -382,6 +416,7 @@ export const TempBusinessCardsMock = [
     "city": "Фергана",
     "area": "266 кв. м.",
     "popular": true,
+    "category": "Недвижимость",
     "type": "франшиза"
   },
   {
@@ -393,6 +428,7 @@ export const TempBusinessCardsMock = [
     "city": "Термез",
     "area": "86 кв. м.",
     "popular": true,
+    "category": "Авто",
     "type": "стартап"
   },
   {
@@ -404,6 +440,7 @@ export const TempBusinessCardsMock = [
     "city": "Ургенч",
     "area": "216 кв. м.",
     "popular": false,
+    "category": "Кафе",
     "type": "инвестиции"
   },
   {
@@ -415,6 +452,7 @@ export const TempBusinessCardsMock = [
     "city": "Нукус",
     "area": "349 кв. м.",
     "popular": true,
+    "category": "Недвижимость",
     "type": "инвестиции"
   },
   {
@@ -426,6 +464,7 @@ export const TempBusinessCardsMock = [
     "city": "Ургенч",
     "area": "37 кв. м.",
     "popular": true,
+    "category": "Недвижимость",
     "type": "бизнес"
   },
   {
@@ -437,6 +476,7 @@ export const TempBusinessCardsMock = [
     "city": "Бухара",
     "area": "108 кв. м.",
     "popular": true,
+    "category": "Торговля",
     "type": "стартап"
   },
   {
@@ -448,6 +488,7 @@ export const TempBusinessCardsMock = [
     "city": "Карши",
     "area": "34 кв. м.",
     "popular": true,
+    "category": "Коворкинг",
     "type": "стартап"
   },
   {
@@ -459,6 +500,7 @@ export const TempBusinessCardsMock = [
     "city": "Ургенч",
     "area": "240 кв. м.",
     "popular": true,
+    "category": "Недвижимость",
     "type": "инвестиции"
   },
   {
@@ -470,6 +512,7 @@ export const TempBusinessCardsMock = [
     "city": "Джизак",
     "area": "334 кв. м.",
     "popular": true,
+    "category": "Производство",
     "type": "франшиза"
   },
   {
@@ -481,6 +524,7 @@ export const TempBusinessCardsMock = [
     "city": "Джизак",
     "area": "85 кв. м.",
     "popular": true,
+    "category": "Торговля",
     "type": "стартап"
   },
   {
@@ -492,6 +536,7 @@ export const TempBusinessCardsMock = [
     "city": "Нукус",
     "area": "86 кв. м.",
     "popular": true,
+    "category": "Фитнес",
     "type": "бизнес"
   },
   {
@@ -503,6 +548,7 @@ export const TempBusinessCardsMock = [
     "city": "Джизак",
     "area": "187 кв. м.",
     "popular": true,
+    "category": "Ресторан",
     "type": "стартап"
   },
   {
@@ -514,6 +560,7 @@ export const TempBusinessCardsMock = [
     "city": "Джизак",
     "area": "320 кв. м.",
     "popular": false,
+    "category": "IT",
     "type": "бизнес"
   },
   {
@@ -525,6 +572,7 @@ export const TempBusinessCardsMock = [
     "city": "Андижан",
     "area": "277 кв. м.",
     "popular": false,
+    "category": "Авто",
     "type": "франшиза"
   },
   {
@@ -536,6 +584,7 @@ export const TempBusinessCardsMock = [
     "city": "Джизак",
     "area": "179 кв. м.",
     "popular": false,
+    "category": "Производство",
     "type": "франшиза"
   },
   {
@@ -547,6 +596,7 @@ export const TempBusinessCardsMock = [
     "city": "Джизак",
     "area": "182 кв. м.",
     "popular": true,
+    "category": "IT",
     "type": "франшиза"
   },
   {
@@ -558,6 +608,7 @@ export const TempBusinessCardsMock = [
     "city": "Наманган",
     "area": "337 кв. м.",
     "popular": false,
+    "category": "Ресторан",
     "type": "бизнес"
   },
   {
@@ -569,6 +620,7 @@ export const TempBusinessCardsMock = [
     "city": "Джизак",
     "area": "287 кв. м.",
     "popular": true,
+    "category": "Услуги",
     "type": "стартап"
   },
   {
@@ -580,6 +632,7 @@ export const TempBusinessCardsMock = [
     "city": "Фергана",
     "area": "314 кв. м.",
     "popular": true,
+    "category": "Коворкинг",
     "type": "стартап"
   },
   {
@@ -591,6 +644,7 @@ export const TempBusinessCardsMock = [
     "city": "Нукус",
     "area": "108 кв. м.",
     "popular": false,
+    "category": "Интернет",
     "type": "бизнес"
   },
   {
@@ -602,6 +656,7 @@ export const TempBusinessCardsMock = [
     "city": "Нукус",
     "area": "91 кв. м.",
     "popular": false,
+    "category": "Авто",
     "type": "стартап"
   },
   {
@@ -613,6 +668,7 @@ export const TempBusinessCardsMock = [
     "city": "Ургенч",
     "area": "250 кв. м.",
     "popular": true,
+    "category": "Коворкинг",
     "type": "стартап"
   },
   {
@@ -624,6 +680,7 @@ export const TempBusinessCardsMock = [
     "city": "Андижан",
     "area": "82 кв. м.",
     "popular": false,
+    "category": "Образование",
     "type": "франшиза"
   },
   {
@@ -635,6 +692,7 @@ export const TempBusinessCardsMock = [
     "city": "Нукус",
     "area": "105 кв. м.",
     "popular": true,
+    "category": "Коворкинг",
     "type": "франшиза"
   },
   {
@@ -646,6 +704,7 @@ export const TempBusinessCardsMock = [
     "city": "Бухара",
     "area": "131 кв. м.",
     "popular": false,
+    "category": "Фитнес",
     "type": "инвестиции"
   },
   {
@@ -657,6 +716,7 @@ export const TempBusinessCardsMock = [
     "city": "Ташкент",
     "area": "255 кв. м.",
     "popular": false,
+    "category": "Ресторан",
     "type": "инвестиции"
   },
   {
@@ -668,6 +728,7 @@ export const TempBusinessCardsMock = [
     "city": "Термез",
     "area": "269 кв. м.",
     "popular": true,
+    "category": "Производство",
     "type": "франшиза"
   },
   {
@@ -679,6 +740,7 @@ export const TempBusinessCardsMock = [
     "city": "Ташкент",
     "area": "266 кв. м.",
     "popular": true,
+    "category": "Фитнес",
     "type": "инвестиции"
   },
   {
@@ -690,6 +752,7 @@ export const TempBusinessCardsMock = [
     "city": "Нукус",
     "area": "216 кв. м.",
     "popular": true,
+    "category": "Коворкинг",
     "type": "инвестиции"
   },
   {
@@ -701,6 +764,7 @@ export const TempBusinessCardsMock = [
     "city": "Карши",
     "area": "58 кв. м.",
     "popular": false,
+    "category": "Авто",
     "type": "инвестиции"
   },
   {
@@ -712,6 +776,7 @@ export const TempBusinessCardsMock = [
     "city": "Самарканд",
     "area": "56 кв. м.",
     "popular": true,
+    "category": "IT",
     "type": "стартап"
   },
   {
@@ -723,6 +788,7 @@ export const TempBusinessCardsMock = [
     "city": "Термез",
     "area": "34 кв. м.",
     "popular": true,
+    "category": "Коворкинг",
     "type": "франшиза"
   },
   {
@@ -734,6 +800,7 @@ export const TempBusinessCardsMock = [
     "city": "Бухара",
     "area": "87 кв. м.",
     "popular": true,
+    "category": "Коворкинг",
     "type": "франшиза"
   },
   {
@@ -745,6 +812,7 @@ export const TempBusinessCardsMock = [
     "city": "Наманган",
     "area": "220 кв. м.",
     "popular": true,
+    "category": "Интернет",
     "type": "франшиза"
   },
   {
@@ -756,6 +824,7 @@ export const TempBusinessCardsMock = [
     "city": "Ургенч",
     "area": "151 кв. м.",
     "popular": true,
+    "category": "Ресторан",
     "type": "бизнес"
   },
   {
@@ -767,6 +836,7 @@ export const TempBusinessCardsMock = [
     "city": "Джизак",
     "area": "91 кв. м.",
     "popular": false,
+    "category": "Недвижимость",
     "type": "инвестиции"
   },
   {
@@ -778,6 +848,7 @@ export const TempBusinessCardsMock = [
     "city": "Карши",
     "area": "343 кв. м.",
     "popular": false,
+    "category": "Торговля",
     "type": "стартап"
   },
   {
@@ -789,6 +860,7 @@ export const TempBusinessCardsMock = [
     "city": "Бухара",
     "area": "267 кв. м.",
     "popular": true,
+    "category": "Авто",
     "type": "стартап"
   },
   {
@@ -800,6 +872,7 @@ export const TempBusinessCardsMock = [
     "city": "Карши",
     "area": "285 кв. м.",
     "popular": true,
+    "category": "Образование",
     "type": "бизнес"
   },
   {
@@ -811,6 +884,7 @@ export const TempBusinessCardsMock = [
     "city": "Нукус",
     "area": "32 кв. м.",
     "popular": false,
+    "category": "Образование",
     "type": "инвестиции"
   },
   {
@@ -822,6 +896,7 @@ export const TempBusinessCardsMock = [
     "city": "Нукус",
     "area": "138 кв. м.",
     "popular": false,
+    "category": "Торговля",
     "type": "франшиза"
   },
   {
@@ -833,6 +908,7 @@ export const TempBusinessCardsMock = [
     "city": "Наманган",
     "area": "295 кв. м.",
     "popular": false,
+    "category": "Пекарня",
     "type": "инвестиции"
   },
   {
@@ -844,6 +920,7 @@ export const TempBusinessCardsMock = [
     "city": "Джизак",
     "area": "210 кв. м.",
     "popular": true,
+    "category": "Торговля",
     "type": "бизнес"
   },
   {
@@ -855,6 +932,7 @@ export const TempBusinessCardsMock = [
     "city": "Нукус",
     "area": "243 кв. м.",
     "popular": true,
+    "category": "Ресторан",
     "type": "инвестиции"
   },
   {
@@ -866,6 +944,7 @@ export const TempBusinessCardsMock = [
     "city": "Нукус",
     "area": "148 кв. м.",
     "popular": true,
+    "category": "Кафе",
     "type": "бизнес"
   },
   {
@@ -877,6 +956,7 @@ export const TempBusinessCardsMock = [
     "city": "Ургенч",
     "area": "202 кв. м.",
     "popular": false,
+    "category": "Интернет",
     "type": "бизнес"
   },
   {
@@ -888,6 +968,7 @@ export const TempBusinessCardsMock = [
     "city": "Бухара",
     "area": "99 кв. м.",
     "popular": true,
+    "category": "Производство",
     "type": "франшиза"
   },
   {
@@ -899,6 +980,7 @@ export const TempBusinessCardsMock = [
     "city": "Ургенч",
     "area": "194 кв. м.",
     "popular": true,
+    "category": "Услуги",
     "type": "стартап"
   },
   {
@@ -910,6 +992,7 @@ export const TempBusinessCardsMock = [
     "city": "Джизак",
     "area": "236 кв. м.",
     "popular": false,
+    "category": "IT",
     "type": "инвестиции"
   },
   {
@@ -921,6 +1004,7 @@ export const TempBusinessCardsMock = [
     "city": "Бухара",
     "area": "222 кв. м.",
     "popular": true,
+    "category": "Торговля",
     "type": "инвестиции"
   },
   {
@@ -932,6 +1016,7 @@ export const TempBusinessCardsMock = [
     "city": "Ташкент",
     "area": "252 кв. м.",
     "popular": true,
+    "category": "Медицина",
     "type": "стартап"
   },
   {
@@ -943,6 +1028,7 @@ export const TempBusinessCardsMock = [
     "city": "Андижан",
     "area": "328 кв. м.",
     "popular": true,
+    "category": "Торговля",
     "type": "бизнес"
   },
   {
@@ -954,6 +1040,7 @@ export const TempBusinessCardsMock = [
     "city": "Наманган",
     "area": "275 кв. м.",
     "popular": false,
+    "category": "IT",
     "type": "бизнес"
   },
   {
@@ -965,6 +1052,7 @@ export const TempBusinessCardsMock = [
     "city": "Бухара",
     "area": "101 кв. м.",
     "popular": true,
+    "category": "Фитнес",
     "type": "бизнес"
   },
   {
@@ -976,6 +1064,7 @@ export const TempBusinessCardsMock = [
     "city": "Бухара",
     "area": "335 кв. м.",
     "popular": false,
+    "category": "Фитнес",
     "type": "стартап"
   },
   {
@@ -987,6 +1076,7 @@ export const TempBusinessCardsMock = [
     "city": "Ургенч",
     "area": "150 кв. м.",
     "popular": false,
+    "category": "IT",
     "type": "инвестиции"
   },
   {
@@ -998,6 +1088,7 @@ export const TempBusinessCardsMock = [
     "city": "Ташкент",
     "area": "70 кв. м.",
     "popular": false,
+    "category": "Медицина",
     "type": "франшиза"
   },
   {
@@ -1009,6 +1100,7 @@ export const TempBusinessCardsMock = [
     "city": "Ургенч",
     "area": "310 кв. м.",
     "popular": false,
+    "category": "Фитнес",
     "type": "стартап"
   },
   {
@@ -1020,6 +1112,7 @@ export const TempBusinessCardsMock = [
     "city": "Бухара",
     "area": "248 кв. м.",
     "popular": false,
+    "category": "IT",
     "type": "франшиза"
   },
   {
@@ -1031,6 +1124,7 @@ export const TempBusinessCardsMock = [
     "city": "Ташкент",
     "area": "335 кв. м.",
     "popular": false,
+    "category": "Коворкинг",
     "type": "инвестиции"
   },
   {
@@ -1042,6 +1136,7 @@ export const TempBusinessCardsMock = [
     "city": "Самарканд",
     "area": "322 кв. м.",
     "popular": true,
+    "category": "Авто",
     "type": "франшиза"
   },
   {
@@ -1053,6 +1148,7 @@ export const TempBusinessCardsMock = [
     "city": "Ургенч",
     "area": "161 кв. м.",
     "popular": true,
+    "category": "Медицина",
     "type": "бизнес"
   },
   {
@@ -1064,6 +1160,7 @@ export const TempBusinessCardsMock = [
     "city": "Джизак",
     "area": "44 кв. м.",
     "popular": true,
+    "category": "Производство",
     "type": "стартап"
   },
   {
@@ -1075,6 +1172,7 @@ export const TempBusinessCardsMock = [
     "city": "Ташкент",
     "area": "111 кв. м.",
     "popular": true,
+    "category": "Образование",
     "type": "инвестиции"
   },
   {
@@ -1086,6 +1184,7 @@ export const TempBusinessCardsMock = [
     "city": "Джизак",
     "area": "81 кв. м.",
     "popular": false,
+    "category": "Фитнес",
     "type": "стартап"
   },
   {
@@ -1097,6 +1196,7 @@ export const TempBusinessCardsMock = [
     "city": "Джизак",
     "area": "248 кв. м.",
     "popular": true,
+    "category": "Коворкинг",
     "type": "бизнес"
   }
 ];

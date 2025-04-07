@@ -16,6 +16,7 @@ export interface ICard {
     address: string;
     area: string;
     popular: boolean;
+    category?: string;
 }
 
 interface ICards {
@@ -63,7 +64,7 @@ export const Cards: React.FC<ICards> = ({
                         )}
                         <div className={`relative ${cardIconClass ?? ""}`}>
 
-                            <img src={card.image || ""} alt={`${card.id}`} className="w-full h-auto object-cover" />
+                            <img src={card.image || ""} alt={`${card.id}`} className="w-full h-[192px] object-cover" />
                             <button
                                 onClick={() => toggleFavorite(card.id)}
                                 className="absolute top-5 right-[18px] px-[7px] py-2 text-[#28B13D] bg-white rounded-full border-2 border-[#28B13D] shadow-sm"
@@ -76,8 +77,8 @@ export const Cards: React.FC<ICards> = ({
                             </button>
                         </div>
 
-                        <div className="px-[18px] py-[21px] flex flex-col justify-between">
-                            <div>
+                        <div className="px-[18px] py-[21px] flex flex-col justify-between min-h-[260px] grow">
+                            <div className=" flex flex-col">
                                 <Heading
                                     text={card.price}
                                     level={2}
@@ -101,10 +102,11 @@ export const Cards: React.FC<ICards> = ({
                                     {card.area}
                                 </Paragraph>
                             </div>
-
-                            <Button className="w-full py-[12px] bg-[#2EAA7B] text-white font-medium rounded-md flex items-center justify-center gap-2 hover:bg-[#31B683] transition duration-300 cursor-pointer">
-                                Просмотреть <FaArrowRight />
-                            </Button>
+                            <div className="w-full h-[44px]">
+                                <Button className="w-full py-[12px] bg-[#2EAA7B] text-white font-medium rounded-md flex items-center justify-center gap-2 hover:bg-[#31B683] transition duration-300 cursor-pointer">
+                                    Просмотреть <FaArrowRight />
+                                </Button>
+                            </div>
                         </div>
                     </div>
                 ))}

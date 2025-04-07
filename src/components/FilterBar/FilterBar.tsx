@@ -1,10 +1,11 @@
 import { useState } from "react";
-import { FaLocationDot, FaClock, FaDollarSign } from "react-icons/fa6";
+import { FaLocationDot, FaClock } from "react-icons/fa6";
 import { FiSearch } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
 import { categories } from "../../utils/variables";
 import { Button, Input } from "../index";
 import { MdOutlineArrowDropDown } from "react-icons/md";
+import { HiCurrencyDollar } from "react-icons/hi2";
 
 
 export const FilterBar = () => {
@@ -55,28 +56,26 @@ export const FilterBar = () => {
 
                 {/* Цена */}
                 <div className="flex items-center gap-2 px-4 py-2">
-                    <span className="text-[#2EAA7B] text-lg">
-                        <FaDollarSign />
+                    <span className="text-[#2EAA7B] text-2xl">
+                        <HiCurrencyDollar />
                     </span>
                     <span className="text-[15px] text-black">Цена</span>
                     <div className="flex gap-3">
                         <div className="flex items-center gap-1 px-4 py-[14px] bg-[#F0F1F2] rounded-[14px]">
                             <span className="text-[16px] text-black">от</span>
-                            <input
+                            <Input
                                 type="text"
                                 placeholder="100 000"
-                                className="w-[80px] text-[16px] font-semibold text-[#3C3C3C] bg-transparent outline-none placeholder:text-[#787878]"
-                            />
+                                className="w-[80px] text-[16px] font-semibold text-[#3C3C3C] bg-transparent outline-none placeholder:text-[#787878]" isError={false} />
                             <span className="text-[16px] text-black">сум</span>
                         </div>
 
                         <div className="flex items-center gap-1 px-4 py-[14px] bg-[#F0F1F2] rounded-[14px]">
                             <span className="text-[16px] text-black">до</span>
-                            <input
+                            <Input
                                 type="text"
                                 placeholder="100 000"
-                                className="w-[80px] text-[16px] font-semibold text-[#3C3C3C] bg-transparent outline-none placeholder:text-[#787878]"
-                            />
+                                className="w-[80px] text-[16px] font-semibold text-[#3C3C3C] bg-transparent outline-none placeholder:text-[#787878]" isError={false} />
                             <span className="text-[16px] text-black">сум</span>
                         </div>
                     </div>

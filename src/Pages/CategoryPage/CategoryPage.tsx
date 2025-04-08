@@ -13,9 +13,9 @@ import {
     Paragraph,
     Filters
 } from "../../components";
-import { ICard } from "../../components/Cards/Cards";
+import { ICard } from "../../components/Cards/Interfaces";
 import { TempBusinessCardsMock } from "../../utils/TempBusinessCardsMock";
-import { urlToTypeMap, typeToTitleMap } from "../../utils/categoryMap";
+import { typeToTitleMap } from "../../utils/categoryMap";
 import { FiSearch } from "react-icons/fi";
 import { FiltersState } from "../../utils/variables";
 
@@ -35,13 +35,13 @@ export const CategoryPage = () => {
     });
 
 
-    const type = urlToTypeMap[category ?? ""] ?? "";
+    const type = category ?? "";
     const pageTitle = typeToTitleMap[type as ICard["type"]] ?? "Категория";
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 12;
 
     const filteredCards = TempBusinessCardsMock
-        .filter((card) => card.type.toLowerCase() === type.toLowerCase())
+        .filter((card) => card.type === type)
         .filter((card) => (filters.city ? card.city === filters.city : true))
         .filter((card) => (filters.category ? card.category === filters.category : true));
 
@@ -54,7 +54,7 @@ export const CategoryPage = () => {
             <Header />
             <div className="flex px-[192px] py-[30px] pb-10 gap-10 items-start">
                 <aside className="flex flex-col mr-[60px]">
-                    <Breadcrumbs current={pageTitle} />
+                    <Breadcrumbs category={type} title={""} />
                     <Heading text={pageTitle} level={2} className="text-[30px] font-bold text-black" />
                     <Paragraph className="text-[#787878] font-inter font-medium text-[14px] mt-3.5">
                         {filteredCards.length.toLocaleString("ru-RU")} объявлений

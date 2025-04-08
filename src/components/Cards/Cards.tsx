@@ -6,28 +6,7 @@ import FireIcon from '../../assets/fire.svg?react';
 import HeartIcon from '../../assets/heart.svg?react';
 import SolidHeartIcon from '../../assets/Solidheart.svg?react';
 import { Link } from "react-router-dom";
-
-
-export interface ICard {
-    type: "бизнес" | "франшиза" | "стартап" | "инвестиции";
-    id: number;
-    image?: string | null;
-    price: string;
-    title: string;
-    address: string;
-    area: string;
-    popular: boolean;
-    category?: string;
-}
-
-interface ICards {
-    cards: ICard[];
-    containerClass?: string;
-    cardWrapperClass?: string;
-    cardIconClass?: string;
-    cardHeadingClass?: string;
-    cardTextClass?: string;
-}
+import { ICards } from "./Interfaces";
 
 export const Cards: React.FC<ICards> = ({
     cards,
@@ -104,8 +83,8 @@ export const Cards: React.FC<ICards> = ({
                                 </Paragraph>
                             </div>
                             <div className="w-full h-[44px]">
-                                <Button className="w-full py-[12px] bg-[#2EAA7B] text-white font-medium rounded-md flex items-center justify-center gap-2 hover:bg-[#31B683] transition duration-300 cursor-pointer">
-                                    <Link to={`/${card.type}/card/${card.id}`}>
+                                <Button className="w-full py-[12px] bg-[#2EAA7B] text-white font-medium rounded-md flex justify-center hover:bg-[#31B683] transition duration-300 cursor-pointer">
+                                    <Link to={`/${card.type}/card/${card.id}`} className="flex gap-2 items-center">
                                         Просмотреть <FaArrowRight />
                                     </Link>
 

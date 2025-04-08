@@ -34,22 +34,16 @@ export const CategoryPage = () => {
         profitabilityMax: ""
     });
 
-    const [filteredCards, setFilteredCards] = useState<ICard[]>([]);
 
     const type = urlToTypeMap[category ?? ""] ?? "";
     const pageTitle = typeToTitleMap[type as ICard["type"]] ?? "Категория";
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 12;
 
-    const handleSearch = () => {
-        const result = TempBusinessCardsMock
-            .filter((card) => card.type.toLowerCase() === type.toLowerCase())
-            .filter((card) => (filters.city ? card.city === filters.city : true))
-            .filter((card) => (filters.category ? card.category === filters.category : true));
-
-        setFilteredCards(result);
-        setCurrentPage(1);
-    };
+    const filteredCards = TempBusinessCardsMock
+        .filter((card) => card.type.toLowerCase() === type.toLowerCase())
+        .filter((card) => (filters.city ? card.city === filters.city : true))
+        .filter((card) => (filters.category ? card.category === filters.category : true));
 
     const totalPages = Math.ceil(filteredCards.length / itemsPerPage);
     const startIndex = (currentPage - 1) * itemsPerPage;
@@ -66,7 +60,7 @@ export const CategoryPage = () => {
                         {filteredCards.length.toLocaleString("ru-RU")} объявлений
                     </Paragraph>
 
-                    {type && <Filters category={type as ICard["type"]} filters={filters} setFilters={setFilters} onSearch={handleSearch} />}
+                    {type && <Filters category={type as ICard["type"]} filters={filters} setFilters={setFilters} />}
                 </aside>
 
                 <main className="flex-1 justify-end">

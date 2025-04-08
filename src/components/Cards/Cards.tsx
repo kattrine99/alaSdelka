@@ -5,6 +5,7 @@ import { FaLocationDot, FaLocationCrosshairs } from "react-icons/fa6";
 import FireIcon from '../../assets/fire.svg?react';
 import HeartIcon from '../../assets/heart.svg?react';
 import SolidHeartIcon from '../../assets/Solidheart.svg?react';
+import { Link } from "react-router-dom";
 
 
 export interface ICard {
@@ -104,7 +105,10 @@ export const Cards: React.FC<ICards> = ({
                             </div>
                             <div className="w-full h-[44px]">
                                 <Button className="w-full py-[12px] bg-[#2EAA7B] text-white font-medium rounded-md flex items-center justify-center gap-2 hover:bg-[#31B683] transition duration-300 cursor-pointer">
-                                    Просмотреть <FaArrowRight />
+                                    <Link to={`/${card.type}/card/${card.id}`}>
+                                        Просмотреть <FaArrowRight />
+                                    </Link>
+
                                 </Button>
                             </div>
                         </div>

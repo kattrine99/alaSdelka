@@ -72,13 +72,12 @@ export const RegistrationPage = () => {
         <>
             <div className="w-screen font-openSans bg-[url('public/images/grid.png')] bg-contain bg-no-repeat bg-right">
                 <Header showAuthButtons={false} showNavLinks={false} />
-                <div className="flex px-[192px] pt-20">
+                <div className="flex px-[192px] text-center pt-20">
                     {step === 1 && (
                         <>
-                            <div className="w-full max-w-[518px]">
-                                <Heading level={2} className="text-[32px] font-inter leading-[110%] mb-[28px] font-bold text-black" text={""}>
-                                    Зарегистрируйтесь сейчас,
-                                    чтобы присоединиться к InvestIn
+                            <div className="w-ful max-w-[518px]">
+                                <Heading level={2} className="text-[32px]  font-inter leading-[110%] mb-[28px] font-bold text-black" text={""}>
+                                    Зарегистрироваться
                                 </Heading>
                                 <div className="w-[410px]">
                                     <form className="flex flex-col gap-y-3.5">

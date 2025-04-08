@@ -14,7 +14,6 @@ interface FiltersProps {
     category: "бизнес" | "франшиза" | "стартап" | "инвестиции";
     filters: FiltersState;
     setFilters: React.Dispatch<React.SetStateAction<FiltersState>>;
-    onSearch: () => void;
 }
 
 export const Filters: React.FC<FiltersProps> = ({ category, filters, setFilters }) => {
@@ -222,7 +221,7 @@ export const Filters: React.FC<FiltersProps> = ({ category, filters, setFilters 
                         key={item}
                         onClick={() => {
                             if (item === "Найти") {
-                                handleSearch(); 
+                                handleSearch();
                             } else {
                                 setFilters({
                                     city: "",
@@ -235,7 +234,7 @@ export const Filters: React.FC<FiltersProps> = ({ category, filters, setFilters 
                                     profitabilityMin: "",
                                     profitabilityMax: "",
                                     stage: "",
-                                }); 
+                                });
                             }
                         }}
                         className="w-full py-3 px-5 border border-[#2EAA7B] mb-2.5 hover:bg-[#2EAA7B] hover:text-white focus:bg-[#2EAA7B] focus:text-white rounded-[6px] font-inter font-semibold text-[15px] leading-5.5 text-[#2EAA7B] outline-none"

@@ -20,7 +20,7 @@ export const Description: React.FC<Descriptionprops> = ({
                         <p className="text-[#252525] font-inter font-normal text-[16px] text-sm relative z-10">
                             Gain access to AAA-funded accounts with the capacity to hold up to 400k in funded accounts within 72 hours of successfully completing the evaluation stage.
                         </p>
-                        <span className="absolute top-[350px] font-actay text-[160px] leading-[105%] opacity-[10%] font-bold text-[#252525] z-0">01</span>
+                        <span className="absolute top-[387px] text-[160px] leading-[105%] opacity-[10%] font-bold text-[#252525] z-0" style={{ fontFamily: "Actay Wide Bd" }}>01</span>
                     </div>
 
                 </div>
@@ -34,7 +34,7 @@ export const Description: React.FC<Descriptionprops> = ({
                         <p className="text-[#252525] font-inter font-normal text-[16px] text-sm relative z-10">
                             Gain access to AAA-funded accounts with the capacity to hold up to 400k in funded accounts within 72 hours of successfully completing the evaluation stage.
                         </p>
-                        <span className="absolute bottom-[350px] right-[33px] text-[160px] font-bold text-[#252525] leading-[105%] opacity-[10%] z-0">02</span>
+                        <span className="absolute bottom-[340px] right-[33px] text-[160px] font-bold text-[#252525] leading-[105%] opacity-[10%] z-0" style={{ fontFamily: "Actay Wide Bd" }}>02</span>
 
                     </div>
 
@@ -48,7 +48,7 @@ export const Description: React.FC<Descriptionprops> = ({
                     <p className="text-[#252525] font-inter font-normal text-[16px] text-sm relative z-10">
                         Gain access to AAA-funded accounts with the capacity to hold up to 400k in funded accounts within 72 hours of successfully completing the evaluation stage.
                     </p>
-                    <span className="absolute top-[397px] right-[9px] text-[160px] font-bold text-[#252525] leading-[105%] opacity-[10%] z-0">03</span>
+                    <span className="absolute top-[397px] right-[9px] text-[160px] font-bold text-[#252525] leading-[105%] opacity-[10%] z-0" style={{ fontFamily: "Actay Wide Bd" }}>03</span>
 
                 </div>
             </div>)}

@@ -4,10 +4,22 @@
     box-sizing: border-box;
 }
 
+@font-face {
+    font-family: "Actay Wide Bd";
+    src: url("5f3589e3d4b854aada3b2b1548d15cb4.eot");
+    src: url("5f3589e3d4b854aada3b2b1548d15cb4.eot?#iefix")format("embedded-opentype"),
+        url("5f3589e3d4b854aada3b2b1548d15cb4.woff")format("woff"),
+        url("5f3589e3d4b854aada3b2b1548d15cb4.woff2")format("woff2"),
+        url("5f3589e3d4b854aada3b2b1548d15cb4.ttf")format("truetype"),
+        url("5f3589e3d4b854aada3b2b1548d15cb4.svg#Actay Wide Bd")format("svg");
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
 html,
 body {
     padding: 0;
     margin: 0;
     overflow-x: hidden;
 }
-

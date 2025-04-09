@@ -1,10 +1,11 @@
 import { Header, Heading, Paragraph, NavLinks, CardSection, FilterBar, categories, Button, Footer } from "../../components";
 import { useState } from "react";
 import { TempBusinessCardsMock } from "../../utils/TempBusinessCardsMock";
-import { ICard } from "../../components/Cards/Cards";
+import { ICard } from "../../components/Cards/Interfaces";
 import { titleToTypeMap } from "../../utils/categoryMap";
 import { useNavigate } from "react-router-dom";
 import ShopIcon from '../../assets/shop.svg?react';
+import InvestInIcon from '../../assets/investin_v15.svg?react';
 
 export const MainPage = () => {
     const [selectedCategory, setSelectedCategory] = useState("Бизнес");
@@ -17,15 +18,20 @@ export const MainPage = () => {
                 <div className="absolute right-[-80px] bottom-[-9rem] w-[850px] h-[850px] bg-[url('/images/Check.png')] bg-no-repeat bg-contain rotate-[12deg] pointer-events-none z-0"></div>
                 <div className="relative py-[70px] px-4 sm:px-8 md:px-[96px] xl:px-[192px] overflow-hidden">
                     {/* Текст */}
-                    <div className="order-2 lg:order-1 flex flex-col gap-6 max-w-2xl w-full">
+                    <div className="order-2 lg:order-1 flex flex-col gap-6 max-w-3xl w-full">
                         <Heading
                             level={1}
                             text="Купите, продайте или инвестируйте в бизнес"
                             className="text-[clamp(32px,4vw,60px)] font-bold leading-tight text-white"
                         />
-                        <Paragraph className="text-[clamp(16px,1.5vw,18px)] text-white font-semibold text-xl">
-                            <span className="text-[40px] font-bold">Invest In</span> — первая в Узбекистане специализированная площадка для размещения объявлений о продаже готового бизнеса, стартапов, франшиз и инвестиционных проектов.
+                        <Paragraph className="text-white text-[clamp(16px,1.5vw,18px)] font-semibold leading-snug">
+                            <span className="inline-flex items-baseline align-baseline relative top-2 mr-1">
+                                <InvestInIcon className="w-[168.39px] h-auto" />
+                            </span>
+                            — первая в Узбекистане специализированная площадка для размещения объявлений
+                            о продаже готового бизнеса, стартапов, франшиз и инвестиционных проектов.
                         </Paragraph>
+
 
                         {/* Поиск */}
                         <div className="mt-4 w-full flex flex-col max-w-6xl relative">

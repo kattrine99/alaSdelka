@@ -1,4 +1,4 @@
-import { ICard } from "../components/Cards/Cards";
+import { ICard } from "../components/Cards/Interfaces";
 
 export const titleToTypeMap: Record<string, ICard["type"]> = {
     "Бизнес": "бизнес",
@@ -6,6 +6,11 @@ export const titleToTypeMap: Record<string, ICard["type"]> = {
     "Стартапы": "стартап",
     "Стартап": "стартап",
     "Инвестиции": "инвестиции",
+    business: "бизнес",
+    franchise: "франшиза",
+    startup: "стартап",
+    startups: "стартап",
+    investments: "инвестиции",
 };
 
 export const typeToTitleMap: Record<ICard["type"], string> = {

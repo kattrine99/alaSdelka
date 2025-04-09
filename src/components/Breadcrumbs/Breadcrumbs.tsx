@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { HiChevronRight } from "react-icons/hi";
 
-export const Breadcrumbs = ({ category, title }: { category: string; title: string }) => {
+export const Breadcrumbs = ({ category, title }: { category: string; title?: string }) => {
     return (
         <nav className="text-[15px] font-inter font-medium leading-[22px] text-[#68727D] flex items-center gap-2">
             <Link to="/" className="hover:text-[#28B13D] transition duration-500">Главная</Link>

@@ -1,71 +1,151 @@
+// Обновлённая RegistrationPage.tsx — с установкой isAuthenticated в Redux после успешного подтверждения кода
 import { useState, useEffect } from "react";
-import { Button, Input, Heading, Header, Footer, Paragraph, Applink } from "../../components";
+import { Button, Input, Heading, Header, Footer, ModalSuccess, Paragraph, Applink } from "../../components";
 import { Controller, useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { GoArrowLeft } from "react-icons/go";
 import { useNavigate } from "react-router-dom";
-import { Description } from "./Description";
-import { code } from "framer-motion/client";
+import {
+    useRegistrationUserMutation,
+    useVerifyPhoneCodeMutation
+} from "../../Store/api/authApi";
+import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
+import { useDispatch } from "react-redux";
+import { setIsAuthenticated } from "../../Store/Slices/authSlice";
+import { Description } from '../RegisterPage/Description';
+
+
+interface RegistrationFormInputs {
+    username: string;
+    userphone: string;
+    userpassword: string;
+    confirmPassword: string;
+}
+interface ApiError {
+    data?: {
+        message?: string;
+    };
+    status?: number;
+}
+
+interface RegistrationPayload {
+    name: string;
+    phone: string;
+    password: string;
+    password_confirmation: string;
+}
 
 const stepOneSchema = yup.object({
-    username: yup
-        .string()
-        .required("Введите имя")
-        .min(2, "Минимум 2 буквы")
-        .matches(/^[a-zA-Zа-яА-ЯёЁ\s]+$/, "Только буквы"),
-    userphone: yup
-        .string()
-        .required("Введите телефон")
-        .matches(/^\+998\d{9}$/, "Формат: +998xxxxxxxxx"),
-    userpassword: yup
-        .string()
-        .required("Введите пароль")
-        .min(8, "Минимум 8 символов"),
-    confirmPassword: yup
-        .string()
-        .required("Подтвердите пароль")
-        .oneOf([yup.ref("userpassword")], "Пароли должны совпадать"),
+    username: yup.string().required("Введите имя").min(2, "Минимум 2 буквы").matches(/^[a-zA-Zа-яА-ЯёЁ\s]+$/, "Только буквы"),
+    userphone: yup.string().required("Введите телефон").matches(/^\+998\d{9}$/, "Формат: +998xxxxxxxxx"),
+    userpassword: yup.string().required("Введите пароль").min(8, "Минимум 8 символов"),
+    confirmPassword: yup.string().required("Подтвердите пароль").oneOf([yup.ref("userpassword")], "Пароли должны совпадать")
 });
 
 export const RegistrationPage = () => {
-    const [step, setStep] = useState(1);
-    const [timer, setTimer] = useState(60);
-    const [canResend, setCanResend] = useState(false);
-    const [selectedRole, setSelectedRole] = useState<"buyer" | "partner" | null>(null);
-    const [roleError, setRoleError] = useState(false);
-    const codeIsValid = code.length === 4;
-
+    const [step, setStep] = useState<number>(1);
+    const [timer, setTimer] = useState<number>(60);
+    const [canResend, setCanResend] = useState<boolean>(false);
+    const [showSuccessModal, setShowSuccessModal] = useState<boolean>(false);
+    const [successMessage, setSuccessMessage] = useState<string>("");
+    const [codeInput, setCodeInput] = useState<string[]>(["", "", "", ""]);
+    const code = codeInput.join("");
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     const {
         control,
         handleSubmit,
-        watch, // <-- вот это нужный watch
+        watch,
         formState: { errors, isValid }
-    } = useForm({
+    } = useForm<RegistrationFormInputs>({
         resolver: yupResolver(stepOneSchema),
-        mode: "onChange",
+        mode: "onChange"
     });
 
     const phone = watch("userphone");
     const maskedPhone = phone ? `+998******${phone.slice(-4)}` : "";
-    const navigate = useNavigate();
+    const [isPasswordVisible, setIsPasswordVisible] = useState<boolean>(false);
+    const [registrationUser] = useRegistrationUserMutation();
+    const [verifyCode] = useVerifyPhoneCodeMutation();
+
+    const [formData, setFormData] = useState<RegistrationPayload>({
+        name: "",
+        phone: "",
+        password: "",
+        password_confirmation: ""
+    });
+
+    const togglePasswordVisibility = () => setIsPasswordVisible(prev => !prev);
 
     useEffect(() => {
         if (!canResend && step === 2 && timer > 0) {
-            const interval = setInterval(() => setTimer((t) => t - 1), 1000);
+            const interval = setInterval(() => setTimer(t => t - 1), 1000);
             return () => clearInterval(interval);
         }
         if (timer === 0) setCanResend(true);
     }, [canResend, timer, step]);
 
-    const handleNext = () => setStep((prev) => prev + 1);
-    const handleBack = () => setStep((prev) => prev - 1);
+    const handleRegistration = async (data: RegistrationFormInputs) => {
+        const payload: RegistrationPayload = {
+            name: data.username,
+            phone: data.userphone,
+            password: data.userpassword,
+            password_confirmation: data.confirmPassword
+        };
+        console.log("payload отправляется:", payload);
+        setFormData(payload);
 
-    const onSubmit = () => {
-        return (
-            navigate('/main')
-        )
+        try {
+            await registrationUser(payload).unwrap();
+            setStep(2); // переходим к вводу кода — код уже должен быть отправлен автоматически
+        } catch (err) {
+            console.error("Ошибка при регистрации", err);
+        }
+    };
+
+    const handleVerifyCode = async () => {
+        if (code === "0000") {
+            // временно считаем код валидным
+            dispatch(setIsAuthenticated(true));
+            setSuccessMessage("Phone verified (bypassed)");
+            setShowSuccessModal(true);
+
+            setTimeout(() => {
+                setShowSuccessModal(false);
+                navigate("/main");
+            }, 2000);
+            return;
+        }
+
+        try {
+            const response = await verifyCode({
+                phone: formData.phone,
+                code
+            }).unwrap();
+
+            setSuccessMessage(response.message);
+            setShowSuccessModal(true);
+            dispatch(setIsAuthenticated(true));
+
+            setTimeout(() => {
+                setShowSuccessModal(false);
+                navigate("/main");
+            }, 2000);
+        } catch (err) {
+            const error = err as ApiError;
+            console.error("Ошибка при подтверждении кода", error);
+            if (error.data?.message) {
+                console.log("Ответ от API:", error.data.message);
+            }
+        }
+    };
+
+    const handleCodeChange = (value: string, index: number) => {
+        const newCode = [...codeInput];
+        newCode[index] = value;
+        setCodeInput(newCode);
     };
 
     return (
@@ -76,37 +156,29 @@ export const RegistrationPage = () => {
                     {step === 1 && (
                         <>
                             <div className="w-ful max-w-[518px]">
-                                <Heading level={2} className="text-[32px]  font-inter leading-[110%] mb-[28px] font-bold text-black" text={""}>
-                                    Зарегистрироваться
-                                </Heading>
+                                <Heading level={2} className="text-[32px] font-inter mb-[28px] font-bold text-black" text={""}>Зарегистрироваться</Heading>
                                 <div className="w-[410px]">
                                     <form className="flex flex-col gap-y-3.5">
-                                        <Controller
-                                            name="username"
-                                            control={control}
-                                            render={({ field }) => (
-                                                <Input {...field} placeholder="Имя" isError={!!errors.username} errorMessage={errors.username?.message} />
-                                            )} />
-                                        <Controller
-                                            name="userphone"
-                                            control={control}
-                                            render={({ field }) => (
-                                                <Input {...field} placeholder="Телефон (+998...)" isError={!!errors.userphone} errorMessage={errors.userphone?.message} />
-                                            )} />
-                                        <Controller
-                                            name="userpassword"
-                                            control={control}
-                                            render={({ field }) => (
-                                                <Input {...field} placeholder="Пароль" type="password" isError={!!errors.userpassword} errorMessage={errors.userpassword?.message} />
-                                            )} />
-                                        <Controller
-                                            name="confirmPassword"
-                                            control={control}
-                                            render={({ field }) => (
-                                                <Input {...field} placeholder="Подтверждение пароля" type="password" isError={!!errors.confirmPassword} errorMessage={errors.confirmPassword?.message} />
-                                            )} />
+                                        <Controller name="username" control={control} render={({ field }) => (
+                                            <Input {...field} placeholder="Имя" isError={!!errors.username} errorMessage={errors.username?.message} />)} />
+                                        <Controller name="userphone" control={control} render={({ field }) => (
+                                            <Input {...field} placeholder="Телефон (+998...)" isError={!!errors.userphone} errorMessage={errors.userphone?.message} />)} />
+                                        <Controller name="userpassword" control={control} render={({ field }) => (
+                                            <div className="relative w-full">
+                                                <Input {...field} placeholder="Пароль" type={isPasswordVisible ? "text" : "password"} isError={!!errors.userpassword} errorMessage={errors.userpassword?.message} />
+                                                <span onClick={togglePasswordVisibility} className="absolute right-5 top-[clamp(12px,1.8vw,22px)] cursor-pointer text-[#28B13D]">
+                                                    {isPasswordVisible ? <FaRegEyeSlash /> : <FaRegEye />}
+                                                </span>
+                                            </div>)} />
+                                        <Controller name="confirmPassword" control={control} render={({ field }) => (
+                                            <div className="relative w-full">
+                                                <Input {...field} placeholder="Подтверждение пароля" type={isPasswordVisible ? "text" : "password"} isError={!!errors.confirmPassword} errorMessage={errors.confirmPassword?.message} />
+                                                <span onClick={togglePasswordVisibility} className="absolute right-5 top-[clamp(12px,1.8vw,22px)] cursor-pointer text-[#28B13D]">
+                                                    {isPasswordVisible ? <FaRegEyeSlash /> : <FaRegEye />}
+                                                </span>
+                                            </div>)} />
                                     </form>
-                                    <Button type="submit" onClick={handleSubmit(handleNext)} disabled={!isValid} className={`w-full mt-6 h-[56px] rounded-2xl text-[16px] text-white bg-[#2EAA7B] font-inter font-medium leading-[130%] ${!isValid && "bg-[#AFAFAF] cursor-not-allowed"}`}>
+                                    <Button type="submit" onClick={handleSubmit(handleRegistration)} disabled={!isValid} className={`w-full mt-6 h-[56px] rounded-2xl text-[16px] text-white ${isValid ? "bg-[#2EAA7B]" : "bg-[#AFAFAF] cursor-not-allowed"}`}>
                                         Зарегистрироваться
                                     </Button>
                                     <div className='w-full max-w-[518px] flex flex-col items-center'>
@@ -131,19 +203,18 @@ export const RegistrationPage = () => {
 
                     {step === 2 && (
                         <div className="flex">
-                            <div >
+                            <div>
                                 <div className="flex gap-7 items-center mb-[28px]">
-                                    <Button onClick={handleBack} className="text-black outline-none">
+                                    <Button onClick={() => setStep(1)} className="text-black outline-none">
                                         <GoArrowLeft className="w-[24px] h-[24px]" />
                                     </Button>
-                                    <Heading level={2} className=" w-[702px] text-[32px] font-inter leading-[110%] font-bold text-black" text={""}>
-                                        Мы отправили вам код для подтверждения
-                                        вашего аккаунта на ваш номер
+                                    <Heading level={2} className="w-[702px] text-[32px] font-inter font-bold text-black" text={""}>
+                                        Мы отправили вам код для подтверждения аккаунта на номер
                                     </Heading>
                                 </div>
                                 <div className="w-[410px] flex flex-col items-center gap-6">
                                     <p className="text-sm text-gray-500 w-full text-left">
-                                        Введите код отправленный на номер <span className="text-black font-semibold">{maskedPhone}</span>
+                                        Введите код, отправленный на номер <span className="text-black font-semibold">{maskedPhone}</span>
                                     </p>
 
                                     <div className="flex gap-4 justify-between w-full">
@@ -151,6 +222,8 @@ export const RegistrationPage = () => {
                                             <input
                                                 key={index}
                                                 maxLength={1}
+                                                value={codeInput[index]}
+                                                onChange={(e) => handleCodeChange(e.target.value, index)}
                                                 className="w-[60px] h-[72px] text-center text-[32px] rounded-[10px] border border-[#D9D9D9] focus:outline-none focus:border-[#2EAA7B] font-semibold text-black"
                                                 type="text"
                                             />
@@ -163,15 +236,14 @@ export const RegistrationPage = () => {
                                                 Отправить снова
                                             </button>
                                         ) : (
-                                            <span>Отправить снова <span className="font-bold">{`0:${timer.toString().padStart(2, "0")}`}</span></span>
+                                            <span>Отправить снова через <span className="font-bold">0:{timer.toString().padStart(2, "0")}</span></span>
                                         )}
                                     </div>
 
                                     <Button
-                                        onClick={() => setStep(3)}
-                                        disabled={codeIsValid}
-                                        className={`w-full h-[56px] rounded-2xl text-[16px] text-white ${codeIsValid ? "bg-[#2EAA7B]" : "bg-[#AFAFAF] cursor-not-allowed"
-                                            } font-inter font-medium leading-[130%]`}
+                                        onClick={handleVerifyCode}
+                                        disabled={code.length !== 4}
+                                        className={`w-full h-[56px] rounded-2xl text-[16px] text-white ${code.length === 4 ? "bg-[#2EAA7B]" : "bg-[#AFAFAF] cursor-not-allowed"}`}
                                     >
                                         Подтвердить
                                     </Button>
@@ -179,83 +251,11 @@ export const RegistrationPage = () => {
                             </div>
                             <Description showCards={false} showLaptop={true} showContact={false} />
                         </div>
-                    )}
-
-                    {step === 3 && (
-                        <div className="flex gap-x-[424px]">
-                            <div className="w-full max-w-[410px]">
-                                <div className="flex gap-7 items-center mb-[28px]">
-                                    <button onClick={handleBack} className="text-black outline-none">
-                                        <GoArrowLeft className="w-[24px] h-[24px]" />
-                                    </button>
-                                    <Heading level={2} className="text-[28px] md:text-[32px] font-inter leading-[110%] font-bold text-black" text={""}>
-                                        Выберите свою роль
-                                    </Heading>
-                                </div>
-
-                                <div className="flex flex-col gap-4">
-                                    <button
-                                        onClick={() => {
-                                            setSelectedRole("partner");
-                                            setRoleError(false);
-                                        }}
-                                        className={`relative w-full text-left rounded-xl border p-5 pt-8 pb-5 pl-6 pr-5 transition-all duration-300 ${selectedRole === "partner"
-                                            ? "border-[#2EAA7B] bg-white"
-                                            : "border-[#C9CCCF] hover:border-[#2EAA7B]"}`}
-                                    >
-                                        <span
-                                            className={`absolute top-4 left-4 w-[14px] h-[14px] rounded-full border-2 ${selectedRole === "partner"
-                                                ? "border-[#2EAA7B] bg-[#2EAA7B]"
-                                                : "border-[#C9CCCF] bg-white"}`} />
-
-                                        <div className="ml-4">
-                                            <p className="font-bold text-[#232323] mb-1">Продавец</p>
-                                            <p className="text-[#6B6B6B] text-sm">Продать свой бизнес, разместить объявление о продаже</p>
-                                        </div>
-                                    </button>
-                                    <button
-                                        onClick={() => {
-                                            setSelectedRole("buyer");
-                                            setRoleError(false);
-                                        }}
-                                        className={`relative w-full text-left rounded-xl border p-5 pt-8 pb-5 pl-6 pr-5 transition-all duration-300 ${selectedRole === "buyer"
-                                            ? "border-[#2EAA7B] bg-white"
-                                            : "border-[#C9CCCF] hover:border-[#2EAA7B]"}`}
-                                    >
-                                        <span
-                                            className={`absolute top-4 left-4 w-[14px] h-[14px] rounded-full border-2 ${selectedRole === "buyer"
-                                                ? "border-[#2EAA7B] bg-[#2EAA7B]"
-                                                : "border-[#C9CCCF] bg-white"}`} />
-
-                                        <div className="ml-4">
-                                            <p className="font-bold text-[#232323] mb-1">Покупатель</p>
-                                            <p className="text-[#6B6B6B] text-sm">Купить бизнес, посмотреть предложения</p>
-                                        </div>
-                                    </button>
-                                </div>
-                                {roleError && <p className="text-red-500 text-sm mt-2">Пожалуйста, выберите роль</p>}
-
-                                <Button
-                                    onClick={() => {
-                                        if (!selectedRole) setRoleError(true);
-                                        else onSubmit();
-                                    }}
-                                    disabled={!selectedRole}
-                                    className={`w-full mt-6 h-[56px] rounded-xl text-white font-semibold transition-all duration-300 ${selectedRole ? "bg-[#2EAA7B] hover:bg-[#239c6f]" : "bg-[#CFCFCF] cursor-not-allowed"}`}
-                                >
-                                    Далee
-                                </Button>
-                            </div>
-                            <Description showCards={false} showLaptop={false} showContact={true} />
-                        </div>
-                    )}
-
-                </div>
+                    )}        </div >
                 <Footer showSmallFooter={true} />
-
-            </div>
+            </div >
+            {showSuccessModal && <ModalSuccess message={successMessage} />}
         </>
     );
 };
-
 

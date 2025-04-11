@@ -10,11 +10,10 @@ import { Applink } from '../../components/AppLink/AppLink';
 import { Description } from '../RegisterPage/Description';
 
 const loginFormschema = yup.object({
-    username: yup
+    userphone: yup
         .string()
-        .required("Введите имя")
-        .min(2, "Имя должно содержать минимум 2 буквы")
-        .matches(/^[a-zA-Zа-яА-ЯёЁ\s]+$/, "Имя должно содержать только буквы"),
+        .required("Введите номер телефона")
+        .matches(/^\+998\d{9}$/, "Формат: +998xxxxxxxxx"),
     userpassword: yup
         .string()
         .required("Обязательное поле")
@@ -30,7 +29,7 @@ export const LoginPage = () => {
     } = useForm({
         resolver: yupResolver(loginFormschema),
         mode: "onChange",
-        defaultValues: { username: "", userpassword: "" },
+        defaultValues: { userphone: "", userpassword: "" },
     });
 
     const togglePasswordVisibility = () => {
@@ -51,16 +50,16 @@ export const LoginPage = () => {
                         <Heading className="text-[32px] mb-[32px] font-inter font-bold text-black" text={'Вход в личный кабинет'} level={1} />
                         <form onSubmit={handleSubmit(onSubmit)} className="w-full flex flex-col gap-[clamp(14px,1.8vw,28px)]">
                             <Controller
-                                name="username"
+                                name="userphone"
                                 control={control}
                                 render={({ field }) => (
                                     <Input
                                         {...field}
-                                        isError={!!errors.username}
-                                        errorMessage={errors.username?.message}
+                                        isError={!!errors.userphone}
+                                        errorMessage={errors.userphone?.message}
                                         type="text"
-                                        placeholder="Имя"
-                                        className={`w-full px-[18px] py-[17px] border-2 bg-[#EEEEEE80] rounded-[14px] focus:outline-none text-[16px] font-semibold leading-[130%] transition-all duration-500 ${errors.username ? 'border-red-500 focus:ring-red-500' : field.value ? 'border-green-500 focus:ring-green-500' : 'border-[#9C9C9C33] focus:ring-[#2EAA7B]'}`}
+                                        placeholder="Номер телефона"
+                                        className={`w-full px-[18px] py-[17px] border-2 bg-[#EEEEEE80] rounded-[14px] focus:outline-none text-[16px] font-semibold leading-[130%] transition-all duration-500 ${errors.userphone ? 'border-red-500 focus:ring-red-500' : field.value ? 'border-green-500 focus:ring-green-500' : 'border-[#9C9C9C33] focus:ring-[#2EAA7B]'}`}
                                     />
                                 )}
                             />

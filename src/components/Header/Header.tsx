@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { FaPhone, FaWhatsapp } from "react-icons/fa";
 import { IoIosMail } from "react-icons/io";
 import { FaTelegram } from "react-icons/fa6";
@@ -7,6 +6,9 @@ import { MdOutlineArrowDropDown } from "react-icons/md";
 import NoticeIcon from '../../assets/notification.svg?react';
 import FavIcon from '../../assets/heart-circle.svg?react';
 import ProfileIcon from '../../assets/profile-circle.svg?react';
+import { useSelector } from "react-redux";
+import { RootState } from "../../Store/store";
+
 
 interface HeaderProps {
     showNavLinks?: boolean;
@@ -21,7 +23,7 @@ export const Header: React.FC<HeaderProps> = ({
     showtoBar = true,
     navLinksData,
 }) => {
-    const [isAuthenticated, setIsAuthenticated] = useState(true);
+    const isAuthenticated = useSelector((state: RootState) => state.auth.isAuthenticated);
 
     return (
         <div className="font-inter font-medium w-full bg-white shadow">

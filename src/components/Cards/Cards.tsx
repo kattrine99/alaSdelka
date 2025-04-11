@@ -8,6 +8,7 @@ import SolidHeartIcon from '../../assets/Solidheart.svg?react';
 import { Link } from "react-router-dom";
 import { ICards } from "./Interfaces";
 
+
 export const Cards: React.FC<ICards> = ({
     cards,
     cardWrapperClass,

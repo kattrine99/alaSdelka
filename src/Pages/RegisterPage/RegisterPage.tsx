@@ -99,15 +99,14 @@ export const RegistrationPage = () => {
 
         try {
             await registrationUser(payload).unwrap();
-            setStep(2); // переходим к вводу кода — код уже должен быть отправлен автоматически
+            setStep(2);
         } catch (err) {
             console.error("Ошибка при регистрации", err);
         }
     };
 
     const handleVerifyCode = async () => {
-        if (code === "0000") {
-            // временно считаем код валидным
+        if (code === "1111") {
             dispatch(setIsAuthenticated(true));
             setSuccessMessage("Phone verified (bypassed)");
             setShowSuccessModal(true);

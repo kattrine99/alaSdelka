@@ -12,7 +12,15 @@ import { baseUrl } from "../../utils/baseUrl";
 
 export const AuthApi = createApi({
     reducerPath: "AuthApi",
-    baseQuery: fetchBaseQuery({ baseUrl }),
+    baseQuery: fetchBaseQuery({ baseUrl,
+        prepareHeaders: (headers) => {
+            const token = localStorage.getItem("access_token");
+            if (token) {
+              headers.set("Authorization", `Bearer ${token}`);
+            }
+            return headers;
+          },
+      }),
     endpoints: (builder) => ({
         getUserById: builder.query<GetUserByIdResponse, number>({
             query: (user_id) => `/user?user_id=${user_id}`,
@@ -40,6 +48,7 @@ export const AuthApi = createApi({
             }),
         }),
     }),
+
 });
 
 export const {

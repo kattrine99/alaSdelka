@@ -1,13 +1,21 @@
-import { Footer, Header, Heading, Input, Paragraph } from '../../components/index'
+import { Footer, Header, Heading, Input, Paragraph, Applink, Button, ModalSuccess } from '../../components/index';
 import * as yup from "yup";
 import { Controller, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useState } from "react";
-import './LoginPage.css'
-import { Button } from '../../components/Button/Button';
+import './LoginPage.css';
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
-import { Applink } from '../../components/AppLink/AppLink';
 import { Description } from '../RegisterPage/Description';
+import { useLoginUserMutation } from '../../Store/api/authApi';
+import { useDispatch } from 'react-redux';
+import { setIsAuthenticated } from '../../Store/Slices/authSlice';
+import { useNavigate } from 'react-router-dom';
+import { saveToken } from '../../utils/tokenUtils';
+
+interface LoginFormInputs {
+    userphone: string;
+    userpassword: string;
+}
 
 const loginFormschema = yup.object({
     userphone: yup
@@ -22,11 +30,17 @@ const loginFormschema = yup.object({
 
 export const LoginPage = () => {
     const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+    const [showModal, setShowModal] = useState(false);
+    const [modalText, setModalText] = useState("");
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const [loginUser] = useLoginUserMutation();
+
     const {
         control,
         handleSubmit,
         formState: { errors, isValid },
-    } = useForm({
+    } = useForm<LoginFormInputs>({
         resolver: yupResolver(loginFormschema),
         mode: "onChange",
         defaultValues: { userphone: "", userpassword: "" },
@@ -36,10 +50,23 @@ export const LoginPage = () => {
         setIsPasswordVisible((prevState) => !prevState);
     };
 
-    const onSubmit = () => {
-        console.log("Login submitted");
+    const onSubmit = async (data: LoginFormInputs) => {
+        try {
+            const response = await loginUser({ phone: data.userphone, password: data.userpassword }).unwrap();
+            saveToken(response.token); // ✅ сохраняем токен
+            dispatch(setIsAuthenticated(true));
+            setModalText("Успешный вход!");
+            setShowModal(true);
+            setTimeout(() => {
+                setShowModal(false);
+                navigate("/main");
+            }, 2000);
+        } catch (error) {
+            console.error("Ошибка при логине:", error);
+            setModalText("Неверный номер или пароль");
+            setShowModal(true);
+        }
     };
-
 
     return (
         <div className="min-w-screen bg-[url('/images/grid.png')] bg-contain bg-no-repeat bg-right">
@@ -108,12 +135,12 @@ export const LoginPage = () => {
                         </div>
                     </div>
                     <div>
-                        {/*Описание*/}
                         <Description showCards={true} showLaptop={false} showContact={false} />
                     </div>
                 </div>
             </div>
             <Footer showSmallFooter={true} />
+            {showModal && <ModalSuccess message={modalText} />}
         </div>
     );
 };

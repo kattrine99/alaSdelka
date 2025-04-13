@@ -1,10 +1,15 @@
 import { useParams } from 'react-router-dom';
 import { TempBusinessCardsMock } from '../../utils/TempBusinessCardsMock';
 import { Breadcrumbs, Footer, Header } from '../../components/index';
+import { useEffect, useState } from 'react';
 
 export const CardDetailPage = () => {
     const { id, category } = useParams();
-    const card = TempBusinessCardsMock.find(c => c.id === Number(id));
+    const [card, setCard] = useState(() => TempBusinessCardsMock.find(c => c.id === Number(id)));
+
+    useEffect(() => {
+        setCard(TempBusinessCardsMock.find(c => c.id === Number(id)));
+    }, [id]);
 
     if (!card) {
         return <div className="p-6">Карточка не найдена</div>;
@@ -14,7 +19,7 @@ export const CardDetailPage = () => {
         <div className="w-screen">
             <Header />
             <div>
-                <Breadcrumbs category={category || "Категория"} title={card.title} />
+                <Breadcrumbs category={category} title={card.title} />
                 <h1 className="text-2xl font-bold mb-2">{card.title}</h1>
                 <p className="text-gray-500 mb-4">ID {card.id}</p>
 

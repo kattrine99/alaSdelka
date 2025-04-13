@@ -26,3 +26,10 @@ export const urlToTypeMap: Record<string, ICard["type"]> = {
     startups: "стартап",
     investments: "инвестиции",
 };
+export const typeToUrlMap: Record<ICard["type"], string> = {
+    "бизнес": "business",
+    "франшиза": "franchise",
+    "стартап": "startup",
+    "инвестиции": "investments",
+  };
+  

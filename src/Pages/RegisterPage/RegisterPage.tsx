@@ -149,7 +149,7 @@ export const RegistrationPage = () => {
 
     return (
         <>
-            <div className="w-screen font-openSans bg-[url('public/images/grid.png')] bg-contain bg-no-repeat bg-right">
+            <div className="w-screen font-openSans bg-[url('/images/grid.png')] bg-contain bg-no-repeat bg-right">
                 <Header showAuthButtons={false} showNavLinks={false} />
                 <div className="flex px-[192px] text-center pt-20">
                     {step === 1 && (
@@ -196,7 +196,7 @@ export const RegistrationPage = () => {
 
                                 </div>
                             </div>
-                            <Description showCards={true} showLaptop={false} showContact={false} />
+                            <Description showCards={true} showLaptop={false} />
                         </>
                     )}
 
@@ -248,7 +248,7 @@ export const RegistrationPage = () => {
                                     </Button>
                                 </div>
                             </div>
-                            <Description showCards={false} showLaptop={true} showContact={false} />
+                            <Description showCards={false} showLaptop={true} />
                         </div>
                     )}        </div >
                 <Footer showSmallFooter={true} />

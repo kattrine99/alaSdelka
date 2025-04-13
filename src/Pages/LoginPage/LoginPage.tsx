@@ -135,7 +135,7 @@ export const LoginPage = () => {
                         </div>
                     </div>
                     <div>
-                        <Description showCards={true} showLaptop={false} showContact={false} />
+                        <Description showCards={true} showLaptop={false} />
                     </div>
                 </div>
             </div>

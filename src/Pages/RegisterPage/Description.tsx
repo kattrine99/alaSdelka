@@ -1,12 +1,10 @@
 interface Descriptionprops {
     showCards: boolean,
     showLaptop: boolean,
-    showContact: boolean
 }
 export const Description: React.FC<Descriptionprops> = ({
     showCards,
-    showLaptop,
-    showContact }) => {
+    showLaptop }) => {
     return (
         <div>
             {showCards && (<div className="grid grid-cols-3 pb-[123px] pl-[37px] w-full relative">
@@ -54,9 +52,6 @@ export const Description: React.FC<Descriptionprops> = ({
             </div>)}
             {showLaptop && (<div className="mb-18.5">
                 <img src="/images/Laptop.png" />
-            </div>)}
-            {showContact && (<div className="mb-18.5">
-                <img src="/images/Contact.png" />
             </div>)}
         </div>
 

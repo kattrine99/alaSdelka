@@ -1,30 +1,30 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import type {
-    GetUserByIdResponse,
     LoginUserPayload,
     LoginUserResponse,
     RegistrationUserPayload,
     RegistrationUserResponse,
     VerifyCodePayload,
     VerifyCodeResponse,
+    GetUserInfoResponse,
+    UpdateUserInfoPayload,
+    UpdateUserInfoResponse
 } from "./types";
 import { baseUrl } from "../../utils/baseUrl";
 
 export const AuthApi = createApi({
     reducerPath: "AuthApi",
-    baseQuery: fetchBaseQuery({ baseUrl,
+    baseQuery: fetchBaseQuery({
+        baseUrl,
         prepareHeaders: (headers) => {
             const token = localStorage.getItem("access_token");
             if (token) {
-              headers.set("Authorization", `Bearer ${token}`);
+                headers.set("Authorization", `Bearer ${token}`);
             }
             return headers;
-          },
-      }),
+        },
+    }),
     endpoints: (builder) => ({
-        getUserById: builder.query<GetUserByIdResponse, number>({
-            query: (user_id) => `/user?user_id=${user_id}`,
-        }),
         loginUser: builder.mutation<LoginUserResponse, LoginUserPayload>({
             query: (payload) => ({
                 url: "/login",
@@ -47,13 +47,29 @@ export const AuthApi = createApi({
                 body: payload,
             }),
         }),
+        getUserInfo: builder.query<GetUserInfoResponse, void>({
+            query: () => ({
+                url: "/user",
+                method: "GET",
+            }),
+            transformResponse: (response: { data: GetUserInfoResponse }) => response.data,
+        }),
+
+        updateUserInfo: builder.mutation<UpdateUserInfoResponse, UpdateUserInfoPayload>({
+            query: (payload) => ({
+                url: "/user",
+                method: "PUT",
+                body: payload,
+            }),
+        }),
     }),
 
 });
 
 export const {
-    useGetUserByIdQuery,
     useLoginUserMutation,
     useRegistrationUserMutation,
-    useVerifyPhoneCodeMutation
+    useVerifyPhoneCodeMutation,
+    useGetUserInfoQuery,
+    useUpdateUserInfoMutation,
 } = AuthApi;

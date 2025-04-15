@@ -53,7 +53,9 @@ export const LoginPage = () => {
     const onSubmit = async (data: LoginFormInputs) => {
         try {
             const response = await loginUser({ phone: data.userphone, password: data.userpassword }).unwrap();
-            saveToken(response.token); // ✅ сохраняем токен
+            console.log("RESPONSE FROM LOGIN >>>", response);
+            
+            saveToken(response.access_token);
             dispatch(setIsAuthenticated(true));
             setModalText("Успешный вход!");
             setShowModal(true);
@@ -69,6 +71,7 @@ export const LoginPage = () => {
     };
 
     return (
+
         <div className="min-w-screen bg-[url('/images/grid.png')] bg-contain bg-no-repeat bg-right">
             <Header showNavLinks={false} showAuthButtons={false} />
             <div className=" flex items-center justify-center py-[62px] transition-all duration-300">

@@ -9,6 +9,7 @@ export const personalpages = [
     { label: "Мои объявления", to: "/announcement" },
     { label: "Уведомления", to: "/notices" },
     { label: "Избранное", to: "/favorites" },
+    { label: "Продвижение", to: "/promotion" },
 ]
 export interface FiltersState {
     city: string;

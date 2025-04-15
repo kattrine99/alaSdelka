@@ -1,4 +1,3 @@
-// Обновлённая RegistrationPage.tsx — с установкой isAuthenticated в Redux после успешного подтверждения кода
 import { useState, useEffect } from "react";
 import { Button, Input, Heading, Header, Footer, ModalSuccess, Paragraph, Applink } from "../../components";
 import { Controller, useForm } from "react-hook-form";
@@ -14,7 +13,7 @@ import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 import { useDispatch } from "react-redux";
 import { setIsAuthenticated } from "../../Store/Slices/authSlice";
 import { Description } from '../RegisterPage/Description';
-
+import { RegistrationUserPayload } from "../../Store/api/types"
 
 interface RegistrationFormInputs {
     username: string;
@@ -27,13 +26,6 @@ interface ApiError {
         message?: string;
     };
     status?: number;
-}
-
-interface RegistrationPayload {
-    name: string;
-    phone: string;
-    password: string;
-    password_confirmation: string;
 }
 
 const stepOneSchema = yup.object({
@@ -70,7 +62,7 @@ export const RegistrationPage = () => {
     const [registrationUser] = useRegistrationUserMutation();
     const [verifyCode] = useVerifyPhoneCodeMutation();
 
-    const [formData, setFormData] = useState<RegistrationPayload>({
+    const [formData, setFormData] = useState<RegistrationUserPayload>({
         name: "",
         phone: "",
         password: "",
@@ -88,7 +80,7 @@ export const RegistrationPage = () => {
     }, [canResend, timer, step]);
 
     const handleRegistration = async (data: RegistrationFormInputs) => {
-        const payload: RegistrationPayload = {
+        const payload: RegistrationUserPayload = {
             name: data.username,
             phone: data.userphone,
             password: data.userpassword,
@@ -108,7 +100,7 @@ export const RegistrationPage = () => {
     const handleVerifyCode = async () => {
         if (code === "1111") {
             dispatch(setIsAuthenticated(true));
-            setSuccessMessage("Phone verified (bypassed)");
+            setSuccessMessage("Phone verified!");
             setShowSuccessModal(true);
 
             setTimeout(() => {

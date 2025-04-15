@@ -7,7 +7,6 @@ export interface RegistrationUserPayload {
 
 export interface RegistrationUserResponse {
     message: string;
-    token: string;
     user: {
         id: number;
         name: string;
@@ -22,7 +21,7 @@ export interface LoginUserPayload {
 
 export interface LoginUserResponse {
     message: string;
-    token: string;
+    access_token: string;
     user: {
         id: number;
         name: string;
@@ -57,4 +56,25 @@ export interface VerifyCodeResponse {
         email: string;
         photo: string;
     };
+}
+export interface GetUserInfoResponse {
+    id: number;
+    name: string;
+    phone: string;
+    email: string;
+    photo: string;
+}
+export interface UpdateUserInfoPayload {
+    name: string;
+    phone: string;
+    email: string;
+    photo: string;
+}
+export interface UpdateUserInfoResponse {
+
+    id: number;
+    name: string;
+    phone: string;
+    email: string;
+    photo: string;
 }

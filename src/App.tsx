@@ -6,12 +6,16 @@ import { useDispatch } from "react-redux";
 import { setIsAuthenticated } from "./Store/Slices/authSlice";
 import { getToken } from "./utils/tokenUtils";
 import { ScrollToTop } from "./components/ScrollTop/ScrollTop";
-const Layout = () => (
-  <>
-    <ScrollToTop />
-    <Outlet />
-  </>
-);
+import { useInactivityLogout } from "./utils/useAuthTimeout";
+const Layout = () => {
+  useInactivityLogout(3600_000)
+  return (
+    <>
+      <ScrollToTop />
+      <Outlet />
+    </>
+  )
+} 
 
 const routerConfig = createBrowserRouter([
   {
@@ -31,6 +35,7 @@ const routerConfig = createBrowserRouter([
 
 function App() {
   const dispatch = useDispatch();
+  useInactivityLogout(3600_000);
 
   useEffect(() => {
     const token = getToken();

@@ -7,13 +7,12 @@ import type {
     VerifyCodePayload,
     VerifyCodeResponse,
     GetUserInfoResponse,
-    UpdateUserInfoPayload,
     UpdateUserInfoResponse
 } from "./types";
 import { baseUrl } from "../../utils/baseUrl";
 
 export const AuthApi = createApi({
-    reducerPath: "AuthApi",
+    reducerPath: "Api",
     baseQuery: fetchBaseQuery({
         baseUrl,
         prepareHeaders: (headers) => {
@@ -55,11 +54,11 @@ export const AuthApi = createApi({
             transformResponse: (response: { data: GetUserInfoResponse }) => response.data,
         }),
 
-        updateUserInfo: builder.mutation<UpdateUserInfoResponse, UpdateUserInfoPayload>({
-            query: (payload) => ({
+        updateUserInfo: builder.mutation<UpdateUserInfoResponse, FormData>({
+            query: (formData) => ({
                 url: "/user",
                 method: "PUT",
-                body: payload,
+                body: formData,
             }),
         }),
     }),

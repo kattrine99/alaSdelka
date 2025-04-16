@@ -1,4 +1,4 @@
-import { Footer, Header, Heading, Input, Paragraph, Applink, Button, ModalSuccess } from '../../components/index';
+import { Footer, Header, Heading, Input, Paragraph, Applink, Button, ModalBase } from '../../components/index';
 import * as yup from "yup";
 import { Controller, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -6,7 +6,7 @@ import { useState } from "react";
 import './LoginPage.css';
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 import { Description } from '../RegisterPage/Description';
-import { useLoginUserMutation } from '../../Store/api/authApi';
+import { useLoginUserMutation } from '../../Store/api/Api';
 import { useDispatch } from 'react-redux';
 import { setIsAuthenticated } from '../../Store/Slices/authSlice';
 import { useNavigate } from 'react-router-dom';
@@ -54,8 +54,8 @@ export const LoginPage = () => {
         try {
             const response = await loginUser({ phone: data.userphone, password: data.userpassword }).unwrap();
             console.log("RESPONSE FROM LOGIN >>>", response);
-            
-            saveToken(response.access_token);
+
+            saveToken(response.access_token, response.expires_in);
             dispatch(setIsAuthenticated(true));
             setModalText("Успешный вход!");
             setShowModal(true);
@@ -73,6 +73,14 @@ export const LoginPage = () => {
     return (
 
         <div className="min-w-screen bg-[url('/images/grid.png')] bg-contain bg-no-repeat bg-right">
+            <div className='flex flex-col'>
+                {showModal && <ModalBase
+                    title="Успешно!"
+                    message={modalText}
+                    onClose={() => setShowModal(false)}
+                    actions={<Button className={"w-full text-center py-4 hover:border-1 hover:bg-white hover:text-[#2EAA7B] hover:border-[#2EAA7B] text-white bg-[#2EAA7B] rounded-[14px]"} onClick={() => { setShowModal(false) }}>Подтвердить</Button>}
+                />}
+            </div>
             <Header showNavLinks={false} showAuthButtons={false} />
             <div className=" flex items-center justify-center py-[62px] transition-all duration-300">
                 <div className="w-full flex px-[192px] transition-all duration-500">
@@ -143,7 +151,6 @@ export const LoginPage = () => {
                 </div>
             </div>
             <Footer showSmallFooter={true} />
-            {showModal && <ModalSuccess message={modalText} />}
         </div>
     );
 };

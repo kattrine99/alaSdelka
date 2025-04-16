@@ -22,6 +22,7 @@ export interface LoginUserPayload {
 export interface LoginUserResponse {
     message: string;
     access_token: string;
+    expires_in: number;
     user: {
         id: number;
         name: string;
@@ -58,23 +59,21 @@ export interface VerifyCodeResponse {
     };
 }
 export interface GetUserInfoResponse {
+    city_id: number;
     id: number;
     name: string;
     phone: string;
     email: string;
     photo: string;
 }
-export interface UpdateUserInfoPayload {
-    name: string;
-    phone: string;
-    email: string;
-    photo: string;
-}
+
 export interface UpdateUserInfoResponse {
 
     id: number;
     name: string;
     phone: string;
     email: string;
-    photo: string;
+    photo: string | File;
+    city_id: number;
+
 }

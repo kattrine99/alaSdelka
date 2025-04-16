@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Button, Input, Heading, Header, Footer, ModalSuccess, Paragraph, Applink } from "../../components";
+import { Button, Input, Heading, Header, Footer, ModalBase, Paragraph, Applink } from "../../components";
 import { Controller, useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 import {
     useRegistrationUserMutation,
     useVerifyPhoneCodeMutation
-} from "../../Store/api/authApi";
+} from "../../Store/api/Api";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 import { useDispatch } from "react-redux";
 import { setIsAuthenticated } from "../../Store/Slices/authSlice";
@@ -245,7 +245,7 @@ export const RegistrationPage = () => {
                     )}        </div >
                 <Footer showSmallFooter={true} />
             </div >
-            {showSuccessModal && <ModalSuccess message={successMessage} />}
+            {showSuccessModal && <ModalBase message={successMessage} actions={<Button className={""} onClick={() => { setShowSuccessModal(false) }}></Button>} />}
         </>
     );
 };

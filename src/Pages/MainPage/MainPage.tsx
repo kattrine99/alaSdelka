@@ -1,15 +1,24 @@
 import { Header, Heading, Paragraph, NavLinks, CardSection, FilterBar, categories, Button, Footer } from "../../components";
 import { useState } from "react";
-import { TempBusinessCardsMock } from "../../utils/TempBusinessCardsMock";
-import { ICard } from "../../components/Cards/Interfaces";
 import { titleToTypeMap } from "../../utils/categoryMap";
 import { useNavigate } from "react-router-dom";
 import ShopIcon from '../../assets/shop.svg?react';
 import InvestInIcon from '../../assets/investin_v15.svg?react';
+import { useGetHomeOffersQuery } from "../../Store/api/Api";
 
 export const MainPage = () => {
-    const [selectedCategory, setSelectedCategory] = useState("Бизнес");
+    const [selectedCategory, setSelectedCategory] = useState<"Бизнес" | "Франшиза" | "Стартапы" | "Инвестиции">("Бизнес")
+        ;
     const navigate = useNavigate();
+    const [listingType, setListingType] = useState<"buy" | "sell">("buy");
+    const { data: homeOffers, isLoading, isError } = useGetHomeOffersQuery(listingType);
+    const cityStats: Record<string, number> = (homeOffers?.[titleToTypeMap[selectedCategory]] || []).reduce(
+        (acc, card) => {
+            acc[card.city] = (acc[card.city] || 0) + 1;
+            return acc;
+        },
+        {} as Record<string, number>
+    );
 
     return (
         <div className="font-openSans min-h-screen w-screen overflow-x-hidden">
@@ -41,7 +50,16 @@ export const MainPage = () => {
                                     links={categories}
                                     variant="tabs"
                                     activeLabel={selectedCategory}
-                                    onClick={setSelectedCategory}
+                                    onClick={(label) => {
+                                        if (
+                                            label === "Бизнес" ||
+                                            label === "Франшиза" ||
+                                            label === "Стартапы" ||
+                                            label === "Инвестиции"
+                                        ) {
+                                            setSelectedCategory(label);
+                                        }
+                                    }}
                                     className="flex text-[18px] font-openSans font-semibold"
                                     activeClassName="text-[#2EAA7B] w-[136px] py-[14px] px-[17px]  border-b"
                                     inactiveClassName="text-[#787878] w-[136px] py-[14px] px-[17px] hover:text-[#2EAA7B] "
@@ -68,19 +86,24 @@ export const MainPage = () => {
                         <Paragraph className="text-[16px] mt-1.5 text-[#787878]">Описание</Paragraph>
                     </div>
                     <div className="flex gap-[42px] text-center">
-                        <Button className="flex items-center justify-center gap-x-2 rounded-[8px] h-[52px] w-[364px] border border-[#2EAA7B] text-[#2EAA7B] text-[16px] hover:bg-[#2EAA7B] hover:text-white transition duration-500 font-inter leading-[150%] font-semibold">
+                        <Button onClick={() => setListingType("buy")} className="flex items-center justify-center gap-x-2 rounded-[8px] h-[52px] w-[364px] border border-[#2EAA7B] text-[#2EAA7B] text-[16px] hover:bg-[#2EAA7B] hover:text-white transition duration-500 font-inter leading-[150%] font-semibold">
                             <ShopIcon className="w-5 h-5 hover:text-white" />
                             Покупка бизнеса
                         </Button>
 
-                        <Button className="flex items-center justify-center gap-x-2 rounded-[8px] h-[52px] w-[364px] border border-[#2EAA7B] text-[#2EAA7B] text-[16px] hover:bg-[#2EAA7B] hover:text-white transition duration-500 font-inter leading-[150%] font-semibold">
+                        <Button onClick={() => setListingType("sell")} className="flex items-center justify-center gap-x-2 rounded-[8px] h-[52px] w-[364px] border border-[#2EAA7B] text-[#2EAA7B] text-[16px] hover:bg-[#2EAA7B] hover:text-white transition duration-500 font-inter leading-[150%] font-semibold">
                             <ShopIcon className="w-5 h-5 hover:text-white" />
                             Продажа бизнеса
                         </Button>
                     </div>
 
                 </div>
-                <CardSection title="Бизнес" cards={TempBusinessCardsMock as ICard[]} maxVisible={8} Class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-y-10 gap-x-8 transition duration-600" ClassName={"px-[192px] py-[30px]"} />
+                {isLoading ? (
+                    <p className="px-[192px] py-[30px]">Загрузка...</p>
+                ) : isError ? (
+                    <p className="px-[192px] py-[30px] text-red-500">Ошибка загрузки данных</p>
+                ) : (<CardSection title="Бизнес" cards={homeOffers?.business || []} maxVisible={8} Class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-y-10 gap-x-8 transition duration-600" ClassName={"px-[192px] py-[30px]"} />
+                )}
             </section>
             <section className="mt-[50px] mb-[35px]">
                 <div className="px-[192px] flex justify-start gap-[272px]">
@@ -93,18 +116,24 @@ export const MainPage = () => {
                         <Paragraph className="text-[16px] mt-1.5 text-[#787878]">Описание</Paragraph>
                     </div>
                     <div className="flex gap-[42px] text-center">
-                        <Button className="flex items-center justify-center gap-x-2 rounded-[8px] h-[52px] w-[364px] border border-[#2EAA7B] text-[#2EAA7B] hover:bg-[#2EAA7B] hover:text-white transition duration-500 text-[16px] font-inter leading-[150%] font-semibold">
+                        <Button onClick={() => setListingType("buy")} className="flex items-center justify-center gap-x-2 rounded-[8px] h-[52px] w-[364px] border border-[#2EAA7B] text-[#2EAA7B] hover:bg-[#2EAA7B] hover:text-white transition duration-500 text-[16px] font-inter leading-[150%] font-semibold">
                             <ShopIcon className="w-5 h-5 hover:text-white" />
                             Покупка франшизы
                         </Button>
 
-                        <Button className="flex items-center justify-center gap-x-2 rounded-[8px] h-[52px] w-[364px] border border-[#2EAA7B] text-[#2EAA7B] hover:bg-[#2EAA7B] hover:text-white transition duration-500 text-[16px] font-inter leading-[150%] font-semibold">
+                        <Button onClick={() => setListingType("sell")} className="flex items-center justify-center gap-x-2 rounded-[8px] h-[52px] w-[364px] border border-[#2EAA7B] text-[#2EAA7B] hover:bg-[#2EAA7B] hover:text-white transition duration-500 text-[16px] font-inter leading-[150%] font-semibold">
                             <ShopIcon className="w-5 h-5 hover:text-white" />
                             Продажа франшизы
                         </Button>
                     </div>
                 </div>
-                <CardSection title="Франшиза" cards={TempBusinessCardsMock as ICard[]} maxVisible={8} Class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-y-10 gap-x-8 transition duration-600" ClassName={"px-[192px] py-[30px]"} />
+                {isLoading ? (
+                    <p className="px-[192px] py-[30px]">Загрузка...</p>
+                ) : isError ? (
+                    <p className="px-[192px] py-[30px] text-red-500">Ошибка загрузки данных</p>
+                ) : (<CardSection title="Франшиза" cards={homeOffers?.franchise || []} maxVisible={8} Class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-y-10 gap-x-8 transition duration-600" ClassName={"px-[192px] py-[30px]"} />
+
+                )}
             </section>
             <section className="mt-[50px] mb-[35px]">
                 <div className="px-[192px] flex justify-start gap-[272px]">
@@ -117,18 +146,23 @@ export const MainPage = () => {
                         <Paragraph className="text-[16px] mt-1.5 text-[#787878]">Описание</Paragraph>
                     </div>
                     <div className="flex gap-[42px] text-center">
-                        <Button className="flex items-center justify-center gap-x-2 rounded-[8px] h-[52px] w-[364px] border border-[#2EAA7B] text-[#2EAA7B] hover:bg-[#2EAA7B] hover:text-white transition duration-500 text-[16px] font-inter leading-[150%] font-semibold">
+                        <Button onClick={() => setListingType("buy")} className="flex items-center justify-center gap-x-2 rounded-[8px] h-[52px] w-[364px] border border-[#2EAA7B] text-[#2EAA7B] hover:bg-[#2EAA7B] hover:text-white transition duration-500 text-[16px] font-inter leading-[150%] font-semibold">
                             <ShopIcon className="w-5 h-5 hover:text-white" />
                             Покупка стартапа
                         </Button>
 
-                        <Button className="flex items-center justify-center gap-x-2 rounded-[8px] h-[52px] w-[364px] border border-[#2EAA7B] text-[#2EAA7B] hover:bg-[#2EAA7B] hover:text-white transition duration-500 text-[16px] font-inter leading-[150%] font-semibold">
+                        <Button onClick={() => setListingType("sell")} className="flex items-center justify-center gap-x-2 rounded-[8px] h-[52px] w-[364px] border border-[#2EAA7B] text-[#2EAA7B] hover:bg-[#2EAA7B] hover:text-white transition duration-500 text-[16px] font-inter leading-[150%] font-semibold">
                             <ShopIcon className="w-5 h-5 hover:text-white" />
                             Продажа стартапа
                         </Button>
                     </div>
                 </div>
-                <CardSection title="Стартапы" cards={TempBusinessCardsMock as ICard[]} maxVisible={8} Class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-y-10 gap-x-8 transition duration-600" ClassName={"px-[192px] py-[30px]"} />
+                {isLoading ? (
+                    <p className="px-[192px] py-[30px]">Загрузка...</p>
+                ) : isError ? (
+                    <p className="px-[192px] py-[30px] text-red-500">Ошибка загрузки данных</p>
+                ) : (<CardSection title="Стартапы" cards={homeOffers?.startup || []} maxVisible={8} Class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-y-10 gap-x-8 transition duration-600" ClassName={"px-[192px] py-[30px]"} />
+                )}
             </section>
             <section className="my-[50px] mb-[35px]">
                 <div className="px-[192px]">
@@ -139,7 +173,12 @@ export const MainPage = () => {
                     </Button>
                     <Paragraph className="text-[16px] mt-1.5 text-[#787878]">Описание</Paragraph>
                 </div>
-                <CardSection title="Инвестиции" cards={TempBusinessCardsMock as ICard[]} maxVisible={4} Class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-y-10 gap-x-8 transition duration-600" ClassName={"px-[192px] py-[30px]"} />
+                {isLoading ? (
+                    <p className="px-[192px] py-[30px]">Загрузка...</p>
+                ) : isError ? (
+                    <p className="px-[192px] py-[30px] text-red-500">Ошибка загрузки данных</p>
+                ) : (<CardSection title="Инвестиции" cards={homeOffers?.investments || []} maxVisible={4} Class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-y-10 gap-x-8 transition duration-600" ClassName={"px-[192px] py-[30px]"} />
+                )}
             </section>
             {/* Города */}
             <section className="relative min-h-[610px] w-screen overflow-hidden bg-gradient-to-br from-[#F8FFF5] to-[#FAFFF9]">
@@ -155,7 +194,16 @@ export const MainPage = () => {
                             links={categories}
                             variant="tabs"
                             activeLabel={selectedCategory}
-                            onClick={setSelectedCategory}
+                            onClick={(label) => {
+                                if (
+                                    label === "Бизнес" ||
+                                    label === "Франшиза" ||
+                                    label === "Стартапы" ||
+                                    label === "Инвестиции"
+                                ) {
+                                    setSelectedCategory(label);
+                                }
+                            }}
                             className="flex gap-4 text-[24px] text-start font-openSans mb-[25px] font-bold"
                             activeClassName="w-[234px] px-6 py-4 bg-[#2EAA7B] text-white rounded-xl"
                             inactiveClassName="w-[234px] bg-white font-openSans text-[#232323] border border-[#2EAA7B] rounded-xl hover:bg-[#31B683]/10"
@@ -163,20 +211,10 @@ export const MainPage = () => {
 
                         {/* ГОРОДА */}
                         <div className="flex flex-wrap gap-[20px]">
-                            {Object.entries(
-                                TempBusinessCardsMock
-
-                                    .filter((card) => card.type === titleToTypeMap[selectedCategory])
-                                    .reduce((acc: Record<string, number>, card) => {
-                                        acc[card.city] = (acc[card.city] || 0) + 1;
-                                        return acc;
-                                    }, {})
-                            ).map(([city, count], idx) => (
-                                <div
-                                    key={idx}
-                                    className="bg-black font-openSans text-white w-[234px] rounded-xl px-6 py-4 flex flex-col items-start">
-                                    <span className="text-2xl leading-[150%] font-bold">{city}</span>
-                                    <span className="font-bold leading-[150%] font-Urbanist text-[40px] ">{count.toLocaleString("ru-RU")}</span>
+                            {Object.entries(cityStats).map(([city, count], idx) => (
+                                <div key={idx} className="...">
+                                    <span>{city}</span>
+                                    <span>{count.toLocaleString("ru-RU")}</span>
                                 </div>
                             ))}
                         </div>

@@ -1,4 +1,4 @@
-import { LoginPage, RegistrationPage, MainPage, CategoryPage, ProfilePage, CardDetailPage } from "./Pages/index";
+import { LoginPage, RegistrationPage, MainPage, CategoryPage, ProfilePage, CardDetailPage, FavoritePage, AnnouncemntsPage, NoticePage } from "./Pages/index";
 import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
 import './index.css';
 import { useEffect } from "react";
@@ -15,7 +15,7 @@ const Layout = () => {
       <Outlet />
     </>
   )
-} 
+}
 
 const routerConfig = createBrowserRouter([
   {
@@ -28,6 +28,9 @@ const routerConfig = createBrowserRouter([
       { path: "register", element: <RegistrationPage /> },
       { path: ":category", element: <CategoryPage /> },
       { path: "profile", element: <ProfilePage /> },
+      { path: "favorites", element: <FavoritePage /> },
+      { path: "announcements", element: <AnnouncemntsPage /> },
+      { path: "notices", element: <NoticePage /> },
       { path: ":category/card/:id", element: <CardDetailPage /> },
     ]
   }

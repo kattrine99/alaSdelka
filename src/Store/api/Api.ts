@@ -10,6 +10,7 @@ import type {
     UpdateUserInfoResponse
 } from "./types";
 import { baseUrl } from "../../utils/baseUrl";
+import { ICard } from "../../components/Cards/Interfaces";
 
 export const AuthApi = createApi({
     reducerPath: "Api",
@@ -61,6 +62,20 @@ export const AuthApi = createApi({
                 body: formData,
             }),
         }),
+        getHomeOffers: builder.query<
+            {
+                business: ICard[];
+                franchise: ICard[];
+                startup: ICard[];
+                investments: ICard[];
+            },
+            string
+        >({
+            query: (listingType) => ({
+                url: `/home-offers?listing_type=${listingType}`,
+                method: "GET",
+            }),
+        }),
     }),
 
 });
@@ -71,4 +86,5 @@ export const {
     useVerifyPhoneCodeMutation,
     useGetUserInfoQuery,
     useUpdateUserInfoMutation,
+    useGetHomeOffersQuery,
 } = AuthApi;

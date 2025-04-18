@@ -5,13 +5,7 @@ import { useDispatch } from "react-redux";
 import { setIsAuthenticated } from "../../Store/Slices/authSlice";
 import { useState } from "react";
 import { FiEdit2 } from "react-icons/fi";
-
-const profileNavigate = [
-    { label: "Мои объявления", to: "/announcements" },
-    { label: "Уведомления", to: "/notices" },
-    { label: "Избранное", to: "/favorites" },
-    { label: "Продвижение", to: "/promotion" },
-];
+import { profileNavigate } from "../../utils/categoryMap"
 
 export const ProfilePage = () => {
     const navigate = useNavigate();
@@ -22,17 +16,17 @@ export const ProfilePage = () => {
     const { data, isLoading, error } = useGetUserInfoQuery();
     const [updateUserInfo] = useUpdateUserInfoMutation();
 
+    const [firstNameInput, setFirstNameInput] = useState("");
+    const [lastNameInput, setLastNameInput] = useState("");
     const [formData, setFormData] = useState<{
-        name: string;
         phone: string;
         email: string;
         city_id: number;
         photo?: File;
     }>({
-        name: "",
         phone: "",
         email: "",
-        city_id: 0,
+        city_id: 1,
         photo: undefined,
     });
 
@@ -52,8 +46,9 @@ export const ProfilePage = () => {
 
     const handleEditClick = () => {
         setEditMode(true);
+        setFirstNameInput(firstName);
+        setLastNameInput(lastName);
         setFormData({
-            name: data.name ?? "",
             phone: data.phone ?? "",
             email: data.email ?? "",
             city_id: data.city_id ?? 0,
@@ -70,8 +65,10 @@ export const ProfilePage = () => {
 
     const handleSave = async () => {
         try {
+            const fullName = `${firstNameInput} ${lastNameInput}`.trim();
+
             const form = new FormData();
-            form.append("name", formData.name);
+            form.append("name", fullName);
             form.append("email", formData.email);
             form.append("city_id", formData.city_id.toString());
             form.append("phone", formData.phone);
@@ -134,11 +131,12 @@ export const ProfilePage = () => {
                     <div className="bg-[#F8F8F8] w-full mt-6 p-10">
                         {editMode && (
                             <div className="relative w-max mb-6">
+                                <label className="text-[#121212] text-sm mb-1 block">Фото профиля</label>
                                 {formData.photo instanceof File ? (
                                     <img
                                         src={URL.createObjectURL(formData.photo)}
                                         alt="Preview"
-                                        className="rounded-full w-[140px] h-[140px] object-cover"
+                                        className="rounded-full w-[100px] h-[100px] object-cover"
                                     />
                                 ) : (
                                     <img
@@ -163,8 +161,8 @@ export const ProfilePage = () => {
                                     <Input
                                         title="Имя"
                                         type="text"
-                                        value={editMode ? formData.name.split(" ")[0] : firstName}
-                                        onChange={e => setFormData({ ...formData, name: `${e.target.value} ${lastName}` })}
+                                        value={editMode ? firstNameInput : firstName}
+                                        onChange={e => setFirstNameInput(e.target.value)}
                                         disabled={!editMode}
                                         isError={false}
                                     />
@@ -174,8 +172,8 @@ export const ProfilePage = () => {
                                     <Input
                                         title="Фамилия"
                                         type="text"
-                                        value={editMode ? formData.name.split(" ")[1] || "" : lastName}
-                                        onChange={e => setFormData({ ...formData, name: `${firstName} ${e.target.value}` })}
+                                        value={editMode ? lastNameInput : lastName}
+                                        onChange={e => setLastNameInput(e.target.value)}
                                         disabled={!editMode}
                                         isError={false}
                                     />

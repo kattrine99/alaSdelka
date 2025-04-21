@@ -1,4 +1,4 @@
-import { Footer, Header, Heading } from "../../components"
+import { EmptyMessage, Footer, Header, Heading } from "../../components"
 import { profileNavigate } from "../../utils/categoryMap"
 
 export const NoticePage = () => {
@@ -7,6 +7,11 @@ export const NoticePage = () => {
             <Header navLinksData={profileNavigate} />
             <div className="px-[192px] py-9">
                 <Heading text={"Уведомления"} level={2} className="font-inter text-xl font-bold leading-5 space-x-[-0.5%]" />
+                <EmptyMessage
+                    title="Нет уведомлений"
+                    subtitle="Здесь будут отображаться ваши уведомления"
+                    hideButton
+                />
 
             </div>
             <Footer showSmallFooter={true} />

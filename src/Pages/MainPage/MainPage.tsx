@@ -99,11 +99,14 @@ export const MainPage = () => {
 
                 </div>
                 {isLoading ? (
-                    <p className="px-[192px] py-[30px]">Загрузка...</p>
+                    <div className="flex justify-center items-center py-[30px]">
+                        <div className="w-10 h-10 border-4 border-[#2EAA7B] border-t-transparent rounded-full animate-spin"></div>
+                    </div>
                 ) : isError ? (
                     <p className="px-[192px] py-[30px] text-red-500">Ошибка загрузки данных</p>
-                ) : (<CardSection title="Бизнес" cards={homeOffers?.business || []} maxVisible={8} Class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-y-10 gap-x-8 transition duration-600" ClassName={"px-[192px] py-[30px]"} />
-                )}
+                ) :
+                    (<CardSection title="Бизнес" cards={homeOffers?.business || []} maxVisible={8} Class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-y-10 gap-x-8 transition duration-600" ClassName={"px-[192px] py-[30px]"} />
+                    )}
             </section>
             <section className="mt-[50px] mb-[35px]">
                 <div className="px-[192px] flex justify-start gap-[272px]">
@@ -128,12 +131,15 @@ export const MainPage = () => {
                     </div>
                 </div>
                 {isLoading ? (
-                    <p className="px-[192px] py-[30px]">Загрузка...</p>
+                    <div className="flex justify-center items-center py-[30px]">
+                        <div className="w-10 h-10 border-4 border-[#2EAA7B] border-t-transparent rounded-full animate-spin"></div>
+                    </div>
                 ) : isError ? (
                     <p className="px-[192px] py-[30px] text-red-500">Ошибка загрузки данных</p>
-                ) : (<CardSection title="Франшиза" cards={homeOffers?.franchise || []} maxVisible={8} Class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-y-10 gap-x-8 transition duration-600" ClassName={"px-[192px] py-[30px]"} />
+                ) :
+                    (<CardSection title="Франшиза" cards={homeOffers?.franchise || []} maxVisible={8} Class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-y-10 gap-x-8 transition duration-600" ClassName={"px-[192px] py-[30px]"} />
+                    )}
 
-                )}
             </section>
             <section className="mt-[50px] mb-[35px]">
                 <div className="px-[192px] flex justify-start gap-[272px]">
@@ -158,11 +164,15 @@ export const MainPage = () => {
                     </div>
                 </div>
                 {isLoading ? (
-                    <p className="px-[192px] py-[30px]">Загрузка...</p>
+                    <div className="flex justify-center items-center py-[30px]">
+                        <div className="w-10 h-10 border-4 border-[#2EAA7B] border-t-transparent rounded-full animate-spin"></div>
+                    </div>
                 ) : isError ? (
                     <p className="px-[192px] py-[30px] text-red-500">Ошибка загрузки данных</p>
-                ) : (<CardSection title="Стартапы" cards={homeOffers?.startup || []} maxVisible={8} Class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-y-10 gap-x-8 transition duration-600" ClassName={"px-[192px] py-[30px]"} />
-                )}
+                ) :
+                    (<CardSection title="Стартапы" cards={homeOffers?.startup || []} maxVisible={8} Class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-y-10 gap-x-8 transition duration-600" ClassName={"px-[192px] py-[30px]"} />
+                    )}
+
             </section>
             <section className="my-[50px] mb-[35px]">
                 <div className="px-[192px]">
@@ -174,11 +184,15 @@ export const MainPage = () => {
                     <Paragraph className="text-[16px] mt-1.5 text-[#787878]">Описание</Paragraph>
                 </div>
                 {isLoading ? (
-                    <p className="px-[192px] py-[30px]">Загрузка...</p>
+                    <div className="flex justify-center items-center py-[30px]">
+                        <div className="w-10 h-10 border-4 border-[#2EAA7B] border-t-transparent rounded-full animate-spin"></div>
+                    </div>
                 ) : isError ? (
                     <p className="px-[192px] py-[30px] text-red-500">Ошибка загрузки данных</p>
-                ) : (<CardSection title="Инвестиции" cards={homeOffers?.investments || []} maxVisible={4} Class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-y-10 gap-x-8 transition duration-600" ClassName={"px-[192px] py-[30px]"} />
-                )}
+                ) :
+                    (<CardSection title="Инвестиции" cards={homeOffers?.investments || []} maxVisible={4} Class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-y-10 gap-x-8 transition duration-600" ClassName={"px-[192px] py-[30px]"} />
+                    )}
+
             </section>
             {/* Города */}
             <section className="relative min-h-[610px] w-screen overflow-hidden bg-gradient-to-br from-[#F8FFF5] to-[#FAFFF9]">

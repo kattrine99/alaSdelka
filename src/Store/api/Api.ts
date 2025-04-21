@@ -7,7 +7,8 @@ import type {
     VerifyCodePayload,
     VerifyCodeResponse,
     GetUserInfoResponse,
-    UpdateUserInfoResponse
+    UpdateUserInfoResponse,
+    MyOffer,
 } from "./types";
 import { baseUrl } from "../../utils/baseUrl";
 import { ICard } from "../../components/Cards/Interfaces";
@@ -76,6 +77,10 @@ export const AuthApi = createApi({
                 method: "GET",
             }),
         }),
+        getMyOffers: builder.query<{ offers: { data: MyOffer[] } }, number>({
+            query: (perPage) => `/my-offers?per_page=${perPage}`,
+        }),
+
     }),
 
 });
@@ -87,4 +92,5 @@ export const {
     useGetUserInfoQuery,
     useUpdateUserInfoMutation,
     useGetHomeOffersQuery,
+    useGetMyOffersQuery,
 } = AuthApi;

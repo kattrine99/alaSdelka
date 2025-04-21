@@ -6,6 +6,8 @@ import { setIsAuthenticated } from "../../Store/Slices/authSlice";
 import { useState } from "react";
 import { FiEdit2 } from "react-icons/fi";
 import { profileNavigate } from "../../utils/categoryMap"
+import { FiAlertCircle } from "react-icons/fi";
+
 
 export const ProfilePage = () => {
     const navigate = useNavigate();
@@ -31,13 +33,17 @@ export const ProfilePage = () => {
     });
 
     const [showSuccess, setShowSuccess] = useState(false);
-
-    if (isLoading) return <div>Загрузка...</div>;
-    if (error) return <div>Ошибка</div>;
-    if (!data) return <div>Нет данных</div>;
-
+    if (isLoading) return <div className="w-screen h-[670px] flex justify-center items-center py-[30px]">
+        <div className="w-30 h-30 border-10 border-[#2EAA7B] border-t-transparent rounded-full animate-spin"></div>
+    </div>;
+    if (error) return <div className="w-screen h-[670px] flex flex-col justify-center items-center py-[30px]">
+        <div className="w-12 h-12 flex items-center justify-center rounded-full bg-red-100 mb-3">
+            <FiAlertCircle className="text-red-600 text-[28px]" />
+        </div>
+        <p className="text-red-600 text-lg font-semibold">Произошла ошибка при загрузке</p>
+    </div>;
+    if (!data) return <div>Нет данных</div>
     const [firstName, lastName] = (data.name || "").split(" ");
-
     const handleLogout = () => {
         localStorage.removeItem("access_token");
         dispatch(setIsAuthenticated(false));
@@ -46,14 +52,16 @@ export const ProfilePage = () => {
 
     const handleEditClick = () => {
         setEditMode(true);
-        setFirstNameInput(firstName);
-        setLastNameInput(lastName);
-        setFormData({
-            phone: data.phone ?? "",
-            email: data.email ?? "",
-            city_id: data.city_id ?? 0,
-            photo: undefined,
-        });
+        if (data) {
+            setFirstNameInput(firstName);
+            setLastNameInput(lastName);
+            setFormData({
+                phone: data.phone ?? "",
+                email: data.email ?? "",
+                city_id: data.city_id ?? 0,
+                photo: undefined,
+            });
+        }
     };
 
     const handlePhotoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -110,8 +118,7 @@ export const ProfilePage = () => {
                             <Heading
                                 className="text-[#121212] font-inter font-bold text-4xl leading-10"
                                 text={`Добро пожаловать, ${firstName}!`}
-                                level={2}
-                            />
+                                level={2} />
                             <div className="flex justify-between mt-6 ml-5">
                                 <div className="flex gap-x-6 mb-1.5 items-center">
                                     <img src={data.photo || ""} alt="profile_Photo" className="rounded-full w-[100px] h-[100px]" />
@@ -228,6 +235,7 @@ export const ProfilePage = () => {
                     </div>
                 </div>
             </div>
+
             <Footer showSmallFooter={true} />
         </div>
     );

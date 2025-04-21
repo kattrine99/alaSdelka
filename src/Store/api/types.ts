@@ -77,3 +77,17 @@ export interface UpdateUserInfoResponse {
     city_id: number;
 
 }
+export interface MyOffer {
+    id: number;
+    title: string;
+    price: number;
+    area: number;
+    offer_status: string;
+    address: {
+        address: string;
+        city: {
+            name_ru: string;
+        };
+    };
+    photos: { photo: string }[];
+}

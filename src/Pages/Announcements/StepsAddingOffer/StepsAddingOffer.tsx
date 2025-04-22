@@ -113,6 +113,7 @@ export const StepsAddingOffer = () => {
                                         <Paragraph className="font-semibold">{type}</Paragraph>
                                     </div>
                                 ))}
+
                             </div>
                         )}
 
@@ -133,21 +134,23 @@ export const StepsAddingOffer = () => {
                         )}
                         {/* Step-2 - информация */}
                         {step === 2 && category && (
-                            <InformationStep category={category as CategoryType} />
+                            <InformationStep category={category as CategoryType} onNext={handleNext} />
                         )}
 
 
                         {/* Кнопка Дальше */}
-                        <div className="mt-10">
-                            <Button
-                                onClick={handleNext}
-                                disabled={isNextDisabled()}
-                                className={`flex items-center gap-2 ${isNextDisabled() ? "bg-gray-300 cursor-not-allowed" : "bg-[#2EAA7B] text-white"
-                                    } px-6 py-2 rounded-md`}
-                            >
-                                Дальше <FiChevronRight />
-                            </Button>
-                        </div>
+                        {step !== 2 && (
+                            <div className="mt-10">
+                                <Button
+                                    onClick={handleNext}
+                                    disabled={isNextDisabled()}
+                                    className={`flex items-center gap-2 ${isNextDisabled() ? "bg-gray-300 cursor-not-allowed" : "bg-[#2EAA7B] text-white"
+                                        } px-6 py-2 rounded-md`}
+                                >
+                                    Дальше <FiChevronRight />
+                                </Button>
+                            </div>
+                        )}
                     </div>
                 </div>
 

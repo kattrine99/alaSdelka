@@ -1,15 +1,34 @@
 import { Paragraph } from "../Typography/Paragraph/Paragraph";
-import { forwardRef, InputHTMLAttributes, useEffect, useState } from "react";
+import {
+    forwardRef,
+    InputHTMLAttributes,
+    TextareaHTMLAttributes,
+    useEffect,
+    useState,
+} from "react";
 
-interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
+interface BaseProps {
+    isTextArea?: boolean;
     errorMessage?: string;
     isError: boolean;
-    value?: string; // ← добавлено
-    onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void; // ← добавлено
+    value?: string;
+    onChange?: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
+    type?: string;
+    placeholder?: string;
+    LabelClassName?: string;
+    LabelText?: string;
+
 }
 
-export const Input = forwardRef<HTMLInputElement, InputProps>(
-    ({ type, placeholder, isError, errorMessage, value, onChange, ...props }, ref) => {
+
+type InputProps = BaseProps &
+    Omit<
+        InputHTMLAttributes<HTMLInputElement> & TextareaHTMLAttributes<HTMLTextAreaElement>,
+        "onChange" | "value" | "type"
+    >;
+
+export const Input = forwardRef<HTMLInputElement | HTMLTextAreaElement, InputProps>(
+    ({ type, placeholder, isError, errorMessage, value, onChange, isTextArea = false, LabelClassName, LabelText, ...props }, ref) => {
         const [inputStatus, setInputStatus] = useState<"default" | "error" | "success">("default");
 
         useEffect(() => {
@@ -28,27 +47,42 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
                 : inputStatus === "success"
                     ? "border-green-500 focus:ring-green-500"
                     : "border-gray-300 focus:ring-blue-500";
-
+        if (isTextArea) {
+            return (
+                <div className="w-full relative flex flex-col gap-2.5">
+                    <label className={LabelClassName}>{LabelText}</label>
+                    <textarea
+                        ref={ref as React.Ref<HTMLTextAreaElement>}
+                        placeholder={placeholder}
+                        value={value}
+                        onChange={onChange}
+                        maxLength={3000}
+                        className={`bg-[#F0F1F2]/50 resize-none rounded-[14px] outline-none py-[14px] px-[18px] text-[#101828] font-inter text-sm placeholder:text-[#8A8A8A] w-full h-[150px] ${borderColor}`}
+                        {...(props as TextareaHTMLAttributes<HTMLTextAreaElement>)}
+                    />
+                    {isError && (
+                        <Paragraph className="text-sm text-red-500 mt-1">{errorMessage}</Paragraph>
+                    )}
+                </div>
+            );
+        }
         return (
-            <div className="w-full">
+            <div className="w-full flex flex-col gap-2.5">
+                <label className={LabelClassName}>{LabelText}</label>
                 <input
-                    ref={ref}
+                    ref={ref as React.Ref<HTMLInputElement>}
                     type={type}
                     placeholder={placeholder}
                     value={value}
                     onChange={onChange}
-                    className={`w-full px-4 py-3 border-2 rounded-lg outline-none transition-all duration-300 ${borderColor}`}
-                    {...props}
+                    {...(props as InputHTMLAttributes<HTMLInputElement>)}
                 />
-
                 <div
                     className={`transition-all duration-300 ease-in-out ${isError ? "opacity-100 scale-100 mt-1" : "opacity-0 scale-95 h-0 mt-0"
                         } overflow-hidden text-left`}
                 >
                     {isError && (
-                        <Paragraph className="text-sm text-red-500">
-                            {errorMessage}
-                        </Paragraph>
+                        <Paragraph className="text-sm text-red-500">{errorMessage}</Paragraph>
                     )}
                 </div>
             </div>

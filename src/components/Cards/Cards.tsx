@@ -45,7 +45,7 @@ export const Cards: React.FC<ICards> = ({
                         )}
                         <div className={`relative ${cardIconClass ?? ""}`}>
 
-                            <img src={card.image || ""} alt={`${card.id}`} className="w-full h-[192px] object-cover" />
+                            <img src={card.image || "../../../images/business_abstract.jpg"} alt={`${card.id}`} className="w-full h-[192px] object-cover" />
                             <button
                                 onClick={() => toggleFavorite(card.id)}
                                 className="absolute top-5 right-[18px] px-[7px] py-2 text-[#28B13D] bg-white rounded-full border-2 border-[#28B13D] shadow-sm"

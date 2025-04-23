@@ -310,11 +310,12 @@ export const InformationStep: React.FC<Props> = ({ category, onNext }) => {
 
             {/* Детали объявления (переключатели) */}
             <Heading text={"Детали объявления"} level={3} className="font-inter font-semibold text-[#232323] text-xl leading-[130%]" />
-            <div className="grid grid-cols-2 md:grid-cols-1 gap-x-20 gap-y-5 w-[800px]">
-                <label className="flex items-center justify-between w-full cursor-pointer">
-                    <span className="text-[#101828] font-inter text-[16px] leading-[130%]">Парковка</span>
-                    <input
+            <div className="flex flex-col w-[393px] gap-6">
+                <label className="flex items-center justify-between cursor-pointer">
+                    <span className="text-[#101828] font-inter w-full text-[16px] leading-[130%]">Парковка</span>
+                    <Input
                         type="checkbox"
+                        isError={false}
                         checked={parking}
                         onChange={() => setParking(!parking)}
                         className="appearance-none w-[44px] h-[24px] bg-gray-300 rounded-full relative transition-all duration-300 checked:bg-[#2EAA7B]
@@ -324,9 +325,10 @@ export const InformationStep: React.FC<Props> = ({ category, onNext }) => {
                 </label>
 
                 <label className="flex items-center justify-between w-full cursor-pointer">
-                    <span className="text-[#101828] font-inter text-[16px] leading-[130%]">База клиентов</span>
-                    <input
+                    <span className="text-[#101828] w-full font-inter text-[16px] leading-[130%]">База клиентов</span>
+                    <Input
                         type="checkbox"
+                        isError={false}
                         checked={clients}
                         onChange={() => setClients(!clients)}
                         className="appearance-none w-[44px] h-[24px] bg-gray-300 rounded-full relative transition-all duration-300 checked:bg-[#2EAA7B]
@@ -336,9 +338,10 @@ export const InformationStep: React.FC<Props> = ({ category, onNext }) => {
                 </label>
 
                 <label className="flex items-center justify-between w-full cursor-pointer">
-                    <span className="text-[#101828] font-inter text-[16px] leading-[130%]">База поставщиков</span>
-                    <input
+                    <span className="text-[#101828] w-full font-inter text-[16px] leading-[130%]">База поставщиков</span>
+                    <Input
                         type="checkbox"
+                        isError={false}
                         checked={suppliers}
                         onChange={() => setSuppliers(!suppliers)}
                         className="appearance-none w-[44px] h-[24px] bg-gray-300 rounded-full relative transition-all duration-300 checked:bg-[#2EAA7B]
@@ -348,9 +351,10 @@ export const InformationStep: React.FC<Props> = ({ category, onNext }) => {
                 </label>
 
                 <label className="flex items-center justify-between w-full cursor-pointer">
-                    <span className="text-[#101828] font-inter text-[16px] leading-[130%]">Оборудование и активы</span>
-                    <input
+                    <span className="text-[#101828] w-full font-inter text-[16px] leading-[130%]">Оборудование и активы</span>
+                    <Input
                         type="checkbox"
+                        isError={false}
                         checked={equipment}
                         onChange={() => setEquipment(!equipment)}
                         className="appearance-none w-[44px] h-[24px] bg-gray-300 rounded-full relative transition-all duration-300 checked:bg-[#2EAA7B]
@@ -360,9 +364,10 @@ export const InformationStep: React.FC<Props> = ({ category, onNext }) => {
                 </label>
 
                 <label className="flex items-center justify-between w-full cursor-pointer">
-                    <span className="text-[#101828] font-inter text-[16px] leading-[130%]">Поставки из-за рубежа</span>
-                    <input
+                    <span className="text-[#101828] w-full font-inter text-[16px] leading-[130%]">Поставки из-за рубежа</span>
+                    <Input
                         type="checkbox"
+                        isError={false}
                         checked={importedSupplies}
                         onChange={() => setImportedSupplies(!importedSupplies)}
                         className="appearance-none w-[44px] h-[24px] bg-gray-300 rounded-full relative transition-all duration-300 checked:bg-[#2EAA7B]
@@ -372,9 +377,10 @@ export const InformationStep: React.FC<Props> = ({ category, onNext }) => {
                 </label>
 
                 <label className="flex items-center justify-between w-full cursor-pointer">
-                    <span className="text-[#101828] font-inter text-[16px] leading-[130%]">Контракты на экспорт</span>
-                    <input
+                    <span className="text-[#101828] w-full font-inter text-[16px] leading-[130%]">Контракты на экспорт</span>
+                    <Input
                         type="checkbox"
+                        isError={false}
                         checked={exportContracts}
                         onChange={() => setExportContracts(!exportContracts)}
                         className="appearance-none w-[44px] h-[24px] bg-gray-300 rounded-full relative transition-all duration-300 checked:bg-[#2EAA7B]
@@ -384,9 +390,10 @@ export const InformationStep: React.FC<Props> = ({ category, onNext }) => {
                 </label>
 
                 <label className="flex items-center justify-between w-full cursor-pointer">
-                    <span className="text-[#101828] font-inter text-[16px] leading-[130%]">Отсутствие кредита</span>
-                    <input
+                    <span className="text-[#101828] w-full font-inter text-[16px] leading-[130%]">Отсутствие кредита</span>
+                    <Input
                         type="checkbox"
+                        isError={false}
                         checked={noCredit}
                         onChange={() => setNoCredit(!noCredit)}
                         className="appearance-none w-[44px] h-[24px] bg-gray-300 rounded-full relative transition-all duration-300 checked:bg-[#2EAA7B]
@@ -396,9 +403,10 @@ export const InformationStep: React.FC<Props> = ({ category, onNext }) => {
                 </label>
 
                 <label className="flex items-center justify-between w-full cursor-pointer">
-                    <span className="text-[#101828] font-inter text-[16px] leading-[130%]">Наличие филиалов</span>
-                    <input
+                    <span className="text-[#101828] w-full font-inter text-[16px] leading-[130%]">Наличие филиалов</span>
+                    <Input
                         type="checkbox"
+                        isError={false}
                         checked={hasBranches}
                         onChange={() => setHasBranches(!hasBranches)}
                         className="appearance-none w-[44px] h-[24px] bg-gray-300 rounded-full relative transition-all duration-300 checked:bg-[#2EAA7B]
@@ -406,6 +414,51 @@ export const InformationStep: React.FC<Props> = ({ category, onNext }) => {
       before:bg-white before:rounded-full before:transition-all before:duration-300 checked:before:translate-x-[20px]"
                     />
                 </label>
+                {isFranchise &&
+                    <div className="flex flex-col w-[393px] gap-6">
+                        <label className="flex items-center justify-between w-full cursor-pointer">
+                            <span className="text-[#101828] w-full font-inter text-[16px] leading-[130%]">Международная франшиза</span>
+                            <Input
+                                type="checkbox"
+                                isError={false}
+                                checked={hasBranches}
+                                onChange={() => setHasBranches(!hasBranches)}
+                                className="appearance-none w-[44px] h-[24px] bg-gray-300 rounded-full relative transition-all duration-300 checked:bg-[#2EAA7B]
+  before:content-[''] before:absolute before:top-[2px] before:left-[2px] before:w-[20px] before:h-[20px]
+  before:bg-white before:rounded-full before:transition-all before:duration-300 checked:before:translate-x-[20px]"
+                            />
+                        </label>
+                        <label className="flex items-center justify-between w-full cursor-pointer">
+                            <span className="text-[#101828] w-full font-inter text-[16px] leading-[130%]">Наличие мастер франшизы</span>
+                            <Input
+                                type="checkbox"
+                                isError={false}
+                                checked={hasBranches}
+                                onChange={() => setHasBranches(!hasBranches)}
+                                className="appearance-none w-[44px] h-[24px] bg-gray-300 rounded-full relative transition-all duration-300 checked:bg-[#2EAA7B]
+  before:content-[''] before:absolute before:top-[2px] before:left-[2px] before:w-[20px] before:h-[20px]
+  before:bg-white before:rounded-full before:transition-all before:duration-300 checked:before:translate-x-[20px]"
+                            />
+                        </label>
+                    </div>
+                }
+                {isInvestments &&
+                    <div className="flex flex-col w-[393px] gap-6">
+                        <label className="flex items-center justify-between w-full cursor-pointer">
+                            <span className="text-[#101828] w-full font-inter text-[16px] leading-[130%]">Авторские права</span>
+                            <Input
+                                type="checkbox"
+                                isError={false}
+                                checked={hasBranches}
+                                onChange={() => setHasBranches(!hasBranches)}
+                                className="appearance-none w-[44px] h-[24px] bg-gray-300 rounded-full relative transition-all duration-300 checked:bg-[#2EAA7B]
+  before:content-[''] before:absolute before:top-[2px] before:left-[2px] before:w-[20px] before:h-[20px]
+  before:bg-white before:rounded-full before:transition-all before:duration-300 checked:before:translate-x-[20px]"
+                            />
+                        </label>
+                    </div>
+                }
+
             </div>
 
             <div className="mt-10">

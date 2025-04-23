@@ -31,7 +31,7 @@ export const MainPage = () => {
             <Header />
             <section className="relative overflow-hidden bg-gradient-to-tr from-[#16503A] to-[#31B683]">
                 <div className="absolute right-[-80px] bottom-[-9rem] w-[850px] h-[850px] bg-[url('/images/Check.png')] bg-no-repeat bg-contain rotate-[12deg] pointer-events-none z-0"></div>
-                <div className="relative py-[70px] px-4 sm:px-8 md:px-[96px] xl:px-[192px] overflow-hidden">
+                <div className="relative container mx-auto py-[70px]">
                     {/* Текст */}
                     <div className="order-2 lg:order-1 flex flex-col gap-6 max-w-3xl w-full">
                         <Heading
@@ -46,36 +46,34 @@ export const MainPage = () => {
                             — первая в Узбекистане специализированная площадка для размещения объявлений
                             о продаже готового бизнеса, стартапов, франшиз и инвестиционных проектов.
                         </Paragraph>
-
-
-                        {/* Поиск */}
-                        <div className="mt-4 w-full flex flex-col max-w-6xl relative">
-                            {/* Категории */}
-                            <div className="w-[566px] bg-white rounded-t-xl border-b border-[#E0E0E0]">
-                                <NavLinks
-                                    links={categories}
-                                    variant="tabs"
-                                    activeLabel={selectedCategory}
-                                    onClick={(label) => {
-                                        if (
-                                            label === "Бизнес" ||
-                                            label === "Франшиза" ||
-                                            label === "Стартапы" ||
-                                            label === "Инвестиции"
-                                        ) {
-                                            setSelectedCategory(label);
-                                        }
-                                    }}
-                                    className="flex text-[18px] font-openSans font-semibold"
-                                    activeClassName="text-[#2EAA7B] w-[136px] py-[14px] px-[17px]  border-b"
-                                    inactiveClassName="text-[#787878] w-[136px] py-[14px] px-[17px] hover:text-[#2EAA7B] "
-                                    underlineColor="bg-[#2EAA7B]"
-                                />
-                            </div>
-
-                            {/* Фильтр Поиск*/}
-                            <FilterBar />
+                    </div>
+                    {/* Поиск */}
+                    <div className="mt-4 w-full flex flex-col relative">
+                        {/* Категории */}
+                        <div className="w-[566px] bg-white rounded-t-xl border-b border-[#E0E0E0]">
+                            <NavLinks
+                                links={categories}
+                                variant="tabs"
+                                activeLabel={selectedCategory}
+                                onClick={(label) => {
+                                    if (
+                                        label === "Бизнес" ||
+                                        label === "Франшиза" ||
+                                        label === "Стартапы" ||
+                                        label === "Инвестиции"
+                                    ) {
+                                        setSelectedCategory(label);
+                                    }
+                                }}
+                                className="flex text-[18px] font-openSans font-semibold"
+                                activeClassName="text-[#2EAA7B] w-[136px] py-[14px] px-[17px]  border-b"
+                                inactiveClassName="text-[#787878] w-[136px] py-[14px] px-[17px] hover:text-[#2EAA7B] "
+                                underlineColor="bg-[#2EAA7B]"
+                            />
                         </div>
+
+                        {/* Фильтр Поиск*/}
+                        <FilterBar />
                     </div>
                 </div>
             </section>

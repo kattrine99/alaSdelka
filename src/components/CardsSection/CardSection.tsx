@@ -1,6 +1,5 @@
 import { Cards } from "../index";
-import { ICard } from "../Cards/Cards";
-import { titleToTypeMap } from "../../utils/categoryMap";
+import { ICard } from "../Cards/Interfaces";
 
 interface CardSectionProps {
   title: string;
@@ -12,7 +11,6 @@ interface CardSectionProps {
 }
 
 export const CardSection: React.FC<CardSectionProps> = ({
-  title,
   cards,
   maxVisible,
   Class,
@@ -20,9 +18,7 @@ export const CardSection: React.FC<CardSectionProps> = ({
 }) => {
 
 
-
-  const typeFilter = titleToTypeMap[title] || "";
-  const filteredCards = cards.filter((card) => card.type === typeFilter);
+  const filteredCards = cards;
 
   return (
     <div className={ClassName}>

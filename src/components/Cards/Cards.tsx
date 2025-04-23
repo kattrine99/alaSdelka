@@ -33,7 +33,7 @@ export const Cards: React.FC<ICards> = ({
                 .map((card) => (
                     <div
                         key={card.id}
-                        className={`relative rounded-lg shadow-lg bg-white ${cardWrapperClass ?? ""}`}
+                        className={`relative rounded-lg shadow-lg bg-white flex flex-col h-full ${cardWrapperClass ?? ""}`}
                     >
                         {card.popular && (
                             <div className="absolute w-[125px] left-5 font-openSans translate-y-[-50%] bg-white border border-[#FD6A0D] text-[#FD6A0D] py-[5px] px-1.5 rounded-md font-semibold z-10 shadow-sm flex">
@@ -58,7 +58,7 @@ export const Cards: React.FC<ICards> = ({
                             </button>
                         </div>
 
-                        <div className="px-[18px] py-[21px] flex flex-col justify-between min-h-[260px] grow">
+                        <div className="px-[18px] py-[21px] flex flex-col flex-1">
                             <div className=" flex flex-col">
                                 <Heading
                                     text={card.price}
@@ -74,7 +74,8 @@ export const Cards: React.FC<ICards> = ({
                                     className={`text-gray-600 flex gap-x-2 font-inter text-[14px] font-medium mb-[6px] ${cardTextClass ?? ""}`}
                                 >
                                     <FaLocationDot className="text-[#2EAA7B] h-[16px]" />
-                                    Адрес: <span className="font-bold">{card.address}</span>
+                                    Адрес: <span className="font-bold">  {card.address?.address ?? "Адрес не указан"}, {card.address?.city?.name_ru ?? ""}
+                                    </span>
                                 </Paragraph>
                                 <Paragraph
                                     className={`text-gray-600 flex gap-x-2 font-inter text-[14px] font-medium mb-[18px] ${cardTextClass ?? ""}`}
@@ -83,7 +84,7 @@ export const Cards: React.FC<ICards> = ({
                                     {card.area}
                                 </Paragraph>
                             </div>
-                            <div className="w-full h-[44px]">
+                            <div className="w-full h-[44px] mt-auto">
                                 <Button className="w-full py-[12px] bg-[#2EAA7B] text-white font-medium rounded-md flex justify-center hover:bg-[#31B683] transition duration-300 cursor-pointer">
                                     <Link to={`/${card.type}/card/${card.id}`} className="flex gap-2 items-center">
                                         Просмотреть <FaArrowRight />

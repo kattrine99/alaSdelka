@@ -1,12 +1,17 @@
 
 export interface ICard {
-    city: any;
+    city_id: number;
     type: "бизнес" | "франшиза" | "стартап" | "инвестиции";
     id: number;
     image?: string | null;
     price: string;
     title: string;
-    address: string;
+    address: {
+        address: string;
+        city: {
+            name_ru: string;
+        };
+    };
     area: string;
     popular: boolean;
     category?: string;

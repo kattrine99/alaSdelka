@@ -10,8 +10,14 @@ export const MainPage = () => {
     const [selectedCategory, setSelectedCategory] = useState<"Бизнес" | "Франшиза" | "Стартапы" | "Инвестиции">("Бизнес")
         ;
     const navigate = useNavigate();
-    const [listingType, setListingType] = useState<"buy" | "sell">("buy");
-    const { data: homeOffers, isLoading, isError } = useGetHomeOffersQuery(listingType);
+    const [listingTypes, setListingTypes] = useState<Record<"Бизнес" | "Франшиза" | "Стартапы" | "Инвестиции", "buy" | "sell">>({
+        Бизнес: "buy",
+        Франшиза: "buy",
+        Стартапы: "buy",
+        Инвестиции: "buy",
+    });
+    const currentType = listingTypes[selectedCategory];
+    const { data: homeOffers, isLoading, isError } = useGetHomeOffersQuery(listingTypes[selectedCategory]);
     const cityStats: Record<string, number> = (homeOffers?.[titleToTypeMap[selectedCategory]] || []).reduce(
         (acc, card) => {
             acc[card.city] = (acc[card.city] || 0) + 1;
@@ -86,12 +92,18 @@ export const MainPage = () => {
                         <Paragraph className="text-[16px] mt-1.5 text-[#787878]">Описание</Paragraph>
                     </div>
                     <div className="flex gap-[42px] text-center">
-                        <Button onClick={() => setListingType("buy")} className="flex items-center justify-center gap-x-2 rounded-[8px] h-[52px] w-[364px] border border-[#2EAA7B] text-[#2EAA7B] text-[16px] hover:bg-[#2EAA7B] hover:text-white transition duration-500 font-inter leading-[150%] font-semibold">
+                        <Button onClick={() => setListingTypes(prev => ({ ...prev, [selectedCategory]: "buy" }))} className={`flex items-center justify-center gap-x-2 rounded-[8px] h-[52px] w-[364px] border border-[#2EAA7B] text-[#2EAA7B] text-[16px] hover:bg-[#2EAA7B] hover:text-white transition duration-500 font-inter leading-[150%] font-semibold
+                        ${currentType === "buy" ? "bg-[#2EAA7B] text-white border-[#2EAA7B]"
+                                : "border-[#2EAA7B] text-[#2EAA7B] hover:bg-[#2EAA7B] hover:text-white"
+                            }`}>
                             <ShopIcon className="w-5 h-5 hover:text-white" />
                             Покупка бизнеса
                         </Button>
 
-                        <Button onClick={() => setListingType("sell")} className="flex items-center justify-center gap-x-2 rounded-[8px] h-[52px] w-[364px] border border-[#2EAA7B] text-[#2EAA7B] text-[16px] hover:bg-[#2EAA7B] hover:text-white transition duration-500 font-inter leading-[150%] font-semibold">
+                        <Button onClick={() => setListingTypes(prev => ({ ...prev, [selectedCategory]: "sell" }))} className={`flex items-center justify-center gap-x-2 rounded-[8px] h-[52px] w-[364px] border border-[#2EAA7B] text-[#2EAA7B] text-[16px] hover:bg-[#2EAA7B] hover:text-white transition duration-500 font-inter leading-[150%] font-semibold
+                        ${currentType === "sell" ? "bg-[#2EAA7B] text-white border-[#2EAA7B]"
+                                : "border-[#2EAA7B] text-[#2EAA7B] hover:bg-[#2EAA7B] hover:text-white"
+                            }`}>
                             <ShopIcon className="w-5 h-5 hover:text-white" />
                             Продажа бизнеса
                         </Button>
@@ -105,7 +117,7 @@ export const MainPage = () => {
                 ) : isError ? (
                     <p className="px-[192px] py-[30px] text-red-500">Ошибка загрузки данных</p>
                 ) :
-                    (<CardSection title="Бизнес" cards={homeOffers?.business || []} maxVisible={8} Class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-y-10 gap-x-8 transition duration-600" ClassName={"px-[192px] py-[30px]"} />
+                    (<CardSection title="Бизнес" cards={Object.values(homeOffers?.business || {})} maxVisible={8} Class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-y-10 gap-x-8 transition duration-600" ClassName={"px-[192px] py-[30px]"} />
                     )}
             </section>
             <section className="mt-[50px] mb-[35px]">
@@ -119,12 +131,18 @@ export const MainPage = () => {
                         <Paragraph className="text-[16px] mt-1.5 text-[#787878]">Описание</Paragraph>
                     </div>
                     <div className="flex gap-[42px] text-center">
-                        <Button onClick={() => setListingType("buy")} className="flex items-center justify-center gap-x-2 rounded-[8px] h-[52px] w-[364px] border border-[#2EAA7B] text-[#2EAA7B] hover:bg-[#2EAA7B] hover:text-white transition duration-500 text-[16px] font-inter leading-[150%] font-semibold">
+                        <Button onClick={() => setListingTypes(prev => ({ ...prev, [selectedCategory]: "buy" }))} className={`flex items-center justify-center gap-x-2 rounded-[8px] h-[52px] w-[364px] border border-[#2EAA7B] text-[#2EAA7B] text-[16px] hover:bg-[#2EAA7B] hover:text-white transition duration-500 font-inter leading-[150%] font-semibold
+                        ${currentType === "buy" ? "bg-[#2EAA7B] text-white border-[#2EAA7B]"
+                                : "border-[#2EAA7B] text-[#2EAA7B] hover:bg-[#2EAA7B] hover:text-white"
+                            }`}>
                             <ShopIcon className="w-5 h-5 hover:text-white" />
                             Покупка франшизы
                         </Button>
 
-                        <Button onClick={() => setListingType("sell")} className="flex items-center justify-center gap-x-2 rounded-[8px] h-[52px] w-[364px] border border-[#2EAA7B] text-[#2EAA7B] hover:bg-[#2EAA7B] hover:text-white transition duration-500 text-[16px] font-inter leading-[150%] font-semibold">
+                        <Button onClick={() => setListingTypes(prev => ({ ...prev, [selectedCategory]: "sell" }))} className={`flex items-center justify-center gap-x-2 rounded-[8px] h-[52px] w-[364px] border border-[#2EAA7B] text-[#2EAA7B] text-[16px] hover:bg-[#2EAA7B] hover:text-white transition duration-500 font-inter leading-[150%] font-semibold
+                        ${currentType === "sell" ? "bg-[#2EAA7B] text-white border-[#2EAA7B]"
+                                : "border-[#2EAA7B] text-[#2EAA7B] hover:bg-[#2EAA7B] hover:text-white"
+                            }`}>
                             <ShopIcon className="w-5 h-5 hover:text-white" />
                             Продажа франшизы
                         </Button>
@@ -152,12 +170,18 @@ export const MainPage = () => {
                         <Paragraph className="text-[16px] mt-1.5 text-[#787878]">Описание</Paragraph>
                     </div>
                     <div className="flex gap-[42px] text-center">
-                        <Button onClick={() => setListingType("buy")} className="flex items-center justify-center gap-x-2 rounded-[8px] h-[52px] w-[364px] border border-[#2EAA7B] text-[#2EAA7B] hover:bg-[#2EAA7B] hover:text-white transition duration-500 text-[16px] font-inter leading-[150%] font-semibold">
+                        <Button onClick={() => setListingTypes(prev => ({ ...prev, [selectedCategory]: "buy" }))} className={`flex items-center justify-center gap-x-2 rounded-[8px] h-[52px] w-[364px] border border-[#2EAA7B] text-[#2EAA7B] text-[16px] hover:bg-[#2EAA7B] hover:text-white transition duration-500 font-inter leading-[150%] font-semibold
+                        ${currentType === "buy" ? "bg-[#2EAA7B] text-white border-[#2EAA7B]"
+                                : "border-[#2EAA7B] text-[#2EAA7B] hover:bg-[#2EAA7B] hover:text-white"
+                            }`}>
                             <ShopIcon className="w-5 h-5 hover:text-white" />
                             Покупка стартапа
                         </Button>
 
-                        <Button onClick={() => setListingType("sell")} className="flex items-center justify-center gap-x-2 rounded-[8px] h-[52px] w-[364px] border border-[#2EAA7B] text-[#2EAA7B] hover:bg-[#2EAA7B] hover:text-white transition duration-500 text-[16px] font-inter leading-[150%] font-semibold">
+                        <Button onClick={() => setListingTypes(prev => ({ ...prev, [selectedCategory]: "sell" }))} className={`flex items-center justify-center gap-x-2 rounded-[8px] h-[52px] w-[364px] border border-[#2EAA7B] text-[#2EAA7B] text-[16px] hover:bg-[#2EAA7B] hover:text-white transition duration-500 font-inter leading-[150%] font-semibold
+                        ${currentType === "sell" ? "bg-[#2EAA7B] text-white border-[#2EAA7B]"
+                                : "border-[#2EAA7B] text-[#2EAA7B] hover:bg-[#2EAA7B] hover:text-white"
+                            }`}>
                             <ShopIcon className="w-5 h-5 hover:text-white" />
                             Продажа стартапа
                         </Button>

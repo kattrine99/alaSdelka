@@ -16,9 +16,16 @@ export const MainPage = () => {
         Стартапы: "buy",
         Инвестиции: "buy",
     });
-    const currentType = listingTypes[selectedCategory];
+
+    const businessType = listingTypes["Бизнес"];
+    const franchiseType = listingTypes["Франшиза"];
+    const startupType = listingTypes["Стартапы"];
+
     const { data: mainStats } = useGetMainStatisticsQuery();
-    const { data: homeOffers, isLoading, isError } = useGetHomeOffersQuery(listingTypes[selectedCategory]);
+    const { data: businessOffers, isLoading: isLoadingBusiness, isError: isErrorBusiness } = useGetHomeOffersQuery(listingTypes["Бизнес"]);
+    const { data: franchiseOffers, isLoading: isLoadingFranchise, isError: isErrorFranchise } = useGetHomeOffersQuery(listingTypes["Франшиза"]);
+    const { data: startupOffers, isLoading: isLoadingStartup, isError: isErrorStartup } = useGetHomeOffersQuery(listingTypes["Стартапы"]);
+    const { data: investmentOffers, isLoading: isLoadingInvestment, isError: isErrorInvestment } = useGetHomeOffersQuery(listingTypes["Инвестиции"]);
     const cityStats: Record<string, number> = {};
     mainStats?.cities_statistics.forEach((item) => {
         if (item.name_ru && item.offers_count > 0) {
@@ -90,7 +97,7 @@ export const MainPage = () => {
                     </div>
                     <div className="flex gap-[42px] text-center">
                         <Button onClick={() => setListingTypes(prev => ({ ...prev, [selectedCategory]: "buy" }))} className={`flex items-center justify-center gap-x-2 rounded-[8px] h-[52px] w-[364px] border border-[#2EAA7B] text-[#2EAA7B] text-[16px] hover:bg-[#2EAA7B] hover:text-white transition duration-500 font-inter leading-[150%] font-semibold
-                        ${currentType === "buy" ? "bg-[#2EAA7B] text-white border-[#2EAA7B]"
+                        ${businessType === "buy" ? "bg-[#2EAA7B] text-white border-[#2EAA7B]"
                                 : "border-[#2EAA7B] text-[#2EAA7B] hover:bg-[#2EAA7B] hover:text-white"
                             }`}>
                             <ShopIcon className="w-5 h-5 hover:text-white" />
@@ -98,7 +105,7 @@ export const MainPage = () => {
                         </Button>
 
                         <Button onClick={() => setListingTypes(prev => ({ ...prev, [selectedCategory]: "sell" }))} className={`flex items-center justify-center gap-x-2 rounded-[8px] h-[52px] w-[364px] border border-[#2EAA7B] text-[#2EAA7B] text-[16px] hover:bg-[#2EAA7B] hover:text-white transition duration-500 font-inter leading-[150%] font-semibold
-                        ${currentType === "sell" ? "bg-[#2EAA7B] text-white border-[#2EAA7B]"
+                        ${businessType === "sell" ? "bg-[#2EAA7B] text-white border-[#2EAA7B]"
                                 : "border-[#2EAA7B] text-[#2EAA7B] hover:bg-[#2EAA7B] hover:text-white"
                             }`}>
                             <ShopIcon className="w-5 h-5 hover:text-white" />
@@ -107,14 +114,14 @@ export const MainPage = () => {
                     </div>
 
                 </div>
-                {isLoading ? (
+                {isLoadingBusiness ? (
                     <div className="flex justify-center items-center py-[30px]">
                         <div className="w-10 h-10 border-4 border-[#2EAA7B] border-t-transparent rounded-full animate-spin"></div>
                     </div>
-                ) : isError ? (
+                ) : isErrorBusiness ? (
                     <p className="px-[192px] py-[30px] text-red-500">Ошибка загрузки данных</p>
                 ) :
-                    (<CardSection title="Бизнес" cards={Object.values(homeOffers?.business || {})} maxVisible={8} Class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-y-10 gap-x-8 transition duration-600" ClassName={"px-[192px] py-[30px]"} />
+                    (<CardSection title="Бизнес" cards={Object.values(businessOffers?.business || {})} maxVisible={8} Class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-y-10 gap-x-8 transition duration-600" ClassName={"px-[192px] py-[30px]"} />
                     )}
             </section>
             <section className="mt-[50px] mb-[35px]">
@@ -128,16 +135,16 @@ export const MainPage = () => {
                         <Paragraph className="text-[16px] mt-1.5 text-[#787878]">Описание</Paragraph>
                     </div>
                     <div className="flex gap-[42px] text-center">
-                        <Button onClick={() => setListingTypes(prev => ({ ...prev, [selectedCategory]: "buy" }))} className={`flex items-center justify-center gap-x-2 rounded-[8px] h-[52px] w-[364px] border border-[#2EAA7B] text-[#2EAA7B] text-[16px] hover:bg-[#2EAA7B] hover:text-white transition duration-500 font-inter leading-[150%] font-semibold
-                        ${currentType === "buy" ? "bg-[#2EAA7B] text-white border-[#2EAA7B]"
+                        <Button onClick={() => setListingTypes(prev => ({ ...prev, Франшиза: "buy" }))} className={`flex items-center justify-center gap-x-2 rounded-[8px] h-[52px] w-[364px] border border-[#2EAA7B] text-[#2EAA7B] text-[16px] hover:bg-[#2EAA7B] hover:text-white transition duration-500 font-inter leading-[150%] font-semibold
+                        ${franchiseType === "buy" ? "bg-[#2EAA7B] text-white border-[#2EAA7B]"
                                 : "border-[#2EAA7B] text-[#2EAA7B] hover:bg-[#2EAA7B] hover:text-white"
                             }`}>
                             <ShopIcon className="w-5 h-5 hover:text-white" />
                             Покупка франшизы
                         </Button>
 
-                        <Button onClick={() => setListingTypes(prev => ({ ...prev, [selectedCategory]: "sell" }))} className={`flex items-center justify-center gap-x-2 rounded-[8px] h-[52px] w-[364px] border border-[#2EAA7B] text-[#2EAA7B] text-[16px] hover:bg-[#2EAA7B] hover:text-white transition duration-500 font-inter leading-[150%] font-semibold
-                        ${currentType === "sell" ? "bg-[#2EAA7B] text-white border-[#2EAA7B]"
+                        <Button onClick={() => setListingTypes(prev => ({ ...prev, Франшиза: "sell" }))} className={`flex items-center justify-center gap-x-2 rounded-[8px] h-[52px] w-[364px] border border-[#2EAA7B] text-[#2EAA7B] text-[16px] hover:bg-[#2EAA7B] hover:text-white transition duration-500 font-inter leading-[150%] font-semibold
+                        ${franchiseType === "sell" ? "bg-[#2EAA7B] text-white border-[#2EAA7B]"
                                 : "border-[#2EAA7B] text-[#2EAA7B] hover:bg-[#2EAA7B] hover:text-white"
                             }`}>
                             <ShopIcon className="w-5 h-5 hover:text-white" />
@@ -145,14 +152,14 @@ export const MainPage = () => {
                         </Button>
                     </div>
                 </div>
-                {isLoading ? (
+                {isLoadingFranchise ? (
                     <div className="flex justify-center items-center py-[30px]">
                         <div className="w-10 h-10 border-4 border-[#2EAA7B] border-t-transparent rounded-full animate-spin"></div>
                     </div>
-                ) : isError ? (
+                ) : isErrorFranchise ? (
                     <p className="px-[192px] py-[30px] text-red-500">Ошибка загрузки данных</p>
                 ) :
-                    (<CardSection title="Франшиза" cards={homeOffers?.franchise || []} maxVisible={8} Class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-y-10 gap-x-8 transition duration-600" ClassName={"px-[192px] py-[30px]"} />
+                    (<CardSection title="Франшиза" cards={franchiseOffers?.franchise || []} maxVisible={8} Class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-y-10 gap-x-8 transition duration-600" ClassName={"px-[192px] py-[30px]"} />
                     )}
 
             </section>
@@ -167,16 +174,16 @@ export const MainPage = () => {
                         <Paragraph className="text-[16px] mt-1.5 text-[#787878]">Описание</Paragraph>
                     </div>
                     <div className="flex gap-[42px] text-center">
-                        <Button onClick={() => setListingTypes(prev => ({ ...prev, [selectedCategory]: "buy" }))} className={`flex items-center justify-center gap-x-2 rounded-[8px] h-[52px] w-[364px] border border-[#2EAA7B] text-[#2EAA7B] text-[16px] hover:bg-[#2EAA7B] hover:text-white transition duration-500 font-inter leading-[150%] font-semibold
-                        ${currentType === "buy" ? "bg-[#2EAA7B] text-white border-[#2EAA7B]"
+                        <Button onClick={() => setListingTypes(prev => ({ ...prev, Стартапы: "buy" }))} className={`flex items-center justify-center gap-x-2 rounded-[8px] h-[52px] w-[364px] border border-[#2EAA7B] text-[#2EAA7B] text-[16px] hover:bg-[#2EAA7B] hover:text-white transition duration-500 font-inter leading-[150%] font-semibold
+                        ${startupType === "buy" ? "bg-[#2EAA7B] text-white border-[#2EAA7B]"
                                 : "border-[#2EAA7B] text-[#2EAA7B] hover:bg-[#2EAA7B] hover:text-white"
                             }`}>
                             <ShopIcon className="w-5 h-5 hover:text-white" />
                             Покупка стартапа
                         </Button>
 
-                        <Button onClick={() => setListingTypes(prev => ({ ...prev, [selectedCategory]: "sell" }))} className={`flex items-center justify-center gap-x-2 rounded-[8px] h-[52px] w-[364px] border border-[#2EAA7B] text-[#2EAA7B] text-[16px] hover:bg-[#2EAA7B] hover:text-white transition duration-500 font-inter leading-[150%] font-semibold
-                        ${currentType === "sell" ? "bg-[#2EAA7B] text-white border-[#2EAA7B]"
+                        <Button onClick={() => setListingTypes(prev => ({ ...prev, Стартапы: "sell" }))} className={`flex items-center justify-center gap-x-2 rounded-[8px] h-[52px] w-[364px] border border-[#2EAA7B] text-[#2EAA7B] text-[16px] hover:bg-[#2EAA7B] hover:text-white transition duration-500 font-inter leading-[150%] font-semibold
+                        ${startupType === "sell" ? "bg-[#2EAA7B] text-white border-[#2EAA7B]"
                                 : "border-[#2EAA7B] text-[#2EAA7B] hover:bg-[#2EAA7B] hover:text-white"
                             }`}>
                             <ShopIcon className="w-5 h-5 hover:text-white" />
@@ -184,14 +191,14 @@ export const MainPage = () => {
                         </Button>
                     </div>
                 </div>
-                {isLoading ? (
+                {isLoadingStartup ? (
                     <div className="flex justify-center items-center py-[30px]">
                         <div className="w-10 h-10 border-4 border-[#2EAA7B] border-t-transparent rounded-full animate-spin"></div>
                     </div>
-                ) : isError ? (
+                ) : isErrorStartup ? (
                     <p className="px-[192px] py-[30px] text-red-500">Ошибка загрузки данных</p>
                 ) :
-                    (<CardSection title="Стартапы" cards={homeOffers?.startup || []} maxVisible={8} Class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-y-10 gap-x-8 transition duration-600" ClassName={"px-[192px] py-[30px]"} />
+                    (<CardSection title="Стартапы" cards={startupOffers?.startup || []} maxVisible={8} Class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-y-10 gap-x-8 transition duration-600" ClassName={"px-[192px] py-[30px]"} />
                     )}
 
             </section>
@@ -204,14 +211,14 @@ export const MainPage = () => {
                     </Button>
                     <Paragraph className="text-[16px] mt-1.5 text-[#787878]">Описание</Paragraph>
                 </div>
-                {isLoading ? (
+                {isLoadingInvestment ? (
                     <div className="flex justify-center items-center py-[30px]">
                         <div className="w-10 h-10 border-4 border-[#2EAA7B] border-t-transparent rounded-full animate-spin"></div>
                     </div>
-                ) : isError ? (
+                ) : isErrorInvestment ? (
                     <p className="px-[192px] py-[30px] text-red-500">Ошибка загрузки данных</p>
                 ) :
-                    (<CardSection title="Инвестиции" cards={homeOffers?.investments || []} maxVisible={4} Class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-y-10 gap-x-8 transition duration-600" ClassName={"px-[192px] py-[30px]"} />
+                    (<CardSection title="Инвестиции" cards={investmentOffers?.investments || []} maxVisible={4} Class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-y-10 gap-x-8 transition duration-600" ClassName={"px-[192px] py-[30px]"} />
                     )}
 
             </section>

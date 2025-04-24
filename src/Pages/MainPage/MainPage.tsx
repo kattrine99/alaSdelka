@@ -1,10 +1,10 @@
 import { Header, Heading, Paragraph, NavLinks, CardSection, FilterBar, categories, Button, Footer } from "../../components";
 import { useState } from "react";
-import { titleToTypeMap } from "../../utils/categoryMap";
 import { useNavigate } from "react-router-dom";
 import ShopIcon from '../../assets/shop.svg?react';
 import InvestInIcon from '../../assets/investin_v15.svg?react';
 import { useGetHomeOffersQuery } from "../../Store/api/Api";
+import { useGetMainStatisticsQuery } from "../../Store/api/Api";
 
 export const MainPage = () => {
     const [selectedCategory, setSelectedCategory] = useState<"Бизнес" | "Франшиза" | "Стартапы" | "Инвестиции">("Бизнес")
@@ -17,15 +17,14 @@ export const MainPage = () => {
         Инвестиции: "buy",
     });
     const currentType = listingTypes[selectedCategory];
+    const { data: mainStats } = useGetMainStatisticsQuery();
     const { data: homeOffers, isLoading, isError } = useGetHomeOffersQuery(listingTypes[selectedCategory]);
-    const cityStats: Record<string, number> = (homeOffers?.[titleToTypeMap[selectedCategory]] || []).reduce(
-        (acc, card) => {
-            acc[card.city] = (acc[card.city] || 0) + 1;
-            return acc;
-        },
-        {} as Record<string, number>
-    );
-
+    const cityStats: Record<string, number> = {};
+    mainStats?.cities_statistics.forEach((item) => {
+        if (item.name_ru && item.offers_count > 0) {
+            cityStats[item.name_ru] = item.offers_count;
+        }
+    });
     return (
         <div className="font-openSans min-h-screen w-screen overflow-x-hidden">
             <Header />
@@ -247,12 +246,13 @@ export const MainPage = () => {
 
                         {/* ГОРОДА */}
                         <div className="flex flex-wrap gap-[20px]">
-                            {Object.entries(cityStats).map(([city, count], idx) => (
-                                <div key={idx} className="...">
-                                    <span>{city}</span>
-                                    <span>{count.toLocaleString("ru-RU")}</span>
-                                </div>
-                            ))}
+                            {cityStats &&
+                                Object.entries(cityStats).map(([city, count], idx) => (
+                                    <div key={idx} className="w-58.5 h-32.5 flex flex-col bg-[#1A1A1A] text-white py-4 px-6 rounded-[12px] gap-0.5">
+                                        <span className="font-openSans font-bold text-2xl leading-[150%]">{city}</span>
+                                        <span className="font-Urbanist font-bold text-[40px] leading-[150%]">{count.toLocaleString("ru-RU")}</span>
+                                    </div>
+                                ))}
                         </div>
                     </div>
                 </div>
@@ -279,14 +279,14 @@ export const MainPage = () => {
                         <div className="flex flex-col gap-[20px]">
                             <div className="bg-white font-inter text-black w-[260px] flex flex-col items-center rounded-[30px] py-6 shadow-[0px_4px_21.2px_rgba(46,170,123,0.2)]">
                                 <Paragraph className="text-[40px] text-center font-bold leading-none">
-                                    1900<span className="text-[#2EAA7B]">+</span>
+                                    {mainStats?.offers_count?.toLocaleString("ru-RU")}<span className="text-[#2EAA7B]">+</span>
                                 </Paragraph>
                                 <Paragraph className="font-normal text-base mt-2">объявлений</Paragraph>
                             </div>
 
                             <div className="bg-white font-inter text-black w-[260px] flex flex-col items-center rounded-[30px] py-6 shadow-[0px_4px_21.2px_rgba(46,170,123,0.2)]">
                                 <Paragraph className="text-[40px] text-center font-bold leading-none">
-                                    1200<span className="text-[#2EAA7B]">+</span>
+                                    {mainStats?.deals_count?.toLocaleString("ru-RU")}<span className="text-[#2EAA7B]">+</span>
                                 </Paragraph>
                                 <Paragraph className="font-normal text-base mt-2">сделок</Paragraph>
                             </div>
@@ -294,14 +294,16 @@ export const MainPage = () => {
                         <div className="flex flex-col gap-[20px]">
                             <div className="bg-white font-inter text-black w-[260px] flex flex-col items-center rounded-[30px] py-6 shadow-[0px_4px_21.2px_rgba(46,170,123,0.2)]">
                                 <Paragraph className="text-[40px] text-center font-bold leading-none">
-                                    120
+                                    {mainStats?.partners_count?.toLocaleString("ru-RU")}
                                 </Paragraph>
                                 <Paragraph className="font-normal text-base mt-2">партнёров</Paragraph>
                             </div>
 
                             <div className="bg-white font-inter text-black w-[260px] flex flex-col items-center rounded-[30px] py-6 shadow-[0px_4px_21.2px_rgba(46,170,123,0.2)]">
                                 <Paragraph className="text-[40px] text-center font-bold leading-none">
-                                    2 млн <span className="text-[#2EAA7B]">$</span>
+                                    {mainStats?.total_sold_amount
+                                        ? `${(+mainStats.total_sold_amount / 1000000).toFixed(0)} млн `
+                                        : "—"}<span className="text-[#2EAA7B]">$</span>
                                 </Paragraph>
                                 <Paragraph className="font-normal text-base mt-2">продано бизнесов</Paragraph>
                             </div>

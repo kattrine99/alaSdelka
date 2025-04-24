@@ -104,7 +104,7 @@ export const FilterBar = () => {
                         const current = categories.find((cat) => cat.label === selectedCategory);
                         if (current) navigate(current.to);
                     }}
-                    className="text-[#2EAA7B] h-[54px] border border-[#2EAA7B] rounded-xl font-semibold hover:bg-[#2EAA7B] hover:text-white transition text-[15px]">
+                    className="text-[#2EAA7B] py-3 px-5 border border-[#2EAA7B] rounded-xl font-semibold hover:bg-[#2EAA7B] hover:text-white transition text-[15px]">
                     Перейти к категории
                 </Button>
             </div>

@@ -1,3 +1,6 @@
+import { ICard } from "../../components/Cards/Interfaces";
+
+
 export interface RegistrationUserPayload {
     name: string;
     phone: string;
@@ -90,4 +93,43 @@ export interface MyOffer {
         };
     };
     photos: { photo: string }[];
+}
+export interface OfferFilters {
+    page: number;
+    per_page: number;
+    offer_type: "business" | "franchise" | "startup" | "investments";
+    category?: string;
+    city?: object;
+    stage?: string;
+    price_from?: string;
+    price_to?: string;
+    investment_from?: string;
+    investment_to?: string;
+    profitability_from?: string;
+    profitability_to?: string;
+}
+
+export interface OffersMeta {
+    current_page: number;
+    from: number;
+    last_page: number;
+    per_page: number;
+    to: number;
+    total: number;
+}
+
+export interface OffersResponse {
+    data: ICard[];
+    meta: OffersMeta;
+}
+export interface HomeStatistics {
+    cities_statistics: {
+        city_id: number;
+        name_ru: string;
+        offers_count: number;
+    }[];
+    offers_count: number;
+    partners_count: number;
+    deals_count: number;
+    total_sold_amount: string;
 }

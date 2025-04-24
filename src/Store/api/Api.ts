@@ -9,6 +9,9 @@ import type {
     GetUserInfoResponse,
     UpdateUserInfoResponse,
     MyOffer,
+    OfferFilters,
+    OffersResponse,
+    HomeStatistics,
 } from "./types";
 import { baseUrl } from "../../utils/baseUrl";
 import { ICard } from "../../components/Cards/Interfaces";
@@ -77,8 +80,18 @@ export const AuthApi = createApi({
                 method: "GET",
             }),
         }),
+        getMainStatistics: builder.query<HomeStatistics, void>({
+            query: () => '/home/statistics',
+        }),
         getMyOffers: builder.query<{ offers: { data: MyOffer[] } }, number>({
             query: (perPage) => `/my-offers?per_page=${perPage}`,
+        }),
+        getOffers: builder.query<OffersResponse, OfferFilters>({
+            query: (params) => ({
+                url: "/offers",
+                method: "GET",
+                params,
+            }),
         }),
 
     }),
@@ -93,4 +106,6 @@ export const {
     useUpdateUserInfoMutation,
     useGetHomeOffersQuery,
     useGetMyOffersQuery,
+    useGetOffersQuery,
+    useGetMainStatisticsQuery,
 } = AuthApi;

@@ -17,6 +17,10 @@ export const typeToTitleMap: Record<ICard["type"], string> = {
     "франшиза": "Франшиза",
     "стартап": "Стартапы",
     "инвестиции": "Инвестиции",
+    business: "",
+    franchise: "",
+    startup: "",
+    investments: ""
 };
 export const urlToTypeMap: Record<string, ICard["type"]> = {
     business: "бизнес",
@@ -30,6 +34,10 @@ export const typeToUrlMap: Record<ICard["type"], string> = {
     "франшиза": "franchise",
     "стартап": "startup",
     "инвестиции": "investments",
+    business: "",
+    franchise: "",
+    startup: "",
+    investments: ""
 };
 
 export const profileNavigate = [
@@ -38,3 +46,10 @@ export const profileNavigate = [
     { label: "Избранное", to: "/favorites" },
     { label: "Продвижение", to: "/promotion" },
 ];
+
+export const urlToApiOfferTypeMap: Record<string, ICard["type"]> = {
+    "бизнес": "business",
+    "франшиза": "franchise",
+    "стартап": "startup",
+    "инвестиции": "investments",
+};

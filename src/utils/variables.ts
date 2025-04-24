@@ -1,7 +1,7 @@
 export const categories = [
     { label: "Бизнес", to: "/business" },
     { label: "Франшиза", to: "/franchise" },
-    { label: "Стартап", to: "/startup" },
+    { label: "Стартапы", to: "/startup" },
     { label: "Инвестиции", to: "/investments" },
 ];
 
@@ -12,7 +12,7 @@ export const personalpages = [
     { label: "Продвижение", to: "/promotion" },
 ]
 export interface FiltersState {
-    city: string;
+    city: object;
     category: string;
     paybackPeriod?: string;
     priceMin?: string;

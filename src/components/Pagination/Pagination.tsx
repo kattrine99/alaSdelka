@@ -1,4 +1,3 @@
-// components/Pagination.tsx
 import { FaArrowLeftLong, FaArrowRightLong } from "react-icons/fa6";
 
 interface PaginationProps {

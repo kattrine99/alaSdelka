@@ -1,7 +1,6 @@
 
 export interface ICard {
-    city_id: number;
-    type: "бизнес" | "франшиза" | "стартап" | "инвестиции";
+    type: "бизнес" | "франшиза" | "стартап" | "инвестиции" | "business" | "franchise" | "startup" | "investments";
     id: number;
     image?: string | null;
     price: string;

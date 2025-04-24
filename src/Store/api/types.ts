@@ -62,7 +62,11 @@ export interface VerifyCodeResponse {
     };
 }
 export interface GetUserInfoResponse {
-    city_id: number;
+    city: {
+        id: number;
+        name_ru: string;
+        name_uz: string;
+    };
     id: number;
     name: string;
     phone: string;
@@ -71,15 +75,18 @@ export interface GetUserInfoResponse {
 }
 
 export interface UpdateUserInfoResponse {
-
     id: number;
     name: string;
     phone: string;
     email: string;
-    photo: string | File;
-    city_id: number;
-
+    photo: string;
+    city: {
+        id: number;
+        name_ru: string;
+        name_uz: string;
+    };
 }
+
 export interface MyOffer {
     id: number;
     title: string;

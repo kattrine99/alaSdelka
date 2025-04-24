@@ -2,7 +2,41 @@ import { Link } from "react-router-dom";
 import { HiChevronRight } from "react-icons/hi";
 import { urlToTypeMap, typeToUrlMap } from "../../utils/categoryMap";
 
-export const Breadcrumbs = ({ category, title }: { category?: string; title?: string }) => {
+type CrumbLink = {
+    label: string;
+    href?: string; // если есть, делаем ссылкой
+};
+
+export const Breadcrumbs = ({
+    category,
+    title,
+    links,
+}: {
+    category?: string;
+    title?: string;
+    links?: CrumbLink[];
+}) => {
+    if (links?.length) {
+        return (
+            <nav className="text-[15px] font-inter font-medium leading-[22px] text-[#68727D] flex items-center gap-2">
+                {links.map((link, index) => (
+                    <span key={index} className="flex items-center gap-2">
+                        {link.href ? (
+                            <Link to={link.href} className="hover:text-[#28B13D] transition duration-500">
+                                {link.label}
+                            </Link>
+                        ) : (
+                            <span className="text-[#28B13D]">{link.label}</span>
+                        )}
+                        {index !== links.length - 1 && (
+                            <HiChevronRight className="text-gray-400 w-[20px] h-[20px]" />
+                        )}
+                    </span>
+                ))}
+            </nav>
+        );
+    }
+
     const readableName = category
         ? urlToTypeMap[category as keyof typeof urlToTypeMap] ?? category
         : "";

@@ -62,8 +62,8 @@ export const AuthApi = createApi({
         updateUserInfo: builder.mutation<UpdateUserInfoResponse, FormData>({
             query: (formData) => ({
                 url: "/user",
-                method: "PUT",
-                body: formData,
+                method: "POST",
+                body: formData, 
             }),
         }),
         getHomeOffers: builder.query<

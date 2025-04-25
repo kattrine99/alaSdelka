@@ -7,6 +7,7 @@ import HeartIcon from '../../assets/heart.svg?react';
 import SolidHeartIcon from '../../assets/Solidheart.svg?react';
 import { Link } from "react-router-dom";
 import { ICards } from "./Interfaces";
+import { offerTypeToUrlMap } from "../../utils/categoryMap";
 
 
 export const Cards: React.FC<ICards> = ({
@@ -85,13 +86,15 @@ export const Cards: React.FC<ICards> = ({
                                 </Paragraph>
                             </div>
                             <div className="w-full h-[44px] mt-auto">
-                                <Button className="w-full py-[12px] bg-[#2EAA7B] text-white font-medium rounded-md flex justify-center hover:bg-[#31B683] transition duration-300 cursor-pointer">
-                                    <Link to={`/${card.type}/card/${card.id}`} className="flex gap-2 items-center">
-                                        Просмотреть <FaArrowRight />
-                                    </Link>
-
-                                </Button>
+                                <Link to={`/${offerTypeToUrlMap[card.offer_type]}/card/${card.id}`} className="w-full">
+                                    <Button className="w-full py-[12px] bg-[#2EAA7B] text-white font-medium rounded-md flex justify-center hover:bg-[#31B683] transition duration-300 cursor-pointer">
+                                        <span className="flex gap-2 items-center">
+                                            Просмотреть <FaArrowRight />
+                                        </span>
+                                    </Button>
+                                </Link>
                             </div>
+
                         </div>
                     </div>
                 ))}

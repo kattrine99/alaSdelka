@@ -12,7 +12,7 @@ export const titleToTypeMap: Record<
 
 
 
-export const typeToTitleMap: Record<ICard["type"], string> = {
+export const typeToTitleMap: Record<ICard["offer_type"], string> = {
     "бизнес": "Бизнес",
     "франшиза": "Франшиза",
     "стартап": "Стартапы",
@@ -22,14 +22,14 @@ export const typeToTitleMap: Record<ICard["type"], string> = {
     startup: "",
     investments: ""
 };
-export const urlToTypeMap: Record<string, ICard["type"]> = {
+export const urlToTypeMap: Record<string, ICard["offer_type"]> = {
     business: "бизнес",
     franchise: "франшиза",
     startup: "стартап",
     startups: "стартап",
     investments: "инвестиции",
 };
-export const typeToUrlMap: Record<ICard["type"], string> = {
+export const typeToUrlMap: Record<ICard["offer_type"], string> = {
     "бизнес": "business",
     "франшиза": "franchise",
     "стартап": "startup",
@@ -47,9 +47,20 @@ export const profileNavigate = [
     { label: "Продвижение", to: "/promotion" },
 ];
 
-export const urlToApiOfferTypeMap: Record<string, ICard["type"]> = {
+export const urlToApiOfferTypeMap: Record<string, ICard["offer_type"]> = {
     "бизнес": "business",
     "франшиза": "franchise",
     "стартап": "startup",
     "инвестиции": "investments",
+};
+
+export const offerTypeToUrlMap: Record<string, string> = {
+    "бизнес": "business",
+    "франшиза": "franchise",
+    "стартап": "startup",
+    "инвестиции": "investments",
+    "business": "business",
+    "franchise": "franchise",
+    "startup": "startup",
+    "investments": "investments"
 };

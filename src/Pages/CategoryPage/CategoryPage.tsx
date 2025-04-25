@@ -43,7 +43,7 @@ export const CategoryPage = () => {
 
   const type = urlToTypeMap[category ?? ""] ?? "";
   const apiOfferType = urlToApiOfferTypeMap[type] as OfferFilters["offer_type"];
-  const pageTitle = typeToTitleMap[type as ICard["type"]] ?? "Категория";
+  const pageTitle = typeToTitleMap[type as ICard["offer_type"]] ?? "Категория";
 
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 12;

@@ -1,4 +1,4 @@
-import { ICard } from "../Cards/Cards";
+import { ICard } from "../Cards/Interfaces";
 import { Heading, Cards } from "../index";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";

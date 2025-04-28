@@ -85,8 +85,8 @@ export const MainPage = () => {
             </section>
 
             {/* Карточки */}
-            <section className="mt-[50px] mb-[35px]">
-                <div className="px-[192px] flex justify-start gap-[272px]" >
+            <section className="mt-12.5 mb-8.75">
+                <div className="px-48 flex justify-start gap-68" >
                     <div>
                         <Button onClick={() => {
                             navigate("/business")
@@ -95,8 +95,8 @@ export const MainPage = () => {
                         </Button>
                         <Paragraph className="text-[16px] mt-1.5 text-[#787878]">Описание</Paragraph>
                     </div>
-                    <div className="flex gap-[42px] text-center">
-                        <Button onClick={() => setListingTypes(prev => ({ ...prev, [selectedCategory]: "buy" }))} className={`flex items-center justify-center gap-x-2 rounded-[8px] h-[52px] w-[364px] border border-[#2EAA7B] text-[#2EAA7B] text-[16px] hover:bg-[#2EAA7B] hover:text-white transition duration-500 font-inter leading-[150%] font-semibold
+                    <div className="flex gap-10.5 text-center">
+                        <Button onClick={() => setListingTypes(prev => ({ ...prev, [selectedCategory]: "buy" }))} className={`flex items-center justify-center gap-x-2 rounded-[8px] h-13 w-91 border border-[#2EAA7B] text-[#2EAA7B] text-[16px] hover:bg-[#2EAA7B] hover:text-white transition duration-500 font-inter leading-[150%] font-semibold
                         ${businessType === "buy" ? "bg-[#2EAA7B] text-white border-[#2EAA7B]"
                                 : "border-[#2EAA7B] text-[#2EAA7B] hover:bg-[#2EAA7B] hover:text-white"
                             }`}>
@@ -104,7 +104,7 @@ export const MainPage = () => {
                             Покупка бизнеса
                         </Button>
 
-                        <Button onClick={() => setListingTypes(prev => ({ ...prev, [selectedCategory]: "sell" }))} className={`flex items-center justify-center gap-x-2 rounded-[8px] h-[52px] w-[364px] border border-[#2EAA7B] text-[#2EAA7B] text-[16px] hover:bg-[#2EAA7B] hover:text-white transition duration-500 font-inter leading-[150%] font-semibold
+                        <Button onClick={() => setListingTypes(prev => ({ ...prev, [selectedCategory]: "sell" }))} className={`flex items-center justify-center gap-x-2 rounded-[8px] h-13 w-91 border border-[#2EAA7B] text-[#2EAA7B] text-[16px] hover:bg-[#2EAA7B] hover:text-white transition duration-500 font-inter leading-[150%] font-semibold
                         ${businessType === "sell" ? "bg-[#2EAA7B] text-white border-[#2EAA7B]"
                                 : "border-[#2EAA7B] text-[#2EAA7B] hover:bg-[#2EAA7B] hover:text-white"
                             }`}>
@@ -119,13 +119,13 @@ export const MainPage = () => {
                         <div className="w-10 h-10 border-4 border-[#2EAA7B] border-t-transparent rounded-full animate-spin"></div>
                     </div>
                 ) : isErrorBusiness ? (
-                    <p className="px-[192px] py-[30px] text-red-500">Ошибка загрузки данных</p>
+                    <p className="px-48 py-7.5 text-red-500">Ошибка загрузки данных</p>
                 ) :
-                    (<CardSection title="Бизнес" cards={Object.values(businessOffers?.business || {})} maxVisible={8} Class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 lg:grid-cols-3 gap-y-10 gap-x-8 transition duration-600" ClassName={"container mx-auto py-[30px]"} />
+                    (<CardSection title="Бизнес" cards={Object.values(businessOffers?.business || {})} maxVisible={8} Class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 lg:grid-cols-3 gap-y-10 gap-x-8 transition duration-300" ClassName={"container mx-auto py-7.5"} />
                     )}
             </section>
-            <section className="mt-[50px] mb-[35px]">
-                <div className="px-[192px] flex justify-start gap-[272px]">
+            <section className="mt-12.5 mb-8.75">
+                <div className="px-48 flex justify-start gap-68">
                     <div>
                         <Button onClick={() => {
                             navigate("/franchise")
@@ -157,14 +157,14 @@ export const MainPage = () => {
                         <div className="w-10 h-10 border-4 border-[#2EAA7B] border-t-transparent rounded-full animate-spin"></div>
                     </div>
                 ) : isErrorFranchise ? (
-                    <p className="px-[192px] py-[30px] text-red-500">Ошибка загрузки данных</p>
+                    <p className="px-48 py-[30px] text-red-500">Ошибка загрузки данных</p>
                 ) :
-                    (<CardSection title="Франшиза" cards={franchiseOffers?.franchise || []} maxVisible={8} Class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-y-10 gap-x-8 transition duration-600" ClassName={"px-[192px] py-[30px]"} />
+                    (<CardSection title="Франшиза" cards={franchiseOffers?.franchise || []} maxVisible={8} Class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 lg:grid-cols-3 gap-y-10 gap-x-8 transition duration-300" ClassName={"container mx-auto py-7.5"} />
                     )}
 
             </section>
-            <section className="mt-[50px] mb-[35px]">
-                <div className="px-[192px] flex justify-start gap-[272px]">
+            <section className="mt-12.5 mb-8.75">
+                <div className="px-48 flex justify-start gap-[272px]">
                     <div>
                         <Button onClick={() => {
                             navigate("/startups")
@@ -196,14 +196,14 @@ export const MainPage = () => {
                         <div className="w-10 h-10 border-4 border-[#2EAA7B] border-t-transparent rounded-full animate-spin"></div>
                     </div>
                 ) : isErrorStartup ? (
-                    <p className="px-[192px] py-[30px] text-red-500">Ошибка загрузки данных</p>
+                    <p className="px-48 py-[30px] text-red-500">Ошибка загрузки данных</p>
                 ) :
-                    (<CardSection title="Стартапы" cards={startupOffers?.startup || []} maxVisible={8} Class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-y-10 gap-x-8 transition duration-600" ClassName={"px-[192px] py-[30px]"} />
+                    (<CardSection title="Стартапы" cards={startupOffers?.startup || []} maxVisible={8} Class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 lg:grid-cols-3 gap-y-10 gap-x-8 transition duration-300" ClassName={"container mx-auto py-7.5"} />
                     )}
 
             </section>
-            <section className="my-[50px] mb-[35px]">
-                <div className="px-[192px]">
+            <section className="mt-12.5 mb-8.75">
+                <div className="px-48">
                     <Button onClick={() => {
                         navigate('/investments')
                     }} className={""}>
@@ -216,16 +216,16 @@ export const MainPage = () => {
                         <div className="w-10 h-10 border-4 border-[#2EAA7B] border-t-transparent rounded-full animate-spin"></div>
                     </div>
                 ) : isErrorInvestment ? (
-                    <p className="px-[192px] py-[30px] text-red-500">Ошибка загрузки данных</p>
+                    <p className="px-48 py-7.5 text-red-500">Ошибка загрузки данных</p>
                 ) :
-                    (<CardSection title="Инвестиции" cards={investmentOffers?.investments || []} maxVisible={4} Class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-y-10 gap-x-8 transition duration-600" ClassName={"px-[192px] py-[30px]"} />
+                    (<CardSection title="Инвестиции" cards={investmentOffers?.investments || []} maxVisible={4} Class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 lg:grid-cols-3 gap-y-10 gap-x-8 transition duration-300" ClassName={"container mx-auto py-7.5"} />
                     )}
 
             </section>
             {/* Города */}
-            <section className="relative min-h-[610px] w-screen overflow-hidden bg-gradient-to-br from-[#F8FFF5] to-[#FAFFF9]">
+            <section className="relative min-h-152.5 w-screen overflow-hidden bg-gradient-to-br from-[#F8FFF5] to-[#FAFFF9]">
                 <div className="min-h-[610px] bg-[url(./images/Streets.png)] bg-center-bottom bg-no-repeat bg-cover">
-                    <div className="py-[70px] px-4 sm:px-8 md:px-[96px] xl:px-[192px]">
+                    <div className="py-[70px] px-4 sm:px-8 md:px-[96px] xl:px-48">
                         <Heading
                             text={"Города"}
                             level={2}
@@ -266,9 +266,9 @@ export const MainPage = () => {
             </section>
 
             {/*Почему Invest In*/}
-            <section className="relative overflow-hidden  w-full h-[907px] bg-[url('/images/Mask.png')] bg-repeat">
-                <div className="absolute right-[197px] top-[61px] w-[702px] h-full bg-[url('/images/WhyInvestIn.png')] bg-no-repeat bg-contain px-[192px]" ></div>
-                <div className="relative py-[70px] px-4 sm:px-8 md:px-[96px] xl:px-[192px] overflow-hidden">
+            <section className="relative overflow-hidden  w-full h-226.75 bg-[url('/images/Mask.png')] bg-repeat">
+                <div className="absolute right-[197px] top-[61px] w-[702px] h-full bg-[url('/images/WhyInvestIn.png')] bg-no-repeat bg-contain px-48" ></div>
+                <div className="relative py-[70px] px-4 sm:px-8 md:px-[96px] xl:px-48 overflow-hidden">
                     <div className="order-2 lg:order-1 flex flex-col gap-6 max-w-2xl w-full">
                         <Heading
                             level={1}

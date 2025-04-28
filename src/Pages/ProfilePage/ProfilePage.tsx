@@ -111,7 +111,7 @@ export const ProfilePage = () => {
                 />
             )}
             <Header navLinksData={profileNavigate} />
-            <div className="w-full px-[192px] mt-6">
+            <div className="w-full px-48 mt-6">
                 {isEditingProfile && <Breadcrumbs
                     links={[
                         { label: "Главная", href: "/" },
@@ -121,7 +121,7 @@ export const ProfilePage = () => {
                 />
                 }
 
-                <div className="w-[1127px] p-5">
+                <div className="w-full p-5">
                     {!editMode && (
                         <>
                             <Heading
@@ -138,8 +138,8 @@ export const ProfilePage = () => {
                                     </div>
                                 </div>
                                 <div className="flex gap-x-4 items-center">
-                                    <Button className="h-[54px] px-5 text-white bg-[#31B683] rounded-[6px] cursor-pointer" onClick={handleLogout}>Выйти из профиля</Button>
-                                    <Button className="px-5 h-[54px] text-white bg-[#31B683] rounded-[6px] cursor-pointer" onClick={handleEditClick}>Редактировать личные данные</Button>
+                                    <Button className="h-13.5 px-5 text-white bg-[#31B683] rounded-[6px] cursor-pointer" onClick={handleLogout}>Выйти из профиля</Button>
+                                    <Button className="px-5 h-13.5 text-white bg-[#31B683] rounded-[6px] cursor-pointer" onClick={handleEditClick}>Редактировать личные данные</Button>
                                 </div>
                             </div>
                         </>
@@ -159,7 +159,7 @@ export const ProfilePage = () => {
                                     <img
                                         src={data.photo}
                                         alt="profile_Photo"
-                                        className="rounded-full w-[100px] h-[100px] object-cover"
+                                        className="rounded-full w-25 h-25 object-cover"
                                     />
                                 )}
                                 <label className="absolute bottom-0 right-0 bg-white border border-[#2EAA7B] rounded-full w-7 h-7 flex items-center justify-center cursor-pointer">
@@ -173,7 +173,7 @@ export const ProfilePage = () => {
 
                         <div className="flex flex-col gap-y-6">
                             <div className="flex gap-3.5">
-                                <div className="w-[393px]">
+                                <div className="w-98.25">
                                     <label className="text-[#121212] text-sm mb-1 block">Имя</label>
                                     {editMode ? (<Input
                                         title="Имя"
@@ -182,16 +182,16 @@ export const ProfilePage = () => {
                                         onChange={e => setFirstNameInput(e.target.value)}
                                         disabled={!editMode}
                                         isError={false}
-                                        className="bg-[#F2F2F2] rounded-[10px] px-4 py-[14px] text-[#121212] text-[16px]"
+                                        className="bg-[#F2F2F2] rounded-[10px] px-4 py-3.5 text-[#121212] text-[16px]"
                                     />) : (
-                                        <div className="w-[393px]">
-                                            <div className="bg-[#F2F2F2] rounded-[10px] px-4 py-[14px] text-[#121212] text-[16px]">
+                                        <div className="w-98.25">
+                                            <div className="bg-[#F2F2F2] rounded-[10px] px-4 py-3.5 text-[#121212] text-[16px]">
                                                 {firstName || " "}
                                             </div>
                                         </div>
                                     )}
                                 </div>
-                                <div className="w-[393px]">
+                                <div className="w-98.25">
                                     <label className="text-[#121212] text-sm mb-1 block">Фамилия</label>
                                     {editMode ? (<Input
                                         title="Фамилия"
@@ -200,9 +200,9 @@ export const ProfilePage = () => {
                                         onChange={e => setLastNameInput(e.target.value)}
                                         disabled={!editMode}
                                         isError={false}
-                                        className="bg-[#F2F2F2] rounded-[10px] px-4 py-[14px] text-[#121212] text-[16px]"
+                                        className="bg-[#F2F2F2] rounded-[10px] px-4 py-3.5 text-[#121212] text-[16px]"
                                     />) : (
-                                        <div className="bg-[#F2F2F2] rounded-[10px] px-4 py-[14px] text-[#121212] text-[16px]">
+                                        <div className="bg-[#F2F2F2] rounded-[10px] px-4 py-3.5 text-[#121212] text-[16px]">
                                             {lastName || " "}
                                         </div>
                                     )}
@@ -214,7 +214,7 @@ export const ProfilePage = () => {
                                     <label className="text-[#121212] text-sm mb-1 block">Номер телефона</label>
                                     {editMode ? (
                                         <div className="flex items-center bg-[#F2F2F2] rounded-[10px] px-4 py-[10px]">
-                                            <FlagIcon className="w-[25px] h-[25px] object-contain mr-3" />
+                                            <FlagIcon className="w-6.25 h-6.25 object-contain mr-3" />
                                             <Input
                                                 title="Телефон"
                                                 type="text"
@@ -222,12 +222,12 @@ export const ProfilePage = () => {
                                                 onChange={e => setFormData({ ...formData, phone: e.target.value })}
                                                 disabled={!editMode}
                                                 isError={false}
-                                                className="bg-[#F2F2F2] rounded-[10px] px-4 py-[14px] text-[#121212] text-[16px]"
+                                                className="bg-[#F2F2F2] rounded-[10px] px-4 py-3.5 text-[#121212] text-[16px]"
                                             />
                                         </div>
 
                                     ) : (
-                                        <div className="bg-[#F2F2F2] rounded-[10px] px-4 py-[14px] text-[#121212] text-[16px] flex items-center gap-2">
+                                        <div className="bg-[#F2F2F2] rounded-[10px] px-4 py-3.5 text-[#121212] text-[16px] flex items-center gap-2">
                                             <FlagIcon className="w-[25px] h-[25px] object-contain" />
                                             {data.phone || " "}
                                         </div>
@@ -243,10 +243,10 @@ export const ProfilePage = () => {
                                         onChange={e => setFormData({ ...formData, city_id: Number(e.target.value) })}
                                         disabled={!editMode}
                                         isError={false}
-                                        className="bg-[#F2F2F2] rounded-[10px] px-4 py-[14px] text-[#121212] text-[16px]"
+                                        className="bg-[#F2F2F2] rounded-[10px] px-4 py-3.5 text-[#121212] text-[16px]"
 
                                     />) : (
-                                        <div className="bg-[#F2F2F2] rounded-[10px] px-4 py-[14px] text-[#121212] text-[16px]">
+                                        <div className="bg-[#F2F2F2] rounded-[10px] px-4 py-3.5 text-[#121212] text-[16px]">
                                             {data.city?.name_ru || " "}
                                         </div>
                                     )}
@@ -262,11 +262,11 @@ export const ProfilePage = () => {
                                             onChange={e => setFormData({ ...formData, email: e.target.value })}
                                             disabled={!editMode}
                                             isError={false}
-                                            className="bg-[#F2F2F2] rounded-[10px] px-4 py-[14px] text-[#121212] text-[16px]"
+                                            className="bg-[#F2F2F2] rounded-[10px] px-4 py-3.5 text-[#121212] text-[16px]"
 
                                         />
                                     ) : (
-                                        <div className="bg-[#F2F2F2] rounded-[10px] px-4 py-[14px] text-[#121212] text-[16px]">
+                                        <div className="bg-[#F2F2F2] rounded-[10px] px-4 py-3.5 text-[#121212] text-[16px]">
                                             {data.email || " "}
                                         </div>
                                     )}

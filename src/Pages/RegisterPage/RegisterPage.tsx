@@ -156,12 +156,12 @@ export const RegistrationPage = () => {
         <>
             <div className="w-screen font-openSans bg-[url('/images/grid.png')] bg-contain bg-no-repeat bg-right">
                 <Header showAuthButtons={false} showNavLinks={false} />
-                <div className="flex px-[192px] text-center pt-20">
+                <div className="flex px-48 text-center pt-20">
                     {step === 1 && (
                         <>
-                            <div className="w-ful max-w-[518px]">
-                                <Heading level={2} className="text-[32px] font-inter mb-[28px] font-bold text-black" text={""}>Зарегистрироваться</Heading>
-                                <div className="w-[410px]">
+                            <div className="w-ful max-w-129.5">
+                                <Heading level={2} className="text-[32px] font-inter mb-7 font-bold text-black" text={""}>Зарегистрироваться</Heading>
+                                <div className="w-102.5">
                                     <form className="flex flex-col gap-y-3.5">
                                         <Controller name="username" control={control} render={({ field }) => (
                                             <Input {...field} placeholder="Имя" isError={!!errors.username} errorMessage={errors.username?.message} className="py-3.5 px-4.5 bg-[#EEEEEE80] outline-none rounded-[14px]" />)} />
@@ -185,11 +185,11 @@ export const RegistrationPage = () => {
                                     <Button type="submit" onClick={handleSubmit(handleRegistration)} disabled={!isValid} className={`w-full mt-6 h-[56px] rounded-2xl text-[16px] text-white ${isValid ? "bg-[#2EAA7B]" : "bg-[#AFAFAF] cursor-not-allowed"}`}>
                                         Зарегистрироваться
                                     </Button>
-                                    <div className='w-full max-w-[518px] flex flex-col items-center'>
+                                    <div className='w-full max-w-129.5 flex flex-col items-center'>
                                         <div className='w-[237px] border border-[#DFDFDF] mt-[38px]'></div>
                                         <div className="mt-[30px] justify-center">
-                                            <Button className="w-[378px] h-[56px] flex items-center gap-x-3 justify-center bg-white border border-[#C9CCCF] rounded-2xl text-[#232323] font-semibold  font-inter leading-[24px] transition-all duration-500 hover:bg-gray-100 hover:shadow-lg">
-                                                <img src="/images/google_icon.png" alt="Google" className="w-[24px] h-[24px]" />
+                                            <Button className="w-94.5 h-[56px] flex items-center gap-x-3 justify-center bg-white border border-[#C9CCCF] rounded-2xl text-[#232323] font-semibold  font-inter leading-[24px] transition-all duration-500 hover:bg-gray-100 hover:shadow-lg">
+                                                <img src="/images/google_icon.png" alt="Google" className="w-6 h-6" />
                                                 Зарегистрироваться через Google
                                             </Button>
                                         </div>
@@ -210,13 +210,13 @@ export const RegistrationPage = () => {
                             <div>
                                 <div className="flex gap-7 items-center mb-[28px]">
                                     <Button onClick={() => setStep(1)} className="text-black outline-none">
-                                        <GoArrowLeft className="w-[24px] h-[24px]" />
+                                        <GoArrowLeft className="w-6 h-6" />
                                     </Button>
-                                    <Heading level={2} className="w-[702px] text-[32px] font-inter font-bold text-black" text={""}>
+                                    <Heading level={2} className="w-178 text-[32px] font-inter font-bold text-black" text={""}>
                                         Мы отправили вам код для подтверждения аккаунта на номер
                                     </Heading>
                                 </div>
-                                <div className="w-[410px] flex flex-col items-center gap-6">
+                                <div className="w-102.5 flex flex-col items-center gap-6">
                                     <p className="text-sm text-gray-500 w-full text-left">
                                         Введите код, отправленный на номер <span className="text-black font-semibold">{maskedPhone}</span>
                                     </p>
@@ -230,7 +230,7 @@ export const RegistrationPage = () => {
                                                 value={codeInput[index]}
                                                 onChange={(e) => handleCodeChange(e.target.value, index)}
                                                 onKeyDown={(e) => handleKeyDown(e, index)}
-                                                className="w-[60px] h-[72px] text-center text-[32px] rounded-[10px] border border-[#D9D9D9] focus:outline-none focus:border-[#2EAA7B] font-semibold text-black"
+                                                className="w-15 h-18 text-center text-[32px] rounded-[10px] border border-[#D9D9D9] focus:outline-none focus:border-[#2EAA7B] font-semibold text-black"
                                                 type="text" isError={false} />
 
                                         ))}
@@ -249,7 +249,7 @@ export const RegistrationPage = () => {
                                     <Button
                                         onClick={handleVerifyCode}
                                         disabled={code.length !== 4}
-                                        className={`w-full h-[56px] rounded-2xl text-[16px] text-white ${code.length === 4 ? "bg-[#2EAA7B]" : "bg-[#AFAFAF] cursor-not-allowed"}`}
+                                        className={`w-full h-14 rounded-2xl text-[16px] text-white ${code.length === 4 ? "bg-[#2EAA7B]" : "bg-[#AFAFAF] cursor-not-allowed"}`}
                                     >
                                         Подтвердить
                                     </Button>
@@ -262,7 +262,7 @@ export const RegistrationPage = () => {
             </div >
             {showSuccessModal && (
                 <ModalBase
-                    title="Успешно!" // или "Упс!", если ошибка — зависит от successMessage
+                    title="Успешно!"
                     message={successMessage}
                     onClose={() => setShowSuccessModal(false)}
                     actions={

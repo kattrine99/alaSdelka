@@ -86,7 +86,7 @@ export const LoginPage = () => {
             </div>
             <Header showNavLinks={false} showAuthButtons={false} />
             <div className=" flex items-center justify-center py-[62px] transition-all duration-300">
-                <div className="w-full flex px-[192px] transition-all duration-500">
+                <div className="w-full flex px-48 transition-all duration-500">
                     <div className="w-full p-[clamp(30px,4vw,70px)] flex flex-col items-start text-start transition-all duration-300">
                         <Heading className="text-[32px] mb-[32px] font-inter font-bold text-black" text={'Вход в личный кабинет'} level={1} />
                         <form onSubmit={handleSubmit(onSubmit)} className="w-full flex flex-col gap-[clamp(14px,1.8vw,28px)]">

@@ -72,7 +72,7 @@ export const CategoryPage = () => {
   return (
     <div className="font-openSans min-h-screen w-screen overflow-x-hidden">
       <Header />
-      <div className="flex px-[192px] py-[30px] pb-10 gap-10 items-start">
+      <div className="flex px-48 py-[30px] pb-10 gap-10 items-start">
         <aside className="flex flex-col mr-[60px]">
           <Breadcrumbs category={type} />
           <Heading text={pageTitle} level={2} className="text-[30px] font-bold text-black" />
@@ -108,7 +108,7 @@ export const CategoryPage = () => {
               <div className="w-10 h-10 border-4 border-[#2EAA7B] border-t-transparent rounded-full animate-spin"></div>
             </div>
           ) : isError ? (
-            <p className="px-[192px] py-[30px] text-red-500">Ошибка загрузки данных</p>
+            <p className="px-48 py-[30px] text-red-500">Ошибка загрузки данных</p>
           ) : (
             <CardSection
               Class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-y-10 gap-x-8 transition duration-600"

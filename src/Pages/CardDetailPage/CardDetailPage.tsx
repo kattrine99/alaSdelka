@@ -60,7 +60,7 @@ export const CardDetailPage = () => {
             {isLoading ? (<div className="flex justify-center items-center py-[30px]">
                 <div className="w-10 h-10 border-4 border-[#2EAA7B] border-t-transparent rounded-full animate-spin"></div>
             </div>) : isError || !card ? (
-                <p className="px-[192px] py-[30px] text-red-500">Ошибка загрузки данных</p>
+                <p className="px-48 py-7.5 text-red-500">Ошибка загрузки данных</p>
 
             ) :
                 (

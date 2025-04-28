@@ -32,6 +32,7 @@ export const LoginPage = () => {
     const [isPasswordVisible, setIsPasswordVisible] = useState(false);
     const [showModal, setShowModal] = useState(false);
     const [modalText, setModalText] = useState("");
+    const [modalTitle, setModalTitle] = useState("");
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const [loginUser] = useLoginUserMutation();
@@ -57,7 +58,8 @@ export const LoginPage = () => {
 
             saveToken(response.access_token, response.expires_in);
             dispatch(setIsAuthenticated(true));
-            setModalText("Успешный вход!");
+            setModalText("Добро пожаловать!");
+            setModalTitle("Успешно!")
             setShowModal(true);
             setTimeout(() => {
                 setShowModal(false);
@@ -65,6 +67,7 @@ export const LoginPage = () => {
             }, 2000);
         } catch (error) {
             console.error("Ошибка при логине:", error);
+            setModalTitle("Упс!")
             setModalText("Неверный номер или пароль");
             setShowModal(true);
         }
@@ -75,7 +78,7 @@ export const LoginPage = () => {
         <div className="min-w-screen bg-[url('/images/grid.png')] bg-contain bg-no-repeat bg-right">
             <div className='flex flex-col'>
                 {showModal && <ModalBase
-                    title="Успешно!"
+                    title={modalTitle}
                     message={modalText}
                     onClose={() => setShowModal(false)}
                     actions={<Button className={"w-full text-center py-4 hover:border-1 hover:bg-white hover:text-[#2EAA7B] hover:border-[#2EAA7B] text-white bg-[#2EAA7B] rounded-[14px]"} onClick={() => { setShowModal(false) }}>Подтвердить</Button>}

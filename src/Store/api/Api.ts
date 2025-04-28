@@ -64,7 +64,7 @@ export const AuthApi = createApi({
             query: (formData) => ({
                 url: "/user",
                 method: "POST",
-                body: formData, 
+                body: formData,
             }),
         }),
         getHomeOffers: builder.query<
@@ -96,7 +96,10 @@ export const AuthApi = createApi({
         }),
         getOfferById: builder.query<OfferDetail, number>({
             query: (id) => `/offers/${id}`,
-          }),
+        }),
+        // getFiltersData: builder.query<FilterData,>({
+
+        // }),
     }),
 
 });

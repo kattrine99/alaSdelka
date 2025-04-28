@@ -8,7 +8,7 @@ import ChartIcon from '../../assets/Chart.svg?react'
 import { MdOutlineArrowDropDown } from "react-icons/md"
 import { FiltersState } from "../../utils/variables"
 import { useState } from "react";
-import { ICard } from "../Cards/Cards";
+import { ICard } from "../Cards/Interfaces";
 
 interface FiltersProps {
     category: "бизнес" | "франшиза" | "стартап" | "инвестиции";

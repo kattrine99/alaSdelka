@@ -121,7 +121,7 @@ export const MainPage = () => {
                 ) : isErrorBusiness ? (
                     <p className="px-[192px] py-[30px] text-red-500">Ошибка загрузки данных</p>
                 ) :
-                    (<CardSection title="Бизнес" cards={Object.values(businessOffers?.business || {})} maxVisible={8} Class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-y-10 gap-x-8 transition duration-600" ClassName={"px-[192px] py-[30px]"} />
+                    (<CardSection title="Бизнес" cards={Object.values(businessOffers?.business || {})} maxVisible={8} Class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 lg:grid-cols-3 gap-y-10 gap-x-8 transition duration-600" ClassName={"container mx-auto py-[30px]"} />
                     )}
             </section>
             <section className="mt-[50px] mb-[35px]">

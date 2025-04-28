@@ -14,7 +14,7 @@ export const FilterBar = () => {
 
     return (
         <div className="flex items-center gap-3 px-4 py-[13px] bg-white rounded-[24px] rounded-tl-[0px]">
-            <div className="flex items-center rounded-xl rounded-r-2xl border border-[#EAEBF0] bg-white">
+            <div className=" w-full flex items-center rounded-xl rounded-r-2xl border border-[#EAEBF0] bg-white">
                 {/* Город */}
                 <div className="flex items-center gap-2 px-2 py-2">
                     <span className="text-[#2EAA7B] text-lg h-[16px]">
@@ -83,8 +83,8 @@ export const FilterBar = () => {
             </div>
 
             {/* Поиск */}
-            <div className="flex gap-2.5 h-[54px]">
-                <div className="flex items-center border border-[#2EAA7B] rounded-xl pl-5 bg-white overflow-hidden">
+            <div className="w-full flex gap-2.5 h-[54px] justify-end">
+                <div className="flex w-full items-center border border-[#2EAA7B] rounded-xl pl-5 bg-white overflow-hidden">
                     <div className="flex items-center justify-center text-[#2EAA7B]">
                         <FiSearch className="h-[24px]" />
                     </div>
@@ -92,7 +92,7 @@ export const FilterBar = () => {
                         type="text"
                         placeholder="Поиск по названию или ID"
                         isError={false}
-                        className="flex-1 w-full text-4 px-2.5 text-[#787878] placeholder-[#787878] bg-white outline-none"
+                        className="w-full text-4 px-2.5 text-[#787878] placeholder-[#787878] bg-white outline-none"
                     />
                     <Button className="h-full bg-[#2EAA7B] text-white text-sm font-semibold px-5 hover:bg-green-600 transition rounded-none">
                         Поиск
@@ -104,7 +104,7 @@ export const FilterBar = () => {
                         const current = categories.find((cat) => cat.label === selectedCategory);
                         if (current) navigate(current.to);
                     }}
-                    className="text-[#2EAA7B] py-3 px-5 border border-[#2EAA7B] rounded-xl font-semibold hover:bg-[#2EAA7B] hover:text-white transition text-[15px]">
+                    className="text-[#2EAA7B] py-1 px-5 border border-[#2EAA7B] rounded-xl font-semibold hover:bg-[#2EAA7B] hover:text-white transition text-[15px]">
                     Перейти к категории
                 </Button>
             </div>

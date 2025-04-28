@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Button, Input, Heading, Header, Footer, ModalBase, Paragraph, Applink } from "../../components";
 import { Controller, useForm } from "react-hook-form";
 import * as yup from "yup";
@@ -41,6 +41,7 @@ export const RegistrationPage = () => {
     const [canResend, setCanResend] = useState<boolean>(false);
     const [showSuccessModal, setShowSuccessModal] = useState<boolean>(false);
     const [successMessage, setSuccessMessage] = useState<string>("");
+    const inputsRef = useRef<(HTMLInputElement | HTMLTextAreaElement | null)[]>([]);
     const [codeInput, setCodeInput] = useState<string[]>(["", "", "", ""]);
     const code = codeInput.join("");
     const navigate = useNavigate();
@@ -58,7 +59,8 @@ export const RegistrationPage = () => {
 
     const phone = watch("userphone");
     const maskedPhone = phone ? `+998******${phone.slice(-4)}` : "";
-    const [isPasswordVisible, setIsPasswordVisible] = useState<boolean>(false);
+    const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+    const [isConfirmPasswordVisible, setIsConfirmPasswordVisible] = useState(false);
     const [registrationUser] = useRegistrationUserMutation();
     const [verifyCode] = useVerifyPhoneCodeMutation();
 
@@ -70,6 +72,7 @@ export const RegistrationPage = () => {
     });
 
     const togglePasswordVisibility = () => setIsPasswordVisible(prev => !prev);
+    const toggleConfirmPasswordVisibility = () => setIsConfirmPasswordVisible(prev => !prev);
 
     useEffect(() => {
         if (!canResend && step === 2 && timer > 0) {
@@ -122,7 +125,7 @@ export const RegistrationPage = () => {
 
             setTimeout(() => {
                 setShowSuccessModal(false);
-                navigate("/main");
+                navigate("/login");
             }, 2000);
         } catch (err) {
             const error = err as ApiError;
@@ -132,12 +135,22 @@ export const RegistrationPage = () => {
             }
         }
     };
-
     const handleCodeChange = (value: string, index: number) => {
+        if (!/^[0-9]?$/.test(value)) return;
         const newCode = [...codeInput];
         newCode[index] = value;
         setCodeInput(newCode);
+
+        if (value && index < inputsRef.current.length - 1) {
+            inputsRef.current[index + 1]?.focus();
+        }
+    }
+    const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>, index: number) => {
+        if (e.key === "Backspace" && !codeInput[index] && index > 0) {
+            inputsRef.current[index - 1]?.focus();
+        }
     };
+
 
     return (
         <>
@@ -163,9 +176,9 @@ export const RegistrationPage = () => {
                                             </div>)} />
                                         <Controller name="confirmPassword" control={control} render={({ field }) => (
                                             <div className="relative w-full">
-                                                <Input {...field} placeholder="Подтверждение пароля" type={isPasswordVisible ? "text" : "password"} isError={!!errors.confirmPassword} errorMessage={errors.confirmPassword?.message} className="py-3.5 px-4.5 bg-[#EEEEEE80] outline-none rounded-[14px]" />
-                                                <span onClick={togglePasswordVisibility} className="absolute right-5 top-[clamp(12px,1.8vw,20px)] cursor-pointer text-[#28B13D]">
-                                                    {isPasswordVisible ? <FaRegEyeSlash /> : <FaRegEye />}
+                                                <Input {...field} placeholder="Подтверждение пароля" type={isConfirmPasswordVisible ? "text" : "password"} isError={!!errors.confirmPassword} errorMessage={errors.confirmPassword?.message} className="py-3.5 px-4.5 bg-[#EEEEEE80] outline-none rounded-[14px]" />
+                                                <span onClick={toggleConfirmPasswordVisibility} className="absolute right-5 top-[clamp(12px,1.8vw,20px)] cursor-pointer text-[#28B13D]">
+                                                    {isConfirmPasswordVisible ? <FaRegEyeSlash /> : <FaRegEye />}
                                                 </span>
                                             </div>)} />
                                     </form>
@@ -210,14 +223,16 @@ export const RegistrationPage = () => {
 
                                     <div className="flex gap-4 justify-between w-full">
                                         {Array.from({ length: 4 }).map((_, index) => (
-                                            <input
+                                            <Input
                                                 key={index}
                                                 maxLength={1}
+                                                ref={(el) => { inputsRef.current[index] = el; }}
                                                 value={codeInput[index]}
                                                 onChange={(e) => handleCodeChange(e.target.value, index)}
+                                                onKeyDown={(e) => handleKeyDown(e, index)}
                                                 className="w-[60px] h-[72px] text-center text-[32px] rounded-[10px] border border-[#D9D9D9] focus:outline-none focus:border-[#2EAA7B] font-semibold text-black"
-                                                type="text"
-                                            />
+                                                type="text" isError={false} />
+
                                         ))}
                                     </div>
 
@@ -245,7 +260,21 @@ export const RegistrationPage = () => {
                     )}        </div >
                 <Footer showSmallFooter={true} />
             </div >
-            {showSuccessModal && <ModalBase message={successMessage} actions={<Button className={""} onClick={() => { setShowSuccessModal(false) }}></Button>} />}
+            {showSuccessModal && (
+                <ModalBase
+                    title="Успешно!" // или "Упс!", если ошибка — зависит от successMessage
+                    message={successMessage}
+                    onClose={() => setShowSuccessModal(false)}
+                    actions={
+                        <Button
+                            className="w-full text-center py-4 hover:border hover:bg-white hover:text-[#2EAA7B] hover:border-[#2EAA7B] text-white bg-[#2EAA7B] rounded-[14px]"
+                            onClick={() => setShowSuccessModal(false)}
+                        >
+                            Подтвердить
+                        </Button>
+                    }
+                />
+            )}
         </>
     );
 };

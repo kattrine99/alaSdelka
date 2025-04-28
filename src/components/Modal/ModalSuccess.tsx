@@ -1,10 +1,11 @@
 import { RxCross1 } from "react-icons/rx";
 import { Heading } from "../Typography/Heading/Heading";
 import { Paragraph } from "../Typography/Paragraph/Paragraph";
+import { ReactNode } from "react";
 
 interface ModalBaseProps {
     title?: string;
-    message: string;
+    message: ReactNode;
     onClose?: () => void;
     actions?: React.ReactNode;
     showCloseButton?: boolean;
@@ -18,7 +19,7 @@ export const ModalBase: React.FC<ModalBaseProps> = ({
     showCloseButton = true
 }) => {
     return (
-        <div className="fixed w-screen h-screen z-50 flex items-center justify-center bg-[#3B3B3B80] bg-opacity-50">
+        <div className="fixed inset-0 w-screen h-screen z-50 flex items-center justify-center bg-[#3B3B3B80] bg-opacity-50">
             <div className="flex">
                 <div className="bg-white flex flex-col p-6 rounded-[24px] max-w-[460px] w-[457px] shadow-lg">
                     <Heading className="text-[32px] mb-4 font-semibold font-inter text-[#101828] leading-6" level={2} text={title} />

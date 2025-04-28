@@ -154,7 +154,7 @@ export interface OfferDetail {
         average_monthly_revenue: number;
         average_monthly_profit: number;
         average_monthly_expenses: number;
-        percentage_of_sale: number;
+        percentage_for_sale: number;
         profitability: number;
         foundation_year: number;
         employee_count: number;
@@ -212,4 +212,70 @@ export interface OfferDetail {
             }
         ],
     }
+}
+export interface FilterData {
+    cities: [
+        {
+            id: number,
+            name_ru: string,
+            name_uz: string
+        }
+    ],
+    categories: [
+        {
+            id: number,
+            title_ru: string,
+            title_uz: string
+        }
+    ],
+    project_stages: [
+        {
+            id: number,
+            name_ru: string,
+            name_uz: string
+        }
+    ],
+    conveniences: [
+        {
+            id: number,
+            name_ru: string,
+            name_uz: string
+        }
+    ],
+    business_types: [
+        {
+            value: string,
+            label_ru: string,
+            label_uz: string,
+        }
+    ],
+    listing_types: [
+        {
+            value: string,
+            label_ru: string,
+            label_uz: string,
+        }
+    ],
+    offer_types: [
+        {
+            value: string,
+            label_ru: string,
+            label_uz: string,
+        }
+    ],
+    offer_statuses: [
+        {
+            value: string,
+            label_ru: string,
+            label_uz: string,
+        }
+    ],
+    tariffs: [
+        {
+            id: number,
+            name: string,
+            price: number,
+            duragtion: number,
+        }
+    ],
 }

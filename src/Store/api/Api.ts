@@ -13,6 +13,7 @@ import type {
     OffersResponse,
     HomeStatistics,
     OfferDetail,
+    FilterData,
 } from "./types";
 import { baseUrl } from "../../utils/baseUrl";
 import { ICard } from "../../components/Cards/Interfaces";
@@ -97,9 +98,12 @@ export const AuthApi = createApi({
         getOfferById: builder.query<OfferDetail, number>({
             query: (id) => `/offers/${id}`,
         }),
-        // getFiltersData: builder.query<FilterData,>({
-
-        // }),
+        getFiltersData: builder.query<FilterData, void>({
+            query: () => ({
+                url: "/filters",
+                method: "GET",
+            }),
+        }),
     }),
 
 });
@@ -115,4 +119,5 @@ export const {
     useGetOffersQuery,
     useGetMainStatisticsQuery,
     useGetOfferByIdQuery,
+    useGetFiltersDataQuery,
 } = AuthApi;

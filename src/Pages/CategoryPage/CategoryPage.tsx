@@ -11,7 +11,7 @@ import {
   Button,
   Input,
   Paragraph,
-  Filters
+  Filters,
 } from "../../components";
 import { ICard } from "../../components/Cards/Interfaces";
 import { useGetOffersQuery } from "../../Store/api/Api";
@@ -22,7 +22,7 @@ import { OfferFilters } from "../../Store/api/types";
 
 function cleanObject<T extends object>(obj: T): Partial<T> {
   return Object.fromEntries(
-    Object.entries(obj).filter(([value]) => value !== "" && value !== undefined)
+    Object.entries(obj).filter(([, value]) => value !== "" && value !== undefined)
   ) as Partial<T>;
 }
 
@@ -31,14 +31,15 @@ export const CategoryPage = () => {
 
   const [filters, setFilters] = useState<FiltersState>({
     category: "",
-    city: {},
+    city: "",
     stage: "",
+    paybackPeriod: "",
     priceMin: "",
     priceMax: "",
     investmentMin: "",
     investmentMax: "",
     profitabilityMin: "",
-    profitabilityMax: ""
+    profitabilityMax: "",
   });
 
   const type = urlToTypeMap[category ?? ""] ?? "";
@@ -54,15 +55,15 @@ export const CategoryPage = () => {
     offer_type: apiOfferType,
     ...cleanObject({
       category: filters.category,
-      city: filters.city,
+      city_id: filters.city, // 👈 ПРАВИЛЬНО city_id
       stage: filters.stage,
       price_from: filters.priceMin,
       price_to: filters.priceMax,
       investment_from: filters.investmentMin,
       investment_to: filters.investmentMax,
       profitability_from: filters.profitabilityMin,
-      profitability_to: filters.profitabilityMax
-    })
+      profitability_to: filters.profitabilityMax,
+    }),
   };
 
   const { data, isLoading, isError } = useGetOffersQuery(queryParams);
@@ -80,8 +81,14 @@ export const CategoryPage = () => {
             {cards.length.toLocaleString("ru-RU")} объявлений
           </Paragraph>
 
-          {type && <Filters category={type as "бизнес" | "франшиза" | "стартап" | "инвестиции"}
-            filters={filters} setFilters={setFilters} />}
+          {type && (
+            <Filters
+              category={type as "бизнес" | "франшиза" | "стартап" | "инвестиции"}
+              filters={filters}
+              setFilters={setFilters}
+              onApplyFilters={() => setCurrentPage(1)} // сброс страницы при новом фильтре
+            />
+          )}
         </aside>
 
         <main className="flex-1 justify-end">

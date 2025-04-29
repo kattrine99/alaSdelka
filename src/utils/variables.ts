@@ -11,15 +11,17 @@ export const personalpages = [
     { label: "Избранное", to: "/favorites" },
     { label: "Продвижение", to: "/promotion" },
 ]
+
 export interface FiltersState {
-    city: object;
     category: string;
-    paybackPeriod?: string;
-    priceMin?: string;
-    priceMax?: string;
-    investmentMin?: string;
-    investmentMax?: string;
-    profitabilityMin?: string;
-    profitabilityMax?: string;
-    stage?: string;
-}
+    city: string;
+    stage: string;
+    paybackPeriod: string;
+    priceMin: string;
+    priceMax: string;
+    investmentMin: string;
+    investmentMax: string;
+    profitabilityMin: string;
+    profitabilityMax: string;
+  }
+  

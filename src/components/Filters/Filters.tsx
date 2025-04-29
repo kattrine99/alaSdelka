@@ -152,6 +152,8 @@ export const Filters: React.FC<FiltersProps> = ({ category, filters, setFilters,
                         <span className="text-[14px] text-black">от</span>
                         <Input
                             type="text"
+                            value={localFilters.priceMin}
+                            onChange={(e) => setLocalFilters((prev) => ({ ...prev, priceMin: e.target.value }))}
                             placeholder="100 000"
                             className="w-full text-[16px] font-semibold text-[#3C3C3C] bg-transparent outline-none placeholder:text-[#787878]" isError={false} />
                         <span className="text-[14px] text-black">сум</span>
@@ -160,6 +162,8 @@ export const Filters: React.FC<FiltersProps> = ({ category, filters, setFilters,
                         <span className="text-[14px] text-black">до</span>
                         <Input
                             type="text"
+                            value={localFilters.priceMax}
+                            onChange={(e) => setLocalFilters((prev) => ({ ...prev, priceMax: e.target.value }))}
                             placeholder="100 000"
                             className="w-full text-[16px] font-semibold text-[#3C3C3C] bg-transparent outline-none placeholder:text-[#787878]" isError={false} />
                         <span className="text-[14px] text-black">сум</span>
@@ -182,6 +186,8 @@ export const Filters: React.FC<FiltersProps> = ({ category, filters, setFilters,
                                 <span className="text-[14px] text-black">от</span>
                                 <Input
                                     type="text"
+                                    value={localFilters.priceMin}
+                                    onChange={(e) => setLocalFilters((prev) => ({ ...prev, priceMin: e.target.value }))}
                                     placeholder="100 000"
                                     className="w-full text-[16px] font-semibold text-[#3C3C3C] bg-transparent outline-none placeholder:text-[#787878]" isError={false} />
                                 <span className="text-[14px] text-black">сум</span>
@@ -190,6 +196,8 @@ export const Filters: React.FC<FiltersProps> = ({ category, filters, setFilters,
                                 <span className="text-[14px] text-black">до</span>
                                 <Input
                                     type="text"
+                                    value={localFilters.priceMax}
+                                    onChange={(e) => setLocalFilters((prev) => ({ ...prev, priceMax: e.target.value }))}
                                     placeholder="100 000"
                                     className="w-full text-[16px] font-semibold text-[#3C3C3C] bg-transparent outline-none placeholder:text-[#787878]" isError={false} />
                                 <span className="text-[14px] text-black">сум</span>
@@ -212,6 +220,8 @@ export const Filters: React.FC<FiltersProps> = ({ category, filters, setFilters,
                             <span className="text-[14px] text-black">от</span>
                             <Input
                                 type="text"
+                                value={localFilters.priceMin}
+                                onChange={(e) => setLocalFilters((prev) => ({ ...prev, priceMin: e.target.value }))}
                                 placeholder="100 000"
                                 className="w-full text-[16px] font-semibold text-[#3C3C3C] bg-transparent outline-none placeholder:text-[#787878]" isError={false} />
                             <span className="text-[14px] text-black">сум</span>
@@ -220,6 +230,8 @@ export const Filters: React.FC<FiltersProps> = ({ category, filters, setFilters,
                             <span className="text-[14px] text-black">до</span>
                             <Input
                                 type="text"
+                                value={localFilters.priceMax}
+                                onChange={(e) => setLocalFilters((prev) => ({ ...prev, priceMax: e.target.value }))}
                                 placeholder="100 000"
                                 className="w-full text-[16px] font-semibold text-[#3C3C3C] bg-transparent outline-none placeholder:text-[#787878]" isError={false} />
                             <span className="text-[14px] text-black">сум</span>

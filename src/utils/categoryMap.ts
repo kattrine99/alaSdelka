@@ -64,3 +64,9 @@ export const offerTypeToUrlMap: Record<string, string> = {
     "startup": "startup",
     "investments": "investments"
 };
+export const ruToApiOfferTypeMap = {
+    бизнес: "business",
+    стартап: "startup",
+    франшиза: "franchise",
+    инвестиции: "investments",
+} as const;

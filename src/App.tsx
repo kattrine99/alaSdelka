@@ -1,4 +1,4 @@
-import { LoginPage, RegistrationPage, MainPage, CategoryPage, ProfilePage, CardDetailPage, FavoritePage, AnnouncemntsPage, NoticePage } from "./Pages/index";
+import { LoginPage, RegistrationPage, MainPage, CategoryPage, ProfilePage, CardDetailPage, FavoritePage, AnnouncemntsPage, NoticePage, UserAnnouncementPage } from "./Pages/index";
 import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
 import './index.css';
 import { useEffect } from "react";
@@ -34,6 +34,7 @@ const routerConfig = createBrowserRouter([
       { path: "add-offer", element: <StepsAddingOffer /> },
       { path: "notices", element: <NoticePage /> },
       { path: ":category/card/:id", element: <CardDetailPage /> },
+      { path: "user_announcements", element: <UserAnnouncementPage /> },
     ]
   }
 ]);

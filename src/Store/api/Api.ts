@@ -14,6 +14,10 @@ import type {
     HomeStatistics,
     OfferDetail,
     FilterData,
+    FavoritesResponse,
+    Notifications,
+    GetUserOffersResponse,
+    GetUserOffersParams,
 } from "./types";
 import { baseUrl } from "../../utils/baseUrl";
 import { ICard } from "../../components/Cards/Interfaces";
@@ -104,6 +108,28 @@ export const AuthApi = createApi({
                 method: "GET",
             }),
         }),
+        toggleFavorite: builder.mutation<
+            { message: string; status: "added" | "deleted" },
+            number
+        >({
+            query: (offer_id) => ({
+                url: `/favourite-offers/${offer_id}`,
+                method: "POST",
+            }),
+        }),
+        getFavorites: builder.query<OfferDetail[], void>({
+            query: () => `/favourite-offers`,
+            transformResponse: (response: FavoritesResponse) => response.data,
+        }),
+        getNotifications: builder.query<Notifications, void>({
+            query: () => "/notifications",
+        }),
+        getUserOffers: builder.query<GetUserOffersResponse, GetUserOffersParams>({
+            query: ({ user_id, ...params }) => ({
+                url: `/users/${user_id}/offers`,
+                params,
+            }),
+        }),
     }),
 
 });
@@ -120,4 +146,8 @@ export const {
     useGetMainStatisticsQuery,
     useGetOfferByIdQuery,
     useGetFiltersDataQuery,
+    useToggleFavoriteMutation,
+    useGetFavoritesQuery,
+    useGetNotificationsQuery,
+    useGetUserOffersQuery,
 } = AuthApi;

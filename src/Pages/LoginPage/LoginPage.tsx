@@ -54,12 +54,10 @@ export const LoginPage = () => {
     const onSubmit = async (data: LoginFormInputs) => {
         try {
             const response = await loginUser({ phone: data.userphone, password: data.userpassword }).unwrap();
-            console.log("RESPONSE FROM LOGIN >>>", response);
-
             saveToken(response.access_token, response.expires_in);
             dispatch(setIsAuthenticated(true));
-            setModalText("Добро пожаловать!");
-            setModalTitle("Успешно!")
+            setModalText("Вы успешно вошли в аккаунт");
+            setModalTitle(" Добро пожаловать!")
             setShowModal(true);
             setTimeout(() => {
                 setShowModal(false);

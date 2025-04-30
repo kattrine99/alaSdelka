@@ -22,7 +22,7 @@ export default ({
                 white: "#FFFFFF",
                 black: "#191919",
                 gray: "#787878",
-            }
+            },
         },
     },
     plugins: [],

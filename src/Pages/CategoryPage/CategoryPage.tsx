@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useState } from "react";
 import {
   Breadcrumbs,
@@ -28,7 +28,7 @@ function cleanObject<T extends object>(obj: T): Partial<T> {
 
 export const CategoryPage = () => {
   const { category } = useParams();
-
+  const navigate = useNavigate();
   const [filters, setFilters] = useState<FiltersState>({
     category: "",
     city: "",
@@ -40,6 +40,8 @@ export const CategoryPage = () => {
     investmentMax: "",
     profitabilityMin: "",
     profitabilityMax: "",
+    listing_type: "",
+    offer_type: "",
   });
 
   const type = urlToTypeMap[category ?? ""] ?? "";
@@ -47,15 +49,19 @@ export const CategoryPage = () => {
   const pageTitle = typeToTitleMap[type as ICard["offer_type"]] ?? "Категория";
 
   const [currentPage, setCurrentPage] = useState(1);
+  const [searchInput, setSearchInput] = useState("");
+  const [searchQuery, setSearchQuery] = useState("");
+
   const itemsPerPage = 12;
 
+  const isNumber = /^\d+$/.test(searchQuery);
   const queryParams: OfferFilters = {
     page: currentPage,
     per_page: itemsPerPage,
     offer_type: apiOfferType,
     ...cleanObject({
       category: filters.category,
-      city_id: filters.city, // 👈 ПРАВИЛЬНО city_id
+      city_id: filters.city,
       stage: filters.stage,
       price_from: filters.priceMin,
       price_to: filters.priceMax,
@@ -63,13 +69,24 @@ export const CategoryPage = () => {
       investment_to: filters.investmentMax,
       profitability_from: filters.profitabilityMin,
       profitability_to: filters.profitabilityMax,
+      ...(searchQuery && (isNumber
+        ? { id: searchQuery }
+        : { title: searchQuery })),
+
     }),
   };
+
 
   const { data, isLoading, isError } = useGetOffersQuery(queryParams);
   const cards = data?.data || [];
   const totalPages = data?.meta?.last_page || 1;
-
+  const exactCards = searchQuery
+    ? cards.filter((card) =>
+      isNumber
+        ? String(card.id) === searchQuery
+        : card.title.toLowerCase().includes(searchQuery.toLowerCase())
+    )
+    : cards;
   return (
     <div className="font-openSans min-h-screen w-screen overflow-x-hidden">
       <Header />
@@ -86,25 +103,40 @@ export const CategoryPage = () => {
               category={type as "бизнес" | "франшиза" | "стартап" | "инвестиции"}
               filters={filters}
               setFilters={setFilters}
-              onApplyFilters={() => setCurrentPage(1)} // сброс страницы при новом фильтре
+              onApplyFilters={() => setCurrentPage(1)}
             />
           )}
         </aside>
 
         <main className="flex-1 justify-end">
           <div className="flex justify-end gap-x-4">
-            <Button className="px-5 py-3 bg-[#31B683] text-white rounded-[6px]">Добавить объявление</Button>
+            <Button
+              className="px-5 py-3 bg-[#31B683] text-white rounded-[6px]"
+              onClick={() => navigate('/add-offer')}
+            >
+              Добавить объявление
+            </Button>
             <div className="flex items-center border border-[#2EAA7B] rounded-xl pl-5 w-[450px] bg-white overflow-hidden">
               <div className="text-[#2EAA7B]">
                 <FiSearch className="w-[24px] h-[24px]" />
               </div>
               <Input
                 type="text"
+                value={searchInput}
+
+                onChange={(e) => setSearchInput(e.target.value)}
                 placeholder="Поиск по названию или ID"
                 isError={false}
                 className="flex-1 w-full px-2.5 text-[#787878] placeholder-[#787878] bg-white outline-none"
               />
-              <Button className="h-full bg-[#2EAA7B] text-white text-sm font-semibold px-5 hover:bg-green-600 transition rounded-none">
+              <Button
+
+                onClick={() => {
+                  setSearchQuery(searchInput);
+                  setCurrentPage(1);
+                }}
+                className="h-full bg-[#2EAA7B] text-white text-sm font-semibold px-5 hover:bg-green-600 transition rounded-none"
+              >
                 Поиск
               </Button>
             </div>
@@ -116,12 +148,25 @@ export const CategoryPage = () => {
             </div>
           ) : isError ? (
             <p className="px-48 py-[30px] text-red-500">Ошибка загрузки данных</p>
+          ) : exactCards.length === 0 ? (
+            <div className="flex flex-col w-full h-full justify-center items-center bg-[url('../../../images/grid.png')] bg-no-repeat  bg-contain" >
+              <div className="w-128 h-100 bg-[url('../../../images/404.png')] bg-contain bg-center bg-no-repeat flex flex-col items-center justify-end">
+                <Paragraph className="text-[20px] font-semibold text-black mb-4">Страница не найдена</Paragraph>
+                <Button
+                  onClick={() => navigate("/")}
+                  className="bg-[#2EAA7B] text-white py-2.5 px-6 rounded-[12px] text-[16px] font-medium"
+                >
+                  Перейти на главную
+                </Button>
+              </div>
+
+            </div>
           ) : (
             <CardSection
               Class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-y-10 gap-x-8 transition duration-600"
               title={pageTitle}
-              ClassName="py-[39px]"
-              cards={cards}
+              ClassName="py-9.75"
+              cards={exactCards}
               hideViewAllButton
             />
           )}
@@ -132,9 +177,10 @@ export const CategoryPage = () => {
             onPageChange={(page: number) => setCurrentPage(page)}
           />
         </main>
-      </div>
+
+      </div >
       <PopularSliderSection cards={cards} />
       <Footer showSmallFooter={true} />
-    </div>
+    </div >
   );
 };

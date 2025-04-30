@@ -164,6 +164,7 @@ export interface OfferDetail {
         offer_status: string;
         user_name: string;
         user_phone: string;
+        user_photo: string;
         is_paid: boolean;
         created_at: string;
         updated_at: string;
@@ -278,4 +279,43 @@ export interface FilterData {
             duragtion: number,
         }
     ],
+}
+export interface Notification {
+    title_ru: string;
+    title_uz: string;
+    text_ru: string;
+    text_uz: string;
+}
+export interface Notifications {
+    data: Notification[],
+    links: object,
+    meta: object,
+}
+export interface FavoritesResponse {
+    data: OfferDetail[];
+    meta?: object;
+    links?: object;
+}
+export interface GetUserOffersResponse {
+    user: {
+        id: number;
+        name: string;
+        phone: string;
+        email: string;
+        photo: string;
+    };
+    offers: OfferDetail[];
+    user_offers_count: number;
+}
+export interface GetUserOffersParams {
+    user_id: number;
+    per_page?: number;
+    page?: number;
+    search?: string;
+    category_id?: number;
+    price_min?: number;
+    price_max?: number;
+    listing_type?: "sell" | "buy";
+    offer_type?: "business" | "startup" | "franchise" | "investments";
+    city_id?: number;
 }

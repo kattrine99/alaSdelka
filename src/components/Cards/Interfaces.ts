@@ -12,12 +12,14 @@ export interface ICard {
         };
     };
     area: string;
-    popular: boolean;
+    popular?: boolean;
     category?: string;
 }
 
 export interface ICards {
     cards: ICard[];
+    initialFavorites?: number[];
+    onFavoritesChanged?: () => void;
     containerClass?: string;
     cardWrapperClass?: string;
     cardIconClass?: string;

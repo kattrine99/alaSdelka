@@ -2,7 +2,7 @@ import { Cards } from "../index";
 import { ICard } from "../Cards/Interfaces";
 
 interface CardSectionProps {
-  title: string;
+  title?: string;
   cards: ICard[];
   maxVisible?: number;
   hideViewAllButton?: boolean;

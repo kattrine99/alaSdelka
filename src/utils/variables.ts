@@ -23,5 +23,7 @@ export interface FiltersState {
     investmentMax: string;
     profitabilityMin: string;
     profitabilityMax: string;
-  }
-  
+    listing_type?: "buy" | "sell" | "" | null;
+    offer_type: "business" | "startup" | "franchise" | "investments" | "" | null;
+}
+

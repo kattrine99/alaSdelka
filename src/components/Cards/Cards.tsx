@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { Button, Heading, Paragraph } from "../index";
 import { FaArrowRight } from "react-icons/fa";
 import { FaLocationDot, FaLocationCrosshairs } from "react-icons/fa6";
@@ -8,30 +7,49 @@ import SolidHeartIcon from '../../assets/Solidheart.svg?react';
 import { Link } from "react-router-dom";
 import { ICards } from "./Interfaces";
 import { offerTypeToUrlMap } from "../../utils/categoryMap";
+import { useToggleFavoriteMutation } from "../../Store/api/Api";
+import { useState } from "react";
 
 
 export const Cards: React.FC<ICards> = ({
     cards,
+    initialFavorites = [],
     cardWrapperClass,
     cardIconClass,
     cardHeadingClass,
     cardTextClass,
     containerClass,
+    onFavoritesChanged,
 }) => {
-    const [favorites, setFavorites] = useState<number[]>([]);
 
-    const toggleFavorite = (id: number) => {
-        setFavorites((prev) =>
-            prev.includes(id) ? prev.filter((favId) => favId !== id) : [...prev, id]
-        );
+    const [toggleFavoriteAPI] = useToggleFavoriteMutation();
+    const [favoriteIds, setFavoriteIds] = useState<number[]>(initialFavorites);
+
+    const handleToggle = async (id: number) => {
+        try {
+            const res = await toggleFavoriteAPI(id).unwrap();
+
+            setFavoriteIds((prev) =>
+                res.status === "added"
+                    ? [...prev, id]
+                    : prev.filter((favId) => favId !== id)
+            );
+
+            if (onFavoritesChanged) {
+                onFavoritesChanged();
+            }
+
+        } catch (e) {
+            console.error("Ошибка добавления в избранное", e);
+        }
     };
 
     return (
         <div className={containerClass}>
-            {cards
-                .slice()
-                .sort((a, b) => Number(b.popular) - Number(a.popular))
-                .map((card) => (
+
+            {cards.map((card) => {
+                const isFavorite = favoriteIds.includes(card.id);
+                return (
                     <div
                         key={card.id}
                         className={`relative rounded-lg w-[22rem] shadow-lg bg-white flex flex-col h-full ${cardWrapperClass ?? ""}`}
@@ -48,14 +66,14 @@ export const Cards: React.FC<ICards> = ({
 
                             <img src={card.image || "../../../images/business_abstract.jpg"} alt={`${card.id}`} className="w-full h-[192px] object-cover" />
                             <button
-                                onClick={() => toggleFavorite(card.id)}
-                                className="absolute top-5 right-[18px] px-[7px] py-2 text-[#28B13D] bg-white rounded-full border-2 border-[#28B13D] shadow-sm"
+                                onClick={() => handleToggle(card.id)}
+                                className="absolute top-5 right-[18px] ..."
                             >
-                                {favorites.includes(card.id) ?
-                                    <SolidHeartIcon className="w-8 h-7 border-1.5 border-[#FF1D1D] text-[#FF1D1D]" />
-                                    :
-                                    <HeartIcon className="w-8 h-7 text-center border-1.5" />
-                                }
+                                {isFavorite ? (
+                                    <SolidHeartIcon className="w-8 h-7 border- py-0.5 border-[#2EAA7B] text-[#FF1D1D] bg-white rounded-full " />
+                                ) : (
+                                    <HeartIcon className="w-8 h-7 text-center border-1 py-0.5 border-[#2EAA7B] text-[#2EAA7B] bg-white rounded-full" />
+                                )}
                             </button>
                         </div>
 
@@ -97,7 +115,10 @@ export const Cards: React.FC<ICards> = ({
 
                         </div>
                     </div>
-                ))}
+                )
+            }
+            )
+            }
         </div>
     );
 };

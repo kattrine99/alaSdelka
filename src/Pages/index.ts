@@ -7,5 +7,6 @@ export { CardDetailPage } from "./CardDetailPage/CardDetailPage"
 export { FavoritePage } from "./FavoritePage/FavoritePage"
 export { AnnouncemntsPage } from "./Announcements/Announcements"
 export { NoticePage } from "./Notices/NoticePage"
+export { UserAnnouncementPage } from "./userAnnouncementsPage/UserAnnouncementPage"
 
 

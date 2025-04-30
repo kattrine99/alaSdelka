@@ -2,7 +2,8 @@ import { useState } from "react";
 import { ModalBase, Button, Paragraph } from "../../../components";
 import { BiHeart, BiSolidHeart } from "react-icons/bi";
 import { OfferDetail } from "../../../Store/api/types";
-
+import ProfileIcon from "../../../assets/profile-circle.svg?react"
+import { Link } from "react-router-dom";
 export const SellerInfoCard = ({ card }: { card: OfferDetail }) => {
     const [isContactModalOpen, setContactModalOpen] = useState(false);
     const [isLinksModalOpen, setLinksModalOpen] = useState(false);
@@ -25,9 +26,11 @@ flex flex-col gap-4 relative">
                 {card.data.price?.toLocaleString()} сум
             </Paragraph>
             <div className="flex items-center bg-[#E9F7F1] rounded-md p-3 gap-3">
-                <div className="w-6 h-6 border-2 bg-[#E9F7F1] border-[#2EAA7B] rounded-full" >
-                </div>
-                <Paragraph className="text-[#101828] font-semibold">{card.data.user_name || "Имя продавца"}</Paragraph>
+                <Link to={"/user_announcements"}>
+                    <div className="w-6 h-6 border-2 bg-[#E9F7F1] border-[#2EAA7B] rounded-full" >
+                        <img src={`${card.data.user_photo || <ProfileIcon />}`} />
+                    </div>
+                    <Paragraph className="text-[#101828] font-semibold">{card.data.user_name || "Имя продавца"}</Paragraph></Link>
             </div>
             <Button
                 className="w-full bg-[#2EAA7B] text-white font-semibold py-2 rounded-md hover:bg-[#31B683] transition"

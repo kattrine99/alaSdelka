@@ -2,7 +2,6 @@ import { useState } from "react";
 import { ModalBase, Button, Paragraph } from "../../../components";
 import { BiHeart, BiSolidHeart } from "react-icons/bi";
 import { OfferDetail } from "../../../Store/api/types";
-import ProfileIcon from "../../../assets/profile-circle.svg?react"
 import { Link } from "react-router-dom";
 export const SellerInfoCard = ({ card }: { card: OfferDetail }) => {
     const [isContactModalOpen, setContactModalOpen] = useState(false);
@@ -26,9 +25,9 @@ flex flex-col gap-4 relative">
                 {card.data.price?.toLocaleString()} сум
             </Paragraph>
             <div className="flex items-center bg-[#E9F7F1] rounded-md p-3 gap-3">
-                <Link to={"/user_announcements"}>
-                    <div className="w-6 h-6 border-2 bg-[#E9F7F1] border-[#2EAA7B] rounded-full" >
-                        <img src={`${card.data.user_photo || <ProfileIcon />}`} />
+                <Link to={"/user_announcements"} className="flex gap-5 items-center">
+                    <div className="rounded-full" >
+                        <img src={`${card.data.user_photo || "../../../../images/profile.png"}`} className="w-10 h-10" />
                     </div>
                     <Paragraph className="text-[#101828] font-semibold">{card.data.user_name || "Имя продавца"}</Paragraph></Link>
             </div>
@@ -45,7 +44,6 @@ flex flex-col gap-4 relative">
                 Ссылки
             </Button>
 
-            {/* Модалка контактов */}
             {isContactModalOpen && (
                 <ModalBase
                     title="Контакты продавца"
@@ -55,7 +53,6 @@ flex flex-col gap-4 relative">
                 />
             )}
 
-            {/* Модалка ссылок */}
             {isLinksModalOpen && (
                 <ModalBase
                     title="Ссылки"

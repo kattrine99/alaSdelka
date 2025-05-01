@@ -18,9 +18,9 @@ const categories = ["Бизнес", "Франшиза", "Стартап", "Ин�
 type CategoryType = typeof categories[number];
 
 const stepIcons = [
-    <ShopIcon className="w-4 h-4" />, // Тип объявления
-    <CategoryIcon className="w-4 h-4" />,         // Категория
-    <InfoIcon className="w-4 h-4" />,         // Информация
+    <ShopIcon className="w-4 h-4" />, 
+    <CategoryIcon className="w-4 h-4" />,      
+    <InfoIcon className="w-4 h-4" />,         
 ];
 export const StepsAddingOffer = () => {
     const [step, setStep] = useState(0);

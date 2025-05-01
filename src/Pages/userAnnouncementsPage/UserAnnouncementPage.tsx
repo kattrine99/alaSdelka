@@ -59,7 +59,7 @@ export const UserAnnouncementPage = () => {
         price_min: filters.priceMin ? Number(filters.priceMin) : undefined,
         price_max: filters.priceMax ? Number(filters.priceMax) : undefined,
     });
-
+    console.log(typeof userId, userId)
     const cards = data?.offers ?? [];
     const mappedCards: ICard[] = cards.map((card) => ({
         id: card.data.id,

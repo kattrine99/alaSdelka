@@ -1,4 +1,4 @@
-import { EmptyMessage, Footer, Header, Heading } from "../../components";
+import { EmptyMessage, Footer, Header, Heading, Paragraph } from "../../components";
 import { profileNavigate } from "../../utils/categoryMap";
 import { useGetNotificationsQuery } from "../../Store/api/Api";
 import { Notification } from "../../Store/api/types";
@@ -33,11 +33,11 @@ export const NoticePage = () => {
                         {notifications.map((item: Notification, index: number) => (
                             <div
                                 key={index}
-                                className="border border-green-100 rounded-lg p-4 shadow-sm"
+                                className="w-full mt-5 flex flex-col gap-6 rounded-lg py-6 px-5 shadow-[1px_1px_4.5px_0px] shadow-[#28B13D4D]"
                             >
-                                <h3 className="font-bold text-black mb-1">{item.title_ru}</h3>
-                                <p className="text-gray-700 mb-3">{item.text_ru}</p>
-                                <div className="text-gray-400 text-sm flex gap-4 items-center">
+                                <Heading className="font-inter font-bold text-lg text-[#232323] mb-3.5" text={item.title_ru} level={3} />
+                                <Paragraph className="font-inter text-lg text-[#232323] mb-3.5">{item.text_ru}</Paragraph>
+                                <div className="text-gray-400 text-sm flex gap-3 items-center">
                                     <span>📅 17.05.2021</span>
                                     <span>⏰ 16:23</span>
                                 </div>

@@ -20,6 +20,7 @@ export const Cards: React.FC<ICards> = ({
     cardTextClass,
     containerClass,
     onFavoritesChanged,
+    WhatchButtonClass,
 }) => {
 
     const [toggleFavoriteAPI] = useToggleFavoriteMutation();
@@ -52,7 +53,7 @@ export const Cards: React.FC<ICards> = ({
                 return (
                     <div
                         key={card.id}
-                        className={`relative rounded-lg w-[22rem] shadow-lg bg-white flex flex-col h-full ${cardWrapperClass ?? ""}`}
+                        className={`relative rounded-lg bg-white flex h-full ${cardWrapperClass ?? ""}`}
                     >
                         {card.popular && (
                             <div className="absolute w-[125px] left-5 font-openSans translate-y-[-50%] bg-white border border-[#FD6A0D] text-[#FD6A0D] py-[5px] px-1.5 rounded-md font-semibold z-10 shadow-sm flex">
@@ -62,12 +63,20 @@ export const Cards: React.FC<ICards> = ({
                                 </Paragraph>
                             </div>
                         )}
+                        {card.popular && (
+                            <div className="absolute w-[125px] left-5 font-openSans translate-y-[-50%] bg-white border border-[#301DFF] text-[#301DFF] py-1.25 px-1.5 rounded-md font-semibold z-10 shadow-sm flex">
+                                <FireIcon className="z-10 w-5 h-5 text-[#301DFF]" />
+                                <Paragraph className="">
+                                    Продано
+                                </Paragraph>
+                            </div>
+                        )}
                         <div className={`relative ${cardIconClass ?? ""}`}>
 
-                            <img src={card.image || "../../../images/business_abstract.jpg"} alt={`${card.id}`} className="w-full h-[192px] object-cover" />
+                            <img src={card.image || "../../../images/business_abstract.jpg"} alt={`${card.id}`} className="w-full h-58 object-cover" />
                             <button
                                 onClick={() => handleToggle(card.id)}
-                                className="absolute top-5 right-[18px] ..."
+                                className="absolute top-5 right-4.5"
                             >
                                 {isFavorite ? (
                                     <SolidHeartIcon className="w-8 h-7 border- py-0.5 border-[#2EAA7B] text-[#FF1D1D] bg-white rounded-full " />
@@ -105,7 +114,7 @@ export const Cards: React.FC<ICards> = ({
                             </div>
                             <div className="w-full h-[44px] mt-auto">
                                 <Link to={`/${offerTypeToUrlMap[card.offer_type]}/card/${card.id}`} className="w-full">
-                                    <Button className="w-full py-[12px] bg-[#2EAA7B] text-white font-medium rounded-md flex justify-center hover:bg-[#31B683] transition duration-300 cursor-pointer">
+                                    <Button className={WhatchButtonClass}>
                                         <span className="flex gap-2 items-center">
                                             Просмотреть <FaArrowRight />
                                         </span>

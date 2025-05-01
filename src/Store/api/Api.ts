@@ -14,10 +14,10 @@ import type {
     HomeStatistics,
     OfferDetail,
     FilterData,
-    FavoritesResponse,
     Notifications,
     GetUserOffersResponse,
     GetUserOffersParams,
+    Offer,
 } from "./types";
 import { baseUrl } from "../../utils/baseUrl";
 import { ICard } from "../../components/Cards/Interfaces";
@@ -117,16 +117,15 @@ export const AuthApi = createApi({
                 method: "POST",
             }),
         }),
-        getFavorites: builder.query<OfferDetail[], void>({
+        getFavorites: builder.query<{ data: Offer[] }, void>({
             query: () => `/favourite-offers`,
-            transformResponse: (response: FavoritesResponse) => response.data,
         }),
         getNotifications: builder.query<Notifications, void>({
             query: () => "/notifications",
         }),
         getUserOffers: builder.query<GetUserOffersResponse, GetUserOffersParams>({
             query: ({ user_id, ...params }) => ({
-                url: `/users/${user_id}/offers`,
+                url: `/users/${Number(user_id)}/offers`,
                 params,
             }),
         }),

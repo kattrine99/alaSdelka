@@ -214,6 +214,19 @@ export interface OfferDetail {
         ],
     }
 }
+export interface Offer {
+    id: number;
+    title: string;
+    price: number;
+    area: number;
+    offer_type: "business" | "franchise" | "startup" | "investments";
+    photos?: { id: number; photo: string; order: number }[];
+    address?: {
+        address: string;
+        city?: { name_ru: string };
+    };
+}
+
 export interface FilterData {
     cities: [
         {

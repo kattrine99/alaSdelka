@@ -165,6 +165,8 @@ export interface OfferDetail {
         user_name: string;
         user_phone: string;
         user_photo: string;
+        user_created_at: string,
+        user_id: number,
         is_paid: boolean;
         created_at: string;
         updated_at: string;
@@ -316,6 +318,8 @@ export interface GetUserOffersResponse {
         phone: string;
         email: string;
         photo: string;
+        created_at: string;
+        updated_at: string;
     };
     offers: OfferDetail[];
     user_offers_count: number;
@@ -331,4 +335,49 @@ export interface GetUserOffersParams {
     listing_type?: "sell" | "buy";
     offer_type?: "business" | "startup" | "franchise" | "investments";
     city_id?: number;
+}
+export interface OfferPayload {
+    title: string;
+    description: string;
+    listing_type: "buy" | "sell";
+    offer_type: "business" | "franchise" | "startup" | "investments";
+    user_name: string;
+    user_phone: string;
+    address: string;
+    city_id: number;
+
+    amount: string;
+
+    parking: boolean;
+    clients: boolean;
+    suppliers: boolean;
+    equipment: boolean;
+    imported_supplies: boolean;
+    export_contracts: boolean;
+    no_credit: boolean;
+    has_branches: boolean;
+
+    // SELL-specific
+    ownership_type?: string;
+    property_ownership_type?: string;
+    documents?: File[];
+    images?: File[];
+    communication_links?: string[];
+    business_share?: string;
+    monthly_income?: string;
+    profit?: string;
+    payback_period?: string;
+
+    // BUY-specific
+    legal_form?: string;
+
+    // Startup-specific
+    startup_stage?: string;
+
+    // Franchise-specific
+    is_international_franchise?: boolean;
+    has_master_franchise?: boolean;
+
+    // Investments-specific
+    has_copyrights?: boolean;
 }

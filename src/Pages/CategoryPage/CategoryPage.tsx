@@ -1,5 +1,5 @@
-import { useNavigate, useParams } from "react-router-dom";
-import { useState } from "react";
+import { useNavigate, useParams, useSearchParams } from "react-router-dom";
+import { useEffect, useState } from "react";
 import {
   Breadcrumbs,
   CardSection,
@@ -15,7 +15,7 @@ import {
 } from "../../components";
 import { ICard } from "../../components/Cards/Interfaces";
 import { useGetOffersQuery } from "../../Store/api/Api";
-import { typeToTitleMap, urlToApiOfferTypeMap, urlToTypeMap } from "../../utils/categoryMap";
+import { routeToCategoryIdMap, typeToTitleMap, urlToApiOfferTypeMap, urlToTypeMap } from "../../utils/categoryMap";
 import { FiSearch } from "react-icons/fi";
 import { FiltersState } from "../../utils/variables";
 import { OfferFilters } from "../../Store/api/types";
@@ -28,33 +28,46 @@ function cleanObject<T extends object>(obj: T): Partial<T> {
 
 export const CategoryPage = () => {
   const { category } = useParams();
+  const [searchParams] = useSearchParams();
   const navigate = useNavigate();
-  const [filters, setFilters] = useState<FiltersState>({
-    category: "",
-    city: "",
-    stage: "",
-    paybackPeriod: "",
-    priceMin: "",
-    priceMax: "",
-    investmentMin: "",
-    investmentMax: "",
-    profitabilityMin: "",
-    profitabilityMax: "",
-    listing_type: "",
-    offer_type: "",
-  });
 
-  const type = urlToTypeMap[category ?? ""] ?? "";
+  const categoryKey = category?.toLowerCase() ?? "";
+  const categoryId = routeToCategoryIdMap[categoryKey] || "";
+  const type = urlToTypeMap[categoryKey] ?? "";
   const apiOfferType = urlToApiOfferTypeMap[type] as OfferFilters["offer_type"];
   const pageTitle = typeToTitleMap[type as ICard["offer_type"]] ?? "Категория";
+  const offerTypeFromURL = searchParams.get("offer_type") ?? "";
+  const allowedOfferTypes = ["", "business", "franchise", "startup", "investments"] as const;
+  type OfferType = typeof allowedOfferTypes[number];
+
+  const isValidOfferType = (value: string): value is OfferType =>
+    allowedOfferTypes.includes(value as OfferType);
+
+  const validOfferType: OfferType = isValidOfferType(offerTypeFromURL)
+    ? offerTypeFromURL
+    : "";
+  const [filters, setFilters] = useState<FiltersState>({
+    category: categoryId,
+    city: searchParams.get("city") || "",
+    stage: searchParams.get("stage") || "",
+    paybackPeriod: searchParams.get("paybackPeriod") || "",
+    priceMin: searchParams.get("priceMin") || "",
+    priceMax: searchParams.get("priceMax") || "",
+    investmentMin: searchParams.get("investmentMin") || "",
+    investmentMax: searchParams.get("investmentMax") || "",
+    profitabilityMin: searchParams.get("profitabilityMin") || "",
+    profitabilityMax: searchParams.get("profitabilityMax") || "",
+    listing_type: "",
+    offer_type: validOfferType,
+  });
 
   const [currentPage, setCurrentPage] = useState(1);
-  const [searchInput, setSearchInput] = useState("");
-  const [searchQuery, setSearchQuery] = useState("");
+  const [searchInput, setSearchInput] = useState(searchParams.get("search") || "");
+  const [searchQuery, setSearchQuery] = useState(searchParams.get("search") || "");
 
   const itemsPerPage = 12;
-
   const isNumber = /^\d+$/.test(searchQuery);
+
   const queryParams: OfferFilters = {
     page: currentPage,
     per_page: itemsPerPage,
@@ -63,30 +76,32 @@ export const CategoryPage = () => {
       category: filters.category,
       city_id: filters.city,
       stage: filters.stage,
+      payback_period: filters.paybackPeriod,
       price_from: filters.priceMin,
       price_to: filters.priceMax,
       investment_from: filters.investmentMin,
       investment_to: filters.investmentMax,
       profitability_from: filters.profitabilityMin,
       profitability_to: filters.profitabilityMax,
-      ...(searchQuery && (isNumber
-        ? { id: searchQuery }
-        : { title: searchQuery })),
-
+      ...(searchQuery && (isNumber ? { id: searchQuery } : { title: searchQuery })),
     }),
   };
-
 
   const { data, isLoading, isError } = useGetOffersQuery(queryParams);
   const cards = data?.data || [];
   const totalPages = data?.meta?.last_page || 1;
+
   const exactCards = searchQuery
     ? cards.filter((card) =>
-      isNumber
-        ? String(card.id) === searchQuery
-        : card.title.toLowerCase().includes(searchQuery.toLowerCase())
+      isNumber ? String(card.id) === searchQuery : card.title.toLowerCase().includes(searchQuery.toLowerCase())
     )
     : cards;
+  useEffect(() => {
+    setFilters((prev) => ({
+      ...prev,
+      paybackPeriod: searchParams.get("paybackPeriod") || "",
+    }));
+  }, [searchParams]);
   return (
     <div className="font-openSans min-h-screen w-screen overflow-x-hidden">
       <Header />
@@ -100,10 +115,17 @@ export const CategoryPage = () => {
 
           {type && (
             <Filters
-              category={type as "бизнес" | "франшиза" | "стартап" | "инвестиции"}
+              offer_type={categoryKey as "business" | "startup" | "franchise" | "investments"}
               filters={filters}
               setFilters={setFilters}
-              onApplyFilters={() => setCurrentPage(1)}
+              onApplyFilters={() => {
+                const query = new URLSearchParams();
+                if (searchInput) query.append("search", searchInput);
+                Object.entries(filters).forEach(([key, value]) => {
+                  if (value) query.append(key, value);
+                });
+                navigate(`/${categoryKey}?${query.toString()}`);
+              }}
             />
           )}
         </aside>
@@ -123,14 +145,12 @@ export const CategoryPage = () => {
               <Input
                 type="text"
                 value={searchInput}
-
                 onChange={(e) => setSearchInput(e.target.value)}
                 placeholder="Поиск по названию или ID"
                 isError={false}
                 className="flex-1 w-full px-2.5 text-[#787878] placeholder-[#787878] bg-white outline-none"
               />
               <Button
-
                 onClick={() => {
                   setSearchQuery(searchInput);
                   setCurrentPage(1);
@@ -149,7 +169,7 @@ export const CategoryPage = () => {
           ) : isError ? (
             <p className="px-48 py-[30px] text-red-500">Ошибка загрузки данных</p>
           ) : exactCards.length === 0 ? (
-            <div className="flex flex-col w-full h-full justify-center items-center bg-[url('../../../images/grid.png')] bg-no-repeat  bg-contain" >
+            <div className="flex flex-col w-full h-full justify-center items-center bg-[url('../../../images/grid.png')] bg-no-repeat  bg-contain">
               <div className="w-128 h-100 bg-[url('../../../images/404.png')] bg-contain bg-center bg-no-repeat flex flex-col items-center justify-end">
                 <Paragraph className="text-[20px] font-semibold text-black mb-4">Страница не найдена</Paragraph>
                 <Button
@@ -159,7 +179,6 @@ export const CategoryPage = () => {
                   Перейти на главную
                 </Button>
               </div>
-
             </div>
           ) : (
             <CardSection
@@ -177,10 +196,9 @@ export const CategoryPage = () => {
             onPageChange={(page: number) => setCurrentPage(page)}
           />
         </main>
-
-      </div >
+      </div>
       <PopularSliderSection cards={cards} />
       <Footer showSmallFooter={true} />
-    </div >
+    </div>
   );
 };

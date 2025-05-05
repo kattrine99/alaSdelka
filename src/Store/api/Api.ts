@@ -129,6 +129,13 @@ export const AuthApi = createApi({
                 params,
             }),
         }),
+        createOffer: builder.mutation<{ data: OfferDetail }, Partial<OfferDetail>>({
+            query: (payload) => ({
+                url: "/offers",
+                method: "POST",
+                body: payload,
+            }),
+        }),
     }),
 
 });
@@ -137,6 +144,7 @@ export const {
     useLoginUserMutation,
     useRegistrationUserMutation,
     useVerifyPhoneCodeMutation,
+    useCreateOfferMutation,
     useGetUserInfoQuery,
     useUpdateUserInfoMutation,
     useGetHomeOffersQuery,

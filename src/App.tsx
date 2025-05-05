@@ -34,7 +34,7 @@ const routerConfig = createBrowserRouter([
       { path: "add-offer", element: <StepsAddingOffer /> },
       { path: "notices", element: <NoticePage /> },
       { path: ":category/card/:id", element: <CardDetailPage /> },
-      { path: "user_announcements", element: <UserAnnouncementPage /> },
+      { path: "/users/:userId/:category", element: <UserAnnouncementPage /> },
     ]
   }
 ]);

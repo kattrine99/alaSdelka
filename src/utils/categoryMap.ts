@@ -70,3 +70,16 @@ export const ruToApiOfferTypeMap = {
     франшиза: "franchise",
     инвестиции: "investments",
 } as const;
+export const categoryRouteMap: Record<string, string> = {
+    бизнес: "business",
+    франшиза: "franchise",
+    стартапы: "startups",
+    инвестиции: "investments",
+};
+export const routeToCategoryIdMap: Record<string, string> = {
+    business: "1",
+    franchise: "2",
+    startups: "3",
+    investments: "4",
+};
+

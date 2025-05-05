@@ -12,8 +12,6 @@ import MoneySendIcon from "../../assets/money-send.svg?react"
 import PercentIcon from "../../assets/percentage-square.svg?react"
 import ReceiptIcon from "../../assets/receipt-item.svg?react"
 import WalletIcon from "../../assets/wallet-add.svg?react"
-
-
 import GpsIcon from '../../assets/gps.svg?react'
 import CategoryIcon from '../../assets/frame.svg?react'
 import { JSX, useState } from 'react';
@@ -42,7 +40,7 @@ export const CardDetailPage = () => {
     };
 
     const handleDownloadAllDocuments = () => {
-        if (!card || !card.documents) return; // Защита
+        if (!card || !card.documents) return;
 
         card.documents.forEach((doc, index) => {
             const link = document.createElement('a');
@@ -240,7 +238,7 @@ export const CardDetailPage = () => {
                                     />
                                 </div>
                             </div>
-                            <SellerInfoCard card={data} />
+                            <SellerInfoCard card={data} userId={card.user_id} />
                         </div>
                     </div>
                 )

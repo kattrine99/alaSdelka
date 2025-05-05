@@ -13,6 +13,8 @@ export const personalpages = [
 ]
 
 export interface FiltersState {
+    category_id?: number;
+    categories?: { id: number };
     category: string;
     city: string;
     stage: string;
@@ -26,4 +28,8 @@ export interface FiltersState {
     listing_type?: "buy" | "sell" | "" | null;
     offer_type: "business" | "startup" | "franchise" | "investments" | "" | null;
 }
-
+export interface FileMeta {
+    name: string;
+    size: number;
+    type: string;
+  }

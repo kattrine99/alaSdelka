@@ -5,6 +5,8 @@ import ShopIcon from '../../assets/shop.svg?react';
 import InvestInIcon from '../../assets/investin_v15.svg?react';
 import { useGetHomeOffersQuery } from "../../Store/api/Api";
 import { useGetMainStatisticsQuery } from "../../Store/api/Api";
+import { FiltersState } from "../../utils/variables";
+import { categoryRouteMap } from "../../utils/categoryMap";
 
 export const MainPage = () => {
     const [selectedCategory, setSelectedCategory] = useState<"Бизнес" | "Франшиза" | "Стартапы" | "Инвестиции">("Бизнес")
@@ -17,9 +19,25 @@ export const MainPage = () => {
         Инвестиции: "buy",
     });
 
+    const [filters, setFilters] = useState<FiltersState>({
+        category: "",
+        city: "",
+        stage: "",
+        paybackPeriod: "",
+        priceMin: "",
+        priceMax: "",
+        investmentMin: "",
+        investmentMax: "",
+        profitabilityMin: "",
+        profitabilityMax: "",
+        offer_type: "",
+    });
+
     const businessType = listingTypes["Бизнес"];
     const franchiseType = listingTypes["Франшиза"];
     const startupType = listingTypes["Стартапы"];
+    const [searchInput, setSearchInput] = useState("");
+
 
     const { data: mainStats } = useGetMainStatisticsQuery();
     const { data: businessOffers, isLoading: isLoadingBusiness, isError: isErrorBusiness } = useGetHomeOffersQuery(listingTypes["Бизнес"]);
@@ -32,6 +50,34 @@ export const MainPage = () => {
             cityStats[item.name_ru] = item.offers_count;
         }
     });
+    const handleApplyFilters = () => {
+        if (!filters.category && selectedCategory) {
+            filters.category = selectedCategory.toLowerCase(); // добавь это, чтобы синхронизировать значения
+        }
+
+        const query = new URLSearchParams();
+        if (searchInput) query.append("search", searchInput);
+        if (filters.category) query.append("category", filters.category);
+        if (filters.city) query.append("city", filters.city);
+        if (filters.stage) query.append("stage", filters.stage);
+        if (filters.paybackPeriod) query.append("paybackPeriod", filters.paybackPeriod);
+        if (filters.priceMin) query.append("priceMin", filters.priceMin);
+        if (filters.priceMax) query.append("priceMax", filters.priceMax);
+        if (filters.investmentMin) query.append("investmentMin", filters.investmentMin);
+        if (filters.investmentMax) query.append("investmentMax", filters.investmentMax);
+        if (filters.profitabilityMin) query.append("profitabilityMin", filters.profitabilityMin);
+        if (filters.profitabilityMax) query.append("profitabilityMax", filters.profitabilityMax);
+        if (filters.offer_type) query.append("offer_type", filters.offer_type);
+
+        const categoryRoute = categoryRouteMap[filters.category] || "business";
+
+        console.log("filters.category:", filters.category);
+        console.log("categoryRoute:", categoryRoute);
+
+        navigate(`/${categoryRoute}?${query.toString()}`);
+    };
+
+
     return (
         <div className="font-openSans min-h-screen w-screen overflow-x-hidden">
             <Header />
@@ -79,7 +125,14 @@ export const MainPage = () => {
                         </div>
 
                         {/* Фильтр Поиск*/}
-                        <FilterBar />
+                        <FilterBar
+                            filters={filters}
+                            setFilters={setFilters}
+                            searchInput={searchInput}
+                            setSearchInput={setSearchInput}
+                            selectedCategory={selectedCategory}
+                            onSearch={handleApplyFilters}
+                        />
                     </div>
                 </div>
             </section>

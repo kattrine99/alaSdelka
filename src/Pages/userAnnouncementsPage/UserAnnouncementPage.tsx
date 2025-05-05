@@ -38,6 +38,7 @@ export const UserAnnouncementPage = () => {
     });
 
     const type = urlToTypeMap[category ?? ""] ?? "бизнес";
+    console.log(type)
     const pageTitle = typeToTitleMap[type as ICard["offer_type"]] ?? "Категория";
 
     const [currentPage, setCurrentPage] = useState(1);
@@ -59,7 +60,6 @@ export const UserAnnouncementPage = () => {
         price_min: filters.priceMin ? Number(filters.priceMin) : undefined,
         price_max: filters.priceMax ? Number(filters.priceMax) : undefined,
     });
-    console.log(typeof userId, userId)
     const cards = data?.offers ?? [];
     const mappedCards: ICard[] = cards.map((card) => ({
         id: card.data.id,
@@ -88,7 +88,7 @@ export const UserAnnouncementPage = () => {
 
                     {type && (
                         <Filters
-                            category={type as "бизнес" | "франшиза" | "стартап" | "инвестиции"}
+                            offer_type={type as "business" | "startup" | "franchise" | "investments" | "бизнес" | "франшиза" | "стартапы" | "инвстиции"}
                             filters={filters}
                             setFilters={setFilters}
                             onApplyFilters={() => setCurrentPage(1)}
@@ -129,17 +129,21 @@ export const UserAnnouncementPage = () => {
                                 <div className="w-[40px] h-[40px] border border-[#2EAA7B] rounded-full"></div>
                                 <div>
                                     <Paragraph className="font-bold text-[#101828] text-[16px]">{user.name}</Paragraph>
+                                </div>
+                            </div>
+                            <div className="flex justify-between">
+                                <div>
                                     <Paragraph className="text-[#6B7280] text-[13px] mt-1">
                                         Количество объявлений: {data?.user_offers_count}
                                     </Paragraph>
                                     <Paragraph className="text-[#6B7280] text-[13px]">
-                                        На сайте с: 30.06.2024
+                                        На сайте с: {data?.user.created_at}
                                     </Paragraph>
                                 </div>
+                                <Button className="px-4 py-2 text-white bg-[#2EAA7B] rounded-md font-medium text-sm">
+                                    Посмотреть контакты
+                                </Button>
                             </div>
-                            <Button className="px-4 py-2 text-white bg-[#2EAA7B] rounded-md font-medium text-sm">
-                                Посмотреть контакты
-                            </Button>
                         </div>
                     )}
 
@@ -148,8 +152,6 @@ export const UserAnnouncementPage = () => {
                             <div className="w-10 h-10 border-4 border-[#2EAA7B] border-t-transparent rounded-full animate-spin"></div>
                         </div>
                     ) : isError ? (
-                        <p className="px-48 py-[30px] text-red-500">Ошибка загрузки данных</p>
-                    ) : cards.length === 0 ? (
                         <div className="flex flex-col w-full h-full justify-center items-center bg-[url('../../../images/grid.png')] bg-no-repeat bg-contain" >
                             <div className="w-128 h-100 bg-[url('../../../images/404.png')] bg-contain bg-center bg-no-repeat flex flex-col items-center justify-end">
                                 <Paragraph className="text-[20px] font-semibold text-black mb-4">Страница не найдена</Paragraph>
@@ -160,8 +162,19 @@ export const UserAnnouncementPage = () => {
                                     Перейти на главную
                                 </Button>
                             </div>
-                        </div>
-                    ) : (
+                        </div>) : cards.length === 0 ? (
+                            <div className="flex flex-col w-full h-full justify-center items-center bg-[url('../../../images/grid.png')] bg-no-repeat bg-contain" >
+                                <div className="w-128 h-100 bg-[url('../../../images/404.png')] bg-contain bg-center bg-no-repeat flex flex-col items-center justify-end">
+                                    <Paragraph className="text-[20px] font-semibold text-black mb-4">Страница не найдена</Paragraph>
+                                    <Button
+                                        onClick={() => navigate("/")}
+                                        className="bg-[#2EAA7B] text-white py-2.5 px-6 rounded-[12px] text-[16px] font-medium"
+                                    >
+                                        Перейти на главную
+                                    </Button>
+                                </div>
+                            </div>
+                        ) : (
                         <CardSection
                             Class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-y-10 gap-x-8 transition duration-600"
                             title={pageTitle}

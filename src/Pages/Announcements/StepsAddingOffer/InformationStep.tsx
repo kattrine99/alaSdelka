@@ -7,7 +7,8 @@ import GalleryIcon from '../../../assets/gallery.svg?react';
 import { HiPlus, HiX } from "react-icons/hi";
 import { useCreateOfferMutation, useGetFiltersDataQuery } from "../../../Store/api/Api"
 import { OfferDetail, OfferPayload } from "../../../Store/api/types";
-import { saveTemporaryOffer } from "../../../Store/tempStorage";
+import { useDispatch } from "react-redux";
+import { setOfferData } from "../../../Store/tempStorage";
 
 interface Props {
     offerType: "business" | "franchise" | "startup" | "investments";
@@ -91,6 +92,7 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
     const isNextDisabled = () => {
         return !title.trim() || !amount.trim();
     };
+    const dispatch = useDispatch();
     const handleSubmit = async () => {
         const payload: OfferPayload = {
             title,
@@ -147,7 +149,7 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
         try {
             const response = await createOffer(payload as Partial<OfferDetail>).unwrap();
             console.log("Успешно создано:", response);
-            saveTemporaryOffer(payload);
+            dispatch(setOfferData(payload));
             onNext();
         } catch (error) {
             console.error("Ошибка при создании:", error);
@@ -641,3 +643,5 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
         </div>
     );
 };
+
+

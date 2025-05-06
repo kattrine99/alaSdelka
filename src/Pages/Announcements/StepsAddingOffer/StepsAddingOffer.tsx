@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Button, Paragraph, Footer, Header, Breadcrumbs } from "../../../components/index";
 import { profileNavigate } from "../../../utils/categoryMap";
 import ShopIcon from '../../../assets/shop.svg?react';
@@ -7,8 +7,9 @@ import CategoryIcon from '../../../assets/category.svg?react';
 import { InformationStep } from "./InformationStep";
 import { PublicationStep } from "./PublicationStep";
 import { ModerationStep } from "./ModerationStep";
-import { OfferPayload } from "../../../Store/api/types";
-import { getTemporaryOffer } from "../../../Store/tempStorage";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../Store/store";
+
 import { useNavigate } from "react-router-dom";
 import { FiChevronRight } from "react-icons/fi";
 
@@ -43,8 +44,8 @@ export const StepsAddingOffer = () => {
     const [step, setStep] = useState(0);
     const [listingType, setListingType] = useState<"buy" | "sell" | null>(null);
     const [offerType, setOfferType] = useState<OfferType | null>(null);
-    const [savedData, setSavedData] = useState<OfferPayload | null>(null);
     const navigate = useNavigate();
+    const savedData = useSelector((state: RootState) => state.tempOffer.offerData);
 
     const handleNext = () => {
         if (step < steps.length - 1) {
@@ -62,10 +63,7 @@ export const StepsAddingOffer = () => {
         navigate("/announcements");
         setStep(4);
     };
-    useEffect(() => {
-        const data = getTemporaryOffer();
-        setSavedData(data);
-    }, [step]);
+
     return (
         <div className="w-screen">
             <Header navLinksData={profileNavigate} />

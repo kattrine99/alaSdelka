@@ -1,19 +1,14 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { ModalBase, Button, Paragraph } from "../../../components";
 import { BiHeart, BiSolidHeart } from "react-icons/bi";
 import { OfferDetail } from "../../../Store/api/types";
 import { Link } from "react-router-dom";
 
-export const SellerInfoCard = ({ card, offer_type, userId }: { card: OfferDetail, userId: number, offer_type?: string }) => {
+export const SellerInfoCard = ({ card, offer_type, userId }: { card: OfferDetail['data'], userId: number, offer_type?: string }) => {
     const [isContactModalOpen, setContactModalOpen] = useState(false);
     const [isLinksModalOpen, setLinksModalOpen] = useState(false);
     const [isFavorite, setFavorite] = useState(false);
 
-
-    useEffect(() => {
-        console.log("userId from URL:", userId); // Для отладки
-        console.log("category from URL:", offer_type); // Для отладки
-    }, [userId, offer_type]);
 
     return (
         <div className="lg:w-113 w-full h-full p-4 rounded-md shadow-md shadow-[#2EAA7B2E] flex flex-col gap-4 relative">
@@ -28,19 +23,22 @@ export const SellerInfoCard = ({ card, offer_type, userId }: { card: OfferDetail
                 )}
             </button>
             <Paragraph className="text-[22px] font-bold text-[#101828] text-left">
-                {card.data.price?.toLocaleString()} сум
+                {card.price?.toLocaleString()} сум
             </Paragraph>
             <div className="flex items-center bg-[#E9F7F1] rounded-md p-3 gap-3">
-                <Link to={`/users/${userId}/offers`} className="flex gap-5 items-center">
+                <Link
+                    to={`/users/${userId}/offers`}
+                    state={{ category: offer_type }}
+                    className="flex gap-5 items-center">
                     <div className="rounded-full">
                         <img
-                            src={`${card.data.user_photo || "../../../../images/profile.png"}`}
+                            src={`${card.user_photo || "../../../../images/profile.png"}`}
                             className="w-10 h-10"
                             alt="User photo"
                         />
                     </div>
                     <Paragraph className="text-[#101828] font-semibold">
-                        {card.data.user_name || "Имя продавца"}
+                        {card.user_name || "Имя продавца"}
                     </Paragraph>
                 </Link>
             </div>
@@ -60,7 +58,7 @@ export const SellerInfoCard = ({ card, offer_type, userId }: { card: OfferDetail
             {isContactModalOpen && (
                 <ModalBase
                     title="Контакты продавца"
-                    message={card.data.user_phone || "Номер не указан"}
+                    message={card.user_phone || "Номер не указан"}
                     onClose={() => setContactModalOpen(false)}
                     showCloseButton={true}
                 />
@@ -70,9 +68,9 @@ export const SellerInfoCard = ({ card, offer_type, userId }: { card: OfferDetail
                 <ModalBase
                     title="Ссылки"
                     message={
-                        card.data.communication_channels?.length ? (
+                        card.communication_channels?.length ? (
                             <div className="flex flex-col gap-2">
-                                {card.data.communication_channels.map((channel, idx) => (
+                                {card.communication_channels.map((channel, idx) => (
                                     <a
                                         key={idx}
                                         href={channel.link}

@@ -1,16 +1,26 @@
-import { OfferPayload } from './api/types';
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { OfferPayload } from "../Store/api/types";
 
-export const TEMP_OFFER_KEY = 'temp_offer_data';
+interface TempOfferState {
+    offerData?: OfferPayload;
+}
 
-export const saveTemporaryOffer = (data: OfferPayload) => {
-    localStorage.setItem(TEMP_OFFER_KEY, JSON.stringify(data));
+const initialState: TempOfferState = {
+    offerData: undefined,
 };
 
-export const getTemporaryOffer = (): OfferPayload | null => {
-    const stored = localStorage.getItem(TEMP_OFFER_KEY);
-    return stored ? JSON.parse(stored) : null;
-};
+export const tempOfferSlice = createSlice({
+    name: "tempOffer",
+    initialState,
+    reducers: {
+        setOfferData(state, action: PayloadAction<OfferPayload>) {
+            state.offerData = action.payload;
+        },
+        clearOfferData(state) {
+            state.offerData = undefined;
+        },
+    },
+});
 
-export const clearTemporaryOffer = () => {
-    localStorage.removeItem(TEMP_OFFER_KEY);
-};
+export const { setOfferData, clearOfferData } = tempOfferSlice.actions;
+export default tempOfferSlice.reducer;

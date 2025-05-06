@@ -55,43 +55,41 @@ export const FilterBar: React.FC<FilterBarProps> = ({
         <div className="flex items-center gap-3 px-4 py-[13px] bg-white rounded-[24px] rounded-tl-[0px]">
             <div className="w-full flex items-center rounded-xl rounded-r-2xl border border-[#EAEBF0] bg-white">
                 {/* Город */}
-                <div className="flex items-center gap-2 px-2 py-2">
+                <div className=" relative flex items-center gap-2 px-2 py-2">
                     <span className="text-[#2EAA7B] text-lg h-[16px]">
                         <FaLocationDot />
                     </span>
                     <select
                         value={filters.city}
                         onChange={(e) => setFilters((prev) => ({ ...prev, city: e.target.value }))}
-                        className="text-[15px] text-black focus:outline-none bg-transparent appearance-none"
-                    >
+                        className="text-[15px] text-black px-3 py-2 rounded-md focus:outline-none bg-white appearance-none pr-6">
                         <option value="">Город</option>
                         {filterOptions.cities.map((city) => (
-                            <option key={city.id} value={String(city.id)}>
+                            <option className="px-1.5" key={city.id} value={String(city.id)}>
                                 {city.name_ru}
                             </option>
                         ))}
                     </select>
-                    <MdOutlineArrowDropDown className="text-xl text-[#191919] pointer-events-none" />
+                    <MdOutlineArrowDropDown className="absolute right-1 text-xl text-[#191919] pointer-events-none" />
                 </div>
 
                 <div className="h-7.5 border-l border-[#D9D9D9]" />
 
                 {/* Окупаемость */}
-                <div className="flex items-center gap-2 px-2 py-2">
+                <div className="relative flex items-center gap-2 px-2 py-2">
                     <span className="text-[#2EAA7B] text-lg">
                         <FaClock />
                     </span>
                     <select
                         value={filters.paybackPeriod}
                         onChange={(e) => setFilters((prev) => ({ ...prev, paybackPeriod: e.target.value }))}
-                        className="text-[15px] text-black focus:outline-none bg-transparent appearance-none"
-                    >
+                        className=" text-[15px] text-black px-3 focus:outline-none bg-transparent appearance-none pr-6">
                         <option value="">Окупаемость</option>
-                        <option value="До 6 месяцев">До 6 месяцев</option>
-                        <option value="До 1 года">До 1 года</option>
+                        <option value="До 6 месяцев" >До 6 месяцев</option>
+                        <option value="До 1 года" >До 1 года</option>
                         <option value="До 3 лет">До 3 лет</option>
                     </select>
-                    <MdOutlineArrowDropDown className="text-xl text-[#191919] pointer-events-none" />
+                    <MdOutlineArrowDropDown className="absolute right-1 text-xl text-[#191919] pointer-events-none" />
                 </div>
 
                 <div className="h-7.5 border-l border-[#D9D9D9]" />

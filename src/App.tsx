@@ -8,6 +8,7 @@ import { getToken } from "./utils/tokenUtils";
 import { ScrollToTop } from "./components/ScrollTop/ScrollTop";
 import { useInactivityLogout } from "./utils/useAuthTimeout";
 import { StepsAddingOffer } from "./Pages/Announcements/StepsAddingOffer/StepsAddingOffer";
+import { PromotionPage } from "./Pages/PromotionPage/PromotionPage";
 const Layout = () => {
   useInactivityLogout(3600_000)
   return (
@@ -32,6 +33,7 @@ const routerConfig = createBrowserRouter([
       { path: "favorites", element: <FavoritePage /> },
       { path: "announcements", element: <AnnouncemntsPage /> },
       { path: "add-offer", element: <StepsAddingOffer /> },
+      { path: "promotion", element: <PromotionPage /> },
       { path: "notices", element: <NoticePage /> },
       { path: ":category/card/:id", element: <CardDetailPage /> },
       { path: "/users/:userId/:category", element: <UserAnnouncementPage /> },

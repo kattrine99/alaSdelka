@@ -125,7 +125,7 @@ export const AuthApi = createApi({
         }),
         getUserOffers: builder.query<GetUserOffersResponse, GetUserOffersParams>({
             query: ({ user_id, ...params }) => ({
-                url: `/users/${Number(user_id)}/offers`,
+                url: `/users/${user_id}/offers`,
                 params,
             }),
         }),
@@ -136,6 +136,17 @@ export const AuthApi = createApi({
                 body: payload,
             }),
         }),
+        promoteOffer: builder.mutation<
+            { message: string; offer: OfferDetail },
+            { tariff_id: number; offer_id: number; card_id: number }
+        >({
+            query: (payload) => ({
+                url: "/promotions",
+                method: "POST",
+                body: payload,
+            }),
+        }),
+
     }),
 
 });
@@ -147,6 +158,7 @@ export const {
     useCreateOfferMutation,
     useGetUserInfoQuery,
     useUpdateUserInfoMutation,
+    usePromoteOfferMutation,
     useGetHomeOffersQuery,
     useGetMyOffersQuery,
     useGetOffersQuery,

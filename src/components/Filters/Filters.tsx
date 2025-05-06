@@ -137,7 +137,7 @@ export const Filters: React.FC<FiltersProps> = ({ offer_type, filters, setFilter
                         <Paragraph>Цена</Paragraph>
                     </div>
                     <div className="flex gap-x-1.5 mt-2">
-                        <div className="flex items-center gap-1 px-4 py-[14px] bg-[#F0F1F2] rounded-[14px]">
+                        <div className="flex items-center gap-1 px-4 py-3.5 bg-[#F0F1F2] rounded-[14px]">
                             <span className="text-[14px] text-black">от</span>
                             <Input type="text" value={localFilters.priceMin} onChange={(e) => update("priceMin", e.target.value)} placeholder="100 000" className="w-full text-[16px] font-semibold text-[#3C3C3C] bg-transparent outline-none placeholder:text-[#787878]" isError={false} />
                             <span className="text-[14px] text-black">сум</span>
@@ -160,11 +160,11 @@ export const Filters: React.FC<FiltersProps> = ({ offer_type, filters, setFilter
                         <Paragraph>Вложения</Paragraph>
                     </div>
                     <div className="flex gap-x-1.5 mt-2">
-                        <div className="flex items-center gap-1 px-4 py-[14px] bg-[#F0F1F2] rounded-[14px]">
+                        <div className="flex items-center gap-1 px-4 bg-[#F0F1F2] rounded-[14px]">
                             <span className="text-[14px] text-black">от</span>
                             <Input type="text" value={localFilters.investmentMin} onChange={(e) => update("investmentMin", e.target.value)} placeholder="от" className="w-full bg-[#F2F2F2] outline-none rounded-lg py-3 px-1.5" isError={false} />
                         </div>
-                        <div className="flex items-center gap-1 px-4 py-[14px] bg-[#F0F1F2] rounded-[14px]">
+                        <div className="flex items-center gap-1 px-4  bg-[#F0F1F2] rounded-[14px]">
                             <span className="text-[14px] text-black">до</span>
                             <Input type="text" value={localFilters.investmentMax} onChange={(e) => update("investmentMax", e.target.value)} placeholder="100 000"
                                 className="w-full text-[16px] font-semibold text-[#3C3C3C] bg-transparent outline-none placeholder:text-[#787878]" isError={false} />

@@ -1,9 +1,11 @@
 import { Button, EmptyMessage, Footer, Header, Heading, Paragraph } from "../../components"
 import { profileNavigate } from "../../utils/categoryMap"
 import { useGetMyOffersQuery } from "../../Store/api/Api";
+import { useNavigate } from "react-router-dom";
 
 export const AnnouncemntsPage = () => {
-  const { data, isLoading, isError } = useGetMyOffersQuery(10);
+  const { data, isLoading, isError } = useGetMyOffersQuery(5);
+  const navigate = useNavigate();
 
   const offers = data?.offers?.data || [];
 
@@ -44,7 +46,9 @@ export const AnnouncemntsPage = () => {
                 <div className="flex flex-col gap-2 items-end">
                   <Button className="bg-[#2EAA7B] text-white px-4 py-2 rounded-md">Посмотреть</Button>
                   <Button className="border border-[#2EAA7B] text-[#2EAA7B] px-4 py-2 rounded-md">Поместить в архив</Button>
-                  <Button className="bg-orange-500 text-white px-4 py-2 rounded-md">Продвигать объявление</Button>
+                  <Button className="bg-orange-500 text-white px-4 py-2 rounded-md"
+                    onClick={() => navigate(`/promotion/${offer.id}`)}
+                  >Продвигать объявление</Button>
                   <Button className="bg-orange-500 text-white px-4 py-2 rounded-md">Продано</Button>
                 </div>
               </div>

@@ -23,7 +23,7 @@ export const CardPreview: React.FC<CardPreviewProps> = ({ card }) => {
 
             <div className="flex-1 md:ml-6 mt-4 md:mt-0 flex flex-col justify-between">
                 <div>
-                    <Heading text={card.price} level={2} className="text-[20px] font-bold text-[#232323]" />
+                    <Heading text={String(card.price)} level={2} className="text-[20px] font-bold text-[#232323]" />
                     <Paragraph className="text-[#232323] text-[16px] font-semibold mt-1">{card.title}</Paragraph>
 
                     <Paragraph className="flex items-center text-[#667085] text-[14px] mt-2">

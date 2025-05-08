@@ -5,8 +5,8 @@ import FlagIcon from '../../../assets/Flag.svg?react';
 import PdfIcon from '../../../assets/pdf.svg?react';
 import GalleryIcon from '../../../assets/gallery.svg?react';
 import { HiPlus, HiX } from "react-icons/hi";
-import { useCreateOfferMutation, useGetFiltersDataQuery } from "../../../Store/api/Api"
-import { OfferDetail, OfferPayload } from "../../../Store/api/types";
+import { useGetFiltersDataQuery } from "../../../Store/api/Api"
+import { OfferPayload } from "../../../Store/api/types";
 import { useDispatch } from "react-redux";
 import { setOfferData } from "../../../Store/tempStorage";
 
@@ -24,7 +24,10 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
     const isSell = listingType === "sell";
     const isBuy = listingType === "buy"
 
-    const [category, setCategory] = useState("");
+    const [categoryId, setCategoryId] = useState<string>("");
+    const [cityId, setCityId] = useState<string>("");
+    const [projectStageId, setProjectStageId] = useState<string>("");
+
     const [title, setTitle] = useState("");
     const [amount, setAmount] = useState("");
     const [description, setDescription] = useState("");
@@ -36,7 +39,6 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
     const [exportContracts, setExportContracts] = useState(true);
     const [noCredit, setNoCredit] = useState(true);
     const [hasBranches, setHasBranches] = useState(true);
-    const [createOffer] = useCreateOfferMutation();
     const { data: filtersData } = useGetFiltersDataQuery();
 
     const [files, setFiles] = useState<File[]>([]);
@@ -48,7 +50,6 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
     const [phoneNumber, setPhoneNumber] = useState("");
-    const [city, setCity] = useState("");
     const [address, setAddress] = useState("");
     const [propertyOwnershipType, setPropertyOwnershipType] = useState("");
     const [businessShare, setBusinessShare] = useState("");
@@ -56,7 +57,6 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
     const [profit, setProfit] = useState("");
     const [paybackPeriod, setPaybackPeriod] = useState("");
     const [legalForm, setLegalForm] = useState("");
-    const [startupStage, setStartupStage] = useState("");
     const [isInternationalFranchise, setIsInternationalFranchise] = useState(false);
     const [hasMasterFranchise, setHasMasterFranchise] = useState(false);
     const [hasCopyrights, setHasCopyrights] = useState(false);
@@ -99,14 +99,14 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
             description,
             listing_type: listingType,
             offer_type: offerType,
-
-            city_id: +city,
+            city_id: cityId,
             address,
-            amount: amount.replace(/\s+/g, "").trim(),
-            user_name: `${firstName} ${lastName}`.trim(),
-            user_phone: phoneNumber,
+            category_id: categoryId,
 
-            // Удобства
+            amount: parseInt(amount.replace(/\s/g, ""), 10),
+            user_name: `${firstName} ${lastName}`.trim(),
+            user_phone: "+998" + phoneNumber,
+
             parking,
             clients,
             suppliers,
@@ -133,7 +133,7 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
             }),
 
             ...(isStartup && {
-                startup_stage: startupStage
+                project_stage_id: projectStageId ? parseInt(projectStageId, 10) : undefined,
             }),
 
             ...(isFranchise && {
@@ -145,15 +145,8 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
                 has_copyrights: hasCopyrights
             }),
         };
-
-        try {
-            const response = await createOffer(payload as Partial<OfferDetail>).unwrap();
-            console.log("Успешно создано:", response);
-            dispatch(setOfferData(payload));
-            onNext();
-        } catch (error) {
-            console.error("Ошибка при создании:", error);
-        }
+        dispatch(setOfferData(payload));
+        onNext();
     };
 
 
@@ -203,8 +196,8 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
                 <div className="flex flex-col gap-2 w-[800px] relative">
                     <label className="text-[#101828] font-inter text-[16px] leading-[130%]">*Категория объявления</label>
                     <select className="bg-[#F0F1F280] w-[800px] rounded-[14px] text-[#686A70] outline-none py-3.5 px-4.5"
-                        value={category}
-                        onChange={(e) => setCategory(e.target.value)}>
+                        value={categoryId}
+                        onChange={(e) => setCategoryId(e.target.value)}>
                         <option value="">Выбрать</option>
                         {filtersData?.categories.map((cat) => (
                             <option key={cat.id} value={cat.title_ru}>
@@ -250,8 +243,8 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
                 <div className="flex flex-col gap-2 w-[800px] relative">
                     <label className="text-[#101828] font-inter text-[16px] leading-[130%]">*Стадия</label>
                     <select className="bg-[#F0F1F280] w-[800px] rounded-[14px] text-[#686A70] outline-none py-3.5 px-4.5"
-                        value={startupStage}
-                        onChange={(e) => setStartupStage(e.target.value)}>
+                        value={projectStageId}
+                        onChange={(e) => setProjectStageId(e.target.value)}>
                         <option className="">Выбрать</option>
                         {filtersData?.project_stages.map((stage) => (
                             <option key={stage.id} value={stage.name_ru}>
@@ -265,8 +258,8 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
             <div className="flex flex-col gap-2 w-[800px] relative">
                 <label className="text-[#101828] font-inter text-[16px] leading-[130%]">*Город</label>
                 <select className="bg-[#F0F1F280] w-[800px] rounded-[14px] text-[#686A70] outline-none py-3.5 px-4.5"
-                    value={city}
-                    onChange={(e) => setCity(e.target.value)}>
+                    value={cityId}
+                    onChange={(e) => setCityId(e.target.value)}>
                     <option className="">Выбрать</option>
                     {filtersData?.cities.map((city) => (
                         <option key={city.id} value={city.name_ru}>
@@ -276,12 +269,12 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
                 </select>
             </div>
             {/*Адрес */}
-            {isSell && <div className="flex flex-col gap-2 w-[800px] relative">
+            <div className="flex flex-col gap-2 w-[800px] relative">
                 <Input className="bg-[#F0F1F280] w-full rounded-[14px] outline-none py-3.5 px-4.5" LabelClassName="font-inter text-[16px] leading-[130%]"
                     LabelText="*Адрес" type="text" placeholder="Введите" isError={false}
                     value={address}
                     onChange={(e) => setAddress(e.target.value)} />
-            </div>}
+            </div>
             {/*Форма владения бизнесом */}
             {isSell && isBusiness &&
                 <div className="flex flex-col gap-2 w-[393px] relative">

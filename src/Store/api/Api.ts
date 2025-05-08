@@ -18,6 +18,7 @@ import type {
     GetUserOffersResponse,
     GetUserOffersParams,
     Offer,
+    OfferPayload,
 } from "./types";
 import { baseUrl } from "../../utils/baseUrl";
 import { ICard } from "../../components/Cards/Interfaces";
@@ -129,7 +130,7 @@ export const AuthApi = createApi({
                 params,
             }),
         }),
-        createOffer: builder.mutation<{ data: OfferDetail }, Partial<OfferDetail>>({
+        createOffer: builder.mutation<{ data: OfferDetail }, OfferPayload>({
             query: (payload) => ({
                 url: "/offers",
                 method: "POST",

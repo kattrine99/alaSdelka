@@ -9,6 +9,7 @@ import { PublicationStep } from "./PublicationStep";
 import { ModerationStep } from "./ModerationStep";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../Store/store";
+import { useCreateOfferMutation } from "../../../Store/api/Api"; // не забудь импорт
 
 import { useNavigate } from "react-router-dom";
 import { FiChevronRight } from "react-icons/fi";
@@ -58,11 +59,20 @@ export const StepsAddingOffer = () => {
         return false;
     };
 
-    const handlePublish = () => {
-        console.log("POST запрос отправлен", savedData);
-        navigate("/announcements");
-        setStep(4);
+    const [createOffer] = useCreateOfferMutation();
+
+    const handlePublish = async () => {
+        if (!savedData) return;
+
+        try {
+            const result = await createOffer(savedData).unwrap();
+            console.log("Успешно отправлено:", result);
+            setStep(4);
+        } catch (error) {
+            console.error("Ошибка при отправке объявления:", error);
+        }
     };
+
 
     return (
         <div className="w-screen">

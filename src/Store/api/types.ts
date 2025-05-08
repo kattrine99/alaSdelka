@@ -344,9 +344,10 @@ export interface OfferPayload {
     user_name: string;
     user_phone: string;
     address: string;
-    city_id: number;
+    city_id: string;
+    category_id: string;
 
-    amount: string;
+    amount: number;
 
     parking: boolean;
     clients: boolean;
@@ -368,16 +369,16 @@ export interface OfferPayload {
     profit?: string;
     payback_period?: string;
 
-    // BUY-specific
+    // BUY
     legal_form?: string;
 
-    // Startup-specific
-    startup_stage?: string;
+    // Startup
+    project_stage_id?: number;
 
-    // Franchise-specific
+    // Franchise
     is_international_franchise?: boolean;
     has_master_franchise?: boolean;
 
-    // Investments-specific
+    // Investments
     has_copyrights?: boolean;
 }

@@ -1,56 +1,54 @@
 import { Button, Paragraph, CardPreview } from "../../../components";
-import { FiCheck } from "react-icons/fi";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../Store/store";
 import { OfferPayload } from "../../../Store/api/types";
 import { ICard } from "../../../components/Cards/Interfaces";
+import { FaArrowRight } from "react-icons/fa";
 
 interface Props {
     onPublish: () => void;
 }
 
 const mapOfferToCard = (data: OfferPayload): ICard => ({
-    id: 0, // временно
+    id: data.id ?? 0,
     title: data.title,
     description: data.description,
     price: data.amount,
     address: {
-        address: data.address,
+        address: data.address || "Адрес не указан",
         city: {
-            name_ru: data.city_id || "Город не указан"
+            name_ru: data.city_name || "Город не указан"
         }
-    }, area: "150 м²",
+
+    }, area: data.area || "Площадь не указана",
     image: data.images?.[0] ? URL.createObjectURL(data.images[0]) : null,
+
     is_favorite: false,
     offer_type: data.offer_type,
     listing_type: data.listing_type,
 });
 
 export const PublicationStep: React.FC<Props> = ({ onPublish }) => {
-    const savedData = useSelector((state: RootState) => state.tempOffer.offerData);
+    const cardData = useSelector((state: RootState) => state.tempOffer.offerData);
 
-    if (!savedData) return null;
+    if (!cardData) return null;
 
-    const card = mapOfferToCard(savedData);
+    const card = mapOfferToCard(cardData);
+    console.log("DATA FROM STORE:", cardData);
 
     return (
-        <div className="flex flex-col items-center gap-6 text-center">
-            <Paragraph className="text-[20px] font-semibold">Подтвердите и публикуйте</Paragraph>
-            <Paragraph className="text-[#667085] max-w-[600px]">
-                Вы почти у цели! Проверьте, как будет выглядеть ваше готовое объявление после окончательного оформления.
-                Обратите внимание, что мы можем отредактировать ваш постинг, чтобы помочь вам продать.
+        <div className="flex flex-col items-start gap-6 bg-[#F8F8F8] p-5 ">
+            <Paragraph className="text-3xl font-inter font-semibold text-[#101828] leading-10">Подтвердите и публикуйте</Paragraph>
+            <Paragraph className="font-inter text-[#667085] text-[16px] leading-5 max-w-[600px]">
+                Вы почти у цели! Посмотрите, как будет выглядеть ваш готовый листинг после окончательного одобрения. Обратите внимание, что мы можем отредактировать ваш листинг, чтобы помочь вам продать.
             </Paragraph>
 
-            <div className="w-full max-w-[600px] border rounded-lg p-4 shadow-sm bg-white">
+            <div className="w-full max-w-[600px]">
                 <CardPreview card={card} />
             </div>
-
-            <Button
-                onClick={onPublish}
-                className="bg-[#2EAA7B] text-white px-6 py-3 rounded-md flex items-center gap-2"
-            >
-                <FiCheck /> Опубликовать
-            </Button>
+                <Button className="bg-[#2EAA7B] text-white px-4 py-2 rounded-md flex items-center gap-2" onClick={onPublish}>
+                    Опубликовать <FaArrowRight />
+                </Button>
         </div>
     );
 };

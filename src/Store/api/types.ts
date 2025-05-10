@@ -337,14 +337,17 @@ export interface GetUserOffersParams {
     city_id?: number;
 }
 export interface OfferPayload {
+    area: string;
+    id?: number;
     title: string;
     description: string;
     listing_type: "buy" | "sell";
     offer_type: "business" | "franchise" | "startup" | "investments";
     user_name: string;
     user_phone: string;
-    address: string;
+    address?: string;
     city_id: string;
+    city_name?: string;
     category_id: string;
 
     amount: number;

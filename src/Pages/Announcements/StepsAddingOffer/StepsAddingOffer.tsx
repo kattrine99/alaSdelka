@@ -13,6 +13,7 @@ import { useCreateOfferMutation } from "../../../Store/api/Api"; // не заб�
 
 import { useNavigate } from "react-router-dom";
 import { FiChevronRight } from "react-icons/fi";
+import { OfferPayload } from "../../../Store/api/types";
 
 const steps = [
     { title: "Тип объявления", subtitle: "Выберите что вы хотите сделать" },
@@ -65,9 +66,10 @@ export const StepsAddingOffer = () => {
         if (!savedData) return;
 
         try {
-            const result = await createOffer(savedData).unwrap();
+            const result = await createOffer(savedData as OfferPayload).unwrap();
             console.log("Успешно отправлено:", result);
             setStep(4);
+            navigate("/announcements");
         } catch (error) {
             console.error("Ошибка при отправке объявления:", error);
         }

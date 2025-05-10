@@ -1,8 +1,6 @@
 import { Heading, Paragraph, Button } from "../../components";
 import { FaLocationDot, FaLocationCrosshairs } from "react-icons/fa6";
 import { FaArrowRight } from "react-icons/fa";
-import GalleryIcon from '../../assets/gallery.svg?react';
-import { offerTypeToUrlMap } from "../../utils/categoryMap";
 import { ICard } from "./Interfaces";
 import { Link } from "react-router-dom";
 
@@ -12,35 +10,33 @@ interface CardPreviewProps {
 
 export const CardPreview: React.FC<CardPreviewProps> = ({ card }) => {
     return (
-        <div className="relative rounded-lg bg-white shadow-sm p-4 w-full max-w-[700px] flex flex-col md:flex-row">
-            <div className="relative md:w-[260px] w-full h-[160px] md:h-auto bg-gray-100 flex items-center justify-center overflow-hidden rounded-md">
-                {card.image ? (
+        <div className="relative rounded-xl bg-white shadow-sm py-7.5 px-4.5 w-full max-w-[400px] flex flex-col">
+            <div className="relative md:w-[360px] w-full h-[160px] md:h-auto bg-gray-100 flex items-center justify-center overflow-hidden rounded-md">
+                {card.image &&
                     <img src={card.image} alt="preview" className="object-cover w-full h-full" />
-                ) : (
-                    <GalleryIcon className="w-12 h-12 text-gray-400" />
-                )}
+                }
             </div>
 
-            <div className="flex-1 md:ml-6 mt-4 md:mt-0 flex flex-col justify-between">
+            <div className="flex-1 flex flex-col ">
                 <div>
-                    <Heading text={String(card.price)} level={2} className="text-[20px] font-bold text-[#232323]" />
-                    <Paragraph className="text-[#232323] text-[16px] font-semibold mt-1">{card.title}</Paragraph>
+                    <Heading text={`${String(card.price)} сум`} level={2} className="font-inter text-[24px] font-bold text-[#232323] mb-2" />
+                    <Paragraph className="font-inter text-[#232323] text-[18px] font-bold">{card.title}</Paragraph>
 
-                    <Paragraph className="flex items-center text-[#667085] text-[14px] mt-2">
-                        <FaLocationDot className="text-[#2EAA7B] mr-2" />
-                        Адрес: {card.address?.address}, {card.address?.city?.name_ru}
+                    <Paragraph className="flex items-center font-inter font-medium text-[14px] mt-3 text-[#667085]">
+                        <FaLocationDot className="text-[#2EAA7B] mr-1.5" />
+                        Адрес:<span className=" font-bold text-[14px]">{card.address?.address}, {card.address?.city?.name_ru}</span>
                     </Paragraph>
 
                     {card.area && (
-                        <Paragraph className="flex items-center text-[#667085] text-[14px] mt-1">
-                            <FaLocationCrosshairs className="text-[#2EAA7B] mr-2" />
+                        <Paragraph className="flex items-center font-inter font-medium text-[14px] mt-3 text-[#667085]">
+                            <FaLocationCrosshairs className="text-[#2EAA7B] mr-1.5" />
                             {card.area}
                         </Paragraph>
                     )}
                 </div>
 
-                <div className="mt-4">
-                    <Link to={`/${offerTypeToUrlMap[card.offer_type]}/card/${card.id}`}>
+                <div className="mt-4.5">
+                    <Link to={`/preview-detail`}>
                         <Button className="bg-[#2EAA7B] text-white px-4 py-2 rounded-md flex items-center gap-2">
                             Просмотреть <FaArrowRight />
                         </Button>

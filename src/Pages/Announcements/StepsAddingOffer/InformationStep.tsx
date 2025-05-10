@@ -62,7 +62,6 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
     const [hasCopyrights, setHasCopyrights] = useState(false);
     const [businessOwnership, setBusinessOwnership] = useState("");
 
-
     const handleFiles = (e: React.ChangeEvent<HTMLInputElement>) => {
         const newFiles = e.target.files ? Array.from(e.target.files) : [];
         setFiles(prev => [...prev, ...newFiles]);
@@ -93,6 +92,7 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
         return !title.trim() || !amount.trim();
     };
     const dispatch = useDispatch();
+
     const handleSubmit = async () => {
         const payload: OfferPayload = {
             title,
@@ -103,7 +103,7 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
             address,
             category_id: categoryId,
 
-            amount: parseInt(amount.replace(/\s/g, ""), 10),
+            amount: Number(amount.replace(/\s/g, "")) || 0,
             user_name: `${firstName} ${lastName}`.trim(),
             user_phone: "+998" + phoneNumber,
 
@@ -144,8 +144,12 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
             ...(isInvestments && {
                 has_copyrights: hasCopyrights
             }),
+            area: ""
         };
-        dispatch(setOfferData(payload));
+        const selectedCity = filtersData?.cities.find(c => String(c.id) === cityId);
+        const selectedCityName = selectedCity?.name_ru || "Город не указан";
+        dispatch(setOfferData({ ...payload, city_name: selectedCityName }));
+        console.log("PAYLOAD TO STORE:", { ...payload, city_name: selectedCityName });
         onNext();
     };
 
@@ -262,7 +266,7 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
                     onChange={(e) => setCityId(e.target.value)}>
                     <option className="">Выбрать</option>
                     {filtersData?.cities.map((city) => (
-                        <option key={city.id} value={city.name_ru}>
+                        <option key={city.id} value={city.id.toString()}>
                             {city.name_ru}
                         </option>
                     ))}

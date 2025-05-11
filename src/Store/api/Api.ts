@@ -28,10 +28,11 @@ export const AuthApi = createApi({
     baseQuery: fetchBaseQuery({
         baseUrl,
         prepareHeaders: (headers) => {
-            const token = localStorage.getItem("access_token");
+            const token = localStorage.getItem("accessToken");
             if (token) {
                 headers.set("Authorization", `Bearer ${token}`);
             }
+            headers.set("Accept", "application/json");
             return headers;
         },
     }),
@@ -130,11 +131,19 @@ export const AuthApi = createApi({
                 params,
             }),
         }),
-        createOffer: builder.mutation<{ data: OfferDetail }, OfferPayload>({
-            query: (payload) => ({
-                url: "/offers",
+        createOffer: builder.mutation<OfferDetail, OfferPayload>({
+            query: (body) => ({
+                url: `offers/`,
+                method: 'POST',
+                body,
+                validateStatus: (response) => (response.status === 201 || response.status === 302)
+            })
+        }),
+
+        publishOffer: builder.mutation<{ data: OfferDetail }, number>({
+            query: (id) => ({
+                url: `/offer/${id}/publish`,
                 method: "POST",
-                body: payload,
             }),
         }),
         promoteOffer: builder.mutation<
@@ -170,4 +179,5 @@ export const {
     useGetFavoritesQuery,
     useGetNotificationsQuery,
     useGetUserOffersQuery,
+    usePublishOfferMutation,
 } = AuthApi;

@@ -1,18 +1,14 @@
 import { useState } from "react";
 import { Breadcrumbs, Button, Footer, Header, Heading, Input, Paragraph } from "../../components";
 import { profileNavigate } from "../../utils/categoryMap";
-import { usePromoteOfferMutation } from "../../Store/api/Api";
+import { useGetFiltersDataQuery, usePromoteOfferMutation } from "../../Store/api/Api";
 import UzcardIcon from "../../assets/uzcard.svg?react"
 import HumoIcon from "../../assets/humo.svg?react"
 
-const tariffs = [
-    { id: 1, days: 7, price: 2000000 },
-    { id: 2, days: 15, price: 4000000 },
-    { id: 3, days: 30, price: 8000000 },
-];
 
 export const PromotionPage = () => {
     const [selectedTariff, setSelectedTariff] = useState<number | null>(null);
+    const { data: filtersData, isLoading: isTariffsLoading } = useGetFiltersDataQuery();
     const [cardNumber, setCardNumber] = useState("");
     const [expiryMonth, setExpiryMonth] = useState("");
     const [expiryYear, setExpiryYear] = useState("");
@@ -67,17 +63,20 @@ export const PromotionPage = () => {
                                 <Heading className="text-xl font-inter mb-4 w-100" text={"Выберите количество дней для продвижения вашего объявления"} level={3} />
                             </div>
                             <div className="flex gap-6.75 mt-5.5">
-                                {tariffs.map((tariff) => (
-                                    <Button
-                                        key={tariff.id}
-                                        className={` flex flex-col border items-start border-[#2EAA7B] px-6 py-4 rounded-lg focus:bg-[#2EAA7B] focus:text-white ${selectedTariff === tariff.id ? "bg-[#2EAA7B] text-white" : "bg-white"
-                                            }`}
-                                        onClick={() => setSelectedTariff(tariff.id)}
-                                    >
-                                        <Paragraph className="font-inter font-semibold text-xl">{tariff.days} дней</Paragraph>
-                                        <Paragraph>{tariff.price.toLocaleString()} сум</Paragraph>
-                                    </Button>
-                                ))}
+                                {isTariffsLoading ? (
+                                    <Paragraph>Загрузка тарифов...</Paragraph>
+                                ) : (
+                                    filtersData?.tariffs?.map((tariff) => (
+                                        <Button
+                                            key={tariff.id}
+                                            className={`flex flex-col border items-start border-[#2EAA7B] px-6 py-4 rounded-lg ${selectedTariff === tariff.id ? "bg-[#2EAA7B] text-white" : "bg-white"}`}
+                                            onClick={() => setSelectedTariff(tariff.id)}
+                                        >
+                                            <Paragraph className="font-inter font-semibold text-xl">{tariff.duration} дней</Paragraph>
+                                            <Paragraph>{tariff.price.toLocaleString()} сум</Paragraph>
+                                        </Button>
+                                    ))
+                                )}
                             </div>
                             {/* Блок ввода карты */}
                             <div>
@@ -132,7 +131,7 @@ export const PromotionPage = () => {
                                     <div className="flex flex-col items-center">
                                         <Paragraph className="mb-2 font-inter text-3xl">К оплате:</Paragraph>
                                         <Paragraph className="mb-15  text-3xl font-inter font-bold">
-                                            {tariffs.find((t) => t.id === selectedTariff)?.price.toLocaleString() || 0} сум
+                                            {filtersData?.tariffs?.find((t) => t.id === selectedTariff)?.price.toLocaleString() || 0} сум
                                         </Paragraph>
                                     </div>
                                     <Button

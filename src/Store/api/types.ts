@@ -291,7 +291,7 @@ export interface FilterData {
             id: number,
             name: string,
             price: number,
-            duragtion: number,
+            duration: number,
         }
     ],
 }
@@ -337,7 +337,7 @@ export interface GetUserOffersParams {
     city_id?: number;
 }
 export interface OfferPayload {
-    area: string;
+    area: number;
     id?: number;
     title: string;
     description: string;
@@ -352,17 +352,10 @@ export interface OfferPayload {
 
     amount: number;
 
-    parking: boolean;
-    clients: boolean;
-    suppliers: boolean;
-    equipment: boolean;
-    imported_supplies: boolean;
-    export_contracts: boolean;
-    no_credit: boolean;
-    has_branches: boolean;
+    business_type?: string;
+    conveniences?: string[];
 
     // SELL-specific
-    ownership_type?: string;
     property_ownership_type?: string;
     documents?: File[];
     images?: File[];

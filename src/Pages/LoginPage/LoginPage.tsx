@@ -2,15 +2,15 @@ import { Footer, Header, Heading, Input, Paragraph, Applink, Button, ModalBase }
 import * as yup from "yup";
 import { Controller, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import './LoginPage.css';
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 import { Description } from '../RegisterPage/Description';
 import { useLoginUserMutation } from '../../Store/api/Api';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { setIsAuthenticated } from '../../Store/Slices/authSlice';
 import { useNavigate } from 'react-router-dom';
-import { saveToken } from '../../utils/tokenUtils';
+import { RootState } from '../../Store/store';
 
 interface LoginFormInputs {
     userphone: string;
@@ -31,12 +31,18 @@ const loginFormschema = yup.object({
 export const LoginPage = () => {
     const [isPasswordVisible, setIsPasswordVisible] = useState(false);
     const [showModal, setShowModal] = useState(false);
+    const [showLogoutModal, setShowLogoutModal] = useState(false);
     const [modalText, setModalText] = useState("");
     const [modalTitle, setModalTitle] = useState("");
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const [loginUser] = useLoginUserMutation();
-
+    const logoutReason = useSelector((state: RootState) => state.auth.logoutReason);
+    useEffect(() => {
+        if (logoutReason) {
+            setShowLogoutModal(true);
+        }
+    }, [logoutReason]);
     const {
         control,
         handleSubmit,
@@ -54,7 +60,7 @@ export const LoginPage = () => {
     const onSubmit = async (data: LoginFormInputs) => {
         try {
             const response = await loginUser({ phone: data.userphone, password: data.userpassword }).unwrap();
-            saveToken(response.access_token, response.expires_in);
+            localStorage.setItem("accessToken", response.access_token);
             dispatch(setIsAuthenticated(true));
             setModalText("Вы успешно вошли в аккаунт");
             setModalTitle(" Добро пожаловать!")
@@ -81,6 +87,12 @@ export const LoginPage = () => {
                     onClose={() => setShowModal(false)}
                     actions={<Button className={"w-full text-center py-4 hover:border-1 hover:bg-white hover:text-[#2EAA7B] hover:border-[#2EAA7B] text-white bg-[#2EAA7B] rounded-[14px]"} onClick={() => { setShowModal(false) }}>Подтвердить</Button>}
                 />}
+                {showLogoutModal && (
+                    <ModalBase
+                        title="Сессия завершена"
+                        message={logoutReason}
+                        onClose={() => setShowLogoutModal(false)}
+                        actions={<Button className={"w-full text-center py-4 hover:border-1 hover:bg-white hover:text-[#2EAA7B] hover:border-[#2EAA7B] text-white bg-[#2EAA7B] rounded-[14px]"} onClick={() => { setShowLogoutModal(false) }}>Понятно</Button>} />)}
             </div>
             <Header showNavLinks={false} showAuthButtons={false} />
             <div className=" flex items-center justify-center py-[62px] transition-all duration-300">

@@ -9,12 +9,14 @@ import { useGetFiltersDataQuery } from "../../../Store/api/Api"
 import { OfferPayload } from "../../../Store/api/types";
 import { useDispatch } from "react-redux";
 import { setOfferData } from "../../../Store/tempStorage";
+import { useCreateOfferMutation, usePublishOfferMutation } from "../../../Store/api/Api";
 
 interface Props {
     offerType: "business" | "franchise" | "startup" | "investments";
     listingType: "sell" | "buy";
     onNext: () => void;
 }
+
 
 export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNext }) => {
     const isFranchise = offerType === "franchise";
@@ -26,7 +28,10 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
 
     const [categoryId, setCategoryId] = useState<string>("");
     const [cityId, setCityId] = useState<string>("");
+    const [Area, setArea] = useState("");
     const [projectStageId, setProjectStageId] = useState<string>("");
+    const [createOffer] = useCreateOfferMutation();
+    const [publishOffer] = usePublishOfferMutation();
 
     const [title, setTitle] = useState("");
     const [amount, setAmount] = useState("");
@@ -56,11 +61,21 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
     const [monthlyIncome, setMonthlyIncome] = useState("");
     const [profit, setProfit] = useState("");
     const [paybackPeriod, setPaybackPeriod] = useState("");
-    const [legalForm, setLegalForm] = useState("");
     const [isInternationalFranchise, setIsInternationalFranchise] = useState(false);
     const [hasMasterFranchise, setHasMasterFranchise] = useState(false);
     const [hasCopyrights, setHasCopyrights] = useState(false);
     const [businessOwnership, setBusinessOwnership] = useState("");
+
+    const conveniences = [
+        parking && "Парковка",
+        clients && "База клиентов",
+        suppliers && "База поставщиков",
+        equipment && "Оборудование и активы",
+        importedSupplies && "Поставки из-за рубежа",
+        exportContracts && "Контракты на экспорт",
+        noCredit && "Отсутствие кредита",
+        hasBranches && "Наличие филиалов"
+    ].filter(Boolean) as string[];
 
     const handleFiles = (e: React.ChangeEvent<HTMLInputElement>) => {
         const newFiles = e.target.files ? Array.from(e.target.files) : [];
@@ -102,22 +117,13 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
             city_id: cityId,
             address,
             category_id: categoryId,
-
             amount: Number(amount.replace(/\s/g, "")) || 0,
             user_name: `${firstName} ${lastName}`.trim(),
             user_phone: "+998" + phoneNumber,
-
-            parking,
-            clients,
-            suppliers,
-            equipment,
-            imported_supplies: importedSupplies,
-            export_contracts: exportContracts,
-            no_credit: noCredit,
-            has_branches: hasBranches,
+            conveniences,
+            business_type: businessOwnership,
 
             ...(isSell && {
-                ownership_type: businessOwnership,
                 property_ownership_type: propertyOwnershipType,
                 documents: files,
                 images,
@@ -126,10 +132,6 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
                 monthly_income: String(monthlyIncome),
                 profit: String(profit),
                 payback_period: String(paybackPeriod),
-            }),
-
-            ...(isBuy && {
-                legal_form: legalForm
             }),
 
             ...(isStartup && {
@@ -144,14 +146,36 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
             ...(isInvestments && {
                 has_copyrights: hasCopyrights
             }),
-            area: ""
+
+            area: Number(Area)
         };
-        const selectedCity = filtersData?.cities.find(c => String(c.id) === cityId);
-        const selectedCityName = selectedCity?.name_ru || "Город не указан";
-        dispatch(setOfferData({ ...payload, city_name: selectedCityName }));
-        console.log("PAYLOAD TO STORE:", { ...payload, city_name: selectedCityName });
-        onNext();
+
+        try {
+            const response = await createOffer(payload).unwrap();
+            const id = response?.data?.id;
+
+            if (!id) {
+                console.error("Оффер создан, но ID отсутствует");
+                return;
+            }
+
+            const city_name = filtersData?.cities.find(c => String(c.id) === cityId)?.name_ru || "Город не указан";
+
+            dispatch(setOfferData({
+                ...payload,
+                id,
+                city_name
+            }));
+
+            await publishOffer(id).unwrap();
+
+            onNext();
+
+        } catch (error) {
+            console.error("Ошибка при создании или публикации оффера:", error);
+        }
     };
+
 
 
     return (
@@ -204,7 +228,7 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
                         onChange={(e) => setCategoryId(e.target.value)}>
                         <option value="">Выбрать</option>
                         {filtersData?.categories.map((cat) => (
-                            <option key={cat.id} value={cat.title_ru}>
+                            <option key={cat.id} value={String(cat.id)}>
                                 {cat.title_ru}
                             </option>
                         ))}
@@ -251,7 +275,7 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
                         onChange={(e) => setProjectStageId(e.target.value)}>
                         <option className="">Выбрать</option>
                         {filtersData?.project_stages.map((stage) => (
-                            <option key={stage.id} value={stage.name_ru}>
+                            <option key={stage.id} value={String(stage.id)}>
                                 {stage.name_ru}
                             </option>
                         ))}
@@ -278,6 +302,13 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
                     LabelText="*Адрес" type="text" placeholder="Введите" isError={false}
                     value={address}
                     onChange={(e) => setAddress(e.target.value)} />
+            </div>
+            {/*Площадь */}
+            <div className="flex flex-col gap-2 w-[800px] relative">
+                <Input className="bg-[#F0F1F280] w-full rounded-[14px] outline-none py-3.5 px-4.5" LabelClassName="font-inter text-[16px] leading-[130%]"
+                    LabelText="*Площадь" type="text" placeholder="Введите" isError={false}
+                    value={Area}
+                    onChange={(e) => setArea(e.target.value)} />
             </div>
             {/*Форма владения бизнесом */}
             {isSell && isBusiness &&
@@ -463,15 +494,15 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
                 <label className="text-[#101828] font-inter text-[16px] leading-[130%]">Организационно правовая форма</label>
                 <select
                     className="bg-[#F0F1F280] rounded-[14px] text-[#686A70] outline-none py-3.5 px-4.5"
-                    value={legalForm}
-                    onChange={(e) => setLegalForm(e.target.value)}
+                    value={businessOwnership}
+                    onChange={(e) => setBusinessOwnership(e.target.value)}
                 >
                     <option value="">Выбрать</option>
-                    {/*{filtersData?.legal_forms.map((form) => (
-                        <option key={form.id} value={form.name_ru}>
-                            {form.name_ru}
+                    {filtersData?.business_types.map((type) => (
+                        <option key={type.value} value={type.value}>
+                            {type.label_ru}
                         </option>
-                    ))}*/}
+                    ))}
                 </select>
             </div>}
             {/* Детали объявления (переключатели) */}

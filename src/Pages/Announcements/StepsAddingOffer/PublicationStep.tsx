@@ -4,9 +4,11 @@ import { RootState } from "../../../Store/store";
 import { OfferPayload } from "../../../Store/api/types";
 import { ICard } from "../../../components/Cards/Interfaces";
 import { FaArrowRight } from "react-icons/fa";
+import { usePublishOfferMutation } from "../../../Store/api/Api";
 
 interface Props {
     onPublish: () => void;
+    onPreview: () => void;
 }
 
 const mapOfferToCard = (data: OfferPayload): ICard => ({
@@ -20,7 +22,7 @@ const mapOfferToCard = (data: OfferPayload): ICard => ({
             name_ru: data.city_name || "Город не указан"
         }
 
-    }, area: data.area || "Площадь не указана",
+    }, area: String(data.area) || "Площадь не указана",
     image: data.images?.[0] ? URL.createObjectURL(data.images[0]) : null,
 
     is_favorite: false,
@@ -28,13 +30,29 @@ const mapOfferToCard = (data: OfferPayload): ICard => ({
     listing_type: data.listing_type,
 });
 
-export const PublicationStep: React.FC<Props> = ({ onPublish }) => {
+export const PublicationStep: React.FC<Props> = ({ onPublish, onPreview }) => {
     const cardData = useSelector((state: RootState) => state.tempOffer.offerData);
+    const [publishOffer] = usePublishOfferMutation();
 
     if (!cardData) return null;
 
     const card = mapOfferToCard(cardData);
     console.log("DATA FROM STORE:", cardData);
+
+    const handlePublish = async () => {
+        if (!cardData?.id) {
+            console.error("ID карточки отсутствует");
+            return;
+        }
+
+        try {
+            await publishOffer(cardData.id).unwrap(); 
+            onPublish(); 
+        } catch (error) {
+            console.error("Ошибка при публикации:", error);
+        }
+    };
+
 
     return (
         <div className="flex flex-col items-start gap-6 bg-[#F8F8F8] p-5 ">
@@ -44,11 +62,11 @@ export const PublicationStep: React.FC<Props> = ({ onPublish }) => {
             </Paragraph>
 
             <div className="w-full max-w-[600px]">
-                <CardPreview card={card} />
+                <CardPreview card={card} onPreview={onPreview} />
             </div>
-                <Button className="bg-[#2EAA7B] text-white px-4 py-2 rounded-md flex items-center gap-2" onClick={onPublish}>
-                    Опубликовать <FaArrowRight />
-                </Button>
+            <Button className="bg-[#2EAA7B] text-white px-4 py-2 rounded-md flex items-center gap-2" onClick={handlePublish}>
+                Опубликовать <FaArrowRight />
+            </Button>
         </div>
     );
 };

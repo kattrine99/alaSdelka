@@ -4,6 +4,8 @@ import * as React from "react";
 import App from './App.tsx'
 import { Provider } from "react-redux";
 import { store } from "./Store/store.ts";
+import 'swiper/css';
+
 
 createRoot(document.getElementById('root')!).render(
   <React.StrictMode>

@@ -52,8 +52,8 @@ export const FilterBar: React.FC<FilterBarProps> = ({
     };
 
     return (
-        <div className="flex items-center gap-3 px-4 py-[13px] bg-white rounded-[24px] rounded-tl-[0px]">
-            <div className="w-full flex items-center rounded-xl rounded-r-2xl border border-[#EAEBF0] bg-white">
+        <div className="flex max-xl:flex-wrap items-center gap-3 px-4 py-[13px] bg-white rounded-[24px] rounded-tl-[0px]">
+            <div className="w-full flex max-xl:flex-wrap items-center rounded-xl rounded-r-2xl border border-[#EAEBF0] bg-white">
                 {/* Город */}
                 <div className=" relative flex items-center gap-2 px-2 py-2">
                     <span className="text-[#2EAA7B] text-lg h-[16px]">

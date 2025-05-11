@@ -6,12 +6,10 @@ import { useDispatch } from "react-redux";
 import { setIsAuthenticated } from "./Store/Slices/authSlice";
 import { getToken } from "./utils/tokenUtils";
 import { ScrollToTop } from "./components/ScrollTop/ScrollTop";
-import { useInactivityLogout } from "./utils/useAuthTimeout";
 import { StepsAddingOffer } from "./Pages/Announcements/StepsAddingOffer/StepsAddingOffer";
 import { PromotionPage } from "./Pages/PromotionPage/PromotionPage";
-import { CardDetailPreview } from "./components/Cards/CardDetailPreview";
+import { useAutoLogout } from "./utils/useAutoLogout";
 const Layout = () => {
-  useInactivityLogout(3600_000)
   return (
     <>
       <ScrollToTop />
@@ -36,7 +34,6 @@ const routerConfig = createBrowserRouter([
       { path: "add-offer", element: <StepsAddingOffer /> },
       { path: "promotion", element: <PromotionPage /> },
       { path: "notices", element: <NoticePage /> },
-      { path: "preview-detail", element: <CardDetailPreview /> },
       { path: ":category/card/:id", element: <CardDetailPage /> },
       { path: "/users/:userId/:category", element: <UserAnnouncementPage /> },
     ]
@@ -45,8 +42,7 @@ const routerConfig = createBrowserRouter([
 
 function App() {
   const dispatch = useDispatch();
-  useInactivityLogout(3600_000);
-
+  useAutoLogout();
   useEffect(() => {
     const token = getToken();
     if (token) dispatch(setIsAuthenticated(true));

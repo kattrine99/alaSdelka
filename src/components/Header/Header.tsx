@@ -27,16 +27,18 @@ export const Header: React.FC<HeaderProps> = ({
 
     return (
         <div className="font-inter font-medium w-full bg-white shadow">
-            {showtoBar && (<div className="flex justify-end items-center py-[19px] px-[192px] border-b border-[#E9E9E9]">
-                <div className="md:flex gap-[50px]">
-                    <Paragraph className="flex items-center gap-1 text-[#232323] font-openSans font-normal text-[16px] leading-[125%]">
-                        <IoIosMail className="text-[#2EAA7B] text-base" />
-                        info@name-com.uz
-                    </Paragraph>
-                    <Paragraph className="flex items-center gap-1 text-[#232323] font-inter font-normal text-[16px] leading-[125%]">
-                        <FaPhone className="text-[#2EAA7B] text-base" />
-                        +998 71 789 78 78
-                    </Paragraph>
+            {showtoBar && (<div className="flex justify-end items-center py-5 px-48 border-b border-[#E9E9E9]">
+                <div className="flex gap-12.5 ">
+                    <div className="flex gap-x-12.5 gap-y-1 flex-wrap">
+                        <Paragraph className="flex items-center gap-1 text-[#232323] font-openSans font-normal text-[16px] leading-[125%]">
+                            <IoIosMail className="text-[#2EAA7B] text-base" />
+                            info@name-com.uz
+                        </Paragraph>
+                        <Paragraph className="flex items-center gap-1 text-[#232323] font-inter font-normal text-[16px] leading-[125%]">
+                            <FaPhone className="text-[#2EAA7B] text-base" />
+                            +998 71 789 78 78
+                        </Paragraph>
+                    </div>
                     <div className="md:flex gap-3">
                         <Applink to="#">
                             <FaTelegram className="w-8 h-8 text-[#229ED9]" />
@@ -73,7 +75,6 @@ export const Header: React.FC<HeaderProps> = ({
                         >
                             <option id="RU">Русский</option>
                             <option id="UZ">O'zbek</option>
-                            <option id="EN">English</option>
                         </select>
                         <MdOutlineArrowDropDown className="absolute right-3 top-1/2 -translate-y-1/2 text-xl text-[#191919] pointer-events-none" />
                     </div>

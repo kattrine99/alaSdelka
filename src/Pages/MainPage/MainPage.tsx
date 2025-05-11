@@ -81,9 +81,9 @@ export const MainPage = () => {
     return (
         <div className="font-openSans min-h-screen w-screen overflow-x-hidden">
             <Header />
-            <section className="relative overflow-hidden bg-gradient-to-tr from-[#16503A] to-[#31B683]">
-                <div className="absolute right-[-80px] bottom-[-9rem] w-[850px] h-[850px] bg-[url('/images/Check.png')] bg-no-repeat bg-contain rotate-[12deg] pointer-events-none z-0"></div>
-                <div className="relative container mx-auto py-[70px]">
+            <section className="px-48 relative overflow-hidden bg-gradient-to-tr from-[#16503A] to-[#31B683]">
+                <div className="absolute right-[-80px] bottom-[-9rem] w-212.5 h-212.5 bg-[url('/images/Check.png')] bg-no-repeat bg-contain rotate-[12deg] pointer-events-none z-0"></div>
+                <div className="relative container mx-auto py-17.5">
                     {/* Текст */}
                     <div className="order-2 lg:order-1 flex flex-col gap-6 max-w-3xl w-full">
                         <Heading
@@ -102,7 +102,7 @@ export const MainPage = () => {
                     {/* Поиск */}
                     <div className="mt-4 w-full flex flex-col relative">
                         {/* Категории */}
-                        <div className="w-[566px] bg-white rounded-t-xl border-b border-[#E0E0E0]">
+                        <div className="max-w-142 bg-white rounded-t-xl border-b border-[#E0E0E0]">
                             <NavLinks
                                 links={categories}
                                 variant="tabs"
@@ -118,8 +118,8 @@ export const MainPage = () => {
                                     }
                                 }}
                                 className="flex text-[18px] font-openSans font-semibold"
-                                activeClassName="text-[#2EAA7B] w-[136px] py-[14px] px-[17px]  border-b"
-                                inactiveClassName="text-[#787878] w-[136px] py-[14px] px-[17px] hover:text-[#2EAA7B] "
+                                activeClassName="text-[#2EAA7B] w-34 py-3.5 px-4.25  border-b"
+                                inactiveClassName="text-[#787878] w-34 py-3.5 px-4.25 hover:text-[#2EAA7B] "
                                 underlineColor="bg-[#2EAA7B]"
                             />
                         </div>
@@ -146,7 +146,6 @@ export const MainPage = () => {
                         }} className={""}>
                             <Heading level={2} text="Бизнес" className="font-openSans font-bold hover:text-[#2EAA7B] hover:underline hover:decoration-1 transition duration-500 text-3xl cursor-pointer" />
                         </Button>
-                        <Paragraph className="text-[16px] mt-1.5 text-[#787878]">Описание</Paragraph>
                     </div>
                     <div className="flex gap-10.5 text-center">
                         <Button onClick={() => setListingTypes(prev => ({ ...prev, [selectedCategory]: "buy" }))} className={`flex items-center justify-center gap-x-2 rounded-[8px] h-13 w-91 border border-[#2EAA7B] text-[#2EAA7B] text-[16px] hover:bg-[#2EAA7B] hover:text-white transition duration-500 font-inter leading-[150%] font-semibold
@@ -168,26 +167,25 @@ export const MainPage = () => {
 
                 </div>
                 {isLoadingBusiness ? (
-                    <div className="flex justify-center items-center py-[30px]">
+                    <div className="flex justify-center items-center py-7.5">
                         <div className="w-10 h-10 border-4 border-[#2EAA7B] border-t-transparent rounded-full animate-spin"></div>
                     </div>
                 ) : isErrorBusiness ? (
-                    <p className="px-48 py-7.5 text-red-500">Ошибка загрузки данных</p>
+                    <p className=" py-7.5 text-red-500">Ошибка загрузки данных</p>
                 ) :
-                    (<CardSection title="Бизнес" cards={Object.values(businessOffers?.business || {})} maxVisible={8} Class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 lg:grid-cols-3 gap-y-10 gap-x-8 transition duration-300" ClassName={"container mx-auto py-7.5"} />
+                    (<CardSection title="Бизнес" cards={Object.values(businessOffers?.business || {})} maxVisible={8} Class="grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-4 xl:grid-cols-3 lg:grid-cols-2 gap-y-10 gap-x-8 transition duration-300 ease-in-out" ClassName={"container mx-auto py-7.5"} />
                     )}
             </section>
             <section className="mt-12.5 mb-8.75">
-                <div className="px-48 flex justify-start gap-68">
+                <div className=" px-48 flex justify-start gap-68">
                     <div>
                         <Button onClick={() => {
                             navigate("/franchise")
                         }} className={""}>
                             <Heading level={2} text="Франшиза" className="font-openSans font-bold hover:text-[#2EAA7B] hover:underline hover:decoration-1 transition duration-500 text-3xl cursor-pointer" />
                         </Button>
-                        <Paragraph className="text-[16px] mt-1.5 text-[#787878]">Описание</Paragraph>
                     </div>
-                    <div className="flex gap-[42px] text-center">
+                    <div className="flex gap-10.5 text-center">
                         <Button onClick={() => setListingTypes(prev => ({ ...prev, Франшиза: "buy" }))} className={`flex items-center justify-center gap-x-2 rounded-[8px] h-[52px] w-[364px] border border-[#2EAA7B] text-[#2EAA7B] text-[16px] hover:bg-[#2EAA7B] hover:text-white transition duration-500 font-inter leading-[150%] font-semibold
                         ${franchiseType === "buy" ? "bg-[#2EAA7B] text-white border-[#2EAA7B]"
                                 : "border-[#2EAA7B] text-[#2EAA7B] hover:bg-[#2EAA7B] hover:text-white"
@@ -212,7 +210,7 @@ export const MainPage = () => {
                 ) : isErrorFranchise ? (
                     <p className="px-48 py-[30px] text-red-500">Ошибка загрузки данных</p>
                 ) :
-                    (<CardSection title="Франшиза" cards={franchiseOffers?.franchise || []} maxVisible={8} Class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 lg:grid-cols-3 gap-y-10 gap-x-8 transition duration-300" ClassName={"container mx-auto py-7.5"} />
+                    (<CardSection title="Франшиза" cards={franchiseOffers?.franchise || []} maxVisible={8} Class="grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-4 xl:grid-cols-3 lg:grid-cols-2 gap-y-10 gap-x-8 transition duration-300 ease-in-out" ClassName={"container mx-auto py-7.5"} />
                     )}
 
             </section>
@@ -224,7 +222,6 @@ export const MainPage = () => {
                         }} className={""}>
                             <Heading level={2} text="Стартапы" className="font-openSans font-bold hover:text-[#2EAA7B] hover:underline hover:decoration-1 transition duration-500 text-3xl cursor-pointer" />
                         </Button>
-                        <Paragraph className="text-[16px] mt-1.5 text-[#787878]">Описание</Paragraph>
                     </div>
                     <div className="flex gap-[42px] text-center">
                         <Button onClick={() => setListingTypes(prev => ({ ...prev, Стартапы: "buy" }))} className={`flex items-center justify-center gap-x-2 rounded-[8px] h-[52px] w-[364px] border border-[#2EAA7B] text-[#2EAA7B] text-[16px] hover:bg-[#2EAA7B] hover:text-white transition duration-500 font-inter leading-[150%] font-semibold
@@ -251,7 +248,7 @@ export const MainPage = () => {
                 ) : isErrorStartup ? (
                     <p className="px-48 py-[30px] text-red-500">Ошибка загрузки данных</p>
                 ) :
-                    (<CardSection title="Стартапы" cards={startupOffers?.startup || []} maxVisible={8} Class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 lg:grid-cols-3 gap-y-10 gap-x-8 transition duration-300" ClassName={"container mx-auto py-7.5"} />
+                    (<CardSection title="Стартапы" cards={startupOffers?.startup || []} maxVisible={8} Class="grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-4 xl:grid-cols-3 lg:grid-cols-2 gap-y-10 gap-x-8 transition duration-300 ease-in-out" ClassName={"container mx-auto py-7.5"} />
                     )}
 
             </section>
@@ -262,7 +259,6 @@ export const MainPage = () => {
                     }} className={""}>
                         <Heading level={2} text="Инвестиции" className="font-openSans font-bold text-3xl hover:text-[#2EAA7B] hover:underline hover:decoration-1 transition duration-500 cursor-pointer" />
                     </Button>
-                    <Paragraph className="text-[16px] mt-1.5 text-[#787878]">Описание</Paragraph>
                 </div>
                 {isLoadingInvestment ? (
                     <div className="flex justify-center items-center py-[30px]">
@@ -271,7 +267,7 @@ export const MainPage = () => {
                 ) : isErrorInvestment ? (
                     <p className="px-48 py-7.5 text-red-500">Ошибка загрузки данных</p>
                 ) :
-                    (<CardSection title="Инвестиции" cards={investmentOffers?.investments || []} maxVisible={4} Class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 lg:grid-cols-3 gap-y-10 gap-x-8 transition duration-300" ClassName={"container mx-auto py-7.5"} />
+                    (<CardSection title="Инвестиции" cards={investmentOffers?.investments || []} maxVisible={4} Class="grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-4 xl:grid-cols-3 lg:grid-cols-2 gap-y-10 gap-x-8 transition duration-300 ease-in-out" ClassName={"container mx-auto py-7.5"} />
                     )}
 
             </section>

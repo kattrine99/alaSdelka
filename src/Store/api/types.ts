@@ -131,15 +131,24 @@ export interface OffersResponse {
 }
 export interface HomeStatistics {
     cities_statistics: {
-        city_id: number;
-        name_ru: string;
-        offers_count: number;
-    }[];
+        business: CityStats[];
+        franchise: CityStats[];
+        startup: CityStats[];
+        investments: CityStats[];
+    };
     offers_count: number;
     partners_count: number;
     deals_count: number;
-    total_sold_amount: string;
+    total_sold_amount: number;
 }
+
+interface CityStats {
+    city_id: number;
+    name_ru: string;
+    name_uz: string;
+    offers_count: number;
+}
+
 export interface OfferDetail {
     data: {
         id: number;

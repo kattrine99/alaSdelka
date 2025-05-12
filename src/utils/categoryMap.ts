@@ -75,6 +75,7 @@ export const categoryRouteMap: Record<string, string> = {
     франшиза: "franchise",
     стартапы: "startups",
     инвестиции: "investments",
+    
 };
 export const routeToCategoryIdMap: Record<string, string> = {
     business: "1",

@@ -1,5 +1,5 @@
 import { Header, Heading, Paragraph, NavLinks, CardSection, FilterBar, categories, Button, Footer } from "../../components";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ShopIcon from '../../assets/shop.svg?react';
 import InvestInIcon from '../../assets/investin_v15.svg?react';
@@ -18,6 +18,24 @@ export const MainPage = () => {
         Стартапы: "buy",
         Инвестиции: "buy",
     });
+    const { data: mainStats } = useGetMainStatisticsQuery();
+
+    const cityStats = useMemo(() => {
+        if (!mainStats?.cities_statistics) return null;
+
+        switch (selectedCategory) {
+            case "Бизнес":
+                return mainStats.cities_statistics.business;
+            case "Франшиза":
+                return mainStats.cities_statistics.franchise;
+            case "Стартапы":
+                return mainStats.cities_statistics.startup;
+            case "Инвестиции":
+                return mainStats.cities_statistics.investments;
+            default:
+                return [];
+        }
+    }, [mainStats, selectedCategory]);
 
     const [filters, setFilters] = useState<FiltersState>({
         category: "",
@@ -39,20 +57,18 @@ export const MainPage = () => {
     const [searchInput, setSearchInput] = useState("");
 
 
-    const { data: mainStats } = useGetMainStatisticsQuery();
     const { data: businessOffers, isLoading: isLoadingBusiness, isError: isErrorBusiness } = useGetHomeOffersQuery(listingTypes["Бизнес"]);
     const { data: franchiseOffers, isLoading: isLoadingFranchise, isError: isErrorFranchise } = useGetHomeOffersQuery(listingTypes["Франшиза"]);
     const { data: startupOffers, isLoading: isLoadingStartup, isError: isErrorStartup } = useGetHomeOffersQuery(listingTypes["Стартапы"]);
-    const { data: investmentOffers, isLoading: isLoadingInvestment, isError: isErrorInvestment } = useGetHomeOffersQuery(listingTypes["Инвестиции"]);
-    const cityStats: Record<string, number> = {};
-    mainStats?.cities_statistics.forEach((item) => {
-        if (item.name_ru && item.offers_count > 0) {
-            cityStats[item.name_ru] = item.offers_count;
-        }
-    });
+    const { data: investmentOffers, isLoading: isLoadingInvestment, isError: isErrorInvestment } = useGetHomeOffersQuery("");
+
+    console.log('Бизнес:', businessOffers);
+    console.log('Франшиза:', franchiseOffers);
+    console.log('Стартапы:', startupOffers);
+    console.log('Инвестиции:', investmentOffers);
     const handleApplyFilters = () => {
         if (!filters.category && selectedCategory) {
-            filters.category = selectedCategory.toLowerCase(); // добавь это, чтобы синхронизировать значения
+            filters.category = selectedCategory.toLowerCase();
         }
 
         const query = new URLSearchParams();
@@ -70,10 +86,6 @@ export const MainPage = () => {
         if (filters.offer_type) query.append("offer_type", filters.offer_type);
 
         const categoryRoute = categoryRouteMap[filters.category] || "business";
-
-        console.log("filters.category:", filters.category);
-        console.log("categoryRoute:", categoryRoute);
-
         navigate(`/${categoryRoute}?${query.toString()}`);
     };
 
@@ -286,13 +298,8 @@ export const MainPage = () => {
                             variant="tabs"
                             activeLabel={selectedCategory}
                             onClick={(label) => {
-                                if (
-                                    label === "Бизнес" ||
-                                    label === "Франшиза" ||
-                                    label === "Стартапы" ||
-                                    label === "Инвестиции"
-                                ) {
-                                    setSelectedCategory(label);
+                                if (categories.find((cat) => cat.label === label)) {
+                                    setSelectedCategory(label as typeof selectedCategory);
                                 }
                             }}
                             className="flex gap-4 text-[24px] text-start font-openSans mb-[25px] font-bold"
@@ -303,10 +310,12 @@ export const MainPage = () => {
                         {/* ГОРОДА */}
                         <div className="flex flex-wrap gap-[20px]">
                             {cityStats &&
-                                Object.entries(cityStats).map(([city, count], idx) => (
+                                cityStats.map((city, idx) => (
                                     <div key={idx} className="w-58.5 h-32.5 flex flex-col bg-[#1A1A1A] text-white py-4 px-6 rounded-[12px] gap-0.5">
-                                        <span className="font-openSans font-bold text-2xl leading-[150%]">{city}</span>
-                                        <span className="font-Urbanist font-bold text-[40px] leading-[150%]">{count.toLocaleString("ru-RU")}</span>
+                                        <span className="font-openSans font-bold text-2xl leading-[150%]">{city.name_ru}</span>
+                                        <span className="font-Urbanist font-bold text-[40px] leading-[150%]">
+                                            {city.offers_count.toLocaleString("ru-RU")}
+                                        </span>
                                     </div>
                                 ))}
                         </div>

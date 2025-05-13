@@ -164,7 +164,7 @@ export const RegistrationPage = () => {
                                 <div className="w-102.5">
                                     <form className="flex flex-col gap-y-3.5">
                                         <Controller name="username" control={control} render={({ field }) => (
-                                            <Input {...field} placeholder="Имя" isError={!!errors.username} errorMessage={errors.username?.message} className="py-3.5 px-4.5 bg-[#EEEEEE80] outline-none rounded-[14px]" />)} />
+                                            <Input {...field} placeholder="Имя Фамилия" isError={!!errors.username} errorMessage={errors.username?.message} className="py-3.5 px-4.5 bg-[#EEEEEE80] outline-none rounded-[14px]" />)} />
                                         <Controller name="userphone" control={control} render={({ field }) => (
                                             <Input {...field} placeholder="Телефон (+998...)" isError={!!errors.userphone} errorMessage={errors.userphone?.message} className="py-3.5 px-4.5 bg-[#EEEEEE80] outline-none rounded-[14px]" />)} />
                                         <Controller name="userpassword" control={control} render={({ field }) => (

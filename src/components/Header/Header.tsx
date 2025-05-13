@@ -89,10 +89,10 @@ export const Header: React.FC<HeaderProps> = ({
                             </div>
                         ) : (
                             <>
-                                <Applink to="/login" className="border border-[#31B683] rounded-[10px] px-5 py-3 hover:bg-[#2EAA7B] hover:text-white text-sm font-medium">
+                                <Applink to="/login" className="border border-[#31B683] rounded-[10px] px-5 py-3 hover:bg-[#2EAA7B] hover:text-white text-sm font-medium transition duration-600">
                                     Войти
                                 </Applink>
-                                <Applink to="/register" className="bg-[#31B683] text-white px-5 py-3 rounded-[10px] hover:bg-[#2EAA7B] text-sm font-medium">
+                                <Applink to="/register" className="bg-[#2EAA7B] text-white px-5 py-3 rounded-[10px] hover:bg-[#31B683] text-sm font-medium transition duration-600">
                                     Зарегистрироваться
                                 </Applink>
                             </>

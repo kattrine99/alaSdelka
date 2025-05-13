@@ -225,6 +225,81 @@ export interface OfferDetail {
         ],
     }
 }
+export interface OfferDetails {
+    id: number;
+    title: string;
+    description: string;
+    listing_type: "sell" | "buy";
+    business_type: string;
+    offer_type: "business" | "franchise" | "startup" | "investments";
+    premises_ownership_form: string;
+    price: number;
+    payback_period: number;
+    average_monthly_revenue: number;
+    average_monthly_profit: number;
+    average_monthly_expenses: number;
+    percentage_for_sale: number;
+    profitability: number;
+    foundation_year: number;
+    employee_count: number;
+    area: number;
+    view_count: number;
+    closed_successfully: boolean;
+    offer_status: string;
+    user_name: string;
+    user_phone: string;
+    user_photo: string;
+    user_created_at: string,
+    user_id: number,
+    is_paid: boolean;
+    created_at: string;
+    updated_at: string;
+    photos: [
+        {
+            id: number,
+            photo: string,
+            order: number
+        }
+    ];
+    documents: [{
+        id: number,
+        document: string
+    }];
+    address: {
+        address: string,
+        latitude: number,
+        longitude: number,
+        city: {
+            id: number,
+            name_ru: string,
+            name_uz: string
+        }
+    }
+    category: {
+        id: number,
+        title_ru: string,
+        title_uz: string
+    },
+    project_stage: {
+        id: number,
+        name_ru: string,
+        name_uz: string
+    },
+    conveniences: [
+        {
+            id: number,
+            name_ru: string,
+            name_uz: string
+        }
+    ],
+    communication_channels: [
+        {
+            channel_name: string,
+            link: string
+        }
+    ],
+}
+
 export interface Offer {
     id: number;
     title: string;
@@ -237,6 +312,8 @@ export interface Offer {
         city?: { name_ru: string };
     };
 }
+
+
 
 export interface FilterData {
     cities: [
@@ -330,11 +407,12 @@ export interface GetUserOffersResponse {
         created_at: string;
         updated_at: string;
     };
-    offers: OfferDetail[];
+    offers: OfferDetails[];
     user_offers_count: number;
 }
 export interface GetUserOffersParams {
     user_id: number;
+    user_phone?: string;
     per_page?: number;
     page?: number;
     search?: string;
@@ -386,4 +464,25 @@ export interface OfferPayload {
 
     // Investments
     has_copyrights?: boolean;
+}
+export interface DailyStats {
+    date: string;
+    view_count: number;
+    favourite_count: number;
+    contact_view_count: number;
+}
+
+export interface StatMetric {
+    current_week: number;
+    previous_week: number;
+    change: number;
+}
+
+export interface OfferStatsResponse {
+    data: DailyStats[];
+    metrics: {
+        view_count: StatMetric;
+        favourite_count: StatMetric;
+        contact_view_count: StatMetric;
+    };
 }

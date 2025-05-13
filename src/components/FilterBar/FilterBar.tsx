@@ -143,14 +143,14 @@ export const FilterBar: React.FC<FilterBarProps> = ({
                     />
                     <Button
                         onClick={onSearch}
-                        className="h-full bg-[#2EAA7B] text-white text-sm font-semibold px-5 hover:bg-green-600 transition rounded-none"
+                        className="h-full bg-[#2EAA7B] text-sm font-semibold px-5 hover:bg-[#31B683] text-white transition duration-500 rounded-none"
                     >
                         Поиск
                     </Button>
                 </div>
                 <Button
                     onClick={handleNavigateToCategory}
-                    className="text-[#2EAA7B] py-1 px-5 border border-[#2EAA7B] rounded-xl font-semibold hover:bg-[#2EAA7B] hover:text-white transition text-[15px]"
+                    className="text-[#2EAA7B] py-1 px-5 border  rounded-xl font-semibold hover:bg-[#2EAA7B] hover:text-white transition text-[15px] duration-500"
                 >
                     Перейти к категории
                 </Button>

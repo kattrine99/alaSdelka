@@ -17,6 +17,7 @@ export interface ICard {
     category?: string;
     is_favorite?: boolean;
     listing_type?: string;
+    user_phone?: string;
 }
 
 export interface ICards {

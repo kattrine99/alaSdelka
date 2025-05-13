@@ -1,4 +1,5 @@
 /** @type {import('tailwindcss').Config} */
+import animatePlugin from 'tailwindcss-animate';
 
 export default ({
     content: [
@@ -15,15 +16,27 @@ export default ({
                 Urbanist: ["Urbanist", 'sans-serif'],
                 actay: ['"Actay Wide"', 'sans-serif'],
             },
-            colors: {
-                'main-green': "#2EAA7B",
-                'main-green1': "#31B683",
-                'dark-green': '#16503A',
-                white: "#FFFFFF",
-                black: "#191919",
-                gray: "#787878",
+            animation: {
+                'fade-in': 'fade-in 0.4s ease-out',
+                'fade-in-down': 'fade-in-down 0.5s ease-out',
+                'fade-in-slow': 'fade-in-down 1s ease-out'
+            },
+            keyframes: {
+                'fade-in-slow': {
+                    '0%': { opacity: 0 },
+                    '50%': { opacity: 0 },
+                    '100%': { opacity: 1 },
+                },
+                'fade-in-down': {
+                    '0%': { opacity: 0, transform: 'translateY(-10px)' },
+                    '100%': { opacity: 1, transform: 'translateY(0)' },
+                },
+                'fade-in': {
+                    '0%': { opacity: 0 },
+                    '100%': { opacity: 1 },
+                },
             },
         },
     },
-    plugins: [],
+    plugins: [animatePlugin],
 });

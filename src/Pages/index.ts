@@ -8,5 +8,5 @@ export { FavoritePage } from "./FavoritePage/FavoritePage"
 export { AnnouncemntsPage } from "./Announcements/Announcements"
 export { NoticePage } from "./Notices/NoticePage"
 export { UserAnnouncementPage } from "./userAnnouncementsPage/UserAnnouncementPage"
-
+export { StatisticsPage } from "./Statistics/StatisticsPage"
 

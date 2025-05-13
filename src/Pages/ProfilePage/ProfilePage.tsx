@@ -148,7 +148,6 @@ export const ProfilePage = () => {
                     <div className="bg-[#F8F8F8] w-full mt-6 p-10">
                         {editMode && (
                             <div className="relative w-max mb-6">
-                                <label className="text-[#121212] text-sm mb-1 block">Фото профиля</label>
                                 {formData.photo ? (
 
 
@@ -182,10 +181,10 @@ export const ProfilePage = () => {
                                         onChange={e => setFirstNameInput(e.target.value)}
                                         disabled={!editMode}
                                         isError={false}
-                                        className="bg-[#F2F2F2] rounded-[10px] px-4 py-3.5 text-[#121212] text-[16px]"
+                                        className="bg-[#F2F2F2] rounded-[10px] h-14 px-4 py-3.5 text-[#121212] text-[16px]"
                                     />) : (
                                         <div className="w-98.25">
-                                            <div className="bg-[#F2F2F2] rounded-[10px] px-4 py-3.5 text-[#121212] text-[16px]">
+                                            <div className="bg-[#F2F2F2] rounded-[10px] h-14 px-4 py-3.5 text-[#121212] text-[16px]">
                                                 {firstName || " "}
                                             </div>
                                         </div>
@@ -200,9 +199,9 @@ export const ProfilePage = () => {
                                         onChange={e => setLastNameInput(e.target.value)}
                                         disabled={!editMode}
                                         isError={false}
-                                        className="bg-[#F2F2F2] rounded-[10px] px-4 py-3.5 text-[#121212] text-[16px]"
+                                        className="bg-[#F2F2F2] rounded-[10px] h-14 px-4 py-3.5 text-[#121212] text-[16px]"
                                     />) : (
-                                        <div className="bg-[#F2F2F2] rounded-[10px] px-4 py-3.5 text-[#121212] text-[16px]">
+                                        <div className="bg-[#F2F2F2] rounded-[10px] h-14 px-4 py-3.5 text-[#121212] text-[16px]">
                                             {lastName || " "}
                                         </div>
                                     )}
@@ -222,12 +221,12 @@ export const ProfilePage = () => {
                                                 onChange={e => setFormData({ ...formData, phone: e.target.value })}
                                                 disabled={!editMode}
                                                 isError={false}
-                                                className="bg-[#F2F2F2] rounded-[10px] px-4 py-3.5 text-[#121212] text-[16px]"
+                                                className="bg-[#F2F2F2] rounded-[10px] h-14 px-4 py-3.5 text-[#121212] text-[16px]"
                                             />
                                         </div>
 
                                     ) : (
-                                        <div className="bg-[#F2F2F2] rounded-[10px] px-4 py-3.5 text-[#121212] text-[16px] flex items-center gap-2">
+                                        <div className="bg-[#F2F2F2] rounded-[10px] h-14 px-4 py-3.5 text-[#121212] text-[16px] flex items-center gap-2">
                                             <FlagIcon className="w-[25px] h-[25px] object-contain" />
                                             {data.phone || " "}
                                         </div>
@@ -243,10 +242,10 @@ export const ProfilePage = () => {
                                         onChange={e => setFormData({ ...formData, city_id: Number(e.target.value) })}
                                         disabled={!editMode}
                                         isError={false}
-                                        className="bg-[#F2F2F2] rounded-[10px] px-4 py-3.5 text-[#121212] text-[16px]"
+                                        className="bg-[#F2F2F2] rounded-[10px] h-14 px-4 py-3.5 text-[#121212] text-[16px]"
 
                                     />) : (
-                                        <div className="bg-[#F2F2F2] rounded-[10px] px-4 py-3.5 text-[#121212] text-[16px]">
+                                        <div className="bg-[#F2F2F2] rounded-[10px] h-14 px-4 py-3.5 text-[#121212] text-[16px]">
                                             {data.city?.name_ru || " "}
                                         </div>
                                     )}
@@ -262,11 +261,11 @@ export const ProfilePage = () => {
                                             onChange={e => setFormData({ ...formData, email: e.target.value })}
                                             disabled={!editMode}
                                             isError={false}
-                                            className="bg-[#F2F2F2] rounded-[10px] px-4 py-3.5 text-[#121212] text-[16px]"
+                                            className="bg-[#F2F2F2] rounded-[10px] h-14 px-4 py-3.5 text-[#121212] text-[16px]"
 
                                         />
                                     ) : (
-                                        <div className="bg-[#F2F2F2] rounded-[10px] px-4 py-3.5 text-[#121212] text-[16px]">
+                                        <div className="bg-[#F2F2F2] rounded-[10px] h-14 px-4 py-3.5 text-[#121212] text-[16px]">
                                             {data.email || " "}
                                         </div>
                                     )}

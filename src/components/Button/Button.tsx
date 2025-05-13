@@ -1,6 +1,6 @@
 interface ButtonPage {
     type?: "button" | "submit" | "reset"
-    className: string
+    className: string | undefined
     onClick?: () => void;
     children?: React.ReactNode;
     disabled?: boolean;

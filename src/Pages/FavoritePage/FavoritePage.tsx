@@ -18,9 +18,7 @@ export const FavoritePage = () => {
   const mappedFavorites: ICard[] = offers.map((offer) => ({
     id: offer.id,
     title: offer.title || "Название не указано",
-    price: offer.price
-      ? `${offer.price.toLocaleString("ru-RU")} сум`
-      : "Цена не указана",
+    price: offer.price ?? 0,
     image: offer.photos?.[0]?.photo || "/images/business_abstract.jpg",
     address: {
       address: offer.address?.address || "Адрес не указан",

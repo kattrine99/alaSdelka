@@ -44,7 +44,7 @@ export const AnnouncemntsPage = () => {
                   </div>
                 </div>
                 <div className="flex flex-col gap-2 items-end">
-                  <Button className="bg-[#2EAA7B] text-white px-4 py-2 rounded-md">Посмотреть</Button>
+                  <Button className="bg-[#2EAA7B] text-white px-4 py-2 rounded-md" onClick={()=>navigate(`/statistics/${offer.id}`)}>Посмотреть статистику</Button>
                   <Button className="border border-[#2EAA7B] text-[#2EAA7B] px-4 py-2 rounded-md">Поместить в архив</Button>
                   <Button className="bg-orange-500 text-white px-4 py-2 rounded-md"
                     onClick={() => navigate(`/promotion/${offer.id}`)}

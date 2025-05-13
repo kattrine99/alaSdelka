@@ -19,6 +19,7 @@ import type {
     GetUserOffersParams,
     Offer,
     OfferPayload,
+    OfferStatsResponse,
 } from "./types";
 import { baseUrl } from "../../utils/baseUrl";
 import { ICard } from "../../components/Cards/Interfaces";
@@ -156,6 +157,13 @@ export const AuthApi = createApi({
                 body: payload,
             }),
         }),
+        getOfferStats: builder.query<OfferStatsResponse, { offer_id: number; from: string; to: string }>({
+            query: ({ offer_id, from, to }) => ({
+                url: `/offers/${offer_id}/stats`,
+                method: "GET",
+                params: { from, to },
+            }),
+        }),
 
     }),
 
@@ -180,4 +188,5 @@ export const {
     useGetNotificationsQuery,
     useGetUserOffersQuery,
     usePublishOfferMutation,
+    useGetOfferStatsQuery,
 } = AuthApi;

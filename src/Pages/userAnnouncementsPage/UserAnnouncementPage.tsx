@@ -2,7 +2,6 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useState } from "react";
 import {
     Breadcrumbs,
-    CardSection,
     Header,
     Pagination,
     Footer,
@@ -11,12 +10,14 @@ import {
     Input,
     Paragraph,
     Filters,
+    Cards,
+    ModalBase,
 } from "../../components";
 import { ICard } from "../../components/Cards/Interfaces";
 import { useGetUserOffersQuery } from "../../Store/api/Api";
 import { FiltersState } from "../../utils/variables";
 import { FiSearch } from "react-icons/fi";
-import { urlToTypeMap, typeToTitleMap, ruToApiOfferTypeMap } from "../../utils/categoryMap";
+import { urlToTypeMap, ruToApiOfferTypeMap } from "../../utils/categoryMap";
 
 export const UserAnnouncementPage = () => {
     const { category, userId } = useParams();
@@ -38,9 +39,8 @@ export const UserAnnouncementPage = () => {
     });
 
     const type = urlToTypeMap[category ?? ""] ?? "бизнес";
-    console.log(type)
-    const pageTitle = typeToTitleMap[type as ICard["offer_type"]] ?? "Категория";
 
+    const [isContactModalOpen, setContactModalOpen] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
     const [searchInput, setSearchInput] = useState("");
     const [searchQuery, setSearchQuery] = useState("");
@@ -61,29 +61,41 @@ export const UserAnnouncementPage = () => {
         price_max: filters.priceMax ? Number(filters.priceMax) : undefined,
     });
     const cards = data?.offers ?? [];
-    const mappedCards: ICard[] = cards.map((card) => ({
-        id: card.data.id,
-        title: card.data.title || "Название не указано",
-        price: card.data.price ? `${card.data.price.toLocaleString("ru-RU")} сум` : "Цена не указана",
-        image: card.data.photos?.[0]?.photo || "/images/business_abstract.jpg",
-        address: {
-            address: card.data.address?.address || "Адрес не указан",
-            city: {
-                name_ru: card.data.address?.city?.name_ru || "",
+    const mappedCards: ICard[] = cards
+        .filter((card) => card)
+        .map((card) => ({
+            id: card.id,
+            title: card.title || "Название не указано",
+            price: card.price ?? "Цена не указана",
+            image: card.photos?.[0]?.photo || "/images/business_abstract.jpg",
+            address: {
+                address: card.address?.address || "Адрес не указан",
+                city: {
+                    name_ru: card.address?.city?.name_ru || "",
+                },
             },
-        },
-        area: card.data.area ? `${card.data.area} кв. м.` : "Площадь не указана",
-        offer_type: card.data.offer_type,
-    }));
+            area: card.area ? `${card.area} кв. м.` : "Площадь не указана",
+            offer_type: card.offer_type,
+            user_phone: card.user_phone || "",
+        }));
     const totalPages = Math.ceil((data?.user_offers_count ?? 0) / itemsPerPage);
     const user = data?.user;
 
     return (
+
         <div className="font-openSans min-h-screen w-screen overflow-x-hidden">
+            {isContactModalOpen && (
+                <ModalBase
+                    title="Контакты продавца"
+                    message={user?.phone || "Номер отсутствует"}
+                    onClose={() => setContactModalOpen(false)}
+                    showCloseButton={true}
+                />
+            )}
             <Header />
             <div className="flex px-48 py-[30px] pb-10 gap-10 items-start">
-                <aside className="flex flex-col m-auto">
-                    <Breadcrumbs category={type} title="Объявления пользователя" />
+                <aside className="flex flex-col">
+                    <Breadcrumbs category={category} title="Объявления пользователя" />
                     <Heading text="Объявления пользователя" level={2} className="text-[30px] font-bold text-black mt-4.5" />
 
                     {type && (
@@ -124,14 +136,19 @@ export const UserAnnouncementPage = () => {
 
                     {/* Карточка пользователя */}
                     {user && (
-                        <div className="w-full border border-[#2EAA7B] rounded-2xl p-6 flex justify-between items-center mb-8">
+                        <div className="w-full border border-[#2EAA7B] rounded-2xl p-6 flex flex-col  items-start mt-16">
                             <div className="flex items-center gap-4">
-                                <div className="w-[40px] h-[40px] border border-[#2EAA7B] rounded-full"></div>
-                                <div>
+                                <div className="rounded-full">
+                                    <img
+                                        src={`${user.photo || "../../../../images/profile.png"}`}
+                                        className="w-10 h-10"
+                                        alt="User photo"
+                                    />
+                                </div>                                <div>
                                     <Paragraph className="font-bold text-[#101828] text-[16px]">{user.name}</Paragraph>
                                 </div>
                             </div>
-                            <div className="flex justify-between">
+                            <div className="flex justify-between w-full ">
                                 <div>
                                     <Paragraph className="text-[#6B7280] text-[13px] mt-1">
                                         Количество объявлений: {data?.user_offers_count}
@@ -140,7 +157,8 @@ export const UserAnnouncementPage = () => {
                                         На сайте с: {data?.user.created_at}
                                     </Paragraph>
                                 </div>
-                                <Button className="px-4 py-2 text-white bg-[#2EAA7B] rounded-md font-medium text-sm">
+                                <Button className="px-4 py-2 text-white bg-[#2EAA7B] rounded-md font-medium text-sm"
+                                    onClick={() => setContactModalOpen(true)}>
                                     Посмотреть контакты
                                 </Button>
                             </div>
@@ -175,13 +193,14 @@ export const UserAnnouncementPage = () => {
                                 </div>
                             </div>
                         ) : (
-                        <CardSection
-                            Class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-y-10 gap-x-8 transition duration-600"
-                            title={pageTitle}
-                            ClassName="py-9.75"
+                        <Cards
                             cards={mappedCards}
-                            hideViewAllButton
+                            containerClass="flex flex-col gap-7.5 rounded-xl w-317.75 mt-25"
+                            cardWrapperClass="shadow-[1px_1px_4.5px_0px] shadow-[#28B13D4D]"
+                            cardIconClass="w-85 h-58"
+                            WhatchButtonClass="py-3 px-5 w-79.5 bg-[#2EAA7B] text-white font-medium rounded-md flex justify-center hover:bg-[#31B683] transition duration-300 cursor-pointer"
                         />
+
                     )}
 
                     <Pagination

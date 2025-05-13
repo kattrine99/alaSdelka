@@ -1,4 +1,4 @@
-import { LoginPage, RegistrationPage, MainPage, CategoryPage, ProfilePage, CardDetailPage, FavoritePage, AnnouncemntsPage, NoticePage, UserAnnouncementPage } from "./Pages/index";
+import { LoginPage, RegistrationPage, MainPage, CategoryPage, ProfilePage, CardDetailPage, FavoritePage, AnnouncemntsPage, NoticePage, UserAnnouncementPage, StatisticsPage } from "./Pages/index";
 import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
 import './index.css';
 import { useEffect } from "react";
@@ -32,8 +32,9 @@ const routerConfig = createBrowserRouter([
       { path: "favorites", element: <FavoritePage /> },
       { path: "announcements", element: <AnnouncemntsPage /> },
       { path: "add-offer", element: <StepsAddingOffer /> },
-      { path: "promotion", element: <PromotionPage /> },
+      { path: "/promotion/:id", element: <PromotionPage /> },
       { path: "notices", element: <NoticePage /> },
+      { path: "/statistics/:id", element: <StatisticsPage /> },
       { path: ":category/card/:id", element: <CardDetailPage /> },
       { path: "/users/:userId/:category", element: <UserAnnouncementPage /> },
     ]

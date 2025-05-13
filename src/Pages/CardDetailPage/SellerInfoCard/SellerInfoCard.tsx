@@ -27,7 +27,7 @@ export const SellerInfoCard = ({ card, offer_type, userId }: { card: OfferDetail
             </Paragraph>
             <div className="flex items-center bg-[#E9F7F1] rounded-md p-3 gap-3">
                 <Link
-                    to={`/users/${userId}/offers`}
+                    to={`/users/${userId}/${offer_type}`}
                     state={{ category: offer_type }}
                     className="flex gap-5 items-center">
                     <div className="rounded-full">

@@ -48,12 +48,12 @@ export const Cards: React.FC<ICards> = ({
     return (
         <div className={containerClass}>
 
-            {cards.map((card) => {
+            {cards.map((card, index) => {
                 const isFavorite = favoriteIds.includes(card.id);
                 return (
                     <div
                         key={card.id}
-                        className={`relative rounded-lg bg-white flex h-full ${cardWrapperClass ?? ""}`}
+                        className={`relative rounded-lg bg-white flex h-full ${cardWrapperClass ?? ""} delay-[${index * 100}ms]`}
                     >
                         {card.popular && (
                             <div className="absolute w-[125px] left-5 font-openSans translate-y-[-50%] bg-white border border-[#FD6A0D] text-[#FD6A0D] py-[5px] px-1.5 rounded-md font-semibold z-10 shadow-sm flex">
@@ -89,7 +89,7 @@ export const Cards: React.FC<ICards> = ({
                         <div className="px-[18px] py-[21px] flex flex-col flex-1">
                             <div className=" flex flex-col">
                                 <Heading
-                                    text={card.price}
+                                    text={`${card.price} сум`}
                                     level={2}
                                     className={`text-[24px] leading-[22px] font-bold font-inter text-[#232323] mb-[8px] ${cardHeadingClass ?? ""}`}
                                 />

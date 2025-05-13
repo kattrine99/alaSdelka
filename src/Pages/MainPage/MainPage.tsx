@@ -62,10 +62,6 @@ export const MainPage = () => {
     const { data: startupOffers, isLoading: isLoadingStartup, isError: isErrorStartup } = useGetHomeOffersQuery(listingTypes["Стартапы"]);
     const { data: investmentOffers, isLoading: isLoadingInvestment, isError: isErrorInvestment } = useGetHomeOffersQuery("");
 
-    console.log('Бизнес:', businessOffers);
-    console.log('Франшиза:', franchiseOffers);
-    console.log('Стартапы:', startupOffers);
-    console.log('Инвестиции:', investmentOffers);
     const handleApplyFilters = () => {
         if (!filters.category && selectedCategory) {
             filters.category = selectedCategory.toLowerCase();
@@ -185,7 +181,7 @@ export const MainPage = () => {
                 ) : isErrorBusiness ? (
                     <p className=" py-7.5 text-red-500">Ошибка загрузки данных</p>
                 ) :
-                    (<CardSection title="Бизнес" cards={Object.values(businessOffers?.business || {})} maxVisible={8} Class="grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-4 xl:grid-cols-3 lg:grid-cols-2 gap-y-10 gap-x-8 transition duration-300 ease-in-out" ClassName={"container mx-auto py-7.5"} />
+                    (<CardSection key={businessType} title="Бизнес" cards={Object.values(businessOffers?.business || {})} maxVisible={8} Class="grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-4 xl:grid-cols-3 lg:grid-cols-2 gap-y-10 gap-x-8 transition duration-300 ease-in-out" ClassName={"container mx-auto py-7.5"} />
                     )}
             </section>
             <section className="mt-12.5 mb-8.75">

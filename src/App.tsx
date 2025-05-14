@@ -21,7 +21,7 @@ const Layout = () => {
 
 const routerConfig = createBrowserRouter([
   {
-    path: "/main",
+    path: "/",
     element: <Layout />,
     children: [
       { index: true, element: <MainPage /> },

@@ -17,7 +17,6 @@ interface BaseProps {
     placeholder?: string;
     LabelClassName?: string;
     LabelText?: string;
-
 }
 
 
@@ -33,6 +32,7 @@ export const Input = forwardRef<HTMLInputElement | HTMLTextAreaElement, InputPro
 
         useEffect(() => {
             if (isError) {
+                console.log("isError: ", isError)
                 setInputStatus("error");
             } else if (!isError && value) {
                 setInputStatus("success");
@@ -43,10 +43,12 @@ export const Input = forwardRef<HTMLInputElement | HTMLTextAreaElement, InputPro
 
         const borderColor =
             inputStatus === "error"
-                ? "border-red-500 focus:ring-red-500"
+                ? " border-red-500 focus:ring-red-500"
                 : inputStatus === "success"
-                    ? "border-green-500 focus:ring-green-500"
-                    : "border-gray-300 focus:ring-blue-500";
+                    ? " border-[#2EAA7B] focus:ring-[#2EAA7B]"
+                    : "border-[#EEEEEE80] focus:ring-blue-500";
+        console.log("borderColor:", borderColor);
+
         if (isTextArea) {
             return (
                 <div className="w-full relative flex flex-col gap-2.5">
@@ -75,6 +77,7 @@ export const Input = forwardRef<HTMLInputElement | HTMLTextAreaElement, InputPro
                     placeholder={placeholder}
                     value={value}
                     onChange={onChange}
+                    className={`py-3.5 px-4.5 bg-[#EEEEEE80] rounded-[14px] outline-none border ${borderColor} ${props.className ?? ""}`}
                     {...(props as InputHTMLAttributes<HTMLInputElement>)}
                 />
                 <div
@@ -85,7 +88,7 @@ export const Input = forwardRef<HTMLInputElement | HTMLTextAreaElement, InputPro
                         <Paragraph className="text-sm text-red-500">{errorMessage}</Paragraph>
                     )}
                 </div>
-            </div>
+            </div >
         );
     }
 );

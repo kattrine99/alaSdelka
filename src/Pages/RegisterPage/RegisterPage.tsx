@@ -24,8 +24,12 @@ interface RegistrationFormInputs {
 interface ApiError {
     data?: {
         message?: string;
+        errors?: {
+            phone?: string[];
+        }
     };
     status?: number;
+
 }
 
 const stepOneSchema = yup.object({
@@ -38,6 +42,8 @@ const stepOneSchema = yup.object({
 export const RegistrationPage = () => {
     const [step, setStep] = useState<number>(1);
     const [timer, setTimer] = useState<number>(60);
+    const [codeError, setCodeError] = useState(false);
+
     const [canResend, setCanResend] = useState<boolean>(false);
     const [showSuccessModal, setShowSuccessModal] = useState<boolean>(false);
     const [successMessage, setSuccessMessage] = useState<string>("");
@@ -51,7 +57,8 @@ export const RegistrationPage = () => {
         control,
         handleSubmit,
         watch,
-        formState: { errors, isValid }
+        formState: { errors, isValid },
+        setError,
     } = useForm<RegistrationFormInputs>({
         resolver: yupResolver(stepOneSchema),
         mode: "onChange"
@@ -96,34 +103,31 @@ export const RegistrationPage = () => {
             await registrationUser(payload).unwrap();
             setStep(2);
         } catch (err) {
-            console.error("Ошибка при регистрации", err);
+            console.log("REGISTRATION ERROR", err);
+            const error = err as ApiError;
+            const phoneErrors = error?.data?.errors?.phone;
+            if (Array.isArray(phoneErrors) && phoneErrors.includes("validation.unique")) {
+                setError("userphone", {
+                    type: "manual",
+                    message: "Этот номер уже зарегистрирован",
+                });
+            }
         }
     };
 
     const handleVerifyCode = async () => {
-        // if (code === "1111") {
-        //     dispatch(setIsAuthenticated(true));
-        //     setSuccessMessage("Phone verified!");
-        //     setShowSuccessModal(true);
-
-        //     setTimeout(() => {
-        //         setShowSuccessModal(false);
-        //         navigate("/main");
-        //     }, 2000);
-        //     return;
-        // }
+        if (code.length !== 4) return;
 
         try {
             const response = await verifyCode({
                 phone: formData.phone,
                 code
             }).unwrap();
-            console.log("Ответ от verifyCode", response);
 
-            localStorage.setItem("accessToken", response.access_token);
             setSuccessMessage(response.message);
             setShowSuccessModal(true);
             dispatch(setIsAuthenticated(true));
+            localStorage.setItem("accessToken", response.access_token);
 
             setTimeout(() => {
                 setShowSuccessModal(false);
@@ -132,11 +136,19 @@ export const RegistrationPage = () => {
         } catch (err) {
             const error = err as ApiError;
             console.error("Ошибка при подтверждении кода", error);
-            if (error.data?.message) {
-                console.log("Ответ от API:", error.data.message);
-            }
+
+            setCodeError(true);
+
+            // Очистка полей кода
+            setCodeInput(["", "", "", ""]);
+
+            setTimeout(() => {
+                setCodeError(false);
+                inputsRef.current[0]?.focus();
+            }, 500);
         }
     };
+
     const handleCodeChange = (value: string, index: number) => {
         if (!/^[0-9]?$/.test(value)) return;
         const newCode = [...codeInput];
@@ -168,17 +180,23 @@ export const RegistrationPage = () => {
                                         <Controller name="username" control={control} render={({ field }) => (
                                             <Input {...field} placeholder="Имя Фамилия" isError={!!errors.username} errorMessage={errors.username?.message} className="py-3.5 px-4.5 bg-[#EEEEEE80] outline-none rounded-[14px]" />)} />
                                         <Controller name="userphone" control={control} render={({ field }) => (
-                                            <Input {...field} placeholder="Телефон (+998...)" isError={!!errors.userphone} errorMessage={errors.userphone?.message} className="py-3.5 px-4.5 bg-[#EEEEEE80] outline-none rounded-[14px]" />)} />
+                                            <Input
+                                                {...field}
+                                                placeholder="Телефон (+998...)"
+                                                isError={!!errors.userphone}
+                                                errorMessage={errors.userphone?.message}
+                                            />
+                                        )} />
                                         <Controller name="userpassword" control={control} render={({ field }) => (
                                             <div className="relative w-full">
-                                                <Input {...field} placeholder="Пароль" type={isPasswordVisible ? "text" : "password"} isError={!!errors.userpassword} errorMessage={errors.userpassword?.message} className="py-3.5 px-4.5 bg-[#EEEEEE80] rounded-[14px]" />
+                                                <Input {...field} placeholder="Пароль" type={isPasswordVisible ? "text" : "password"} isError={!!errors.userpassword} errorMessage={errors.userpassword?.message} />
                                                 <span onClick={togglePasswordVisibility} className="absolute right-5 top-[clamp(12px,1.8vw,20px)] cursor-pointer text-[#28B13D]">
                                                     {isPasswordVisible ? <FaRegEyeSlash /> : <FaRegEye />}
                                                 </span>
                                             </div>)} />
                                         <Controller name="confirmPassword" control={control} render={({ field }) => (
                                             <div className="relative w-full">
-                                                <Input {...field} placeholder="Подтверждение пароля" type={isConfirmPasswordVisible ? "text" : "password"} isError={!!errors.confirmPassword} errorMessage={errors.confirmPassword?.message} className="py-3.5 px-4.5 bg-[#EEEEEE80] outline-none rounded-[14px]" />
+                                                <Input {...field} placeholder="Подтверждение пароля" type={isConfirmPasswordVisible ? "text" : "password"} isError={!!errors.confirmPassword} errorMessage={errors.confirmPassword?.message} />
                                                 <span onClick={toggleConfirmPasswordVisibility} className="absolute right-5 top-[clamp(12px,1.8vw,20px)] cursor-pointer text-[#28B13D]">
                                                     {isConfirmPasswordVisible ? <FaRegEyeSlash /> : <FaRegEye />}
                                                 </span>
@@ -232,9 +250,12 @@ export const RegistrationPage = () => {
                                                 value={codeInput[index]}
                                                 onChange={(e) => handleCodeChange(e.target.value, index)}
                                                 onKeyDown={(e) => handleKeyDown(e, index)}
-                                                className="w-15 h-18 text-center text-[32px] rounded-[10px] border border-[#D9D9D9] focus:outline-none focus:border-[#2EAA7B] font-semibold text-black"
-                                                type="text" isError={false} />
-
+                                                autoFocus={index === 0}
+                                                className={`w-15 h-18 text-center text-[32px] rounded-[10px] border ${codeError ? "border-red-500" : "border-[#D9D9D9]"
+                                                    } focus:outline-none focus:border-[#2EAA7B] font-semibold text-black`}
+                                                type="text"
+                                                isError={false}
+                                            />
                                         ))}
                                     </div>
 

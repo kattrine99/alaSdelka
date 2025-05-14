@@ -440,7 +440,7 @@ export interface OfferPayload {
     amount: number;
 
     business_type?: string;
-    conveniences?: string[];
+    convenience_ids: number[];
 
     // SELL-specific
     property_ownership_type?: string;

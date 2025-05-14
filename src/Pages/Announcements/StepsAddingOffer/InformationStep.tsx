@@ -32,19 +32,13 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
     const [projectStageId, setProjectStageId] = useState<string>("");
     const [createOffer] = useCreateOfferMutation();
     const [publishOffer] = usePublishOfferMutation();
+    const [selectedConveniences, setSelectedConveniences] = useState<number[]>([]);
 
     const [title, setTitle] = useState("");
     const [amount, setAmount] = useState("");
     const [description, setDescription] = useState("");
-    const [parking, setParking] = useState(true);
-    const [clients, setClients] = useState(true);
-    const [suppliers, setSuppliers] = useState(true);
-    const [equipment, setEquipment] = useState(true);
-    const [importedSupplies, setImportedSupplies] = useState(true);
-    const [exportContracts, setExportContracts] = useState(true);
-    const [noCredit, setNoCredit] = useState(true);
-    const [hasBranches, setHasBranches] = useState(true);
     const { data: filtersData } = useGetFiltersDataQuery();
+    const conveniences = filtersData?.conveniences || [];
 
     const [files, setFiles] = useState<File[]>([]);
     const [images, setImages] = useState<File[]>([]);
@@ -61,22 +55,15 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
     const [monthlyIncome, setMonthlyIncome] = useState("");
     const [profit, setProfit] = useState("");
     const [paybackPeriod, setPaybackPeriod] = useState("");
-    const [isInternationalFranchise, setIsInternationalFranchise] = useState(false);
-    const [hasMasterFranchise, setHasMasterFranchise] = useState(false);
-    const [hasCopyrights, setHasCopyrights] = useState(false);
     const [businessOwnership, setBusinessOwnership] = useState("");
 
-    const conveniences = [
-        parking && "Парковка",
-        clients && "База клиентов",
-        suppliers && "База поставщиков",
-        equipment && "Оборудование и активы",
-        importedSupplies && "Поставки из-за рубежа",
-        exportContracts && "Контракты на экспорт",
-        noCredit && "Отсутствие кредита",
-        hasBranches && "Наличие филиалов"
-    ].filter(Boolean) as string[];
-
+    const toggleConvenience = (id: number) => {
+        setSelectedConveniences(prev =>
+            prev.includes(id)
+                ? prev.filter(item => item !== id)
+                : [...prev, id]
+        );
+    };
     const handleFiles = (e: React.ChangeEvent<HTMLInputElement>) => {
         const newFiles = e.target.files ? Array.from(e.target.files) : [];
         setFiles(prev => [...prev, ...newFiles]);
@@ -120,9 +107,8 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
             amount: Number(amount.replace(/\s/g, "")) || 0,
             user_name: `${firstName} ${lastName}`.trim(),
             user_phone: "+998" + phoneNumber,
-            conveniences,
+            convenience_ids: selectedConveniences,
             business_type: businessOwnership,
-
             ...(isSell && {
                 property_ownership_type: propertyOwnershipType,
                 documents: files,
@@ -137,16 +123,6 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
             ...(isStartup && {
                 project_stage_id: projectStageId ? parseInt(projectStageId, 10) : undefined,
             }),
-
-            ...(isFranchise && {
-                is_international_franchise: isInternationalFranchise,
-                has_master_franchise: hasMasterFranchise,
-            }),
-
-            ...(isInvestments && {
-                has_copyrights: hasCopyrights
-            }),
-
             area: Number(Area)
         };
 
@@ -290,7 +266,7 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
                     onChange={(e) => setCityId(e.target.value)}>
                     <option className="">Выбрать</option>
                     {filtersData?.cities.map((city) => (
-                        <option key={city.id} value={city.id.toString()}>
+                        <option key={city.id} value={String(city.id)}>
                             {city.name_ru}
                         </option>
                     ))}
@@ -321,7 +297,7 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
                     >
                         <option value="">Выбрать</option>
                         {filtersData?.business_types.map((type) => (
-                            <option key={type.value} value={type.label_ru}>
+                            <option key={type.value} value={type.value}>
                                 {type.label_ru}
                             </option>
                         ))}
@@ -389,7 +365,7 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
             {/*Сумма */}
             <div className="flex flex-col gap-2 w-[393px] relative">
                 <Input className="bg-[#F0F1F280] w-full rounded-[14px] outline-none py-3.5 px-4.5" LabelClassName="font-inter text-[16px] leading-[130%]"
-                    LabelText="*Сумма" type="text" placeholder="Введите" isError={false}
+                    LabelText="*Сумма, сум" type="text" placeholder="Введите" isError={false}
                     value={amount}
                     onChange={(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => setAmount(e.target.value)} />
             </div>
@@ -508,155 +484,31 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
             {/* Детали объявления (переключатели) */}
             <Heading text={"Детали объявления"} level={3} className="font-inter font-semibold text-[#232323] text-xl leading-[130%]" />
             <div className="flex flex-col w-[393px] gap-6">
-                <label className="flex items-center justify-between cursor-pointer">
-                    <span className="text-[#101828] font-inter w-full text-[16px] leading-[130%]">Парковка</span>
-                    <Input
-                        type="checkbox"
-                        isError={false}
-                        checked={parking}
-                        onChange={() => setParking(!parking)}
-                        className="appearance-none w-[44px] h-[24px] bg-gray-300 rounded-full relative transition-all duration-300 checked:bg-[#2EAA7B]
-      before:content-[''] before:absolute before:top-[2px] before:left-[2px] before:w-[20px] before:h-[20px]
-      before:bg-white before:rounded-full before:transition-all before:duration-300 checked:before:translate-x-[20px]"
-                    />
-                </label>
+                {conveniences.map(({ id, name_ru }) => {
+                    // Условия фильтрации по isFranchise и isInvestments
+                    const isFranchiseOnly = [10, 11].includes(id);
+                    const isInvestmentOnly = [9].includes(id);
 
-                <label className="flex items-center justify-between w-full cursor-pointer">
-                    <span className="text-[#101828] w-full font-inter text-[16px] leading-[130%]">База клиентов</span>
-                    <Input
-                        type="checkbox"
-                        isError={false}
-                        checked={clients}
-                        onChange={() => setClients(!clients)}
-                        className="appearance-none w-[44px] h-[24px] bg-gray-300 rounded-full relative transition-all duration-300 checked:bg-[#2EAA7B]
-      before:content-[''] before:absolute before:top-[2px] before:left-[2px] before:w-[20px] before:h-[20px]
-      before:bg-white before:rounded-full before:transition-all before:duration-300 checked:before:translate-x-[20px]"
-                    />
-                </label>
+                    if (isFranchiseOnly && !isFranchise) return null;
+                    if (isInvestmentOnly && !isInvestments) return null;
 
-                <label className="flex items-center justify-between w-full cursor-pointer">
-                    <span className="text-[#101828] w-full font-inter text-[16px] leading-[130%]">База поставщиков</span>
-                    <Input
-                        type="checkbox"
-                        isError={false}
-                        checked={suppliers}
-                        onChange={() => setSuppliers(!suppliers)}
-                        className="appearance-none w-[44px] h-[24px] bg-gray-300 rounded-full relative transition-all duration-300 checked:bg-[#2EAA7B]
-      before:content-[''] before:absolute before:top-[2px] before:left-[2px] before:w-[20px] before:h-[20px]
-      before:bg-white before:rounded-full before:transition-all before:duration-300 checked:before:translate-x-[20px]"
-                    />
-                </label>
-
-                <label className="flex items-center justify-between w-full cursor-pointer">
-                    <span className="text-[#101828] w-full font-inter text-[16px] leading-[130%]">Оборудование и активы</span>
-                    <Input
-                        type="checkbox"
-                        isError={false}
-                        checked={equipment}
-                        onChange={() => setEquipment(!equipment)}
-                        className="appearance-none w-[44px] h-[24px] bg-gray-300 rounded-full relative transition-all duration-300 checked:bg-[#2EAA7B]
-      before:content-[''] before:absolute before:top-[2px] before:left-[2px] before:w-[20px] before:h-[20px]
-      before:bg-white before:rounded-full before:transition-all before:duration-300 checked:before:translate-x-[20px]"
-                    />
-                </label>
-
-                <label className="flex items-center justify-between w-full cursor-pointer">
-                    <span className="text-[#101828] w-full font-inter text-[16px] leading-[130%]">Поставки из-за рубежа</span>
-                    <Input
-                        type="checkbox"
-                        isError={false}
-                        checked={importedSupplies}
-                        onChange={() => setImportedSupplies(!importedSupplies)}
-                        className="appearance-none w-[44px] h-[24px] bg-gray-300 rounded-full relative transition-all duration-300 checked:bg-[#2EAA7B]
-      before:content-[''] before:absolute before:top-[2px] before:left-[2px] before:w-[20px] before:h-[20px]
-      before:bg-white before:rounded-full before:transition-all before:duration-300 checked:before:translate-x-[20px]"
-                    />
-                </label>
-
-                <label className="flex items-center justify-between w-full cursor-pointer">
-                    <span className="text-[#101828] w-full font-inter text-[16px] leading-[130%]">Контракты на экспорт</span>
-                    <Input
-                        type="checkbox"
-                        isError={false}
-                        checked={exportContracts}
-                        onChange={() => setExportContracts(!exportContracts)}
-                        className="appearance-none w-[44px] h-[24px] bg-gray-300 rounded-full relative transition-all duration-300 checked:bg-[#2EAA7B]
-      before:content-[''] before:absolute before:top-[2px] before:left-[2px] before:w-[20px] before:h-[20px]
-      before:bg-white before:rounded-full before:transition-all before:duration-300 checked:before:translate-x-[20px]"
-                    />
-                </label>
-
-                <label className="flex items-center justify-between w-full cursor-pointer">
-                    <span className="text-[#101828] w-full font-inter text-[16px] leading-[130%]">Отсутствие кредита</span>
-                    <Input
-                        type="checkbox"
-                        isError={false}
-                        checked={noCredit}
-                        onChange={() => setNoCredit(!noCredit)}
-                        className="appearance-none w-[44px] h-[24px] bg-gray-300 rounded-full relative transition-all duration-300 checked:bg-[#2EAA7B]
-      before:content-[''] before:absolute before:top-[2px] before:left-[2px] before:w-[20px] before:h-[20px]
-      before:bg-white before:rounded-full before:transition-all before:duration-300 checked:before:translate-x-[20px]"
-                    />
-                </label>
-
-                <label className="flex items-center justify-between w-full cursor-pointer">
-                    <span className="text-[#101828] w-full font-inter text-[16px] leading-[130%]">Наличие филиалов</span>
-                    <Input
-                        type="checkbox"
-                        isError={false}
-                        checked={hasBranches}
-                        onChange={() => setHasBranches(!hasBranches)}
-                        className="appearance-none w-[44px] h-[24px] bg-gray-300 rounded-full relative transition-all duration-300 checked:bg-[#2EAA7B]
-      before:content-[''] before:absolute before:top-[2px] before:left-[2px] before:w-[20px] before:h-[20px]
-      before:bg-white before:rounded-full before:transition-all before:duration-300 checked:before:translate-x-[20px]"
-                    />
-                </label>
-                {isFranchise &&
-                    <div className="flex flex-col w-[393px] gap-6">
-                        <label className="flex items-center justify-between w-full cursor-pointer">
-                            <span className="text-[#101828] w-full font-inter text-[16px] leading-[130%]">Международная франшиза</span>
+                    return (
+                        <label key={id} className="flex items-center justify-between cursor-pointer">
+                            <span className="text-[#101828] w-full font-inter text-[16px] leading-[130%]">{name_ru}</span>
                             <Input
                                 type="checkbox"
                                 isError={false}
-                                checked={isInternationalFranchise}
-                                onChange={() => setIsInternationalFranchise(!isInternationalFranchise)}
+                                checked={selectedConveniences.includes(id)}
+                                onChange={() => toggleConvenience(id)}
                                 className="appearance-none w-[44px] h-[24px] bg-gray-300 rounded-full relative transition-all duration-300 checked:bg-[#2EAA7B]
-  before:content-[''] before:absolute before:top-[2px] before:left-[2px] before:w-[20px] before:h-[20px]
-  before:bg-white before:rounded-full before:transition-all before:duration-300 checked:before:translate-x-[20px]"
+            before:content-[''] before:absolute before:top-[2px] before:left-[2px] before:w-[20px] before:h-[20px]
+            before:bg-white before:rounded-full before:transition-all before:duration-300 checked:before:translate-x-[20px]"
                             />
                         </label>
-                        <label className="flex items-center justify-between w-full cursor-pointer">
-                            <span className="text-[#101828] w-full font-inter text-[16px] leading-[130%]">Наличие мастер франшизы</span>
-                            <Input
-                                type="checkbox"
-                                isError={false}
-                                checked={hasMasterFranchise}
-                                onChange={() => setHasMasterFranchise(!hasMasterFranchise)}
-                                className="appearance-none w-[44px] h-[24px] bg-gray-300 rounded-full relative transition-all duration-300 checked:bg-[#2EAA7B]
-  before:content-[''] before:absolute before:top-[2px] before:left-[2px] before:w-[20px] before:h-[20px]
-  before:bg-white before:rounded-full before:transition-all before:duration-300 checked:before:translate-x-[20px]"
-                            />
-                        </label>
-                    </div>
-                }
-                {isInvestments &&
-                    <div className="flex flex-col w-[393px] gap-6">
-                        <label className="flex items-center justify-between w-full cursor-pointer">
-                            <span className="text-[#101828] w-full font-inter text-[16px] leading-[130%]">Авторские права</span>
-                            <Input
-                                type="checkbox"
-                                isError={false}
-                                checked={hasCopyrights}
-                                onChange={() => setHasCopyrights(!hasCopyrights)}
-                                className="appearance-none w-[44px] h-[24px] bg-gray-300 rounded-full relative transition-all duration-300 checked:bg-[#2EAA7B]
-  before:content-[''] before:absolute before:top-[2px] before:left-[2px] before:w-[20px] before:h-[20px]
-  before:bg-white before:rounded-full before:transition-all before:duration-300 checked:before:translate-x-[20px]"
-                            />
-                        </label>
-                    </div>
-                }
-
+                    );
+                })}
             </div>
+
 
             <div className="mt-10">
                 <Button

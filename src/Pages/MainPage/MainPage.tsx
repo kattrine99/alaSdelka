@@ -1,4 +1,4 @@
-import { Header, Heading, Paragraph, NavLinks, CardSection, FilterBar, categories, Button, Footer } from "../../components";
+import { Header, Heading, Paragraph, NavLinks, CardSection, FilterBar, categories, Button, Footer, EmptyMessage } from "../../components";
 import { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ShopIcon from '../../assets/shop.svg?react';
@@ -181,8 +181,30 @@ export const MainPage = () => {
                 ) : isErrorBusiness ? (
                     <p className=" py-7.5 text-red-500">Ошибка загрузки данных</p>
                 ) :
-                    (<CardSection key={businessType} title="Бизнес" cards={Object.values(businessOffers?.business || {})} maxVisible={8} Class="grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-4 xl:grid-cols-3 lg:grid-cols-2 gap-y-10 gap-x-8 transition duration-300 ease-in-out" ClassName={"container mx-auto py-7.5"} />
-                    )}
+                    ((() => {
+                        const businessCards = Object.values(businessOffers?.business || {});
+
+                        if (businessCards.length === 0) {
+                            return (
+                                <EmptyMessage
+                                    title="Здесь еще нет объявлений"
+                                    subtitle="Ваше может стать первым!"
+                                    hideButton
+                                />
+                            );
+                        }
+
+                        return (
+                            <CardSection
+                                key={businessType}
+                                title="Бизнес"
+                                cards={businessCards}
+                                maxVisible={8}
+                                Class="grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-4 xl:grid-cols-3 lg:grid-cols-2 gap-y-10 gap-x-8 transition duration-300 ease-in-out"
+                                ClassName="container mx-auto py-7.5"
+                            />
+                        );
+                    })())}
             </section>
             <section className="mt-12.5 mb-8.75">
                 <div className=" px-48 flex justify-start gap-68">
@@ -218,8 +240,32 @@ export const MainPage = () => {
                 ) : isErrorFranchise ? (
                     <p className="px-48 py-[30px] text-red-500">Ошибка загрузки данных</p>
                 ) :
-                    (<CardSection title="Франшиза" cards={franchiseOffers?.franchise || []} maxVisible={8} Class="grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-4 xl:grid-cols-3 lg:grid-cols-2 gap-y-10 gap-x-8 transition duration-300 ease-in-out" ClassName={"container mx-auto py-7.5"} />
-                    )}
+                    (
+                        ((() => {
+                            const franchiseCards = Object.values(franchiseOffers?.franchise || {});
+
+                            if (franchiseCards.length === 0) {
+                                return (
+                                    <EmptyMessage
+                                        title="Здесь еще нет объявлений"
+                                        subtitle="Ваше может стать первым!"
+                                        hideButton
+                                    />
+                                );
+                            }
+
+                            return (
+                                <CardSection
+                                    key={franchiseType}
+                                    title="Франшиза"
+                                    cards={franchiseCards}
+                                    maxVisible={8}
+                                    Class="grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-4 xl:grid-cols-3 lg:grid-cols-2 gap-y-10 gap-x-8 transition duration-300 ease-in-out"
+                                    ClassName="container mx-auto py-7.5"
+                                />
+                            );
+                        })()))}
+
 
             </section>
             <section className="mt-12.5 mb-8.75">
@@ -256,8 +302,30 @@ export const MainPage = () => {
                 ) : isErrorStartup ? (
                     <p className="px-48 py-[30px] text-red-500">Ошибка загрузки данных</p>
                 ) :
-                    (<CardSection title="Стартапы" cards={startupOffers?.startup || []} maxVisible={8} Class="grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-4 xl:grid-cols-3 lg:grid-cols-2 gap-y-10 gap-x-8 transition duration-300 ease-in-out" ClassName={"container mx-auto py-7.5"} />
-                    )}
+                    ((() => {
+                        const startupCards = Object.values(startupOffers?.startup || {});
+
+                        if (startupCards.length === 0) {
+                            return (
+                                <EmptyMessage
+                                    title="Здесь еще нет объявлений"
+                                    subtitle="Ваше может стать первым!"
+                                    hideButton
+                                />
+                            );
+                        }
+
+                        return (
+                            <CardSection
+                                key={startupType}
+                                title="Стартапы"
+                                cards={startupCards}
+                                maxVisible={8}
+                                Class="grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-4 xl:grid-cols-3 lg:grid-cols-2 gap-y-10 gap-x-8 transition duration-300 ease-in-out"
+                                ClassName="container mx-auto py-7.5"
+                            />
+                        );
+                    })())}
 
             </section>
             <section className="mt-12.5 mb-8.75">

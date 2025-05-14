@@ -1,12 +1,13 @@
 import { useSelector } from "react-redux";
 import { RootState } from "../../Store/store";
-import { Heading, Paragraph, PhotosSwiper } from "../index";
+import { Button, Heading, Paragraph, PhotosSwiper } from "../index";
 import { FaLocationDot } from "react-icons/fa6";
 import { HiOutlineArrowNarrowLeft } from "react-icons/hi";
 import { FaBuilding, FaCopyright, FaGlobe, FaGlobeAmericas, FaParking, FaShoppingBasket, FaTools, FaUniversity, FaUsers } from "react-icons/fa";
 import { RiContactsFill } from "react-icons/ri";
 import { MdOutlineCreditCardOff } from "react-icons/md";
-import { JSX, useEffect } from "react";
+import { JSX, useEffect, useState } from "react";
+import { useGetFiltersDataQuery } from "../../Store/api/Api";
 
 interface CardDetailPreviewProps {
     onBack: () => void;
@@ -15,18 +16,20 @@ interface CardDetailPreviewProps {
 export const CardDetailPreview: React.FC<CardDetailPreviewProps> = ({ onBack }) => {
 
     const conveniencesIcons: Record<string, JSX.Element> = {
-        "Парковка": <FaParking className="w-10 h-10 text-[#7E7E7E]" />,
-        "База клиентов": <FaUsers className="w-10 h-10 text-[#7E7E7E]" />,
-        "База поставщиков": <FaShoppingBasket className="w-10 h-10 text-[#7E7E7E]" />,
-        "Оборудование и активы": <FaTools className="w-10 h-10 text-[#7E7E7E]" />,
-        "Поставки из-за рубежа": <FaGlobeAmericas className="w-10 h-10 text-[#7E7E7E]" />,
-        "Контракты на экспорт": <RiContactsFill className="w-10 h-10 text-[#7E7E7E]" />,
-        "Отсутствие кредита": <MdOutlineCreditCardOff className="w-10 h-10 text-[#7E7E7E]" />,
-        "Наличие филиалов": <FaBuilding className="w-10 h-10 text-[#7E7E7E]" />,
-        "Авторские права": <FaCopyright className="w-10 h-10 text-[#7E7E7E]" />,
-        "Международная франшиза": <FaGlobe className="w-10 h-10 text-[#7E7E7E]" />,
-        "Наличие мастер франшизи": <FaUniversity className="w-10 h-10 text-[#7E7E7E]" />,
+        "Парковка": <FaParking className="w-[40px] h-[40px] text-[#7E7E7E]" />,
+        "База клиентов": <FaUsers className="w-[40px] h-[40px] text-[#7E7E7E]" />,
+        "База поставщиков": <FaShoppingBasket className="w-[40px] h-[40px] text-[#7E7E7E]" />,
+        "Оборудование и активы": <FaTools className="w-[40px] h-[40px] text-[#7E7E7E]" />,
+        "Поставки из-за рубежа": <FaGlobeAmericas className="w-[40px] h-[40px] text-[#7E7E7E]" />,
+        "Контракты на экспорт": <RiContactsFill className="w-[40px] h-[40px] text-[#7E7E7E]" />,
+        "Отсутствие кредита": <MdOutlineCreditCardOff className="w-[40px] h-[40px] text-[#7E7E7E]" />,
+        "Наличие филиалов": <FaBuilding className="w-[40px] h-[40px] text-[#7E7E7E]" />,
+        "Авторские права": <FaCopyright className="w-[40px] h-[40px] text-[#7E7E7E]" />,
+        "Международная франшиза": <FaGlobe className="w-[40px] h-[40px] text-[#7E7E7E]" />,
+        "Наличие мастер франшизи": <FaUniversity className="w-[40px] h-[40px] text-[#7E7E7E]" />,
     };
+    const [showFullDescription, setShowFullDescription] = useState(false);
+    const { data: filtersData } = useGetFiltersDataQuery();
     const data = useSelector((state: RootState) => state.tempOffer.offerData);
     useEffect(() => {
         return () => {
@@ -34,8 +37,11 @@ export const CardDetailPreview: React.FC<CardDetailPreviewProps> = ({ onBack }) 
         };
     }, [data?.images]);
     if (!data) return <Paragraph>Нет данных для предпросмотра</Paragraph>;
-
-    const conveniences = data.conveniences ?? [];
+    const conveniences = data.convenience_ids ?? [];
+    const convenienceMap = filtersData?.conveniences?.reduce((acc, item) => {
+        acc[item.id] = item.name_ru;
+        return acc;
+    }, {} as Record<number, string>) ?? {};
 
     return (
         <div className="px-[192px] py-10 ">
@@ -72,15 +78,20 @@ export const CardDetailPreview: React.FC<CardDetailPreviewProps> = ({ onBack }) 
                 <div className="mb-6">
                     <Heading level={3} text="Удобства" className="text-[18px] mb-2" />
                     <div className="grid grid-cols-5 gap-x-12.5 gap-y-4">
-                        {conveniences.map(name => (
-                            <div key={name} className="flex items-center gap-3 text-sm text-gray-700">
-                                {conveniencesIcons[name] ?? <span className="w-10 h-10" />}
-                                <div className="flex flex-col">
-                                    <span>{name}</span>
-                                    <span className='font-inter font-bold text-xl text-[#2EAA7B]'>Есть</span>
+                        {conveniences.map((id) => {
+                            const name = convenienceMap[id];
+                            if (!name) return null;
+
+                            return (
+                                <div key={id} className="flex gap-3 text-sm text-gray-700">
+                                    {conveniencesIcons[name] ?? <span className="w-[40px] h-[40px]" />}
+                                    <div className="flex flex-col">
+                                        <span>{name}</span>
+                                        <span className='font-inter font-bold text-xl text-[#2EAA7B]'>Есть</span>
+                                    </div>
                                 </div>
-                            </div>
-                        ))}
+                            );
+                        })}
                     </div>
 
                 </div>
@@ -88,7 +99,22 @@ export const CardDetailPreview: React.FC<CardDetailPreviewProps> = ({ onBack }) 
                 {/* Описание */}
                 <div className="mb-6">
                     <Heading level={3} text="Описание" className="text-[18px] mb-2" />
-                    <Paragraph>{data.description}</Paragraph>
+                    <div className="mt-3">
+                        <Paragraph className="text-gray-700 leading-relaxed whitespace-pre-line">
+                            {showFullDescription
+                                ? data.description
+                                : data.description.slice(0, 300) + (data.description.length > 300 ? "..." : "")}
+                        </Paragraph>
+
+                        {data.description.length > 300 && (
+                            <Button
+                                onClick={() => setShowFullDescription(!showFullDescription)}
+                                className="text-[#2EAA7B] mt-2 font-semibold hover:underline transition"
+                            >
+                                {showFullDescription ? "Скрыть" : "Читать дальше"}
+                            </Button>
+                        )}
+                    </div>
                 </div>
 
                 {/* Финансы */}

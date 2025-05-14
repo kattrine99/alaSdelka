@@ -37,7 +37,6 @@ export const PublicationStep: React.FC<Props> = ({ onPublish, onPreview }) => {
     if (!cardData) return null;
 
     const card = mapOfferToCard(cardData);
-    console.log("DATA FROM STORE:", cardData);
 
     const handlePublish = async () => {
         if (!cardData?.id) {

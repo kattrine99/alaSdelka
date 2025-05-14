@@ -60,6 +60,7 @@ export const LoginPage = () => {
     const onSubmit = async (data: LoginFormInputs) => {
         try {
             const response = await loginUser({ phone: data.userphone, password: data.userpassword }).unwrap();
+
             localStorage.setItem("accessToken", response.access_token);
             dispatch(setIsAuthenticated(true));
             setModalText("Вы успешно вошли в аккаунт");

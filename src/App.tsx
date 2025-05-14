@@ -9,6 +9,7 @@ import { ScrollToTop } from "./components/ScrollTop/ScrollTop";
 import { StepsAddingOffer } from "./Pages/Announcements/StepsAddingOffer/StepsAddingOffer";
 import { PromotionPage } from "./Pages/PromotionPage/PromotionPage";
 import { useAutoLogout } from "./utils/useAutoLogout";
+import { useAuthInit } from "./utils/useAUthInit";
 const Layout = () => {
   return (
     <>
@@ -42,6 +43,8 @@ const routerConfig = createBrowserRouter([
 ]);
 
 function App() {
+  useAuthInit();
+
   const dispatch = useDispatch();
   useAutoLogout();
   useEffect(() => {

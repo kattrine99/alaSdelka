@@ -101,31 +101,33 @@ export const RegistrationPage = () => {
     };
 
     const handleVerifyCode = async () => {
-        if (code === "1111") {
-            dispatch(setIsAuthenticated(true));
-            setSuccessMessage("Phone verified!");
-            setShowSuccessModal(true);
+        // if (code === "1111") {
+        //     dispatch(setIsAuthenticated(true));
+        //     setSuccessMessage("Phone verified!");
+        //     setShowSuccessModal(true);
 
-            setTimeout(() => {
-                setShowSuccessModal(false);
-                navigate("/main");
-            }, 2000);
-            return;
-        }
+        //     setTimeout(() => {
+        //         setShowSuccessModal(false);
+        //         navigate("/main");
+        //     }, 2000);
+        //     return;
+        // }
 
         try {
             const response = await verifyCode({
                 phone: formData.phone,
                 code
             }).unwrap();
+            console.log("Ответ от verifyCode", response);
 
+            localStorage.setItem("accessToken", response.access_token);
             setSuccessMessage(response.message);
             setShowSuccessModal(true);
             dispatch(setIsAuthenticated(true));
 
             setTimeout(() => {
                 setShowSuccessModal(false);
-                navigate("/login");
+                navigate("/main");
             }, 2000);
         } catch (err) {
             const error = err as ApiError;

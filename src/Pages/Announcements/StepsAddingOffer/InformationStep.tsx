@@ -9,7 +9,7 @@ import { useGetFiltersDataQuery } from "../../../Store/api/Api"
 import { OfferPayload } from "../../../Store/api/types";
 import { useDispatch } from "react-redux";
 import { setOfferData } from "../../../Store/tempStorage";
-import { useCreateOfferMutation, usePublishOfferMutation } from "../../../Store/api/Api";
+import { useCreateOfferMutation, usePublishOfferMutation, useGetUserInfoQuery } from "../../../Store/api/Api";
 
 interface Props {
     offerType: "business" | "franchise" | "startup" | "investments";
@@ -39,22 +39,23 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
     const [description, setDescription] = useState("");
     const { data: filtersData } = useGetFiltersDataQuery();
     const conveniences = filtersData?.conveniences || [];
+    const { data: userInfo } = useGetUserInfoQuery();
 
     const [files, setFiles] = useState<File[]>([]);
     const [images, setImages] = useState<File[]>([]);
     const [links, setLinks] = useState<string[]>([""]);
-
+    const fullName = userInfo?.name?.trim() || "";
+    const [firstName, lastName = ""] = fullName.split(" ");
+    const phoneNumber = userInfo?.phone?.replace("+998", "") || "";
     const inputRef = useRef<HTMLInputElement>(null);
     const imageInputRef = useRef<HTMLInputElement>(null);
-    const [firstName, setFirstName] = useState("");
-    const [lastName, setLastName] = useState("");
-    const [phoneNumber, setPhoneNumber] = useState("");
     const [address, setAddress] = useState("");
     const [propertyOwnershipType, setPropertyOwnershipType] = useState("");
     const [businessShare, setBusinessShare] = useState("");
     const [monthlyIncome, setMonthlyIncome] = useState("");
     const [profit, setProfit] = useState("");
     const [paybackPeriod, setPaybackPeriod] = useState("");
+    const [FoundationYear, setFoundationYear] = useState("");
     const [businessOwnership, setBusinessOwnership] = useState("");
 
     const toggleConvenience = (id: number) => {
@@ -96,6 +97,11 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
     const dispatch = useDispatch();
 
     const handleSubmit = async () => {
+        const wrappedDocuments = files.map(file => ({ document: file }));
+        const wrappedImages = images.map((file, index) => ({
+            photo: file,
+            order: index + 1
+        }));
         const payload: OfferPayload = {
             title,
             description,
@@ -111,13 +117,14 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
             business_type: businessOwnership,
             ...(isSell && {
                 property_ownership_type: propertyOwnershipType,
-                documents: files,
-                images,
+                documents: wrappedDocuments,
+                images: wrappedImages,
                 communication_links: links.map(link => link.trim()),
                 business_share: String(businessShare),
                 monthly_income: String(monthlyIncome),
                 profit: String(profit),
                 payback_period: String(paybackPeriod),
+                foundation_year: String(FoundationYear),
             }),
 
             ...(isStartup && {
@@ -125,9 +132,29 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
             }),
             area: Number(Area)
         };
+        const formData = new FormData();
+
+        Object.entries(payload).forEach(([key, value]) => {
+            if (key === 'documents' && Array.isArray(value)) {
+                value.forEach((doc, i) => {
+                    formData.append(`documents[${i}][document]`, doc.document);
+                });
+            } else if (key === 'images' && Array.isArray(value)) {
+                value.forEach((img, i) => {
+                    formData.append(`images[${i}][photo]`, img.photo);
+                    formData.append(`images[${i}][order]`, img.order.toString());
+                });
+            } else if (Array.isArray(value)) {
+                value.forEach((v) => {
+                    formData.append(`${key}[]`, v);
+                });
+            } else if (value !== undefined && value !== null) {
+                formData.append(key, value);
+            }
+        });
 
         try {
-            const response = await createOffer(payload).unwrap();
+            const response = await createOffer(formData).unwrap();
             const id = response?.data?.id;
 
             if (!id) {
@@ -214,32 +241,46 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
             {/*Имя и фамилия*/}
             <div className="flex gap-3.5 w-[800px]">
                 <div className="flex-1" >
-                    <Input className="bg-[#F0F1F280] w-full rounded-[14px] outline-none py-3.5 px-4.5" LabelClassName="font-inter text-[16px] leading-[130%]"
-                        LabelText="*Имя" type="text" placeholder="Введите" isError={false}
+                    <Input
+                        className="bg-[#b5b5b667]  text-gray-500 cursor-not-allowed w-full rounded-[14px] outline-none py-3.5 px-4.5"
+                        LabelClassName="font-inter text-[16px] leading-[130%]"
+                        LabelText="*Имя"
+                        type="text"
+                        placeholder="Введите"
+                        isError={false}
                         value={firstName}
-                        onChange={(e) => setFirstName(e.target.value)} />
+                        disabled
+                    />
                 </div>
                 <div className="flex-1 ">
-                    <Input className="bg-[#F0F1F280] w-full rounded-[14px] outline-none py-3.5 px-4.5" LabelClassName="font-inter text-[16px] leading-[130%]"
-                        LabelText="*Фамилия" type="text" placeholder="Введите" isError={false}
+                    <Input
+                        className="bg-[#b5b5b667] text-gray-500 cursor-not-allowed w-full rounded-[14px] outline-none py-3.5 px-4.5"
+                        LabelClassName="font-inter text-[16px] leading-[130%]"
+                        LabelText="*Фамилия"
+                        type="text"
+                        placeholder="Введите"
+                        isError={false}
                         value={lastName}
-                        onChange={(e) => setLastName(e.target.value)} />
+                        disabled
+                    />
                 </div>
             </div>
             {/*Номер телефона */}
-            <div className="flex flex-col gap-2 w-[800px] relative">
+            <div className="flex flex-col gap-2 w-[800px] relative ">
                 <label className="text-[#101828] font-inter text-[16px] leading-[130%] mb-2.5 block">*Номер телефона</label>
-                <div className="bg-[#F0F1F280] w-full rounded-[14px] flex items-center p-1 ">
-                    <div className="w-[48px] h-[49px] rounded-[10px] bg-[#B4B8CC42] flex items-center justify-center mr-3">
+                <div className="bg-[#b5b5b667] w-full rounded-[14px] flex items-center p-1 ">
+                    <div className="w-[48px] h-[49px] rounded-[10px] bg-[#b4b8cc] flex items-center justify-center mr-3">
                         <FlagIcon className="w-[25px] h-[25px] object-contain" />
                     </div>
-                    <span className="text-[#101828] font-inter text-[16px] mr-2">+998</span>
+                    <span className="text-gray-500 font-inter text-[16px] mr-2">+998</span>
                     <Input
                         type="tel"
                         placeholder="90 000 00 00"
-                        className="bg-transparent outline-none w-full text-[#101828] font-inter text-[16px] placeholder:text-[#8A8A8A]" isError={false}
+                        className="placeholder:text-[#8A8A8A] disabled:text-gray-500 input-no-border cursor-not-allowed"
+                        isError={false}
                         value={phoneNumber}
-                        onChange={(e) => setPhoneNumber(e.target.value)} />
+                        disabled
+                    />
                 </div>
             </div>
             {/*Стадия */}
@@ -287,7 +328,7 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
                     onChange={(e) => setArea(e.target.value)} />
             </div>
             {/*Форма владения бизнесом */}
-            {isSell && isBusiness &&
+            {isSell &&
                 <div className="flex flex-col gap-2 w-[393px] relative">
                     <label className="text-[#101828] font-inter text-[16px] leading-[130%]">*Форма владения бизнесом</label>
                     <select
@@ -464,6 +505,12 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
                             LabelText="Окупаемость (месяц)" type="text" placeholder="Введите" isError={false}
                             value={paybackPeriod}
                             onChange={(e) => setPaybackPeriod(e.target.value)} />
+                    </div>
+                    <div className="flex flex-col gap-2 w-[393px] relative">
+                        <Input className="bg-[#F0F1F280] w-full rounded-[14px] outline-none py-3.5 px-4.5" LabelClassName="font-inter text-[16px] leading-[130%]"
+                            LabelText="Год основания бизнеса" type="text" placeholder="Введите" isError={false}
+                            value={FoundationYear}
+                            onChange={(e) => setFoundationYear(e.target.value)} />
                     </div>
                 </>}
             {isBuy && <div className="flex flex-col gap-2 w-200 relative">

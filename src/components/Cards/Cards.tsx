@@ -55,7 +55,7 @@ export const Cards: React.FC<ICards> = ({
                         key={card.id}
                         className={`relative rounded-lg bg-white flex h-full ${cardWrapperClass ?? ""} delay-[${index * 100}ms]`}
                     >
-                        {card.popular && (
+                        {card.offer_status === "is_payed" && (
                             <div className="absolute w-[125px] left-5 font-openSans translate-y-[-50%] bg-white border border-[#FD6A0D] text-[#FD6A0D] py-[5px] px-1.5 rounded-md font-semibold z-10 shadow-sm flex">
                                 <FireIcon className="z-10 w-5 h-5 text-[#FD6A0D]" />
                                 <Paragraph className="">
@@ -63,7 +63,7 @@ export const Cards: React.FC<ICards> = ({
                                 </Paragraph>
                             </div>
                         )}
-                        {card.popular && (
+                        {card.offer_status === "sold" && (
                             <div className="absolute w-[125px] left-5 font-openSans translate-y-[-50%] bg-white border border-[#301DFF] text-[#301DFF] py-1.25 px-1.5 rounded-md font-semibold z-10 shadow-sm flex">
                                 <FireIcon className="z-10 w-5 h-5 text-[#301DFF]" />
                                 <Paragraph className="">

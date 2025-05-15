@@ -16,9 +16,12 @@ export const CardSection: React.FC<CardSectionProps> = ({
   Class,
   ClassName,
 }) => {
-
-
-  const filteredCards = cards;
+  // Сортировка is_payed
+  const filteredCards = [...cards].sort((a, b) => {
+    const aIsPaid = a.offer_status === "is_payed" ? 1 : 0;
+    const bIsPaid = b.offer_status === "is_payed" ? 1 : 0;
+    return bIsPaid - aIsPaid;
+  });
 
   return (
     <div className={ClassName}>
@@ -26,10 +29,10 @@ export const CardSection: React.FC<CardSectionProps> = ({
         cards={filteredCards.slice(0, maxVisible)}
         containerClass={Class}
         cardIconClass="rounded-t-xl overflow-hidden"
-        cardWrapperClass={`rounded-xl w-[22rem] flex-col shadow-lg`}
-        WhatchButtonClass='py-3 px-5 w-79.5 bg-[#2EAA7B] text-white font-medium rounded-md flex justify-center hover:bg-[#31B683] transition duration-300 cursor-pointer'
-
+        cardWrapperClass="rounded-xl w-[22rem] flex-col shadow-lg"
+        WhatchButtonClass="py-3 px-5 w-79.5 bg-[#2EAA7B] text-white font-medium rounded-md flex justify-center hover:bg-[#31B683] transition duration-300 cursor-pointer"
       />
     </div>
   );
 };
+

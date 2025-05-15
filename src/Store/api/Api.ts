@@ -18,7 +18,6 @@ import type {
     GetUserOffersResponse,
     GetUserOffersParams,
     Offer,
-    OfferPayload,
     OfferStatsResponse,
 } from "./types";
 import { baseUrl } from "../../utils/baseUrl";
@@ -38,6 +37,7 @@ export const AuthApi = createApi({
         },
     }),
     endpoints: (builder) => ({
+        //Авторизация и выход
         loginUser: builder.mutation<LoginUserResponse, LoginUserPayload>({
             query: (payload) => ({
                 url: "/login",
@@ -60,6 +60,7 @@ export const AuthApi = createApi({
                 body: payload,
             }),
         }),
+
         getUserInfo: builder.query<GetUserInfoResponse, void>({
             query: () => ({
                 url: "/user",
@@ -75,6 +76,13 @@ export const AuthApi = createApi({
                 body: formData,
             }),
         }),
+        logout: builder.mutation<{ message: string }, void>({
+            query: () => ({
+                url: "/logout",
+                method: "POST",
+            }),
+        }),
+        //Главная
         getHomeOffers: builder.query<
             {
                 business: ICard[];
@@ -132,7 +140,7 @@ export const AuthApi = createApi({
                 params,
             }),
         }),
-        createOffer: builder.mutation<OfferDetail, OfferPayload>({
+        createOffer: builder.mutation<OfferDetail, FormData>({
             query: (body) => ({
                 url: `offers/`,
                 method: 'POST',
@@ -164,6 +172,10 @@ export const AuthApi = createApi({
                 params: { from, to },
             }),
         }),
+        getOfferContactView: builder.query<{ phone: string }, number>({
+            query: (offerId) => `/offers/${offerId}/contact-view`
+        }),
+
 
     }),
 
@@ -174,19 +186,22 @@ export const {
     useRegistrationUserMutation,
     useVerifyPhoneCodeMutation,
     useCreateOfferMutation,
-    useGetUserInfoQuery,
+    useLogoutMutation,
+    usePublishOfferMutation,
     useUpdateUserInfoMutation,
     usePromoteOfferMutation,
+    useToggleFavoriteMutation,  
     useGetHomeOffersQuery,
     useGetMyOffersQuery,
     useGetOffersQuery,
     useGetMainStatisticsQuery,
     useGetOfferByIdQuery,
     useGetFiltersDataQuery,
-    useToggleFavoriteMutation,
     useGetFavoritesQuery,
     useGetNotificationsQuery,
     useGetUserOffersQuery,
-    usePublishOfferMutation,
     useGetOfferStatsQuery,
+    useGetUserInfoQuery,
+    useGetOfferContactViewQuery,
+
 } = AuthApi;

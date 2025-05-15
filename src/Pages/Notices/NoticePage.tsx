@@ -2,6 +2,9 @@ import { EmptyMessage, Footer, Header, Heading, Paragraph } from "../../componen
 import { profileNavigate } from "../../utils/categoryMap";
 import { useGetNotificationsQuery } from "../../Store/api/Api";
 import { Notification } from "../../Store/api/types";
+import { CiCalendar } from "react-icons/ci";
+import { IoMdTime } from "react-icons/io";
+
 export const NoticePage = () => {
     const { data, isLoading, isError } = useGetNotificationsQuery();
 
@@ -10,7 +13,7 @@ export const NoticePage = () => {
     return (
         <div className="w-screen">
             <Header navLinksData={profileNavigate} />
-            <div className="px-48 py-9">
+            <div className="px-48 py-9 h-screen">
                 <Heading
                     text="Уведомления"
                     level={2}
@@ -30,19 +33,33 @@ export const NoticePage = () => {
                         hideButton
                     />) : (
                     <div className="flex flex-col gap-4 mt-6">
-                        {notifications.map((item: Notification, index: number) => (
-                            <div
-                                key={index}
-                                className="w-full mt-5 flex flex-col gap-6 rounded-lg py-6 px-5 shadow-[1px_1px_4.5px_0px] shadow-[#28B13D4D]"
-                            >
-                                <Heading className="font-inter font-bold text-lg text-[#232323] mb-3.5" text={item.title_ru} level={3} />
-                                <Paragraph className="font-inter text-lg text-[#232323] mb-3.5">{item.text_ru}</Paragraph>
-                                <div className="text-gray-400 text-sm flex gap-3 items-center">
-                                    <span>📅 17.05.2021</span>
-                                    <span>⏰ 16:23</span>
+                        {notifications.map((item: Notification, index: number) => {
+                            const createdDate = new Date(item.created_at);
+                            const date = createdDate.toLocaleDateString("ru-RU", {
+                                day: "2-digit",
+                                month: "2-digit",
+                                year: "numeric"
+                            });
+                            const time = createdDate.toLocaleTimeString("ru-RU", {
+                                hour: "2-digit",
+                                minute: "2-digit"
+                            });
+
+                            return (
+                                <div
+                                    key={index}
+                                    className="w-full mt-5 flex flex-col gap-6 rounded-lg py-6 px-5 shadow-[1px_1px_4.5px_0px] shadow-[#28B13D4D]"
+                                >
+                                    <Heading className="font-inter font-bold text-lg text-[#232323] mb-3.5" text={item.title_ru} level={3} />
+                                    <Paragraph className="font-inter text-lg text-[#232323] mb-3.5">{item.text_ru}</Paragraph>
+                                    <div className="text-[#727272] text-sm flex gap-3 items-center">
+                                        <span className="flex gap-2"><CiCalendar className="w-4 h-4 text-[#727272]" /> {date}</span>
+                                        <span className="flex gap-2"><IoMdTime className="w-4 h-4 text-[#727272]" /> {time}</span>
+                                    </div>
                                 </div>
-                            </div>
-                        ))}
+                            );
+                        })}
+
                     </div>
                 )}
             </div>

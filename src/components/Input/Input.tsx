@@ -43,12 +43,8 @@ export const Input = forwardRef<HTMLInputElement | HTMLTextAreaElement, InputPro
 
         const borderColor =
             inputStatus === "error"
-                ? " border-red-500 focus:ring-red-500"
-                : inputStatus === "success"
-                    ? " border-[#2EAA7B] focus:ring-[#2EAA7B]"
-                    : "border-[#EEEEEE80] focus:ring-blue-500";
-        console.log("borderColor:", borderColor);
-
+                ? "border border-red-500 focus:ring-red-500"
+                : inputStatus === "success" && "border border-[#2EAA7B] focus:ring-[#2EAA7B]"
         if (isTextArea) {
             return (
                 <div className="w-full relative flex flex-col gap-2.5">
@@ -77,11 +73,11 @@ export const Input = forwardRef<HTMLInputElement | HTMLTextAreaElement, InputPro
                     placeholder={placeholder}
                     value={value}
                     onChange={onChange}
-                    className={`py-3.5 px-4.5 bg-[#EEEEEE80] rounded-[14px] outline-none border ${borderColor} ${props.className ?? ""}`}
+                    className={`py-3.5 px-4.5 bg-[#EEEEEE80] rounded-[14px] outline-none ${borderColor} ${props.className ?? ""}`}
                     {...(props as InputHTMLAttributes<HTMLInputElement>)}
                 />
                 <div
-                    className={`transition-all duration-300 ease-in-out ${isError ? "opacity-100 scale-100 mt-1" : "opacity-0 scale-95 h-0 mt-0"
+                    className={` ${isError ? "transition-all duration-300 ease-in-out opacity-100 scale-100 mt-1" : "opacity-0 scale-95 h-0 mt-0"
                         } overflow-hidden text-left`}
                 >
                     {isError && (

@@ -8,3 +8,9 @@
     font-weight: 700;
     font-style: normal;
 }
+
+.input-no-border:disabled {
+    border: none !important;
+    border-bottom: none !important;
+    box-shadow: none !important;
+}

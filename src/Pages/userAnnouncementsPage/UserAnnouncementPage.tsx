@@ -1,5 +1,5 @@
 import { useNavigate, useParams } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
     Breadcrumbs,
     Header,
@@ -14,7 +14,8 @@ import {
     ModalBase,
 } from "../../components";
 import { ICard } from "../../components/Cards/Interfaces";
-import { useGetUserOffersQuery } from "../../Store/api/Api";
+import { useGetUserOffersQuery, useGetOfferContactViewQuery } from "../../Store/api/Api";
+
 import { FiltersState } from "../../utils/variables";
 import { FiSearch } from "react-icons/fi";
 import { urlToTypeMap, ruToApiOfferTypeMap } from "../../utils/categoryMap";
@@ -44,6 +45,7 @@ export const UserAnnouncementPage = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [searchInput, setSearchInput] = useState("");
     const [searchQuery, setSearchQuery] = useState("");
+    const [contactPhone, setContactPhone] = useState<string | null>(null);
     const itemsPerPage = 12;
 
     const { data, isLoading, isError } = useGetUserOffersQuery({
@@ -60,6 +62,15 @@ export const UserAnnouncementPage = () => {
         price_min: filters.priceMin ? Number(filters.priceMin) : undefined,
         price_max: filters.priceMax ? Number(filters.priceMax) : undefined,
     });
+    const firstOfferId = data?.offers?.[0]?.id;
+    const { data: contactData, isLoading: isLoadingPhone } = useGetOfferContactViewQuery(firstOfferId!, {
+        skip: !isContactModalOpen || !firstOfferId,
+    });
+
+    useEffect(() => {
+        if (contactData?.phone) setContactPhone(contactData.phone);
+    }, [contactData]);
+
     const cards = data?.offers ?? [];
     const mappedCards: ICard[] = cards
         .filter((card) => card)
@@ -87,11 +98,16 @@ export const UserAnnouncementPage = () => {
             {isContactModalOpen && (
                 <ModalBase
                     title="Контакты продавца"
-                    message={user?.phone || "Номер отсутствует"}
+                    message={
+                        isLoadingPhone
+                            ? <span className="text-gray-400">Загрузка...</span>
+                            : contactPhone || "Номер отсутствует"
+                    }
                     onClose={() => setContactModalOpen(false)}
                     showCloseButton={true}
                 />
             )}
+
             <Header />
             <div className="flex px-48 py-[30px] pb-10 gap-10 items-start">
                 <aside className="flex flex-col">
@@ -214,3 +230,5 @@ export const UserAnnouncementPage = () => {
         </div>
     );
 };
+
+

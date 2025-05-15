@@ -3,11 +3,16 @@ import { ModalBase, Button, Paragraph } from "../../../components";
 import { BiHeart, BiSolidHeart } from "react-icons/bi";
 import { OfferDetail } from "../../../Store/api/types";
 import { Link } from "react-router-dom";
+import { useGetOfferContactViewQuery } from "../../../Store/api/Api";
+import { skipToken } from "@reduxjs/toolkit/query";
 
 export const SellerInfoCard = ({ card, offer_type, userId }: { card: OfferDetail['data'], userId: number, offer_type?: string }) => {
     const [isContactModalOpen, setContactModalOpen] = useState(false);
     const [isLinksModalOpen, setLinksModalOpen] = useState(false);
     const [isFavorite, setFavorite] = useState(false);
+    const { data: contactData, isLoading: isContactLoading } = useGetOfferContactViewQuery(
+        isContactModalOpen ? card.id : skipToken
+    );
 
 
     return (
@@ -58,7 +63,11 @@ export const SellerInfoCard = ({ card, offer_type, userId }: { card: OfferDetail
             {isContactModalOpen && (
                 <ModalBase
                     title="Контакты продавца"
-                    message={card.user_phone || "Номер не указан"}
+                    message={
+                        isContactLoading
+                            ? "Загрузка..."
+                            : contactData?.phone || "Номер не найден"
+                    }
                     onClose={() => setContactModalOpen(false)}
                     showCloseButton={true}
                 />

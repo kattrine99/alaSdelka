@@ -1,5 +1,5 @@
 import { useNavigate, useLocation } from "react-router-dom";
-import { useGetUserInfoQuery, useUpdateUserInfoMutation } from "../../Store/api/Api";
+import { useGetUserInfoQuery, useUpdateUserInfoMutation, useLogoutMutation } from "../../Store/api/Api";
 import { Heading, Paragraph, Input, Button, Header, Footer, Breadcrumbs, ModalBase } from "../../components";
 import { useDispatch } from "react-redux";
 import { setIsAuthenticated } from "../../Store/Slices/authSlice";
@@ -8,7 +8,6 @@ import { FiEdit2 } from "react-icons/fi";
 import { profileNavigate } from "../../utils/categoryMap"
 import { FiAlertCircle } from "react-icons/fi";
 import FlagIcon from '../../assets/Flag.svg?react'
-
 
 export const ProfilePage = () => {
     const navigate = useNavigate();
@@ -32,7 +31,7 @@ export const ProfilePage = () => {
         city_id: 1,
         photo: undefined,
     });
-
+    const [logout] = useLogoutMutation();
     const [showSuccess, setShowSuccess] = useState(false);
     if (isLoading) return <div className="w-screen h-[670px] flex justify-center items-center py-[30px]">
         <div className="w-30 h-30 border-10 border-[#2EAA7B] border-t-transparent rounded-full animate-spin"></div>
@@ -45,10 +44,17 @@ export const ProfilePage = () => {
     </div>;
     if (!data) return <div>Нет данных</div>
     const [firstName, lastName] = (data.name || "").split(" ");
-    const handleLogout = () => {
-        localStorage.removeItem("access_token");
-        dispatch(setIsAuthenticated(false));
-        navigate("/login");
+
+    const handleLogout = async () => {
+        try {
+            await logout().unwrap();
+        } catch (error) {
+            console.error("Ошибка при выходе:", error);
+        } finally {
+            localStorage.removeItem("access_token");
+            dispatch(setIsAuthenticated(false));
+            navigate("/login");
+        }
     };
 
     const handleEditClick = () => {

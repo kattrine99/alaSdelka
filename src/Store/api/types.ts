@@ -386,6 +386,8 @@ export interface Notification {
     title_uz: string;
     text_ru: string;
     text_uz: string;
+    created_at: string;
+    updated_at: string;
 }
 export interface Notifications {
     data: Notification[],
@@ -444,13 +446,14 @@ export interface OfferPayload {
 
     // SELL-specific
     property_ownership_type?: string;
-    documents?: File[];
-    images?: File[];
+    documents?: { document: File }[];
+    images?: { photo: File, order: number }[];
     communication_links?: string[];
     business_share?: string;
     monthly_income?: string;
     profit?: string;
     payback_period?: string;
+    foundation_year?: string;
 
     // BUY
     legal_form?: string;

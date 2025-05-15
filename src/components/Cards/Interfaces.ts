@@ -12,8 +12,8 @@ export interface ICard {
             name_ru: string;
         };
     };
-    area: string;
-    popular?: boolean;
+    area: number;
+    offer_status?: string;
     category?: string;
     is_favorite?: boolean;
     listing_type?: string;

@@ -16,7 +16,7 @@ export const PopularSliderSection: React.FC<PopularSliderSectionProps> = ({
   cards,
   title = "Популярное",
 }) => {
-  const popularCards = cards.filter((card) => card.popular);
+  const popularCards = cards.filter((card) => card.offer_status === "is_payed");
 
   if (popularCards.length === 0) return null;
 
@@ -52,14 +52,19 @@ export const PopularSliderSection: React.FC<PopularSliderSectionProps> = ({
           </SwiperSlide>
         ))}
       </Swiper>
+
       <button className="swiper-button-prev-custom absolute bottom-[180px] left-[174px] transform -translate-y-1/2 z-10 w-[40px] h-[40px] rounded-[10px] bg-white shadow-md flex items-center justify-center hover:bg-gray-100">
-        <span className="text-2xl text-[#4B5563]"><MdKeyboardArrowLeft />
+        <span className="text-2xl text-[#4B5563]">
+          <MdKeyboardArrowLeft />
         </span>
       </button>
+
       <button className="swiper-button-next-custom absolute bottom-[180px] right-[174px] transform -translate-y-1/2 z-10 w-[40px] h-[40px] rounded-[10px] bg-white shadow-md flex items-center justify-center hover:bg-gray-100">
-        <span className="text-2xl text-[#4B5563]"><MdKeyboardArrowRight />
+        <span className="text-2xl text-[#4B5563]">
+          <MdKeyboardArrowRight />
         </span>
       </button>
     </div>
   );
 };
+

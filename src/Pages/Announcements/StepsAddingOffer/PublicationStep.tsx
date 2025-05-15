@@ -22,8 +22,8 @@ const mapOfferToCard = (data: OfferPayload): ICard => ({
             name_ru: data.city_name || "Город не указан"
         }
 
-    }, area: String(data.area) || "Площадь не указана",
-    image: data.images?.[0] ? URL.createObjectURL(data.images[0]) : null,
+    }, area: data.area || 0,
+    image: data.images?.[0]?.photo ? URL.createObjectURL(data.images[0].photo) : null,
 
     is_favorite: false,
     offer_type: data.offer_type,
@@ -45,8 +45,8 @@ export const PublicationStep: React.FC<Props> = ({ onPublish, onPreview }) => {
         }
 
         try {
-            await publishOffer(cardData.id).unwrap(); 
-            onPublish(); 
+            await publishOffer(cardData.id).unwrap();
+            onPublish();
         } catch (error) {
             console.error("Ошибка при публикации:", error);
         }

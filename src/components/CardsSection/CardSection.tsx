@@ -8,6 +8,8 @@ interface CardSectionProps {
   hideViewAllButton?: boolean;
   Class: string;
   ClassName: string;
+  initialFavorites?: number[];
+  onFavoritesChanged?: (id: number, status: "added" | "removed") => void;
 }
 
 export const CardSection: React.FC<CardSectionProps> = ({
@@ -15,8 +17,9 @@ export const CardSection: React.FC<CardSectionProps> = ({
   maxVisible,
   Class,
   ClassName,
+  initialFavorites,
+  onFavoritesChanged,
 }) => {
-  // Сортировка is_payed
   const filteredCards = [...cards].sort((a, b) => {
     const aIsPaid = a.offer_status === "is_payed" ? 1 : 0;
     const bIsPaid = b.offer_status === "is_payed" ? 1 : 0;
@@ -31,6 +34,8 @@ export const CardSection: React.FC<CardSectionProps> = ({
         cardIconClass="rounded-t-xl overflow-hidden"
         cardWrapperClass="rounded-xl w-[22rem] flex-col shadow-lg"
         WhatchButtonClass="py-3 px-5 w-79.5 bg-[#2EAA7B] text-white font-medium rounded-md flex justify-center hover:bg-[#31B683] transition duration-300 cursor-pointer"
+        initialFavorites={initialFavorites}
+        onFavoritesChanged={onFavoritesChanged}
       />
     </div>
   );

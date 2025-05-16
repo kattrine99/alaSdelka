@@ -12,6 +12,7 @@ import {
   Input,
   Paragraph,
   Filters,
+  EmptyMessage,
 } from "../../components";
 import { ICard } from "../../components/Cards/Interfaces";
 import { useGetOffersQuery } from "../../Store/api/Api";
@@ -167,8 +168,6 @@ export const CategoryPage = () => {
               <div className="w-10 h-10 border-4 border-[#2EAA7B] border-t-transparent rounded-full animate-spin"></div>
             </div>
           ) : isError ? (
-            <p className="px-48 py-[30px] text-red-500">Ошибка загрузки данных</p>
-          ) : exactCards.length === 0 ? (
             <div className="flex flex-col w-full h-full justify-center items-center bg-[url('../../../images/grid.png')] bg-no-repeat  bg-contain">
               <div className="w-128 h-100 bg-[url('../../../images/404.png')] bg-contain bg-center bg-no-repeat flex flex-col items-center justify-end">
                 <Paragraph className="text-[20px] font-semibold text-black mb-4">Страница не найдена</Paragraph>
@@ -179,8 +178,13 @@ export const CategoryPage = () => {
                   Перейти на главную
                 </Button>
               </div>
-            </div>
-          ) : (
+            </div>) : exactCards.length === 0 ? (
+              <EmptyMessage
+                title="Здесь еще нет объявлений"
+                subtitle="Ваше может стать первым!"
+                hideButton
+              />
+            ) : (
             <CardSection
               Class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-y-10 gap-x-8 transition duration-600"
               title={pageTitle}

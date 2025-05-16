@@ -26,8 +26,9 @@ export const FavoritePage = () => {
         name_ru: offer.address?.city?.name_ru || "",
       },
     },
-    area: offer.area ? `${offer.area} кв. м.` : "Площадь не указана",
+    area: offer.area ? Number(`${offer.area}`) : 0,
     offer_type: offer.offer_type,
+    offer_status: offer.offer_status,
   }));
 
   const favoriteIds = mappedFavorites.map((card) => card.id);
@@ -52,7 +53,7 @@ export const FavoritePage = () => {
         <Heading
           text="Избранное"
           level={2}
-          className="font-inter text-xl font-bold leading-5 mb-6"
+          className="font-inter text-xl font-bold leading-5 mb-10"
         />
 
         {isLoading ? (

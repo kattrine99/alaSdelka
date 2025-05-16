@@ -311,6 +311,7 @@ export interface Offer {
         address: string;
         city?: { name_ru: string };
     };
+    offer_status?: string;
 }
 
 

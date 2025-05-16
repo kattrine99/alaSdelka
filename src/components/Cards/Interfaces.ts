@@ -23,8 +23,7 @@ export interface ICard {
 export interface ICards {
     cards: ICard[];
     initialFavorites?: number[];
-    onFavoritesChanged?: () => void;
-    WhatchButtonClass?: string;
+    onFavoritesChanged?: (id: number, status: "added" | "removed") => void; WhatchButtonClass?: string;
     containerClass?: string;
     cardWrapperClass?: string;
     cardIconClass?: string;

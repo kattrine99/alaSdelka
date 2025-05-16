@@ -18,8 +18,8 @@ export const ProfilePage = () => {
     const { data, isLoading, error, refetch } = useGetUserInfoQuery();
     const [updateUserInfo] = useUpdateUserInfoMutation();
 
-    const [firstNameInput, setFirstNameInput] = useState("");
-    const [lastNameInput, setLastNameInput] = useState("");
+    const [fullNameInput, setFullNameInput] = useState("");
+
     const [formData, setFormData] = useState<{
         phone: string;
         email: string;
@@ -43,8 +43,7 @@ export const ProfilePage = () => {
         <p className="text-red-600 text-lg font-semibold">Произошла ошибка при загрузке</p>
     </div>;
     if (!data) return <div>Нет данных</div>
-    const [firstName, lastName] = (data.name || "").split(" ");
-
+    const fullName = data.name || "";
     const handleLogout = async () => {
         try {
             await logout().unwrap();
@@ -53,15 +52,14 @@ export const ProfilePage = () => {
         } finally {
             localStorage.removeItem("access_token");
             dispatch(setIsAuthenticated(false));
-            navigate("/login");
+            navigate("/main");
         }
     };
 
     const handleEditClick = () => {
         setEditMode(true);
         if (data) {
-            setFirstNameInput(firstName);
-            setLastNameInput(lastName);
+            setFullNameInput(fullName)
             setFormData({
                 phone: data.phone ?? "",
                 email: data.email ?? "",
@@ -80,8 +78,6 @@ export const ProfilePage = () => {
 
     const handleSave = async () => {
         try {
-            const fullName = `${firstNameInput} ${lastNameInput}`.trim();
-
             const form = new FormData();
             form.append("name", fullName);
             if (formData.email) form.append("email", formData.email);
@@ -90,15 +86,13 @@ export const ProfilePage = () => {
             if (formData.photo) form.append("photo", formData.photo);
 
             await updateUserInfo(form).unwrap();
-            await refetch(); // ⬅️ перезапрашиваем данные
+            await refetch();
             setEditMode(false);
             setShowSuccess(true);
         } catch (error) {
             console.error("Ошибка при сохранении:", error);
         }
     };
-
-
 
     const handleCancel = () => {
         setEditMode(false);
@@ -132,7 +126,7 @@ export const ProfilePage = () => {
                         <>
                             <Heading
                                 className="text-[#121212] font-inter font-bold text-4xl leading-10"
-                                text={`Добро пожаловать, ${firstName}!`}
+                                text={`Добро пожаловать, ${fullName}!`}
                                 level={2} />
                             <div className="flex justify-between mt-6 ml-5">
                                 <div className="flex gap-x-6 mb-1.5 items-center">
@@ -177,44 +171,26 @@ export const ProfilePage = () => {
                         <Heading className="text-[#101828] font-inter font-semibold text-xl leading-7 mb-3.5" text="Основная информация" level={3} />
 
                         <div className="flex flex-col gap-y-6">
-                            <div className="flex gap-3.5">
-                                <div className="w-98.25">
-                                    <label className="text-[#121212] text-sm mb-1 block">Имя</label>
-                                    {editMode ? (<Input
-                                        title="Имя"
-                                        type="text"
-                                        value={editMode ? firstNameInput : firstName}
-                                        onChange={e => setFirstNameInput(e.target.value)}
-                                        disabled={!editMode}
-                                        isError={false}
-                                        className="bg-[#F2F2F2] rounded-[10px] h-14 px-4 py-3.5 text-[#121212] text-[16px]"
-                                    />) : (
-                                        <div className="w-98.25">
-                                            <div className="bg-[#F2F2F2] rounded-[10px] h-14 px-4 py-3.5 text-[#121212] text-[16px]">
-                                                {firstName || " "}
-                                            </div>
-                                        </div>
-                                    )}
-                                </div>
-                                <div className="w-98.25">
-                                    <label className="text-[#121212] text-sm mb-1 block">Фамилия</label>
-                                    {editMode ? (<Input
-                                        title="Фамилия"
-                                        type="text"
-                                        value={editMode ? lastNameInput : lastName}
-                                        onChange={e => setLastNameInput(e.target.value)}
-                                        disabled={!editMode}
-                                        isError={false}
-                                        className="bg-[#F2F2F2] rounded-[10px] h-14 px-4 py-3.5 text-[#121212] text-[16px]"
-                                    />) : (
+                            <div className="flex flex-col w-200">
+                                <label className="text-[#121212] text-sm mb-1 block">Имя Фамилия</label>
+                                {editMode ? (<Input
+                                    title="Имя Фамилия"
+                                    type="text"
+                                    value={editMode && fullNameInput}
+                                    onChange={e => setFullNameInput(e.target.value)}
+                                    disabled={!editMode}
+                                    isError={false}
+                                    className="bg-[#F2F2F2] rounded-[10px] h-14 px-4 py-3.5 text-[#121212] text-[16px]"
+                                />) : (
+                                    <div className="w-full">
                                         <div className="bg-[#F2F2F2] rounded-[10px] h-14 px-4 py-3.5 text-[#121212] text-[16px]">
-                                            {lastName || " "}
+                                            {fullName || " "}
                                         </div>
-                                    )}
-                                </div>
+                                    </div>
+                                )}
                             </div>
 
-                            <div className="w-[800px]">
+                            <div className="w-200">
                                 <div className="mb-6">
                                     <label className="text-[#121212] text-sm mb-1 block">Номер телефона</label>
                                     {editMode ? (

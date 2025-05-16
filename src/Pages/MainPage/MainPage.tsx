@@ -3,7 +3,7 @@ import { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ShopIcon from '../../assets/shop.svg?react';
 import InvestInIcon from '../../assets/investin_v15.svg?react';
-import { useGetHomeOffersQuery } from "../../Store/api/Api";
+import { useGetFavoritesQuery, useGetHomeOffersQuery } from "../../Store/api/Api";
 import { useGetMainStatisticsQuery } from "../../Store/api/Api";
 import { FiltersState } from "../../utils/variables";
 import { categoryRouteMap } from "../../utils/categoryMap";
@@ -37,6 +37,14 @@ export const MainPage = () => {
         }
     }, [mainStats, selectedCategory]);
 
+    const { data: favoritesData, refetch } = useGetFavoritesQuery();
+    const favoriteIds = Array.isArray(favoritesData)
+        ? []
+        : favoritesData?.data?.map((offer) => offer.id) ?? [];
+    const handleFavoritesChanged = async (id: number, status: "added" | "removed") => {
+        console.log(`Card ${id} was ${status === "added" ? "added to" : "removed from"} favorites.`);
+        await refetch();
+    };
     const [filters, setFilters] = useState<FiltersState>({
         category: "",
         city: "",
@@ -89,7 +97,7 @@ export const MainPage = () => {
     return (
         <div className="font-openSans min-h-screen w-screen overflow-x-hidden">
             <Header />
-            <section className="px-48 relative overflow-hidden bg-gradient-to-tr from-[#16503A] to-[#31B683]">
+            <section className=" relative overflow-hidden bg-gradient-to-tr from-[#16503A] to-[#31B683]">
                 <div className="absolute right-[-80px] bottom-[-9rem] w-212.5 h-212.5 bg-[url('/images/Check.png')] bg-no-repeat bg-contain rotate-[12deg] pointer-events-none z-0"></div>
                 <div className="relative container mx-auto py-17.5">
                     {/* Текст */}
@@ -146,8 +154,8 @@ export const MainPage = () => {
             </section>
 
             {/* Карточки */}
-            <section className="mt-12.5 mb-8.75">
-                <div className="px-48 flex justify-start gap-68" >
+            <section className="items-center px-48 mt-12.5 mb-8.75">
+                <div className=" flex gap-68" >
                     <div>
                         <Button onClick={() => {
                             navigate("/business")
@@ -199,6 +207,8 @@ export const MainPage = () => {
                                 key={businessType}
                                 title="Бизнес"
                                 cards={businessCards}
+                                initialFavorites={favoriteIds}
+                                onFavoritesChanged={handleFavoritesChanged}
                                 maxVisible={8}
                                 Class="grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-4 xl:grid-cols-3 lg:grid-cols-2 gap-y-10 gap-x-8 transition duration-300 ease-in-out"
                                 ClassName="container mx-auto py-7.5"
@@ -206,8 +216,8 @@ export const MainPage = () => {
                         );
                     })())}
             </section>
-            <section className="mt-12.5 mb-8.75">
-                <div className=" px-48 flex justify-start gap-68">
+            <section className="px-48 mt-12.5 mb-8.75">
+                <div className="flex justify-start gap-68">
                     <div>
                         <Button onClick={() => {
                             navigate("/franchise")
@@ -238,7 +248,7 @@ export const MainPage = () => {
                         <div className="w-10 h-10 border-4 border-[#2EAA7B] border-t-transparent rounded-full animate-spin"></div>
                     </div>
                 ) : isErrorFranchise ? (
-                    <p className="px-48 py-[30px] text-red-500">Ошибка загрузки данных</p>
+                    <p className=" py-[30px] text-red-500">Ошибка загрузки данных</p>
                 ) :
                     (
                         ((() => {
@@ -268,8 +278,8 @@ export const MainPage = () => {
 
 
             </section>
-            <section className="mt-12.5 mb-8.75">
-                <div className="px-48 flex justify-start gap-[272px]">
+            <section className="px-48 mt-12.5 mb-8.75">
+                <div className=" flex justify-start gap-[272px]">
                     <div>
                         <Button onClick={() => {
                             navigate("/startups")
@@ -406,35 +416,35 @@ export const MainPage = () => {
                     {/*Цифры*/}
                     <div className="flex justify-start gap-5 mt-[58px]">
                         <div className="flex flex-col gap-[20px]">
-                            <div className="bg-white font-inter text-black w-[260px] flex flex-col items-center rounded-[30px] py-6 shadow-[0px_4px_21.2px_rgba(46,170,123,0.2)]">
+                            <div className="bg-white font-inter text-black w-65 h-38.5 flex flex-col items-center rounded-[30px] py-6 shadow-[0px_4px_21.2px_rgba(46,170,123,0.2)]">
                                 <Paragraph className="text-[40px] text-center font-bold leading-none">
                                     {mainStats?.offers_count?.toLocaleString("ru-RU")}<span className="text-[#2EAA7B]">+</span>
                                 </Paragraph>
-                                <Paragraph className="font-normal text-base mt-2">объявлений</Paragraph>
+                                <Paragraph className="text-2xl mt-2">объявлений</Paragraph>
                             </div>
 
-                            <div className="bg-white font-inter text-black w-[260px] flex flex-col items-center rounded-[30px] py-6 shadow-[0px_4px_21.2px_rgba(46,170,123,0.2)]">
+                            <div className="bg-white font-inter text-black w-65 h-38.5 flex flex-col items-center rounded-[30px] py-6 shadow-[0px_4px_21.2px_rgba(46,170,123,0.2)]">
                                 <Paragraph className="text-[40px] text-center font-bold leading-none">
                                     {mainStats?.deals_count?.toLocaleString("ru-RU")}<span className="text-[#2EAA7B]">+</span>
                                 </Paragraph>
-                                <Paragraph className="font-normal text-base mt-2">сделок</Paragraph>
+                                <Paragraph className="text-2xl mt-2">сделок</Paragraph>
                             </div>
                         </div>
                         <div className="flex flex-col gap-[20px]">
-                            <div className="bg-white font-inter text-black w-[260px] flex flex-col items-center rounded-[30px] py-6 shadow-[0px_4px_21.2px_rgba(46,170,123,0.2)]">
+                            <div className="bg-white font-inter text-black w-65 h-38.5 flex flex-col items-center rounded-[30px] py-6 shadow-[0px_4px_21.2px_rgba(46,170,123,0.2)]">
                                 <Paragraph className="text-[40px] text-center font-bold leading-none">
                                     {mainStats?.partners_count?.toLocaleString("ru-RU")}
                                 </Paragraph>
-                                <Paragraph className="font-normal text-base mt-2">партнёров</Paragraph>
+                                <Paragraph className="text-2xl mt-2">партнёров</Paragraph>
                             </div>
 
-                            <div className="bg-white font-inter text-black w-[260px] flex flex-col items-center rounded-[30px] py-6 shadow-[0px_4px_21.2px_rgba(46,170,123,0.2)]">
+                            <div className="bg-white font-inter text-black w-65 h-38.5 flex flex-col items-center rounded-[30px] py-6 shadow-[0px_4px_21.2px_rgba(46,170,123,0.2)]">
                                 <Paragraph className="text-[40px] text-center font-bold leading-none">
                                     {mainStats?.total_sold_amount
                                         ? `${(+mainStats.total_sold_amount / 1000000).toFixed(0)} млн `
                                         : "—"}<span className="text-[#2EAA7B]">$</span>
                                 </Paragraph>
-                                <Paragraph className="font-normal text-base mt-2">продано бизнесов</Paragraph>
+                                <Paragraph className=" text-2xl mt-2">продано бизнесов</Paragraph>
                             </div>
                         </div>
                     </div>

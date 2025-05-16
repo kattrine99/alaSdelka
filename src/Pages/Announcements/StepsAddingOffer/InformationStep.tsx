@@ -45,7 +45,6 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
     const [images, setImages] = useState<File[]>([]);
     const [links, setLinks] = useState<string[]>([""]);
     const fullName = userInfo?.name?.trim() || "";
-    const [firstName, lastName = ""] = fullName.split(" ");
     const phoneNumber = userInfo?.phone?.replace("+998", "") || "";
     const inputRef = useRef<HTMLInputElement>(null);
     const imageInputRef = useRef<HTMLInputElement>(null);
@@ -111,7 +110,7 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
             address,
             category_id: categoryId,
             amount: Number(amount.replace(/\s/g, "")) || 0,
-            user_name: `${firstName} ${lastName}`.trim(),
+            user_name: fullName,
             user_phone: "+998" + phoneNumber,
             convenience_ids: selectedConveniences,
             business_type: businessOwnership,
@@ -239,31 +238,17 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
                 </div>
             }
             {/*Имя и фамилия*/}
-            <div className="flex gap-3.5 w-[800px]">
-                <div className="flex-1" >
-                    <Input
-                        className="bg-[#b5b5b667]  text-gray-500 cursor-not-allowed w-full rounded-[14px] outline-none py-3.5 px-4.5"
-                        LabelClassName="font-inter text-[16px] leading-[130%]"
-                        LabelText="*Имя"
-                        type="text"
-                        placeholder="Введите"
-                        isError={false}
-                        value={firstName}
-                        disabled
-                    />
-                </div>
-                <div className="flex-1 ">
-                    <Input
-                        className="bg-[#b5b5b667] text-gray-500 cursor-not-allowed w-full rounded-[14px] outline-none py-3.5 px-4.5"
-                        LabelClassName="font-inter text-[16px] leading-[130%]"
-                        LabelText="*Фамилия"
-                        type="text"
-                        placeholder="Введите"
-                        isError={false}
-                        value={lastName}
-                        disabled
-                    />
-                </div>
+            <div className="flex gap-3.5 w-200">
+                <Input
+                    className="bg-[#b5b5b667]  text-gray-500 cursor-not-allowed w-full rounded-[14px] outline-none py-3.5 px-4.5"
+                    LabelClassName="font-inter text-[16px] leading-[130%]"
+                    LabelText="*Имя Фамилия"
+                    type="text"
+                    placeholder="Введите"
+                    isError={false}
+                    value={fullName}
+                    disabled
+                />
             </div>
             {/*Номер телефона */}
             <div className="flex flex-col gap-2 w-[800px] relative ">

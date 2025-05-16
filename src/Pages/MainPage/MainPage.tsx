@@ -89,8 +89,10 @@ export const MainPage = () => {
     return (
         <div className="font-openSans min-h-screen w-screen overflow-x-hidden">
             <Header />
-            <section className="px-48 relative overflow-hidden bg-gradient-to-tr from-[#16503A] to-[#31B683]">
-                <div className="absolute right-[-80px] bottom-[-9rem] w-212.5 h-212.5 bg-[url('/images/Check.png')] bg-no-repeat bg-contain rotate-[12deg] pointer-events-none z-0"></div>
+            <section className="px-4 md:px-0 relative overflow-hidden bg-gradient-to-tr from-[#16503A] to-[#31B683]">
+                <div className="flex justify-end">
+                    <div className="absolute right-[-12rem] bottom-[-5rem] w-96 h-96 md:right-[-16rem] lg:right-[-80px] md:bottom-[-9rem] md:w-212.5 md:h-212.5 bg-[url('/images/Check.png')] bg-no-repeat bg-contain rotate-[12deg] pointer-events-none z-0"></div>
+                </div>
                 <div className="relative container mx-auto py-17.5">
                     {/* Текст */}
                     <div className="order-2 lg:order-1 flex flex-col gap-6 max-w-3xl w-full">
@@ -99,16 +101,16 @@ export const MainPage = () => {
                             text="Купите, продайте или инвестируйте в бизнес"
                             className="text-[clamp(32px,4vw,60px)] font-bold leading-tight text-white"
                         />
-                        <Paragraph className="text-white text-[clamp(16px,1.5vw,18px)] font-semibold leading-snug">
+                        <Paragraph className="text-white text-[clamp(16px,1.5vw,18px)] max-w-3/5 md:w-full font-semibold leading-snug">
                             <span className="inline-flex items-baseline align-baseline relative top-2 mr-1">
-                                <InvestInIcon className="w-[168.39px] h-auto" />
+                                <InvestInIcon className="w-[120px] md:w-[168.39px] h-auto" />
                             </span>
                             — первая в Узбекистане специализированная площадка для размещения объявлений
                             о продаже готового бизнеса, стартапов, франшиз и инвестиционных проектов.
                         </Paragraph>
                     </div>
                     {/* Поиск */}
-                    <div className="mt-4 w-full flex flex-col relative">
+                    <div className="mt-4 w-full flex-col relative hidden md:flex">
                         {/* Категории */}
                         <div className="max-w-142 bg-white rounded-t-xl border-b border-[#E0E0E0]">
                             <NavLinks
@@ -133,14 +135,14 @@ export const MainPage = () => {
                         </div>
 
                         {/* Фильтр Поиск*/}
-                        <FilterBar
-                            filters={filters}
-                            setFilters={setFilters}
-                            searchInput={searchInput}
-                            setSearchInput={setSearchInput}
-                            selectedCategory={selectedCategory}
-                            onSearch={handleApplyFilters}
-                        />
+                            <FilterBar
+                                filters={filters}
+                                setFilters={setFilters}
+                                searchInput={searchInput}
+                                setSearchInput={setSearchInput}
+                                selectedCategory={selectedCategory}
+                                onSearch={handleApplyFilters}
+                            />
                     </div>
                 </div>
             </section>

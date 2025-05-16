@@ -168,14 +168,14 @@ export const RegistrationPage = () => {
 
     return (
         <>
-            <div className="w-screen font-openSans bg-[url('/images/grid.png')] bg-contain bg-no-repeat bg-right">
+            <div className="min-w-screen font-openSans bg-[url('/images/grid.png')] bg-contain bg-no-repeat bg-right">
                 <Header showAuthButtons={false} showNavLinks={false} />
-                <div className="flex px-48 text-center pt-20">
+                <div className="grid grid-cols-1 lg:grid-cols-2 text-center pt-20 w-full">
                     {step === 1 && (
                         <>
-                            <div className="w-ful max-w-129.5">
+                            <div className="w-full p-[clamp(30px,4vw,70px)] flex flex-col items-start text-start transition-all duration-300">
                                 <Heading level={2} className="text-[32px] font-inter mb-7 font-bold text-black" text={""}>Зарегистрироваться</Heading>
-                                <div className="w-102.5">
+                                <div className="w-full">
                                     <form className="flex flex-col gap-y-3.5">
                                         <Controller name="username" control={control} render={({ field }) => (
                                             <Input {...field} placeholder="Имя Фамилия" isError={!!errors.username} errorMessage={errors.username?.message} className="py-3.5 px-4.5 bg-[#EEEEEE80] outline-none rounded-[14px]" />)} />
@@ -205,14 +205,14 @@ export const RegistrationPage = () => {
                                     <Button type="submit" onClick={handleSubmit(handleRegistration)} disabled={!isValid} className={`w-full mt-6 h-[56px] rounded-2xl text-[16px] text-white ${isValid ? "bg-[#2EAA7B]" : "bg-[#AFAFAF] cursor-not-allowed"}`}>
                                         Зарегистрироваться
                                     </Button>
-                                    <div className='w-full max-w-129.5 flex flex-col items-center'>
+                                    <div className='w-full flex flex-col items-center'>
                                         <div className='w-[237px] border border-[#DFDFDF] mt-[38px]'></div>
-                                        <div className="mt-[30px] justify-center">
-                                            <Button className="w-94.5 h-[56px] flex items-center gap-x-3 justify-center bg-white border border-[#C9CCCF] rounded-2xl text-[#232323] font-semibold  font-inter leading-[24px] transition-all duration-500 hover:bg-gray-100 hover:shadow-lg">
-                                                <img src="/images/google_icon.png" alt="Google" className="w-6 h-6" />
-                                                Зарегистрироваться через Google
-                                            </Button>
-                                        </div>
+                                        {/*<div className="mt-[30px] justify-center">*/}
+                                        {/*    <Button className="w-94.5 h-[56px] flex items-center gap-x-3 justify-center bg-white border border-[#C9CCCF] rounded-2xl text-[#232323] font-semibold  font-inter leading-[24px] transition-all duration-500 hover:bg-gray-100 hover:shadow-lg">*/}
+                                        {/*        <img src="/images/google_icon.png" alt="Google" className="w-6 h-6" />*/}
+                                        {/*        Зарегистрироваться через Google*/}
+                                        {/*    </Button>*/}
+                                        {/*</div>*/}
                                         <Paragraph className="text-[16px] font-inter text-[#232323] leading-[130%] mt-10 transition-all duration-300">
                                             У вас уже есть аккаунт?
                                             <Applink to='/login' className="text-[#2EAA7B] hover:underline ml-1 font-semibold transition duration-500">Авторизоваться</Applink>
@@ -221,7 +221,9 @@ export const RegistrationPage = () => {
 
                                 </div>
                             </div>
-                            <Description showCards={true} showLaptop={false} />
+                            <div className="hidden md:block">
+                                <Description showCards={true} showLaptop={false} />
+                            </div>
                         </>
                     )}
 

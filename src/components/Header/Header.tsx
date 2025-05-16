@@ -55,7 +55,7 @@ export const Header: React.FC<HeaderProps> = ({
                         </div>
                     </div>
                 </div>)}
-            <div className="flex justify-between items-center bg-white py-[20px] border-b border-[#E9E9E9]">
+            <div className="flex justify-between items-center bg-white py-[20px] px-6 md:px-0 border-b border-[#E9E9E9]">
                 <div className="container mx-auto flex justify-between">
                     {/* Логотип */}
                     <Applink to="/main" className="flex items-center gap-2">

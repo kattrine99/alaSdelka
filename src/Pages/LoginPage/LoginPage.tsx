@@ -80,7 +80,7 @@ export const LoginPage = () => {
 
     return (
 
-        <div className="min-w-screen bg-[url('/images/grid.png')] bg-contain bg-no-repeat bg-right">
+        <div className="min-w-screen sm:bg-[url('/images/grid.png')] bg-contain bg-no-repeat bg-right">
             <div className='flex flex-col'>
                 {showModal && <ModalBase
                     title={modalTitle}
@@ -97,7 +97,7 @@ export const LoginPage = () => {
             </div>
             <Header showNavLinks={false} showAuthButtons={false} />
             <div className=" flex items-center justify-center py-[62px] transition-all duration-300">
-                <div className="w-full flex px-48 transition-all duration-500">
+                <div className="w-full grid grid-cols-1 lg:grid-cols-2 lg:px-36 transition-all duration-500">
                     <div className="w-full p-[clamp(30px,4vw,70px)] flex flex-col items-start text-start transition-all duration-300">
                         <Heading className="text-[32px] mb-[32px] font-inter font-bold text-black" text={'Вход в личный кабинет'} level={1} />
                         <form onSubmit={handleSubmit(onSubmit)} className="w-full flex flex-col gap-[clamp(14px,1.8vw,28px)]">
@@ -147,19 +147,19 @@ export const LoginPage = () => {
                         </form>
                         <div className='w-full flex flex-col items-center'>
                             <div className='w-[237px] border border-[#DFDFDF] mt-[38px]'></div>
-                            <div className="mt-[30px] w-full">
-                                <Button className="w-[378px] h-[56px] flex items-center gap-x-3 justify-center bg-white border border-[#C9CCCF] rounded-2xl text-[#232323] font-semibold  font-inter leading-[24px] transition-all duration-500 hover:bg-gray-100 hover:shadow-lg active:">
-                                    <img src="/images/google_icon.png" alt="Google" className="w-[24px] h-[24px]" />
-                                    Войти с помощью Google
-                                </Button>
-                            </div>
+                            {/*<div className="mt-[30px] w-full">*/}
+                            {/*    <Button className="w-[378px] h-[56px] flex items-center gap-x-3 justify-center bg-white border border-[#C9CCCF] rounded-2xl text-[#232323] font-semibold  font-inter leading-[24px] transition-all duration-500 hover:bg-gray-100 hover:shadow-lg active:">*/}
+                            {/*        <img src="/images/google_icon.png" alt="Google" className="w-[24px] h-[24px]" />*/}
+                            {/*        Войти с помощью Google*/}
+                            {/*    </Button>*/}
+                            {/*</div>*/}
                             <Paragraph className="text-[16px] font-inter text-[#232323] leading-[130%] mt-10 transition-all duration-300">
                                 Еще нет аккаунта?
                                 <Applink to='/register' className="text-[#2EAA7B] hover:underline ml-1 font-semibold transition duration-500">Зарегистрироваться</Applink>
                             </Paragraph>
                         </div>
                     </div>
-                    <div>
+                    <div className='hidden md:block'>
                         <Description showCards={true} showLaptop={false} />
                     </div>
                 </div>

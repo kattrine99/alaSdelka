@@ -1,19 +1,19 @@
-import { useState, useEffect, useRef } from "react";
-import { Button, Input, Heading, Header, Footer, ModalBase, Paragraph, Applink } from "../../components";
-import { Controller, useForm } from "react-hook-form";
+import {useState, useEffect, useRef} from "react";
+import {Button, Input, Heading, Header, Footer, ModalBase, Paragraph, Applink} from "../../components";
+import {Controller, useForm} from "react-hook-form";
 import * as yup from "yup";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { GoArrowLeft } from "react-icons/go";
-import { useNavigate } from "react-router-dom";
+import {yupResolver} from "@hookform/resolvers/yup";
+import {GoArrowLeft} from "react-icons/go";
+import {useNavigate} from "react-router-dom";
 import {
     useRegistrationUserMutation,
     useVerifyPhoneCodeMutation
 } from "../../Store/api/Api";
-import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
-import { useDispatch } from "react-redux";
-import { setIsAuthenticated } from "../../Store/Slices/authSlice";
-import { Description } from '../RegisterPage/Description';
-import { RegistrationUserPayload } from "../../Store/api/types"
+import {FaRegEye, FaRegEyeSlash} from "react-icons/fa";
+import {useDispatch} from "react-redux";
+import {setIsAuthenticated} from "../../Store/Slices/authSlice";
+import {Description} from '../RegisterPage/Description';
+import {RegistrationUserPayload} from "../../Store/api/types"
 
 interface RegistrationFormInputs {
     username: string;
@@ -21,6 +21,7 @@ interface RegistrationFormInputs {
     userpassword: string;
     confirmPassword: string;
 }
+
 interface ApiError {
     data?: {
         message?: string;
@@ -57,7 +58,7 @@ export const RegistrationPage = () => {
         control,
         handleSubmit,
         watch,
-        formState: { errors, isValid },
+        formState: {errors, isValid},
         setError,
     } = useForm<RegistrationFormInputs>({
         resolver: yupResolver(stepOneSchema),
@@ -169,40 +170,53 @@ export const RegistrationPage = () => {
     return (
         <>
             <div className="min-w-screen font-openSans bg-[url('/images/grid.png')] bg-contain bg-no-repeat bg-right">
-                <Header showAuthButtons={false} showNavLinks={false} />
-                <div className="grid grid-cols-1 lg:grid-cols-2 text-center pt-20 w-full">
-                    {step === 1 && (
-                        <>
-                            <div className="w-full p-[clamp(30px,4vw,70px)] flex flex-col items-start text-start transition-all duration-300">
-                                <Heading level={2} className="text-[32px] font-inter mb-7 font-bold text-black" text={""}>Зарегистрироваться</Heading>
+                <Header showAuthButtons={false} showNavLinks={false}/>
+                {step === 1 && (
+                    <>
+                        <div className="grid grid-cols-1 lg:grid-cols-2 text-center lg:pt-20 w-full">
+                            <div
+                                className="w-full p-[clamp(30px,4vw,70px)] flex flex-col items-start text-start transition-all duration-300">
+                                <Heading level={2} className="text-[32px] font-inter mb-7 font-bold text-black"
+                                         text={""}>Зарегистрироваться</Heading>
                                 <div className="w-full">
                                     <form className="flex flex-col gap-y-3.5">
-                                        <Controller name="username" control={control} render={({ field }) => (
-                                            <Input {...field} placeholder="Имя Фамилия" isError={!!errors.username} errorMessage={errors.username?.message} className="py-3.5 px-4.5 bg-[#EEEEEE80] outline-none rounded-[14px]" />)} />
-                                        <Controller name="userphone" control={control} render={({ field }) => (
+                                        <Controller name="username" control={control} render={({field}) => (
+                                            <Input {...field} placeholder="Имя Фамилия" isError={!!errors.username}
+                                                   errorMessage={errors.username?.message}
+                                                   className="py-3.5 px-4.5 bg-[#EEEEEE80] outline-none rounded-[14px]"/>)}/>
+                                        <Controller name="userphone" control={control} render={({field}) => (
                                             <Input
                                                 {...field}
                                                 placeholder="Телефон (+998...)"
                                                 isError={!!errors.userphone}
                                                 errorMessage={errors.userphone?.message}
                                             />
-                                        )} />
-                                        <Controller name="userpassword" control={control} render={({ field }) => (
+                                        )}/>
+                                        <Controller name="userpassword" control={control} render={({field}) => (
                                             <div className="relative w-full">
-                                                <Input {...field} placeholder="Пароль" type={isPasswordVisible ? "text" : "password"} isError={!!errors.userpassword} errorMessage={errors.userpassword?.message} />
-                                                <span onClick={togglePasswordVisibility} className="absolute right-5 top-[clamp(12px,1.8vw,20px)] cursor-pointer text-[#28B13D]">
-                                                    {isPasswordVisible ? <FaRegEyeSlash /> : <FaRegEye />}
+                                                <Input {...field} placeholder="Пароль"
+                                                       type={isPasswordVisible ? "text" : "password"}
+                                                       isError={!!errors.userpassword}
+                                                       errorMessage={errors.userpassword?.message}/>
+                                                <span onClick={togglePasswordVisibility}
+                                                      className="absolute right-5 top-[clamp(12px,1.8vw,20px)] cursor-pointer text-[#28B13D]">
+                                                    {isPasswordVisible ? <FaRegEyeSlash/> : <FaRegEye/>}
                                                 </span>
-                                            </div>)} />
-                                        <Controller name="confirmPassword" control={control} render={({ field }) => (
+                                            </div>)}/>
+                                        <Controller name="confirmPassword" control={control} render={({field}) => (
                                             <div className="relative w-full">
-                                                <Input {...field} placeholder="Подтверждение пароля" type={isConfirmPasswordVisible ? "text" : "password"} isError={!!errors.confirmPassword} errorMessage={errors.confirmPassword?.message} />
-                                                <span onClick={toggleConfirmPasswordVisibility} className="absolute right-5 top-[clamp(12px,1.8vw,20px)] cursor-pointer text-[#28B13D]">
-                                                    {isConfirmPasswordVisible ? <FaRegEyeSlash /> : <FaRegEye />}
+                                                <Input {...field} placeholder="Подтверждение пароля"
+                                                       type={isConfirmPasswordVisible ? "text" : "password"}
+                                                       isError={!!errors.confirmPassword}
+                                                       errorMessage={errors.confirmPassword?.message}/>
+                                                <span onClick={toggleConfirmPasswordVisibility}
+                                                      className="absolute right-5 top-[clamp(12px,1.8vw,20px)] cursor-pointer text-[#28B13D]">
+                                                    {isConfirmPasswordVisible ? <FaRegEyeSlash/> : <FaRegEye/>}
                                                 </span>
-                                            </div>)} />
+                                            </div>)}/>
                                     </form>
-                                    <Button type="submit" onClick={handleSubmit(handleRegistration)} disabled={!isValid} className={`w-full mt-6 h-[56px] rounded-2xl text-[16px] text-white ${isValid ? "bg-[#2EAA7B]" : "bg-[#AFAFAF] cursor-not-allowed"}`}>
+                                    <Button type="submit" onClick={handleSubmit(handleRegistration)} disabled={!isValid}
+                                            className={`w-full mt-6 h-[56px] rounded-2xl text-[16px] text-white ${isValid ? "bg-[#2EAA7B]" : "bg-[#AFAFAF] cursor-not-allowed"}`}>
                                         Зарегистрироваться
                                     </Button>
                                     <div className='w-full flex flex-col items-center'>
@@ -213,78 +227,93 @@ export const RegistrationPage = () => {
                                         {/*        Зарегистрироваться через Google*/}
                                         {/*    </Button>*/}
                                         {/*</div>*/}
-                                        <Paragraph className="text-[16px] font-inter text-[#232323] leading-[130%] mt-10 transition-all duration-300">
+                                        <Paragraph
+                                            className="text-[16px] font-inter text-[#232323] leading-[130%] mt-10 transition-all duration-300">
                                             У вас уже есть аккаунт?
-                                            <Applink to='/login' className="text-[#2EAA7B] hover:underline ml-1 font-semibold transition duration-500">Авторизоваться</Applink>
+                                            <Applink to='/login'
+                                                     className="text-[#2EAA7B] hover:underline ml-1 font-semibold transition duration-500">Авторизоваться</Applink>
                                         </Paragraph>
                                     </div>
 
                                 </div>
                             </div>
                             <div className="hidden md:block">
-                                <Description showCards={true} showLaptop={false} />
+                                <Description showCards={true} showLaptop={false}/>
                             </div>
-                        </>
-                    )}
-
-                    {step === 2 && (
-                        <div className="flex">
-                            <div>
-                                <div className="flex gap-7 items-center mb-[28px]">
-                                    <Button onClick={() => setStep(1)} className="text-black outline-none">
-                                        <GoArrowLeft className="w-6 h-6" />
-                                    </Button>
-                                    <Heading level={2} className="w-178 text-[32px] font-inter font-bold text-black" text={""}>
-                                        Мы отправили вам код для подтверждения аккаунта на номер
-                                    </Heading>
-                                </div>
-                                <div className="w-102.5 flex flex-col items-center gap-6">
-                                    <p className="text-sm text-gray-500 w-full text-left">
-                                        Введите код, отправленный на номер <span className="text-black font-semibold">{maskedPhone}</span>
-                                    </p>
-
-                                    <div className="flex gap-4 justify-between w-full">
-                                        {Array.from({ length: 4 }).map((_, index) => (
-                                            <Input
-                                                key={index}
-                                                maxLength={1}
-                                                ref={(el) => { inputsRef.current[index] = el; }}
-                                                value={codeInput[index]}
-                                                onChange={(e) => handleCodeChange(e.target.value, index)}
-                                                onKeyDown={(e) => handleKeyDown(e, index)}
-                                                autoFocus={index === 0}
-                                                className={`w-15 h-18 text-center text-[32px] rounded-[10px] border ${codeError ? "border-red-500" : "border-[#D9D9D9]"
-                                                    } focus:outline-none focus:border-[#2EAA7B] font-semibold text-black`}
-                                                type="text"
-                                                isError={false}
-                                            />
-                                        ))}
-                                    </div>
-
-                                    <div className="text-center text-[14px] text-[#28B13D] font-semibold">
-                                        {canResend ? (
-                                            <button onClick={() => { setTimer(60); setCanResend(false); }} className="hover:underline">
-                                                Отправить снова
-                                            </button>
-                                        ) : (
-                                            <span>Отправить снова через <span className="font-bold">0:{timer.toString().padStart(2, "0")}</span></span>
-                                        )}
-                                    </div>
-
-                                    <Button
-                                        onClick={handleVerifyCode}
-                                        disabled={code.length !== 4}
-                                        className={`w-full h-14 rounded-2xl text-[16px] text-white ${code.length === 4 ? "bg-[#2EAA7B]" : "bg-[#AFAFAF] cursor-not-allowed"}`}
-                                    >
-                                        Подтвердить
-                                    </Button>
-                                </div>
-                            </div>
-                            <Description showCards={false} showLaptop={true} />
                         </div>
-                    )}        </div >
-                <Footer showSmallFooter={true} />
-            </div >
+                    </>
+                )}
+                {step === 2 && (
+                    <div className="grid grid-cols-1 lg:grid-cols-2 text-center lg:pt-20 w-full">
+                        <div className="w-full p-[clamp(30px,4vw,70px)] flex flex-col items-start text-start transition-all duration-300">
+                            <div className="flex gap-7 items-center mb-[28px]">
+                                <Button onClick={() => setStep(1)} className="hidden md:block text-black outline-none">
+                                    <GoArrowLeft className="w-6 h-6"/>
+                                </Button>
+                                <Heading level={2} className="md:text-3xl text-2xl text-center font-inter font-bold text-black"
+                                         text={""}>
+                                    Мы отправили вам код для подтверждения аккаунта на номер
+                                </Heading>
+                            </div>
+                            <div className="mx-auto flex flex-col items-center gap-6">
+                                <p className="text-sm text-gray-500 w-full text-left">
+                                    Введите код, отправленный на номер <span
+                                    className="text-black font-semibold">{maskedPhone}</span>
+                                </p>
+
+                                <div className="flex gap-4 justify-between w-full">
+                                    {Array.from({length: 4}).map((_, index) => (
+                                        <Input
+                                            key={index}
+                                            maxLength={1}
+                                            ref={(el) => {
+                                                inputsRef.current[index] = el;
+                                            }}
+                                            value={codeInput[index]}
+                                            onChange={(e) => handleCodeChange(e.target.value, index)}
+                                            onKeyDown={(e) => handleKeyDown(e, index)}
+                                            autoFocus={index === 0}
+                                            className={`w-15 h-18 text-center text-[32px] rounded-[10px] border ${codeError ? "border-red-500" : "border-[#D9D9D9]"
+                                            } focus:outline-none focus:border-[#2EAA7B] font-semibold text-black`}
+                                            type="text"
+                                            isError={false}
+                                        />
+                                    ))}
+                                </div>
+
+                                <div className="text-center text-[14px] text-[#28B13D] font-semibold">
+                                    {canResend ? (
+                                        <button onClick={() => {
+                                            setTimer(60);
+                                            setCanResend(false);
+                                        }} className="hover:underline">
+                                            Отправить снова
+                                        </button>
+                                    ) : (
+                                        <span>Отправить снова через <span
+                                            className="font-bold">0:{timer.toString().padStart(2, "0")}</span></span>
+                                    )}
+                                </div>
+
+                                <Button
+                                    onClick={handleVerifyCode}
+                                    disabled={code.length !== 4}
+                                    className={`w-full h-14 rounded-2xl text-[16px] text-white ${code.length === 4 ? "bg-[#2EAA7B]" : "bg-[#AFAFAF] cursor-not-allowed"}`}
+                                >
+                                    Подтвердить
+                                </Button>
+                                <Button onClick={() => setStep(1)} className="block md:hidden text-black outline-none w-full h-14 rounded-2xl text-[16px] ">
+                                    Назад
+                                </Button>
+                            </div>
+                        </div>
+                        <div className="hidden md:block mx-auto">
+                            <Description showCards={false} showLaptop={true}/>
+                        </div>
+                    </div>
+                )}
+                <Footer showSmallFooter={true}/>
+            </div>
             {showSuccessModal && (
                 <ModalBase
                     title="Успешно!"

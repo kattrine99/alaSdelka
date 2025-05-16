@@ -2,6 +2,7 @@ import { Button, EmptyMessage, Footer, Header, Heading, Paragraph } from "../../
 import { profileNavigate } from "../../utils/categoryMap"
 import { useGetMyOffersQuery } from "../../Store/api/Api";
 import { useNavigate } from "react-router-dom";
+import FireIcon from '../../assets/fire.svg?react';
 
 export const AnnouncemntsPage = () => {
   const { data, isLoading, isError } = useGetMyOffersQuery(5);
@@ -44,11 +45,22 @@ export const AnnouncemntsPage = () => {
                   </div>
                 </div>
                 <div className="flex flex-col gap-2 items-end">
-                  <Button className="bg-[#2EAA7B] text-white px-4 py-2 rounded-md" onClick={()=>navigate(`/statistics/${offer.id}`)}>Посмотреть статистику</Button>
+                  <Button className="bg-[#2EAA7B] text-white px-4 py-2 rounded-md" onClick={() => navigate(`/statistics/${offer.id}`)}>Посмотреть статистику</Button>
                   <Button className="border border-[#2EAA7B] text-[#2EAA7B] px-4 py-2 rounded-md">Поместить в архив</Button>
-                  <Button className="bg-orange-500 text-white px-4 py-2 rounded-md"
-                    onClick={() => navigate(`/promotion/${offer.id}`)}
-                  >Продвигать объявление</Button>
+                  {offer.promotion?.is_active ? (
+                    <div className="bg-[#FF1D1D] text-white px-4 py-2 rounded-md flex items-center gap-2 font-semibold">
+                      Идет продвижение (осталось {offer.promotion.days_left} дней)
+                      <FireIcon className="z-10 w-5 h-5 text-[#FD6A0D]" />
+                    </div>
+                  ) : (
+                    <Button
+                      className="bg-orange-500 text-white px-4 py-2 rounded-md"
+                      onClick={() => navigate(`/promotion/${offer.id}`)}
+                    >
+                      Продвигать объявление
+                    </Button>
+                  )}
+
                   <Button className="bg-orange-500 text-white px-4 py-2 rounded-md">Продано</Button>
                 </div>
               </div>

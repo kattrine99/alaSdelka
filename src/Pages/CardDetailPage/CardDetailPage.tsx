@@ -51,6 +51,31 @@ export const CardDetailPage = () => {
         });
     };
 
+    function formatMonthsToYears(months) {
+        const years = Math.floor(months / 12);
+        const remainingMonths = months % 12;
+
+        let result = '';
+        if (years > 0) {
+            result += `${years} ${getPlural(years, 'год', 'года', 'лет')}`;
+        }
+        if (remainingMonths > 0 || result === '') {
+            if (result) result += ' ';
+            result += `${remainingMonths} ${getPlural(remainingMonths, 'месяц', 'месяца', 'месяцев')}`;
+        }
+
+        return result;
+    }
+
+    function getPlural(number, one, few, many) {
+        const mod10 = number % 10;
+        const mod100 = number % 100;
+
+        if (mod10 === 1 && mod100 !== 11) return one;
+        if (mod10 >= 2 && mod10 <= 4 && (mod100 < 10 || mod100 >= 20)) return few;
+        return many;
+    }
+
     return (
         <div className="w-screen">
             <Header />
@@ -61,20 +86,12 @@ export const CardDetailPage = () => {
 
             ) :
                 (
-                    <div className=' px-48 py-7.5 '>
+                    <div className='container mx-auto px-3 md:px-0 py-7.5 '>
                         <Breadcrumbs category={category} title={card.title} />
-                        <div className='flex'>
-                            <div className='flex flex-col w-full '>
-                                <Heading className="text-4xl font-inter leading-10 font-bold mt-6 mb-3.5" text={card.title} level={2} />
+                        <div className='flex flex-wrap lg:flex-nowrap'>
+                            <div className='flex flex-col w-full'>
+                                <Heading className="text-[24px] md:text-4xl font-inter leading-10 font-bold mt-6 mb-3.5" text={card.title} level={2} />
                                 <div className='flex flex-col gap-2 mb-[15px]'>
-                                    <Paragraph className="font-inter font-bold text-[1rem] text-[#363636]">ID {card.id}</Paragraph>
-                                    <div className='flex gap-1.5'>
-                                        <FaLocationDot className="text-[#2EAA7B] w-4 h-4" />
-                                        <Paragraph className="">
-                                            {card?.address?.address ?? "Адрес не указан"},
-                                            {card?.address?.city?.name_ru ?? ""}
-                                        </Paragraph>
-                                    </div>
                                     <div className='flex gap-1.5 items-center'>
                                         <GpsIcon className='w-4 h-4' />
                                         <Paragraph>{card.area} кв. м.</Paragraph>
@@ -96,7 +113,7 @@ export const CardDetailPage = () => {
                                         <div className='w-[49.63rem]'>
                                             <Heading text={'Удобства'} level={3} className='font-inter font-semibold text-xl text-[#3A3A3A]' />
                                             <div className="mt-3">
-                                                <div className="flex flex-wrap gap-x-12.5 gap-y-4">
+                                                <div className="flex md:flex-row flex-col max-w-full flex-wrap gap-x-12.5 gap-y-4">
                                                     {card.conveniences.map(item => (
                                                         <div key={item.id} className="flex items-center gap-3 text-sm text-gray-700">
                                                             {conveniencesIcons[item.name_ru] || <span className="w-5 h-5" />}
@@ -164,43 +181,43 @@ export const CardDetailPage = () => {
                                 )}
                                 <div>
                                     <Heading text={'Информация и финансы'} level={3} className='font-inter font-semibold text-xl mt-7.5 text-[#3A3A3A]' />
-                                    <div className="mt-3 w-203.25 flex flex-wrap gap-x-3 gap-y-4">
-                                        <div className="flex w-65.75 gap-2 border border-[#2EAA7B] items-center rounded-[10px] py-3 px-4.25">
+                                    <div className="mt-3 grid grid-cols-1 md:grid-cols-3 gap-x-3 gap-y-4">
+                                        <div className="flex w-full gap-2 border border-[#2EAA7B] items-center rounded-[10px] py-3 px-4.25">
                                             <WalletIcon className='w-10 h-10' />
                                             <div className='flex flex-col'>
                                                 <Paragraph className="font-inter text-[13px] leading-5 text-[#7D7D7D]">Среднемесячная выручка</Paragraph>
                                                 <Paragraph className="font-inter text-xl font-bold text-[#2EAA7B]">{card.average_monthly_revenue} сум</Paragraph>
                                             </div>
                                         </div>
-                                        <div className="flex gap-2 w-65.75 border border-[#2EAA7B] items-center rounded-[10px] py-3 px-4.25">
+                                        <div className="flex gap-2 w-full border border-[#2EAA7B] items-center rounded-[10px] py-3 px-4.25">
                                             <ReceiptIcon className='w-10 h-10' />
                                             <div className='flex flex-col'>
                                                 <Paragraph className="font-inter text-[13px] leading-5 text-[#7D7D7D]">Среднемесячные расходы</Paragraph>
                                                 <Paragraph className="font-inter text-xl font-bold text-[#2EAA7B]">{card.average_monthly_expenses} сум</Paragraph>
                                             </div>
                                         </div>
-                                        <div className="flex gap-2 w-65.75 border border-[#2EAA7B] items-center rounded-[10px] py-3 px-4.25">
+                                        <div className="flex gap-2 w-full border border-[#2EAA7B] items-center rounded-[10px] py-3 px-4.25">
                                             <CalendarIcon className='w-10 h-10' />
                                             <div className='flex flex-col'>
                                                 <Paragraph className="font-inter text-[13px] leading-5 text-[#7D7D7D]">Дата основания</Paragraph>
                                                 <Paragraph className="font-inter text-xl font-bold text-[#2EAA7B]">{card.foundation_year} год</Paragraph>
                                             </div>
                                         </div>
-                                        <div className="flex gap-2 w-65.75 border border-[#2EAA7B] items-center rounded-[10px] py-3 px-4.25">
+                                        <div className="flex gap-2 w-full border border-[#2EAA7B] items-center rounded-[10px] py-3 px-4.25">
                                             <DollarCircleIcon className='w-10 h-10' />
                                             <div className='flex flex-col'>
                                                 <Paragraph className="font-inter text-[13px] leading-5 text-[#7D7D7D]">Среднемесячная прибыль</Paragraph>
                                                 <Paragraph className="font-inter text-xl font-bold text-[#2EAA7B]">{card.average_monthly_profit} сум</Paragraph>
                                             </div>
                                         </div>
-                                        <div className="flex gap-2 w-65.75 border border-[#2EAA7B] items-center rounded-[10px] py-3 px-4.25">
+                                        <div className="flex gap-2 w-full border border-[#2EAA7B] items-center rounded-[10px] py-3 px-4.25">
                                             <MoneySendIcon className='w-10 h-10' />
                                             <div className='flex flex-col'>
                                                 <Paragraph className="font-inter text-[13px] leading-5 text-[#7D7D7D]">Окупаемость</Paragraph>
-                                                <Paragraph className="font-inter text-xl font-bold text-[#2EAA7B]">{card.profitability} сум</Paragraph>
+                                                <Paragraph className="font-inter text-xl font-bold text-[#2EAA7B]">{formatMonthsToYears(card.profitability)}</Paragraph>
                                             </div>
                                         </div>
-                                        <div className="flex gap-2 w-65.75 border border-[#2EAA7B] items-center rounded-[10px] py-3 px-4.25">
+                                        <div className="flex gap-2 w-full border border-[#2EAA7B] items-center rounded-[10px] py-3 px-4.25">
                                             <PercentIcon className='w-10 h-10' />
                                             <div className='flex flex-col'>
                                                 <Paragraph className="font-inter text-[13px] leading-5 text-[#7D7D7D]">Доля к продаже</Paragraph>
@@ -214,21 +231,25 @@ export const CardDetailPage = () => {
                                     <div className='flex gap-1.5'>
                                         <FaLocationDot className="text-[#2EAA7B] w-4 h-4" />
                                         <Paragraph className="">
-                                            {card?.address?.address ?? "Адрес не указан"},
+                                            {card?.address !== null ? card?.address?.address + ',' : "Адрес не указан"}
                                             {card?.address?.city?.name_ru ?? ""}
                                         </Paragraph>
                                     </div>
-                                    <iframe
-                                        src={`https://maps.google.com/maps?q=${card.address.latitude},${card.address.longitude}&z=15&layer=s&output=embed`}
-                                        width="100%"
-                                        height="350"
-                                        className="rounded-lg border border-[#2EAA7B]"
-                                        allowFullScreen
-                                        loading="eager"
-                                    />
+                                    {card.address !== null && (
+                                        <iframe
+                                            src={`https://maps.google.com/maps?q=${card.address.latitude},${card.address.longitude}&z=15&layer=s&output=embed`}
+                                            width="100%"
+                                            height="350"
+                                            className="rounded-lg border border-[#2EAA7B]"
+                                            allowFullScreen
+                                            loading="eager"
+                                        />
+                                    )}
                                 </div>
                             </div>
-                            <SellerInfoCard card={data.data} userId={card.user_id} offer_type={card.offer_type} />
+                            <div className="lg:mt-0 mt-6 w-full lg:w-4/12">
+                                <SellerInfoCard card={data.data} userId={card.user_id} offer_type={card.offer_type} />
+                            </div>
                         </div>
                     </div>
                 )

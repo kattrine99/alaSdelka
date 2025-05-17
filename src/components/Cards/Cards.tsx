@@ -73,7 +73,7 @@ export const Cards: React.FC<ICards> = ({
                         )}
                         <div className={`relative ${cardIconClass ?? ""}`}>
 
-                            <img src={card.image || "../../../images/business_abstract.jpg"} alt={`${card.id}`} className="w-full h-58 object-cover" />
+                            <img src={card.image || "../../../images/business_abstract.jpg"} alt={`${card.id}`} className="w-full object-cover" />
                             <button
                                 onClick={() => handleToggle(card.id)}
                                 className="absolute top-5 right-4.5"
@@ -91,25 +91,25 @@ export const Cards: React.FC<ICards> = ({
                                 <Heading
                                     text={`${card.price} сум`}
                                     level={2}
-                                    className={`text-[24px] leading-[22px] font-bold font-inter text-[#232323] mb-[8px] ${cardHeadingClass ?? ""}`}
+                                    className={`text-[16px] md:text-[24px] leading-[22px] font-bold font-inter text-[#232323] mb-[8px] ${cardHeadingClass ?? ""}`}
                                 />
                                 <Heading
                                     text={card.title}
                                     level={3}
-                                    className={`text-[18px] leading-[22px] font-bold font-inter mb-[12px] ${cardHeadingClass ?? ""}`}
+                                    className={`text-[14px] md:text-[18px] leading-[22px] font-bold font-inter mb-[12px] ${cardHeadingClass ?? ""}`}
                                 />
                                 <Paragraph
                                     className={`text-gray-600 flex gap-x-2 font-inter text-[14px] font-medium mb-[6px] ${cardTextClass ?? ""}`}
                                 >
-                                    <FaLocationDot className="text-[#2EAA7B] h-[16px]" />
-                                    Адрес: <span className="font-bold">  {card.address?.address ?? "Адрес не указан"}, {card.address?.city?.name_ru ?? ""}
+                                    <FaLocationDot className="text-[#2EAA7B] h-[16px] text-[20px]"/>
+                                    <span className="font-bold text-[12px]">  {card.address?.address ?? "Адрес не указан"}, {card.address?.city?.name_ru ?? ""}
                                     </span>
                                 </Paragraph>
                                 <Paragraph
                                     className={`text-gray-600 flex gap-x-2 font-inter text-[14px] font-medium mb-[18px] ${cardTextClass ?? ""}`}
                                 >
                                     <FaLocationCrosshairs className="text-[#2EAA7B] h-[16px]" />
-                                    {card.area}
+                                    {card.area} кв.м
                                 </Paragraph>
                             </div>
                             <div className="w-full h-[44px] mt-auto">

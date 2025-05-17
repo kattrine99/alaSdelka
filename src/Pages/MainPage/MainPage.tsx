@@ -418,17 +418,17 @@ export const MainPage = () => {
                                     setSelectedCategory(label as typeof selectedCategory);
                                 }
                             }}
-                            className="flex gap-4 text-[24px] text-start font-openSans mb-[25px] font-bold"
-                            activeClassName="w-[234px] px-6 py-4 bg-[#2EAA7B] text-white rounded-xl"
-                            inactiveClassName="w-[234px] bg-white font-openSans text-[#232323] border border-[#2EAA7B] rounded-xl hover:bg-[#31B683]/10"
+                            className="flex flex-wrap md:flex-nowrap gap-4 text-[24px] text-start font-openSans mb-[25px] font-bold"
+                            activeClassName="w-full px-6 py-4 bg-[#2EAA7B] text-white rounded-xl"
+                            inactiveClassName="w-full px-2 py-1 bg-white font-openSans text-[#232323] border border-[#2EAA7B] rounded-xl hover:bg-[#31B683]/10"
                         />
 
                         {/* ГОРОДА */}
-                        <div className="flex flex-wrap gap-[20px]">
+                        <div className="grid 2xl:grid-cols-6 lg:grid-cols-4 grid-cols-2 gap-3">
                             {cityStats &&
                                 cityStats.map((city, idx) => (
                                     <div key={idx}
-                                         className="w-58.5 h-32.5 flex flex-col bg-[#1A1A1A] text-white py-4 px-6 rounded-[12px] gap-0.5">
+                                         className="w-full flex flex-col bg-[#1A1A1A] text-white py-4 px-6 rounded-[12px] gap-0.5">
                                         <span
                                             className="font-openSans font-bold text-2xl leading-[150%]">{city.name_ru}</span>
                                         <span className="font-Urbanist font-bold text-[40px] leading-[150%]">
@@ -442,29 +442,31 @@ export const MainPage = () => {
             </section>
 
             {/*Почему Invest In*/}
-            <section className="relative overflow-hidden  w-full h-226.75 bg-[url('/images/Mask.png')] bg-repeat">
-                <div
-                    className="absolute right-[197px] top-[61px] w-[702px] h-full bg-[url('/images/WhyInvestIn.png')] bg-no-repeat bg-contain px-48"></div>
+            <section className="relative overflow-hidden w-full bg-[url('/images/Mask.png')] bg-repeat">
+                <div className="absolute right-[197px] hidden md:block top-[61px] w-[702px] h-full bg-[url('/images/WhyInvestIn.png')] bg-no-repeat bg-contain px-48" ></div>
                 <div className="relative py-[70px] px-4 sm:px-8 md:px-[96px] xl:px-48 overflow-hidden">
                     <div className="order-2 lg:order-1 flex flex-col gap-6 max-w-2xl w-full">
                         <Heading
                             level={1}
-                            className="text-[clamp(32px,4vw,45px)] font-bold leading-tight text-black" text={""}>
-                            Почему <span className="text-[#31B683]">Invest In — лучший инструмент</span><br/>
+                            className="text-[24px] md:text-[32px] font-bold leading-tight text-black" text={""}>
+                            Почему <span className="text-[#31B683]">Invest In — лучший инструмент </span>
                             для продажи бизнеса?
                         </Heading>
 
                         <Paragraph
-                            className="w-[893px] mt-[35px] text-[#232323] font-inter font-normal leading-[125%] text-3xl">
+                            className=" mt-[12px] w-full text-[#232323] font-inter font-normal leading-[125%] text-[16px] md:text-3xl">
                             С Invest In благодаря поддержке на всех этапах сделки вы сможете продать свой бизнес на
                             условиях, которые будут выгодны и удобны для вас. На нашем сайте уже:
                         </Paragraph>
                     </div>
+                    <div className="md:hidden mt-6">
+                        <img src="/images/WhyInvestIn.png" alt="" className="w-full max-w-3xl"/>
+                    </div>
                     {/*Цифры*/}
                     <div className="flex justify-start gap-5 mt-[58px]">
-                        <div className="flex flex-col gap-[20px]">
+                        <div className="grid grid-cols-2 gap-[20px] md:max-w-2xl w-full">
                             <div
-                                className="bg-white font-inter text-black w-[260px] flex flex-col items-center rounded-[30px] py-6 shadow-[0px_4px_21.2px_rgba(46,170,123,0.2)]">
+                                className="bg-white w-full font-inter text-black flex flex-col items-center rounded-[30px] py-6 shadow-[0px_4px_21.2px_rgba(46,170,123,0.2)]">
                                 <Paragraph className="text-[40px] text-center font-bold leading-none">
                                     {mainStats?.offers_count?.toLocaleString("ru-RU")}<span
                                     className="text-[#2EAA7B]">+</span>
@@ -473,25 +475,22 @@ export const MainPage = () => {
                             </div>
 
                             <div
-                                className="bg-white font-inter text-black w-[260px] flex flex-col items-center rounded-[30px] py-6 shadow-[0px_4px_21.2px_rgba(46,170,123,0.2)]">
+                                className="bg-white w-full font-inter text-black flex flex-col items-center rounded-[30px] py-6 shadow-[0px_4px_21.2px_rgba(46,170,123,0.2)]">
                                 <Paragraph className="text-[40px] text-center font-bold leading-none">
                                     {mainStats?.deals_count?.toLocaleString("ru-RU")}<span
                                     className="text-[#2EAA7B]">+</span>
                                 </Paragraph>
                                 <Paragraph className="font-normal text-base mt-2">сделок</Paragraph>
                             </div>
-                        </div>
-                        <div className="flex flex-col gap-[20px]">
                             <div
-                                className="bg-white font-inter text-black w-[260px] flex flex-col items-center rounded-[30px] py-6 shadow-[0px_4px_21.2px_rgba(46,170,123,0.2)]">
+                                className="bg-white font-inter text-black flex flex-col items-center rounded-[30px] py-6 shadow-[0px_4px_21.2px_rgba(46,170,123,0.2)]">
                                 <Paragraph className="text-[40px] text-center font-bold leading-none">
                                     {mainStats?.partners_count?.toLocaleString("ru-RU")}
                                 </Paragraph>
                                 <Paragraph className="font-normal text-base mt-2">партнёров</Paragraph>
                             </div>
-
                             <div
-                                className="bg-white font-inter text-black w-[260px] flex flex-col items-center rounded-[30px] py-6 shadow-[0px_4px_21.2px_rgba(46,170,123,0.2)]">
+                                className="bg-white font-inter text-black flex flex-col items-center rounded-[30px] py-6 shadow-[0px_4px_21.2px_rgba(46,170,123,0.2)]">
                                 <Paragraph className="text-[40px] text-center font-bold leading-none">
                                     {mainStats?.total_sold_amount
                                         ? `${(+mainStats.total_sold_amount / 1000000).toFixed(0)} млн `

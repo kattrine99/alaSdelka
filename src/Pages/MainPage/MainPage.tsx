@@ -237,7 +237,7 @@ export const MainPage = () => {
                                 title="Бизнес"
                                 cards={businessCards}
                                 maxVisible={8}
-                                Class="grid grid-cols-2 2xl:grid-cols-4 xl:grid-cols-3 lg:grid-cols-2 gap-y-10 gap-x-8 transition duration-300 ease-in-out"
+                                Class="grid grid-cols-1 2xl:grid-cols-4 xl:grid-cols-3 lg:grid-cols-2 gap-y-10 gap-x-8 transition duration-300 ease-in-out"
                                 ClassName="container mx-auto py-7.5"
                             />
                         );
@@ -301,7 +301,7 @@ export const MainPage = () => {
                                     title="Франшиза"
                                     cards={franchiseCards}
                                     maxVisible={8}
-                                    Class="grid grid-cols-2 2xl:grid-cols-4 xl:grid-cols-3 lg:grid-cols-2 gap-y-10 gap-x-8 transition duration-300 ease-in-out"
+                                    Class="grid grid-cols-1 2xl:grid-cols-4 xl:grid-cols-3 lg:grid-cols-2 gap-y-10 gap-x-8 transition duration-300 ease-in-out"
                                     ClassName="container mx-auto py-7.5"
                                 />
                             );
@@ -366,7 +366,7 @@ export const MainPage = () => {
                                 title="Стартапы"
                                 cards={startupCards}
                                 maxVisible={8}
-                                Class="grid grid-cols-2 2xl:grid-cols-4 xl:grid-cols-3 lg:grid-cols-2 gap-y-10 gap-x-4 md:gap-x-8 transition duration-300 ease-in-out"
+                                Class="grid grid-cols-1 2xl:grid-cols-4 xl:grid-cols-3 lg:grid-cols-2 gap-y-10 gap-x-4 md:gap-x-8 transition duration-300 ease-in-out"
                                 ClassName="container mx-auto py-7.5"
                             />
                         );
@@ -393,7 +393,7 @@ export const MainPage = () => {
                         <p className="px-48 py-7.5 text-red-500">Ошибка загрузки данных</p>
                     ) :
                     (<CardSection title="Инвестиции" cards={investmentOffers?.investments || []} maxVisible={4}
-                                  Class="grid grid-cols-2 2xl:grid-cols-4 xl:grid-cols-3 lg:grid-cols-2 gap-y-10 gap-x-8 transition duration-300 ease-in-out"
+                                  Class="grid grid-cols-1 2xl:grid-cols-4 xl:grid-cols-3 lg:grid-cols-2 gap-y-10 gap-x-8 transition duration-300 ease-in-out"
                                   ClassName={"container mx-auto py-7.5"}/>
                     )}
 

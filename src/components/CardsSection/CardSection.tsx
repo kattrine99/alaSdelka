@@ -29,7 +29,7 @@ export const CardSection: React.FC<CardSectionProps> = ({
         cards={filteredCards.slice(0, maxVisible)}
         containerClass={Class}
         cardIconClass="rounded-t-xl overflow-hidden"
-        cardWrapperClass="rounded-xl w-auto max-w-[22rem] flex-col shadow-lg"
+        cardWrapperClass="rounded-xl w-auto flex-col shadow-lg"
         WhatchButtonClass="py-3 px-5 w-full bg-[#2EAA7B] text-white font-medium rounded-md flex justify-center hover:bg-[#31B683] transition duration-300 cursor-pointer"
       />
     </div>

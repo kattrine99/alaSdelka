@@ -9,6 +9,7 @@ interface ModalBaseProps {
     onClose?: () => void;
     actions?: React.ReactNode;
     showCloseButton?: boolean;
+    HeadingClassName: string;
 }
 
 export const ModalBase: React.FC<ModalBaseProps> = ({
@@ -16,7 +17,9 @@ export const ModalBase: React.FC<ModalBaseProps> = ({
     message,
     onClose,
     actions,
-    showCloseButton = true
+    showCloseButton = true,
+    HeadingClassName,
+
 }) => {
     return (
         <div
@@ -35,7 +38,7 @@ export const ModalBase: React.FC<ModalBaseProps> = ({
                         <RxCross1 className="w-4 h-4" />
                     </button>
                 )}
-                <Heading className="text-[32px] mb-4 font-semibold font-inter text-[#101828] leading-6" level={2} text={title} />
+                <Heading className={`${HeadingClassName} mb-4`} level={2} text={title} />
                 <Paragraph className="text-[#667085] text-[16px] leading-5 space-[30px] tracking-[0.5%] mb-6">{message}</Paragraph>
                 {actions && <div>{actions}</div>}
             </div>

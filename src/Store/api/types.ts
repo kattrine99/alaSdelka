@@ -88,18 +88,29 @@ export interface UpdateUserInfoResponse {
 }
 
 export interface MyOffer {
-    id: number;
-    title: string;
-    price: number;
-    area: number;
-    offer_status: string;
-    address: {
-        address: string;
-        city: {
-            name_ru: string;
-        };
+    data: [
+        {
+            offer_type?: "business" | "franchise" | "startup" | "investments";
+            id: number;
+            title: string;
+            price: number;
+            area: number;
+            offer_status: string;
+            address: {
+                address: string;
+                city: {
+                    name_ru: string;
+                };
+            };
+            photos: { photo: string }[];
+        }
+    ]
+    meta: {
+        current_page: number;
+        last_page: number;
+        per_page: number;
+        total: number;
     };
-    photos: { photo: string }[];
 }
 export interface OfferFilters {
     page: number;
@@ -225,6 +236,10 @@ export interface OfferDetail {
         ],
     }
 }
+export interface SellOfferResponse {
+    message: string;
+    data: OfferDetails
+}
 export interface OfferDetails {
     id: number;
     title: string;
@@ -312,6 +327,15 @@ export interface Offer {
         city?: { name_ru: string };
     };
     offer_status?: string;
+}
+export interface FavoritesResponseType {
+    data: Offer[];
+    meta: {
+        current_page: number;
+        last_page: number;
+        per_page: number;
+        total: number;
+    };
 }
 
 

@@ -7,7 +7,7 @@ import SolidHeartIcon from '../../assets/Solidheart.svg?react';
 import { Link } from "react-router-dom";
 import { ICards } from "./Interfaces";
 import { offerTypeToUrlMap } from "../../utils/categoryMap";
-import { useGetFavoritesQuery, useToggleFavoriteMutation } from "../../Store/api/Api";
+import { useToggleFavoriteMutation } from "../../Store/api/Api";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../Store/store";
@@ -15,6 +15,7 @@ import { RootState } from "../../Store/store";
 
 export const Cards: React.FC<ICards> = ({
     cards,
+    initialFavorites = [],
     cardWrapperClass,
     cardIconClass,
     cardHeadingClass,
@@ -24,17 +25,18 @@ export const Cards: React.FC<ICards> = ({
     WhatchButtonClass,
 }) => {
     const isAuthenticated = useSelector((state: RootState) => state.auth.isAuthenticated);
-    const [favoriteIds, setFavoriteIds] = useState<number[]>([]);
+    const [favoriteIds, setFavoriteIds] = useState<number[]>(initialFavorites);
     const [toggleFavoriteAPI] = useToggleFavoriteMutation();
-    const { data: favoriteData } = useGetFavoritesQuery();
 
     useEffect(() => {
-        if (favoriteData?.data) {
-            const ids = favoriteData.data.map((offer) => offer.id);
-            setFavoriteIds(ids);
-        }
-    }, [favoriteData]);
+        const areEqual =
+            initialFavorites.length === favoriteIds.length &&
+            initialFavorites.every((id) => favoriteIds.includes(id));
 
+        if (!areEqual) {
+            setFavoriteIds(initialFavorites);
+        }
+    }, [favoriteIds, initialFavorites]);
 
 
     const handleToggle = async (id: number) => {

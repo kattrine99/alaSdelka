@@ -218,14 +218,28 @@ export const CardDetailPage = () => {
                                             {card?.address?.city?.name_ru ?? ""}
                                         </Paragraph>
                                     </div>
-                                    <iframe
-                                        src={`https://maps.google.com/maps?q=${card.address.latitude},${card.address.longitude}&z=15&layer=s&output=embed`}
-                                        width="100%"
-                                        height="350"
-                                        className="rounded-lg border border-[#2EAA7B]"
-                                        allowFullScreen
-                                        loading="eager"
-                                    />
+                                    {card.address?.latitude && card.address?.longitude ? (
+                                        <iframe
+                                            src={`https://maps.google.com/maps?q=${card.address.latitude},${card.address.longitude}&z=15&output=embed`}
+                                            width="100%"
+                                            height="350"
+                                            className="rounded-lg border border-[#2EAA7B]"
+                                            allowFullScreen
+                                            loading="eager"
+                                        />
+                                    ) : card.address?.address ? (
+                                        <iframe
+                                            src={`https://maps.google.com/maps?q=${encodeURIComponent(card.address.address)}&z=15&output=embed`}
+                                            width="100%"
+                                            height="350"
+                                            className="rounded-lg border border-[#2EAA7B]"
+                                            allowFullScreen
+                                            loading="eager"
+                                        />
+                                    ) : (
+                                        <Paragraph className="text-gray-500">Адрес недоступен</Paragraph>
+                                    )}
+
                                 </div>
                             </div>
                             <SellerInfoCard card={data.data} userId={card.user_id} offer_type={card.offer_type} />

@@ -1,13 +1,14 @@
 import { FaPhone, FaWhatsapp } from "react-icons/fa";
 import { IoIosMail } from "react-icons/io";
 import { FaTelegram } from "react-icons/fa6";
-import { Paragraph, NavLinks, categories, Applink } from "../index";
+import { Paragraph, NavLinks, categories, Applink, Button } from "../index";
 import { MdOutlineArrowDropDown } from "react-icons/md";
 import NoticeIcon from '../../assets/notification.svg?react';
 import FavIcon from '../../assets/heart-circle.svg?react';
 import ProfileIcon from '../../assets/profile-circle.svg?react';
 import { useSelector } from "react-redux";
 import { RootState } from "../../Store/store";
+import { useNavigate } from "react-router-dom";
 
 
 interface HeaderProps {
@@ -24,7 +25,7 @@ export const Header: React.FC<HeaderProps> = ({
     navLinksData,
 }) => {
     const isAuthenticated = useSelector((state: RootState) => state.auth.isAuthenticated);
-
+    const navigate = useNavigate()
     return (
         <div className="font-inter font-medium w-full bg-white shadow">
             {showtoBar && (<div className="flex justify-end items-center py-5 px-48 border-b border-[#E9E9E9]">
@@ -83,8 +84,8 @@ export const Header: React.FC<HeaderProps> = ({
                     {showAuthButtons && (
                         isAuthenticated ? (
                             <div className="flex ml-6 gap-2">
-                                <Applink to="/notices" ><NoticeIcon /></Applink>
-                                <Applink to="/favorites" ><FavIcon /></Applink>
+                                <Button onClick={() => navigate("/notices")} className={undefined}><NoticeIcon /></Button>
+                                <Button onClick={() => navigate("/favorites")} className={undefined}><FavIcon /></Button>
                                 <Applink to="/profile"><ProfileIcon /></Applink>
                             </div>
                         ) : (

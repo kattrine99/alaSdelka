@@ -1,5 +1,5 @@
 import { Header, Heading, Paragraph, NavLinks, CardSection, FilterBar, categories, Button, Footer, EmptyMessage } from "../../components";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ShopIcon from '../../assets/shop.svg?react';
 import InvestInIcon from '../../assets/investin_v15.svg?react';
@@ -7,6 +7,7 @@ import { useGetFavoritesQuery, useGetHomeOffersQuery } from "../../Store/api/Api
 import { useGetMainStatisticsQuery } from "../../Store/api/Api";
 import { FiltersState } from "../../utils/variables";
 import { categoryRouteMap } from "../../utils/categoryMap";
+import { Offer } from "../../Store/api/types";
 
 export const MainPage = () => {
     const [selectedCategory, setSelectedCategory] = useState<"Бизнес" | "Франшиза" | "Стартапы" | "Инвестиции">("Бизнес")
@@ -36,8 +37,30 @@ export const MainPage = () => {
                 return [];
         }
     }, [mainStats, selectedCategory]);
+    const [, setAllFavorites] = useState<Offer[]>([]);
 
-    const { data: favoritesData, refetch } = useGetFavoritesQuery();
+    const { data: favoritesData, refetch } = useGetFavoritesQuery({ page: 1, per_page: 1000 });
+    useEffect(() => {
+        const loadAllPages = async () => {
+            const firstPage = favoritesData?.data || [];
+            const totalPages = favoritesData?.meta?.last_page || 1;
+
+            const restPages = await Promise.all(
+                Array.from({ length: totalPages - 1 }, (_, i) =>
+                    fetch(`/api/favourite-offers?page=${i + 2}`)
+                        .then((res) => res.json())
+                        .then((res) => res.data)
+                )
+            );
+
+            const all = firstPage.concat(...restPages.flat());
+            setAllFavorites(all);
+        };
+
+        if (favoritesData?.data) {
+            loadAllPages();
+        }
+    }, [favoritesData]);
     const favoriteIds = Array.isArray(favoritesData)
         ? []
         : favoritesData?.data?.map((offer) => offer.id) ?? [];
@@ -269,6 +292,7 @@ export const MainPage = () => {
                                     key={franchiseType}
                                     title="Франшиза"
                                     cards={franchiseCards}
+                                    initialFavorites={favoriteIds}
                                     maxVisible={8}
                                     Class="grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-4 xl:grid-cols-3 lg:grid-cols-2 gap-y-10 gap-x-8 transition duration-300 ease-in-out"
                                     ClassName="container mx-auto py-7.5"
@@ -330,6 +354,7 @@ export const MainPage = () => {
                                 key={startupType}
                                 title="Стартапы"
                                 cards={startupCards}
+                                initialFavorites={favoriteIds}
                                 maxVisible={8}
                                 Class="grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-4 xl:grid-cols-3 lg:grid-cols-2 gap-y-10 gap-x-8 transition duration-300 ease-in-out"
                                 ClassName="container mx-auto py-7.5"
@@ -353,7 +378,11 @@ export const MainPage = () => {
                 ) : isErrorInvestment ? (
                     <p className="px-48 py-7.5 text-red-500">Ошибка загрузки данных</p>
                 ) :
-                    (<CardSection title="Инвестиции" cards={investmentOffers?.investments || []} maxVisible={4} Class="grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-4 xl:grid-cols-3 lg:grid-cols-2 gap-y-10 gap-x-8 transition duration-300 ease-in-out" ClassName={"container mx-auto py-7.5"} />
+                    (<CardSection
+                        title="Инвестиции"
+                        cards={investmentOffers?.investments || []} maxVisible={4}
+                        initialFavorites={favoriteIds}
+                        Class="grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-4 xl:grid-cols-3 lg:grid-cols-2 gap-y-10 gap-x-8 transition duration-300 ease-in-out" ClassName={"container mx-auto py-7.5"} />
                     )}
 
             </section>

@@ -17,8 +17,9 @@ import type {
     Notifications,
     GetUserOffersResponse,
     GetUserOffersParams,
-    Offer,
     OfferStatsResponse,
+    FavoritesResponseType,
+    SellOfferResponse,
 } from "./types";
 import { baseUrl } from "../../utils/baseUrl";
 import { ICard } from "../../components/Cards/Interfaces";
@@ -100,9 +101,24 @@ export const AuthApi = createApi({
         getMainStatistics: builder.query<HomeStatistics, void>({
             query: () => '/home/statistics',
         }),
-        getMyOffers: builder.query<{ offers: { data: MyOffer[] } }, number>({
-            query: (perPage) => `/my-offers?per_page=${perPage}`,
+        getMyOffers: builder.query<MyOffer, { page: number; per_page?: number }>({
+            query: ({ page, per_page = 5 }) =>
+                `/my-offers?page=${page}&per_page=${per_page}`,
         }),
+
+        sellOffer: builder.mutation<SellOfferResponse, number>({
+            query: (offerId) => ({
+                url: `/offer/${offerId}/sell`,
+                method: "POST",
+            }),
+        }),
+        archiveOffer: builder.mutation<void, number>({
+            query: (offerId) => ({
+                url: `/offer/${offerId}/archive`,
+                method: "POST",
+            }),
+        }),
+
         getOffers: builder.query<OffersResponse, OfferFilters>({
             query: (params) => ({
                 url: "/offers",
@@ -128,9 +144,15 @@ export const AuthApi = createApi({
                 method: "POST",
             }),
         }),
-        getFavorites: builder.query<{ data: Offer[] }, void>({
-            query: () => `/favourite-offers`,
-        }),
+        getFavorites: builder.query<FavoritesResponseType, { page?: number; per_page?: number }>(
+            {
+                query: ({ page = 1, per_page = 5 }) => ({
+                    url: '/favourite-offers',
+                    params: { page, per_page },
+                }),
+            }
+        ),
+
         getNotifications: builder.query<Notifications, void>({
             query: () => "/notifications",
         }),
@@ -190,7 +212,9 @@ export const {
     usePublishOfferMutation,
     useUpdateUserInfoMutation,
     usePromoteOfferMutation,
-    useToggleFavoriteMutation,  
+    useToggleFavoriteMutation,
+    useSellOfferMutation,
+    useArchiveOfferMutation,
     useGetHomeOffersQuery,
     useGetMyOffersQuery,
     useGetOffersQuery,

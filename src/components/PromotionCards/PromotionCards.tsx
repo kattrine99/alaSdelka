@@ -8,7 +8,7 @@ export const PromotionCards = () => {
     const { data, isLoading, isError } = useGetMyOffersQuery(5);
     const navigate = useNavigate();
 
-    const offers = data?.offers?.data || [];
+    const offers = data?.data || [];
 
     return (
         <div className="w-screen">

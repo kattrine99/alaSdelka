@@ -1,9 +1,10 @@
 import { useState } from "react";
-import { Button, Paragraph, Footer, Header, Breadcrumbs } from "../../../components/index";
+import { Button, Paragraph, Footer, Header, Breadcrumbs, Heading } from "../../../components/index";
 import { profileNavigate } from "../../../utils/categoryMap";
 import ShopIcon from '../../../assets/shop.svg?react';
 import InfoIcon from '../../../assets/info.svg?react';
 import CategoryIcon from '../../../assets/category.svg?react';
+import ShopSellIcon from '../../../assets/shop-sell.svg?react';
 import { InformationStep } from "./InformationStep";
 import { PublicationStep } from "./PublicationStep";
 import { ModerationStep } from "./ModerationStep";
@@ -11,10 +12,12 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../../Store/store";
 import { FiChevronRight } from "react-icons/fi";
 import { CardDetailPreview } from "../../../components/Cards/CardDetailPreview";
+import { FaCheckCircle } from "react-icons/fa";
+
 
 const steps = [
-    { title: "Тип объявления", subtitle: "Выберите что вы хотите сделать" },
     { title: "Раздел объявления", subtitle: "Выберите категорию объявления" },
+    { title: "Тип объявления", subtitle: "Выберите что вы хотите сделать" },
     { title: "Информация", subtitle: "Заполните детали объявления" },
     { title: "Публикация", subtitle: "Проверьте и подтвердите" },
     { title: "Готово", subtitle: "На модерации" }
@@ -28,22 +31,32 @@ const offerTypeMap: Record<OfferType, string> = {
     startup: "Стартап",
     investments: "Инвестиции"
 };
-const listingTypeLabels: Record<"buy" | "sell", string> = {
-    buy: "Купить",
-    sell: "Продать",
-};
+
 const listingTypes: Array<"buy" | "sell"> = ["sell", "buy"];
+
 
 const stepIcons = [
     <ShopIcon className="w-4 h-4" />,
     <CategoryIcon className="w-4 h-4" />,
     <InfoIcon className="w-4 h-4" />,
+    <FaCheckCircle className="w-4 h-4" />
 ];
+const ListingTypesIcons = [
+    <ShopIcon className="w-6 h-6" />,
+    <ShopSellIcon className="w-6 h-6" />
+]
 export const StepsAddingOffer = () => {
     const [step, setStep] = useState(0);
     const [listingType, setListingType] = useState<"buy" | "sell" | null>(null);
     const [offerType, setOfferType] = useState<OfferType | null>(null);
     const savedData = useSelector((state: RootState) => state.tempOffer.offerData);
+
+    const getListingTypeLabel = (type: "buy" | "sell") => {
+        if (offerType === "investments") {
+            return type === "buy" ? "Найти инвестиции" : "Инвестировать";
+        }
+        return type === "buy" ? "Купить" : "Продать";
+    };
 
     const handleNext = () => {
         if (step < steps.length - 1) {
@@ -51,8 +64,8 @@ export const StepsAddingOffer = () => {
         }
     };
     const isNextDisabled = () => {
-        if (step === 0) return !listingType;
-        if (step === 1) return !offerType;
+        if (step === 0) return !offerType;
+        if (step === 1) return !listingType;
         return false;
     };
 
@@ -118,35 +131,50 @@ export const StepsAddingOffer = () => {
                     </div>
 
 
-                    <div className="flex-1">
-                        {/* Step 0 — тип */}
+                    <div className="flex-1 p-10 bg-[#F8F8F8]">
+                        {/* Step 0 - категория */}
                         {step === 0 && (
-                            <div className="flex gap-6">
-                                {listingTypes.map((type) => (
-                                    <div
-                                        key={type}
-                                        className={`border rounded-lg px-6 py-4 cursor-pointer w-[180px] text-center ${listingType === type ? "border-[#2EAA7B] bg-[#F5FFFA]" : "border-gray-300"}`}
-                                        onClick={() => setListingType(type as "buy" | "sell")}
-                                    >
-                                        <Paragraph className="font-semibold">{listingTypeLabels[type]}</Paragraph>
-                                    </div>
-                                ))}
+                            <div>
+                                <Heading text={"Категория объявления"} level={2} className="font-inter font-semibold text-3xl text-[#101828] mb-1.5" />
+                                <Paragraph className="font-inter text-[16px] text-[#667085] mb-6">Выберите категорию объявления</Paragraph>
 
+                                <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+
+                                    {offerTypes.map((type) => (
+                                        <div
+                                            key={type}
+                                            className={`border rounded-lg w-48.75 h-43 cursor-pointer text-center 
+          flex items-center justify-center
+          ${offerType === type ? "border-[#2EAA7B] bg-[#F5FFFA]" : "border-gray-300"}`}
+                                            onClick={() => setOfferType(type)}
+                                        >
+                                            <Paragraph className="font-semibold">{offerTypeMap[type]}</Paragraph>
+                                        </div>
+                                    ))}
+                                </div>
                             </div>
                         )}
 
-                        {/* Step 1 - категория */}
+                        {/* Step 1 — тип */}
                         {step === 1 && (
-                            <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-                                {offerTypes.map((type) => (
-                                    <div
-                                        key={type}
-                                        className={`border rounded-lg px-6 py-4 cursor-pointer text-center ${offerType === type ? "border-[#2EAA7B] bg-[#F5FFFA]" : "border-gray-300"}`}
-                                        onClick={() => setOfferType(type)}
-                                    >
-                                        <Paragraph className="font-semibold">{offerTypeMap[type]}</Paragraph>
-                                    </div>
-                                ))}
+                            <div>
+                                <Heading text={"Категория объявления"} level={2} className="font-inter font-semibold text-3xl text-[#101828] mb-1.5" />
+                                <Paragraph className="font-inter text-[16px] text-[#667085] mb-6">Выберите категорию объявления</Paragraph>
+                                <div className="flex gap-6 text-center ">
+
+                                    {listingTypes.map((type, index) => (
+                                        <div
+                                            key={type}
+                                            className={`  border rounded-lg w-48.75 h-43 cursor-pointer text-center 
+          flex flex-col items-center justify-center ${listingType === type ? "border-[#2EAA7B] bg-[#F5FFFA]" : "border-gray-300"}`}
+                                            onClick={() => setListingType(type as "buy" | "sell")}
+                                        >
+                                            <span className="text-[#2EAA7B]">{ListingTypesIcons[index]}</span>
+                                            <Paragraph className="font-semibold">{getListingTypeLabel(type)}</Paragraph>
+                                        </div>
+                                    ))}
+
+                                </div>
                             </div>
                         )}
                         {/* Step-2 - информация */}

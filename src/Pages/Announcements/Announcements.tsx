@@ -174,7 +174,7 @@ export const AnnouncemntsPage = () => {
                               }}>Поместить в архив</Button>
                           </div>
                           <div className="flex flex-col w-full gap-7">
-                            {offer.promotion?.is_active ? (
+                            {offer.paid_offer == true ? (
                               <div className="bg-[#FF1D1D] text-white px-5 h-12 rounded-md flex items-center gap-2 font-semibold">
                                 Идет продвижение (осталось {offer.promotion.days_left} дней)
                                 <FireIcon className="z-10 w-5 h-5 text-[#FD6A0D]" />

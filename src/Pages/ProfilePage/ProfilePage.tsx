@@ -108,7 +108,7 @@ export const ProfilePage = () => {
                     message="Данные успешно обновлены"
                     showCloseButton={true}
                     onClose={() => setShowSuccess(false)}
-                />
+                    HeadingClassName={"font-inter font-semibold text-[#101828] text-3xl leading-[44px]"} />
             )}
             <Header navLinksData={profileNavigate} />
             <div className="w-full px-48 mt-6">

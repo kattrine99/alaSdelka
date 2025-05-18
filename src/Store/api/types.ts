@@ -96,6 +96,7 @@ export interface MyOffer {
             price: number;
             area: number;
             offer_status: string;
+            paid_offer?: boolean;
             address: {
                 address: string;
                 city: {

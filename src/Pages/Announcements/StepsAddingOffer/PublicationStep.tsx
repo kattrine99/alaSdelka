@@ -15,12 +15,12 @@ const mapOfferToCard = (data: OfferPayload): ICard => ({
     id: data.id ?? 0,
     title: data.title,
     description: data.description,
-    price: data.amount,
+    price: data.price,
     address: {
-        address: data.address || "Адрес не указан",
+        address: data.address?.address || "Адрес не указан",
         city: {
             name_ru: data.city_name || "Город не указан"
-        }
+        },
 
     }, area: data.area || 0,
     image: data.images?.[0]?.photo ? URL.createObjectURL(data.images[0].photo) : null,

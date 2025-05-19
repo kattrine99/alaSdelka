@@ -20,6 +20,7 @@ import type {
     OfferStatsResponse,
     FavoritesResponseType,
     SellOfferResponse,
+    OfferResponse,
 } from "./types";
 import { baseUrl } from "../../utils/baseUrl";
 import { ICard } from "../../components/Cards/Interfaces";
@@ -162,13 +163,12 @@ export const AuthApi = createApi({
                 params,
             }),
         }),
-        createOffer: builder.mutation<OfferDetail, FormData>({
-            query: (body) => ({
-                url: `offers/`,
-                method: 'POST',
-                body,
-                validateStatus: (response) => (response.status === 201 || response.status === 302)
-            })
+        createOffer: builder.mutation<{ data: OfferResponse }, FormData>({
+            query: (formData) => ({
+                url: "/offers",
+                method: "POST",
+                body: formData,
+            }),
         }),
 
         publishOffer: builder.mutation<{ data: OfferDetail }, number>({
@@ -197,7 +197,16 @@ export const AuthApi = createApi({
         getOfferContactView: builder.query<{ phone: string }, number>({
             query: (offerId) => `/offers/${offerId}/contact-view`
         }),
-
+        downloadOfferDocuments: builder.query<Blob, number>({
+            query: (offerId) => ({
+                url: `/offers/${offerId}/documents/download`,
+                method: 'GET',
+                responseHandler: async (response) => response.blob(),
+                headers: {
+                    'Accept': 'application/zip',
+                },
+            }),
+        }),
 
     }),
 
@@ -227,5 +236,6 @@ export const {
     useGetOfferStatsQuery,
     useGetUserInfoQuery,
     useGetOfferContactViewQuery,
+    useDownloadOfferDocumentsQuery,
 
 } = AuthApi;

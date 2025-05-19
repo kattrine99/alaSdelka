@@ -406,6 +406,13 @@ export interface FilterData {
             duration: number,
         }
     ],
+    premises_ownership_form: [
+        {
+            value: string,
+            label_ru: string,
+            label_uz: string
+        }
+    ]
 }
 export interface Notification {
     title_ru: string;
@@ -460,27 +467,35 @@ export interface OfferPayload {
     offer_type: "business" | "franchise" | "startup" | "investments";
     user_name: string;
     user_phone: string;
-    address?: string;
-    city_id: string;
+    address?: {
+        address: string;
+        city_id: number;
+        latitude?: number;
+        longitude?: number;
+    }
+
     city_name?: string;
     category_id: string;
 
-    amount: number;
+    price: number;
 
     business_type?: string;
-    convenience_ids: number[];
+    conveniences: number[];
 
     // SELL-specific
     property_ownership_type?: string;
-    documents?: { document: File }[];
+    documents?: File[];
     images?: { photo: File, order: number }[];
-    communication_links?: string[];
-    business_share?: string;
-    monthly_income?: string;
-    profit?: string;
-    payback_period?: string;
-    foundation_year?: string;
-
+    communication_channels?: { channel_name: string; link: string }[];
+    business_share?: number;
+    average_monthly_revenue?: number;
+    average_monthly_profit?: number;
+    payback_period?: number;
+    average_monthly_expenses?: number;
+    percentage_for_sale?: number;
+    foundation_year?: number;
+    profitability?: number;
+    employee_count?: number;
     // BUY
     legal_form?: string;
 
@@ -514,4 +529,20 @@ export interface OfferStatsResponse {
         favourite_count: StatMetric;
         contact_view_count: StatMetric;
     };
+}
+export interface PhotoResponse {
+    id: number;
+    photo: string;
+    order: number;
+}
+
+export interface DocumentResponse {
+    id: number;
+    document: string;
+}
+
+export interface OfferResponse {
+    id: number;
+    photos?: PhotoResponse[];
+    documents?: DocumentResponse[];
 }

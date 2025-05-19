@@ -1,12 +1,11 @@
 import { FiChevronRight } from "react-icons/fi";
 import { Button, Heading, Input, Paragraph } from "../../../components";
-import { useRef, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import FlagIcon from '../../../assets/Flag.svg?react';
 import PdfIcon from '../../../assets/pdf.svg?react';
 import GalleryIcon from '../../../assets/gallery.svg?react';
 import { HiPlus, HiX } from "react-icons/hi";
 import { useGetFiltersDataQuery } from "../../../Store/api/Api"
-import { OfferPayload } from "../../../Store/api/types";
 import { useDispatch } from "react-redux";
 import { setOfferData } from "../../../Store/tempStorage";
 import { useCreateOfferMutation, usePublishOfferMutation, useGetUserInfoQuery } from "../../../Store/api/Api";
@@ -43,20 +42,28 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
 
     const [files, setFiles] = useState<File[]>([]);
     const [images, setImages] = useState<File[]>([]);
-    const [links, setLinks] = useState<string[]>([""]);
+    const [links, setLinks] = useState<Array<{ channel_name: string; link: string }>>([{ channel_name: "", link: "" }]);
     const fullName = userInfo?.name?.trim() || "";
     const phoneNumber = userInfo?.phone?.replace("+998", "") || "";
     const inputRef = useRef<HTMLInputElement>(null);
     const imageInputRef = useRef<HTMLInputElement>(null);
-    const [address, setAddress] = useState("");
+    const [addressText, setAddressText] = useState("");
     const [propertyOwnershipType, setPropertyOwnershipType] = useState("");
-    const [businessShare, setBusinessShare] = useState("");
-    const [monthlyIncome, setMonthlyIncome] = useState("");
-    const [profit, setProfit] = useState("");
-    const [paybackPeriod, setPaybackPeriod] = useState("");
-    const [FoundationYear, setFoundationYear] = useState("");
+    const [monthlyIncome, setMonthlyIncome] = useState<number | undefined>(0);
+    const [profit, setProfit] = useState<number | undefined>(0);
+    const [expences, setExpences] = useState<number | undefined>(0);
+    const [percentageForSale, setpercentageForSale] = useState<number | undefined>(0);
+    const [paybackPeriod, setPaybackPeriod] = useState<number | undefined>(0);
+    const [FoundationYear, setFoundationYear] = useState<number | undefined>(0);
     const [businessOwnership, setBusinessOwnership] = useState("");
-
+    const currentYear = new Date().getFullYear();
+    const foundationYears = useMemo(() => {
+        const years = [];
+        for (let y = currentYear; y >= 1930; y--) {
+            years.push(y);
+        }
+        return years;
+    }, [currentYear]);
     const toggleConvenience = (id: number) => {
         setSelectedConveniences(prev =>
             prev.includes(id)
@@ -71,10 +78,15 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
     const handleRemove = (index: number) => {
         setFiles(prev => prev.filter((_, i) => i !== index));
     };
-    const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const newImages = e.target.files ? Array.from(e.target.files) : [];
-        setImages(prev => [...prev, ...newImages]);
+    const handleImageChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        const target = e.target as HTMLInputElement;
+        const files = target.files;
+        if (!files) return;
+
+        const fileArray = Array.from(files);
+        setImages(prev => [...prev, ...fileArray]);
     };
+
 
     const handleImageRemove = (index: number) => {
         setImages(prev => prev.filter((_, i) => i !== index));
@@ -82,12 +94,16 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
 
     const handleLinkChange = (index: number, value: string) => {
         const updatedLinks = [...links];
-        updatedLinks[index] = value;
+        updatedLinks[index].link = value;
         setLinks(updatedLinks);
     };
-
+    const handleChannelNameChange = (index: number, value: string) => {
+        const updated = [...links];
+        updated[index].channel_name = value;
+        setLinks(updated);
+    };
     const handleAddLink = () => {
-        setLinks([...links, ""]);
+        setLinks([...links, { channel_name: "", link: "" }]);
     };
 
     const isNextDisabled = () => {
@@ -96,62 +112,59 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
     const dispatch = useDispatch();
 
     const handleSubmit = async () => {
-        const wrappedDocuments = files.map(file => ({ document: file }));
-        const wrappedImages = images.map((file, index) => ({
-            photo: file,
-            order: index + 1
-        }));
-        const payload: OfferPayload = {
-            title,
-            description,
-            listing_type: listingType,
-            offer_type: offerType,
-            city_id: cityId,
-            address,
-            category_id: categoryId,
-            amount: Number(amount.replace(/\s/g, "")) || 0,
-            user_name: fullName,
-            user_phone: "+998" + phoneNumber,
-            convenience_ids: selectedConveniences,
-            business_type: businessOwnership,
-            ...(isSell && {
-                property_ownership_type: propertyOwnershipType,
-                documents: wrappedDocuments,
-                images: wrappedImages,
-                communication_links: links.map(link => link.trim()),
-                business_share: String(businessShare),
-                monthly_income: String(monthlyIncome),
-                profit: String(profit),
-                payback_period: String(paybackPeriod),
-                foundation_year: String(FoundationYear),
-            }),
-
-            ...(isStartup && {
-                project_stage_id: projectStageId ? parseInt(projectStageId, 10) : undefined,
-            }),
-            area: Number(Area)
-        };
         const formData = new FormData();
 
-        Object.entries(payload).forEach(([key, value]) => {
-            if (key === 'documents' && Array.isArray(value)) {
-                value.forEach((doc, i) => {
-                    formData.append(`documents[${i}][document]`, doc.document);
-                });
-            } else if (key === 'images' && Array.isArray(value)) {
-                value.forEach((img, i) => {
-                    formData.append(`images[${i}][photo]`, img.photo);
-                    formData.append(`images[${i}][order]`, img.order.toString());
-                });
-            } else if (Array.isArray(value)) {
-                value.forEach((v) => {
-                    formData.append(`${key}[]`, v);
-                });
-            } else if (value !== undefined && value !== null) {
-                formData.append(key, value);
-            }
+        formData.append("title", title);
+        formData.append("description", description);
+        formData.append("listing_type", listingType);
+        formData.append("offer_type", offerType);
+        formData.append("category_id", categoryId);
+        formData.append("price", amount.replace(/\s/g, ""));
+        formData.append("user_name", fullName);
+        formData.append("user_phone", "+998" + phoneNumber);
+        formData.append("area", Area);
+
+        formData.append("address[address]", addressText.trim() || "Не указан");
+        formData.append("address[latitude]", "0");
+        formData.append("address[longitude]", "0");
+        formData.append("address[city_id]", cityId);
+
+        selectedConveniences.forEach((id, index) => {
+            formData.append(`conveniences[${index}]`, String(id));
         });
 
+        if (isSell) {
+            formData.append("premises_ownership_form", propertyOwnershipType);
+            formData.append("business_type", businessOwnership);
+            formData.append("average_monthly_revenue", String(monthlyIncome || 0));
+            formData.append("average_monthly_profit", String(profit || 0));
+            formData.append("average_monthly_expenses", String(expences || 0));
+            formData.append("payback_period", String(paybackPeriod || 0));
+            formData.append("percentage_for_sale", String(percentageForSale || 0));
+            formData.append("foundation_year", String(FoundationYear || 0));
+
+            files.forEach(file => {
+                formData.append('documents[]', file);
+            });
+
+            images.forEach((image, idx) => {
+                formData.append(`photos[${idx}][photo]`, image);
+                formData.append(`photos[${idx}][order]`, String(idx));
+            });
+
+
+            links.forEach((link, idx) => {
+                if (link.channel_name.trim() && link.link.trim()) {
+                    formData.append(`communication_channels[${idx}][channel_name]`, link.channel_name.trim());
+                    formData.append(`communication_channels[${idx}][link]`, link.link.trim());
+                }
+            });
+        }
+
+        if (isStartup) {
+            formData.append("project_stage_id", projectStageId);
+        }
+        console.log([...formData.entries()])
         try {
             const response = await createOffer(formData).unwrap();
             const id = response?.data?.id;
@@ -161,24 +174,58 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
                 return;
             }
 
-            const city_name = filtersData?.cities.find(c => String(c.id) === cityId)?.name_ru || "Город не указан";
+            const selectedCity = filtersData?.cities.find(c => String(c.id) === cityId);
+            const city_name = selectedCity?.name_ru || "Город не указан";
+            const photosFromServer = response.data.photos ?? [];
 
             dispatch(setOfferData({
-                ...payload,
                 id,
-                city_name
+                title,
+                description,
+                listing_type: listingType,
+                offer_type: offerType,
+                price: Number(amount.replace(/\s/g, "")) || 0,
+                category_id: categoryId,
+                user_name: fullName,
+                user_phone: "+998" + phoneNumber,
+                area: Number(Area) || 0,
+                address: {
+                    address: addressText.trim() || "Не указан",
+                    latitude: 0,
+                    longitude: 0,
+                    city_id: Number(cityId) || 0,
+                },
+                conveniences: selectedConveniences,
+                city_name,
+                ...(isSell && {
+                    business_type: businessOwnership,
+                    premises_ownership_form: propertyOwnershipType,
+                    average_monthly_revenue: monthlyIncome || 0,
+                    average_monthly_profit: profit || 0,
+                    average_monthly_expenses: expences || 0,
+                    payback_period: paybackPeriod || 0,
+                    percentage_for_sale: percentageForSale || 0,
+                    foundation_year: FoundationYear || 0,
+                    documents: files,
+                    photos: photosFromServer,
+                    communication_channels: links
+                        .filter(link => link.channel_name.trim() && link.link.trim())
+                        .map(link => ({
+                            channel_name: link.channel_name.trim(),
+                            link: link.link.trim(),
+                        })),
+                }),
+                ...(isStartup && {
+                    project_stage_id: Number(projectStageId) || 0,
+                }),
             }));
 
             await publishOffer(id).unwrap();
-
             onNext();
-
         } catch (error) {
             console.error("Ошибка при создании или публикации оффера:", error);
         }
     };
-
-
 
     return (
         <div className="flex flex-col gap-6 p-10 bg-[#F8F8F8]">
@@ -222,21 +269,19 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
                 </span>
             </div>
             {/*Категория объявления */}
-            {isSell && isBusiness &&
-                <div className="flex flex-col gap-2 w-[800px] relative">
-                    <label className="text-[#101828] font-inter text-[16px] leading-[130%]">*Категория объявления</label>
-                    <select className="bg-[#F0F1F280] w-[800px] rounded-[14px] text-[#686A70] outline-none py-3.5 px-4.5"
-                        value={categoryId}
-                        onChange={(e) => setCategoryId(e.target.value)}>
-                        <option value="">Выбрать</option>
-                        {filtersData?.categories.map((cat) => (
-                            <option key={cat.id} value={String(cat.id)}>
-                                {cat.title_ru}
-                            </option>
-                        ))}
-                    </select>
-                </div>
-            }
+            <div className="flex flex-col gap-2 w-[800px] relative">
+                <label className="text-[#101828] font-inter text-[16px] leading-[130%]">*Категория объявления</label>
+                <select className="bg-[#F0F1F280] w-[800px] rounded-[14px] text-[#686A70] outline-none py-3.5 px-4.5"
+                    value={categoryId}
+                    onChange={(e) => setCategoryId(e.target.value)}>
+                    <option value="">Выбрать</option>
+                    {filtersData?.categories.map((cat) => (
+                        <option key={cat.id} value={String(cat.id)}>
+                            {cat.title_ru}
+                        </option>
+                    ))}
+                </select>
+            </div>
             {/*Имя и фамилия*/}
             <div className="flex gap-3.5 w-200">
                 <Input
@@ -302,8 +347,8 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
             <div className="flex flex-col gap-2 w-[800px] relative">
                 <Input className="bg-[#F0F1F280] w-full rounded-[14px] outline-none py-3.5 px-4.5" LabelClassName="font-inter text-[16px] leading-[130%]"
                     LabelText="*Адрес" type="text" placeholder="Введите" isError={false}
-                    value={address}
-                    onChange={(e) => setAddress(e.target.value)} />
+                    value={addressText}
+                    onChange={(e) => setAddressText(e.target.value)} />
             </div>
             {/*Площадь */}
             <div className="flex flex-col gap-2 w-[800px] relative">
@@ -338,8 +383,11 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
                     onChange={(e) => setPropertyOwnershipType(e.target.value)}
                 >
                     <option className="">Выбрать</option>
-                    <option value="rent">Аренда</option>
-                    <option value="owned">Собственность</option>
+                    {filtersData?.premises_ownership_form.map((form) => (
+                        <option key={form.value} value={String(form.value)}>
+                            {form.label_ru}
+                        </option>
+                    ))}
                 </select>
             </div>}
 
@@ -431,71 +479,99 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
                             <p className="text-[#232323] font-medium">Загрузить изображение</p>
                             <p className="text-[#667085] text-sm">620×220 px</p>
 
-                            <input
+                            <Input
                                 ref={imageInputRef}
                                 type="file"
                                 accept="image/*"
                                 multiple
-                                onChange={handleImageUpload}
+                                onChange={handleImageChange}
                                 className="hidden"
-                            />
+                                isError={false} />
                         </button>
                     </div>
                 </div>}
 
-            {isSell &&
+            {isSell && (
                 <div className="flex flex-col w-[800px]">
                     <label className="text-[#101828] font-inter text-[16px] leading-[130%]">Ссылка на официальные каналы коммуникации</label>
 
-                    {links.map((link, index) => (
+                    {links.map((item, index) => (
                         <div key={index} className="flex items-center gap-3">
                             <Input
+                                type="text"
+                                value={item.channel_name}
+                                placeholder="Например: Telegram"
+                                onChange={(e) => handleChannelNameChange(index, e.target.value)}
+                                className="bg-[#F0F1F280] w-60 rounded-[14px] outline-none py-3.5 px-4.5"
+                                isError={false}
+                            />
+                            <Input
                                 type="url"
-                                value={link}
+                                value={item.link}
                                 placeholder="https://..."
                                 onChange={(e) => handleLinkChange(index, e.target.value)}
-                                className="bg-[#F0F1F280] w-full rounded-[14px] outline-none py-3.5 px-4.5"
+                                className="bg-[#F0F1F280] flex-1 rounded-[14px] outline-none py-3.5 px-4.5 mb-2"
                                 isError={false}
                             />
                         </div>
                     ))}
 
-                    <button onClick={handleAddLink} className="text-[#2EAA7B] font-inter font-semibold text-[16px] leading-[130%] underline text-left w-max">
+                    <button
+                        onClick={handleAddLink}
+                        className="text-[#2EAA7B] font-inter font-semibold text-[16px] leading-[130%] underline text-left w-max mt-2"
+                    >
                         + Добавить доп. канал
                     </button>
-                </div>}
+                </div>
+            )}
 
             {isSell &&
                 <>
                     <div className="flex flex-col gap-2 w-[393px] relative">
                         <Input className="bg-[#F0F1F280] w-full rounded-[14px] outline-none py-3.5 px-4.5" LabelClassName="font-inter text-[16px] leading-[130%]"
                             LabelText="Доля продаваемого бизнеса" type="text" placeholder="Введите" isError={false}
-                            value={businessShare}
-                            onChange={(e) => setBusinessShare(e.target.value)} />
+                            value={String(percentageForSale)}
+                            onChange={(e) => setpercentageForSale(Number(e.target.value))} />
                     </div>
                     <div className="flex flex-col gap-2 w-[393px] relative">
                         <Input className="bg-[#F0F1F280] w-full rounded-[14px] outline-none py-3.5 px-4.5" LabelClassName="font-inter text-[16px] leading-[130%]"
                             LabelText="Сумма среднемесячного дохода" type="text" placeholder="Введите" isError={false}
-                            onChange={(e) => setMonthlyIncome(e.target.value)} />
+                            value={String(monthlyIncome)}
+                            onChange={(e) => setMonthlyIncome(Number(e.target.value))} />
+                    </div>
+                    <div className="flex flex-col gap-2 w-[393px] relative">
+                        <Input className="bg-[#F0F1F280] w-full rounded-[14px] outline-none py-3.5 px-4.5" LabelClassName="font-inter text-[16px] leading-[130%]"
+                            LabelText="Сумма среднемесячного расхода" type="text" placeholder="Введите" isError={false}
+                            value={String(expences)}
+                            onChange={(e) => setExpences(Number(e.target.value))} />
                     </div>
 
                     <div className="flex flex-col gap-2 w-[393px] relative">
                         <Input className="bg-[#F0F1F280] w-full rounded-[14px] outline-none py-3.5 px-4.5" LabelClassName="font-inter text-[16px] leading-[130%]"
                             LabelText="Сумма прибыли" type="text" placeholder="Введите" isError={false}
-                            value={profit}
-                            onChange={(e) => setProfit(e.target.value)} />
+                            value={String(profit)}
+                            onChange={(e) => setProfit(Number(e.target.value))} />
                     </div>
                     <div className="flex flex-col gap-2 w-[393px] relative">
                         <Input className="bg-[#F0F1F280] w-full rounded-[14px] outline-none py-3.5 px-4.5" LabelClassName="font-inter text-[16px] leading-[130%]"
                             LabelText="Окупаемость (месяц)" type="text" placeholder="Введите" isError={false}
-                            value={paybackPeriod}
-                            onChange={(e) => setPaybackPeriod(e.target.value)} />
+                            value={String(paybackPeriod)}
+                            onChange={(e) => setPaybackPeriod(Number(e.target.value))} />
                     </div>
                     <div className="flex flex-col gap-2 w-[393px] relative">
-                        <Input className="bg-[#F0F1F280] w-full rounded-[14px] outline-none py-3.5 px-4.5" LabelClassName="font-inter text-[16px] leading-[130%]"
-                            LabelText="Год основания бизнеса" type="text" placeholder="Введите" isError={false}
-                            value={FoundationYear}
-                            onChange={(e) => setFoundationYear(e.target.value)} />
+                        <label className="text-[#101828] font-inter text-[16px] leading-[130%]">Год основания бизнеса</label>
+                        <select
+                            className="bg-[#F0F1F280] w-full rounded-[14px] text-[#686A70] outline-none py-3.5 px-4.5"
+                            value={String(FoundationYear)}
+                            onChange={(e) => setFoundationYear(Number(e.target.value))}
+                        >
+                            <option value="">Выбрать</option>
+                            {foundationYears.map((year) => (
+                                <option key={year} value={year}>
+                                    {year}
+                                </option>
+                            ))}
+                        </select>
                     </div>
                 </>}
             {isBuy && <div className="flex flex-col gap-2 w-200 relative">
@@ -517,7 +593,6 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
             <Heading text={"Детали объявления"} level={3} className="font-inter font-semibold text-[#232323] text-xl leading-[130%]" />
             <div className="flex flex-col w-[393px] gap-6">
                 {conveniences.map(({ id, name_ru }) => {
-                    // Условия фильтрации по isFranchise и isInvestments
                     const isFranchiseOnly = [10, 11].includes(id);
                     const isInvestmentOnly = [9].includes(id);
 
@@ -555,5 +630,4 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
         </div>
     );
 };
-
 

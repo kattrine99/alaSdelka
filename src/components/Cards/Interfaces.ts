@@ -2,7 +2,7 @@
 export interface ICard {
     offer_type: "бизнес" | "франшиза" | "стартап" | "инвестиции" | "business" | "franchise" | "startup" | "investments";
     id: number;
-    image?: string | null;
+    image?: File | string | null;
     price: number;
     title: string;
     description?: string;
@@ -11,6 +11,8 @@ export interface ICard {
         city: {
             name_ru: string;
         };
+        longitude?: number;
+        latitude?: number;
     };
     area: number;
     offer_status?: string;

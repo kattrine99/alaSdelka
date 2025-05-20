@@ -42,7 +42,7 @@ export const Filters: React.FC<FiltersProps> = ({ offer_type, filters, setFilter
     console.log(localFilters)
     return (
         <div className="w-full mt-5">
-            <div className="w-[286px] gap-y-2">
+            <div className="gap-y-2">
                 <div className="flex items-center gap-2">
                     <FrameIcon className="text-[#2EAA7B]" />
                     <Paragraph>Категория проекта</Paragraph>
@@ -64,7 +64,7 @@ export const Filters: React.FC<FiltersProps> = ({ offer_type, filters, setFilter
                 </div>
             </div>
 
-            <div className="w-[286px] gap-y-2">
+            <div className="gap-y-2">
                 <div className="flex items-center gap-2">
                     <FaLocationDot className="text-[#2EAA7B]" />
                     <Paragraph>Город</Paragraph>
@@ -87,7 +87,7 @@ export const Filters: React.FC<FiltersProps> = ({ offer_type, filters, setFilter
             </div>
 
             {showStage && (
-                <div className="w-[286px] gap-y-2">
+                <div className="gap-y-2">
                     <div className="flex items-center gap-2">
                         <CopyIcon className="text-[#2EAA7B]" />
                         <Paragraph>Стадия проекта</Paragraph>
@@ -111,7 +111,7 @@ export const Filters: React.FC<FiltersProps> = ({ offer_type, filters, setFilter
             )}
 
             {showPayback && (
-                <div className="w-[286px] gap-y-2">
+                <div className="gap-y-2">
                     <div className="flex items-center gap-2">
                         <FaClock className="text-[#2EAA7B]" />
                         <Paragraph>Период окупаемости</Paragraph>
@@ -131,7 +131,7 @@ export const Filters: React.FC<FiltersProps> = ({ offer_type, filters, setFilter
             )}
 
             {showPrice && (
-                <div className="w-[286px] gap-y-2">
+                <div className="gap-y-2">
                     <div className="flex items-center gap-2">
                         <HiCurrencyDollar className="text-[#2EAA7B]" />
                         <Paragraph>Цена</Paragraph>
@@ -154,7 +154,7 @@ export const Filters: React.FC<FiltersProps> = ({ offer_type, filters, setFilter
             )}
 
             {showInvestments && (
-                <div className="w-[286px] gap-y-2 mt-4">
+                <div className="gap-y-2 mt-4">
                     <div className="flex items-center gap-2">
                         <WalletIcon className="text-[#2EAA7B]" />
                         <Paragraph>Вложения</Paragraph>
@@ -175,7 +175,7 @@ export const Filters: React.FC<FiltersProps> = ({ offer_type, filters, setFilter
             )}
 
             {showProfit && (
-                <div className="w-[286px] gap-y-2 mt-4">
+                <div className="gap-y-2 mt-4">
                     <div className="flex items-center gap-2">
                         <ChartIcon className="text-[#2EAA7B]" />
                         <Paragraph>Рентабельность</Paragraph>
@@ -197,7 +197,7 @@ export const Filters: React.FC<FiltersProps> = ({ offer_type, filters, setFilter
                 </div>
             )}
 
-            <div className="w-[286px] mt-4">
+            <div className="mt-4">
                 {["Найти", "Сбросить"].map((item) => (
                     <Button
                         key={item}

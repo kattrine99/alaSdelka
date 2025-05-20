@@ -237,7 +237,7 @@ export const MainPage = () => {
                                 title="Бизнес"
                                 cards={businessCards}
                                 maxVisible={8}
-                                Class="grid grid-cols-1 2xl:grid-cols-4 xl:grid-cols-3 lg:grid-cols-2 gap-y-10 gap-x-8 transition duration-300 ease-in-out"
+                                Class="grid grid-cols-2 2xl:grid-cols-4 xl:grid-cols-3 lg:grid-cols-2 gap-y-10 gap-x-2 transition duration-300 ease-in-out"
                                 ClassName="container mx-auto py-7.5"
                             />
                         );

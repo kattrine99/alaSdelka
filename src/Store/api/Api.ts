@@ -24,6 +24,7 @@ import type {
 } from "./types";
 import { baseUrl } from "../../utils/baseUrl";
 import { ICard } from "../../components/Cards/Interfaces";
+import qs from 'qs'
 
 export const AuthApi = createApi({
     reducerPath: "Api",
@@ -37,6 +38,7 @@ export const AuthApi = createApi({
             headers.set("Accept", "application/json");
             return headers;
         },
+        paramsSerializer: (params) => qs.stringify(params),
     }),
     endpoints: (builder) => ({
         //Авторизация и выход
@@ -190,7 +192,7 @@ export const AuthApi = createApi({
         getOfferStats: builder.query<OfferStatsResponse, { offer_id: number; from: string; to: string }>({
             query: ({ offer_id, from, to }) => ({
                 url: `/offers/${offer_id}/stats`,
-                method: "GET",
+                method: 'GET',
                 params: { from, to },
             }),
         }),
@@ -234,6 +236,7 @@ export const {
     useGetNotificationsQuery,
     useGetUserOffersQuery,
     useGetOfferStatsQuery,
+    useLazyGetOfferStatsQuery,
     useGetUserInfoQuery,
     useGetOfferContactViewQuery,
     useDownloadOfferDocumentsQuery,

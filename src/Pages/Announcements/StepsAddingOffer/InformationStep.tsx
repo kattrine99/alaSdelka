@@ -91,6 +91,13 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
     const handleImageRemove = (index: number) => {
         setImages(prev => prev.filter((_, i) => i !== index));
     };
+    const handleNumericInput = (
+        e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+        setter: (val: number) => void
+    ) => {
+        const value = e.target.value.replace(/\D/g, "");
+        setter(Number(value));
+    };
 
     const handleLinkChange = (index: number, value: string) => {
         const updatedLinks = [...links];
@@ -351,12 +358,19 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
                     onChange={(e) => setAddressText(e.target.value)} />
             </div>
             {/*Площадь */}
-            <div className="flex flex-col gap-2 w-[800px] relative">
-                <Input className="bg-[#F0F1F280] w-full rounded-[14px] outline-none py-3.5 px-4.5" LabelClassName="font-inter text-[16px] leading-[130%]"
-                    LabelText="*Площадь" type="text" placeholder="Введите" isError={false}
-                    value={Area}
-                    onChange={(e) => setArea(e.target.value)} />
-            </div>
+            <Input
+                className="bg-[#F0F1F280] w-full rounded-[14px] outline-none py-3.5 px-4.5"
+                LabelClassName="font-inter text-[16px] leading-[130%]"
+                LabelText="Площадь, кв. м."
+                type="text"
+                placeholder="Введите"
+                isError={false}
+                value={Area}
+                onChange={(e) => {
+                    const value = e.target.value.replace(/\D/g, "");
+                    setArea(value);
+                }}
+            />
             {/*Форма владения бизнесом */}
             {isSell &&
                 <div className="flex flex-col gap-2 w-[393px] relative">
@@ -441,9 +455,14 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
                 <Input className="bg-[#F0F1F280] w-full rounded-[14px] outline-none py-3.5 px-4.5" LabelClassName="font-inter text-[16px] leading-[130%]"
                     LabelText="*Сумма, сум" type="text" placeholder="Введите" isError={false}
                     value={amount}
-                    onChange={(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => setAmount(e.target.value)} />
+                    onChange={(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+                        const rawValue = e.target.value.replace(/\D/g, "");
+                        const formatted = rawValue.replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+                        setAmount(formatted);
+                    }} />
             </div>
 
+            {/*Изображения */}
             {isSell &&
                 <div className="flex flex-col gap-2">
                     <label className="text-[#101828] font-inter text-[16px] leading-[130%] mb-2.5">
@@ -491,6 +510,7 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
                     </div>
                 </div>}
 
+            {/*Ссылки */}
             {isSell && (
                 <div className="flex flex-col w-[800px]">
                     <label className="text-[#101828] font-inter text-[16px] leading-[130%]">Ссылка на официальные каналы коммуникации</label>
@@ -528,35 +548,74 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
             {isSell &&
                 <>
                     <div className="flex flex-col gap-2 w-[393px] relative">
-                        <Input className="bg-[#F0F1F280] w-full rounded-[14px] outline-none py-3.5 px-4.5" LabelClassName="font-inter text-[16px] leading-[130%]"
-                            LabelText="Доля продаваемого бизнеса" type="text" placeholder="Введите" isError={false}
+                        <Input
+                            className="bg-[#F0F1F280] w-full rounded-[14px] outline-none py-3.5 px-4.5"
+                            LabelClassName="font-inter text-[16px] leading-[130%]"
+                            LabelText="Доля продаваемого бизнеса"
+                            type="text"
+                            placeholder="Введите"
+                            isError={false}
                             value={String(percentageForSale)}
-                            onChange={(e) => setpercentageForSale(Number(e.target.value))} />
+                            onChange={(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+                                const value = e.target.value.replace(/\D/g, ""); // только цифры
+                                const numeric = Math.min(Number(value), 100);   // ограничиваем до 100
+                                setpercentageForSale(numeric);
+                            }}
+                        />
                     </div>
                     <div className="flex flex-col gap-2 w-[393px] relative">
-                        <Input className="bg-[#F0F1F280] w-full rounded-[14px] outline-none py-3.5 px-4.5" LabelClassName="font-inter text-[16px] leading-[130%]"
-                            LabelText="Сумма среднемесячного дохода" type="text" placeholder="Введите" isError={false}
-                            value={String(monthlyIncome)}
-                            onChange={(e) => setMonthlyIncome(Number(e.target.value))} />
+                        <Input
+                            className="bg-[#F0F1F280] w-full rounded-[14px] outline-none py-3.5 px-4.5"
+                            LabelClassName="font-inter text-[16px] leading-[130%]"
+                            LabelText="Сумма среднемесячного дохода"
+                            type="text"
+                            placeholder="Введите"
+                            isError={false}
+                            value={monthlyIncome?.toLocaleString("ru-RU").replace(/,/g, " ")}
+                            onChange={(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+                                const rawValue = e.target.value.replace(/\D/g, "");
+                                setMonthlyIncome(Number(rawValue));
+                            }}
+                        />
                     </div>
+
                     <div className="flex flex-col gap-2 w-[393px] relative">
-                        <Input className="bg-[#F0F1F280] w-full rounded-[14px] outline-none py-3.5 px-4.5" LabelClassName="font-inter text-[16px] leading-[130%]"
-                            LabelText="Сумма среднемесячного расхода" type="text" placeholder="Введите" isError={false}
-                            value={String(expences)}
-                            onChange={(e) => setExpences(Number(e.target.value))} />
+                        <Input
+                            className="bg-[#F0F1F280] w-full rounded-[14px] outline-none py-3.5 px-4.5"
+                            LabelClassName="font-inter text-[16px] leading-[130%]"
+                            LabelText="Сумма среднемесячного расхода"
+                            type="text"
+                            placeholder="Введите"
+                            isError={false}
+                            value={expences?.toLocaleString("ru-RU").replace(/,/g, " ")}
+                            onChange={(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+                                const rawValue = e.target.value.replace(/\D/g, "");
+                                setExpences(Number(rawValue));
+                            }}
+                        />
+                    </div>
+
+                    <div className="flex flex-col gap-2 w-[393px] relative">
+                        <Input
+                            className="bg-[#F0F1F280] w-full rounded-[14px] outline-none py-3.5 px-4.5"
+                            LabelClassName="font-inter text-[16px] leading-[130%]"
+                            LabelText="Сумма прибыли"
+                            type="text"
+                            placeholder="Введите"
+                            isError={false}
+                            value={profit?.toLocaleString("ru-RU").replace(/,/g, " ")}
+                            onChange={(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+                                const rawValue = e.target.value.replace(/\D/g, "");
+                                setProfit(Number(rawValue));
+                            }}
+                        />
                     </div>
 
                     <div className="flex flex-col gap-2 w-[393px] relative">
                         <Input className="bg-[#F0F1F280] w-full rounded-[14px] outline-none py-3.5 px-4.5" LabelClassName="font-inter text-[16px] leading-[130%]"
-                            LabelText="Сумма прибыли" type="text" placeholder="Введите" isError={false}
-                            value={String(profit)}
-                            onChange={(e) => setProfit(Number(e.target.value))} />
-                    </div>
-                    <div className="flex flex-col gap-2 w-[393px] relative">
-                        <Input className="bg-[#F0F1F280] w-full rounded-[14px] outline-none py-3.5 px-4.5" LabelClassName="font-inter text-[16px] leading-[130%]"
                             LabelText="Окупаемость (месяц)" type="text" placeholder="Введите" isError={false}
                             value={String(paybackPeriod)}
-                            onChange={(e) => setPaybackPeriod(Number(e.target.value))} />
+                            onChange={(e) => handleNumericInput(e, setPaybackPeriod)} />
                     </div>
                     <div className="flex flex-col gap-2 w-[393px] relative">
                         <label className="text-[#101828] font-inter text-[16px] leading-[130%]">Год основания бизнеса</label>

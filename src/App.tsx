@@ -10,6 +10,7 @@ import { StepsAddingOffer } from "./Pages/Announcements/StepsAddingOffer/StepsAd
 import { PromotionPage } from "./Pages/PromotionPage/PromotionPage";
 import { useAutoLogout } from "./utils/useAutoLogout";
 import { useAuthInit } from "./utils/useAUthInit";
+import { PromotionCards } from "./components";
 const Layout = () => {
   return (
     <>
@@ -34,6 +35,7 @@ const routerConfig = createBrowserRouter([
       { path: "announcements", element: <AnnouncemntsPage /> },
       { path: "add-offer", element: <StepsAddingOffer /> },
       { path: "/promotion/:id", element: <PromotionPage /> },
+      { path: "/promotion", element: <PromotionCards /> },
       { path: "notices", element: <NoticePage /> },
       { path: "/statistics/:id", element: <StatisticsPage /> },
       { path: ":category/card/:id", element: <CardDetailPage /> },
@@ -43,8 +45,7 @@ const routerConfig = createBrowserRouter([
 ]);
 
 function App() {
-  useAuthInit();
-
+  useAuthInit();     
   const dispatch = useDispatch();
   useAutoLogout();
   useEffect(() => {

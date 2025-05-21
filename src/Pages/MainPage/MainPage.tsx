@@ -1,23 +1,13 @@
-import {
-    Header,
-    Heading,
-    Paragraph,
-    NavLinks,
-    CardSection,
-    FilterBar,
-    categories,
-    Button,
-    Footer,
-    EmptyMessage
-} from "../../components";
-import {useMemo, useState} from "react";
-import {useNavigate} from "react-router-dom";
+import { Header, Heading, Paragraph, NavLinks, CardSection, FilterBar, categories, Button, Footer, EmptyMessage } from "../../components";
+import { useEffect, useMemo, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import ShopIcon from '../../assets/shop.svg?react';
 import InvestInIcon from '../../assets/investin_v15.svg?react';
-import {useGetHomeOffersQuery} from "../../Store/api/Api";
-import {useGetMainStatisticsQuery} from "../../Store/api/Api";
-import {FiltersState} from "../../utils/variables";
-import {categoryRouteMap} from "../../utils/categoryMap";
+import { useGetFavoritesQuery, useGetHomeOffersQuery } from "../../Store/api/Api";
+import { useGetMainStatisticsQuery } from "../../Store/api/Api";
+import { FiltersState } from "../../utils/variables";
+import { categoryRouteMap } from "../../utils/categoryMap";
+import { Offer } from "../../Store/api/types";
 
 export const MainPage = () => {
     const [selectedCategory, setSelectedCategory] = useState<"Бизнес" | "Франшиза" | "Стартапы" | "Инвестиции">("Бизнес")
@@ -47,7 +37,37 @@ export const MainPage = () => {
                 return [];
         }
     }, [mainStats, selectedCategory]);
+    const [, setAllFavorites] = useState<Offer[]>([]);
 
+    const { data: favoritesData, refetch } = useGetFavoritesQuery({ page: 1, per_page: 1000 });
+    useEffect(() => {
+        const loadAllPages = async () => {
+            const firstPage = favoritesData?.data || [];
+            const totalPages = favoritesData?.meta?.last_page || 1;
+
+            const restPages = await Promise.all(
+                Array.from({ length: totalPages - 1 }, (_, i) =>
+                    fetch(`/api/favourite-offers?page=${i + 2}`)
+                        .then((res) => res.json())
+                        .then((res) => res.data)
+                )
+            );
+
+            const all = firstPage.concat(...restPages.flat());
+            setAllFavorites(all);
+        };
+
+        if (favoritesData?.data) {
+            loadAllPages();
+        }
+    }, [favoritesData]);
+    const favoriteIds = Array.isArray(favoritesData)
+        ? []
+        : favoritesData?.data?.map((offer) => offer.id) ?? [];
+    const handleFavoritesChanged = async (id: number, status: "added" | "removed") => {
+        console.log(`Card ${id} was ${status === "added" ? "added to" : "removed from"} favorites.`);
+        await refetch();
+    };
     const [filters, setFilters] = useState<FiltersState>({
         category: "",
         city: "",
@@ -179,18 +199,16 @@ export const MainPage = () => {
             {/* Карточки */}
             <section className="mt-12.5 mb-8.75 px-3 md:px-0 container mx-auto">
                 <div className="flex justify-start">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-y-4">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-y-4">ъ
                         <div>
                             <Button onClick={() => {
                                 navigate("/business")
                             }} className={""}>
-                                <Heading level={2} text="Бизнес"
-                                         className="font-openSans font-bold hover:text-[#2EAA7B] hover:underline hover:decoration-1 transition duration-500 text-3xl cursor-pointer"/>
+                                <Heading level={2} text="Бизнес" className="font-openSans font-bold hover:text-[#2EAA7B] hover:underline hover:decoration-1 transition duration-500 text-3xl cursor-pointer" />
                             </Button>
-                        </div>
-                        <div className="flex gap-x-4 mb:gap-10.5 text-center">
-                            <Button onClick={() => setListingTypes(prev => ({...prev, [selectedCategory]: "buy"}))}
-                                    className={`flex items-center justify-center gap-x-2 rounded-[8px] h-13 w-91 border border-[#2EAA7B] text-[#2EAA7B] text-[16px] hover:bg-[#2EAA7B] hover:text-white transition duration-500 font-inter leading-[150%] font-semibold
+                    </div>
+                    <div className="flex gap-x-4 mb:gap-10.5 text-center">
+                        <Button onClick={() => setListingTypes(prev => ({ ...prev, [selectedCategory]: "buy" }))} className={`flex items-center justify-center gap-x-2 rounded-[8px] h-13 w-91 border border-[#2EAA7B] text-[#2EAA7B] text-[16px] hover:bg-[#2EAA7B] hover:text-white transition duration-500 font-inter leading-[150%] font-semibold
                         ${businessType === "buy" ? "bg-[#2EAA7B] text-white border-[#2EAA7B]"
                                         : "border-[#2EAA7B] text-[#2EAA7B] hover:bg-[#2EAA7B] hover:text-white"
                                     }`}>
@@ -236,6 +254,8 @@ export const MainPage = () => {
                                 key={businessType}
                                 title="Бизнес"
                                 cards={businessCards}
+                                initialFavorites={favoriteIds}
+                                onFavoritesChanged={handleFavoritesChanged}
                                 maxVisible={8}
                                 Class="grid grid-cols-2 2xl:grid-cols-4 xl:grid-cols-3 lg:grid-cols-2 gap-y-10 gap-x-2 transition duration-300 ease-in-out"
                                 ClassName="container mx-auto py-7.5"
@@ -243,19 +263,18 @@ export const MainPage = () => {
                         );
                     })())}
             </section>
-            <section className="mt-12.5 mb-8.75 px-3 md:px-0 container mx-auto">
-                <div className="lex justify-start">
+            <section className="px-48 mt-12.5 mb-8.75 px-3 md:px-0 container mx-auto">
+                <div className="flex justify-start">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-y-4">
                         <div>
-                            <Button onClick={() => {
-                                navigate("/franchise")
-                            }} className={""}>
-                                <Heading level={2} text="Франшиза"
-                                         className="font-openSans font-bold hover:text-[#2EAA7B] hover:underline hover:decoration-1 transition duration-500 text-3xl cursor-pointer"/>
-                            </Button>
-                        </div>
-                        <div className="flex gap-x-4 mb:gap-10.5 text-center">
-                            <Button onClick={() => setListingTypes(prev => ({...prev, Франшиза: "buy"}))} className={`flex items-center justify-center gap-x-2 rounded-[8px] h-[52px] w-[364px] border border-[#2EAA7B] text-[#2EAA7B] text-[16px] hover:bg-[#2EAA7B] hover:text-white transition duration-500 font-inter leading-[150%] font-semibold
+                        <Button onClick={() => {
+                            navigate("/franchise")
+                        }} className={""}>
+                            <Heading level={2} text="Франшиза" className="font-openSans font-bold hover:text-[#2EAA7B] hover:underline hover:decoration-1 transition duration-500 text-3xl cursor-pointer" />
+                        </Button>
+                    </div>
+                    <div className="flex gap-x-4 mb:gap-10.5 text-center">
+                        <Button onClick={() => setListingTypes(prev => ({ ...prev, Франшиза: "buy" }))} className={`flex items-center justify-center gap-x-2 rounded-[8px] h-[52px] w-[364px] border border-[#2EAA7B] text-[#2EAA7B] text-[16px] hover:bg-[#2EAA7B] hover:text-white transition duration-500 font-inter leading-[150%] font-semibold
                         ${franchiseType === "buy" ? "bg-[#2EAA7B] text-white border-[#2EAA7B]"
                                 : "border-[#2EAA7B] text-[#2EAA7B] hover:bg-[#2EAA7B] hover:text-white"
                             }`}>
@@ -300,6 +319,7 @@ export const MainPage = () => {
                                     key={franchiseType}
                                     title="Франшиза"
                                     cards={franchiseCards}
+                                    initialFavorites={favoriteIds}
                                     maxVisible={8}
                                     Class="grid grid-cols-1 2xl:grid-cols-4 xl:grid-cols-3 lg:grid-cols-2 gap-y-10 gap-x-8 transition duration-300 ease-in-out"
                                     ClassName="container mx-auto py-7.5"
@@ -314,14 +334,13 @@ export const MainPage = () => {
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-y-4">
                         <div>
                             <Button onClick={() => {
-                                navigate("/startups")
-                            }} className={""}>
-                                <Heading level={2} text="Стартапы"
-                                         className="font-openSans font-bold hover:text-[#2EAA7B] hover:underline hover:decoration-1 transition duration-500 text-3xl cursor-pointer"/>
-                            </Button>
-                        </div>
-                        <div className="flex gap-x-4 mb:gap-10.5 text-center">
-                            <Button onClick={() => setListingTypes(prev => ({...prev, Стартапы: "buy"}))} className={`flex items-center justify-center gap-x-2 rounded-[8px] h-[52px] w-[364px] border border-[#2EAA7B] text-[#2EAA7B] text-[16px] hover:bg-[#2EAA7B] hover:text-white transition duration-500 font-inter leading-[150%] font-semibold
+                            navigate("/startups")
+                        }} className={""}>
+                            <Heading level={2} text="Стартапы" className="font-openSans font-bold hover:text-[#2EAA7B] hover:underline hover:decoration-1 transition duration-500 text-3xl cursor-pointer" />
+                        </Button>
+                    </div>
+                    <div className="flex gap-x-4 mb:gap-10.5 text-center">
+                        <Button onClick={() => setListingTypes(prev => ({ ...prev, Стартапы: "buy" }))} className={`flex items-center justify-center gap-x-2 rounded-[8px] h-[52px] w-[364px] border border-[#2EAA7B] text-[#2EAA7B] text-[16px] hover:bg-[#2EAA7B] hover:text-white transition duration-500 font-inter leading-[150%] font-semibold
                         ${startupType === "buy" ? "bg-[#2EAA7B] text-white border-[#2EAA7B]"
                                 : "border-[#2EAA7B] text-[#2EAA7B] hover:bg-[#2EAA7B] hover:text-white"
                             }`}>
@@ -365,6 +384,7 @@ export const MainPage = () => {
                                 key={startupType}
                                 title="Стартапы"
                                 cards={startupCards}
+                                initialFavorites={favoriteIds}
                                 maxVisible={8}
                                 Class="grid grid-cols-1 2xl:grid-cols-4 xl:grid-cols-3 lg:grid-cols-2 gap-y-10 gap-x-4 md:gap-x-8 transition duration-300 ease-in-out"
                                 ClassName="container mx-auto py-7.5"
@@ -390,11 +410,13 @@ export const MainPage = () => {
                             className="w-10 h-10 border-4 border-[#2EAA7B] border-t-transparent rounded-full animate-spin"></div>
                     </div>
                 ) : isErrorInvestment ? (
-                        <p className="px-48 py-7.5 text-red-500">Ошибка загрузки данных</p>
-                    ) :
-                    (<CardSection title="Инвестиции" cards={investmentOffers?.investments || []} maxVisible={4}
-                                  Class="grid grid-cols-1 2xl:grid-cols-4 xl:grid-cols-3 lg:grid-cols-2 gap-y-10 gap-x-8 transition duration-300 ease-in-out"
-                                  ClassName={"container mx-auto py-7.5"}/>
+                    <p className="px-48 py-7.5 text-red-500">Ошибка загрузки данных</p>
+                ) :
+                    (<CardSection
+                        title="Инвестиции"
+                        cards={investmentOffers?.investments || []} maxVisible={4}
+                        initialFavorites={favoriteIds}
+                        Class="grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-4 xl:grid-cols-3 lg:grid-cols-2 gap-y-10 gap-x-8 transition duration-300 ease-in-out" ClassName={"container mx-auto py-7.5"} />
                     )}
 
             </section>
@@ -465,29 +487,27 @@ export const MainPage = () => {
                     {/*Цифры*/}
                     <div className="flex justify-start gap-5 mt-[58px]">
                         <div className="grid grid-cols-2 gap-[20px] md:max-w-2xl w-full">
-                            <div
-                                className="bg-white w-full font-inter text-black flex flex-col items-center rounded-[30px] py-6 shadow-[0px_4px_21.2px_rgba(46,170,123,0.2)]">
+                            <div className="bg-white w-full font-inter text-black flex flex-col items-center rounded-[30px] py-6 shadow-[0px_4px_21.2px_rgba(46,170,123,0.2)]">
                                 <Paragraph className="text-[40px] text-center font-bold leading-none">
                                     {mainStats?.offers_count?.toLocaleString("ru-RU")}<span
                                     className="text-[#2EAA7B]">+</span>
                                 </Paragraph>
-                                <Paragraph className="font-normal text-base mt-2">объявлений</Paragraph>
+                                <Paragraph className="text-2xl mt-2">объявлений</Paragraph>
                             </div>
 
-                            <div
-                                className="bg-white w-full font-inter text-black flex flex-col items-center rounded-[30px] py-6 shadow-[0px_4px_21.2px_rgba(46,170,123,0.2)]">
+                            <div className="bg-white w-full font-inter text-black flex flex-col items-center rounded-[30px] py-6 shadow-[0px_4px_21.2px_rgba(46,170,123,0.2)]">
                                 <Paragraph className="text-[40px] text-center font-bold leading-none">
                                     {mainStats?.deals_count?.toLocaleString("ru-RU")}<span
                                     className="text-[#2EAA7B]">+</span>
                                 </Paragraph>
-                                <Paragraph className="font-normal text-base mt-2">сделок</Paragraph>
+                                <Paragraph className="text-2xl mt-2">сделок</Paragraph>
                             </div>
                             <div
                                 className="bg-white font-inter text-black flex flex-col items-center rounded-[30px] py-6 shadow-[0px_4px_21.2px_rgba(46,170,123,0.2)]">
                                 <Paragraph className="text-[40px] text-center font-bold leading-none">
                                     {mainStats?.partners_count?.toLocaleString("ru-RU")}
                                 </Paragraph>
-                                <Paragraph className="font-normal text-base mt-2">партнёров</Paragraph>
+                                <Paragraph className="text-2xl mt-2">партнёров</Paragraph>
                             </div>
                             <div
                                 className="bg-white font-inter text-black flex flex-col items-center rounded-[30px] py-6 shadow-[0px_4px_21.2px_rgba(46,170,123,0.2)]">
@@ -496,7 +516,7 @@ export const MainPage = () => {
                                         ? `${(+mainStats.total_sold_amount / 1000000).toFixed(0)} млн `
                                         : "—"}<span className="text-[#2EAA7B]">$</span>
                                 </Paragraph>
-                                <Paragraph className="font-normal text-base mt-2">продано бизнесов</Paragraph>
+                                <Paragraph className=" text-2xl mt-2">продано бизнесов</Paragraph>
                             </div>
                         </div>
                     </div>

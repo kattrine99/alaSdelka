@@ -12,8 +12,17 @@ import { useGetFavoritesQuery } from "../../Store/api/Api";
 import { profileNavigate } from "../../utils/categoryMap";
 
 export const FavoritePage = () => {
-  const { data, isLoading, isError, refetch } = useGetFavoritesQuery();
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const {
+    data,
+    isLoading,
+    isError,
+    refetch
+  } = useGetFavoritesQuery({ page: currentPage });
+
   const offers = data?.data ?? [];
+  const meta = data?.meta;
 
   const mappedFavorites: ICard[] = offers.map((offer) => ({
     id: offer.id,
@@ -26,20 +35,12 @@ export const FavoritePage = () => {
         name_ru: offer.address?.city?.name_ru || "",
       },
     },
-    area: offer.area ? `${offer.area} кв. м.` : "Площадь не указана",
+    area: typeof offer.area === "number" ? offer.area : Number(offer.area ?? 0),
     offer_type: offer.offer_type,
+    offer_status: offer.offer_status,
   }));
 
   const favoriteIds = mappedFavorites.map((card) => card.id);
-
-  const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 5;
-  const totalPages = Math.ceil(mappedFavorites.length / itemsPerPage);
-
-  const paginatedFavorites = mappedFavorites.slice(
-    (currentPage - 1) * itemsPerPage,
-    currentPage * itemsPerPage
-  );
 
   useEffect(() => {
     refetch();
@@ -48,11 +49,11 @@ export const FavoritePage = () => {
   return (
     <div className="w-screen">
       <Header navLinksData={profileNavigate} />
-      <div className="px-48 py-9 h-screen">
+      <div className="px-48 py-9">
         <Heading
           text="Избранное"
           level={2}
-          className="font-inter text-xl font-bold leading-5 mb-6"
+          className="font-inter text-xl font-bold leading-5 mb-10"
         />
 
         {isLoading ? (
@@ -70,18 +71,19 @@ export const FavoritePage = () => {
         ) : (
           <div className="">
             <Cards
-              cards={paginatedFavorites}
+              cards={mappedFavorites}
               initialFavorites={favoriteIds}
               onFavoritesChanged={refetch}
-              containerClass='flex flex-col gap-7.5 rounded-xl w-317.75'
-              cardIconClass='w-85 h-58'
-              cardWrapperClass='shadow-[1px_1px_4.5px_0px] shadow-[#28B13D4D]'
-              WhatchButtonClass='py-3 px-5 w-79.5 bg-[#2EAA7B] text-white font-medium rounded-md flex justify-center hover:bg-[#31B683] transition duration-300 cursor-pointer'
+              containerClass="flex flex-col gap-7.5 rounded-xl w-317.75"
+              cardIconClass="w-85 h-58"
+              cardWrapperClass="shadow-[1px_1px_4.5px_0px] shadow-[#28B13D4D]"
+              WhatchButtonClass="py-3 px-5 w-79.5 bg-[#2EAA7B] text-white font-medium rounded-md flex justify-center hover:bg-[#31B683] transition duration-300 cursor-pointer"
             />
-            {mappedFavorites.length > itemsPerPage && (
+
+            {meta && meta.last_page > 1 && (
               <Pagination
-                currentPage={currentPage}
-                totalPages={totalPages}
+                currentPage={meta.current_page}
+                totalPages={meta.last_page}
                 onPageChange={(page: number) => setCurrentPage(page)}
               />
             )}

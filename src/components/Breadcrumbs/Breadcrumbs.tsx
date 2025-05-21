@@ -1,10 +1,11 @@
 import { Link } from "react-router-dom";
 import { HiChevronRight } from "react-icons/hi";
 import { urlToTypeMap, typeToUrlMap } from "../../utils/categoryMap";
+import { useLocation } from "react-router-dom";
 
 type CrumbLink = {
     label: string;
-    href?: string; // если есть, делаем ссылкой
+    href?: string;
 };
 
 export const Breadcrumbs = ({
@@ -16,23 +17,35 @@ export const Breadcrumbs = ({
     title?: string;
     links?: CrumbLink[];
 }) => {
+    const location = useLocation();
+
     if (links?.length) {
         return (
             <nav className="text-[15px] font-inter font-medium leading-[22px] text-[#68727D] flex items-center gap-2">
-                {links.map((link, index) => (
-                    <span key={index} className="flex items-center gap-2">
-                        {link.href ? (
-                            <Link to={link.href} className="hover:text-[#28B13D] transition duration-500">
-                                {link.label}
-                            </Link>
-                        ) : (
-                            <span className="text-[#28B13D]">{link.label}</span>
-                        )}
-                        {index !== links.length - 1 && (
-                            <HiChevronRight className="text-gray-400 w-[20px] h-[20px]" />
-                        )}
-                    </span>
-                ))}
+                {links.map((link, index) => {
+                    const isActive = link.href === location.pathname;
+
+                    return (
+                        <span key={index} className="flex items-center gap-2">
+                            {link.href ? (
+                                <Link
+                                    to={link.href}
+                                    className={`transition duration-500 ${isActive
+                                        ? "text-[#28B13D] font-semibold"
+                                        : "hover:text-[#28B13D] text-[#68727D]"
+                                        }`}
+                                >
+                                    {link.label}
+                                </Link>
+                            ) : (
+                                <span className="text-[#28B13D]">{link.label}</span>
+                            )}
+                            {index !== links.length - 1 && (
+                                <HiChevronRight className="text-gray-400 w-[20px] h-[20px]" />
+                            )}
+                        </span>
+                    );
+                })}
             </nav>
         );
     }

@@ -1,13 +1,14 @@
-import {FaPhone, FaWhatsapp} from "react-icons/fa";
-import {IoIosMail} from "react-icons/io";
-import {FaTelegram} from "react-icons/fa6";
-import {Paragraph, NavLinks, categories, Applink} from "../index";
-import {MdOutlineArrowDropDown} from "react-icons/md";
+import { FaPhone, FaWhatsapp } from "react-icons/fa";
+import { IoIosMail } from "react-icons/io";
+import { FaTelegram } from "react-icons/fa6";
+import { Paragraph, NavLinks, categories, Applink, Button } from "../index";
+import { MdOutlineArrowDropDown } from "react-icons/md";
 import NoticeIcon from '../../assets/notification.svg?react';
 import FavIcon from '../../assets/heart-circle.svg?react';
 import ProfileIcon from '../../assets/profile-circle.svg?react';
-import {useSelector} from "react-redux";
-import {RootState} from "../../Store/store";
+import { useSelector } from "react-redux";
+import { RootState } from "../../Store/store";
+import { useNavigate } from "react-router-dom";
 
 
 interface HeaderProps {
@@ -24,7 +25,7 @@ export const Header: React.FC<HeaderProps> = ({
                                                   navLinksData,
                                               }) => {
     const isAuthenticated = useSelector((state: RootState) => state.auth.isAuthenticated);
-
+    const navigate = useNavigate()
     return (
         <div className="font-inter font-medium w-full bg-white shadow">
             {showtoBar && (
@@ -87,28 +88,25 @@ export const Header: React.FC<HeaderProps> = ({
                                 className="absolute right-3 top-1/2 -translate-y-1/2 text-xl text-[#191919] pointer-events-none"/>
                         </div>
 
-                        {/* Авторизация */}
-                        {showAuthButtons && (
-                            isAuthenticated ? (
-                                <div className="flex ml-6 gap-2">
-                                    <Applink to="/notices"><NoticeIcon/></Applink>
-                                    <Applink to="/favorites"><FavIcon/></Applink>
-                                    <Applink to="/profile"><ProfileIcon/></Applink>
-                                </div>
-                            ) : (
-                                <>
-                                    <Applink to="/login"
-                                             className="border border-[#31B683] rounded-[10px] px-5 py-3 hover:bg-[#2EAA7B] hover:text-white text-sm font-medium transition duration-600">
-                                        Войти
-                                    </Applink>
-                                    <Applink to="/register"
-                                             className="bg-[#2EAA7B] text-white px-5 py-3 rounded-[10px] hover:bg-[#31B683] text-sm font-medium transition duration-600">
-                                        Зарегистрироваться
-                                    </Applink>
-                                </>
-                            )
-                        )}
-                    </div>
+                    {/* Авторизация */}
+                    {showAuthButtons && (
+                        isAuthenticated ? (
+                            <div className="flex ml-6 gap-2">
+                                <Button onClick={() => navigate("/notices")} className={undefined}><NoticeIcon /></Button>
+                                <Button onClick={() => navigate("/favorites")} className={undefined}><FavIcon /></Button>
+                                <Applink to="/profile"><ProfileIcon /></Applink>
+                            </div>
+                        ) : (
+                            <>
+                                <Applink to="/login" className="border border-[#31B683] rounded-[10px] px-5 py-3 hover:bg-[#2EAA7B] hover:text-white text-sm font-medium transition duration-600">
+                                    Войти
+                                </Applink>
+                                <Applink to="/register" className="bg-[#2EAA7B] text-white px-5 py-3 rounded-[10px] hover:bg-[#31B683] text-sm font-medium transition duration-600">
+                                    Зарегистрироваться
+                                </Applink>
+                            </>
+                        )
+                    )}
                 </div>
             </div>
         </div>

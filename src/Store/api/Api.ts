@@ -17,11 +17,14 @@ import type {
     Notifications,
     GetUserOffersResponse,
     GetUserOffersParams,
-    Offer,
     OfferStatsResponse,
+    FavoritesResponseType,
+    SellOfferResponse,
+    OfferResponse,
 } from "./types";
 import { baseUrl } from "../../utils/baseUrl";
 import { ICard } from "../../components/Cards/Interfaces";
+import qs from 'qs'
 
 export const AuthApi = createApi({
     reducerPath: "Api",
@@ -35,6 +38,7 @@ export const AuthApi = createApi({
             headers.set("Accept", "application/json");
             return headers;
         },
+        paramsSerializer: (params) => qs.stringify(params),
     }),
     endpoints: (builder) => ({
         //Авторизация и выход
@@ -100,9 +104,24 @@ export const AuthApi = createApi({
         getMainStatistics: builder.query<HomeStatistics, void>({
             query: () => '/home/statistics',
         }),
-        getMyOffers: builder.query<{ offers: { data: MyOffer[] } }, number>({
-            query: (perPage) => `/my-offers?per_page=${perPage}`,
+        getMyOffers: builder.query<MyOffer, { page: number; per_page?: number }>({
+            query: ({ page, per_page = 5 }) =>
+                `/my-offers?page=${page}&per_page=${per_page}`,
         }),
+
+        sellOffer: builder.mutation<SellOfferResponse, number>({
+            query: (offerId) => ({
+                url: `/offer/${offerId}/sell`,
+                method: "POST",
+            }),
+        }),
+        archiveOffer: builder.mutation<void, number>({
+            query: (offerId) => ({
+                url: `/offer/${offerId}/archive`,
+                method: "POST",
+            }),
+        }),
+
         getOffers: builder.query<OffersResponse, OfferFilters>({
             query: (params) => ({
                 url: "/offers",
@@ -128,9 +147,15 @@ export const AuthApi = createApi({
                 method: "POST",
             }),
         }),
-        getFavorites: builder.query<{ data: Offer[] }, void>({
-            query: () => `/favourite-offers`,
-        }),
+        getFavorites: builder.query<FavoritesResponseType, { page?: number; per_page?: number }>(
+            {
+                query: ({ page = 1, per_page = 5 }) => ({
+                    url: '/favourite-offers',
+                    params: { page, per_page },
+                }),
+            }
+        ),
+
         getNotifications: builder.query<Notifications, void>({
             query: () => "/notifications",
         }),
@@ -140,13 +165,12 @@ export const AuthApi = createApi({
                 params,
             }),
         }),
-        createOffer: builder.mutation<OfferDetail, FormData>({
-            query: (body) => ({
-                url: `offers/`,
-                method: 'POST',
-                body,
-                validateStatus: (response) => (response.status === 201 || response.status === 302)
-            })
+        createOffer: builder.mutation<{ data: OfferResponse }, FormData>({
+            query: (formData) => ({
+                url: "/offers",
+                method: "POST",
+                body: formData,
+            }),
         }),
 
         publishOffer: builder.mutation<{ data: OfferDetail }, number>({
@@ -168,14 +192,23 @@ export const AuthApi = createApi({
         getOfferStats: builder.query<OfferStatsResponse, { offer_id: number; from: string; to: string }>({
             query: ({ offer_id, from, to }) => ({
                 url: `/offers/${offer_id}/stats`,
-                method: "GET",
+                method: 'GET',
                 params: { from, to },
             }),
         }),
         getOfferContactView: builder.query<{ phone: string }, number>({
             query: (offerId) => `/offers/${offerId}/contact-view`
         }),
-
+        downloadOfferDocuments: builder.query<Blob, number>({
+            query: (offerId) => ({
+                url: `/offers/${offerId}/documents/download`,
+                method: 'GET',
+                responseHandler: async (response) => response.blob(),
+                headers: {
+                    'Accept': 'application/zip',
+                },
+            }),
+        }),
 
     }),
 
@@ -190,7 +223,9 @@ export const {
     usePublishOfferMutation,
     useUpdateUserInfoMutation,
     usePromoteOfferMutation,
-    useToggleFavoriteMutation,  
+    useToggleFavoriteMutation,
+    useSellOfferMutation,
+    useArchiveOfferMutation,
     useGetHomeOffersQuery,
     useGetMyOffersQuery,
     useGetOffersQuery,
@@ -201,7 +236,9 @@ export const {
     useGetNotificationsQuery,
     useGetUserOffersQuery,
     useGetOfferStatsQuery,
+    useLazyGetOfferStatsQuery,
     useGetUserInfoQuery,
     useGetOfferContactViewQuery,
+    useDownloadOfferDocumentsQuery,
 
 } = AuthApi;

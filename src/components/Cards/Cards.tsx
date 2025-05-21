@@ -8,7 +8,9 @@ import { Link } from "react-router-dom";
 import { ICards } from "./Interfaces";
 import { offerTypeToUrlMap } from "../../utils/categoryMap";
 import { useToggleFavoriteMutation } from "../../Store/api/Api";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { RootState } from "../../Store/store";
 
 
 export const Cards: React.FC<ICards> = ({
@@ -22,28 +24,44 @@ export const Cards: React.FC<ICards> = ({
     onFavoritesChanged,
     WhatchButtonClass,
 }) => {
-
-    const [toggleFavoriteAPI] = useToggleFavoriteMutation();
+    const isAuthenticated = useSelector((state: RootState) => state.auth.isAuthenticated);
     const [favoriteIds, setFavoriteIds] = useState<number[]>(initialFavorites);
+    const [toggleFavoriteAPI] = useToggleFavoriteMutation();
+
+    useEffect(() => {
+        const areEqual =
+            initialFavorites.length === favoriteIds.length &&
+            initialFavorites.every((id) => favoriteIds.includes(id));
+
+        if (!areEqual) {
+            setFavoriteIds(initialFavorites);
+        }
+    }, [favoriteIds, initialFavorites]);
+
 
     const handleToggle = async (id: number) => {
+        const isAlreadyFavorite = favoriteIds.includes(id);
+
+        setFavoriteIds((prev) =>
+            isAlreadyFavorite ? prev.filter((favId) => favId !== id) : [...prev, id]
+        );
+
         try {
             const res = await toggleFavoriteAPI(id).unwrap();
 
-            setFavoriteIds((prev) =>
-                res.status === "added"
-                    ? [...prev, id]
-                    : prev.filter((favId) => favId !== id)
-            );
-
             if (onFavoritesChanged) {
-                onFavoritesChanged();
+                onFavoritesChanged(id, res.status as "added" | "removed");
             }
-
         } catch (e) {
             console.error("Ошибка добавления в избранное", e);
+
+            setFavoriteIds((prev) =>
+                isAlreadyFavorite ? [...prev, id] : prev.filter((favId) => favId !== id)
+            );
         }
     };
+
+
 
     return (
         <div className={containerClass}>
@@ -74,16 +92,18 @@ export const Cards: React.FC<ICards> = ({
                         <div className={`relative ${cardIconClass ?? ""}`}>
 
                             <img src={card.image || "../../../images/business_abstract.jpg"} alt={`${card.id}`} className="w-full object-cover" />
-                            <button
-                                onClick={() => handleToggle(card.id)}
-                                className="absolute top-5 right-4.5"
-                            >
-                                {isFavorite ? (
-                                    <SolidHeartIcon className="w-8 h-7 border- py-0.5 border-[#2EAA7B] text-[#FF1D1D] bg-white rounded-full " />
-                                ) : (
-                                    <HeartIcon className="w-8 h-7 text-center border-1 py-0.5 border-[#2EAA7B] text-[#2EAA7B] bg-white rounded-full" />
-                                )}
-                            </button>
+                            {isAuthenticated &&
+                                <button
+                                    onClick={() => handleToggle(card.id)}
+                                    className="absolute top-5 right-4.5"
+                                >
+                                    {isFavorite ? (
+                                        <SolidHeartIcon className="w-8 h-7 border- py-0.5 border-[#2EAA7B] text-[#FF1D1D] bg-white rounded-full " />
+                                    ) : (
+                                        <HeartIcon className="w-8 h-7 text-center border-1 py-0.5 border-[#2EAA7B] text-[#2EAA7B] bg-white rounded-full" />
+                                    )}
+                                </button>
+                            }
                         </div>
 
                         <div className="px-[18px] py-[21px] flex flex-col flex-1">

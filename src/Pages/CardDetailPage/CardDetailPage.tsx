@@ -1,6 +1,6 @@
 import { useParams } from 'react-router-dom';
 import { Breadcrumbs, Button, Footer, Header, Heading, Paragraph, PhotosSwiper } from '../../components/index';
-import { useGetOfferByIdQuery } from "../../Store/api/Api";
+import { useGetOfferByIdQuery, useDownloadOfferDocumentsQuery } from "../../Store/api/Api";
 import { FaLocationDot } from "react-icons/fa6";
 import { FaParking, FaUsers, FaShoppingBasket, FaTools, FaGlobeAmericas, FaBuilding, FaCopyright, FaGlobe, FaUniversity } from "react-icons/fa";
 import { RiContactsFill } from "react-icons/ri";
@@ -37,18 +37,30 @@ export const CardDetailPage = () => {
         "Международная франшиза": <FaGlobe className="w-10 h-10 text-[#7E7E7E]" />,
         "Наличие мастер франшизи": <FaUniversity className="w-10 h-10 text-[#7E7E7E]" />,
     };
+    const { refetch } = useDownloadOfferDocumentsQuery(card?.id ?? 0, {
+        skip: !card?.id,
+    });
 
-    const handleDownloadAllDocuments = () => {
-        if (!card || !card.documents) return;
+    const handleDownloadAllDocuments = async () => {
+        if (!card?.id) return;
 
-        card.documents.forEach((doc, index) => {
-            const link = document.createElement('a');
-            link.href = doc.document;
-            link.download = `document-${index + 1}.pdf`;
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-        });
+        try {
+            const result = await refetch();
+            const blob = result.data;
+
+            if (blob) {
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `documents_offer_${card.id}.zip`;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                window.URL.revokeObjectURL(url);
+            }
+        } catch (error) {
+            console.error("Ошибка при скачивании архива:", error);
+        }
     };
 
     function formatMonthsToYears(months) {
@@ -133,7 +145,7 @@ export const CardDetailPage = () => {
                                     <div>
                                         <Heading text={'Документация'} level={3} className='font-inter font-semibold text-xl mt-7.5 text-[#3A3A3A]' />
                                         <div className="flex flex-wrap gap-4 mt-3">
-                                            {card.documents.map((doc) => (
+                                            {card.documents.map((doc, index) => (
                                                 <a
                                                     key={doc.id}
                                                     href={doc.document}
@@ -141,7 +153,7 @@ export const CardDetailPage = () => {
                                                     rel="noopener noreferrer"
                                                     className=" w-65.75 border border-[#2EAA7B] text-[#191919] rounded-lg py-3 px-4 text-center hover:bg-[#2EAA7B] hover:text-white transition"
                                                 >
-                                                    Название документа.pdf
+                                                    {`document ${index + 1}`}
                                                 </a>
                                             ))}
                                         </div>
@@ -235,16 +247,28 @@ export const CardDetailPage = () => {
                                             {card?.address?.city?.name_ru ?? ""}
                                         </Paragraph>
                                     </div>
-                                    {card.address !== null && (
+                                    {card.address?.latitude && card.address?.longitude ? (
                                         <iframe
-                                            src={`https://maps.google.com/maps?q=${card.address.latitude},${card.address.longitude}&z=15&layer=s&output=embed`}
+                                            src={`https://maps.google.com/maps?q=${card.address.latitude},${card.address.longitude}&z=15&output=embed`}
                                             width="100%"
                                             height="350"
                                             className="rounded-lg border border-[#2EAA7B]"
                                             allowFullScreen
                                             loading="eager"
                                         />
+                                    ) : card.address?.address ? (
+                                        <iframe
+                                            src={`https://maps.google.com/maps?q=${encodeURIComponent(card.address.address)}&z=15&output=embed`}
+                                            width="100%"
+                                            height="350"
+                                            className="rounded-lg border border-[#2EAA7B]"
+                                            allowFullScreen
+                                            loading="eager"
+                                        />
+                                    ) : (
+                                        <Paragraph className="text-gray-500">Адрес недоступен</Paragraph>
                                     )}
+
                                 </div>
                             </div>
                             <div className="lg:mt-0 mt-6 w-full lg:w-4/12">

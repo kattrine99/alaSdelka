@@ -8,7 +8,14 @@ import { RiContactsFill } from "react-icons/ri";
 import { MdOutlineCreditCardOff } from "react-icons/md";
 import { JSX, useEffect, useState } from "react";
 import { useGetFiltersDataQuery } from "../../Store/api/Api";
-
+import GpsIcon from '../../assets/gps.svg?react'
+import CategoryIcon from '../../assets/frame.svg?react'
+import CalendarIcon from "../../assets/calendar.svg?react"
+import DollarCircleIcon from "../../assets/dollar-circle.svg?react"
+import MoneySendIcon from "../../assets/money-send.svg?react"
+import PercentIcon from "../../assets/percentage-square.svg?react"
+import ReceiptIcon from "../../assets/receipt-item.svg?react"
+import WalletIcon from "../../assets/wallet-add.svg?react"
 interface CardDetailPreviewProps {
     onBack: () => void;
 }
@@ -30,18 +37,38 @@ export const CardDetailPreview: React.FC<CardDetailPreviewProps> = ({ onBack }) 
     };
     const [showFullDescription, setShowFullDescription] = useState(false);
     const { data: filtersData } = useGetFiltersDataQuery();
+    const [previewUrls, setPreviewUrls] = useState<string[]>([]);
+
     const data = useSelector((state: RootState) => state.tempOffer.offerData);
     useEffect(() => {
+        if (!data?.images) return;
+
+        const urls = data.images.map(img => {
+            if (img.photo instanceof File) {
+                return URL.createObjectURL(img.photo);
+            }
+            return img.photo;
+        });
+
+        setPreviewUrls(urls);
+
         return () => {
-            data?.images?.forEach(file => URL.revokeObjectURL(URL.createObjectURL(file)));
+            urls.forEach(url => {
+                if (url.startsWith('blob:')) URL.revokeObjectURL(url);
+            });
         };
     }, [data?.images]);
+
+
+
     if (!data) return <Paragraph>Нет данных для предпросмотра</Paragraph>;
-    const conveniences = data.convenience_ids ?? [];
+    const conveniences = data.conveniences ?? [];
     const convenienceMap = filtersData?.conveniences?.reduce((acc, item) => {
         acc[item.id] = item.name_ru;
         return acc;
     }, {} as Record<number, string>) ?? {};
+    const categoryName =
+        filtersData?.categories?.find((c) => c.id === Number(data?.category_id))?.title_ru || "Категория не указана";
 
     return (
         <div className="px-[192px] py-10 ">
@@ -51,25 +78,34 @@ export const CardDetailPreview: React.FC<CardDetailPreviewProps> = ({ onBack }) 
             </div>
 
             {/* Основной блок */}
-            <div className="bg-[#F8F8F8] p-10   ">
+            <div className="bg-[#F8F8F8] p-10">
                 <Heading level={2} text={data.title || "Название"} className="text-[24px] mb-3.75" />
                 <div className='flex gap-1.5'>
                     <FaLocationDot className="text-[#2EAA7B] w-4 h-4" />
-                    <Paragraph className="text-[#667085] text-sm mb-6">
-                        {data.city_name ?? ""},
-                        {data.address ?? "Адрес не указан"}
+                    <Paragraph className="text-[#667085] text-sm mb-2">
+                        {data.city_name ?? ""}, {data.address?.address ?? "Адрес не указан"}
                     </Paragraph>
                 </div>
+                <div className='flex gap-1.5 mb-2 items-center'>
+                    <GpsIcon className='w-4 h-4' />
+                    <Paragraph>{data.area} кв. м.</Paragraph>
+                </div>
+                <div className='flex gap-1.5 items-center mb-3.75'>
+                    <CategoryIcon className='w-4 h-4 text-[#2EAA7B]' />
+                    <Paragraph className="">{categoryName}</Paragraph>
 
+                </div>
                 {/* Изображение */}
                 <div className="flex-1">
                     {data.images && data.images.length > 0 && (
                         <div className="mb-6">
-                            <PhotosSwiper
-                                photos={data.images.map((file) => ({
-                                    photo: URL.createObjectURL(file),
-                                }))}
-                            />
+                            {previewUrls.length > 0 && (
+                                <div className="mb-6">
+                                    <PhotosSwiper
+                                        photos={previewUrls.map(url => ({ photo: url }))}
+                                    />
+                                </div>
+                            )}
                         </div>
                     )}
                 </div>
@@ -95,6 +131,24 @@ export const CardDetailPreview: React.FC<CardDetailPreviewProps> = ({ onBack }) 
                     </div>
 
                 </div>
+                {data.documents && data.documents.length > 0 && (
+                    <div>
+                        <Heading text={'Документация'} level={3} className='font-inter font-semibold text-xl mt-7.5 text-[#3A3A3A]' />
+                        <div className="flex flex-wrap gap-4 mt-3">
+                            {data.documents.map((doc, index) => (
+                                <a
+                                    key={index}
+                                    href={URL.createObjectURL(doc)}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className=" w-65.75 border border-[#2EAA7B] text-[#191919] rounded-lg py-3 px-4 text-center hover:bg-[#2EAA7B] hover:text-white transition"
+                                >
+                                    {doc.name}
+                                </a>
+                            ))}
+                        </div>
+                    </div>
+                )}
 
                 {/* Описание */}
                 <div className="mb-6">
@@ -120,13 +174,50 @@ export const CardDetailPreview: React.FC<CardDetailPreviewProps> = ({ onBack }) 
                 {/* Финансы */}
                 <div className="mb-6">
                     <Heading level={3} text="Информация и финансы" className="text-[18px] mb-2" />
-                    <ul className="grid grid-cols-2 md:grid-cols-3 gap-3 text-sm">
-                        <li>Цена: <strong>{data.amount?.toLocaleString()} сум</strong></li>
-                        <li>Доход: <strong>{data.monthly_income} сум</strong></li>
-                        <li>Прибыль: <strong>{data.profit} сум</strong></li>
-                        <li>Окупаемость: <strong>{data.payback_period} месяцев</strong></li>
-                        <li>Доля бизнеса: <strong>{data.business_share}%</strong></li>
-                    </ul>
+                    <div className="mt-3 w-203.25 flex flex-wrap gap-x-3 gap-y-4">
+                        <div className="flex w-65.75 gap-2 border border-[#2EAA7B] items-center rounded-[10px] py-3 px-4.25">
+                            <WalletIcon className='w-10 h-10' />
+                            <div className='flex flex-col'>
+                                <Paragraph className="font-inter text-[13px] leading-5 text-[#7D7D7D]">Среднемесячная выручка</Paragraph>
+                                <Paragraph className="font-inter text-xl font-bold text-[#2EAA7B]">{data.average_monthly_revenue} сум</Paragraph>
+                            </div>
+                        </div>
+                        <div className="flex gap-2 w-65.75 border border-[#2EAA7B] items-center rounded-[10px] py-3 px-4.25">
+                            <ReceiptIcon className='w-10 h-10' />
+                            <div className='flex flex-col'>
+                                <Paragraph className="font-inter text-[13px] leading-5 text-[#7D7D7D]">Среднемесячные расходы</Paragraph>
+                                <Paragraph className="font-inter text-xl font-bold text-[#2EAA7B]">{data.average_monthly_expenses} сум</Paragraph>
+                            </div>
+                        </div>
+                        <div className="flex gap-2 w-65.75 border border-[#2EAA7B] items-center rounded-[10px] py-3 px-4.25">
+                            <CalendarIcon className='w-10 h-10' />
+                            <div className='flex flex-col'>
+                                <Paragraph className="font-inter text-[13px] leading-5 text-[#7D7D7D]">Дата основания</Paragraph>
+                                <Paragraph className="font-inter text-xl font-bold text-[#2EAA7B]">{data.foundation_year} год</Paragraph>
+                            </div>
+                        </div>
+                        <div className="flex gap-2 w-65.75 border border-[#2EAA7B] items-center rounded-[10px] py-3 px-4.25">
+                            <DollarCircleIcon className='w-10 h-10' />
+                            <div className='flex flex-col'>
+                                <Paragraph className="font-inter text-[13px] leading-5 text-[#7D7D7D]">Среднемесячная прибыль</Paragraph>
+                                <Paragraph className="font-inter text-xl font-bold text-[#2EAA7B]">{data.average_monthly_profit} сум</Paragraph>
+                            </div>
+                        </div>
+                        <div className="flex gap-2 w-65.75 border border-[#2EAA7B] items-center rounded-[10px] py-3 px-4.25">
+                            <MoneySendIcon className='w-10 h-10' />
+                            <div className='flex flex-col'>
+                                <Paragraph className="font-inter text-[13px] leading-5 text-[#7D7D7D]">Окупаемость</Paragraph>
+                                <Paragraph className="font-inter text-xl font-bold text-[#2EAA7B]">{data.payback_period} месяцев</Paragraph>
+                            </div>
+                        </div>
+                        <div className="flex gap-2 w-65.75 border border-[#2EAA7B] items-center rounded-[10px] py-3 px-4.25">
+                            <PercentIcon className='w-10 h-10' />
+                            <div className='flex flex-col'>
+                                <Paragraph className="font-inter text-[13px] leading-5 text-[#7D7D7D]">Доля к продаже</Paragraph>
+                                <Paragraph className="font-inter text-xl font-bold text-[#2EAA7B]">{data.percentage_for_sale} %</Paragraph>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
                 {/* Локация */}
@@ -134,8 +225,29 @@ export const CardDetailPreview: React.FC<CardDetailPreviewProps> = ({ onBack }) 
                     <Heading level={3} text="Местоположение" className="text-[18px] mb-2" />
                     <Paragraph className="flex items-center text-[#667085] text-[14px]">
                         <FaLocationDot className="text-[#2EAA7B] mr-2" />
-                        {data.city_name}, {data.address}
+                        {data.city_name}, {data.address?.address}
                     </Paragraph>
+                    {data.address?.latitude && data.address?.longitude ? (
+                        <iframe
+                            src={`https://maps.google.com/maps?q=${data.address.latitude},${data.address.longitude}&z=15&output=embed`}
+                            width="100%"
+                            height="350"
+                            className="rounded-lg border border-[#2EAA7B]"
+                            allowFullScreen
+                            loading="eager"
+                        />
+                    ) : data.address?.address ? (
+                        <iframe
+                            src={`https://maps.google.com/maps?q=${encodeURIComponent(data.address.address)}&z=15&output=embed`}
+                            width="100%"
+                            height="350"
+                            className="rounded-lg border border-[#2EAA7B]"
+                            allowFullScreen
+                            loading="eager"
+                        />
+                    ) : (
+                        <Paragraph className="text-gray-500">Адрес недоступен</Paragraph>
+                    )}
                 </div>
             </div>
         </div>

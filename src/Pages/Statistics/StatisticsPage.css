@@ -1,0 +1,62 @@
+/* ❌ убирает серую плашку с датой под осью X */
+.apexcharts-xaxistooltip {
+    display: none !important;
+}
+
+/* ✅ делает кросслайн зелёным и сплошным */
+.apexcharts-xcrosshairs {
+    stroke: #2EAA7B !important;
+    stroke-width: 2px !important;
+    stroke-dasharray: 0 !important;
+}
+
+/* ✅ делает кружочек под осью X зелёным */
+.apexcharts-tooltip-marker {
+    background-color: #2EAA7B !important;
+    border: 2px solid white !important;
+}
+
+/* Основной календарь */
+.custom-calendar {
+    font-family: Inter, sans-serif;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border: none;
+}
+
+/* Навигация */
+.react-datepicker__navigation {
+    top: 10px;
+}
+
+.react-datepicker__navigation-icon::before {
+    border-color: #2EAA7B;
+}
+
+/* Шапка месяца */
+.react-datepicker__current-month,
+.react-datepicker__month-dropdown,
+.react-datepicker__year-dropdown {
+    color: #2EAA7B;
+    font-weight: bold;
+}
+
+/* Выбранные даты */
+.react-datepicker__day--in-range,
+.react-datepicker__day--selected,
+.react-datepicker__day--in-selecting-range {
+    background-color: #2EAA7B !important;
+    color: white;
+    border-radius: 9999px;
+}
+
+/* Ховер */
+.react-datepicker__day:hover {
+    background-color: #D7F4E8;
+    border-radius: 9999px;
+}
+
+/* Дни недели */
+.react-datepicker__day-name {
+    color: #727272;
+}

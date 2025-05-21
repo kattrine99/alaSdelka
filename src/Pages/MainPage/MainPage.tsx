@@ -199,7 +199,7 @@ export const MainPage = () => {
             {/* Карточки */}
             <section className="mt-12.5 mb-8.75 px-3 md:px-0 container mx-auto">
                 <div className="flex justify-start">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-y-4">ъ
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-y-4">
                         <div>
                             <Button onClick={() => {
                                 navigate("/business")
@@ -257,13 +257,13 @@ export const MainPage = () => {
                                 initialFavorites={favoriteIds}
                                 onFavoritesChanged={handleFavoritesChanged}
                                 maxVisible={8}
-                                Class="grid grid-cols-2 2xl:grid-cols-4 xl:grid-cols-3 lg:grid-cols-2 gap-y-10 gap-x-2 transition duration-300 ease-in-out"
+                                Class="grid grid-cols-1 2xl:grid-cols-4 xl:grid-cols-3 lg:grid-cols-2 gap-y-10 gap-x-2 transition duration-300 ease-in-out"
                                 ClassName="container mx-auto py-7.5"
                             />
                         );
                     })())}
             </section>
-            <section className="px-48 mt-12.5 mb-8.75 px-3 md:px-0 container mx-auto">
+            <section className="mt-12.5 mb-8.75 px-3 md:px-0 container mx-auto">
                 <div className="flex justify-start">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-y-4">
                         <div>

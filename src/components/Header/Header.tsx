@@ -1,14 +1,14 @@
-import { FaPhone, FaWhatsapp } from "react-icons/fa";
-import { IoIosMail } from "react-icons/io";
-import { FaTelegram } from "react-icons/fa6";
-import { Paragraph, NavLinks, categories, Applink, Button } from "../index";
-import { MdOutlineArrowDropDown } from "react-icons/md";
+import {FaPhone, FaWhatsapp} from "react-icons/fa";
+import {IoIosMail} from "react-icons/io";
+import {FaTelegram} from "react-icons/fa6";
+import {Paragraph, NavLinks, categories, Applink, Button} from "../index";
+import {MdOutlineArrowDropDown} from "react-icons/md";
 import NoticeIcon from '../../assets/notification.svg?react';
 import FavIcon from '../../assets/heart-circle.svg?react';
 import ProfileIcon from '../../assets/profile-circle.svg?react';
-import { useSelector } from "react-redux";
-import { RootState } from "../../Store/store";
-import { useNavigate } from "react-router-dom";
+import {useSelector} from "react-redux";
+import {RootState} from "../../Store/store";
+import {useNavigate} from "react-router-dom";
 
 
 interface HeaderProps {
@@ -56,7 +56,8 @@ export const Header: React.FC<HeaderProps> = ({
                         </div>
                     </div>
                 </div>)}
-            <div className="flex justify-between items-center bg-white py-[20px] px-6 md:px-0 border-b border-[#E9E9E9]">
+            <div
+                className="flex justify-between items-center bg-white py-[20px] px-6 md:px-0 border-b border-[#E9E9E9]">
                 <div className="container mx-auto flex justify-between">
                     {/* Логотип */}
                     <Applink to="/main" className="flex items-center gap-2">
@@ -88,25 +89,30 @@ export const Header: React.FC<HeaderProps> = ({
                                 className="absolute right-3 top-1/2 -translate-y-1/2 text-xl text-[#191919] pointer-events-none"/>
                         </div>
 
-                    {/* Авторизация */}
-                    {showAuthButtons && (
-                        isAuthenticated ? (
-                            <div className="flex ml-6 gap-2">
-                                <Button onClick={() => navigate("/notices")} className={undefined}><NoticeIcon /></Button>
-                                <Button onClick={() => navigate("/favorites")} className={undefined}><FavIcon /></Button>
-                                <Applink to="/profile"><ProfileIcon /></Applink>
-                            </div>
-                        ) : (
-                            <>
-                                <Applink to="/login" className="border border-[#31B683] rounded-[10px] px-5 py-3 hover:bg-[#2EAA7B] hover:text-white text-sm font-medium transition duration-600">
-                                    Войти
-                                </Applink>
-                                <Applink to="/register" className="bg-[#2EAA7B] text-white px-5 py-3 rounded-[10px] hover:bg-[#31B683] text-sm font-medium transition duration-600">
-                                    Зарегистрироваться
-                                </Applink>
-                            </>
-                        )
-                    )}
+                        {/* Авторизация */}
+                        {showAuthButtons && (
+                            isAuthenticated ? (
+                                <div className="flex ml-6 gap-2">
+                                    <Button onClick={() => navigate("/notices")}
+                                            className={undefined}><NoticeIcon/></Button>
+                                    <Button onClick={() => navigate("/favorites")}
+                                            className={undefined}><FavIcon/></Button>
+                                    <Applink to="/profile"><ProfileIcon/></Applink>
+                                </div>
+                            ) : (
+                                <>
+                                    <Applink to="/login"
+                                             className="border border-[#31B683] rounded-[10px] px-5 py-3 hover:bg-[#2EAA7B] hover:text-white text-sm font-medium transition duration-600">
+                                        Войти
+                                    </Applink>
+                                    <Applink to="/register"
+                                             className="bg-[#2EAA7B] text-white px-5 py-3 rounded-[10px] hover:bg-[#31B683] text-sm font-medium transition duration-600">
+                                        Зарегистрироваться
+                                    </Applink>
+                                </>
+                            )
+                        )}
+                    </div>
                 </div>
             </div>
         </div>

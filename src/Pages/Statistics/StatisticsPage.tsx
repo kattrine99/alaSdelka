@@ -10,7 +10,7 @@ import { FiAlertCircle } from "react-icons/fi";
 import { profileNavigate } from "../../utils/categoryMap";
 import { registerLocale } from "react-datepicker";
 import { ru } from "date-fns/locale/ru";
-import './StatisticsPAge.css'
+import './StatisticsPage.css'
 registerLocale("ru", ru);
 
 export const StatisticsPage = () => {

@@ -21,6 +21,11 @@ import type {
     FavoritesResponseType,
     SellOfferResponse,
     OfferResponse,
+    UserCardsResponse,
+    AddCardResponse,
+    AddCardPayload,
+    VerifyCardResponse,
+    VerifyCardPayload,
 } from "./types";
 import { baseUrl } from "../../utils/baseUrl";
 import { ICard } from "../../components/Cards/Interfaces";
@@ -189,6 +194,28 @@ export const AuthApi = createApi({
                 body: payload,
             }),
         }),
+        getUserCards: builder.query<UserCardsResponse, void>({
+            query: () => ({
+                url: "/user/cards",
+                method: "GET",
+            }),
+        }),
+
+        addUserCard: builder.mutation<AddCardResponse, AddCardPayload>({
+            query: (payload) => ({
+                url: "/user/cards",
+                method: "POST",
+                body: payload,
+            }),
+        }),
+
+        verifyUserCard: builder.mutation<VerifyCardResponse, VerifyCardPayload>({
+            query: (payload) => ({
+                url: "/cards/verify",
+                method: "POST",
+                body: payload,
+            }),
+        }),
         getOfferStats: builder.query<OfferStatsResponse, { offer_id: number; from: string; to: string }>({
             query: ({ offer_id, from, to }) => ({
                 url: `/offers/${offer_id}/stats`,
@@ -240,5 +267,8 @@ export const {
     useGetUserInfoQuery,
     useGetOfferContactViewQuery,
     useDownloadOfferDocumentsQuery,
+    useGetUserCardsQuery,
+    useAddUserCardMutation,
+    useVerifyUserCardMutation,
 
 } = AuthApi;

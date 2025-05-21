@@ -1,22 +1,18 @@
-/* ❌ убирает серую плашку с датой под осью X */
 .apexcharts-xaxistooltip {
     display: none !important;
 }
 
-/* ✅ делает кросслайн зелёным и сплошным */
 .apexcharts-xcrosshairs {
     stroke: #2EAA7B !important;
     stroke-width: 2px !important;
     stroke-dasharray: 0 !important;
 }
 
-/* ✅ делает кружочек под осью X зелёным */
 .apexcharts-tooltip-marker {
     background-color: #2EAA7B !important;
     border: 2px solid white !important;
 }
 
-/* Основной календарь */
 .custom-calendar {
     font-family: Inter, sans-serif;
     border-radius: 12px;

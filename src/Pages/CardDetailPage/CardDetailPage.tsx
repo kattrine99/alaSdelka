@@ -160,7 +160,7 @@ export const CardDetailPage = () => {
                                         <Button
                                             disabled={!card?.documents?.length}
                                             onClick={handleDownloadAllDocuments}
-                                            className={`w-65.75 rounded-lg px-4.25 py-3 mb-4.25 font-semibold flex gap-2 items-center transition ${card?.documents?.length ? 'bg-[#2EAA7B] text-white hover:bg-[#31B683]' : 'bg-gray-400 text-white cursor-not-allowed'
+                                            className={`w-65.75 rounded-lg px-4.25 py-3 my-4.25 font-semibold flex gap-2 items-center transition ${card?.documents?.length ? 'bg-[#2EAA7B] text-white hover:bg-[#31B683]' : 'bg-gray-400 text-white cursor-not-allowed'
                                                 }`}
                                         >
                                             <BiSolidArchiveIn />

@@ -10,14 +10,13 @@ import { FiAlertCircle } from "react-icons/fi";
 import { profileNavigate } from "../../utils/categoryMap";
 import { registerLocale } from "react-datepicker";
 import { ru } from "date-fns/locale/ru";
-import './StatisticsPAge.css'
+import './StatisticsPage.css'
 registerLocale("ru", ru);
 
 export const StatisticsPage = () => {
 
     const { id } = useParams<{ id: string }>();
-    const offerId = id;
-    console.log("🔍 offerId из useParams:", offerId);
+    const offerId = Number(id);
 
     const [dateRange, setDateRange] = useState<[Date, Date]>(() => {
         const end = new Date();

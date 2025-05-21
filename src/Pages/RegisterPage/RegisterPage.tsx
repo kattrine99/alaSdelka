@@ -319,15 +319,12 @@ export const RegistrationPage = () => {
                     title="Успешно!"
                     message={successMessage}
                     onClose={() => setShowSuccessModal(false)}
-                    actions={
-                        <Button
-                            className="w-full text-center py-4 hover:border hover:bg-white hover:text-[#2EAA7B] hover:border-[#2EAA7B] text-white bg-[#2EAA7B] rounded-[14px]"
-                            onClick={() => setShowSuccessModal(false)}
-                        >
-                            Подтвердить
-                        </Button>
-                    }
-                />
+                    actions={<Button
+                        className="w-full text-center py-4 hover:border hover:bg-white hover:text-[#2EAA7B] hover:border-[#2EAA7B] text-white bg-[#2EAA7B] rounded-[14px]"
+                        onClick={() => setShowSuccessModal(false)}
+                    >
+                        Подтвердить
+                    </Button>} HeadingClassName={"font-bold font-inter text-xl"} />
             )}
         </>
     );

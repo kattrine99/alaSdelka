@@ -546,3 +546,48 @@ export interface OfferResponse {
     photos?: PhotoResponse[];
     documents?: DocumentResponse[];
 }
+export interface UserCard {
+    id: number;
+    expire: string;
+    masked_number: string;
+    card_type: "UZCARD" | "HUMO" | string;
+    is_verified: boolean;
+}
+
+export interface UserCardsResponse {
+    cards: UserCard[];
+}
+export interface AddCardPayload {
+    card_number: string;
+    expire: string;
+    card_type?: string;
+    is_default?: boolean;
+}
+export interface AddCardResponse {
+
+    message: string;
+    card: {
+        id: number;
+        masked_number: string;
+        card_type: "UZCARD" | "HUMO" | string;
+        is_verified: boolean;
+        is_default: boolean;
+
+    }
+    phone: string;
+}
+export interface VerifyCardPayload {
+    card_id: number;
+    code: string;
+}
+export interface VerifyCardResponse {
+    message: string;
+    card: {
+        id: number;
+        masked_number: string;
+        card_type: "UZCARD" | "HUMO" | string;
+        is_verified: boolean;
+        is_default: boolean;
+
+    }
+}

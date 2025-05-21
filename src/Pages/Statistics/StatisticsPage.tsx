@@ -16,8 +16,7 @@ registerLocale("ru", ru);
 export const StatisticsPage = () => {
 
     const { id } = useParams<{ id: string }>();
-    const offerId = id;
-    console.log("🔍 offerId из useParams:", offerId);
+    const offerId = Number(id);
 
     const [dateRange, setDateRange] = useState<[Date, Date]>(() => {
         const end = new Date();

@@ -103,7 +103,7 @@ export const AnnouncemntsPage = () => {
       )}
 
       <Header navLinksData={profileNavigate} />
-      <div className="px-48 py-9">
+      <div className="container mx-auto px-3 md:px-0 py-9">
         <Heading text={"Мои объявления"} level={2} className="font-inter text-xl font-bold leading-5 space-x-[-0.5%]" />
 
         {isLoading ? (
@@ -119,30 +119,38 @@ export const AnnouncemntsPage = () => {
             buttonLink="/add-offer"
           />) : (
           <div>
-            <div className="flex gap-6 mt-8">
-              <div className="flex flex-col w-317 gap-10.5">
+            <div className="flex md:justify-end mt-5">
+              <Button
+                  className="bg-[#2EAA7B] text-white rounded-md w-60.5 px-5 py-3"
+                  onClick={() => navigate('/add-offer')}
+              >
+                {'Добавить объявление'}
+              </Button>
+            </div>
+            <div className="flex gap-6 mt-8 w-full">
+              <div className="flex flex-col gap-10.5 w-full">
                 {offers.map((offer) => (
-                  <div key={offer.id} className="bg-white border border-[#E0E0E0] rounded-xl flex ">
+                  <div key={offer.id} className="bg-white border border-[#E0E0E0] rounded-xl flex w-full">
 
-                    <div className="relative flex flex-1/4">
+                    <div className="relative grid grid-cols-1 md:grid-cols-3 w-full">
                       {offer.offer_status === "sold" && (
                         <div className="absolute w-[125px] left-5 top-[-20px] font-openSans bg-white border border-[#301DFF] text-[#301DFF] py-1.25 px-1.5 rounded-md font-semibold z-10 shadow-sm flex items-center gap-1">
                           <FireIcon className="w-5 h-5 text-[#301DFF]" />
                           <Paragraph className="text-sm">Продано</Paragraph>
                         </div>)}
-                      <div className="relative w-101.5 ">
-                        <Link to={`/${offerTypeToUrlMap[offer.offer_type || 'category']}/card/${offer.id}`} className="w-full">
+                      <div className="relative col-span-1">
+                        <Link to={`/${offerTypeToUrlMap[offer.offer_type || 'category']}/card/${offer.id}`} className="w-full flex justify-center h-full">
 
                           <img
                             src={offer.photos[0]?.photo ?? "src/assets/gallery.svg"}
                             alt="cover"
-                            className="absolute w-full h-full rounded object-cover bg-gray-100"
+                            className="w-full h-full rounded object-cover bg-gray-100"
                           />
                         </Link>
 
                       </div>
 
-                      <div className="flex flex-3/4 flex-col gap-1 py-9.5 px-7">
+                      <div className="flex flex-3/4 flex-col gap-1 py-9.5 px-7 md:col-span-2">
                         <div className="flex flex-col mb-11">
                           <Link to={`/${offerTypeToUrlMap[offer.offer_type || 'category']}/card/${offer.id}`} className="w-full hover:text-[#2EAA7B]">
 
@@ -164,35 +172,33 @@ export const AnnouncemntsPage = () => {
 
                           </div>
                         </div>
-                        <div className="flex gap-23.75 w-full">
-                          <div className="flex flex-col w-full gap-7">
+                        <div className="flex w-full">
+                          <div className="grid grid-cols-1 gap-y-3 gap-x-5 md:grid-cols-2 w-full">
                             <Button className="bg-[#2EAA7B] text-white px-5 h-12 rounded-md" onClick={() => navigate(`/statistics/${offer.id}`)}>Посмотреть статистику</Button>
-                            <Button className="border border-[#2EAA7B] text-[#2EAA7B] px-5 h-12 rounded-md"
-                              onClick={() => {
-                                setSelectedOfferId(offer.id);
-                                setShowArchiveModal(true);
-                              }}>Поместить в архив</Button>
-                          </div>
-                          <div className="flex flex-col w-full gap-7">
                             {offer.paid_offer == true ? (
-                              <div className="bg-[#FF1D1D] text-white px-5 h-12 rounded-md flex items-center gap-2 font-semibold">
-                                Идет продвижение (осталось {offer.promotion.days_left} дней)
-                                <FireIcon className="z-10 w-5 h-5 text-[#FD6A0D]" />
-                              </div>
+                                <div className="bg-[#FF1D1D] text-white px-5 h-12 rounded-md flex items-center gap-2 font-semibold">
+                                  Идет продвижение (осталось {offer.promotion.days_left} дней)
+                                  <FireIcon className="z-10 w-5 h-5 text-[#FD6A0D]" />
+                                </div>
                             ) : (
-                              <Button
-                                className="bg-orange-500 text-white px-5 h-12 rounded-md"
-                                onClick={() => navigate(`/promotion/${offer.id}`)}
-                              >
-                                Продвигать объявление
-                              </Button>
+                                <Button
+                                    className="bg-orange-500 text-white px-5 h-12 rounded-md"
+                                    onClick={() => navigate(`/promotion/${offer.id}`)}
+                                >
+                                  Продвигать объявление
+                                </Button>
                             )}
+                            <Button className="bg-[#E0F6EE] px-5 h-12 rounded-md text-[#2EAA7B]"
+                                    onClick={() => {
+                                      setSelectedOfferId(offer.id);
+                                      setShowArchiveModal(true);
+                                    }}>Поместить в архив</Button>
 
-                            <Button className="bg-orange-500 text-white px-4 h-12 rounded-md"
-                              onClick={() => {
-                                setSelectedOfferId(offer.id);
-                                setShowModal(true);
-                              }}>Продано</Button>
+                            <Button className="text-[#2EAA7B] border border-[#2EAA7B] px-4 h-12 rounded-md"
+                                    onClick={() => {
+                                      setSelectedOfferId(offer.id);
+                                      setShowModal(true);
+                                    }}>Продано</Button>
                           </div>
                         </div>
                       </div>
@@ -200,14 +206,6 @@ export const AnnouncemntsPage = () => {
 
                   </div>
                 ))}
-              </div>
-              <div className="flex flex-col gap-4.75">
-                <Button
-                  className="bg-[#2EAA7B] text-white rounded-md w-60.5 px-5 py-3"
-                  onClick={() => navigate('/add-offer')}
-                >
-                  {'Добавить объявление'}
-                </Button>
               </div>
 
             </div>

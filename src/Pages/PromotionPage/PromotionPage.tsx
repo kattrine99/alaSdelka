@@ -26,6 +26,7 @@ export const PromotionPage = () => {
     const { data: filtersData, isLoading: isTariffsLoading } = useGetFiltersDataQuery();
     const { data: cardsData, isLoading: isCardsLoading } = useGetUserCardsQuery();
     const { data: userInfo } = useGetUserInfoQuery();
+    console.log("cardsData", cardsData);
 
     const cards = cardsData?.cards || [];
 
@@ -34,7 +35,7 @@ export const PromotionPage = () => {
     const [expiryMonth, setExpiryMonth] = useState("");
     const [expiryYear, setExpiryYear] = useState("");
     const expireDate = `${expiryMonth}${expiryYear}`;
-    const [cardType, setCardType] = useState<"UzCard" | "Humo" | null>(null);
+    const [cardType, setCardType] = useState<string | null>(null);
 
     const [smsCode, setSmsCode] = useState("");
     const [isVerificationStep] = useState(false);
@@ -45,6 +46,9 @@ export const PromotionPage = () => {
     const [promoteOffer] = usePromoteOfferMutation();
 
     const [step, setStep] = useState<1 | 2 | 3>(1);
+    const [timer, setTimer] = useState<number>(60);
+    const [canResend, setCanResend] = useState<boolean>(false);
+
     const [showResultModal, setShowResultModal] = useState(false);
     const [maskedPhone, setMaskedPhone] = useState<string>("");
     const [codeInput, setCodeInput] = useState<string[]>(["", "", "", ""]);
@@ -119,6 +123,22 @@ export const PromotionPage = () => {
             inputsRef.current[index - 1]?.focus();
         }
     };
+    const handleCardSelect = (card: {
+        id: number;
+        masked_number: string;
+        expire: string;
+        card_type: string;
+    }) => {
+        setSelectedCardId(card.id);
+
+        setCardNumber(card.masked_number);
+        const mm = card.expire.slice(0, 2);
+        const yy = card.expire.slice(2, 4);
+        setExpiryMonth(mm || "");
+        setExpiryYear(yy || "");
+
+        setCardType(card.card_type);
+    };
 
 
 
@@ -175,12 +195,15 @@ export const PromotionPage = () => {
                             {/* Карты пользователя */}
                             {cards.length > 0 && (
                                 <div className="mt-10">
-                                    <Heading level={3} text="Выберите карту для оплаты" className="mb-4" />
+                                    <div className="flex gap-8.25 items-center mb-7">
+                                        <Paragraph className="border py-3 px-5 w-12.5 h-12.5 items-center border-[#2EAA7B] rounded-full">2</Paragraph>
+                                        <Heading level={3} text="Выберите карту для оплаты" className="mb-4" />
+                                    </div>
                                     <div className="flex gap-6.75">
                                         {cards.map((card) => (
-                                            <Button key={card.id} onClick={() => setSelectedCardId(card.id)} className={`flex flex-col border items-start border-[#2EAA7B] px-6 py-4 rounded-lg ${selectedCardId === card.id ? "bg-[#2EAA7B] text-white" : "bg-white"}`}>
+                                            <Button key={card.id} onClick={() => handleCardSelect(card)} className={`flex flex-col border items-start border-[#2EAA7B] px-6 py-4 rounded-lg ${selectedCardId === card.id ? "bg-[#2EAA7B] text-white" : "bg-white"}`}>
                                                 <Paragraph className="font-inter font-semibold text-xl">{card.masked_number}</Paragraph>
-                                                <Paragraph>Срок: {card.expire}</Paragraph>
+                                                <Paragraph>Срок: {card.expire.slice(0, 2)}/{card.expire.slice(2, 4)}</Paragraph>
                                             </Button>
                                         ))}
                                     </div>
@@ -189,27 +212,47 @@ export const PromotionPage = () => {
 
                             {/* Новая карта */}
                             <div className="mt-10">
-                                <Heading level={3} text="Введите данные новой карты" className="mb-4" />
-                                <Input placeholder="0000 0000 0000 0000" value={cardNumber} onChange={(e) => setCardNumber(e.target.value)} isError={false} className="w-80 mb-4" />
-                                <div className="flex gap-4 mb-4">
-                                    <Input placeholder="MM" value={expiryMonth} onChange={(e) => setExpiryMonth(e.target.value)} isError={false} className="w-36" />
-                                    <Input placeholder="YY" value={expiryYear} onChange={(e) => setExpiryYear(e.target.value)} isError={false} className="w-36" />
-                                </div>
-                                <div className="flex gap-5.5 mt-4">
-                                    <button
-                                        onClick={() => setCardType("UzCard")}
-                                        className={`transition-opacity duration-200 ${cardType === "Humo" ? "opacity-30" : "opacity-100"}`}
-                                        type="button"
-                                    >
-                                        <UzcardIcon className="w-12 h-12" />
-                                    </button>
-                                    <button
-                                        onClick={() => setCardType("Humo")}
-                                        className={`transition-opacity duration-200 ${cardType === "UzCard" ? "opacity-30" : "opacity-100"}`}
-                                        type="button"
-                                    >
-                                        <HumoIcon className="w-12 h-12" />
-                                    </button>
+                                <Heading level={3} text="Или введите данные новой карты" className="mb-4" />
+                                <div className="bg-[#F8F8F8] rounded-[40px] py-10 px-12.5">
+
+                                    <Input placeholder="0000 0000 0000 0000" LabelText="Номер карты" LabelClassName="font-inter text-[25px] mb-8" value={cardNumber} onChange={(e) => {
+                                        const rawValue = e.target.value.replace(/\D/g, "").slice(0, 16);
+                                        const formatted = rawValue.replace(/(.{4})/g, "$1 ").trim();
+                                        setCardNumber(formatted);
+                                    }} isError={false} className="w-102 mb-12 outline-none py-3.5 px-4.5 bg-[#F0F1F280] border border-[#DEE0E333] rounded-2xl text-3xl text-[#686A70]" />
+                                    <div className="flex justify-between" >
+                                        <div className="flex flex-col gap-4">
+                                            <Paragraph className="font-inter text-2xl mb-4.5">Срок действия</Paragraph>
+                                            <div className="flex gap-2">
+                                                <Input placeholder="MM" value={expiryMonth} onChange={(e) => {
+                                                    const value = e.target.value.replace(/\D/g, "").slice(0, 2);
+                                                    setExpiryMonth(value);
+                                                }}
+                                                    isError={false} className="bg-[#F0F1F280] outline-none py-3.5 px-4.5 w-33 text-center text-xl text-[#686A70]" />
+                                                <Input placeholder="YY" value={expiryYear} onChange={(e) => {
+                                                    const value = e.target.value.replace(/\D/g, "").slice(0, 2);
+                                                    setExpiryYear(value);
+                                                }} isError={false} className="bg-[#F0F1F280] outline-none py-3.5 px-4.5 w-33 text-center text-xl text-[#686A70]" />
+                                            </div>
+                                        </div>
+                                        <div className="flex gap-6 mt-4">
+                                            <button
+                                                onClick={() => setCardType("UzCard")}
+                                                className={`transition-opacity duration-200 ${cardType === "Humo" ? "opacity-30" : "opacity-100"}`}
+                                                type="button"
+                                            >
+                                                <UzcardIcon className="w-24" />
+                                            </button>
+                                            <button
+                                                onClick={() => setCardType("Humo")}
+                                                className={`transition-opacity duration-200 ${cardType === "UzCard" ? "opacity-30" : "opacity-100"}`}
+                                                type="button"
+                                            >
+                                                <HumoIcon className="w-24" />
+                                            </button>
+                                        </div>
+                                    </div>
+
                                 </div>
                             </div>
 
@@ -253,10 +296,11 @@ export const PromotionPage = () => {
                 )}
                 {step === 2 && (
                     <ModalBase
-                        title="Подтвердите карту"
+                        title=""
                         message={`Введите код, отправленный на номер ${maskedPhone}`}
+                        ModalClassName="py-22 px-10 text-center"
                         onClose={() => setStep(1)}
-                        actions={<div className="w-full">
+                        actions={<div className="">
                             <div className="flex justify-between gap-2 mb-4">
                                 {Array.from({ length: 4 }).map((_, index) => (
                                     <Input
@@ -268,11 +312,20 @@ export const PromotionPage = () => {
                                         value={codeInput[index]}
                                         onChange={(e) => handleCodeChange(e.target.value, index)}
                                         onKeyDown={(e) => handleKeyDown(e, index)}
-                                        className="..."
+                                        className="rounded-2xl border border-[#2EAA7B] w-20 h-20 text-center font-inter font-semibold text-3xl"
                                         type="text"
                                         isError={false}
                                     />
                                 ))}
+                            </div>
+                            <div className="text-center text-[14px] text-[#28B13D] font-semibold">
+                                {canResend ? (
+                                    <button onClick={() => { setTimer(60); setCanResend(false); }} className="hover:underline">
+                                        Отправить снова
+                                    </button>
+                                ) : (
+                                    <span>Отправить снова через <span className="font-bold">0:{timer.toString().padStart(2, "0")}</span></span>
+                                )}
                             </div>
                             <Button
                                 disabled={code.length !== 4}
@@ -289,7 +342,7 @@ export const PromotionPage = () => {
                                         setShowResultModal(true);
                                     }
                                 }}
-                                className="w-full bg-[#2EAA7B] text-white py-3 rounded-lg"
+                                className="w-full bg-[#2EAA7B] text-white py-6 rounded-lg "
                             >
                                 Подтвердить
                             </Button>

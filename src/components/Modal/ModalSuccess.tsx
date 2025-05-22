@@ -10,6 +10,7 @@ interface ModalBaseProps {
     actions?: React.ReactNode;
     showCloseButton?: boolean;
     HeadingClassName: string;
+    ModalClassName?: string;
 }
 
 export const ModalBase: React.FC<ModalBaseProps> = ({
@@ -19,15 +20,15 @@ export const ModalBase: React.FC<ModalBaseProps> = ({
     actions,
     showCloseButton = true,
     HeadingClassName,
-
+    ModalClassName,
 }) => {
     return (
         <div
-            className="fixed inset-0 w-screen h-screen z-50 flex items-center justify-center bg-[#3B3B3B80] bg-opacity-50"
+            className={`fixed inset-0 w-screen h-screen z-50 flex items-center justify-center bg-[#3B3B3B80] bg-opacity-50`}
             onClick={onClose}
         >
             <div
-                className="relative bg-white flex flex-col p-6 rounded-[24px] max-w-[460px] w-[457px] shadow-lg"
+                className={`relative bg-white flex flex-col p-6 rounded-[24px] w-[457px] shadow-lg ${ModalClassName}`}
                 onClick={(e) => e.stopPropagation()}
             >
                 {showCloseButton && onClose && (

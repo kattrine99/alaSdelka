@@ -111,7 +111,7 @@ export const ProfilePage = () => {
                     HeadingClassName={"font-inter font-semibold text-[#101828] text-3xl leading-[44px]"} />
             )}
             <Header navLinksData={profileNavigate} />
-            <div className="w-full px-48 mt-6">
+            <div className="w-full mt-6">
                 {isEditingProfile && <Breadcrumbs
                     links={[
                         { label: "Главная", href: "/" },
@@ -128,18 +128,18 @@ export const ProfilePage = () => {
                                 className="text-[#121212] font-inter font-bold text-4xl leading-10"
                                 text={`Добро пожаловать, ${fullName}!`}
                                 level={2} />
-                            <div className="flex justify-between mt-6 ml-5">
-                                <div className="flex gap-x-6 mb-1.5 items-center">
+                            <div className="flex flex-col md:flex-row justify-center md:justify-between mt-6 ml-5">
+                                <div className="flex gap-x-6 mb-1.5 items-center w-full">
                                     {data.photo && (
                                         <img src={data.photo || "/src/assets/profile-circle.svg"} alt="profile_Photo" className="rounded-full w-[100px] h-[100px]" />
-                                    )}                                    <div className="flex flex-col gap-2">
-                                        <Paragraph className="font-inter font-medium text-xl leading-7 tracking-[-1%]">{data.name}</Paragraph>
-                                        <Paragraph className="font-inter font-semibold text-[14px] text-[#667085] leading-5">ID: {data.id}</Paragraph>
+                                    )}                                    <div className="flex flex-col gap-2 w-full">
+                                        <Paragraph className="font-inter font-medium text-xl leading-7 text-center md:text-left tracking-[-1%]">{data.name}</Paragraph>
+                                        <Paragraph className="font-inter font-semibold text-[14px] text-center md:text-left text-[#667085] leading-5">ID: {data.id}</Paragraph>
                                     </div>
                                 </div>
-                                <div className="flex gap-x-4 items-center">
-                                    <Button className="h-13.5 px-5 text-white bg-[#31B683] rounded-[6px] cursor-pointer" onClick={handleLogout}>Выйти из профиля</Button>
-                                    <Button className="px-5 h-13.5 text-white bg-[#31B683] rounded-[6px] cursor-pointer" onClick={handleEditClick}>Редактировать личные данные</Button>
+                                <div className="flex flex-col md:flex-row gap-x-4 gap-y-4 items-center">
+                                    <Button className="px-5 h-13.5 text-white bg-[#31B683] w-full rounded-[6px] cursor-pointer" onClick={handleEditClick}>Редактировать личные данные</Button>
+                                    <Button className="h-13.5 px-5 text-white bg-[#DE5151] w-full rounded-[6px] cursor-pointer" onClick={handleLogout}>Выйти из профиля</Button>
                                 </div>
                             </div>
                         </>
@@ -171,7 +171,7 @@ export const ProfilePage = () => {
                         <Heading className="text-[#101828] font-inter font-semibold text-xl leading-7 mb-3.5" text="Основная информация" level={3} />
 
                         <div className="flex flex-col gap-y-6">
-                            <div className="flex flex-col w-200">
+                            <div className="flex flex-col">
                                 <label className="text-[#121212] text-sm mb-1 block">Имя Фамилия</label>
                                 {editMode ? (<Input
                                     title="Имя Фамилия"
@@ -190,7 +190,7 @@ export const ProfilePage = () => {
                                 )}
                             </div>
 
-                            <div className="w-200">
+                            <div>
                                 <div className="mb-6">
                                     <label className="text-[#121212] text-sm mb-1 block">Номер телефона</label>
                                     {editMode ? (

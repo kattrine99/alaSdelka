@@ -11,7 +11,7 @@ import { Offer } from "../../Store/api/types";
 
 export const MainPage = () => {
     const [selectedCategory, setSelectedCategory] = useState<"Бизнес" | "Франшиза" | "Стартапы" | "Инвестиции">("Бизнес")
-    ;
+        ;
     const navigate = useNavigate();
     const [listingTypes, setListingTypes] = useState<Record<"Бизнес" | "Франшиза" | "Стартапы" | "Инвестиции", "buy" | "sell">>({
         Бизнес: "buy",
@@ -19,7 +19,7 @@ export const MainPage = () => {
         Стартапы: "buy",
         Инвестиции: "buy",
     });
-    const {data: mainStats} = useGetMainStatisticsQuery();
+    const { data: mainStats } = useGetMainStatisticsQuery();
 
     const cityStats = useMemo(() => {
         if (!mainStats?.cities_statistics) return null;
@@ -135,7 +135,7 @@ export const MainPage = () => {
 
     return (
         <div className="font-openSans min-h-screen w-screen overflow-x-hidden">
-            <Header/>
+            <Header />
             <section className="px-4 md:px-0 relative overflow-hidden bg-gradient-to-tr from-[#16503A] to-[#31B683]">
                 <div className="flex justify-end">
                     <div
@@ -152,7 +152,7 @@ export const MainPage = () => {
                         <Paragraph
                             className="text-white text-[clamp(16px,1.5vw,18px)] max-w-3/5 md:w-full font-semibold leading-snug">
                             <span className="inline-flex items-baseline align-baseline relative top-2 mr-1">
-                                <InvestInIcon className="w-[120px] md:w-[168.39px] h-auto"/>
+                                <InvestInIcon className="w-[120px] md:w-[168.39px] h-auto" />
                             </span>
                             — первая в Узбекистане специализированная площадка для размещения объявлений
                             о продаже готового бизнеса, стартапов, франшиз и инвестиционных проектов.
@@ -170,8 +170,8 @@ export const MainPage = () => {
                                     if (
                                         label === "Бизнес" ||
                                         label === "Франшиза" ||
-                                        label === "Стартапы" ||
-                                        label === "Инвестиции"
+                                        label === "Инвестиции" ||
+                                        label === "Стартапы"
                                     ) {
                                         setSelectedCategory(label);
                                     }
@@ -199,94 +199,94 @@ export const MainPage = () => {
             {/* Карточки */}
             <section className="mt-12.5 mb-8.75 px-3 md:px-0 container mx-auto">
                 <div className="flex justify-start">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-y-4">
-                        <div>
+                    <div className="grid grid-cols-3 max-lg:flex max-lg:flex-col max-sm:justify-center items-start w-full mb-6">
+                        <div >
                             <Button onClick={() => {
                                 navigate("/business")
                             }} className={""}>
                                 <Heading level={2} text="Бизнес" className="font-openSans font-bold hover:text-[#2EAA7B] hover:underline hover:decoration-1 transition duration-500 text-3xl cursor-pointer" />
                             </Button>
-                    </div>
-                    <div className="flex gap-x-4 mb:gap-10.5 text-center">
-                        <Button onClick={() => setListingTypes(prev => ({ ...prev, [selectedCategory]: "buy" }))} className={`flex items-center justify-center gap-x-2 rounded-[8px] h-13 w-91 border border-[#2EAA7B] text-[#2EAA7B] text-[16px] hover:bg-[#2EAA7B] hover:text-white transition duration-500 font-inter leading-[150%] font-semibold
-                        ${businessType === "buy" ? "bg-[#2EAA7B] text-white border-[#2EAA7B]"
-                                        : "border-[#2EAA7B] text-[#2EAA7B] hover:bg-[#2EAA7B] hover:text-white"
-                                    }`}>
-                                <ShopIcon className="w-5 h-5 hover:text-white"/>
+                        </div>
+                        <div className="col-span-1 max-lg:mt-2 max-sm:flex-col max-lg:w-full flex justify-center gap-4">
+                            <Button
+                                className={`flex items-center justify-center gap-2 border rounded-[8px] h-13 min-w-70 max-sm:w-full max-sm:mt-3 whitespace-nowrap px-6 text-[16px] font-inter font-semibold transition
+  ${businessType === "buy" ? "bg-[#2EAA7B] text-white border-[#2EAA7B]" : "border-[#2EAA7B] text-[#2EAA7B] hover:bg-[#2EAA7B] hover:text-white"}`}
+                            >
+                                <ShopIcon className="w-5 h-5" />
                                 Покупка бизнеса
                             </Button>
 
-                            <Button onClick={() => setListingTypes(prev => ({...prev, [selectedCategory]: "sell"}))}
-                                    className={`flex items-center justify-center gap-x-2 rounded-[8px] h-13 w-91 border border-[#2EAA7B] text-[#2EAA7B] text-[16px] hover:bg-[#2EAA7B] hover:text-white transition duration-500 font-inter leading-[150%] font-semibold
+                            <Button onClick={() => setListingTypes(prev => ({ ...prev, [selectedCategory]: "sell" }))}
+                                className={`flex items-center justify-center gap-x-2 rounded-[8px] h-13  min-w-70 max-sm:w-full whitespace-nowrap px-6 border border-[#2EAA7B] text-[#2EAA7B] text-[16px] hover:bg-[#2EAA7B] hover:text-white transition duration-500 font-inter leading-[150%] font-semibold
                         ${businessType === "sell" ? "bg-[#2EAA7B] text-white border-[#2EAA7B]"
                                         : "border-[#2EAA7B] text-[#2EAA7B] hover:bg-[#2EAA7B] hover:text-white"
                                     }`}>
-                                <ShopIcon className="w-5 h-5 hover:text-white"/>
+                                <ShopIcon className="w-5 h-5 hover:text-white" />
                                 Продажа бизнеса
                             </Button>
                         </div>
                     </div>
 
                 </div>
-                {isLoadingBusiness ? (
-                    <div className="flex justify-center items-center py-7.5">
-                        <div
-                            className="w-10 h-10 border-4 border-[#2EAA7B] border-t-transparent rounded-full animate-spin"></div>
-                    </div>
-                ) : isErrorBusiness ? (
+                {
+                    isLoadingBusiness ? (
+                        <div className="flex justify-center items-center py-7.5">
+                            <div
+                                className="w-10 h-10 border-4 border-[#2EAA7B] border-t-transparent rounded-full animate-spin"></div>
+                        </div>
+                    ) : isErrorBusiness ? (
                         <p className=" py-7.5 text-red-500">Ошибка загрузки данных</p>
                     ) :
-                    ((() => {
-                        const businessCards = Object.values(businessOffers?.business || {});
+                        ((() => {
+                            const businessCards = Object.values(businessOffers?.business || {});
 
-                        if (businessCards.length === 0) {
+                            if (businessCards.length === 0) {
+                                return (
+                                    <EmptyMessage
+                                        title="Здесь еще нет объявлений"
+                                        subtitle="Ваше может стать первым!"
+                                        hideButton
+                                    />
+                                );
+                            }
+
                             return (
-                                <EmptyMessage
-                                    title="Здесь еще нет объявлений"
-                                    subtitle="Ваше может стать первым!"
-                                    hideButton
+                                <CardSection
+                                    key={businessType}
+                                    title="Бизнес"
+                                    cards={businessCards}
+                                    initialFavorites={favoriteIds}
+                                    onFavoritesChanged={handleFavoritesChanged}
+                                    maxVisible={8}
+                                    Class="grid grid-cols-1 2xl:grid-cols-4 xl:grid-cols-3 lg:grid-cols-2 gap-y-10 gap-x-2 transition duration-300 ease-in-out"
+                                    ClassName="container mx-auto py-7.5"
                                 />
                             );
-                        }
-
-                        return (
-                            <CardSection
-                                key={businessType}
-                                title="Бизнес"
-                                cards={businessCards}
-                                initialFavorites={favoriteIds}
-                                onFavoritesChanged={handleFavoritesChanged}
-                                maxVisible={8}
-                                Class="grid grid-cols-1 2xl:grid-cols-4 xl:grid-cols-3 lg:grid-cols-2 gap-y-10 gap-x-2 transition duration-300 ease-in-out"
-                                ClassName="container mx-auto py-7.5"
-                            />
-                        );
-                    })())}
-            </section>
+                        })())
+                }
+            </section >
             <section className="mt-12.5 mb-8.75 px-3 md:px-0 container mx-auto">
                 <div className="flex justify-start">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-y-4">
+                    <div className="grid grid-cols-3 max-lg:flex max-lg:flex-col max-sm:justify-center items-start w-full mb-6">
                         <div>
-                        <Button onClick={() => {
-                            navigate("/franchise")
-                        }} className={""}>
-                            <Heading level={2} text="Франшиза" className="font-openSans font-bold hover:text-[#2EAA7B] hover:underline hover:decoration-1 transition duration-500 text-3xl cursor-pointer" />
-                        </Button>
-                    </div>
-                    <div className="flex gap-x-4 mb:gap-10.5 text-center">
-                        <Button onClick={() => setListingTypes(prev => ({ ...prev, Франшиза: "buy" }))} className={`flex items-center justify-center gap-x-2 rounded-[8px] h-[52px] w-[364px] border border-[#2EAA7B] text-[#2EAA7B] text-[16px] hover:bg-[#2EAA7B] hover:text-white transition duration-500 font-inter leading-[150%] font-semibold
-                        ${franchiseType === "buy" ? "bg-[#2EAA7B] text-white border-[#2EAA7B]"
-                                : "border-[#2EAA7B] text-[#2EAA7B] hover:bg-[#2EAA7B] hover:text-white"
-                            }`}>
-                                <ShopIcon className="w-5 h-5 hover:text-white"/>
+                            <Button onClick={() => {
+                                navigate("/franchise")
+                            }} className={""}>
+                                <Heading level={2} text="Франшиза" className="font-openSans font-bold hover:text-[#2EAA7B] hover:underline hover:decoration-1 transition duration-500 text-3xl cursor-pointer" />
+                            </Button>
+                        </div>
+                        <div className="col-span-1 max-lg:mt-2 max-sm:flex-col max-lg:w-full flex justify-center gap-4">
+                            <Button onClick={() => setListingTypes(prev => ({ ...prev, Франшиза: "buy" }))} className={`flex items-center justify-center gap-2 border rounded-[8px] h-13 min-w-70 max-sm:w-full max-sm:mt-3 whitespace-nowrap px-6 text-[16px] font-inter font-semibold transition
+  ${businessType === "buy" ? "bg-[#2EAA7B] text-white border-[#2EAA7B]" : "border-[#2EAA7B] text-[#2EAA7B] hover:bg-[#2EAA7B] hover:text-white"}`}>
+                                <ShopIcon className="w-5 h-5 hover:text-white" />
                                 Покупка франшизы
                             </Button>
 
-                            <Button onClick={() => setListingTypes(prev => ({...prev, Франшиза: "sell"}))} className={`flex items-center justify-center gap-x-2 rounded-[8px] h-[52px] w-[364px] border border-[#2EAA7B] text-[#2EAA7B] text-[16px] hover:bg-[#2EAA7B] hover:text-white transition duration-500 font-inter leading-[150%] font-semibold
-                        ${franchiseType === "sell" ? "bg-[#2EAA7B] text-white border-[#2EAA7B]"
-                                : "border-[#2EAA7B] text-[#2EAA7B] hover:bg-[#2EAA7B] hover:text-white"
-                            }`}>
-                                <ShopIcon className="w-5 h-5 hover:text-white"/>
+                            <Button onClick={() => setListingTypes(prev => ({ ...prev, Франшиза: "sell" }))} className={`flex items-center justify-center gap-x-2 rounded-[8px] h-13  min-w-70 max-sm:w-full whitespace-nowrap px-6 border border-[#2EAA7B] text-[#2EAA7B] text-[16px] hover:bg-[#2EAA7B] hover:text-white transition duration-500 font-inter leading-[150%] font-semibold
+                        ${businessType === "sell" ? "bg-[#2EAA7B] text-white border-[#2EAA7B]"
+                                    : "border-[#2EAA7B] text-[#2EAA7B] hover:bg-[#2EAA7B] hover:text-white"
+                                }`}>
+                                <ShopIcon className="w-5 h-5 hover:text-white" />
                                 Продажа франшизы
                             </Button>
                         </div>
@@ -298,8 +298,8 @@ export const MainPage = () => {
                             className="w-10 h-10 border-4 border-[#2EAA7B] border-t-transparent rounded-full animate-spin"></div>
                     </div>
                 ) : isErrorFranchise ? (
-                        <p className="px-48 py-[30px] text-red-500">Ошибка загрузки данных</p>
-                    ) :
+                    <p className="px-48 py-[30px] text-red-500">Ошибка загрузки данных</p>
+                ) :
                     (
                         ((() => {
                             const franchiseCards = Object.values(franchiseOffers?.franchise || {});
@@ -331,28 +331,26 @@ export const MainPage = () => {
             </section>
             <section className="mt-12.5 mb-8.75 px-3 md:px-0 container mx-auto">
                 <div className="flex justify-start">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-y-4">
+                    <div className="grid grid-cols-3 max-lg:flex max-lg:flex-col max-sm:justify-center items-start w-full mb-6">
                         <div>
                             <Button onClick={() => {
-                            navigate("/startups")
-                        }} className={""}>
-                            <Heading level={2} text="Стартапы" className="font-openSans font-bold hover:text-[#2EAA7B] hover:underline hover:decoration-1 transition duration-500 text-3xl cursor-pointer" />
-                        </Button>
-                    </div>
-                    <div className="flex gap-x-4 mb:gap-10.5 text-center">
-                        <Button onClick={() => setListingTypes(prev => ({ ...prev, Стартапы: "buy" }))} className={`flex items-center justify-center gap-x-2 rounded-[8px] h-[52px] w-[364px] border border-[#2EAA7B] text-[#2EAA7B] text-[16px] hover:bg-[#2EAA7B] hover:text-white transition duration-500 font-inter leading-[150%] font-semibold
-                        ${startupType === "buy" ? "bg-[#2EAA7B] text-white border-[#2EAA7B]"
-                                : "border-[#2EAA7B] text-[#2EAA7B] hover:bg-[#2EAA7B] hover:text-white"
-                            }`}>
-                                <ShopIcon className="w-5 h-5 hover:text-white"/>
+                                navigate("/startups")
+                            }} className={""}>
+                                <Heading level={2} text="Стартапы" className="font-openSans font-bold hover:text-[#2EAA7B] hover:underline hover:decoration-1 transition duration-500 text-3xl cursor-pointer" />
+                            </Button>
+                        </div>
+                        <div className="col-span-1 max-lg:mt-2 max-sm:flex-col max-lg:w-full flex justify-center gap-4">
+                            <Button onClick={() => setListingTypes(prev => ({ ...prev, Стартапы: "buy" }))} className={`flex items-center justify-center gap-2 border rounded-[8px] h-13 min-w-70 max-sm:w-full max-sm:mt-3 whitespace-nowrap px-6 text-[16px] font-inter font-semibold transition
+  ${businessType === "buy" ? "bg-[#2EAA7B] text-white border-[#2EAA7B]" : "border-[#2EAA7B] text-[#2EAA7B] hover:bg-[#2EAA7B] hover:text-white"}`}>
+                                <ShopIcon className="w-5 h-5 hover:text-white" />
                                 Покупка стартапа
                             </Button>
 
-                            <Button onClick={() => setListingTypes(prev => ({...prev, Стартапы: "sell"}))} className={`flex items-center justify-center gap-x-2 rounded-[8px] h-[52px] w-[364px] border border-[#2EAA7B] text-[#2EAA7B] text-[16px] hover:bg-[#2EAA7B] hover:text-white transition duration-500 font-inter leading-[150%] font-semibold
-                        ${startupType === "sell" ? "bg-[#2EAA7B] text-white border-[#2EAA7B]"
-                                : "border-[#2EAA7B] text-[#2EAA7B] hover:bg-[#2EAA7B] hover:text-white"
-                            }`}>
-                                <ShopIcon className="w-5 h-5 hover:text-white"/>
+                            <Button onClick={() => setListingTypes(prev => ({ ...prev, Стартапы: "sell" }))} className={`flex items-center justify-center gap-x-2 rounded-[8px] h-13  min-w-70 max-sm:w-full whitespace-nowrap px-6 border border-[#2EAA7B] text-[#2EAA7B] text-[16px] hover:bg-[#2EAA7B] hover:text-white transition duration-500 font-inter leading-[150%] font-semibold
+                        ${businessType === "sell" ? "bg-[#2EAA7B] text-white border-[#2EAA7B]"
+                                    : "border-[#2EAA7B] text-[#2EAA7B] hover:bg-[#2EAA7B] hover:text-white"
+                                }`}>
+                                <ShopIcon className="w-5 h-5 hover:text-white" />
                                 Продажа стартапа
                             </Button>
                         </div>
@@ -364,8 +362,8 @@ export const MainPage = () => {
                             className="w-10 h-10 border-4 border-[#2EAA7B] border-t-transparent rounded-full animate-spin"></div>
                     </div>
                 ) : isErrorStartup ? (
-                        <p className="px-48 py-[30px] text-red-500">Ошибка загрузки данных</p>
-                    ) :
+                    <p className="px-48 py-[30px] text-red-500">Ошибка загрузки данных</p>
+                ) :
                     ((() => {
                         const startupCards = Object.values(startupOffers?.startup || {});
 
@@ -400,7 +398,7 @@ export const MainPage = () => {
                             navigate('/investments')
                         }} className={""}>
                             <Heading level={2} text="Инвестиции"
-                                     className="font-openSans font-bold text-3xl hover:text-[#2EAA7B] hover:underline hover:decoration-1 transition duration-500 cursor-pointer"/>
+                                className="font-openSans font-bold text-3xl hover:text-[#2EAA7B] hover:underline hover:decoration-1 transition duration-500 cursor-pointer" />
                         </Button>
                     </div>
                 </div>
@@ -450,7 +448,7 @@ export const MainPage = () => {
                             {cityStats &&
                                 cityStats.map((city, idx) => (
                                     <div key={idx}
-                                         className="w-full flex flex-col bg-[#1A1A1A] text-white py-4 px-6 rounded-[12px] gap-0.5">
+                                        className="w-full flex flex-col bg-[#1A1A1A] text-white py-4 px-6 rounded-[12px] gap-0.5">
                                         <span
                                             className="font-openSans font-bold text-2xl leading-[150%]">{city.name_ru}</span>
                                         <span className="font-Urbanist font-bold text-[40px] leading-[150%]">
@@ -482,36 +480,36 @@ export const MainPage = () => {
                         </Paragraph>
                     </div>
                     <div className="md:hidden mt-6">
-                        <img src="/images/WhyInvestIn.png" alt="" className="w-full max-w-3xl"/>
+                        <img src="/images/WhyInvestIn.png" alt="" className="w-full max-w-3xl" />
                     </div>
                     {/*Цифры*/}
                     <div className="flex justify-start gap-5 mt-[58px]">
                         <div className="grid grid-cols-2 gap-[20px] md:max-w-2xl w-full">
                             <div className="bg-white w-full font-inter text-black flex flex-col items-center rounded-[30px] py-6 shadow-[0px_4px_21.2px_rgba(46,170,123,0.2)]">
-                                <Paragraph className="text-[40px] text-center font-bold leading-none">
+                                <Paragraph className="text-[40px] max-sm:text-3xl text-center font-bold leading-none transition duration-300">
                                     {mainStats?.offers_count?.toLocaleString("ru-RU")}<span
-                                    className="text-[#2EAA7B]">+</span>
+                                        className="text-[#2EAA7B]">+</span>
                                 </Paragraph>
                                 <Paragraph className="text-2xl mt-2">объявлений</Paragraph>
                             </div>
 
                             <div className="bg-white w-full font-inter text-black flex flex-col items-center rounded-[30px] py-6 shadow-[0px_4px_21.2px_rgba(46,170,123,0.2)]">
-                                <Paragraph className="text-[40px] text-center font-bold leading-none">
+                                <Paragraph className="text-[40px] max-sm:text-3xl text-center font-bold leading-none transition duration-300">
                                     {mainStats?.deals_count?.toLocaleString("ru-RU")}<span
-                                    className="text-[#2EAA7B]">+</span>
+                                        className="text-[#2EAA7B]">+</span>
                                 </Paragraph>
                                 <Paragraph className="text-2xl mt-2">сделок</Paragraph>
                             </div>
                             <div
                                 className="bg-white font-inter text-black flex flex-col items-center rounded-[30px] py-6 shadow-[0px_4px_21.2px_rgba(46,170,123,0.2)]">
-                                <Paragraph className="text-[40px] text-center font-bold leading-none">
+                                <Paragraph className="text-[40px] max-sm:text-3xl text-center font-bold leading-none transition duration-300">
                                     {mainStats?.partners_count?.toLocaleString("ru-RU")}
                                 </Paragraph>
                                 <Paragraph className="text-2xl mt-2">партнёров</Paragraph>
                             </div>
                             <div
-                                className="bg-white font-inter text-black flex flex-col items-center rounded-[30px] py-6 shadow-[0px_4px_21.2px_rgba(46,170,123,0.2)]">
-                                <Paragraph className="text-[40px] text-center font-bold leading-none">
+                                className="bg-white font-inter text-black flex flex-col items-center text-center rounded-[30px] py-6 shadow-[0px_4px_21.2px_rgba(46,170,123,0.2)]">
+                                <Paragraph className="text-[40px] max-sm:text-3xl text-center font-bold leading-none transition duration-300">
                                     {mainStats?.total_sold_amount
                                         ? `${(+mainStats.total_sold_amount / 1000000).toFixed(0)} млн `
                                         : "—"}<span className="text-[#2EAA7B]">$</span>
@@ -524,7 +522,7 @@ export const MainPage = () => {
 
                 </div>
             </section>
-            <Footer showSmallFooter={true}/>
-        </div>
+            <Footer showSmallFooter={true} />
+        </div >
     );
 };

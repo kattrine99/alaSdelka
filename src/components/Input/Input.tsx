@@ -65,7 +65,7 @@ export const Input = forwardRef<HTMLInputElement | HTMLTextAreaElement, InputPro
             );
         }
         return (
-            <div className="flex flex-col">
+            <div className="flex-1 flex-col">
                 <label className={LabelClassName}>{LabelText}</label>
                 <input
                     ref={ref as React.Ref<HTMLInputElement>}

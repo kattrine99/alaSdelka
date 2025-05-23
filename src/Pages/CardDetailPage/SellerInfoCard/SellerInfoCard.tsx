@@ -16,7 +16,7 @@ export const SellerInfoCard = ({ card, offer_type, userId }: { card: OfferDetail
 
 
     return (
-        <div className="lg:max-w-113 w-full h-full p-4 rounded-md shadow-md shadow-[#2EAA7B2E] flex flex-col gap-4 relative">
+        <div className="lg:max-w-113 w-full p-4 rounded-md shadow-md shadow-[#2EAA7B2E] flex flex-col gap-4 relative">
             <button
                 onClick={() => setFavorite(!isFavorite)}
                 className="absolute top-4 right-4 p-1 border rounded-full border-green-500 text-green-500"

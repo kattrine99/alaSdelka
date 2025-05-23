@@ -1,4 +1,4 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { createApi } from "@reduxjs/toolkit/query/react";
 import type {
     LoginUserPayload,
     LoginUserResponse,
@@ -27,24 +27,13 @@ import type {
     VerifyCardResponse,
     VerifyCardPayload,
 } from "./types";
-import { baseUrl } from "../../utils/baseUrl";
 import { ICard } from "../../components/Cards/Interfaces";
-import qs from 'qs'
+import customBaseQuery from "./customBaseQuery";
+
 
 export const AuthApi = createApi({
     reducerPath: "Api",
-    baseQuery: fetchBaseQuery({
-        baseUrl,
-        prepareHeaders: (headers) => {
-            const token = localStorage.getItem("accessToken");
-            if (token) {
-                headers.set("Authorization", `Bearer ${token}`);
-            }
-            headers.set("Accept", "application/json");
-            return headers;
-        },
-        paramsSerializer: (params) => qs.stringify(params),
-    }),
+    baseQuery: customBaseQuery,
     endpoints: (builder) => ({
         //Авторизация и выход
         loginUser: builder.mutation<LoginUserResponse, LoginUserPayload>({

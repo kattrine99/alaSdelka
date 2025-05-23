@@ -86,14 +86,13 @@ export const LoginPage = () => {
                     title={modalTitle}
                     message={modalText}
                     onClose={() => setShowModal(false)}
-                    actions={<Button className={"w-full text-center py-4 hover:border-1 hover:bg-white hover:text-[#2EAA7B] hover:border-[#2EAA7B] text-white bg-[#2EAA7B] rounded-[14px]"} onClick={() => { setShowModal(false) }}>Подтвердить</Button>}
-                />}
+                    actions={<Button className={"w-full text-center py-4 hover:border-1 hover:bg-white hover:text-[#2EAA7B] hover:border-[#2EAA7B] text-white bg-[#2EAA7B] rounded-[14px]"} onClick={() => { setShowModal(false); }}>Подтвердить</Button>} HeadingClassName={''} />}
                 {showLogoutModal && (
                     <ModalBase
                         title="Сессия завершена"
                         message={logoutReason}
                         onClose={() => setShowLogoutModal(false)}
-                        actions={<Button className={"w-full text-center py-4 hover:border-1 hover:bg-white hover:text-[#2EAA7B] hover:border-[#2EAA7B] text-white bg-[#2EAA7B] rounded-[14px]"} onClick={() => { setShowLogoutModal(false) }}>Понятно</Button>} />)}
+                        actions={<Button className={"w-full text-center py-4 hover:border-1 hover:bg-white hover:text-[#2EAA7B] hover:border-[#2EAA7B] text-white bg-[#2EAA7B] rounded-[14px]"} onClick={() => { setShowLogoutModal(false); }}>Понятно</Button>} HeadingClassName={''} />)}
             </div>
             <Header showNavLinks={false} showAuthButtons={false} />
             <div className=" flex items-center justify-center py-[62px] transition-all duration-300">
@@ -153,7 +152,7 @@ export const LoginPage = () => {
                             {/*        Войти с помощью Google*/}
                             {/*    </Button>*/}
                             {/*</div>*/}
-                            <Paragraph className="text-[16px] font-inter text-[#232323] leading-[130%] mt-10 transition-all duration-300">
+                            <Paragraph className="w-full text-center text-[16px] font-inter text-[#232323] leading-[130%] mt-10 transition-all duration-300">
                                 Еще нет аккаунта?
                                 <Applink to='/register' className="text-[#2EAA7B] hover:underline ml-1 font-semibold transition duration-500">Зарегистрироваться</Applink>
                             </Paragraph>

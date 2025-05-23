@@ -1,8 +1,8 @@
 export const categories = [
     { label: "Бизнес", to: "/business" },
     { label: "Франшиза", to: "/franchise" },
-    { label: "Стартапы", to: "/startup" },
     { label: "Инвестиции", to: "/investments" },
+    { label: "Стартапы", to: "/startup" },
 ];
 
 export const personalpages = [
@@ -32,4 +32,4 @@ export interface FileMeta {
     name: string;
     size: number;
     type: string;
-  }
+}

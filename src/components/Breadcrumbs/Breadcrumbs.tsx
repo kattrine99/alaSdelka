@@ -21,33 +21,35 @@ export const Breadcrumbs = ({
 
     if (links?.length) {
         return (
-            <nav className="text-[15px] font-inter font-medium leading-[22px] text-[#68727D] flex items-center gap-2">
-                {links.map((link, index) => {
-                    const isActive = link.href === location.pathname;
+            <div className="w-full max-w-full overflow-hidden">
+                <nav className="w-full text-[15px] font-inter font-medium leading-[22px] text-[#68727D] flex flex-wrap items-center gap-2">
+                    {links.map((link, index) => {
+                        const isActive = link.href === location.pathname;
 
-                    return (
-                        <span key={index} className="flex items-center gap-2">
-                            {link.href ? (
-                                <Link
-                                    to={link.href}
-                                    className={`transition duration-500 ${isActive
-                                        ? "text-[#28B13D] font-semibold"
-                                        : "hover:text-[#28B13D] text-[#68727D]"
-                                        }`}
-                                >
-                                    {link.label}
-                                </Link>
-                            ) : (
-                                <span className="text-[#28B13D]">{link.label}</span>
-                            )}
-                            {index !== links.length - 1 && (
-                                <HiChevronRight className="text-gray-400 w-[20px] h-[20px]" />
-                            )}
-                        </span>
-                    );
-                })}
-            </nav>
-        );
+                        return (
+                            <span key={index} className="flex items-center gap-2">
+                                {link.href ? (
+                                    <Link
+                                        to={link.href}
+                                        className={`transition duration-500 ${isActive
+                                            ? "text-[#28B13D] font-semibold"
+                                            : "hover:text-[#28B13D] text-[#68727D]"
+                                            }`}
+                                    >
+                                        {link.label}
+                                    </Link>
+                                ) : (
+                                    <span className="text-[#28B13D]">{link.label}</span>
+                                )}
+                                {index !== links.length - 1 && (
+                                    <HiChevronRight className="text-gray-400 w-[20px] h-[20px]" />
+                                )}
+                            </span>
+                        );
+                    })}
+                </nav>
+            </div>
+        )
     }
 
     const readableName = category

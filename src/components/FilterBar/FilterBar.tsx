@@ -131,30 +131,36 @@ export const FilterBar: React.FC<FilterBarProps> = ({
 
             {/* Поиск и кнопка перехода */}
             <div className="w-full flex gap-2.5 h-[54px] justify-end">
-                <div className="flex w-full items-center border border-[#2EAA7B] rounded-xl pl-5 bg-white overflow-hidden">
-                    <FiSearch className="text-[#2EAA7B] h-[24px]" />
+                {/* Поисковая строка + кнопка */}
+                <div className="flex w-full border border-[#2EAA7B] rounded-xl overflow-hidden bg-white">
+                    <div className="flex items-center px-3">
+                        <FiSearch className="text-[#2EAA7B] h-5 w-5" />
+                    </div>
                     <Input
                         type="text"
                         placeholder="Поиск по названию или ID"
                         value={searchInput}
                         onChange={(e) => setSearchInput(e.target.value)}
                         isError={false}
-                        className="w-full text-4 px-2.5 text-[#787878] placeholder-[#787878] bg-white outline-none"
+                        className="w-full h-13.5 text-sm px-2 text-[#787878] placeholder-[#787878] bg-white outline-none"
                     />
                     <Button
                         onClick={onSearch}
-                        className="h-full bg-[#2EAA7B] text-sm font-semibold px-5 hover:bg-[#31B683] text-white transition duration-500 rounded-none"
+                        className="px-5 text-sm font-semibold bg-[#2EAA7B] hover:bg-[#31B683] text-white transition duration-500 rounded-none"
                     >
                         Поиск
                     </Button>
                 </div>
+
+                {/* Кнопка перехода */}
                 <Button
                     onClick={handleNavigateToCategory}
-                    className="text-[#2EAA7B] py-1 px-5 border  rounded-xl font-semibold hover:bg-[#2EAA7B] hover:text-white transition text-[15px] duration-500"
+                    className="text-[#2EAA7B] py-1 px-5 border rounded-xl font-semibold hover:bg-[#2EAA7B] hover:text-white transition text-[15px] duration-500"
                 >
                     Перейти к категории
                 </Button>
             </div>
+
         </div>
     );
 };

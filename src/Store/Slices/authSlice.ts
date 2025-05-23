@@ -3,13 +3,11 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 interface AuthState {
   isAuthenticated: boolean;
   logoutReason: string | null;
-
 }
 
 const initialState: AuthState = {
   isAuthenticated: false,
   logoutReason: null,
-
 };
 
 const authSlice = createSlice({
@@ -22,9 +20,12 @@ const authSlice = createSlice({
     setLogoutReason(state, action: PayloadAction<string | null>) {
       state.logoutReason = action.payload;
     },
+    logout(state) {
+      state.isAuthenticated = false;
+      state.logoutReason = null;
+    },
   },
 });
 
-
-export const { setIsAuthenticated, setLogoutReason } = authSlice.actions;
+export const { setIsAuthenticated, setLogoutReason, logout } = authSlice.actions;
 export default authSlice.reducer;

@@ -96,7 +96,14 @@ export interface MyOffer {
             price: number;
             area: number;
             offer_status: string;
-            paid_offer?: boolean;
+            paid_offer?: {
+                tariff_id: number;
+                tarrif_name: string;
+                start_date: string;
+                end_date: string;
+                is_active: boolean;
+                promotion_days_left: number;
+            }
             address: {
                 address: string;
                 city: {
@@ -317,6 +324,7 @@ export interface OfferDetails {
 }
 
 export interface Offer {
+    is_favourite: boolean;
     id: number;
     title: string;
     price: number;
@@ -425,7 +433,12 @@ export interface Notification {
 export interface Notifications {
     data: Notification[],
     links: object,
-    meta: object,
+    meta: {
+        current_page: number;
+        last_page: number;
+        per_page: number;
+        total: number;
+    };
 }
 export interface FavoritesResponse {
     data: OfferDetail[];

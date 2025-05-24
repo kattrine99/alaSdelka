@@ -85,14 +85,18 @@ export const LoginPage = () => {
                 {showModal && <ModalBase
                     title={modalTitle}
                     message={modalText}
+                    ModalClassName='w-115'
+                    HeadingClassName="font-inter font-semibold text-[32px] leading-11 "
                     onClose={() => setShowModal(false)}
-                    actions={<Button className={"w-full text-center py-4 hover:border-1 hover:bg-white hover:text-[#2EAA7B] hover:border-[#2EAA7B] text-white bg-[#2EAA7B] rounded-[14px]"} onClick={() => { setShowModal(false); }}>Подтвердить</Button>} HeadingClassName={''} />}
+                    actions={<Button className={"w-full text-center py-4 hover:border-1 hover:bg-white hover:text-[#2EAA7B] hover:border-[#2EAA7B] text-white bg-[#2EAA7B] rounded-[14px]"} onClick={() => { setShowModal(false); }}>Подтвердить</Button>} />}
                 {showLogoutModal && (
                     <ModalBase
                         title="Сессия завершена"
                         message={logoutReason}
+                        ModalClassName='w-115'
                         onClose={() => setShowLogoutModal(false)}
-                        actions={<Button className={"w-full text-center py-4 hover:border-1 hover:bg-white hover:text-[#2EAA7B] hover:border-[#2EAA7B] text-white bg-[#2EAA7B] rounded-[14px]"} onClick={() => { setShowLogoutModal(false); }}>Понятно</Button>} HeadingClassName={''} />)}
+                        actions={<Button className={"w-full text-center py-4 hover:border-1 hover:bg-white hover:text-[#2EAA7B] hover:border-[#2EAA7B] text-white bg-[#2EAA7B] rounded-[14px]"} onClick={() => { setShowLogoutModal(false); }}>Понятно</Button>} HeadingClassName="font-inter font-semibold text-[32px] leading-11 "
+                    />)}
             </div>
             <Header showNavLinks={false} showAuthButtons={false} />
             <div className=" flex items-center justify-center py-[62px] transition-all duration-300">

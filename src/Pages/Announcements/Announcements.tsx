@@ -88,8 +88,6 @@ export const AnnouncemntsPage = () => {
                   try {
                     await archiveOffer(selectedOfferId).unwrap();
                     setShowArchiveModal(false);
-                    // можно обновить объявления, если хочешь:
-                    // await refetch();
                   } catch (err) {
                     console.error("Ошибка при архивировании:", err);
                   }
@@ -121,8 +119,8 @@ export const AnnouncemntsPage = () => {
           <div>
             <div className="flex md:justify-end mt-5">
               <Button
-                  className="bg-[#2EAA7B] text-white rounded-md w-60.5 px-5 py-3"
-                  onClick={() => navigate('/add-offer')}
+                className="bg-[#2EAA7B] text-white rounded-md w-60.5 px-5 py-3"
+                onClick={() => navigate('/add-offer')}
               >
                 {'Добавить объявление'}
               </Button>
@@ -175,30 +173,30 @@ export const AnnouncemntsPage = () => {
                         <div className="flex w-full">
                           <div className="grid grid-cols-1 gap-y-3 gap-x-5 md:grid-cols-2 w-full">
                             <Button className="bg-[#2EAA7B] text-white px-5 h-12 rounded-md" onClick={() => navigate(`/statistics/${offer.id}`)}>Посмотреть статистику</Button>
-                            {offer.paid_offer == true ? (
-                                <div className="bg-[#FF1D1D] text-white px-5 h-12 rounded-md flex items-center gap-2 font-semibold">
-                                  Идет продвижение (осталось {offer.promotion.days_left} дней)
-                                  <FireIcon className="z-10 w-5 h-5 text-[#FD6A0D]" />
-                                </div>
+                            {offer.paid_offer?.is_active == true ? (
+                              <div className="bg-[#FF1D1D] text-white px-5 h-12 rounded-md flex items-center gap-2 font-semibold">
+                                Идет продвижение (осталось {offer.paid_offer.promotion_days_left} дней)
+                                <FireIcon className="z-10 w-5 h-5 text-[#FD6A0D]" />
+                              </div>
                             ) : (
-                                <Button
-                                    className="bg-orange-500 text-white px-5 h-12 rounded-md"
-                                    onClick={() => navigate(`/promotion/${offer.id}`)}
-                                >
-                                  Продвигать объявление
-                                </Button>
+                              <Button
+                                className="bg-orange-500 text-white px-5 h-12 rounded-md"
+                                onClick={() => navigate(`/promotion/${offer.id}`)}
+                              >
+                                Продвигать объявление
+                              </Button>
                             )}
                             <Button className="bg-[#E0F6EE] px-5 h-12 rounded-md text-[#2EAA7B]"
-                                    onClick={() => {
-                                      setSelectedOfferId(offer.id);
-                                      setShowArchiveModal(true);
-                                    }}>Поместить в архив</Button>
+                              onClick={() => {
+                                setSelectedOfferId(offer.id);
+                                setShowArchiveModal(true);
+                              }}>Поместить в архив</Button>
 
                             <Button className="text-[#2EAA7B] border border-[#2EAA7B] px-4 h-12 rounded-md"
-                                    onClick={() => {
-                                      setSelectedOfferId(offer.id);
-                                      setShowModal(true);
-                                    }}>Продано</Button>
+                              onClick={() => {
+                                setSelectedOfferId(offer.id);
+                                setShowModal(true);
+                              }}>Продано</Button>
                           </div>
                         </div>
                       </div>

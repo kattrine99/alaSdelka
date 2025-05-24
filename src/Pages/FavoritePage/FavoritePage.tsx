@@ -38,9 +38,8 @@ export const FavoritePage = () => {
     area: typeof offer.area === "number" ? offer.area : Number(offer.area ?? 0),
     offer_type: offer.offer_type,
     offer_status: offer.offer_status,
+    is_favourite: offer.is_favourite === true,
   }));
-
-  const favoriteIds = mappedFavorites.map((card) => card.id);
 
   useEffect(() => {
     refetch();
@@ -49,7 +48,7 @@ export const FavoritePage = () => {
   return (
     <div className="w-screen">
       <Header navLinksData={profileNavigate} />
-      <div className="px-48 py-9">
+      <div className="px-48 max-lg:px-20 max-md:px-3 py-9">
         <Heading
           text="Избранное"
           level={2}
@@ -61,7 +60,7 @@ export const FavoritePage = () => {
             <div className="w-10 h-10 border-4 border-[#2EAA7B] border-t-transparent rounded-full animate-spin"></div>
           </div>
         ) : isError ? (
-          <p className="text-red-500">Ошибка загрузки</p>
+          <p className="text-red-500 ">Ошибка загрузки</p>
         ) : mappedFavorites.length === 0 ? (
           <EmptyMessage
             title="Нет избранных"
@@ -72,12 +71,12 @@ export const FavoritePage = () => {
           <div className="">
             <Cards
               cards={mappedFavorites}
-              initialFavorites={favoriteIds}
+              forceAllFavorite={true}
               onFavoritesChanged={refetch}
-              containerClass="flex flex-col gap-7.5 rounded-xl w-317.75"
-              cardIconClass="w-85 h-58"
-              cardWrapperClass="shadow-[1px_1px_4.5px_0px] shadow-[#28B13D4D]"
-              WhatchButtonClass="py-3 px-5 w-79.5 bg-[#2EAA7B] text-white font-medium rounded-md flex justify-center hover:bg-[#31B683] transition duration-300 cursor-pointer"
+              containerClass="flex flex-col gap-7.5 rounded-xl w-full"
+              cardIconClass="w-85 max-xl:w-full h-full"
+              cardWrapperClass="max-lg:flex max-lg:flex-col shadow-[1px_1px_4.5px_0px] shadow-[#28B13D4D] transition duration-500 ease-in-out"
+              WhatchButtonClass="py-3 px-5 w-79.5 max-lg:w-full bg-[#2EAA7B] text-white font-medium rounded-md flex justify-center hover:bg-[#31B683] transition duration-300 cursor-pointer"
             />
 
             {meta && meta.last_page > 1 && (

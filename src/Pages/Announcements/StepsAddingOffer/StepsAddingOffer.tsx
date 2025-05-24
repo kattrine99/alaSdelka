@@ -1,10 +1,11 @@
 import { useState } from "react";
-import { Button, Paragraph, Footer, Header, Breadcrumbs, Heading } from "../../../components/index";
+import { Button, Paragraph, Footer, Header, Breadcrumbs, Heading, ModalBase } from "../../../components/index";
 import { profileNavigate } from "../../../utils/categoryMap";
 import ShopIcon from '../../../assets/shop.svg?react';
 import InfoIcon from '../../../assets/info.svg?react';
 import CategoryIcon from '../../../assets/category.svg?react';
 import ShopSellIcon from '../../../assets/shop-sell.svg?react';
+import HeadphonesIcon from '../../../assets/headphones.svg?react';
 import { InformationStep } from "./InformationStep";
 import { PublicationStep } from "./PublicationStep";
 import { ModerationStep } from "./ModerationStep";
@@ -50,6 +51,7 @@ export const StepsAddingOffer = () => {
     const [listingType, setListingType] = useState<"buy" | "sell" | null>(null);
     const [offerType, setOfferType] = useState<OfferType | null>(null);
     const savedData = useSelector((state: RootState) => state.tempOffer.offerData);
+    const [showHelperModal, setShowHelperModal] = useState(false);
 
     const getListingTypeLabel = (type: "buy" | "sell") => {
         if (offerType === "investments") {
@@ -77,6 +79,25 @@ export const StepsAddingOffer = () => {
     return (
         <div className="w-screen">
             <Header navLinksData={profileNavigate} />
+            {showHelperModal && (
+                <ModalBase
+                    title=""
+                    ModalClassName="w-198"
+                    onClose={() => setShowHelperModal(false)}
+                    message={
+                        <>
+                            <Heading level={3} text="Название" className="text-black mb-2" />
+                            <Paragraph className="mb-4 text-sm leading-[150%] text-[#667085]">
+                                Lorem ipsum dolor sit amet consectetur. Tellus vestibulum sit lectus fusce amet. Enim lacus nibh nulla blandit hendrerit. Urna risus quis elit sed pellentesque eget nulla sit placerat. Sagittis feugiat consectetur ultrices et. Nunc vehicula sit dolor potenti ipsum donec quam enim etiam. In sollicitudin velit facilisis justo. Libero ullamcorper massa massa tincidunt sit tincidunt cum. Est aliquet aliquam mi eu enim vulputate pharetra tincidunt. Sed diam turpis sit nunc. Feugiat gravida aliquam facilisis risus. Aliquet quis sed consectetur aenean. Maecenas odio lectus dis vitae eu. Etiam ut penatibus lorem nec urna viverra odio nisi nisl. Ut massa dignissim sem leo. Lacus quis ultricies fames volutpat a condimentum. Tortor praesent interdum non dui eget tincidunt ac sapien integer. Volutpat ornare ut ut eget. Mauris posuere sed ac sagittis ante. Convallis ultrices enim tempor urna nisl. Nulla ut neque volutpat urna. Tellus dolor integer quis nunc sed purus. Cursus molestie tempus dolor morbi praesent blandit proin. Elementum mauris ac facilisis amet mauris. Erat dictum auctor ridiculus vivamus donec pulvinar viverra. Cursus dolor vel fermentum dignissim ut amet diam. Mi convallis nascetur massa tempor. Dignissim id elementum elit aliquet mattis neque pharetra ornare amet. A nullam venenatis dolor eget nulla ac et. Ligula ipsum enim orci egestas suscipit libero.                            </Paragraph>
+                            <Heading level={3} text="Название" className="text-black mb-2" />
+                            <Paragraph className="text-sm leading-[150%] text-[#667085]">
+                                Lorem ipsum dolor sit amet consectetur. Tellus vestibulum sit lectus faucibus amet. ...
+                            </Paragraph>
+                        </>
+                    }
+                    HeadingClassName="text-[#101828] text-[20px] font-bold"
+                />
+            )}
 
             <div className="px-[192px] py-12 ">
                 {step !== 5 ? (
@@ -120,14 +141,16 @@ export const StepsAddingOffer = () => {
 
                             {/* Умный помощник */}
                             <div className="mt-6 p-4 bg-gradient-to-r from-[#1CA67A] to-[#24568E] rounded-[10px] flex items-start gap-2 text-white">
-                                <img src="/images/assistant-icon.png" alt="assistant" className="w-6 h-6 mt-[2px]" />
-                                <div className="flex flex-col text-left">
-                                    <span className="font-bold text-sm">Умный помощник</span>
+                                <Button onClick={() => setShowHelperModal(true)} className="flex flex-col text-left cursor-pointer">
+                                    <Paragraph className="font-bold text-sm flex justify-start items-center">
+                                        Умный помощник <HeadphonesIcon className="w-8.75 h-9.75 ml-2" />
+                                    </Paragraph>
                                     <span className="text-xs leading-tight mt-1">
                                         Здесь вы найдете инструкцию по размещению объявлений
                                     </span>
-                                </div>
+                                </Button>
                             </div>
+
                         </div>
 
 

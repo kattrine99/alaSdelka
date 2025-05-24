@@ -28,7 +28,7 @@ export const ModalBase: React.FC<ModalBaseProps> = ({
             onClick={onClose}
         >
             <div
-                className={`relative bg-white flex flex-col p-6 rounded-[24px] w-[457px] shadow-lg ${ModalClassName}`}
+                className={`relative bg-white flex flex-col p-6 rounded-[24px] shadow-lg ${ModalClassName}`}
                 onClick={(e) => e.stopPropagation()}
             >
                 {showCloseButton && onClose && (

@@ -80,6 +80,7 @@ export const CardDetailPreview: React.FC<CardDetailPreviewProps> = ({ onBack }) 
             {/* Основной блок */}
             <div className="bg-[#F8F8F8] p-10">
                 <Heading level={2} text={data.title || "Название"} className="text-[24px] mb-3.75" />
+                <Paragraph className="font-inter font-bold text-[#363636] text-[16px]">ID {data.id}</Paragraph>
                 <div className='flex gap-1.5'>
                     <FaLocationDot className="text-[#2EAA7B] w-4 h-4" />
                     <Paragraph className="text-[#667085] text-sm mb-2">

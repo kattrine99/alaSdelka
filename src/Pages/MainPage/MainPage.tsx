@@ -136,7 +136,7 @@ export const MainPage = () => {
     return (
         <div className="font-openSans min-h-screen w-screen overflow-x-hidden">
             <Header />
-            <section className="px-4 md:px-0 relative overflow-hidden bg-gradient-to-tr from-[#16503A] to-[#31B683]">
+            <section className="px-4 xl:px-20 max-xl:px-10 md:px-0 transition duration-500 ease-in-out relative overflow-hidden bg-gradient-to-tr from-[#16503A] to-[#31B683]">
                 <div className="flex justify-end">
                     <div
                         className="absolute right-[-12rem] bottom-[-5rem] w-96 h-96 md:right-[-16rem] lg:right-[-80px] md:bottom-[-9rem] md:w-212.5 md:h-212.5 bg-[url('/images/Check.png')] bg-no-repeat bg-contain rotate-[12deg] pointer-events-none z-0"></div>
@@ -197,7 +197,7 @@ export const MainPage = () => {
             </section>
 
             {/* Карточки */}
-            <section className="mt-12.5 mb-8.75 px-3 md:px-0 container mx-auto">
+            <section className="mt-12.5 mb-8.75 px-3 xl:px-20 max-xl:px-10 md:px-0 transition duration-500 ease-in-out container mx-auto">
                 <div className="flex justify-start">
                     <div className="grid grid-cols-3 max-lg:flex max-lg:flex-col max-sm:justify-center items-start w-full mb-6">
                         <div >
@@ -265,7 +265,7 @@ export const MainPage = () => {
                         })())
                 }
             </section >
-            <section className="mt-12.5 mb-8.75 px-3 md:px-0 container mx-auto">
+            <section className="mt-12.5 mb-8.75 px-3 xl:px-20 max-xl:px-10 md:px-0 transition duration-500 ease-in-out container mx-auto">
                 <div className="flex justify-start">
                     <div className="grid grid-cols-3 max-lg:flex max-lg:flex-col max-sm:justify-center items-start w-full mb-6">
                         <div>
@@ -329,7 +329,7 @@ export const MainPage = () => {
 
 
             </section>
-            <section className="mt-12.5 mb-8.75 px-3 md:px-0 container mx-auto">
+            <section className="mt-12.5 mb-8.75 px-3 xl:px-20 max-xl:px-10 md:px-0 transition duration-500 ease-in-out container mx-auto">
                 <div className="flex justify-start">
                     <div className="grid grid-cols-3 max-lg:flex max-lg:flex-col max-sm:justify-center items-start w-full mb-6">
                         <div>
@@ -391,7 +391,7 @@ export const MainPage = () => {
                     })())}
 
             </section>
-            <section className="mt-12.5 mb-8.75 px-3 md:px-0 container mx-auto">
+            <section className="mt-12.5 mb-8.75 px-3 xl:px-20 max-xl:px-10 md:px-0 transition duration-500 ease-in-out container mx-auto">
                 <div className="flex justify-start">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-y-4">
                         <Button onClick={() => {
@@ -463,8 +463,8 @@ export const MainPage = () => {
 
             {/*Почему Invest In*/}
             <section className="relative overflow-hidden w-full bg-[url('/images/Mask.png')] bg-repeat">
-                <div className="absolute right-[197px] hidden md:block top-[61px] w-[702px] h-full bg-[url('/images/WhyInvestIn.png')] bg-no-repeat bg-contain px-48" ></div>
-                <div className="relative py-[70px] px-4 sm:px-8 md:px-[96px] xl:px-48 overflow-hidden">
+                <div className="absolute right-[197px] hidden 2xl:block top-[61px] w-175.5 h-full bg-[url('/images/WhyInvestIn.png')] bg-no-repeat bg-contain px-48" ></div>
+                <div className="relative py-17.5 max-2xl:px-10 px-4 sm:px-8 md:px-[96px] xl:px-48 overflow-hidden">
                     <div className="order-2 lg:order-1 flex flex-col gap-6 max-w-2xl w-full">
                         <Heading
                             level={1}
@@ -479,7 +479,7 @@ export const MainPage = () => {
                             условиях, которые будут выгодны и удобны для вас. На нашем сайте уже:
                         </Paragraph>
                     </div>
-                    <div className="md:hidden mt-6">
+                    <div className="2xl:hidden mt-6">
                         <img src="/images/WhyInvestIn.png" alt="" className="w-full max-w-3xl" />
                     </div>
                     {/*Цифры*/}

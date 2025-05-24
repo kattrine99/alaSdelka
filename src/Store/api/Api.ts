@@ -150,8 +150,8 @@ export const AuthApi = createApi({
             }
         ),
 
-        getNotifications: builder.query<Notifications, void>({
-            query: () => "/notifications",
+        getNotifications: builder.query<Notifications, { page: number; per_page?: number }>({
+            query: ({ page, per_page = 5 }) => `/notifications?page=${page}&per_page=${per_page}`,
         }),
         getUserOffers: builder.query<GetUserOffersResponse, GetUserOffersParams>({
             query: ({ user_id, ...params }) => ({

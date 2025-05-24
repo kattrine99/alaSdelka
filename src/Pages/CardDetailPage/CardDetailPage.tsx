@@ -104,15 +104,14 @@ export const CardDetailPage = () => {
                             <div className='flex flex-col w-full'>
                                 <Heading className="text-[24px] md:text-4xl font-inter leading-10 font-bold mt-6 mb-3.5" text={card.title} level={2} />
                                 <div className='flex flex-col gap-2 mb-[15px]'>
+                                    <Paragraph className='font-inter font-bold text-[#363636] text-[16px]'>ID {card.id}</Paragraph>
                                     <div className='flex gap-1.5 items-center'>
                                         <GpsIcon className='w-4 h-4' />
                                         <Paragraph>{card.area} кв. м.</Paragraph>
-
                                     </div>
                                     <div className='flex gap-1.5 items-center'>
                                         <CategoryIcon className='w-4 h-4 text-[#2EAA7B]' />
                                         <Paragraph className="">{card?.category?.title_ru ?? ""}</Paragraph>
-
                                     </div>
                                 </div>
                                 <div className="flex flex-col gap-6">

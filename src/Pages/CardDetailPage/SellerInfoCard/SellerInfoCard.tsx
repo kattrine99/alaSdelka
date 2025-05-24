@@ -63,40 +63,36 @@ export const SellerInfoCard = ({ card, offer_type, userId }: { card: OfferDetail
             {isContactModalOpen && (
                 <ModalBase
                     title="Контакты продавца"
-                    message={
-                        isContactLoading
-                            ? "Загрузка..."
-                            : contactData?.phone || "Номер не найден"
-                    }
+                    message={isContactLoading
+                        ? "Загрузка..."
+                        : contactData?.phone || "Номер не найден"}
                     onClose={() => setContactModalOpen(false)}
-                    showCloseButton={true}
+                    showCloseButton={true} HeadingClassName={"font-inter font-bold text-3xl"}
                 />
             )}
 
             {isLinksModalOpen && (
                 <ModalBase
                     title="Ссылки"
-                    message={
-                        card.communication_channels?.length ? (
-                            <div className="flex flex-col gap-2">
-                                {card.communication_channels.map((channel, idx) => (
-                                    <a
-                                        key={idx}
-                                        href={channel.link}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className="text-[#2EAA7B] underline"
-                                    >
-                                        {channel.channel_name}
-                                    </a>
-                                ))}
-                            </div>
-                        ) : (
-                            "Ссылки отсутствуют"
-                        )
-                    }
+                    message={card.communication_channels?.length ? (
+                        <div className="flex flex-col gap-2">
+                            {card.communication_channels.map((channel, idx) => (
+                                <a
+                                    key={idx}
+                                    href={channel.link}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="text-[#2EAA7B] underline"
+                                >
+                                    {channel.channel_name}
+                                </a>
+                            ))}
+                        </div>
+                    ) : (
+                        "Ссылки отсутствуют"
+                    )}
                     onClose={() => setLinksModalOpen(false)}
-                    showCloseButton={true}
+                    showCloseButton={true} HeadingClassName={"font-inter font-bold text-3xl"}
                 />
             )}
         </div>

@@ -7,11 +7,11 @@ export const Description: React.FC<Descriptionprops> = ({
     showLaptop }) => {
     return (
         <div>
-            {showCards && (<div className="grid grid-cols-3 pb-[123px] pl-[37px] w-full relative">
+            {showCards && (<div className="grid grid-cols-3 max-xl:px-8 pb-[123px] w-full relative">
                 {/* Card 01 */}
                 <div className="relative flex flex-col text-left">
                     <div className="mx-8.25 mb-7.75">
-                        <img src="/images/benefits-img-1.png" className="w-[250px] h-auto relative z-10" />
+                        <img src="/images/benefits-img-1.png" className="w-62 h-auto relative z-10" />
                     </div>
                     <div>
                         <h3 className="text-[#252525] font-inter text-[36px] font-semibold mb-[15px] relative z-10">Описание</h3>

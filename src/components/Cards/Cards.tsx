@@ -2,20 +2,18 @@ import { Button, Heading, Paragraph } from "../index";
 import { FaArrowRight } from "react-icons/fa";
 import { FaLocationDot, FaLocationCrosshairs } from "react-icons/fa6";
 import FireIcon from '../../assets/fire.svg?react';
-import HeartIcon from '../../assets/heart.svg?react';
-import SolidHeartIcon from '../../assets/Solidheart.svg?react';
 import { Link } from "react-router-dom";
 import { ICards } from "./Interfaces";
 import { offerTypeToUrlMap } from "../../utils/categoryMap";
 import { useToggleFavoriteMutation } from "../../Store/api/Api";
-import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../Store/store";
+import { FavoriteButton } from "./FavoriteButton";
+import { useState } from "react";
 
-
-export const Cards: React.FC<ICards> = ({
+export const Cards: React.FC<ICards & { forceAllFavorite?: boolean }> = ({
     cards,
-    initialFavorites = [],
+    forceAllFavorite = false,
     cardWrapperClass,
     cardIconClass,
     cardHeadingClass,
@@ -25,23 +23,16 @@ export const Cards: React.FC<ICards> = ({
     WhatchButtonClass,
 }) => {
     const isAuthenticated = useSelector((state: RootState) => state.auth.isAuthenticated);
-    const [favoriteIds, setFavoriteIds] = useState<number[]>(initialFavorites);
     const [toggleFavoriteAPI] = useToggleFavoriteMutation();
 
-    useEffect(() => {
-        const areEqual =
-            initialFavorites.length === favoriteIds.length &&
-            initialFavorites.every((id) => favoriteIds.includes(id));
-
-        if (!areEqual) {
-            setFavoriteIds(initialFavorites);
-        }
-    }, [favoriteIds, initialFavorites]);
-
+    const [favoriteIds, setFavoriteIds] = useState<number[]>(
+        forceAllFavorite
+            ? cards.map((c) => c.id)
+            : cards.filter((c) => c.is_favourite).map((c) => c.id)
+    );
 
     const handleToggle = async (id: number) => {
         const isAlreadyFavorite = favoriteIds.includes(id);
-
         setFavoriteIds((prev) =>
             isAlreadyFavorite ? prev.filter((favId) => favId !== id) : [...prev, id]
         );
@@ -49,11 +40,15 @@ export const Cards: React.FC<ICards> = ({
         try {
             const res = await toggleFavoriteAPI(id).unwrap();
 
-            if (onFavoritesChanged) {
-                onFavoritesChanged(id, res.status as "added" | "removed");
-            }
+            setFavoriteIds((prev) =>
+                res.status === "added"
+                    ? [...new Set([...prev, id])]
+                    : prev.filter((favId) => favId !== id)
+            );
+
+            onFavoritesChanged?.(id, res.status as "added" | "removed");
         } catch (e) {
-            console.error("Ошибка добавления в избранное", e);
+            console.error("Ошибка при добавлении/удалении избранного", e);
 
             setFavoriteIds((prev) =>
                 isAlreadyFavorite ? [...prev, id] : prev.filter((favId) => favId !== id)
@@ -61,53 +56,51 @@ export const Cards: React.FC<ICards> = ({
         }
     };
 
-
-
     return (
         <div className={containerClass}>
+            {cards.map((card) => {
+                const isFavorite = forceAllFavorite || favoriteIds.includes(card.id);
 
-            {cards.map((card, index) => {
-                const isFavorite = favoriteIds.includes(card.id);
                 return (
-                    <div
-                        key={card.id}
-                        className={`relative rounded-lg bg-white flex h-full ${cardWrapperClass ?? ""} delay-[${index * 100}ms]`}
-                    >
+                    <div key={card.id} className={`relative bg-white rounded-lg flex ${cardWrapperClass ?? ""}`}>
+                        {/* СТАТУСЫ */}
                         {card.offer_status === "is_payed" && (
                             <div className="absolute w-[125px] left-5 font-openSans translate-y-[-50%] bg-white border border-[#FD6A0D] text-[#FD6A0D] py-[5px] px-1.5 rounded-md font-semibold z-10 shadow-sm flex">
                                 <FireIcon className="z-10 w-5 h-5 text-[#FD6A0D]" />
-                                <Paragraph className="">
-                                    Популярное
-                                </Paragraph>
+                                <Paragraph>Популярное</Paragraph>
                             </div>
                         )}
                         {card.offer_status === "sold" && (
                             <div className="absolute w-[125px] left-5 font-openSans translate-y-[-50%] bg-white border border-[#301DFF] text-[#301DFF] py-1.25 px-1.5 rounded-md font-semibold z-10 shadow-sm flex">
                                 <FireIcon className="z-10 w-5 h-5 text-[#301DFF]" />
-                                <Paragraph className="">
-                                    Продано
-                                </Paragraph>
+                                <Paragraph>Продано</Paragraph>
                             </div>
                         )}
-                        <div className={`relative ${cardIconClass ?? ""}`}>
 
-                            <img src={card.image || "../../../images/business_abstract.jpg"} alt={`${card.id}`} className="w-full object-cover" />
-                            {isAuthenticated &&
-                                <button
-                                    onClick={() => handleToggle(card.id)}
-                                    className="absolute top-5 right-4.5"
-                                >
-                                    {isFavorite ? (
-                                        <SolidHeartIcon className="w-8 h-7 border- py-0.5 border-[#2EAA7B] text-[#FF1D1D] bg-white rounded-full " />
-                                    ) : (
-                                        <HeartIcon className="w-8 h-7 text-center border-1 py-0.5 border-[#2EAA7B] text-[#2EAA7B] bg-white rounded-full" />
-                                    )}
-                                </button>
-                            }
+                        {/* ИЗОБРАЖЕНИЕ И СЕРДЕЧКО */}
+                        <div className={`relative ${cardIconClass ?? ""}`}>
+                            <img
+                                src={
+                                    typeof card.image === "string"
+                                        ? card.image
+                                        : card.image instanceof File
+                                            ? URL.createObjectURL(card.image)
+                                            : "/images/business_abstract.jpg"
+                                }
+                                alt={`${card.id}`}
+                                className="w-full object-cover"
+                            />
+                            {isAuthenticated && (
+                                <FavoriteButton
+                                    isFavorite={isFavorite}
+                                    onToggle={() => handleToggle(card.id)}
+                                />
+                            )}
                         </div>
 
+                        {/* КОНТЕНТ КАРТОЧКИ */}
                         <div className="px-[18px] py-[21px] flex flex-col flex-1">
-                            <div className=" flex flex-col">
+                            <div className="flex flex-col">
                                 <Heading
                                     text={`${card.price} сум`}
                                     level={2}
@@ -121,8 +114,9 @@ export const Cards: React.FC<ICards> = ({
                                 <Paragraph
                                     className={`text-gray-600 flex gap-x-2 font-inter text-[14px] font-medium mb-[6px] ${cardTextClass ?? ""}`}
                                 >
-                                    <FaLocationDot className="text-[#2EAA7B] h-[16px] text-[20px]"/>
-                                    <span className="font-bold text-[12px]">  {card.address?.address ?? "Адрес не указан"}, {card.address?.city?.name_ru ?? ""}
+                                    <FaLocationDot className="text-[#2EAA7B] h-[16px]" />
+                                    <span className="font-bold text-[12px]">
+                                        {card.address?.address ?? "Адрес не указан"}, {card.address?.city?.name_ru ?? ""}
                                     </span>
                                 </Paragraph>
                                 <Paragraph
@@ -132,6 +126,7 @@ export const Cards: React.FC<ICards> = ({
                                     {card.area} кв.м
                                 </Paragraph>
                             </div>
+
                             <div className="w-full h-[44px] mt-auto">
                                 <Link to={`/${offerTypeToUrlMap[card.offer_type]}/card/${card.id}`} className="w-full">
                                     <Button className={WhatchButtonClass}>
@@ -141,13 +136,10 @@ export const Cards: React.FC<ICards> = ({
                                     </Button>
                                 </Link>
                             </div>
-
                         </div>
                     </div>
-                )
-            }
-            )
-            }
+                );
+            })}
         </div>
     );
 };

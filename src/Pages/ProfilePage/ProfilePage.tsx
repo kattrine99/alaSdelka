@@ -111,7 +111,7 @@ export const ProfilePage = () => {
                     HeadingClassName={"font-inter font-semibold text-[#101828] text-3xl leading-[44px]"} />
             )}
             <Header navLinksData={profileNavigate} />
-            <div className="w-full mt-6">
+            <div className="w-full px-48 max-lg:px-20 max-md:px-2 mt-6">
                 {isEditingProfile && <Breadcrumbs
                     links={[
                         { label: "Главная", href: "/" },
@@ -128,7 +128,7 @@ export const ProfilePage = () => {
                                 className="text-[#121212] font-inter font-bold text-4xl leading-10"
                                 text={`Добро пожаловать, ${fullName}!`}
                                 level={2} />
-                            <div className="flex flex-col md:flex-row justify-center md:justify-between mt-6 ml-5">
+                            <div className="flex flex-col md:flex-row justify-center md:justify-between max-w-281.75 mt-6">
                                 <div className="flex gap-x-6 mb-1.5 items-center w-full">
                                     {data.photo && (
                                         <img src={data.photo || "/src/assets/profile-circle.svg"} alt="profile_Photo" className="rounded-full w-[100px] h-[100px]" />
@@ -137,15 +137,15 @@ export const ProfilePage = () => {
                                         <Paragraph className="font-inter font-semibold text-[14px] text-center md:text-left text-[#667085] leading-5">ID: {data.id}</Paragraph>
                                     </div>
                                 </div>
-                                <div className="flex flex-col md:flex-row gap-x-4 gap-y-4 items-center">
+                                <div className="flex flex-col w-full md:flex-row gap-x-4 gap-y-4 items-center">
                                     <Button className="px-5 h-13.5 text-white bg-[#31B683] w-full rounded-[6px] cursor-pointer" onClick={handleEditClick}>Редактировать личные данные</Button>
-                                    <Button className="h-13.5 px-5 text-white bg-[#DE5151] w-full rounded-[6px] cursor-pointer" onClick={handleLogout}>Выйти из профиля</Button>
+                                    <Button className="h-13.5 px-5 text-white bg-[#31B683] hover:bg-[#DE5151] w-full rounded-[6px] cursor-pointer" onClick={handleLogout}>Выйти из профиля</Button>
                                 </div>
                             </div>
                         </>
                     )}
 
-                    <div className="bg-[#F8F8F8] w-full mt-6 p-10">
+                    <div className="bg-[#F8F8F8] max-w-281.75 mt-6 p-10">
                         {editMode && (
                             <div className="relative w-max mb-6">
                                 {formData.photo ? (

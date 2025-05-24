@@ -17,7 +17,7 @@ export interface ICard {
     area: number;
     offer_status?: string;
     category?: string;
-    is_favorite?: boolean;
+    is_favourite?: boolean;
     listing_type?: string;
     user_phone?: string;
 }

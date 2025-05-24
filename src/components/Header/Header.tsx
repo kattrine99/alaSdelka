@@ -59,7 +59,7 @@ export const Header: React.FC<HeaderProps> = ({
             )}
 
             {/* Десктопный header */}
-            <div className="hidden md:flex justify-between items-center bg-white py-[20px] px-6 md:px-0 border-b border-[#E9E9E9]">
+            <div className="hidden lg:flex justify-between items-center bg-white py-[20px] px-6 md:px-0 border-b border-[#E9E9E9]">
                 <div className="container mx-auto flex justify-between">
                     <Applink to="/main" className="flex items-center gap-2">
                         <img src="/images/investin_logo.png" alt="Logo" className="h-[56px] w-auto object-contain" />
@@ -110,7 +110,7 @@ export const Header: React.FC<HeaderProps> = ({
             </div>
 
             {/* Мобильный header */}
-            <div className="flex md:hidden justify-between items-center px-4 py-4 border-b border-[#E9E9E9]">
+            <div className="flex lg:hidden justify-between items-center px-4 py-4 border-b border-[#E9E9E9]">
                 <Applink to="/main" className="flex items-center">
                     <img src="/images/investin_logo.png" alt="Logo" className="h-10 object-contain" />
                 </Applink>

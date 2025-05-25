@@ -140,10 +140,6 @@ export const PromotionPage = () => {
         setCardType(card.card_type);
     };
 
-
-
-
-
     return (
         <div className="w-screen">
             <Header navLinksData={profileNavigate} />
@@ -213,13 +209,12 @@ export const PromotionPage = () => {
                             {/* Новая карта */}
                             <div className="mt-10">
                                 <Heading level={3} text="Или введите данные новой карты" className="mb-4" />
-                                <div className="bg-[#F8F8F8] rounded-[40px] py-10 px-12.5">
-
-                                    <Input placeholder="0000 0000 0000 0000" LabelText="Номер карты" LabelClassName="font-inter text-[25px] mb-8" value={cardNumber} onChange={(e) => {
+                                <div className="bg-[#F8F8F8] rounded-[40px] py-10 px-12.5 shadow-[1px_1px_10px_0px] shadow-[#00000040]">
+                                    <Input placeholder="0000 0000 0000 0000" LabelText="Номер карты" LabelClassName="font-inter text-[25px] mb-[19px]" value={cardNumber} onChange={(e) => {
                                         const rawValue = e.target.value.replace(/\D/g, "").slice(0, 16);
                                         const formatted = rawValue.replace(/(.{4})/g, "$1 ").trim();
                                         setCardNumber(formatted);
-                                    }} isError={false} className="w-102 mb-12 outline-none py-3.5 px-4.5 bg-[#F0F1F280] border border-[#DEE0E333] rounded-2xl text-3xl text-[#686A70]" />
+                                    }} isError={false} className="max-w-102 mb-12 flex flex-col outline-none py-3.5 px-4.5 bg-[#F0F1F280] border border-[#DEE0E333] rounded-2xl text-3xl text-[#686A70]" />
                                     <div className="flex justify-between" >
                                         <div className="flex flex-col gap-4">
                                             <Paragraph className="font-inter text-2xl mb-4.5">Срок действия</Paragraph>
@@ -228,14 +223,14 @@ export const PromotionPage = () => {
                                                     const value = e.target.value.replace(/\D/g, "").slice(0, 2);
                                                     setExpiryMonth(value);
                                                 }}
-                                                    isError={false} className="bg-[#F0F1F280] outline-none py-3.5 px-4.5 w-33 text-center text-xl text-[#686A70]" />
+                                                    isError={false} className="bg-[#F0F1F280] rounded-xl outline-none py-3.5 px-4.5 w-33 text-center text-xl text-[#686A70]" />
                                                 <Input placeholder="YY" value={expiryYear} onChange={(e) => {
                                                     const value = e.target.value.replace(/\D/g, "").slice(0, 2);
                                                     setExpiryYear(value);
-                                                }} isError={false} className="bg-[#F0F1F280] outline-none py-3.5 px-4.5 w-33 text-center text-xl text-[#686A70]" />
+                                                }} isError={false} className="bg-[#F0F1F280] rounded-xl outline-none py-3.5 px-4.5 w-33 text-center text-xl text-[#686A70]" />
                                             </div>
                                         </div>
-                                        <div className="flex gap-6 mt-4">
+                                        <div className="flex gap-6 mt-4 items-end">
                                             <button
                                                 onClick={() => setCardType("UzCard")}
                                                 className={`transition-opacity duration-200 ${cardType === "Humo" ? "opacity-30" : "opacity-100"}`}

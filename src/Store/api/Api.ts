@@ -34,6 +34,7 @@ import customBaseQuery from "./customBaseQuery";
 export const AuthApi = createApi({
     reducerPath: "Api",
     baseQuery: customBaseQuery,
+    tagTypes: ['Favorites'],
     endpoints: (builder) => ({
         //Авторизация и выход
         loginUser: builder.mutation<LoginUserResponse, LoginUserPayload>({
@@ -140,6 +141,7 @@ export const AuthApi = createApi({
                 url: `/favourite-offers/${offer_id}`,
                 method: "POST",
             }),
+            invalidatesTags: ['Favorites'],
         }),
         getFavorites: builder.query<FavoritesResponseType, { page?: number; per_page?: number }>(
             {
@@ -147,6 +149,7 @@ export const AuthApi = createApi({
                     url: '/favourite-offers',
                     params: { page, per_page },
                 }),
+                providesTags: ['Favorites'],
             }
         ),
 

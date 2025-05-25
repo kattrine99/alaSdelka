@@ -3,22 +3,37 @@ import { ModalBase, Button, Paragraph } from "../../../components";
 import { BiHeart, BiSolidHeart } from "react-icons/bi";
 import { OfferDetail } from "../../../Store/api/types";
 import { Link } from "react-router-dom";
-import { useGetOfferContactViewQuery } from "../../../Store/api/Api";
+import { useGetOfferContactViewQuery, useToggleFavoriteMutation } from "../../../Store/api/Api";
 import { skipToken } from "@reduxjs/toolkit/query";
 
 export const SellerInfoCard = ({ card, offer_type, userId }: { card: OfferDetail['data'], userId: number, offer_type?: string }) => {
     const [isContactModalOpen, setContactModalOpen] = useState(false);
     const [isLinksModalOpen, setLinksModalOpen] = useState(false);
-    const [isFavorite, setFavorite] = useState(false);
     const { data: contactData, isLoading: isContactLoading } = useGetOfferContactViewQuery(
         isContactModalOpen ? card.id : skipToken
     );
+    const [isFavorite, setIsFavorite] = useState(card?.is_favourite ?? false);
+    const [toggleFavoriteAPI] = useToggleFavoriteMutation();
 
+    const handleToggleFavorite = async () => {
+        setIsFavorite((prev) => !prev);
 
+        try {
+            const res = await toggleFavoriteAPI(card.id).unwrap();
+            if (res.status === "added") {
+                setIsFavorite(true);
+            } else {
+                setIsFavorite(false);
+            }
+        } catch (e) {
+            console.error("Ошибка при переключении избранного:", e);
+            setIsFavorite((prev) => !prev);
+        }
+    };
     return (
         <div className="lg:max-w-113 w-full p-4 rounded-md shadow-md shadow-[#2EAA7B2E] flex flex-col gap-4 relative">
             <button
-                onClick={() => setFavorite(!isFavorite)}
+                onClick={handleToggleFavorite}
                 className="absolute top-4 right-4 p-1 border rounded-full border-green-500 text-green-500"
             >
                 {isFavorite ? (

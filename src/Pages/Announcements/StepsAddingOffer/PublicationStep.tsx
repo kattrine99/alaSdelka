@@ -5,7 +5,7 @@ import { OfferPayload } from "../../../Store/api/types";
 import { ICard } from "../../../components/Cards/Interfaces";
 import { FaArrowRight } from "react-icons/fa";
 import { usePublishOfferMutation } from "../../../Store/api/Api";
-
+import { useState } from "react";
 interface Props {
     onPublish: () => void;
     onPreview: () => void;
@@ -25,7 +25,7 @@ const mapOfferToCard = (data: OfferPayload): ICard => ({
     }, area: data.area || 0,
     image: data.images?.[0]?.photo ? URL.createObjectURL(data.images[0].photo) : null,
 
-    is_favorite: false,
+    is_favourite: false,
     offer_type: data.offer_type,
     listing_type: data.listing_type,
 });
@@ -33,22 +33,25 @@ const mapOfferToCard = (data: OfferPayload): ICard => ({
 export const PublicationStep: React.FC<Props> = ({ onPublish, onPreview }) => {
     const cardData = useSelector((state: RootState) => state.tempOffer.offerData);
     const [publishOffer] = usePublishOfferMutation();
-
+    const [isPublishing, setIsPublishing] = useState(false);
+    const [isPublished, setIsPublished] = useState(false);
     if (!cardData) return null;
 
     const card = mapOfferToCard(cardData);
 
     const handlePublish = async () => {
-        if (!cardData?.id) {
-            console.error("ID карточки отсутствует");
-            return;
-        }
+        if (isPublishing || isPublished) return;
+
+        setIsPublishing(true);
 
         try {
-            await publishOffer(cardData.id).unwrap();
+            await publishOffer(cardData.id!).unwrap();
+            setIsPublished(true);
             onPublish();
         } catch (error) {
             console.error("Ошибка при публикации:", error);
+        } finally {
+            setIsPublishing(false);
         }
     };
 

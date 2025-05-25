@@ -196,6 +196,7 @@ export interface OfferDetail {
         user_created_at: string,
         user_id: number,
         is_paid: boolean;
+        is_favourite: boolean;
         created_at: string;
         updated_at: string;
         photos: [

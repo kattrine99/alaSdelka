@@ -143,7 +143,7 @@ export const PromotionPage = () => {
     return (
         <div className="w-screen">
             <Header navLinksData={profileNavigate} />
-            <div className="py-7.5 px-48">
+            <div className="py-7.5 px-30">
                 <Breadcrumbs
                     links={[
                         { label: "Мои объявления", href: "/announcements" },
@@ -151,13 +151,24 @@ export const PromotionPage = () => {
                     ]}
                 />
                 {paymentSuccess === true ? (
-                    <div className="text-center mt-10">
-                        <h2 className="text-2xl font-bold text-green-600">Оплата прошла успешно!</h2>
-                        <Button className="mt-4" onClick={() => (window.location.href = "/announcements")}>Вернуться</Button>
+                    <div className="flex max-xl:flex-wrap gap-10 mt-10 justify-between bg-[url('/images/grid.png')] bg-contain bg-no-repeat bg-right duration-300 ease-in-out">
+                        <div className="flex max-w-150 flex-col  items-start text-start">
+                            <Heading className="font-inter text-4xl max-lg:text-2xl transition duration-300 ease-in-out" text={""} level={2}>Поздравляем,<span className="font-bold">оплата прошла успешно!</span>Вы можете снова перейти к вашим объявлениям</Heading>
+                            <Button className="mt-16 w-full max-w-83 px-5 py-3 bg-[#2EAA7B] shadow-[0px_1px_2px] shadow-[#1018280A] rounded-lg text-white font-inter font-semibold text-2xl max-md:text-xl duration-300 ease-in-out" onClick={() => (window.location.href = "/announcements")}>Вернуться</Button>
+                        </div>
+                        <div className="max-w-90 max-md:hidden">
+                            <img src="/images/done.png" />
+                        </div>
                     </div>
                 ) : paymentSuccess === false ? (
-                    <div className="text-center mt-10">
-                        <h2 className="text-2xl font-bold text-red-600">Что-то пошло не так</h2>
+                    <div className="flex max-xl:flex-wrap gap-10 mt-10 justify-between bg-[url('/images/grid.png')] bg-contain bg-no-repeat bg-right ">
+                        <div className="flex max-w-150 flex-col  items-start text-start">
+                            <Heading className="font-inter text-4xl max-lg:text-2xl duration-300 ease-in-out" text={""} level={2}><span className="font-bold">Что-то пошло не так.</span>Попробуйте оплатить ещё раз.</Heading>
+                            <Button className="mt-16 w-full max-w-83 px-5 py-3 bg-[#2EAA7B] shadow-[0px_1px_2px] shadow-[#1018280A] rounded-lg text-white font-inter font-semibold text-2xl max-md:text-xl duration-300 ease-in-out" onClick={() => (window.location.href = "/announcements")}>Вернуться</Button>
+                        </div>
+                        <div className="max-w-90 max-md:hidden duration-300 ease-in-out">
+                            <img src="/images/wrong.png" />
+                        </div>
                     </div>
                 ) : isVerificationStep ? (
                     <div className="mt-10">

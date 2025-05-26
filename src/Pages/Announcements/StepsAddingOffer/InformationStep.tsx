@@ -258,29 +258,54 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
             </div>
             {/*Название */}
             <div className="flex flex-col gap-2">
-                <Input className="bg-[#F0F1F280] w-[800px] rounded-[14px] outline-none py-3.5 px-4.5" type="text" placeholder="Введите" isError={false} LabelClassName="font-inter text-[16px] leading-[130%]" LabelText="*Название бизнеса" onChange={(e) => setTitle(e.target.value)} />
+                <Input
+                    className={`bg-[#F0F1F280] w-200 rounded-[14px] outline-none py-3.5 px-4.5 ${!title ? 'border border-red-500' : ''
+                        }`}
+                    type="text"
+                    placeholder="Введите"
+                    isError={!title}
+                    required
+                    value={title}
+                    onChange={(e) => setTitle(e.target.value)}
+                    LabelClassName="font-inter text-[16px] leading-[130%] block mb-3"
+                    LabelText="*Название бизнеса"
+                />
+                {!title && (
+                    <p className="text-red-500 text-sm">Пожалуйста, введите название бизнеса</p>
+                )}
             </div>
             {/*Описание textarea */}
-            <div className="flex flex-col gap-2 w-[800px] relative">
+            <div className="flex flex-col gap-2 w-full max-w-[800px] relative">
                 <Input
                     isTextArea
+                    required
                     LabelClassName="font-inter text-[16px] leading-[130%]"
                     LabelText="*Описание"
                     placeholder="Введите текст"
                     value={description}
-                    className="bg-[#F0F1F280] resize-none w-[800px] h-[118px] rounded-[14px] outline-none py-3.5 px-4.5"
                     onChange={(e) => setDescription(e.target.value)}
-                    maxLength={offerType === "business" ? 3000 : 2000} isError={false} />
+                    className={`bg-[#F0F1F280] resize-none w-full h-[118px] rounded-[14px] outline-none py-3.5 px-4.5 ${!description ? 'border border-red-500' : ''
+                        }`}
+                    maxLength={offerType === "business" ? 3000 : 2000}
+                    isError={!description}
+                />
                 <span className="absolute bottom-2 right-3 text-sm text-[#8A8A8A] font-inter">
                     {description.length}/{offerType === "business" ? 3000 : 2000}
                 </span>
+                {!description && (
+                    <p className="text-red-500 text-sm">Пожалуйста, введите описание</p>
+                )}
             </div>
             {/*Категория объявления */}
             <div className="flex flex-col gap-2 w-[800px] relative">
                 <label className="text-[#101828] font-inter text-[16px] leading-[130%]">*Категория объявления</label>
-                <select className="bg-[#F0F1F280] w-[800px] rounded-[14px] text-[#686A70] outline-none py-3.5 px-4.5"
+                <select
+                    required
+                    className={`bg-[#F0F1F280] w-[800px] rounded-[14px] text-[#686A70] outline-none py-3.5 px-4.5 ${!categoryId ? 'border border-red-500' : ''
+                        }`}
                     value={categoryId}
-                    onChange={(e) => setCategoryId(e.target.value)}>
+                    onChange={(e) => setCategoryId(e.target.value)}
+                >
                     <option value="">Выбрать</option>
                     {filtersData?.categories.map((cat) => (
                         <option key={cat.id} value={String(cat.id)}>
@@ -288,7 +313,11 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
                         </option>
                     ))}
                 </select>
+                {!categoryId && (
+                    <p className="text-red-500 text-sm mt-1">Пожалуйста, выберите категорию</p>
+                )}
             </div>
+
             {/*Имя и фамилия*/}
             <div className="flex gap-3.5 w-200">
                 <Input
@@ -324,7 +353,8 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
             {isSell && isStartup &&
                 <div className="flex flex-col gap-2 w-[800px] relative">
                     <label className="text-[#101828] font-inter text-[16px] leading-[130%]">*Стадия</label>
-                    <select className="bg-[#F0F1F280] w-[800px] rounded-[14px] text-[#686A70] outline-none py-3.5 px-4.5"
+                    <select className={`bg-[#F0F1F280] w-[800px] rounded-[14px] text-[#686A70] outline-none py-3.5 px-4.5 ${!projectStageId ? 'border border-red-500' : ''
+                        }`}
                         value={projectStageId}
                         onChange={(e) => setProjectStageId(e.target.value)}>
                         <option className="">Выбрать</option>
@@ -334,12 +364,16 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
                             </option>
                         ))}
                     </select>
+                    {!projectStageId && (
+                        <p className="text-red-500 text-sm mt-1">Пожалуйста, выберите стадию проекта</p>
+                    )}
                 </div>
             }
             {/*Город */}
             <div className="flex flex-col gap-2 w-[800px] relative">
                 <label className="text-[#101828] font-inter text-[16px] leading-[130%]">*Город</label>
-                <select className="bg-[#F0F1F280] w-[800px] rounded-[14px] text-[#686A70] outline-none py-3.5 px-4.5"
+                <select className={`bg-[#F0F1F280] w-[800px] rounded-[14px] text-[#686A70] outline-none py-3.5 px-4.5 ${!cityId ? 'border border-red-500' : ''
+                    }`}
                     value={cityId}
                     onChange={(e) => setCityId(e.target.value)}>
                     <option className="">Выбрать</option>
@@ -349,18 +383,25 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
                         </option>
                     ))}
                 </select>
+                {!cityId && (
+                    <p className="text-red-500 text-sm mt-1">Пожалуйста, выберите город</p>
+                )}
             </div>
             {/*Адрес */}
             <div className="flex flex-col gap-2 w-[800px] relative">
-                <Input className="bg-[#F0F1F280] w-full rounded-[14px] outline-none py-3.5 px-4.5" LabelClassName="font-inter text-[16px] leading-[130%]"
-                    LabelText="*Адрес" type="text" placeholder="Введите" isError={false}
+                <Input className={`bg-[#F0F1F280] w-200 rounded-[14px] outline-none py-3.5 px-4.5 ${!addressText ? 'border border-red-500' : ''
+                    }`}
+                    LabelText="*Адрес" type="text" placeholder="Введите" isError={!addressText}
                     value={addressText}
                     onChange={(e) => setAddressText(e.target.value)} />
+                {!addressText && (
+                    <p className="text-red-500 text-sm">Пожалуйста, введите Адрес</p>
+                )}
             </div>
             {/*Площадь */}
             <Input
-                className="bg-[#F0F1F280] w-full rounded-[14px] outline-none py-3.5 px-4.5"
-                LabelClassName="font-inter text-[16px] leading-[130%]"
+                className="bg-[#F0F1F280] w-200 rounded-[14px] outline-none py-3.5 px-4.5"
+                LabelClassName="font-inter text-[16px] leading-[130%] block mb-3"
                 LabelText="Площадь, кв. м."
                 type="text"
                 placeholder="Введите"
@@ -376,7 +417,8 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
                 <div className="flex flex-col gap-2 w-[393px] relative">
                     <label className="text-[#101828] font-inter text-[16px] leading-[130%]">*Форма владения бизнесом</label>
                     <select
-                        className="bg-[#F0F1F280] rounded-[14px] text-[#686A70] outline-none py-3.5 px-4.5"
+                        className={`bg-[#F0F1F280] w-[800px] rounded-[14px] text-[#686A70] outline-none py-3.5 px-4.5 ${!businessOwnership ? 'border border-red-500' : ''
+                            }`}
                         value={businessOwnership}
                         onChange={(e) => setBusinessOwnership(e.target.value)}
                     >
@@ -387,12 +429,16 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
                             </option>
                         ))}
                     </select>
+                    {!businessOwnership && (
+                        <p className="text-red-500 text-sm mt-1">Пожалуйста, выберите форму</p>
+                    )}
                 </div>
             }
             {/*Форма владения помещением */}
             {isSell && <div className="flex flex-col gap-2 w-[393px] relative">
                 <label className="text-[#101828] font-inter text-[16px] leading-[130%]">*Форма владения помещением</label>
-                <select className="bg-[#F0F1F280] rounded-[14px] text-[#686A70] outline-none py-3.5 px-4.5"
+                <select className={`bg-[#F0F1F280] w-[800px] rounded-[14px] text-[#686A70] outline-none py-3.5 px-4.5 ${!propertyOwnershipType ? 'border border-red-500' : ''
+                    }`}
                     value={propertyOwnershipType}
                     onChange={(e) => setPropertyOwnershipType(e.target.value)}
                 >
@@ -403,6 +449,9 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
                         </option>
                     ))}
                 </select>
+                {!propertyOwnershipType && (
+                    <p className="text-red-500 text-sm mt-1">Пожалуйста, выберите форму</p>
+                )}
             </div>}
 
             {isSell &&
@@ -452,14 +501,17 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
                 </div>}
             {/*Сумма */}
             <div className="flex flex-col gap-2 w-[393px] relative">
-                <Input className="bg-[#F0F1F280] w-full rounded-[14px] outline-none py-3.5 px-4.5" LabelClassName="font-inter text-[16px] leading-[130%]"
-                    LabelText="*Сумма, сум" type="text" placeholder="Введите" isError={false}
+                <Input className={`bg-[#F0F1F280] w-200 rounded-[14px] outline-none py-3.5 px-4.5 ${!amount ? 'border border-red-500' : ''
+                    }`} LabelText="*Сумма, сум" type="text" placeholder="Введите" isError={false}
                     value={amount}
                     onChange={(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
                         const rawValue = e.target.value.replace(/\D/g, "");
                         const formatted = rawValue.replace(/\B(?=(\d{3})+(?!\d))/g, " ");
                         setAmount(formatted);
                     }} />
+                {!amount && (
+                    <p className="text-red-500 text-sm">Пожалуйста, введите сумму</p>
+                )}
             </div>
 
             {/*Изображения */}
@@ -667,8 +719,8 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
                                 checked={selectedConveniences.includes(id)}
                                 onChange={() => toggleConvenience(id)}
                                 className="appearance-none w-[44px] h-[24px] bg-gray-300 rounded-full relative transition-all duration-300 checked:bg-[#2EAA7B]
-            before:content-[''] before:absolute before:top-[2px] before:left-[2px] before:w-[20px] before:h-[20px]
-            before:bg-white before:rounded-full before:transition-all before:duration-300 checked:before:translate-x-[20px]"
+                before:content-[''] before:absolute before:top-[2px] before:left-[2px] before:w-[20px] before:h-[20px]
+                before:bg-white before:rounded-full before:transition-all before:duration-300 checked:before:translate-x-[20px]"
                             />
                         </label>
                     );

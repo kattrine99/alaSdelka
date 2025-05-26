@@ -6,9 +6,10 @@ import PdfIcon from '../../../assets/pdf.svg?react';
 import GalleryIcon from '../../../assets/gallery.svg?react';
 import { HiPlus, HiX } from "react-icons/hi";
 import { useGetFiltersDataQuery } from "../../../Store/api/Api"
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setOfferData } from "../../../Store/tempStorage";
-import { useCreateOfferMutation, usePublishOfferMutation, useGetUserInfoQuery } from "../../../Store/api/Api";
+import { useCreateOfferMutation, useGetUserInfoQuery } from "../../../Store/api/Api";
+import { RootState } from "../../../Store/store";
 
 interface Props {
     offerType: "business" | "franchise" | "startup" | "investments";
@@ -24,38 +25,49 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
     const isInvestments = offerType === "investments";
     const isSell = listingType === "sell";
     const isBuy = listingType === "buy"
+    const offerData = useSelector((state: RootState) => state.tempOffer.offerData);
 
-    const [categoryId, setCategoryId] = useState<string>("");
-    const [cityId, setCityId] = useState<string>("");
-    const [Area, setArea] = useState("");
-    const [projectStageId, setProjectStageId] = useState<string>("");
+    const [categoryId, setCategoryId] = useState(offerData?.category_id || "");
+    const [cityId, setCityId] = useState(offerData?.address?.city_id?.toString() || "");
+    const [Area, setArea] = useState(offerData?.area?.toString() || "");
+    const [projectStageId, setProjectStageId] = useState(
+        offerData?.project_stage_id?.toString() || ""
+    );
     const [createOffer] = useCreateOfferMutation();
-    const [publishOffer] = usePublishOfferMutation();
-    const [selectedConveniences, setSelectedConveniences] = useState<number[]>([]);
+    const [selectedConveniences, setSelectedConveniences] = useState<number[]>(offerData?.conveniences || []);
 
-    const [title, setTitle] = useState("");
-    const [amount, setAmount] = useState("");
-    const [description, setDescription] = useState("");
+    const [title, setTitle] = useState(offerData?.title || "");
+    const [amount, setAmount] = useState(
+        offerData?.price ? offerData.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") : ""
+    );
+    const [description, setDescription] = useState(offerData?.description || "");
     const { data: filtersData } = useGetFiltersDataQuery();
     const conveniences = filtersData?.conveniences || [];
     const { data: userInfo } = useGetUserInfoQuery();
 
     const [files, setFiles] = useState<File[]>([]);
-    const [images, setImages] = useState<File[]>([]);
-    const [links, setLinks] = useState<Array<{ channel_name: string; link: string }>>([{ channel_name: "", link: "" }]);
+    const [photos, setPhotos] = useState<{ photo: File; order: number }[]>(
+        offerData?.photos?.map((p, i) => ({
+            photo: p.photo as File,
+            order: p.order ?? i,
+        })) || []
+    );
+    const [links, setLinks] = useState<{ channel_name: string; link: string }[]>(
+        offerData?.communication_channels || [{ channel_name: "", link: "" }]
+    );
     const fullName = userInfo?.name?.trim() || "";
     const phoneNumber = userInfo?.phone?.replace("+998", "") || "";
     const inputRef = useRef<HTMLInputElement>(null);
     const imageInputRef = useRef<HTMLInputElement>(null);
-    const [addressText, setAddressText] = useState("");
-    const [propertyOwnershipType, setPropertyOwnershipType] = useState("");
-    const [monthlyIncome, setMonthlyIncome] = useState<number | undefined>(0);
-    const [profit, setProfit] = useState<number | undefined>(0);
-    const [expences, setExpences] = useState<number | undefined>(0);
-    const [percentageForSale, setpercentageForSale] = useState<number | undefined>(0);
-    const [paybackPeriod, setPaybackPeriod] = useState<number | undefined>(0);
-    const [FoundationYear, setFoundationYear] = useState<number | undefined>(0);
-    const [businessOwnership, setBusinessOwnership] = useState("");
+    const [addressText, setAddressText] = useState(offerData?.address?.address || "");
+    const [propertyOwnershipType, setPropertyOwnershipType] = useState(offerData?.premises_ownership_form || "");
+    const [monthlyIncome, setMonthlyIncome] = useState<number | undefined>(offerData?.average_monthly_revenue || 0);
+    const [profit, setProfit] = useState<number | undefined>(offerData?.average_monthly_profit || 0);
+    const [expences, setExpences] = useState<number | undefined>(offerData?.average_monthly_expenses || 0);
+    const [percentageForSale, setpercentageForSale] = useState<number | undefined>(offerData?.percentage_for_sale || 0);
+    const [paybackPeriod, setPaybackPeriod] = useState<number | undefined>(offerData?.payback_period || 0);
+    const [FoundationYear, setFoundationYear] = useState<number | undefined>(offerData?.foundation_year || 0);
+    const [businessOwnership, setBusinessOwnership] = useState(offerData?.business_type || "");
     const currentYear = new Date().getFullYear();
     const foundationYears = useMemo(() => {
         const years = [];
@@ -78,18 +90,23 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
     const handleRemove = (index: number) => {
         setFiles(prev => prev.filter((_, i) => i !== index));
     };
-    const handleImageChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const handleImageChange = (
+        e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    ) => {
         const target = e.target as HTMLInputElement;
         const files = target.files;
         if (!files) return;
 
-        const fileArray = Array.from(files);
-        setImages(prev => [...prev, ...fileArray]);
+        const fileArray = Array.from(files).map((file, index) => ({
+            photo: file,
+            order: index,
+        }));
+
+        setPhotos((prev) => [...prev, ...fileArray]);
     };
 
-
     const handleImageRemove = (index: number) => {
-        setImages(prev => prev.filter((_, i) => i !== index));
+        setPhotos(prev => prev.filter((_, i) => i !== index));
     };
     const handleNumericInput = (
         e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -154,9 +171,9 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
                 formData.append('documents[]', file);
             });
 
-            images.forEach((image, idx) => {
-                formData.append(`photos[${idx}][photo]`, image);
-                formData.append(`photos[${idx}][order]`, String(idx));
+            photos.forEach((item, idx) => {
+                formData.append(`photos[${idx}][photo]`, item.photo);
+                formData.append(`photos[${idx}][order]`, String(item.order ?? idx));
             });
 
 
@@ -167,68 +184,59 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
                 }
             });
         }
-
         if (isStartup) {
             formData.append("project_stage_id", projectStageId);
         }
-        console.log([...formData.entries()])
         try {
             const response = await createOffer(formData).unwrap();
-            const id = response?.data?.id;
-
-            if (!id) {
-                console.error("Оффер создан, но ID отсутствует");
-                return;
-            }
 
             const selectedCity = filtersData?.cities.find(c => String(c.id) === cityId);
             const city_name = selectedCity?.name_ru || "Город не указан";
-            const photosFromServer = response.data.photos ?? [];
-
-            dispatch(setOfferData({
-                id,
-                title,
-                description,
-                listing_type: listingType,
-                offer_type: offerType,
-                price: Number(amount.replace(/\s/g, "")) || 0,
-                category_id: categoryId,
-                user_name: fullName,
-                user_phone: "+998" + phoneNumber,
-                area: Number(Area) || 0,
-                address: {
-                    address: addressText.trim() || "Не указан",
-                    latitude: 0,
-                    longitude: 0,
-                    city_id: Number(cityId) || 0,
-                },
-                conveniences: selectedConveniences,
-                city_name,
-                ...(isSell && {
-                    business_type: businessOwnership,
-                    premises_ownership_form: propertyOwnershipType,
-                    average_monthly_revenue: monthlyIncome || 0,
-                    average_monthly_profit: profit || 0,
-                    average_monthly_expenses: expences || 0,
-                    payback_period: paybackPeriod || 0,
-                    percentage_for_sale: percentageForSale || 0,
-                    foundation_year: FoundationYear || 0,
-                    documents: files,
-                    photos: photosFromServer,
-                    communication_channels: links
-                        .filter(link => link.channel_name.trim() && link.link.trim())
-                        .map(link => ({
-                            channel_name: link.channel_name.trim(),
-                            link: link.link.trim(),
-                        })),
-                }),
-                ...(isStartup && {
-                    project_stage_id: Number(projectStageId) || 0,
-                }),
-            }));
-
-            await publishOffer(id).unwrap();
+            if (offerData?.id) {
+                dispatch(setOfferData({
+                    id: response.data.id,
+                    title,
+                    description,
+                    listing_type: listingType,
+                    offer_type: offerType,
+                    price: Number(amount.replace(/\s/g, "")) || 0,
+                    category_id: categoryId,
+                    user_name: fullName,
+                    user_phone: "+998" + phoneNumber,
+                    area: Number(Area) || 0,
+                    address: {
+                        address: addressText.trim() || "Не указан",
+                        latitude: 0,
+                        longitude: 0,
+                        city_id: Number(cityId) || 0,
+                    },
+                    conveniences: selectedConveniences,
+                    city_name,
+                    ...(isSell && {
+                        business_type: businessOwnership,
+                        premises_ownership_form: propertyOwnershipType,
+                        average_monthly_revenue: monthlyIncome || 0,
+                        average_monthly_profit: profit || 0,
+                        average_monthly_expenses: expences || 0,
+                        payback_period: paybackPeriod || 0,
+                        percentage_for_sale: percentageForSale || 0,
+                        foundation_year: FoundationYear || 0,
+                        documents: files, // File[]
+                        photos: photos,   // тип: { photo: File, order: number }[]
+                        communication_channels: links
+                            .filter(link => link.channel_name.trim() && link.link.trim())
+                            .map(link => ({
+                                channel_name: link.channel_name.trim(),
+                                link: link.link.trim(),
+                            })),
+                    }),
+                    ...(isStartup && {
+                        project_stage_id: Number(projectStageId) || 0,
+                    }),
+                }));
+            }
             onNext();
+
         } catch (error) {
             console.error("Ошибка при создании или публикации оффера:", error);
         }
@@ -522,7 +530,7 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
                     </label>
 
                     <div className="flex gap-4 flex-wrap">
-                        {images.map((file, idx) => (
+                        {photos.map((file, idx) => (
                             <div
                                 key={idx}
                                 className="relative border border-dashed border-[#2EAA7B] rounded-[16px] px-6 py-4 w-[260px] h-[120px] flex flex-col items-center justify-center text-center"
@@ -535,8 +543,8 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
                                 </button>
 
                                 <GalleryIcon className="w-9 h-9 mb-2" />
-                                <p className="text-[#232323] font-medium text-sm truncate w-full">{file.name}</p>
-                                <p className="text-[#667085] text-sm">{(file.size / 1024 / 1024).toFixed(1)} МБ</p>
+                                <p className="text-[#232323] font-medium text-sm truncate w-full">{file.photo.name}</p>
+                                <p className="text-[#667085] text-sm">{(file.photo.size / 1024 / 1024).toFixed(1)} МБ</p>
                             </div>
                         ))}
                         <button

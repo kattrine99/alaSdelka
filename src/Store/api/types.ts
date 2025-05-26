@@ -499,9 +499,10 @@ export interface OfferPayload {
     // SELL-specific
     property_ownership_type?: string;
     documents?: File[];
-    images?: { photo: File, order: number }[];
+    photos?: { photo: File, order: number }[];
     communication_channels?: { channel_name: string; link: string }[];
     business_share?: number;
+    premises_ownership_form?: string;
     average_monthly_revenue?: number;
     average_monthly_profit?: number;
     payback_period?: number;

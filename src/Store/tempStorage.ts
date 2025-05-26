@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createAction, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { OfferPayload } from "../Store/api/types";
 
 interface TempOfferState {
@@ -20,7 +20,16 @@ export const tempOfferSlice = createSlice({
             state.offerData = undefined;
         },
     },
+    extraReducers: (builder) => {
+        builder
+            .addCase(setOfferData, (state, action) => {
+                state.offerData = action.payload;
+            })
+            .addCase(clearOfferData, (state) => {
+                state.offerData = undefined;
+            });
+    }
 });
-
-export const { setOfferData, clearOfferData } = tempOfferSlice.actions;
+export const clearOfferData = createAction("tempOffer/clear");
+export const { setOfferData } = tempOfferSlice.actions;
 export default tempOfferSlice.reducer;

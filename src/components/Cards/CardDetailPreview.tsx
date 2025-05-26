@@ -41,9 +41,9 @@ export const CardDetailPreview: React.FC<CardDetailPreviewProps> = ({ onBack }) 
 
     const data = useSelector((state: RootState) => state.tempOffer.offerData);
     useEffect(() => {
-        if (!data?.images) return;
+        if (!data?.photos) return;
 
-        const urls = data.images.map(img => {
+        const urls = data.photos.map(img => {
             if (img.photo instanceof File) {
                 return URL.createObjectURL(img.photo);
             }
@@ -57,7 +57,7 @@ export const CardDetailPreview: React.FC<CardDetailPreviewProps> = ({ onBack }) 
                 if (url.startsWith('blob:')) URL.revokeObjectURL(url);
             });
         };
-    }, [data?.images]);
+    }, [data?.photos]);
 
 
 
@@ -98,7 +98,7 @@ export const CardDetailPreview: React.FC<CardDetailPreviewProps> = ({ onBack }) 
                 </div>
                 {/* Изображение */}
                 <div className="flex-1">
-                    {data.images && data.images.length > 0 && (
+                    {data.photos && data.photos.length > 0 && (
                         <div className="mb-6">
                             {previewUrls.length > 0 && (
                                 <div className="mb-6">

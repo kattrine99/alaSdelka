@@ -1,11 +1,12 @@
 import { Button, Paragraph, CardPreview } from "../../../components";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../../Store/store";
 import { OfferPayload } from "../../../Store/api/types";
 import { ICard } from "../../../components/Cards/Interfaces";
-import { FaArrowRight } from "react-icons/fa";
 import { usePublishOfferMutation } from "../../../Store/api/Api";
 import { useState } from "react";
+import { clearOfferData } from "../../../Store/tempStorage";
+
 interface Props {
     onPublish: () => void;
     onPreview: () => void;
@@ -23,7 +24,7 @@ const mapOfferToCard = (data: OfferPayload): ICard => ({
         },
 
     }, area: data.area || 0,
-    image: data.images?.[0]?.photo ? URL.createObjectURL(data.images[0].photo) : null,
+    image: data.photos?.[0]?.photo ? URL.createObjectURL(data.photos[0].photo) : null,
 
     is_favourite: false,
     offer_type: data.offer_type,
@@ -32,29 +33,32 @@ const mapOfferToCard = (data: OfferPayload): ICard => ({
 
 export const PublicationStep: React.FC<Props> = ({ onPublish, onPreview }) => {
     const cardData = useSelector((state: RootState) => state.tempOffer.offerData);
+    const dispatch = useDispatch();
     const [publishOffer] = usePublishOfferMutation();
     const [isPublishing, setIsPublishing] = useState(false);
-    const [isPublished, setIsPublished] = useState(false);
+    const [, setIsPublished] = useState(false);
+    const [, setError] = useState(false);
     if (!cardData) return null;
 
     const card = mapOfferToCard(cardData);
 
     const handlePublish = async () => {
-        if (isPublishing || isPublished) return;
-
+        if (!cardData?.id) return;
         setIsPublishing(true);
+        setError(false);
 
         try {
-            await publishOffer(cardData.id!).unwrap();
+            await publishOffer(cardData.id).unwrap();
             setIsPublished(true);
+            dispatch(clearOfferData());
             onPublish();
-        } catch (error) {
-            console.error("Ошибка при публикации:", error);
+        } catch (err) {
+            console.error("Ошибка при публикации оффера:", err);
+            setError(true);
         } finally {
             setIsPublishing(false);
         }
     };
-
 
     return (
         <div className="flex flex-col items-start gap-6 bg-[#F8F8F8] p-5 ">
@@ -66,8 +70,12 @@ export const PublicationStep: React.FC<Props> = ({ onPublish, onPreview }) => {
             <div className="w-full max-w-[600px]">
                 <CardPreview card={card} onPreview={onPreview} />
             </div>
-            <Button className="bg-[#2EAA7B] text-white px-4 py-2 rounded-md flex items-center gap-2" onClick={handlePublish}>
-                Опубликовать <FaArrowRight />
+            <Button
+                className="bg-[#2EAA7B] text-white px-6 py-3 rounded-md mt-6"
+                onClick={handlePublish}
+                disabled={isPublishing}
+            >
+                {isPublishing ? "Публикация..." : "Опубликовать"}
             </Button>
         </div>
     );

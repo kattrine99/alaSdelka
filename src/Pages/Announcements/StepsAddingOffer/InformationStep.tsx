@@ -221,8 +221,8 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
                         payback_period: paybackPeriod || 0,
                         percentage_for_sale: percentageForSale || 0,
                         foundation_year: FoundationYear || 0,
-                        documents: files, // File[]
-                        photos: photos,   // тип: { photo: File, order: number }[]
+                        documents: files, 
+                        photos: photos,  
                         communication_channels: links
                             .filter(link => link.channel_name.trim() && link.link.trim())
                             .map(link => ({

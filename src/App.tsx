@@ -12,36 +12,56 @@ import { useAutoLogout } from "./utils/useAutoLogout";
 import { useAuthInit } from "./utils/useAUthInit";
 import { PromotionCards, ModalBase, Button } from "./components";
 import { RootState } from "./Store/store";
-import { setSessionExpired } from "./Store/Slices/uiSlice";
+import { setLogoutReason } from "./Store/Slices/authSlice";
+import { ProtectedRoute } from "./ProtectedRoute";
 
 const Layout = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const sessionExpired = useSelector((state: RootState) => state.ui.sessionExpired);
+  const logoutReason = useSelector((state: RootState) => state.auth.logoutReason);
 
+  const handleCloseModal = () => {
+    dispatch(setLogoutReason(null));
+    navigate("/login");
+  };
+
+  const getModalContent = () => {
+    if (logoutReason === "expired") {
+      return {
+        title: "Сессия завершена",
+        message: "Ваша сессия истекла. Пожалуйста, войдите снова.",
+        buttonText: "Войти",
+      };
+    }
+    if (logoutReason === "unauthorized") {
+      return {
+        title: "Требуется вход",
+        message: "Чтобы продолжить, пожалуйста, войдите в систему.",
+        buttonText: "Войти",
+      };
+    }
+    return null;
+  };
+
+  const modalContent = getModalContent();
   return (
     <>
-    
+
       <ScrollToTop />
       <Outlet />
 
-      {sessionExpired && (
+      {modalContent && (
         <ModalBase
-          title="Сессия завершена"
-          message="Ваша сессия истекла. Пожалуйста, войдите снова."
-          onClose={() => {
-            dispatch(setSessionExpired(false));
-            navigate("/login");
-          } }
-          actions={<Button
-            onClick={() => {
-              dispatch(setSessionExpired(false));
-              navigate("/login");
-            } }
-            className="bg-[#2EAA7B] text-white px-6 py-2 rounded-lg"
-          >
-            Войти
-          </Button>} HeadingClassName={""}        />
+          title={modalContent.title}
+          message={modalContent.message}
+          onClose={handleCloseModal}
+          actions={
+            <Button onClick={handleCloseModal} className="bg-[#2EAA7B] text-white px-6 py-2 rounded-lg">
+              {modalContent.buttonText}
+            </Button>
+          }
+          HeadingClassName=""
+        />
       )}
 
     </>
@@ -58,16 +78,69 @@ const routerConfig = createBrowserRouter([
       { path: "login", element: <LoginPage /> },
       { path: "register", element: <RegistrationPage /> },
       { path: ":category", element: <CategoryPage /> },
-      { path: "profile", element: <ProfilePage /> },
-      { path: "favorites", element: <FavoritePage /> },
-      { path: "announcements", element: <AnnouncemntsPage /> },
-      { path: "add-offer", element: <StepsAddingOffer /> },
-      { path: "/promotion/:id", element: <PromotionPage /> },
-      { path: "/promotion", element: <PromotionCards /> },
-      { path: "notices", element: <NoticePage /> },
-      { path: "/statistics/:id", element: <StatisticsPage /> },
       { path: ":category/card/:id", element: <CardDetailPage /> },
-      { path: "/users/:userId/:category", element: <UserAnnouncementPage /> },
+
+      {
+        path: "profile", element:
+          (<ProtectedRoute>
+            <ProfilePage />
+          </ProtectedRoute>),
+      },
+      {
+        path: "favorites", element:
+          (<ProtectedRoute>
+            <FavoritePage />
+          </ProtectedRoute>),
+      },
+      {
+        path: "announcements", element:
+          (<ProtectedRoute>
+            <AnnouncemntsPage />
+          </ProtectedRoute>),
+      },
+      {
+        path: "add-offer", element: (
+          <ProtectedRoute>
+            <StepsAddingOffer />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "/promotion/:id", element:
+          (
+            <ProtectedRoute>
+              <PromotionPage />
+            </ProtectedRoute>
+          ),
+      },
+      {
+        path: "/promotion", element: (
+          <ProtectedRoute>
+            <PromotionCards />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "notices", element: (
+          <ProtectedRoute>
+            <NoticePage />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "/statistics/:id", element: (
+          <ProtectedRoute>
+            <StatisticsPage />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "/users/:userId/:category", element: (
+          <ProtectedRoute>
+            <UserAnnouncementPage />
+          </ProtectedRoute>
+        ),
+      },
     ]
   }
 ]);

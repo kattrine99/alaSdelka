@@ -1,8 +1,10 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
+type LogoutReason = "expired" | "unauthorized" | null;
+
 interface AuthState {
   isAuthenticated: boolean;
-  logoutReason: string | null;
+  logoutReason: LogoutReason;
 }
 
 const initialState: AuthState = {
@@ -17,7 +19,7 @@ const authSlice = createSlice({
     setIsAuthenticated(state, action: PayloadAction<boolean>) {
       state.isAuthenticated = action.payload;
     },
-    setLogoutReason(state, action: PayloadAction<string | null>) {
+    setLogoutReason(state, action: PayloadAction<LogoutReason>) {
       state.logoutReason = action.payload;
     },
     logout(state) {

@@ -14,15 +14,17 @@ export const useAutoLogout = () => {
 
         const now = Date.now();
         const remaining = issuedAt + expiresIn * 1000 - now;
+
         const logout = () => {
             localStorage.removeItem("accessToken");
             localStorage.removeItem("tokenIssuedAt");
             localStorage.removeItem("tokenExpiresIn");
 
-            dispatch(setLogoutReason("Ваша сессия истекла. Пожалуйста, войдите снова."));
+            dispatch(setLogoutReason("expired"));
             dispatch(setIsAuthenticated(false));
-            window.location.href = "/login";
+            window.location.href = "/";
         };
+
         if (remaining <= 0) {
             logout();
         } else {

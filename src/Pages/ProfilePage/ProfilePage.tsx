@@ -106,6 +106,7 @@ export const ProfilePage = () => {
                 <ModalBase
                     title="Успешно!"
                     message="Данные успешно обновлены"
+                    ModalClassName='w-100 p-9'
                     showCloseButton={true}
                     onClose={() => setShowSuccess(false)}
                     HeadingClassName={"font-inter font-semibold text-[#101828] text-3xl leading-[44px]"} />

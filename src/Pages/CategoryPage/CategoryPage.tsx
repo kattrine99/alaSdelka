@@ -1,26 +1,26 @@
-import {useNavigate, useParams, useSearchParams} from "react-router-dom";
-import {useEffect, useState} from "react";
+import { useNavigate, useParams, useSearchParams } from "react-router-dom";
+import { useEffect, useState } from "react";
 import {
-  Breadcrumbs,
-  CardSection,
-  Header,
-  Pagination,
-  PopularSliderSection,
-  Footer,
-  Heading,
-  Button,
-  Input,
-  Paragraph,
-  Filters,
-  EmptyMessage,
+    Breadcrumbs,
+    CardSection,
+    Header,
+    Pagination,
+    PopularSliderSection,
+    Footer,
+    Heading,
+    Button,
+    Input,
+    Paragraph,
+    Filters,
+    EmptyMessage,
 } from "../../components";
 import './CategoryPage.css'
-import {ICard} from "../../components/Cards/Interfaces";
-import {useGetOffersQuery} from "../../Store/api/Api";
-import {routeToCategoryIdMap, typeToTitleMap, urlToApiOfferTypeMap, urlToTypeMap} from "../../utils/categoryMap";
-import {FiSearch} from "react-icons/fi";
-import {FiltersState} from "../../utils/variables";
-import {OfferFilters} from "../../Store/api/types";
+import { ICard } from "../../components/Cards/Interfaces";
+import { useGetOffersQuery } from "../../Store/api/Api";
+import { routeToCategoryIdMap, typeToTitleMap, urlToApiOfferTypeMap, urlToTypeMap } from "../../utils/categoryMap";
+import { FiSearch } from "react-icons/fi";
+import { FiltersState } from "../../utils/variables";
+import { OfferFilters } from "../../Store/api/types";
 
 function cleanObject<T extends object>(obj: T): Partial<T> {
     return Object.fromEntries(
@@ -29,7 +29,7 @@ function cleanObject<T extends object>(obj: T): Partial<T> {
 }
 
 export const CategoryPage = () => {
-    const {category} = useParams();
+    const { category } = useParams();
     const [searchParams] = useSearchParams();
     const navigate = useNavigate();
 
@@ -86,11 +86,11 @@ export const CategoryPage = () => {
             investment_to: filters.investmentMax,
             profitability_from: filters.profitabilityMin,
             profitability_to: filters.profitabilityMax,
-            ...(searchQuery && (isNumber ? {id: searchQuery} : {title: searchQuery})),
+            ...(searchQuery && (isNumber ? { id: searchQuery } : { title: searchQuery })),
         }),
     };
 
-    const {data, isLoading, isError} = useGetOffersQuery(queryParams);
+    const { data, isLoading, isError } = useGetOffersQuery(queryParams);
     const cards = data?.data || [];
     const totalPages = data?.meta?.last_page || 1;
 
@@ -105,6 +105,11 @@ export const CategoryPage = () => {
             paybackPeriod: searchParams.get("paybackPeriod") || "",
         }));
     }, [searchParams]);
+    useEffect(() => {
+        if (searchInput.trim() === "") {
+            setSearchQuery("");
+        }
+    }, [searchInput]);
 
     function handleApplyFilters() {
         const query = new URLSearchParams();
@@ -116,11 +121,11 @@ export const CategoryPage = () => {
     }
     return (
         <div className="font-openSans min-h-screen w-screen overflow-x-hidden">
-            <Header/>
+            <Header />
             <div className="grid grid-cols-3 container mx-auto px-3 xl:px-0 py-[30px] pb-10 gap-10 items-start">
                 <aside className="hidden lg:flex flex-col mr-[60px] col-span-1">
-                    <Breadcrumbs category={type}/>
-                    <Heading text={pageTitle} level={2} className="text-[30px] font-bold text-black"/>
+                    <Breadcrumbs category={type} />
+                    <Heading text={pageTitle} level={2} className="text-[30px] font-bold text-black" />
                     <Paragraph className="text-[#787878] font-inter font-medium text-[14px] mt-3.5">
                         {cards.length.toLocaleString("ru-RU")} объявлений
                     </Paragraph>
@@ -138,8 +143,8 @@ export const CategoryPage = () => {
                 <main className="flex-1 col-span-3 lg:col-span-2 justify-end">
                     <div className="flex justify-between">
                         <aside className="flex lg:hidden flex-col mr-[60px]">
-                            <Breadcrumbs category={type}/>
-                            <Heading text={pageTitle} level={2} className="text-[30px] font-bold text-black"/>
+                            <Breadcrumbs category={type} />
+                            <Heading text={pageTitle} level={2} className="text-[30px] font-bold text-black" />
                             <Paragraph className="text-[#787878] font-inter font-medium text-[14px] mt-3.5">
                                 {cards.length.toLocaleString("ru-RU")} объявлений
                             </Paragraph>
@@ -169,7 +174,7 @@ export const CategoryPage = () => {
                     </div>
                     <div className="hidden lg:flex justify-end gap-x-4">
                         <Button
-                            className="px-5 py-3 bg-[#31B683] text-white rounded-[6px]"
+                            className="px-5 py-3 bg-[#2EAA7B] text-white rounded-[6px] hover:bg-[#31B683] transition duration-300"
                             onClick={() => navigate('/add-offer')}
                         >
                             Добавить объявление
@@ -177,7 +182,7 @@ export const CategoryPage = () => {
                         <div
                             className="flex items-center border border-[#2EAA7B] rounded-xl pl-5 w-[450px] bg-white overflow-hidden">
                             <div className="text-[#2EAA7B]">
-                                <FiSearch className="w-[24px] h-[24px]"/>
+                                <FiSearch className="w-[24px] h-[24px]" />
                             </div>
                             <Input
                                 type="text"
@@ -188,47 +193,50 @@ export const CategoryPage = () => {
                                 className="flex-1 w-full px-2.5 text-[#787878] placeholder-[#787878] bg-white outline-none"
                             />
                             <Button
+                                className="h-full bg-[#2EAA7B] text-white text-sm font-semibold px-5 hover:bg-[#31B683] transition duration-300 rounded-none"
                                 onClick={() => {
-                                    setSearchQuery(searchInput);
+                                    if (searchInput.trim() === "") {
+                                        setSearchQuery("");
+                                    } else {
+                                        setSearchQuery(searchInput.trim());
+                                    }
                                     setCurrentPage(1);
-                                }}
-                                className="h-full bg-[#2EAA7B] text-white text-sm font-semibold px-5 hover:bg-green-600 transition rounded-none"
-                            >
+                                }}>
                                 Поиск
                             </Button>
                         </div>
                     </div>
 
-          {isLoading ? (
-            <div className="flex justify-center items-center py-[30px]">
-              <div className="w-10 h-10 border-4 border-[#2EAA7B] border-t-transparent rounded-full animate-spin"></div>
-            </div>
-          ) : isError ? (
-            <div className="flex flex-col w-full h-full justify-center items-center bg-[url('../../../images/grid.png')] bg-no-repeat  bg-contain">
-              <div className="w-128 h-100 bg-[url('../../../images/404.png')] bg-contain bg-center bg-no-repeat flex flex-col items-center justify-end">
-                <Paragraph className="text-[20px] font-semibold text-black mb-4">Страница не найдена</Paragraph>
-                <Button
-                  onClick={() => navigate("/")}
-                  className="bg-[#2EAA7B] text-white py-2.5 px-6 rounded-[12px] text-[16px] font-medium"
-                >
-                  Перейти на главную
-                </Button>
-              </div>
-            </div>) : exactCards.length === 0 ? (
-              <EmptyMessage
-                title="Здесь еще нет объявлений"
-                subtitle="Ваше может стать первым!"
-                hideButton
-              />
-            ) : (
-            <CardSection
-              Class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-y-10 gap-x-2 transition duration-600"
-              title={pageTitle}
-              ClassName="py-9.75"
-              cards={exactCards}
-              hideViewAllButton
-            />
-          )}
+                    {isLoading ? (
+                        <div className="flex justify-center items-center py-[30px]">
+                            <div className="w-10 h-10 border-4 border-[#2EAA7B] border-t-transparent rounded-full animate-spin"></div>
+                        </div>
+                    ) : isError ? (
+                        <div className="flex flex-col w-full h-full justify-center items-center bg-[url('../../../images/grid.png')] bg-no-repeat  bg-contain">
+                            <div className="w-128 h-100 bg-[url('../../../images/404.png')] bg-contain bg-center bg-no-repeat flex flex-col items-center justify-end">
+                                <Paragraph className="text-[20px] font-semibold text-black mb-4">Страница не найдена</Paragraph>
+                                <Button
+                                    onClick={() => navigate("/")}
+                                    className="bg-[#2EAA7B] text-white py-2.5 px-6 rounded-[12px] text-[16px] font-medium"
+                                >
+                                    Перейти на главную
+                                </Button>
+                            </div>
+                        </div>) : exactCards.length === 0 ? (
+                            <EmptyMessage
+                                title="Здесь еще нет объявлений"
+                                subtitle="Ваше может стать первым!"
+                                hideButton
+                            />
+                        ) : (
+                        <CardSection
+                            Class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-y-10 gap-x-2 transition duration-600"
+                            title={pageTitle}
+                            ClassName="py-9.75"
+                            cards={exactCards}
+                            hideViewAllButton
+                        />
+                    )}
 
                     <Pagination
                         currentPage={currentPage}
@@ -236,9 +244,9 @@ export const CategoryPage = () => {
                         onPageChange={(page: number) => setCurrentPage(page)}
                     />
                 </main>
-            </div>
-            <PopularSliderSection cards={cards}/>
-            <Footer showSmallFooter={true}/>
-        </div>
+            </div >
+            <PopularSliderSection cards={cards} />
+            <Footer showSmallFooter={true} />
+        </div >
     );
 };

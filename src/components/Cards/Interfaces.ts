@@ -14,7 +14,7 @@ export interface ICard {
         longitude?: number;
         latitude?: number;
     };
-    area: number;
+    area: number | string;
     offer_status?: string;
     category?: string;
     is_favourite?: boolean;

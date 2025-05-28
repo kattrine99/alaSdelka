@@ -24,8 +24,7 @@ const mapOfferToCard = (data: OfferPayload): ICard => ({
         },
 
     }, area: data.area || 0,
-    image: data.photos?.[0]?.photo ? URL.createObjectURL(data.photos[0].photo) : null,
-
+    image: data.photos?.[0]?.preview ?? null,
     is_favourite: false,
     offer_type: data.offer_type,
     listing_type: data.listing_type,

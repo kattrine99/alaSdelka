@@ -13,11 +13,7 @@ export const CardPreview: React.FC<CardPreviewProps> = ({ card, onPreview }) => 
     const [imageUrl, setImageUrl] = useState<string | null>(null);
 
     useEffect(() => {
-        if (card.image instanceof File) {
-            const url = URL.createObjectURL(card.image);
-            setImageUrl(url);
-            return () => URL.revokeObjectURL(url);
-        } else if (typeof card.image === "string") {
+        if (typeof card.image === "string") {
             setImageUrl(card.image);
         }
     }, [card.image]);
@@ -25,12 +21,15 @@ export const CardPreview: React.FC<CardPreviewProps> = ({ card, onPreview }) => 
     return (
         <div className="relative rounded-xl bg-white shadow-sm py-7.5 px-4.5 w-full max-w-[400px] flex flex-col">
             <div className="relative md:w-[360px] w-full h-[160px] md:h-auto bg-gray-100 flex items-center justify-center overflow-hidden rounded-md">
-                {imageUrl && (
+                {imageUrl ? (
                     <img
                         src={imageUrl}
                         alt="preview"
                         className="object-cover w-full h-full"
                     />
+                ) : (
+                    <div className="flex items-center justify-center text-gray-400 text-sm">
+                    </div>
                 )}
             </div>
 

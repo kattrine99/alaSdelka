@@ -32,6 +32,7 @@ export const AnnouncemntsPage = () => {
         <ModalBase
           title="Вы уверены, что хотите отметить объявление как проданное?"
           HeadingClassName="font-inter text-[35px] leading-[100%]"
+          ModalClassName="w-150 p-9"
           message={
             <>
               После подтверждения объявление будет исключено из общего каталога,
@@ -69,6 +70,7 @@ export const AnnouncemntsPage = () => {
         <ModalBase
           title="Вы уверены, что хотите поместить объявление в архив?"
           HeadingClassName="font-inter text-[35px] leading-[100%]"
+          ModalClassName="w-150 p-9"
           message={
             <>После подтверждения объявление будет перемещено в архив</>
           }
@@ -140,7 +142,7 @@ export const AnnouncemntsPage = () => {
                         <Link to={`/${offerTypeToUrlMap[offer.offer_type || 'category']}/card/${offer.id}`} className="w-full flex justify-center h-full">
 
                           <img
-                            src={offer.photos[0]?.photo ?? "src/assets/gallery.svg"}
+                            src={offer.photos[0]?.photo ?? "/images/business_abstract.jpg"}
                             alt="cover"
                             className="w-full h-full rounded object-cover bg-gray-100"
                           />

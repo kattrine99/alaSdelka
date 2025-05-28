@@ -78,6 +78,7 @@ export const SellerInfoCard = ({ card, offer_type, userId }: { card: OfferDetail
             {isContactModalOpen && (
                 <ModalBase
                     title="Контакты продавца"
+                    ModalClassName="w-100 p-9"
                     message={isContactLoading
                         ? "Загрузка..."
                         : contactData?.phone || "Номер не найден"}
@@ -89,6 +90,7 @@ export const SellerInfoCard = ({ card, offer_type, userId }: { card: OfferDetail
             {isLinksModalOpen && (
                 <ModalBase
                     title="Ссылки"
+                    ModalClassName="w-100 p-9"
                     message={card.communication_channels?.length ? (
                         <div className="flex flex-col gap-2">
                             {card.communication_channels.map((channel, idx) => (

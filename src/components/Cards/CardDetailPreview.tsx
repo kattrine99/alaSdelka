@@ -173,53 +173,56 @@ export const CardDetailPreview: React.FC<CardDetailPreviewProps> = ({ onBack }) 
                 </div>
 
                 {/* Финансы */}
-                <div className="mb-6">
-                    <Heading level={3} text="Информация и финансы" className="text-[18px] mb-2" />
-                    <div className="mt-3 w-203.25 flex flex-wrap gap-x-3 gap-y-4">
-                        <div className="flex w-65.75 gap-2 border border-[#2EAA7B] items-center rounded-[10px] py-3 px-4.25">
-                            <WalletIcon className='w-10 h-10' />
-                            <div className='flex flex-col'>
-                                <Paragraph className="font-inter text-[13px] leading-5 text-[#7D7D7D]">Среднемесячная выручка</Paragraph>
-                                <Paragraph className="font-inter text-xl font-bold text-[#2EAA7B]">{data.average_monthly_revenue} сум</Paragraph>
+                {data.average_monthly_revenue === 0 &&
+                    <div className="mb-6">
+                        <Heading level={3} text="Информация и финансы" className="text-[18px] mb-2" />
+                        <div className="mt-3 w-203.25 flex flex-wrap gap-x-3 gap-y-4">
+                            <div className="flex w-65.75 gap-2 border border-[#2EAA7B] items-center rounded-[10px] py-3 px-4.25">
+                                <WalletIcon className='w-10 h-10' />
+                                <div className='flex flex-col'>
+                                    <Paragraph className="font-inter text-[13px] leading-5 text-[#7D7D7D]">Среднемесячная выручка</Paragraph>
+                                    <Paragraph className="font-inter text-xl font-bold text-[#2EAA7B]">{data.average_monthly_revenue} сум</Paragraph>
+                                </div>
                             </div>
-                        </div>
-                        <div className="flex gap-2 w-65.75 border border-[#2EAA7B] items-center rounded-[10px] py-3 px-4.25">
-                            <ReceiptIcon className='w-10 h-10' />
-                            <div className='flex flex-col'>
-                                <Paragraph className="font-inter text-[13px] leading-5 text-[#7D7D7D]">Среднемесячные расходы</Paragraph>
-                                <Paragraph className="font-inter text-xl font-bold text-[#2EAA7B]">{data.average_monthly_expenses} сум</Paragraph>
+                            <div className="flex gap-2 w-65.75 border border-[#2EAA7B] items-center rounded-[10px] py-3 px-4.25">
+                                <ReceiptIcon className='w-10 h-10' />
+                                <div className='flex flex-col'>
+                                    <Paragraph className="font-inter text-[13px] leading-5 text-[#7D7D7D]">Среднемесячные расходы</Paragraph>
+                                    <Paragraph className="font-inter text-xl font-bold text-[#2EAA7B]">{data.average_monthly_expenses} сум</Paragraph>
+                                </div>
                             </div>
-                        </div>
-                        <div className="flex gap-2 w-65.75 border border-[#2EAA7B] items-center rounded-[10px] py-3 px-4.25">
-                            <CalendarIcon className='w-10 h-10' />
-                            <div className='flex flex-col'>
-                                <Paragraph className="font-inter text-[13px] leading-5 text-[#7D7D7D]">Дата основания</Paragraph>
-                                <Paragraph className="font-inter text-xl font-bold text-[#2EAA7B]">{data.foundation_year} год</Paragraph>
+                            <div className="flex gap-2 w-65.75 border border-[#2EAA7B] items-center rounded-[10px] py-3 px-4.25">
+                                <CalendarIcon className='w-10 h-10' />
+                                <div className='flex flex-col'>
+                                    <Paragraph className="font-inter text-[13px] leading-5 text-[#7D7D7D]">Дата основания</Paragraph>
+                                    <Paragraph className="font-inter text-xl font-bold text-[#2EAA7B]">{data.foundation_year} год</Paragraph>
+                                </div>
                             </div>
-                        </div>
-                        <div className="flex gap-2 w-65.75 border border-[#2EAA7B] items-center rounded-[10px] py-3 px-4.25">
-                            <DollarCircleIcon className='w-10 h-10' />
-                            <div className='flex flex-col'>
-                                <Paragraph className="font-inter text-[13px] leading-5 text-[#7D7D7D]">Среднемесячная прибыль</Paragraph>
-                                <Paragraph className="font-inter text-xl font-bold text-[#2EAA7B]">{data.average_monthly_profit} сум</Paragraph>
+                            <div className="flex gap-2 w-65.75 border border-[#2EAA7B] items-center rounded-[10px] py-3 px-4.25">
+                                <DollarCircleIcon className='w-10 h-10' />
+                                <div className='flex flex-col'>
+                                    <Paragraph className="font-inter text-[13px] leading-5 text-[#7D7D7D]">Среднемесячная прибыль</Paragraph>
+                                    <Paragraph className="font-inter text-xl font-bold text-[#2EAA7B]">{data.average_monthly_profit} сум</Paragraph>
+                                </div>
                             </div>
-                        </div>
-                        <div className="flex gap-2 w-65.75 border border-[#2EAA7B] items-center rounded-[10px] py-3 px-4.25">
-                            <MoneySendIcon className='w-10 h-10' />
-                            <div className='flex flex-col'>
-                                <Paragraph className="font-inter text-[13px] leading-5 text-[#7D7D7D]">Окупаемость</Paragraph>
-                                <Paragraph className="font-inter text-xl font-bold text-[#2EAA7B]">{data.payback_period} месяцев</Paragraph>
+                            <div className="flex gap-2 w-65.75 border border-[#2EAA7B] items-center rounded-[10px] py-3 px-4.25">
+                                <MoneySendIcon className='w-10 h-10' />
+                                <div className='flex flex-col'>
+                                    <Paragraph className="font-inter text-[13px] leading-5 text-[#7D7D7D]">Окупаемость</Paragraph>
+                                    <Paragraph className="font-inter text-xl font-bold text-[#2EAA7B]">{data.payback_period} месяцев</Paragraph>
+                                </div>
                             </div>
-                        </div>
-                        <div className="flex gap-2 w-65.75 border border-[#2EAA7B] items-center rounded-[10px] py-3 px-4.25">
-                            <PercentIcon className='w-10 h-10' />
-                            <div className='flex flex-col'>
-                                <Paragraph className="font-inter text-[13px] leading-5 text-[#7D7D7D]">Доля к продаже</Paragraph>
-                                <Paragraph className="font-inter text-xl font-bold text-[#2EAA7B]">{data.percentage_for_sale} %</Paragraph>
+                            <div className="flex gap-2 w-65.75 border border-[#2EAA7B] items-center rounded-[10px] py-3 px-4.25">
+                                <PercentIcon className='w-10 h-10' />
+                                <div className='flex flex-col'>
+                                    <Paragraph className="font-inter text-[13px] leading-5 text-[#7D7D7D]">Доля к продаже</Paragraph>
+                                    <Paragraph className="font-inter text-xl font-bold text-[#2EAA7B]">{data.percentage_for_sale} %</Paragraph>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                }
+
 
                 {/* Локация */}
                 <div>

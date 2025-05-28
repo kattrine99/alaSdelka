@@ -74,6 +74,7 @@ export const StepsAddingOffer = () => {
     const handlePublish = () => {
         setStep(4);
     };
+    console.log("savedData", savedData);
 
 
     return (

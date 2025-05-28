@@ -24,7 +24,6 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
     const isBusiness = offerType === "business";
     const isInvestments = offerType === "investments";
     const isSell = listingType === "sell";
-    const isBuy = listingType === "buy"
     const offerData = useSelector((state: RootState) => state.tempOffer.offerData);
 
     const [categoryId, setCategoryId] = useState(offerData?.category_id || "");
@@ -46,12 +45,8 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
     const { data: userInfo } = useGetUserInfoQuery();
 
     const [files, setFiles] = useState<File[]>([]);
-    const [photos, setPhotos] = useState<{ photo: File; order: number }[]>(
-        offerData?.photos?.map((p, i) => ({
-            photo: p.photo as File,
-            order: p.order ?? i,
-        })) || []
-    );
+    const [photos, setPhotos] = useState<{ photo: File; preview: string; order: number }[]>([]);
+
     const [links, setLinks] = useState<{ channel_name: string; link: string }[]>(
         offerData?.communication_channels || [{ channel_name: "", link: "" }]
     );
@@ -69,6 +64,7 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
     const [FoundationYear, setFoundationYear] = useState<number | undefined>(offerData?.foundation_year || 0);
     const [businessOwnership, setBusinessOwnership] = useState(offerData?.business_type || "");
     const currentYear = new Date().getFullYear();
+
     const foundationYears = useMemo(() => {
         const years = [];
         for (let y = currentYear; y >= 1930; y--) {
@@ -90,20 +86,20 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
     const handleRemove = (index: number) => {
         setFiles(prev => prev.filter((_, i) => i !== index));
     };
-    const handleImageChange = (
-        e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-    ) => {
-        const target = e.target as HTMLInputElement;
-        const files = target.files;
-        if (!files) return;
 
-        const fileArray = Array.from(files).map((file, index) => ({
-            photo: file,
-            order: index,
-        }));
+    const handleImageChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const target = e.target as HTMLInputElement;
+    const files = target.files;
+    if (!files) return;
 
-        setPhotos((prev) => [...prev, ...fileArray]);
-    };
+    const newPhotos = Array.from(files).map((file, index) => ({
+        photo: file,
+        preview: URL.createObjectURL(file),
+        order: index
+    }));
+
+    setPhotos(prev => [...prev, ...newPhotos]);
+};
 
     const handleImageRemove = (index: number) => {
         setPhotos(prev => prev.filter((_, i) => i !== index));
@@ -152,14 +148,14 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
         formData.append("address[latitude]", "0");
         formData.append("address[longitude]", "0");
         formData.append("address[city_id]", cityId);
+        formData.append("premises_ownership_form", propertyOwnershipType);
+        formData.append("business_type", businessOwnership);
 
         selectedConveniences.forEach((id, index) => {
             formData.append(`conveniences[${index}]`, String(id));
         });
 
         if (isSell) {
-            formData.append("premises_ownership_form", propertyOwnershipType);
-            formData.append("business_type", businessOwnership);
             formData.append("average_monthly_revenue", String(monthlyIncome || 0));
             formData.append("average_monthly_profit", String(profit || 0));
             formData.append("average_monthly_expenses", String(expences || 0));
@@ -192,49 +188,53 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
 
             const selectedCity = filtersData?.cities.find(c => String(c.id) === cityId);
             const city_name = selectedCity?.name_ru || "Город не указан";
-            if (offerData?.id) {
-                dispatch(setOfferData({
-                    id: response.data.id,
-                    title,
-                    description,
-                    listing_type: listingType,
-                    offer_type: offerType,
-                    price: Number(amount.replace(/\s/g, "")) || 0,
-                    category_id: categoryId,
-                    user_name: fullName,
-                    user_phone: "+998" + phoneNumber,
-                    area: Number(Area) || 0,
-                    address: {
-                        address: addressText.trim() || "Не указан",
-                        latitude: 0,
-                        longitude: 0,
-                        city_id: Number(cityId) || 0,
-                    },
-                    conveniences: selectedConveniences,
-                    city_name,
-                    ...(isSell && {
-                        business_type: businessOwnership,
-                        premises_ownership_form: propertyOwnershipType,
-                        average_monthly_revenue: monthlyIncome || 0,
-                        average_monthly_profit: profit || 0,
-                        average_monthly_expenses: expences || 0,
-                        payback_period: paybackPeriod || 0,
-                        percentage_for_sale: percentageForSale || 0,
-                        foundation_year: FoundationYear || 0,
-                        documents: files, 
-                        photos: photos,  
-                        communication_channels: links
-                            .filter(link => link.channel_name.trim() && link.link.trim())
-                            .map(link => ({
-                                channel_name: link.channel_name.trim(),
-                                link: link.link.trim(),
-                            })),
-                    }),
-                    ...(isStartup && {
-                        project_stage_id: Number(projectStageId) || 0,
-                    }),
-                }));
-            }
+
+            dispatch(setOfferData({
+                id: response.data.id,
+                title,
+                description,
+                listing_type: listingType,
+                offer_type: offerType,
+                price: Number(amount.replace(/\s/g, "")) || 0,
+                category_id: categoryId,
+                user_name: fullName,
+                user_phone: "+998" + phoneNumber,
+                area: Number(Area) || 0,
+                address: {
+                    address: addressText.trim() || "Не указан",
+                    latitude: 0,
+                    longitude: 0,
+                    city_id: Number(cityId) || 0,
+                },
+                conveniences: selectedConveniences,
+                city_name,
+                ...(isSell && {
+                    business_type: businessOwnership,
+                    premises_ownership_form: propertyOwnershipType,
+                    average_monthly_revenue: monthlyIncome || 0,
+                    average_monthly_profit: profit || 0,
+                    average_monthly_expenses: expences || 0,
+                    payback_period: paybackPeriod || 0,
+                    percentage_for_sale: percentageForSale || 0,
+                    foundation_year: FoundationYear || 0,
+                    documents: files,
+                    photos: photos.map(p => ({
+                        photo: p.photo,
+                        preview: p.preview,
+                        order: p.order
+                    })),
+                    communication_channels: links
+                        .filter(link => link.channel_name.trim() && link.link.trim())
+                        .map(link => ({
+                            channel_name: link.channel_name.trim(),
+                            link: link.link.trim(),
+                        })),
+                }),
+                ...(isStartup && {
+                    project_stage_id: Number(projectStageId) || 0,
+                }),
+            }));
+
             onNext();
 
         } catch (error) {
@@ -421,29 +421,27 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
                 }}
             />
             {/*Форма владения бизнесом */}
-            {isSell &&
-                <div className="flex flex-col gap-2 w-[393px] relative">
-                    <label className="text-[#101828] font-inter text-[16px] leading-[130%]">*Форма владения бизнесом</label>
-                    <select
-                        className={`bg-[#F0F1F280] w-[800px] rounded-[14px] text-[#686A70] outline-none py-3.5 px-4.5 ${!businessOwnership ? 'border border-red-500' : ''
-                            }`}
-                        value={businessOwnership}
-                        onChange={(e) => setBusinessOwnership(e.target.value)}
-                    >
-                        <option value="">Выбрать</option>
-                        {filtersData?.business_types.map((type) => (
-                            <option key={type.value} value={type.value}>
-                                {type.label_ru}
-                            </option>
-                        ))}
-                    </select>
-                    {!businessOwnership && (
-                        <p className="text-red-500 text-sm mt-1">Пожалуйста, выберите форму</p>
-                    )}
-                </div>
-            }
+            <div className="flex flex-col gap-2 w-[393px] relative">
+                <label className="text-[#101828] font-inter text-[16px] leading-[130%]">*Форма владения бизнесом</label>
+                <select
+                    className={`bg-[#F0F1F280] w-[800px] rounded-[14px] text-[#686A70] outline-none py-3.5 px-4.5 ${!businessOwnership ? 'border border-red-500' : ''
+                        }`}
+                    value={businessOwnership}
+                    onChange={(e) => setBusinessOwnership(e.target.value)}
+                >
+                    <option value="">Выбрать</option>
+                    {filtersData?.business_types.map((type) => (
+                        <option key={type.value} value={type.value}>
+                            {type.label_ru}
+                        </option>
+                    ))}
+                </select>
+                {!businessOwnership && (
+                    <p className="text-red-500 text-sm mt-1">Пожалуйста, выберите форму</p>
+                )}
+            </div>
             {/*Форма владения помещением */}
-            {isSell && <div className="flex flex-col gap-2 w-[393px] relative">
+            <div className="flex flex-col gap-2 w-[393px] relative">
                 <label className="text-[#101828] font-inter text-[16px] leading-[130%]">*Форма владения помещением</label>
                 <select className={`bg-[#F0F1F280] w-[800px] rounded-[14px] text-[#686A70] outline-none py-3.5 px-4.5 ${!propertyOwnershipType ? 'border border-red-500' : ''
                     }`}
@@ -460,7 +458,7 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
                 {!propertyOwnershipType && (
                     <p className="text-red-500 text-sm mt-1">Пожалуйста, выберите форму</p>
                 )}
-            </div>}
+            </div>
 
             {isSell &&
                 <div className="flex flex-col gap-2">
@@ -693,21 +691,6 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
                         </select>
                     </div>
                 </>}
-            {isBuy && <div className="flex flex-col gap-2 w-200 relative">
-                <label className="text-[#101828] font-inter text-[16px] leading-[130%]">Организационно правовая форма</label>
-                <select
-                    className="bg-[#F0F1F280] rounded-[14px] text-[#686A70] outline-none py-3.5 px-4.5"
-                    value={businessOwnership}
-                    onChange={(e) => setBusinessOwnership(e.target.value)}
-                >
-                    <option value="">Выбрать</option>
-                    {filtersData?.business_types.map((type) => (
-                        <option key={type.value} value={type.value}>
-                            {type.label_ru}
-                        </option>
-                    ))}
-                </select>
-            </div>}
             {/* Детали объявления (переключатели) */}
             <Heading text={"Детали объявления"} level={3} className="font-inter font-semibold text-[#232323] text-xl leading-[130%]" />
             <div className="flex flex-col w-[393px] gap-6">

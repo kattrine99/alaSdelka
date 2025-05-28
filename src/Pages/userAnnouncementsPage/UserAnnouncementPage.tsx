@@ -98,13 +98,12 @@ export const UserAnnouncementPage = () => {
             {isContactModalOpen && (
                 <ModalBase
                     title="Контакты продавца"
-                    message={
-                        isLoadingPhone
-                            ? <span className="text-gray-400">Загрузка...</span>
-                            : contactPhone || "Номер отсутствует"
-                    }
+                    ModalClassName='w-100 p-9'
+                    message={isLoadingPhone
+                        ? <span className="text-gray-400">Загрузка...</span>
+                        : contactPhone || "Номер отсутствует"}
                     onClose={() => setContactModalOpen(false)}
-                    showCloseButton={true}
+                    showCloseButton={true} HeadingClassName={""}
                 />
             )}
 

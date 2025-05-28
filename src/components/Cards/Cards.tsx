@@ -1,4 +1,4 @@
-import { Button, Heading, Paragraph } from "../index";
+import { Button, Heading, ModalBase, Paragraph } from "../index";
 import { FaArrowRight } from "react-icons/fa";
 import { FaLocationDot, FaLocationCrosshairs } from "react-icons/fa6";
 import FireIcon from '../../assets/fire.svg?react';
@@ -24,7 +24,8 @@ export const Cards: React.FC<ICards & { forceAllFavorite?: boolean }> = ({
 }) => {
     const isAuthenticated = useSelector((state: RootState) => state.auth.isAuthenticated);
     const [toggleFavoriteAPI] = useToggleFavoriteMutation();
-
+    const [showModal, setShowModal] = useState(false);
+    const [pendingRemoveId, setPendingRemoveId] = useState<number | null>(null);
     const [favoriteIds, setFavoriteIds] = useState<number[]>(
         forceAllFavorite
             ? cards.map((c) => c.id)
@@ -55,6 +56,14 @@ export const Cards: React.FC<ICards & { forceAllFavorite?: boolean }> = ({
             );
         }
     };
+    const handleConfirmRemove = () => {
+        if (pendingRemoveId !== null) {
+            onFavoritesChanged?.(pendingRemoveId, "removed");
+        }
+        setShowModal(false);
+        setPendingRemoveId(null);
+    };
+
 
     return (
         <div className={containerClass}>
@@ -93,8 +102,16 @@ export const Cards: React.FC<ICards & { forceAllFavorite?: boolean }> = ({
                             {isAuthenticated && (
                                 <FavoriteButton
                                     isFavorite={isFavorite}
-                                    onToggle={() => handleToggle(card.id)}
+                                    onToggle={() => {
+                                        if (isFavorite && forceAllFavorite) {
+                                            setPendingRemoveId(card.id);
+                                            setShowModal(true);
+                                        } else {
+                                            handleToggle(card.id);
+                                        }
+                                    }}
                                 />
+
                             )}
                         </div>
 
@@ -138,8 +155,20 @@ export const Cards: React.FC<ICards & { forceAllFavorite?: boolean }> = ({
                             </div>
                         </div>
                     </div>
+
                 );
             })}
+            {showModal && (
+                <ModalBase
+                    title="Удалить из избранного?"
+                    message="Вы действительно хотите исключить это объявление из избранного?"
+                    onClose={() => setShowModal(false)}
+                    ModalClassName="max-w-100 p-8"
+                    actions={<div className="flex flex-col gap-4 justify-end">
+                        <Button onClick={handleConfirmRemove} className="w-full py-4 rounded-xl bg-red-500 text-white">Удалить</Button>
+                        <Button onClick={() => setShowModal(false)} className="w-full py-4 rounded-xl bg-[#2EAA7B] text-white">Отмена</Button>
+                    </div>} HeadingClassName={"font-inter font-semibold text-4xl leading-11"} />
+            )}
         </div>
     );
 };

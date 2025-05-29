@@ -1,4 +1,4 @@
-import { FaLocationDot, FaClock } from "react-icons/fa6";
+import { FaLocationDot } from "react-icons/fa6";
 import { FiSearch } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
 import { FiltersState } from "../../utils/variables";
@@ -6,6 +6,7 @@ import { Button, Input } from "../index";
 import { MdOutlineArrowDropDown } from "react-icons/md";
 import { HiCurrencyDollar } from "react-icons/hi2";
 import { useGetFiltersDataQuery } from "../../Store/api/Api";
+import FrameIcon from "../../assets/frame.svg?react";
 
 interface FilterBarProps {
     filters: FiltersState;
@@ -42,7 +43,7 @@ export const FilterBar: React.FC<FilterBarProps> = ({
 
         const query = new URLSearchParams();
         if (filters.city) query.append("city", filters.city);
-        if (filters.paybackPeriod) query.append("paybackPeriod", filters.paybackPeriod);
+        if (filters.category_id) query.append("categories", filters.category_id.toString());
         if (filters.priceMin) query.append("priceMin", filters.priceMin);
         if (filters.priceMax) query.append("priceMax", filters.priceMax);
         if (searchInput) query.append("search", searchInput);
@@ -75,19 +76,44 @@ export const FilterBar: React.FC<FilterBarProps> = ({
 
                 <div className="h-7.5 border-l border-[#D9D9D9]" />
 
-                {/* Окупаемость */}
+                {/* Категория */}
                 <div className="relative flex items-center gap-2 px-2 py-2">
                     <span className="text-[#2EAA7B] text-lg">
-                        <FaClock />
+                        <FrameIcon className="text-[#2EAA7B]" />
                     </span>
                     <select
-                        value={filters.paybackPeriod}
-                        onChange={(e) => setFilters((prev) => ({ ...prev, paybackPeriod: e.target.value }))}
-                        className=" text-[15px] text-black px-3 focus:outline-none bg-transparent appearance-none pr-6">
-                        <option value="">Окупаемость</option>
-                        <option value="До 6 месяцев" >До 6 месяцев</option>
-                        <option value="До 1 года" >До 1 года</option>
-                        <option value="До 3 лет">До 3 лет</option>
+                        value={filters.category_id || ""}
+                        onChange=
+                        {(e) => {
+                            const selected = filterOptions.categories.find(
+                                (cat) => String(cat.id) === e.target.value
+                            );
+
+                            if (selected) {
+                                setFilters((prev) => ({
+                                    ...prev,
+                                    categories: selected,
+                                    category_id: selected.id,
+                                    category: selected.id.toString(),
+                                }));
+                            } else {
+                                setFilters((prev) => ({
+                                    ...prev,
+                                    categories: null,
+                                    category_id: undefined,
+                                    category: "",
+                                }));
+                            }
+                        }}
+
+                        className="text-[15px] text-black px-3 py-2 rounded-md focus:outline-none bg-white appearance-none pr-6 max-h-[200px] overflow-y-auto"
+                    >
+                        <option value="">Категория</option>
+                        {filterOptions.categories.map((cat) => (
+                            <option key={cat.id} value={String(cat.id)}>
+                                {cat.title_ru}
+                            </option>
+                        ))}
                     </select>
                     <MdOutlineArrowDropDown className="absolute right-1 text-xl text-[#191919] pointer-events-none" />
                 </div>
@@ -161,6 +187,6 @@ export const FilterBar: React.FC<FilterBarProps> = ({
                 </Button>
             </div>
 
-        </div>
+        </div >
     );
 };

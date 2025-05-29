@@ -110,26 +110,34 @@ export const MainPage = () => {
     } = useGetHomeOffersQuery("");
 
     const handleApplyFilters = () => {
-        if (!filters.category && selectedCategory) {
-            filters.category = selectedCategory.toLowerCase();
-        }
+        const ruToEnOfferTypeMap = {
+            "бизнес": "business",
+            "франшиза": "franchise",
+            "стартапы": "startup",
+            "инвестиции": "investments",
+        } as const;
+
+        const categoryKey = selectedCategory.toLowerCase();
+        const offerTypeValue = ruToEnOfferTypeMap[categoryKey as keyof typeof ruToEnOfferTypeMap] || "business";
 
         const query = new URLSearchParams();
         if (searchInput) query.append("search", searchInput);
         if (filters.category) query.append("category", filters.category);
         if (filters.city) query.append("city", filters.city);
         if (filters.stage) query.append("stage", filters.stage);
-        if (filters.paybackPeriod) query.append("paybackPeriod", filters.paybackPeriod);
+        if (filters.category_id) query.append("category_id", filters.category_id.toString());
         if (filters.priceMin) query.append("priceMin", filters.priceMin);
         if (filters.priceMax) query.append("priceMax", filters.priceMax);
         if (filters.investmentMin) query.append("investmentMin", filters.investmentMin);
         if (filters.investmentMax) query.append("investmentMax", filters.investmentMax);
         if (filters.profitabilityMin) query.append("profitabilityMin", filters.profitabilityMin);
         if (filters.profitabilityMax) query.append("profitabilityMax", filters.profitabilityMax);
-        if (filters.offer_type) query.append("offer_type", filters.offer_type);
 
-        const categoryRoute = categoryRouteMap[filters.category] || "business";
+        if (offerTypeValue) query.append("offer_type", offerTypeValue);
+
+        const categoryRoute = categoryRouteMap[categoryKey] || "business";
         navigate(`/${categoryRoute}?${query.toString()}`);
+
     };
 
 

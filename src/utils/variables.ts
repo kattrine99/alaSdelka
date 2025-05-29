@@ -11,10 +11,20 @@ export const personalpages = [
     { label: "Избранное", to: "/favorites" },
     { label: "Продвижение", to: "/promotion" },
 ]
+export const ruToEnOfferTypeMap: Record<string, "business" | "franchise" | "startup" | "investments"> = {
+    "бизнес": "business",
+    "франшиза": "franchise",
+    "стартап": "startup",
+    "инвестиции": "investments",
+    "business": "business",
+    "franchise": "franchise",
+    "startup": "startup",
+    "investments": "investments",
+};
 
 export interface FiltersState {
     category_id?: number;
-    categories?: { id: number };
+    categories?: { id: number; title_ru: string; title_uz: string } | null;
     category: string;
     city: string;
     stage: string;

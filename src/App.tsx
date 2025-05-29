@@ -14,6 +14,8 @@ import { PromotionCards, ModalBase, Button } from "./components";
 import { RootState } from "./Store/store";
 import { setLogoutReason } from "./Store/Slices/authSlice";
 import { ProtectedRoute } from "./ProtectedRoute";
+import UserAgreement from "./components/Footer/UserAgreement";
+import PrivacyPolicy from "./components/Footer/PrivacyPolicy";
 
 const Layout = () => {
   const dispatch = useDispatch();
@@ -79,6 +81,10 @@ const routerConfig = createBrowserRouter([
       { path: "register", element: <RegistrationPage /> },
       { path: ":category", element: <CategoryPage /> },
       { path: ":category/card/:id", element: <CardDetailPage /> },
+      { path: "/user-agreement", element: <UserAgreement /> },
+      { path: "/privacy-policy", element: <PrivacyPolicy /> },
+
+
 
       {
         path: "profile", element:

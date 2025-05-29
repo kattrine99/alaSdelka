@@ -1,12 +1,12 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FaPhone } from "react-icons/fa";
 import { IoIosMail } from "react-icons/io";
-import { Paragraph, NavLinks, categories } from "../index";
-
-interface FooterProps {
+import { Paragraph, NavLinks, categories, Button } from "../index";
+ interface FooterProps {
     showSmallFooter: boolean;
 }
 export const Footer: React.FC<FooterProps> = ({ showSmallFooter }) => {
+    const navigate = useNavigate();
 
     return (
         <div className="font-[Inter] font-medium w-full bg-white shadow ">
@@ -36,12 +36,18 @@ export const Footer: React.FC<FooterProps> = ({ showSmallFooter }) => {
                             @ INVESTin 2025
                         </Paragraph>
                         <div className="md:flex gap-[50px] text-sm ">
-                            <Paragraph className="flex items-center gap-1 text-[#232323] font-openSans font-normal text-[16px] leading-[125%]">
+                            <Button
+                                onClick={() => navigate("/user-agreement")}
+                                className="flex items-center gap-1 text-[#232323] font-openSans font-normal text-[16px] leading-[125%] hover:text-[#28B13D] transition"
+                            >
                                 Пользовательское соглашение
-                            </Paragraph>
-                            <Paragraph className="flex items-center gap-1 text-[#232323] font-inter font-normal text-[16px] leading-[125%]">
+                            </Button>
+                            <Button
+                                onClick={() => navigate("/privacy-policy")}
+                                className="flex items-center gap-1 text-[#232323] font-inter font-normal text-[16px] leading-[125%] hover:text-[#28B13D] transition"
+                            >
                                 Политика конфиденциальности
-                            </Paragraph>
+                            </Button>
                         </div>
                     </div></>)}
             {showSmallFooter && (<div className="flex  h-[119px] justify-between px-[192px] border-t border-[#E9E9E9]">
@@ -50,12 +56,18 @@ export const Footer: React.FC<FooterProps> = ({ showSmallFooter }) => {
                         <img src="/images/investin_logo.png" alt="Logo" className="h-[56px] w-auto object-contain" />
                     </Link>
                     <div className="flex gap-x-[50px]">
-                        <Paragraph className="flex items-center text-[#232323] font-openSans font-normal text-[16px] leading-[125%]">
+                        <Button
+                            onClick={() => navigate("/user-agreement")}
+                            className="flex items-center gap-1 text-[#232323] font-openSans font-normal text-[16px] leading-[125%] hover:text-[#28B13D] transition"
+                        >
                             Пользовательское соглашение
-                        </Paragraph>
-                        <Paragraph className="flex items-center text-[#232323] font-inter font-normal text-[16px] leading-[125%]">
+                        </Button>
+                        <Button
+                            onClick={() => navigate("/privacy-policy")}
+                            className="flex items-center gap-1 text-[#232323] font-inter font-normal text-[16px] leading-[125%] hover:text-[#28B13D] transition"
+                        >
                             Политика конфиденциальности
-                        </Paragraph>
+                        </Button>
                     </div>
                 </div>
                 <Paragraph className="flex items-center text-[#232323] font-openSans font-normal text-[16px] leading-[125%]">

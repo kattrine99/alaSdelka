@@ -8,7 +8,7 @@ import ChartIcon from '../../assets/Chart.svg?react';
 import { MdOutlineArrowDropDown } from "react-icons/md";
 import { useGetFiltersDataQuery } from "../../Store/api/Api";
 import { FiltersState } from "../../utils/variables";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 
 interface FiltersProps {
     offer_type: "business" | "startup" | "franchise" | "investments" | "бизнес" | "франшиза" | "стартапы" | "инвстиции";
@@ -18,10 +18,8 @@ interface FiltersProps {
 }
 
 export const Filters: React.FC<FiltersProps> = ({ offer_type, filters, setFilters, onApplyFilters }) => {
-    const buttonsData = ["Не важно", "До 6 месяцев", "До 1 года", "До 3 лет"];
-
-
     const { data: filterOptions, isLoading, isError } = useGetFiltersDataQuery();
+    const buttonsData = ["Не важно", "До 6 месяцев", "До 1 года", "До 3 лет"];
 
     const showPayback = ["business", "franchise"].includes(offer_type);
     const showStage = offer_type === "startup";
@@ -29,19 +27,43 @@ export const Filters: React.FC<FiltersProps> = ({ offer_type, filters, setFilter
     const showInvestments = ["franchise", "startup"].includes(offer_type);
     const showPrice = ["business", "investments"].includes(offer_type);
 
-    const [localFilters, setLocalFilters] = useState<FiltersState>(filters);
+    const update = (field: keyof FiltersState, value: string) => {
+        setFilters(prev => ({ ...prev, [field]: value }));
+    };
     useEffect(() => {
-        setLocalFilters(filters);
-    }, [filters]);
+        if (!filters.categories && filters.category_id && filterOptions?.categories?.length) {
+            const matched = filterOptions.categories.find(cat => cat.id === filters.category_id);
+            if (matched) {
+                setFilters(prev => ({
+                    ...prev,
+                    categories: matched,
+                }));
+            }
+        }
+    }, [filters.category_id, filters.categories, filterOptions, setFilters]);
+    const handleCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        const selected = filterOptions?.categories.find(cat => String(cat.id) === e.target.value);
+        if (selected) {
+            setFilters(prev => ({
+                ...prev,
+                categories: selected,
+                category_id: selected.id,
+            }));
+        } else {
+            setFilters(prev => ({
+                ...prev,
+                categories: null,
+                category_id: undefined,
+            }));
+        }
+    };
 
     if (isLoading) return <div>Загрузка фильтров...</div>;
     if (isError || !filterOptions) return <div>Ошибка загрузки фильтров</div>;
 
-    const update = (field: keyof FiltersState, value: string) =>
-        setLocalFilters((prev) => ({ ...prev, [field]: value }));
-    console.log(localFilters)
     return (
         <div className="w-full mt-5">
+            {/* Категория */}
             <div className="gap-y-2">
                 <div className="flex items-center gap-2">
                     <FrameIcon className="text-[#2EAA7B]" />
@@ -49,12 +71,12 @@ export const Filters: React.FC<FiltersProps> = ({ offer_type, filters, setFilter
                 </div>
                 <div className="relative mt-2 mb-4">
                     <select
-                        value={localFilters.category_id ?? ""}
-                        onChange={(e) => update("category_id", e.target.value)}
+                        value={filters.category_id || ""}
+                        onChange={handleCategoryChange}
                         className="bg-[#F2F2F2] w-full h-[42.4px] rounded-[8px] pl-4 text-black focus:outline-none appearance-none"
                     >
                         <option value="">Все категории</option>
-                        {filterOptions.categories.map((cat) => (
+                        {filterOptions.categories.map(cat => (
                             <option key={cat.id} value={String(cat.id)}>
                                 {cat.title_ru}
                             </option>
@@ -64,6 +86,7 @@ export const Filters: React.FC<FiltersProps> = ({ offer_type, filters, setFilter
                 </div>
             </div>
 
+            {/* Город */}
             <div className="gap-y-2">
                 <div className="flex items-center gap-2">
                     <FaLocationDot className="text-[#2EAA7B]" />
@@ -71,12 +94,12 @@ export const Filters: React.FC<FiltersProps> = ({ offer_type, filters, setFilter
                 </div>
                 <div className="relative mt-2 mb-4">
                     <select
-                        value={localFilters.city}
+                        value={filters.city}
                         onChange={(e) => update("city", e.target.value)}
                         className="bg-[#F2F2F2] w-full h-[42.4px] rounded-[8px] pl-4 text-black focus:outline-none appearance-none"
                     >
                         <option value="">Выбрать</option>
-                        {filterOptions.cities.map((city) => (
+                        {filterOptions.cities.map(city => (
                             <option key={city.id} value={String(city.id)}>
                                 {city.name_ru}
                             </option>
@@ -86,6 +109,7 @@ export const Filters: React.FC<FiltersProps> = ({ offer_type, filters, setFilter
                 </div>
             </div>
 
+            {/* Стадия проекта */}
             {showStage && (
                 <div className="gap-y-2">
                     <div className="flex items-center gap-2">
@@ -94,12 +118,12 @@ export const Filters: React.FC<FiltersProps> = ({ offer_type, filters, setFilter
                     </div>
                     <div className="relative mt-2 mb-4">
                         <select
-                            value={localFilters.stage}
+                            value={filters.stage}
                             onChange={(e) => update("stage", e.target.value)}
                             className="bg-[#F2F2F2] w-full h-[42.4px] rounded-[8px] pl-4 text-black focus:outline-none appearance-none"
                         >
                             <option value="">Выбрать</option>
-                            {filterOptions.project_stages.map((stage) => (
+                            {filterOptions.project_stages.map(stage => (
                                 <option key={stage.id} value={String(stage.id)}>
                                     {stage.name_ru}
                                 </option>
@@ -110,6 +134,7 @@ export const Filters: React.FC<FiltersProps> = ({ offer_type, filters, setFilter
                 </div>
             )}
 
+            {/* Период окупаемости */}
             {showPayback && (
                 <div className="gap-y-2">
                     <div className="flex items-center gap-2">
@@ -117,11 +142,14 @@ export const Filters: React.FC<FiltersProps> = ({ offer_type, filters, setFilter
                         <Paragraph>Период окупаемости</Paragraph>
                     </div>
                     <div className="flex flex-wrap gap-2 mt-2 mb-4">
-                        {buttonsData.map((item) => (
+                        {buttonsData.map(item => (
                             <Button
                                 key={item}
                                 onClick={() => update("paybackPeriod", item)}
-                                className={`px-4 py-2 rounded-lg border ${localFilters.paybackPeriod === item ? "bg-[#2EAA7B] text-white border-[#2EAA7B]" : "bg-white text-black border-gray-300"}`}
+                                className={`px-4 py-2 rounded-lg border ${filters.paybackPeriod === item
+                                    ? "bg-[#2EAA7B] text-white border-[#2EAA7B]"
+                                    : "bg-white text-black border-gray-300"
+                                    }`}
                             >
                                 {item}
                             </Button>
@@ -130,6 +158,7 @@ export const Filters: React.FC<FiltersProps> = ({ offer_type, filters, setFilter
                 </div>
             )}
 
+            {/* Цена */}
             {showPrice && (
                 <div className="gap-y-2">
                     <div className="flex items-center gap-2">
@@ -139,20 +168,33 @@ export const Filters: React.FC<FiltersProps> = ({ offer_type, filters, setFilter
                     <div className="flex gap-x-1.5 mt-2">
                         <div className="flex items-center gap-1 px-4 py-3.5 bg-[#F0F1F2] rounded-[14px]">
                             <span className="text-[14px] text-black">от</span>
-                            <Input type="text" value={localFilters.priceMin} onChange={(e) => update("priceMin", e.target.value)} placeholder="100 000" className="w-full text-[16px] font-semibold text-[#3C3C3C] bg-transparent outline-none placeholder:text-[#787878]" isError={false} />
+                            <Input
+                                type="text"
+                                value={filters.priceMin}
+                                onChange={(e) => update("priceMin", e.target.value)}
+                                placeholder="100 000"
+                                className="w-full text-[16px] font-semibold text-[#3C3C3C] bg-transparent outline-none placeholder:text-[#787878]"
+                                isError={false}
+                            />
                             <span className="text-[14px] text-black">сум</span>
                         </div>
                         <div className="flex items-center gap-1 px-4 py-[14px] bg-[#F0F1F2] rounded-[14px]">
-                            <span className="text-[14px] text-black">от</span>
-                            <Input type="text" value={localFilters.priceMax} onChange={(e) => update("priceMax", e.target.value)} placeholder="100 000"
-                                className="w-full text-[16px] font-semibold text-[#3C3C3C] bg-transparent outline-none placeholder:text-[#787878]" isError={false} />
+                            <span className="text-[14px] text-black">до</span>
+                            <Input
+                                type="text"
+                                value={filters.priceMax}
+                                onChange={(e) => update("priceMax", e.target.value)}
+                                placeholder="100 000"
+                                className="w-full text-[16px] font-semibold text-[#3C3C3C] bg-transparent outline-none placeholder:text-[#787878]"
+                                isError={false}
+                            />
                             <span className="text-[14px] text-black">сум</span>
-
                         </div>
                     </div>
                 </div>
             )}
 
+            {/* Вложения */}
             {showInvestments && (
                 <div className="gap-y-2 mt-4">
                     <div className="flex items-center gap-2">
@@ -162,18 +204,32 @@ export const Filters: React.FC<FiltersProps> = ({ offer_type, filters, setFilter
                     <div className="flex gap-x-1.5 mt-2">
                         <div className="flex items-center gap-1 px-4 bg-[#F0F1F2] rounded-[14px]">
                             <span className="text-[14px] text-black">от</span>
-                            <Input type="text" value={localFilters.investmentMin} onChange={(e) => update("investmentMin", e.target.value)} placeholder="100 000" className="w-full py-3 text-[16px] font-semibold text-[#3C3C3C] bg-transparent outline-none placeholder:text-[#787878]" isError={false} />
+                            <Input
+                                type="text"
+                                value={filters.investmentMin}
+                                onChange={(e) => update("investmentMin", e.target.value)}
+                                placeholder="100 000"
+                                className="w-full py-3 text-[16px] font-semibold text-[#3C3C3C] bg-transparent outline-none placeholder:text-[#787878]"
+                                isError={false}
+                            />
                         </div>
-                        <div className="flex items-center gap-1 px-4  bg-[#F0F1F2] rounded-[14px]">
+                        <div className="flex items-center gap-1 px-4 bg-[#F0F1F2] rounded-[14px]">
                             <span className="text-[14px] text-black">до</span>
-                            <Input type="text" value={localFilters.investmentMax} onChange={(e) => update("investmentMax", e.target.value)} placeholder="100 000"
-                                className="w-full py-3 text-[16px] font-semibold text-[#3C3C3C] bg-transparent outline-none placeholder:text-[#787878]" isError={false} />
+                            <Input
+                                type="text"
+                                value={filters.investmentMax}
+                                onChange={(e) => update("investmentMax", e.target.value)}
+                                placeholder="100 000"
+                                className="w-full py-3 text-[16px] font-semibold text-[#3C3C3C] bg-transparent outline-none placeholder:text-[#787878]"
+                                isError={false}
+                            />
                             <span className="text-[14px] text-black">сум</span>
                         </div>
                     </div>
                 </div>
             )}
 
+            {/* Рентабельность */}
             {showProfit && (
                 <div className="gap-y-2 mt-4">
                     <div className="flex items-center gap-2">
@@ -183,53 +239,64 @@ export const Filters: React.FC<FiltersProps> = ({ offer_type, filters, setFilter
                     <div className="flex gap-x-1.5 mt-2">
                         <div className="flex items-center gap-1 px-4 py-[14px] bg-[#F0F1F2] rounded-[14px]">
                             <span className="text-[14px] text-black">от</span>
-                            <Input type="text" value={localFilters.profitabilityMin} onChange={(e) => update("profitabilityMin", e.target.value)} placeholder="100 000"
-                                className="w-full text-[16px] font-semibold text-[#3C3C3C] bg-transparent outline-none placeholder:text-[#787878]" isError={false} />
+                            <Input
+                                type="text"
+                                value={filters.profitabilityMin}
+                                onChange={(e) => update("profitabilityMin", e.target.value)}
+                                placeholder="100 000"
+                                className="w-full text-[16px] font-semibold text-[#3C3C3C] bg-transparent outline-none placeholder:text-[#787878]"
+                                isError={false}
+                            />
                             <span className="text-[14px] text-black">сум</span>
                         </div>
                         <div className="flex items-center gap-1 px-4 py-[14px] bg-[#F0F1F2] rounded-[14px]">
                             <span className="text-[14px] text-black">до</span>
-                            <Input type="text" value={localFilters.profitabilityMax} onChange={(e) => update("profitabilityMax", e.target.value)} placeholder="100 000"
-                                className="w-full text-[16px] font-semibold text-[#3C3C3C] bg-transparent outline-none placeholder:text-[#787878]" isError={false} />
+                            <Input
+                                type="text"
+                                value={filters.profitabilityMax}
+                                onChange={(e) => update("profitabilityMax", e.target.value)}
+                                placeholder="100 000"
+                                className="w-full text-[16px] font-semibold text-[#3C3C3C] bg-transparent outline-none placeholder:text-[#787878]"
+                                isError={false}
+                            />
                             <span className="text-[14px] text-black">сум</span>
                         </div>
                     </div>
                 </div>
             )}
 
+            {/* Кнопки */}
             <div className="mt-4">
-                {["Найти", "Сбросить"].map((item) => (
-                    <Button
-                        key={item}
-                        onClick={() => {
-                            if (item === "Найти") {
-                                setFilters(localFilters);
-                                onApplyFilters();
-                            } else {
-                                const cleared: FiltersState = {
-                                    category: "",
-                                    category_id: 0,
-                                    city: "",
-                                    stage: "",
-                                    paybackPeriod: "",
-                                    priceMin: "",
-                                    priceMax: "",
-                                    investmentMin: "",
-                                    investmentMax: "",
-                                    profitabilityMin: "",
-                                    profitabilityMax: "",
-                                    listing_type: "",
-                                    offer_type: "",
-                                };
-                                setLocalFilters(cleared);
-                                setFilters(cleared);
-                            }
-                        }}
-                        className="w-full py-3 px-5 border border-[#2EAA7B] mb-2.5 hover:bg-[#2EAA7B] hover:text-white focus:bg-[#2EAA7B] focus:text-white rounded-[6px] font-inter font-semibold text-[15px] leading-5.5 text-[#2EAA7B] outline-none"
-                    >
-                        {item}
-                    </Button>
-                ))}
+                <Button
+                    onClick={onApplyFilters}
+                    className="w-full py-3 px-5 border border-[#2EAA7B] mb-2.5 hover:bg-[#2EAA7B] hover:text-white focus:bg-[#2EAA7B] focus:text-white rounded-[6px] font-inter font-semibold text-[15px] leading-5.5 text-[#2EAA7B] outline-none"
+                >
+                    Найти
+                </Button>
+                <Button
+                    onClick={() => {
+                        const cleared: FiltersState = {
+                            category: "",
+                            category_id: undefined,
+                            categories: null,
+                            city: "",
+                            stage: "",
+                            paybackPeriod: "",
+                            priceMin: "",
+                            priceMax: "",
+                            investmentMin: "",
+                            investmentMax: "",
+                            profitabilityMin: "",
+                            profitabilityMax: "",
+                            listing_type: "",
+                            offer_type: "",
+                        };
+                        setFilters(cleared);
+                    }}
+                    className="w-full py-3 px-5 border border-[#2EAA7B] mb-2.5 hover:bg-[#2EAA7B] hover:text-white focus:bg-[#2EAA7B] focus:text-white rounded-[6px] font-inter font-semibold text-[15px] leading-5.5 text-[#2EAA7B] outline-none"
+                >
+                    Сбросить
+                </Button>
             </div>
         </div>
     );

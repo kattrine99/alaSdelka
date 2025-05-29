@@ -1,5 +1,5 @@
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
     Breadcrumbs,
     CardSection,
@@ -17,9 +17,9 @@ import {
 import './CategoryPage.css'
 import { ICard } from "../../components/Cards/Interfaces";
 import { useGetOffersQuery } from "../../Store/api/Api";
-import { routeToCategoryIdMap, typeToTitleMap, urlToApiOfferTypeMap, urlToTypeMap } from "../../utils/categoryMap";
+import { routeToCategoryIdMap, typeToTitleMap, urlToTypeMap } from "../../utils/categoryMap";
 import { FiSearch } from "react-icons/fi";
-import { FiltersState } from "../../utils/variables";
+import { FiltersState, ruToEnOfferTypeMap } from "../../utils/variables";
 import { OfferFilters } from "../../Store/api/types";
 
 function cleanObject<T extends object>(obj: T): Partial<T> {
@@ -35,8 +35,8 @@ export const CategoryPage = () => {
 
     const categoryKey = category?.toLowerCase() ?? "";
     const categoryId = routeToCategoryIdMap[categoryKey] || "";
-    const type = urlToTypeMap[categoryKey] ?? "";
-    const apiOfferType = urlToApiOfferTypeMap[type] as OfferFilters["offer_type"];
+    const type = useMemo(() => urlToTypeMap[categoryKey] ?? "", [categoryKey]);
+
     const pageTitle = typeToTitleMap[type as ICard["offer_type"]] ?? "Категория";
     const offerTypeFromURL = searchParams.get("offer_type") ?? "";
     const allowedOfferTypes = ["", "business", "franchise", "startup", "investments"] as const;
@@ -48,7 +48,21 @@ export const CategoryPage = () => {
     const validOfferType: OfferType = isValidOfferType(offerTypeFromURL)
         ? offerTypeFromURL
         : "";
-    const [filters, setFilters] = useState<FiltersState>({
+    const [localFilters, setLocalFilters] = useState<FiltersState>({
+        category: categoryId,
+        city: searchParams.get("city") || "",
+        stage: searchParams.get("stage") || "",
+        paybackPeriod: searchParams.get("paybackPeriod") || "",
+        priceMin: searchParams.get("priceMin") || "",
+        priceMax: searchParams.get("priceMax") || "",
+        investmentMin: searchParams.get("investmentMin") || "",
+        investmentMax: searchParams.get("investmentMax") || "",
+        profitabilityMin: searchParams.get("profitabilityMin") || "",
+        profitabilityMax: searchParams.get("profitabilityMax") || "",
+        listing_type: "",
+        offer_type: validOfferType,
+    });
+    const [appliedFilters, setAppliedFilters] = useState<FiltersState>({
         category: categoryId,
         city: searchParams.get("city") || "",
         stage: searchParams.get("stage") || "",
@@ -74,18 +88,19 @@ export const CategoryPage = () => {
     const queryParams: OfferFilters = {
         page: currentPage,
         per_page: itemsPerPage,
-        offer_type: apiOfferType,
+        offer_type: ruToEnOfferTypeMap[categoryKey] || "business",
         ...cleanObject({
-            category: filters.category,
-            city_id: filters.city,
-            stage: filters.stage,
-            payback_period: filters.paybackPeriod,
-            price_from: filters.priceMin,
-            price_to: filters.priceMax,
-            investment_from: filters.investmentMin,
-            investment_to: filters.investmentMax,
-            profitability_from: filters.profitabilityMin,
-            profitability_to: filters.profitabilityMax,
+            category: appliedFilters.category,
+            city_id: appliedFilters.city,
+            category_id: appliedFilters.category_id,
+            stage: appliedFilters.stage,
+            payback_period: appliedFilters.paybackPeriod,
+            price_from: appliedFilters.priceMin,
+            price_to: appliedFilters.priceMax,
+            investment_from: appliedFilters.investmentMin,
+            investment_to: appliedFilters.investmentMax,
+            profitability_from: appliedFilters.profitabilityMin,
+            profitability_to: appliedFilters.profitabilityMax,
             ...(searchQuery && (isNumber ? { id: searchQuery } : { title: searchQuery })),
         }),
     };
@@ -100,11 +115,38 @@ export const CategoryPage = () => {
         )
         : cards;
     useEffect(() => {
-        setFilters((prev) => ({
+        setLocalFilters((prev) => ({
             ...prev,
             paybackPeriod: searchParams.get("paybackPeriod") || "",
         }));
     }, [searchParams]);
+    useEffect(() => {
+        const categoryIdFromURL = searchParams.get("category_id");
+        const numericCategoryId = categoryIdFromURL ? Number(categoryIdFromURL) : undefined;
+
+        const updated: FiltersState = {
+            category: searchParams.get("category") || "",
+            category_id: numericCategoryId,
+            city: searchParams.get("city") || "",
+            stage: searchParams.get("stage") || "",
+            paybackPeriod: searchParams.get("paybackPeriod") || "",
+            priceMin: searchParams.get("priceMin") || "",
+            priceMax: searchParams.get("priceMax") || "",
+            investmentMin: searchParams.get("investmentMin") || "",
+            investmentMax: searchParams.get("investmentMax") || "",
+            profitabilityMin: searchParams.get("profitabilityMin") || "",
+            profitabilityMax: searchParams.get("profitabilityMax") || "",
+            listing_type: "",
+            offer_type: validOfferType,
+        };
+
+        setAppliedFilters(updated);
+        setLocalFilters(updated);
+        setSearchInput(searchParams.get("search") || "");
+        setSearchQuery(searchParams.get("search") || "");
+        setCurrentPage(1);
+    }, [searchParams.toString()]);
+
     useEffect(() => {
         if (searchInput.trim() === "") {
             setSearchQuery("");
@@ -112,13 +154,15 @@ export const CategoryPage = () => {
     }, [searchInput]);
 
     function handleApplyFilters() {
+        setAppliedFilters(localFilters);
         const query = new URLSearchParams();
         if (searchInput) query.append("search", searchInput);
-        Object.entries(filters).forEach(([key, value]) => {
-            if (value) query.append(key, value);
+        Object.entries(localFilters).forEach(([key, value]) => {
+            if (value) query.append(key, String(value));
         });
         navigate(`/${categoryKey}?${query.toString()}`);
     }
+
     return (
         <div className="font-openSans min-h-screen w-screen overflow-x-hidden">
             <Header />
@@ -133,8 +177,8 @@ export const CategoryPage = () => {
                     {type && (
                         <Filters
                             offer_type={categoryKey as "business" | "startup" | "franchise" | "investments"}
-                            filters={filters}
-                            setFilters={setFilters}
+                            filters={localFilters}
+                            setFilters={setLocalFilters}
                             onApplyFilters={handleApplyFilters}
                         />
                     )}
@@ -152,7 +196,7 @@ export const CategoryPage = () => {
                         <div className="flex items-center">
                             {type && (
                                 <>
-                                    <button onClick={() => setIsMobileFiltersOpen(true)} className="btn btn-primary lg:hidden">
+                                    <button onClick={() => setIsMobileFiltersOpen(true)} className="btn btn-primary px-5 py-3 bg-[#2EAA7B] text-white rounded-[6px] hover:bg-[#31B683] transition duration-300 lg:hidden">
                                         Открыть фильтры
                                     </button>
                                     {isMobileFiltersOpen && (
@@ -161,8 +205,8 @@ export const CategoryPage = () => {
                                                 <button onClick={() => setIsMobileFiltersOpen(false)} className="close-btn">×</button>
                                                 <Filters
                                                     offer_type={categoryKey as "business" | "startup" | "franchise" | "investments"}
-                                                    filters={filters}
-                                                    setFilters={setFilters}
+                                                    filters={localFilters}
+                                                    setFilters={setLocalFilters}
                                                     onApplyFilters={handleApplyFilters}
                                                 />
                                             </div>

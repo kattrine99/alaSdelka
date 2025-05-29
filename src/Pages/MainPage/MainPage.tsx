@@ -63,7 +63,7 @@ export const MainPage = () => {
     }, [favoritesData]);
     const favoriteIds = Array.isArray(favoritesData)
         ? []
-        : favoritesData?.data?.map((offer) => offer.id) ?? [];
+        : favoritesData?.data?.map((offer: Offer) => offer.id) ?? [];
     const handleFavoritesChanged = async (id: number, status: "added" | "removed") => {
         console.log(`Card ${id} was ${status === "added" ? "added to" : "removed from"} favorites.`);
         await refetch();

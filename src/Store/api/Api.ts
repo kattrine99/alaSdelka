@@ -18,7 +18,6 @@ import type {
     GetUserOffersResponse,
     GetUserOffersParams,
     OfferStatsResponse,
-    FavoritesResponseType,
     SellOfferResponse,
     OfferResponse,
     UserCardsResponse,
@@ -133,25 +132,20 @@ export const AuthApi = createApi({
                 method: "GET",
             }),
         }),
-        toggleFavorite: builder.mutation<
-            { message: string; status: "added" | "deleted" },
-            number
-        >({
-            query: (offer_id) => ({
-                url: `/favourite-offers/${offer_id}`,
+        toggleFavorite: builder.mutation({
+            query: ({ id }) => ({
+                url: `/favourite-offers/${id}`,
                 method: "POST",
             }),
-            invalidatesTags: ['Favorites'],
+            invalidatesTags: ["Favorites"],
         }),
-        getFavorites: builder.query<FavoritesResponseType, { page?: number; per_page?: number }>(
-            {
-                query: ({ page = 1, per_page = 5 }) => ({
-                    url: '/favourite-offers',
-                    params: { page, per_page },
-                }),
-                providesTags: ['Favorites'],
-            }
-        ),
+        getFavorites: builder.query({
+            query: (params) => ({
+                url: "/favourite-offers",
+                params,
+            }),
+            providesTags: ["Favorites"],
+        }),
 
         getNotifications: builder.query<Notifications, { page: number; per_page?: number }>({
             query: ({ page, per_page = 5 }) => `/notifications?page=${page}&per_page=${per_page}`,

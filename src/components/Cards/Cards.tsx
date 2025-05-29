@@ -39,7 +39,7 @@ export const Cards: React.FC<ICards & { forceAllFavorite?: boolean }> = ({
         );
 
         try {
-            const res = await toggleFavoriteAPI(id).unwrap();
+            const res = await toggleFavoriteAPI({ id }).unwrap();
 
             setFavoriteIds((prev) =>
                 res.status === "added"

@@ -1,49 +1,70 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
   Cards,
   EmptyMessage,
   Footer,
   Header,
   Heading,
-  Pagination
+  Pagination,
 } from "../../components";
 import { ICard } from "../../components/Cards/Interfaces";
-import { useGetFavoritesQuery } from "../../Store/api/Api";
+import { useGetFavoritesQuery, useToggleFavoriteMutation } from "../../Store/api/Api";
 import { profileNavigate } from "../../utils/categoryMap";
+import { Offer } from "../../Store/api/types";
 
 export const FavoritePage = () => {
   const [currentPage, setCurrentPage] = useState(1);
-
   const {
     data,
     isLoading,
     isError,
-    refetch
+    refetch,
   } = useGetFavoritesQuery({ page: currentPage });
 
-  const offers = data?.data ?? [];
+  const [toggleFavorite] = useToggleFavoriteMutation();
+
+  const offers = useMemo(() => data?.data ?? [], [data]);
   const meta = data?.meta;
 
-  const mappedFavorites: ICard[] = offers.map((offer) => ({
-    id: offer.id,
-    title: offer.title || "Название не указано",
-    price: offer.price ?? 0,
-    image: offer.photos?.[0]?.photo || "/images/business_abstract.jpg",
-    address: {
-      address: offer.address?.address || "Адрес не указан",
-      city: {
-        name_ru: offer.address?.city?.name_ru || "",
-      },
-    },
-    area: typeof offer.area === "number" ? offer.area : Number(offer.area ?? 0),
-    offer_type: offer.offer_type,
-    offer_status: offer.offer_status,
-    is_favourite: offer.is_favourite === true,
-  }));
+  const mappedFavorites: ICard[] = useMemo(
+    () =>
+      offers.map((offer: Offer) => ({
+        id: offer.id,
+        title: offer.title || "Название не указано",
+        price: offer.price ?? 0,
+        image: offer.photos?.[0]?.photo || "/images/business_abstract.jpg",
+        address: {
+          address: offer.address?.address || "Адрес не указан",
+          city: {
+            name_ru: offer.address?.city?.name_ru || "",
+          },
+        },
+        area: typeof offer.area === "number" ? offer.area : Number(offer.area ?? 0),
+        offer_type: offer.offer_type,
+        offer_status: offer.offer_status,
+        is_favourite: offer.is_favourite === true,
+      })),
+    [offers]
+  );
+
+  const handleFavoritesChanged = async (id: number) => {
+    try {
+      await toggleFavorite({ id });
+      await refetch();
+    } catch (error) {
+      console.error("Ошибка при обновлении избранного:", error);
+    }
+  };
 
   useEffect(() => {
     refetch();
   }, [refetch]);
+
+  useEffect(() => {
+    if (!isLoading && !isError && offers.length === 0 && currentPage > 1) {
+      setCurrentPage((prev) => prev - 1);
+    }
+  }, [offers, isLoading, isError, currentPage]);
 
   return (
     <div className="w-screen">
@@ -60,7 +81,7 @@ export const FavoritePage = () => {
             <div className="w-10 h-10 border-4 border-[#2EAA7B] border-t-transparent rounded-full animate-spin"></div>
           </div>
         ) : isError ? (
-          <p className="text-red-500 ">Ошибка загрузки</p>
+          <p className="text-red-500">Ошибка загрузки</p>
         ) : mappedFavorites.length === 0 ? (
           <EmptyMessage
             title="Нет избранных"
@@ -68,11 +89,11 @@ export const FavoritePage = () => {
             hideButton
           />
         ) : (
-          <div className="">
+          <div>
             <Cards
               cards={mappedFavorites}
               forceAllFavorite={true}
-              onFavoritesChanged={refetch}
+              onFavoritesChanged={handleFavoritesChanged}
               containerClass="flex flex-col gap-7.5 rounded-xl w-full"
               cardIconClass="w-85 max-xl:w-full h-full"
               cardWrapperClass="max-lg:flex max-lg:flex-col shadow-[1px_1px_4.5px_0px] shadow-[#28B13D4D] transition duration-500 ease-in-out"

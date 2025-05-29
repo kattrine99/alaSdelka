@@ -229,7 +229,7 @@ export const StatisticsPage = () => {
                         dateFormat="dd.MM.yyyy"
                         showPopperArrow={false}
                         placeholderText="Выберите диапазон"
-                        className="bg-white text-center shadow-[0px_1px_3px_rgba(0,0,0,0.40)] p-2 rounded my-6 mx-12.5 font-inter font-medium text-[16px] text-[#728197] leading-5"
+                        className="bg-white w-full text-center shadow-[0px_1px_3px_rgba(0,0,0,0.40)] p-2 rounded my-6 mx-12.5 font-inter font-medium text-[16px] text-[#728197] leading-5"
                     />
                     <Chart
                         options={chartData.options}

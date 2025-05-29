@@ -187,7 +187,7 @@ export const StatisticsPage = () => {
     return (
         <div className="w-screen">
             <Header navLinksData={profileNavigate} showtoBar={false} />
-            <div className="flex flex-col justify-center py-10 px-45">
+            <div className="flex flex-col justify-center py-10 container mx-auto px-3 xl:px-0">
                 <div className="mb-12">
                     <Breadcrumbs
                         links={[
@@ -199,7 +199,7 @@ export const StatisticsPage = () => {
                     <Heading level={2} text="Статистика объявления" className="font-inter font-bold text-xl leading-5 -space-x-[-0.5%]" />
                 </div>
 
-                <div className="flex justify-start gap-6 mb-12">
+                <div className="flex justify-start flex-wrap md:flex-nowrap gap-6 mb-12">
                     <StatsCard
                         label="Всего посещений"
                         value={data?.metrics.view_count.current_week}
@@ -248,7 +248,7 @@ export const StatisticsPage = () => {
 const StatsCard = ({ label, value, diff }: { label: string; value?: number; diff?: number }) => {
     const isPositive = (diff ?? 0) >= 0;
     return (
-        <div className="w-77.5 py-3.5 border font-inter  border-[#2EAA7B] rounded-xl text-center">
+        <div className="w-full py-3.5 border font-inter  border-[#2EAA7B] rounded-xl text-center">
             <Paragraph className="font-bold text-[15px] uppercase mb-1.5">{label}</Paragraph>
             <Paragraph className="text-xl font-bold">{value ?? 0}</Paragraph>
             <Paragraph className={`font-inter text-[15px] leading-[100%] ${isPositive ? "text-[#2EAA7B]" : "text-red-500"}`}>

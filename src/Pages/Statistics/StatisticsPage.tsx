@@ -35,12 +35,6 @@ export const StatisticsPage = () => {
         const from = format(startDate, "yyyy-MM-dd");
         const to = format(endDate, "yyyy-MM-dd");
 
-        console.log("📡 Запрос статистики:", {
-            offer_id: Number(offerId),
-            from,
-            to,
-        });
-
         trigger({
             offer_id: Number(offerId),
             from,

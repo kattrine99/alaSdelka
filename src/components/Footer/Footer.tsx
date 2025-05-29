@@ -2,7 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { FaPhone } from "react-icons/fa";
 import { IoIosMail } from "react-icons/io";
 import { Paragraph, NavLinks, categories, Button } from "../index";
- interface FooterProps {
+interface FooterProps {
     showSmallFooter: boolean;
 }
 export const Footer: React.FC<FooterProps> = ({ showSmallFooter }) => {
@@ -50,30 +50,44 @@ export const Footer: React.FC<FooterProps> = ({ showSmallFooter }) => {
                             </Button>
                         </div>
                     </div></>)}
-            {showSmallFooter && (<div className="flex  h-[119px] justify-between px-[192px] border-t border-[#E9E9E9]">
-                <div className="flex gap-[50px] items-center justify-center ">
-                    <Link to="/main" className="flex ">
-                        <img src="/images/investin_logo.png" alt="Logo" className="h-[56px] w-auto object-contain" />
-                    </Link>
-                    <div className="flex gap-x-[50px]">
-                        <Button
-                            onClick={() => navigate("/user-agreement")}
-                            className="flex items-center gap-1 text-[#232323] font-openSans font-normal text-[16px] leading-[125%] hover:text-[#28B13D] transition"
-                        >
-                            Пользовательское соглашение
-                        </Button>
-                        <Button
-                            onClick={() => navigate("/privacy-policy")}
-                            className="flex items-center gap-1 text-[#232323] font-inter font-normal text-[16px] leading-[125%] hover:text-[#28B13D] transition"
-                        >
-                            Политика конфиденциальности
-                        </Button>
+            {showSmallFooter && (
+                <div className="w-full border-t border-[#E9E9E9] px-4 py-6 sm:px-6 md:px-12 lg:px-[192px] transition-all duration-300">
+                    <div className="flex flex-col lg:flex-row lg:justify-between lg:items-center gap-6 text-center">
+
+                        {/* ЛОГОТИП */}
+                        <div className="flex justify-center lg:justify-start">
+                            <Link to="/main">
+                                <img
+                                    src="/images/investin_logo.png"
+                                    alt="Logo"
+                                    className="h-[48px] w-auto object-contain sm:h-[56px]"
+                                />
+                            </Link>
+                        </div>
+
+                        {/* КНОПКИ */}
+                        <div className="flex justify-center gap-6 flex-wrap text-[14px] sm:text-[16px] text-[#232323]">
+                            <Button
+                                onClick={() => navigate("/user-agreement")}
+                                className="hover:text-[#28B13D] transition"
+                            >
+                                Пользовательское соглашение
+                            </Button>
+                            <Button
+                                onClick={() => navigate("/privacy-policy")}
+                                className="hover:text-[#28B13D] transition"
+                            >
+                                Политика конфиденциальности
+                            </Button>
+                        </div>
+
+                        {/* КОПИРАЙТ */}
+                        <Paragraph className="text-[#232323] text-[14px] sm:text-[16px] text-center lg:text-right">
+                            © INVESTin 2025
+                        </Paragraph>
                     </div>
                 </div>
-                <Paragraph className="flex items-center text-[#232323] font-openSans font-normal text-[16px] leading-[125%]">
-                    @ INVESTin 2025
-                </Paragraph>
-            </div>)}
+            )}
         </div>
     );
 };

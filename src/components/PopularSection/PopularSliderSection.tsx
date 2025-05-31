@@ -16,7 +16,7 @@ export const PopularSliderSection: React.FC<PopularSliderSectionProps> = ({
   cards,
   title = "Популярное",
 }) => {
-  const popularCards = cards.filter((card) => card.offer_status === "is_payed");
+  const popularCards = cards.filter((card) => card.is_paid === true);
 
   if (popularCards.length === 0) return null;
 
@@ -45,9 +45,9 @@ export const PopularSliderSection: React.FC<PopularSliderSectionProps> = ({
           <SwiperSlide key={card.id}>
             <Cards
               cards={[card]}
-              cardWrapperClass="rounded-xl my-[20px]"
-              cardIconClass="rounded-xl overflow-hidden"
-              containerClass="grid grid-cols-1"
+              cardIconClass="rounded-t-xl"
+              cardWrapperClass="rounded-xl w-auto flex-col shadow-lg"
+              WhatchButtonClass="py-3 px-5 w-full bg-[#2EAA7B] text-white font-medium rounded-md flex justify-center hover:bg-[#31B683] transition duration-300 cursor-pointer"
             />
           </SwiperSlide>
         ))}

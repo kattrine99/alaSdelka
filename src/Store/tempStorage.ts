@@ -3,10 +3,12 @@ import { OfferPayload } from "../Store/api/types";
 
 interface TempOfferState {
     offerData?: OfferPayload;
+    offerId?: number | null;
 }
 
 const initialState: TempOfferState = {
     offerData: undefined,
+    offerId: null,
 };
 
 export const tempOfferSlice = createSlice({
@@ -16,10 +18,15 @@ export const tempOfferSlice = createSlice({
         setOfferData(state, action: PayloadAction<OfferPayload>) {
             state.offerData = action.payload;
         },
+        setOfferId(state, action: PayloadAction<number | null>) {
+            state.offerId = action.payload;
+        },
         clearOfferData(state) {
             state.offerData = undefined;
+            state.offerId = null;
         },
     },
 });
-export const { setOfferData, clearOfferData } = tempOfferSlice.actions;
+
+export const { setOfferData, setOfferId, clearOfferData } = tempOfferSlice.actions;
 export default tempOfferSlice.reducer;

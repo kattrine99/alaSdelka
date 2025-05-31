@@ -11,6 +11,8 @@ import ProfileIcon from '../../assets/profile-circle.svg?react';
 import { useSelector } from "react-redux";
 import { RootState } from "../../Store/store";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setCurrencyMode } from "../../Store/Slices/currencySlice";
 
 interface HeaderProps {
     showNavLinks?: boolean;
@@ -28,6 +30,8 @@ export const Header: React.FC<HeaderProps> = ({
     const isAuthenticated = useSelector((state: RootState) => state.auth.isAuthenticated);
     const navigate = useNavigate();
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+    const dispatch = useDispatch();
+    const selectedCurrency = useSelector((state: RootState) => state.currency.mode);
 
     return (
         <div className="font-inter font-medium w-full bg-white shadow">
@@ -91,6 +95,17 @@ export const Header: React.FC<HeaderProps> = ({
                             </select>
                             <MdOutlineArrowDropDown className="absolute right-3 top-1/2 -translate-y-1/2 text-xl text-[#191919] pointer-events-none" />
                         </div>
+                        <div className="relative w-[139px] h-[49px]">
+                            <select
+                                value={selectedCurrency}
+                                onChange={(e) => dispatch(setCurrencyMode(e.target.value as "UZS" | "USD"))}
+                                className="w-full h-full px-4 pr-10 border border-[#C9CCCF] rounded-[10px] outline-none text-[#191919] font-medium appearance-none"
+                            >
+                                <option value="UZS">сум</option>
+                                <option value="USD">$ USD</option>
+                            </select>
+                            <MdOutlineArrowDropDown className="absolute right-3 top-1/2 -translate-y-1/2 text-xl text-[#191919] pointer-events-none" />
+                        </div>
 
                         {showAuthButtons && (
                             isAuthenticated ? (
@@ -144,7 +159,33 @@ export const Header: React.FC<HeaderProps> = ({
                         className="flex flex-col gap-4"
                         linkClassName="text-[#232323] font-inter text-lg hover:text-[#2EAA7B]"
                     />
+                    {/* Язык и Валюта */}
+                    <div className="flex flex-col gap-3">
+                        {/* Языки */}
+                        <div className="relative w-full h-[49px]">
+                            <select
+                                name="Languages"
+                                className="w-full h-full px-4 pr-10 border border-[#C9CCCF] rounded-[10px] outline-none text-[#191919] font-medium appearance-none"
+                            >
+                                <option id="RU">Русский</option>
+                                <option id="UZ">O'zbek</option>
+                            </select>
+                            <MdOutlineArrowDropDown className="absolute right-3 top-1/2 -translate-y-1/2 text-xl text-[#191919] pointer-events-none" />
+                        </div>
 
+                        {/* Валюта */}
+                        <div className="relative w-full h-[49px]">
+                            <select
+                                value={selectedCurrency}
+                                onChange={(e) => dispatch(setCurrencyMode(e.target.value as "UZS" | "USD"))}
+                                className="w-full h-full px-4 pr-10 border border-[#C9CCCF] rounded-[10px] outline-none text-[#191919] font-medium appearance-none"
+                            >
+                                <option value="UZS">сум</option>
+                                <option value="USD">$ USD</option>
+                            </select>
+                            <MdOutlineArrowDropDown className="absolute right-3 top-1/2 -translate-y-1/2 text-xl text-[#191919] pointer-events-none" />
+                        </div>
+                    </div>
                     {isAuthenticated ? (
                         <div className="flex gap-4 justify-center">
                             <Button onClick={() => navigate("/notices")} className={undefined}><NoticeIcon /></Button>

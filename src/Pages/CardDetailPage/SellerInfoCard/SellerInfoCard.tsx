@@ -5,6 +5,8 @@ import { OfferDetail } from "../../../Store/api/types";
 import { Link } from "react-router-dom";
 import { useGetOfferContactViewQuery, useToggleFavoriteMutation } from "../../../Store/api/Api";
 import { skipToken } from "@reduxjs/toolkit/query";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../Store/store";
 
 export const SellerInfoCard = ({ card, offer_type, userId }: { card: OfferDetail['data'], userId: number, offer_type?: string }) => {
     const [isContactModalOpen, setContactModalOpen] = useState(false);
@@ -14,6 +16,11 @@ export const SellerInfoCard = ({ card, offer_type, userId }: { card: OfferDetail
     );
     const [isFavorite, setIsFavorite] = useState(card?.is_favourite ?? false);
     const [toggleFavoriteAPI] = useToggleFavoriteMutation();
+    const { mode: currencyMode, rate } = useSelector((state: RootState) => state.currency);
+    const convertedPrice =
+        currencyMode === "USD"
+            ? Math.round((card.price || 0) / (rate || 1)).toLocaleString() + " $"
+            : (card.price || 0).toLocaleString() + " сум";
 
     const handleToggleFavorite = async () => {
         setIsFavorite((prev) => !prev);
@@ -43,7 +50,7 @@ export const SellerInfoCard = ({ card, offer_type, userId }: { card: OfferDetail
                 )}
             </button>
             <Paragraph className="text-[22px] font-bold text-[#101828] text-left">
-                {card.price?.toLocaleString()} сум
+                {convertedPrice}
             </Paragraph>
             <div className="flex items-center bg-[#E9F7F1] rounded-md p-3 gap-3">
                 <Link

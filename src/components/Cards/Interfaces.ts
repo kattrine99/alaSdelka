@@ -1,5 +1,6 @@
 
 export interface ICard {
+    is_paid: boolean;
     offer_type: "бизнес" | "франшиза" | "стартап" | "инвестиции" | "business" | "franchise" | "startup" | "investments";
     id: number;
     image?: File | string | null;

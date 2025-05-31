@@ -96,6 +96,7 @@ export interface MyOffer {
             price: number;
             area: number;
             offer_status: string;
+            is_paid: boolean;
             paid_offer?: {
                 tariff_id: number;
                 tarrif_name: string;
@@ -605,4 +606,8 @@ export interface VerifyCardResponse {
         is_default: boolean;
 
     }
+}
+export interface TempOfferState {
+    offerData?: OfferPayload;
+    offerId?: number;
 }

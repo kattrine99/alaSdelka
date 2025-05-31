@@ -16,6 +16,8 @@ import GpsIcon from '../../assets/gps.svg?react'
 import CategoryIcon from '../../assets/frame.svg?react'
 import { JSX, useState } from 'react';
 import { SellerInfoCard } from './SellerInfoCard/SellerInfoCard';
+import { useSelector } from "react-redux";
+import { RootState } from "../../Store/store";
 
 export const CardDetailPage = () => {
     const { id, category } = useParams();
@@ -23,7 +25,7 @@ export const CardDetailPage = () => {
     const { data, isLoading, isError } = useGetOfferByIdQuery(offerId);
     const card = data?.data;
     const [showFullDescription, setShowFullDescription] = useState(false);
-
+    const { mode: currencyMode, rate } = useSelector((state: RootState) => state.currency);
     const conveniencesIcons: Record<string, JSX.Element> = {
         "Парковка": <FaParking className="w-10 h-10 text-[#7E7E7E]" />,
         "База клиентов": <FaUsers className="w-10 h-10 text-[#7E7E7E]" />,
@@ -87,7 +89,13 @@ export const CardDetailPage = () => {
         if (mod10 >= 2 && mod10 <= 4 && (mod100 < 10 || mod100 >= 20)) return few;
         return many;
     }
-
+    const formatCurrency = (price: number) => {
+        if (currencyMode === "USD") {
+            const converted = Math.round(price / (rate || 1));
+            return `${converted.toLocaleString()} $`;
+        }
+        return `${price.toLocaleString()} сум`;
+    };
     return (
         <div className="w-screen">
             <Header />
@@ -197,14 +205,14 @@ export const CardDetailPage = () => {
                                             <WalletIcon className='w-10 h-10' />
                                             <div className='flex flex-col'>
                                                 <Paragraph className="font-inter text-[13px] leading-5 text-[#7D7D7D]">Среднемесячная выручка</Paragraph>
-                                                <Paragraph className="font-inter text-xl font-bold text-[#2EAA7B]">{card.average_monthly_revenue} сум</Paragraph>
+                                                <Paragraph className="font-inter text-xl font-bold text-[#2EAA7B]">{formatCurrency(card.average_monthly_revenue)}</Paragraph>
                                             </div>
                                         </div>
                                         <div className="flex gap-2 w-full border border-[#2EAA7B] items-center rounded-[10px] py-3 px-4.25">
                                             <ReceiptIcon className='w-10 h-10' />
                                             <div className='flex flex-col'>
                                                 <Paragraph className="font-inter text-[13px] leading-5 text-[#7D7D7D]">Среднемесячные расходы</Paragraph>
-                                                <Paragraph className="font-inter text-xl font-bold text-[#2EAA7B]">{card.average_monthly_expenses} сум</Paragraph>
+                                                <Paragraph className="font-inter text-xl font-bold text-[#2EAA7B]">{formatCurrency(card.average_monthly_expenses)}</Paragraph>
                                             </div>
                                         </div>
                                         <div className="flex gap-2 w-full border border-[#2EAA7B] items-center rounded-[10px] py-3 px-4.25">
@@ -218,7 +226,7 @@ export const CardDetailPage = () => {
                                             <DollarCircleIcon className='w-10 h-10' />
                                             <div className='flex flex-col'>
                                                 <Paragraph className="font-inter text-[13px] leading-5 text-[#7D7D7D]">Среднемесячная прибыль</Paragraph>
-                                                <Paragraph className="font-inter text-xl font-bold text-[#2EAA7B]">{card.average_monthly_profit} сум</Paragraph>
+                                                <Paragraph className="font-inter text-xl font-bold text-[#2EAA7B]">{formatCurrency(card.average_monthly_profit)}</Paragraph>
                                             </div>
                                         </div>
                                         <div className="flex gap-2 w-full border border-[#2EAA7B] items-center rounded-[10px] py-3 px-4.25">

@@ -16,11 +16,20 @@ import { setLogoutReason } from "./Store/Slices/authSlice";
 import { ProtectedRoute } from "./ProtectedRoute";
 import UserAgreement from "./components/Footer/UserAgreement";
 import PrivacyPolicy from "./components/Footer/PrivacyPolicy";
+import { useGetCurrencyRateQuery } from "./Store/api/Api";
+import { setCurrencyRate } from "./Store/Slices/currencySlice";
 
 const Layout = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const logoutReason = useSelector((state: RootState) => state.auth.logoutReason);
+  const { data } = useGetCurrencyRateQuery();
+
+  useEffect(() => {
+    if (data?.rate) {
+      dispatch(setCurrencyRate(data.rate));
+    }
+  }, [data, dispatch]);
 
   const handleCloseModal = () => {
     dispatch(setLogoutReason(null));

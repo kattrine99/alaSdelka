@@ -8,7 +8,7 @@ import { HiPlus, HiX } from "react-icons/hi";
 import { useGetFiltersDataQuery } from "../../../Store/api/Api"
 import { useDispatch, useSelector } from "react-redux";
 import { setOfferData } from "../../../Store/tempStorage";
-import { useCreateOfferMutation, useGetUserInfoQuery } from "../../../Store/api/Api";
+import { useGetUserInfoQuery } from "../../../Store/api/Api";
 import { RootState } from "../../../Store/store";
 
 interface Props {
@@ -32,7 +32,7 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
     const [projectStageId, setProjectStageId] = useState(
         offerData?.project_stage_id?.toString() || ""
     );
-    const [createOffer] = useCreateOfferMutation();
+
     const [selectedConveniences, setSelectedConveniences] = useState<number[]>(offerData?.conveniences || []);
 
     const [title, setTitle] = useState(offerData?.title || "");
@@ -65,6 +65,14 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
     const [businessOwnership, setBusinessOwnership] = useState(offerData?.business_type || "");
     const currentYear = new Date().getFullYear();
 
+    const selectedCurrency = useSelector((state: RootState) => state.currency.mode);
+    const currencyRate = useSelector((state: RootState) => state.currency.rate);
+    const numericAmount = Number(amount.replace(/\s/g, ""));
+    const priceInUzs = selectedCurrency === "USD" && currencyRate > 0
+        ? Math.round(numericAmount * currencyRate)
+        : numericAmount;
+
+
     const foundationYears = useMemo(() => {
         const years = [];
         for (let y = currentYear; y >= 1930; y--) {
@@ -88,18 +96,18 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
     };
 
     const handleImageChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const target = e.target as HTMLInputElement;
-    const files = target.files;
-    if (!files) return;
+        const target = e.target as HTMLInputElement;
+        const files = target.files;
+        if (!files) return;
 
-    const newPhotos = Array.from(files).map((file, index) => ({
-        photo: file,
-        preview: URL.createObjectURL(file),
-        order: index
-    }));
+        const newPhotos = Array.from(files).map((file, index) => ({
+            photo: file,
+            preview: URL.createObjectURL(file),
+            order: index
+        }));
 
-    setPhotos(prev => [...prev, ...newPhotos]);
-};
+        setPhotos(prev => [...prev, ...newPhotos]);
+    };
 
     const handleImageRemove = (index: number) => {
         setPhotos(prev => prev.filter((_, i) => i !== index));
@@ -131,116 +139,43 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
     };
     const dispatch = useDispatch();
 
-    const handleSubmit = async () => {
-        const formData = new FormData();
-
-        formData.append("title", title);
-        formData.append("description", description);
-        formData.append("listing_type", listingType);
-        formData.append("offer_type", offerType);
-        formData.append("category_id", categoryId);
-        formData.append("price", amount.replace(/\s/g, ""));
-        formData.append("user_name", fullName);
-        formData.append("user_phone", "+998" + phoneNumber);
-        formData.append("area", Area);
-
-        formData.append("address[address]", addressText.trim() || "Не указан");
-        formData.append("address[latitude]", "0");
-        formData.append("address[longitude]", "0");
-        formData.append("address[city_id]", cityId);
-        formData.append("premises_ownership_form", propertyOwnershipType);
-        formData.append("business_type", businessOwnership);
-
-        selectedConveniences.forEach((id, index) => {
-            formData.append(`conveniences[${index}]`, String(id));
-        });
-
-        if (isSell) {
-            formData.append("average_monthly_revenue", String(monthlyIncome || 0));
-            formData.append("average_monthly_profit", String(profit || 0));
-            formData.append("average_monthly_expenses", String(expences || 0));
-            formData.append("payback_period", String(paybackPeriod || 0));
-            formData.append("percentage_for_sale", String(percentageForSale || 0));
-            formData.append("foundation_year", String(FoundationYear || 0));
-
-            files.forEach(file => {
-                formData.append('documents[]', file);
-            });
-
-            photos.forEach((item, idx) => {
-                formData.append(`photos[${idx}][photo]`, item.photo);
-                formData.append(`photos[${idx}][order]`, String(item.order ?? idx));
-            });
-
-
-            links.forEach((link, idx) => {
-                if (link.channel_name.trim() && link.link.trim()) {
-                    formData.append(`communication_channels[${idx}][channel_name]`, link.channel_name.trim());
-                    formData.append(`communication_channels[${idx}][link]`, link.link.trim());
-                }
-            });
-        }
-        if (isStartup) {
-            formData.append("project_stage_id", projectStageId);
-        }
-        try {
-            const response = await createOffer(formData).unwrap();
-
-            const selectedCity = filtersData?.cities.find(c => String(c.id) === cityId);
-            const city_name = selectedCity?.name_ru || "Город не указан";
-
-            dispatch(setOfferData({
-                id: response.data.id,
-                title,
-                description,
-                listing_type: listingType,
-                offer_type: offerType,
-                price: Number(amount.replace(/\s/g, "")) || 0,
-                category_id: categoryId,
-                user_name: fullName,
-                user_phone: "+998" + phoneNumber,
-                area: Number(Area) || 0,
-                address: {
-                    address: addressText.trim() || "Не указан",
-                    latitude: 0,
-                    longitude: 0,
-                    city_id: Number(cityId) || 0,
-                },
-                conveniences: selectedConveniences,
-                city_name,
-                ...(isSell && {
-                    business_type: businessOwnership,
-                    premises_ownership_form: propertyOwnershipType,
-                    average_monthly_revenue: monthlyIncome || 0,
-                    average_monthly_profit: profit || 0,
-                    average_monthly_expenses: expences || 0,
-                    payback_period: paybackPeriod || 0,
-                    percentage_for_sale: percentageForSale || 0,
-                    foundation_year: FoundationYear || 0,
-                    documents: files,
-                    photos: photos.map(p => ({
-                        photo: p.photo,
-                        preview: p.preview,
-                        order: p.order
-                    })),
-                    communication_channels: links
-                        .filter(link => link.channel_name.trim() && link.link.trim())
-                        .map(link => ({
-                            channel_name: link.channel_name.trim(),
-                            link: link.link.trim(),
-                        })),
-                }),
-                ...(isStartup && {
-                    project_stage_id: Number(projectStageId) || 0,
-                }),
-            }));
-
-            onNext();
-
-        } catch (error) {
-            console.error("Ошибка при создании или публикации оффера:", error);
-        }
+    const handleSubmit = () => {
+        dispatch(setOfferData({
+            title,
+            description,
+            listing_type: listingType,
+            offer_type: offerType,
+            price: priceInUzs,
+            category_id: categoryId,
+            area: Number(Area),
+            user_name: fullName,
+            user_phone: "+998" + phoneNumber,
+            address: {
+                address: addressText.trim(),
+                latitude: 0,
+                longitude: 0,
+                city_id: Number(cityId),
+            },
+            conveniences: selectedConveniences,
+            business_type: businessOwnership,
+            premises_ownership_form: propertyOwnershipType,
+            average_monthly_revenue: monthlyIncome || 0,
+            average_monthly_profit: profit || 0,
+            average_monthly_expenses: expences || 0,
+            payback_period: paybackPeriod || 0,
+            percentage_for_sale: percentageForSale || 0,
+            foundation_year: FoundationYear || 0,
+            documents: files,
+            photos,
+            communication_channels: links
+                .filter(link => link.channel_name.trim() && link.link.trim()),
+            ...(isStartup && {
+                project_stage_id: Number(projectStageId) || 0,
+            }),
+        }));
+        onNext();
     };
+
 
     return (
         <div className="flex flex-col gap-6 p-10 bg-[#F8F8F8]">
@@ -507,14 +442,19 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
                 </div>}
             {/*Сумма */}
             <div className="flex flex-col gap-2 w-[393px] relative">
-                <Input className={`bg-[#F0F1F280] w-200 rounded-[14px] outline-none py-3.5 px-4.5 ${!amount ? 'border border-red-500' : ''
-                    }`} LabelText="*Сумма, сум" type="text" placeholder="Введите" isError={false}
+                <Input
+                    className={`bg-[#F0F1F280] w-200 rounded-[14px] outline-none py-3.5 px-4.5 ${!amount ? 'border border-red-500' : ''}`}
+                    LabelText={`*Сумма, ${selectedCurrency === "USD" ? "$" : "сум"}`}
+                    type="text"
+                    placeholder="Введите"
+                    isError={false}
                     value={amount}
-                    onChange={(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+                    onChange={(e) => {
                         const rawValue = e.target.value.replace(/\D/g, "");
                         const formatted = rawValue.replace(/\B(?=(\d{3})+(?!\d))/g, " ");
                         setAmount(formatted);
-                    }} />
+                    }}
+                />
                 {!amount && (
                     <p className="text-red-500 text-sm">Пожалуйста, введите сумму</p>
                 )}

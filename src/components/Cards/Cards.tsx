@@ -31,6 +31,8 @@ export const Cards: React.FC<ICards & { forceAllFavorite?: boolean }> = ({
             ? cards.map((c) => c.id)
             : cards.filter((c) => c.is_favourite).map((c) => c.id)
     );
+    const currencyMode = useSelector((state: RootState) => state.currency.mode);
+    const currencyRate = useSelector((state: RootState) => state.currency.rate);
 
     const handleToggle = async (id: number) => {
         const isAlreadyFavorite = favoriteIds.includes(id);
@@ -63,7 +65,17 @@ export const Cards: React.FC<ICards & { forceAllFavorite?: boolean }> = ({
         setShowModal(false);
         setPendingRemoveId(null);
     };
+    const formatPrice = (price?: number | string) => {
+        const numericPrice = typeof price === "string" ? parseFloat(price) : price;
+        if (typeof numericPrice !== "number" || isNaN(numericPrice)) return "—";
 
+        if (currencyMode === "USD") {
+            if (!currencyRate || isNaN(currencyRate)) return "$ —";
+            return `$ ${Math.round(numericPrice / currencyRate).toLocaleString()}`;
+        }
+
+        return `${numericPrice.toLocaleString()} сум`;
+    };
 
     return (
         <div className={containerClass}>
@@ -73,7 +85,7 @@ export const Cards: React.FC<ICards & { forceAllFavorite?: boolean }> = ({
                 return (
                     <div key={card.id} className={`relative bg-white rounded-lg flex ${cardWrapperClass ?? ""}`}>
                         {/* СТАТУСЫ */}
-                        {card.offer_status === "is_payed" && (
+                        {card.is_paid === true && (
                             <div className="absolute w-[125px] left-5 font-openSans translate-y-[-50%] bg-white border border-[#FD6A0D] text-[#FD6A0D] py-[5px] px-1.5 rounded-md font-semibold z-10 shadow-sm flex">
                                 <FireIcon className="z-10 w-5 h-5 text-[#FD6A0D]" />
                                 <Paragraph>Популярное</Paragraph>
@@ -81,13 +93,13 @@ export const Cards: React.FC<ICards & { forceAllFavorite?: boolean }> = ({
                         )}
                         {card.offer_status === "sold" && (
                             <div className="absolute w-[125px] left-5 font-openSans translate-y-[-50%] bg-white border border-[#301DFF] text-[#301DFF] py-1.25 px-1.5 rounded-md font-semibold z-10 shadow-sm flex">
-                                <FireIcon className="z-10 w-5 h-5 text-[#301DFF]" />
                                 <Paragraph>Продано</Paragraph>
                             </div>
                         )}
 
                         {/* ИЗОБРАЖЕНИЕ И СЕРДЕЧКО */}
                         <div className={`relative ${cardIconClass ?? ""}`}>
+
                             <img
                                 src={
                                     typeof card.image === "string"
@@ -119,7 +131,7 @@ export const Cards: React.FC<ICards & { forceAllFavorite?: boolean }> = ({
                         <div className="px-[18px] py-[21px] flex flex-col flex-1">
                             <div className="flex flex-col">
                                 <Heading
-                                    text={`${card.price} сум`}
+                                    text={formatPrice(card.price)}
                                     level={2}
                                     className={`text-[16px] md:text-[24px] leading-[22px] font-bold font-inter text-[#232323] mb-[8px] ${cardHeadingClass ?? ""}`}
                                 />

@@ -20,16 +20,16 @@ import {
 } from "../../Store/api/Api";
 import UzcardIcon from "../../assets/uzcard.svg?react";
 import HumoIcon from "../../assets/humo.svg?react";
+import { useNavigate, useParams } from "react-router-dom";
 
 export const PromotionPage = () => {
     const [selectedTariff, setSelectedTariff] = useState<number | null>(null);
     const { data: filtersData, isLoading: isTariffsLoading } = useGetFiltersDataQuery();
     const { data: cardsData, isLoading: isCardsLoading } = useGetUserCardsQuery();
     const { data: userInfo } = useGetUserInfoQuery();
-    console.log("cardsData", cardsData);
+    const navigate = useNavigate();
 
     const cards = cardsData?.cards || [];
-
     const [selectedCardId, setSelectedCardId] = useState<number | null>(null);
     const [cardNumber, setCardNumber] = useState("");
     const [expiryMonth, setExpiryMonth] = useState("");
@@ -44,7 +44,6 @@ export const PromotionPage = () => {
     const [addCard] = useAddUserCardMutation();
     const [verifyCard] = useVerifyUserCardMutation();
     const [promoteOffer] = usePromoteOfferMutation();
-
     const [step, setStep] = useState<1 | 2 | 3>(1);
     const [timer, setTimer] = useState<number>(60);
     const [canResend, setCanResend] = useState<boolean>(false);
@@ -55,7 +54,8 @@ export const PromotionPage = () => {
     const code = codeInput.join("");
     const inputsRef = useRef<Array<HTMLInputElement | HTMLTextAreaElement | null>>([]);
     const [paymentSuccess, setPaymentSuccess] = useState<null | boolean>(null);
-
+    const { id } = useParams();
+    const offerId = Number(id);
     const handleAddCardAndPay = async () => {
         if (!cardNumber || !expiryMonth || !expiryYear || !cardType) return;
 
@@ -85,8 +85,8 @@ export const PromotionPage = () => {
             }).unwrap();
 
             await promoteOffer({
-                offer_id: 10,
-                card_id: newCardId!,
+                offer_id: offerId,
+                card_id: selectedCardId!,
                 tariff_id: selectedTariff!,
             }).unwrap();
 
@@ -95,11 +95,13 @@ export const PromotionPage = () => {
             setPaymentSuccess(false);
         }
     };
-
+    if (!offerId || isNaN(offerId)) {
+        return <Paragraph className="text-red-500 px-30 py-7.5">Ошибка: некорректный ID объявления</Paragraph>;
+    }
     const handleExistingCardPayment = async () => {
         try {
             await promoteOffer({
-                offer_id: 10,
+                offer_id: offerId,
                 card_id: selectedCardId!,
                 tariff_id: selectedTariff!,
             }).unwrap();
@@ -154,7 +156,8 @@ export const PromotionPage = () => {
                     <div className="flex max-xl:flex-wrap gap-10 mt-10 justify-between bg-[url('/images/grid.png')] bg-contain bg-no-repeat bg-right duration-300 ease-in-out">
                         <div className="flex max-w-150 flex-col  items-start text-start">
                             <Heading className="font-inter text-4xl max-lg:text-2xl transition duration-300 ease-in-out" text={""} level={2}>Поздравляем,<span className="font-bold">оплата прошла успешно!</span>Вы можете снова перейти к вашим объявлениям</Heading>
-                            <Button className="mt-16 w-full max-w-83 px-5 py-3 bg-[#2EAA7B] shadow-[0px_1px_2px] shadow-[#1018280A] rounded-lg text-white font-inter font-semibold text-2xl max-md:text-xl duration-300 ease-in-out" onClick={() => (window.location.href = "/announcements")}>Вернуться</Button>
+                            <Button className="mt-16 w-full max-w-83 px-5 py-3 bg-[#2EAA7B] shadow-[0px_1px_2px] shadow-[#1018280A] rounded-lg text-white font-inter font-semibold text-2xl max-md:text-xl duration-300 ease-in-out" onClick={() => navigate("/announcements")}
+                            >Вернуться</Button>
                         </div>
                         <div className="max-w-90 max-md:hidden">
                             <img src="/images/done.png" />
@@ -164,7 +167,8 @@ export const PromotionPage = () => {
                     <div className="flex max-xl:flex-wrap gap-10 mt-10 justify-between bg-[url('/images/grid.png')] bg-contain bg-no-repeat bg-right ">
                         <div className="flex max-w-150 flex-col  items-start text-start">
                             <Heading className="font-inter text-4xl max-lg:text-2xl duration-300 ease-in-out" text={""} level={2}><span className="font-bold">Что-то пошло не так.</span>Попробуйте оплатить ещё раз.</Heading>
-                            <Button className="mt-16 w-full max-w-83 px-5 py-3 bg-[#2EAA7B] shadow-[0px_1px_2px] shadow-[#1018280A] rounded-lg text-white font-inter font-semibold text-2xl max-md:text-xl duration-300 ease-in-out" onClick={() => (window.location.href = "/announcements")}>Вернуться</Button>
+                            <Button className="mt-16 w-full max-w-83 px-5 py-3 bg-[#2EAA7B] shadow-[0px_1px_2px] shadow-[#1018280A] rounded-lg text-white font-inter font-semibold text-2xl max-md:text-xl duration-300 ease-in-out" onClick={() => navigate("/announcements")}
+                            >Вернуться</Button>
                         </div>
                         <div className="max-w-90 max-md:hidden duration-300 ease-in-out">
                             <img src="/images/wrong.png" />

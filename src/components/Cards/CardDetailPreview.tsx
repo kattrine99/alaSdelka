@@ -21,6 +21,7 @@ interface CardDetailPreviewProps {
 }
 
 export const CardDetailPreview: React.FC<CardDetailPreviewProps> = ({ onBack }) => {
+    const { mode: currencyMode, rate } = useSelector((state: RootState) => state.currency);
 
     const conveniencesIcons: Record<string, JSX.Element> = {
         "Парковка": <FaParking className="w-[40px] h-[40px] text-[#7E7E7E]" />,
@@ -58,6 +59,15 @@ export const CardDetailPreview: React.FC<CardDetailPreviewProps> = ({ onBack }) 
             });
         };
     }, [data?.photos]);
+    const formatCurrency = (price?: number) => {
+        if (typeof price !== 'number') return "—";
+
+        if (currencyMode === "USD") {
+            const converted = Math.round(price / (rate || 1));
+            return `${converted.toLocaleString()} $`;
+        }
+        return `${price.toLocaleString()} сум`;
+    };
 
 
 
@@ -80,8 +90,7 @@ export const CardDetailPreview: React.FC<CardDetailPreviewProps> = ({ onBack }) 
             {/* Основной блок */}
             <div className="bg-[#F8F8F8] p-10">
                 <Heading level={2} text={data.title || "Название"} className="text-[24px] mb-3.75" />
-                <Paragraph className="font-inter font-bold text-[#363636] text-[16px]">ID {data.id}</Paragraph>
-                <div className='flex gap-1.5'>
+                \                <div className='flex gap-1.5'>
                     <FaLocationDot className="text-[#2EAA7B] w-4 h-4" />
                     <Paragraph className="text-[#667085] text-sm mb-2">
                         {data.city_name ?? ""}, {data.address?.address ?? "Адрес не указан"}
@@ -181,14 +190,14 @@ export const CardDetailPreview: React.FC<CardDetailPreviewProps> = ({ onBack }) 
                                 <WalletIcon className='w-10 h-10' />
                                 <div className='flex flex-col'>
                                     <Paragraph className="font-inter text-[13px] leading-5 text-[#7D7D7D]">Среднемесячная выручка</Paragraph>
-                                    <Paragraph className="font-inter text-xl font-bold text-[#2EAA7B]">{data.average_monthly_revenue} сум</Paragraph>
+                                    <Paragraph className="font-inter text-xl font-bold text-[#2EAA7B]">{formatCurrency(data.average_monthly_revenue)}</Paragraph>
                                 </div>
                             </div>
                             <div className="flex gap-2 w-65.75 border border-[#2EAA7B] items-center rounded-[10px] py-3 px-4.25">
                                 <ReceiptIcon className='w-10 h-10' />
                                 <div className='flex flex-col'>
                                     <Paragraph className="font-inter text-[13px] leading-5 text-[#7D7D7D]">Среднемесячные расходы</Paragraph>
-                                    <Paragraph className="font-inter text-xl font-bold text-[#2EAA7B]">{data.average_monthly_expenses} сум</Paragraph>
+                                    <Paragraph className="font-inter text-xl font-bold text-[#2EAA7B]">{formatCurrency(data.average_monthly_expenses)}</Paragraph>
                                 </div>
                             </div>
                             <div className="flex gap-2 w-65.75 border border-[#2EAA7B] items-center rounded-[10px] py-3 px-4.25">
@@ -202,7 +211,7 @@ export const CardDetailPreview: React.FC<CardDetailPreviewProps> = ({ onBack }) 
                                 <DollarCircleIcon className='w-10 h-10' />
                                 <div className='flex flex-col'>
                                     <Paragraph className="font-inter text-[13px] leading-5 text-[#7D7D7D]">Среднемесячная прибыль</Paragraph>
-                                    <Paragraph className="font-inter text-xl font-bold text-[#2EAA7B]">{data.average_monthly_profit} сум</Paragraph>
+                                    <Paragraph className="font-inter text-xl font-bold text-[#2EAA7B]">{formatCurrency(data.average_monthly_profit)}</Paragraph>
                                 </div>
                             </div>
                             <div className="flex gap-2 w-65.75 border border-[#2EAA7B] items-center rounded-[10px] py-3 px-4.25">

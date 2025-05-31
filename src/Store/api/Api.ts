@@ -98,7 +98,10 @@ export const AuthApi = createApi({
         getMainStatistics: builder.query<HomeStatistics, void>({
             query: () => '/home/statistics',
         }),
-        getMyOffers: builder.query<MyOffer, { page: number; per_page?: number }>({
+        getCurrencyRate: builder.query<{ rate: number }, void>({
+            query: () => "/currency/usd-uzs",
+        }),
+        getMyOffers: builder.query<MyOffer, { page: number; per_page?: number; is_paid?: boolean; }>({
             query: ({ page, per_page = 5 }) =>
                 `/my-offers?page=${page}&per_page=${per_page}`,
         }),
@@ -147,7 +150,7 @@ export const AuthApi = createApi({
             providesTags: ["Favorites"],
         }),
 
-        getNotifications: builder.query<Notifications, { page: number; per_page?: number }>({
+        getNotifications: builder.query<Notifications, { page: number; per_page?: number; }>({
             query: ({ page, per_page = 5 }) => `/notifications?page=${page}&per_page=${per_page}`,
         }),
         getUserOffers: builder.query<GetUserOffersResponse, GetUserOffersParams>({
@@ -254,6 +257,7 @@ export const {
     useGetOfferContactViewQuery,
     useDownloadOfferDocumentsQuery,
     useGetUserCardsQuery,
+    useGetCurrencyRateQuery,
     useAddUserCardMutation,
     useVerifyUserCardMutation,
 

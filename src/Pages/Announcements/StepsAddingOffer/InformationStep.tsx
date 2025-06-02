@@ -65,12 +65,8 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
     const [businessOwnership, setBusinessOwnership] = useState(offerData?.business_type || "");
     const currentYear = new Date().getFullYear();
 
-    const selectedCurrency = useSelector((state: RootState) => state.currency.mode);
-    const currencyRate = useSelector((state: RootState) => state.currency.rate);
     const numericAmount = Number(amount.replace(/\s/g, ""));
-    const priceInUzs = selectedCurrency === "USD" && currencyRate > 0
-        ? Math.round(numericAmount * currencyRate)
-        : numericAmount;
+    const priceInUzs = numericAmount;
 
 
     const foundationYears = useMemo(() => {
@@ -458,7 +454,7 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
             <div className="flex flex-col gap-2 w-[393px] relative">
                 <Input
                     className={`bg-[#F0F1F280] w-200 rounded-[14px] outline-none py-3.5 px-4.5 ${!amount ? 'border border-red-500' : ''}`}
-                    LabelText={`*Сумма, ${selectedCurrency === "USD" ? "$" : "сум"}`}
+                    LabelText="*Сумма, сум"
                     type="text"
                     placeholder="Введите"
                     isError={false}

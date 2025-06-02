@@ -1,7 +1,7 @@
 import { Button, EmptyMessage, Footer, Header, Heading, ModalBase, Pagination, Paragraph } from "../../components"
 import { offerTypeToUrlMap, profileNavigate } from "../../utils/categoryMap"
 import { useArchiveOfferMutation, useGetMyOffersQuery, useSellOfferMutation } from "../../Store/api/Api";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import FireIcon from '../../assets/fire.svg?react';
 import { FaLocationDot } from "react-icons/fa6";
 import GpsIcon from '../../assets/gps.svg?react'
@@ -15,7 +15,8 @@ export const AnnouncemntsPage = () => {
   const navigate = useNavigate();
   const [showModal, setShowModal] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
-  const { data, isLoading, isError } = useGetMyOffersQuery({ page: currentPage, per_page: 5 });
+  const { data, isLoading, isError, refetch } = useGetMyOffersQuery({ page: currentPage, per_page: 5 });
+
   const offers = data?.data || [];
   const meta = data?.meta;
   const [selectedOfferId, setSelectedOfferId] = useState<number | null>(null);
@@ -24,10 +25,18 @@ export const AnnouncemntsPage = () => {
   const [archiveOffer] = useArchiveOfferMutation();
   const currencyMode = useSelector((state: RootState) => state.currency.mode);
   const currencyRate = useSelector((state: RootState) => state.currency.rate);
-
+  const location = useLocation();
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, [currentPage]);
+
+  useEffect(() => {
+    if (location.state?.promotionSuccess) {
+      console.log("🏷️ Промо флаг получен, делаю refetch...");
+      refetch();
+      navigate(location.pathname, { replace: true, state: {} });
+    }
+  }, [location.state]);
 
   const formatPrice = (price?: number | string) => {
     const numericPrice = typeof price === "string" ? parseFloat(price) : price;
@@ -193,9 +202,9 @@ export const AnnouncemntsPage = () => {
                         </div>
                         <div className="flex w-full">
                           <div className="grid grid-cols-1 gap-y-3 gap-x-5 md:grid-cols-2 w-full">
-                            {offer.paid_offer?.is_active == true ? (
+                            {offer.is_paid == true ? (
                               <div className="bg-[#2EAA7B] text-white px-5 h-12 rounded-md flex items-center gap-2 font-semibold">
-                                Идет продвижение (осталось {offer.paid_offer.promotion_days_left} дней)
+                                Идет продвижение (осталось {offer.paid_offer?.promotion_days_left} дней)
                                 <FireIcon className="z-10 w-5 h-5 text-white" />
                               </div>
                             ) : (

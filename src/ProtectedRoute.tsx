@@ -9,12 +9,17 @@ interface ProtectedRouteProps {
 }
 
 export const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
-    const isAuthenticated = useSelector((state: RootState) => state.auth.isAuthenticated);
     const dispatch = useDispatch();
+    const isAuthenticated = useSelector((state: RootState) => state.auth.isAuthenticated);
+    const authReady = useSelector((state: RootState) => state.auth.authReady); // <--- Вот это добавлено
+
+    if (!authReady) {
+        return null;
+    }
 
     if (!isAuthenticated) {
         dispatch(setLogoutReason("unauthorized"));
-        return <Navigate to="/" replace />;
+        return <Navigate to="/login" replace />;
     }
 
     return children;

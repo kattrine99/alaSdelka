@@ -13,6 +13,7 @@ import { RootState } from "../../Store/store";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setCurrencyMode } from "../../Store/Slices/currencySlice";
+import { setLanguage } from "./../../Store/Slices/languageSlice";
 
 interface HeaderProps {
     showNavLinks?: boolean;
@@ -32,6 +33,7 @@ export const Header: React.FC<HeaderProps> = ({
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const dispatch = useDispatch();
     const selectedCurrency = useSelector((state: RootState) => state.currency.mode);
+    const language = useSelector((state: RootState) => state.language.current);
 
     return (
         <div className="font-inter font-medium w-full bg-white shadow">
@@ -78,7 +80,7 @@ export const Header: React.FC<HeaderProps> = ({
                         <nav className="flex gap-8.5 items-center flex-wrap">
                             <NavLinks
                                 links={navLinksData ?? categories}
-                                className="flex flex-wrap gap-x-8.5 font-medium"
+                                className="flex  gap-x-8.5 font-medium"
                                 linkClassName="font-inter leading-[100%] text-[#232323] text-[clamp(14px,1.4vw,18px)] hover:text-[#2EAA7B] transition-all duration-500"
                             />
                         </nav>
@@ -87,11 +89,11 @@ export const Header: React.FC<HeaderProps> = ({
                     <div className="flex items-center gap-4 ml-4 shrink-0">
                         <div className="relative w-[139px] h-[49px]">
                             <select
-                                name="Languages"
-                                className="w-full h-full px-4 pr-10 border border-[#C9CCCF] rounded-[10px] outline-none text-[#191919] font-medium appearance-none"
-                            >
-                                <option id="RU">Русский</option>
-                                <option id="UZ">O'zbek</option>
+                                value={language}
+                                onChange={(e) => dispatch(setLanguage(e.target.value as "ru" | "uz"))}
+                                className="w-full h-full px-4 pr-10 border border-[#C9CCCF] rounded-[10px] outline-none text-[#191919] font-medium appearance-none">
+                                <option value="ru">Русский</option>
+                                <option value="uz">O'zbek</option>
                             </select>
                             <MdOutlineArrowDropDown className="absolute right-3 top-1/2 -translate-y-1/2 text-xl text-[#191919] pointer-events-none" />
                         </div>

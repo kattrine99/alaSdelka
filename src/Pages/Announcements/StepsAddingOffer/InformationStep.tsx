@@ -1,6 +1,6 @@
 import { FiChevronRight } from "react-icons/fi";
 import { Button, Heading, Input, Paragraph } from "../../../components";
-import { useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import FlagIcon from '../../../assets/Flag.svg?react';
 import PdfIcon from '../../../assets/pdf.svg?react';
 import GalleryIcon from '../../../assets/gallery.svg?react';
@@ -166,8 +166,11 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
             percentage_for_sale: percentageForSale || 0,
             foundation_year: FoundationYear || 0,
             documents: files,
-            photos,
-            communication_channels: links
+            photos: photos.map(({ photo, preview, order }) => ({
+                photo: photo,
+                preview,
+                order,
+            })), communication_channels: links
                 .filter(link => link.channel_name.trim() && link.link.trim()),
             ...(isStartup && {
                 project_stage_id: Number(projectStageId) || 0,
@@ -175,6 +178,17 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
         }));
         onNext();
     };
+    useEffect(() => {
+        if (offerData?.photos) {
+            const safePhotos = offerData.photos.map(({ photo, preview, order }) => ({
+                photo,
+                preview: preview ?? URL.createObjectURL(photo),
+                order,
+            }));
+
+            setPhotos(safePhotos);
+        }
+    }, []);
 
 
     return (

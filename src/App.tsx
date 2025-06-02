@@ -3,7 +3,7 @@ import { createBrowserRouter, Outlet, RouterProvider, useNavigate } from "react-
 import './index.css';
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setIsAuthenticated } from "./Store/Slices/authSlice";
+import { setAccessToken, setAuthReady, setIsAuthenticated, setLogoutReason } from "./Store/Slices/authSlice";
 import { getToken } from "./utils/tokenUtils";
 import { ScrollToTop } from "./components/ScrollTop/ScrollTop";
 import { StepsAddingOffer } from "./Pages/Announcements/StepsAddingOffer/StepsAddingOffer";
@@ -12,7 +12,6 @@ import { useAutoLogout } from "./utils/useAutoLogout";
 import { useAuthInit } from "./utils/useAUthInit";
 import { PromotionCards, ModalBase, Button } from "./components";
 import { RootState } from "./Store/store";
-import { setLogoutReason } from "./Store/Slices/authSlice";
 import { ProtectedRoute } from "./ProtectedRoute";
 import UserAgreement from "./components/Footer/UserAgreement";
 import PrivacyPolicy from "./components/Footer/PrivacyPolicy";
@@ -30,6 +29,24 @@ const Layout = () => {
       dispatch(setCurrencyRate(data.rate));
     }
   }, [data, dispatch]);
+  useEffect(() => {
+    const token = localStorage.getItem("accessToken");
+    const expiresAt = localStorage.getItem("expiresAt");
+
+    const isExpired = expiresAt && Date.now() > Number(expiresAt);
+
+    if (token && !isExpired) {
+      dispatch(setIsAuthenticated(true));
+      dispatch(setAccessToken(token));
+    } else if (token && isExpired) {
+      localStorage.removeItem("accessToken");
+      localStorage.removeItem("expiresAt");
+      dispatch(setLogoutReason("expired"));
+      dispatch(setIsAuthenticated(false));
+    }
+
+    dispatch(setAuthReady(true)); 
+  }, [dispatch]);
 
   const handleCloseModal = () => {
     dispatch(setLogoutReason(null));

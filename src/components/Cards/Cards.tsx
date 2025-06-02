@@ -128,7 +128,7 @@ export const Cards: React.FC<ICards & { forceAllFavorite?: boolean }> = ({
                         </div>
 
                         {/* КОНТЕНТ КАРТОЧКИ */}
-                        <div className="px-[18px] py-[21px] flex flex-col flex-1">
+                        <div className="flex flex-col flex-1 justify-between px-[18px] py-[21px] ">
                             <div className="flex flex-col">
                                 <Heading
                                     text={formatPrice(card.price)}

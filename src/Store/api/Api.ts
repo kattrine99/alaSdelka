@@ -95,13 +95,14 @@ export const AuthApi = createApi({
                 method: "GET",
             }),
         }),
+
         getMainStatistics: builder.query<HomeStatistics, void>({
             query: () => '/home/statistics',
         }),
         getCurrencyRate: builder.query<{ rate: number }, void>({
             query: () => "/currency/usd-uzs",
         }),
-        getMyOffers: builder.query<MyOffer, { page: number; per_page?: number; is_paid?: boolean; }>({
+        getMyOffers: builder.query<MyOffer, { page: number; per_page?: number; is_paid?: boolean; is_active?: boolean; }>({
             query: ({ page, per_page = 5 }) =>
                 `/my-offers?page=${page}&per_page=${per_page}`,
         }),

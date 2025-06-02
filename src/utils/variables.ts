@@ -43,3 +43,9 @@ export interface FileMeta {
     size: number;
     type: string;
 }
+export const categoryTitleMap = {
+  business: { ru: "Бизнес", uz: "Biznes" },
+  franchise: { ru: "Франшизы", uz: "Fransiyalar" },
+  startup: { ru: "Стартапы", uz: "Startaplar" },
+  investments: { ru: "Инвестиции", uz: "Investitsiyalar" },
+};

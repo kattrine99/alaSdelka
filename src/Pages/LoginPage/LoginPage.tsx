@@ -8,7 +8,7 @@ import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 import { Description } from '../RegisterPage/Description';
 import { useLoginUserMutation } from '../../Store/api/Api';
 import { useDispatch, useSelector } from 'react-redux';
-import { setIsAuthenticated } from '../../Store/Slices/authSlice';
+import { setAccessToken, setIsAuthenticated } from '../../Store/Slices/authSlice';
 import { useNavigate } from 'react-router-dom';
 import { RootState } from '../../Store/store';
 
@@ -59,20 +59,30 @@ export const LoginPage = () => {
 
     const onSubmit = async (data: LoginFormInputs) => {
         try {
-            const response = await loginUser({ phone: data.userphone, password: data.userpassword }).unwrap();
+            const response = await loginUser({
+                phone: data.userphone,
+                password: data.userpassword,
+            }).unwrap();
+
+            const expiresAt = Date.now() + response.expires_in * 1000;
 
             localStorage.setItem("accessToken", response.access_token);
+            localStorage.setItem("expiresAt", expiresAt.toString());
+
+            dispatch(setAccessToken(response.access_token));
             dispatch(setIsAuthenticated(true));
+
             setModalText("Вы успешно вошли в аккаунт");
-            setModalTitle(" Добро пожаловать!")
+            setModalTitle("Добро пожаловать!");
             setShowModal(true);
+
             setTimeout(() => {
                 setShowModal(false);
                 navigate("/main");
             }, 2000);
         } catch (error) {
             console.error("Ошибка при логине:", error);
-            setModalTitle("Упс!")
+            setModalTitle("Упс!");
             setModalText("Неверный номер или пароль");
             setShowModal(true);
         }

@@ -5,6 +5,8 @@ import uiReducer from "./Slices/uiSlice";
 import tempOfferReducer from "./tempStorage";
 import favoritesSlice from './Slices/favoriteSlice';
 import currencyReducer from './Slices/currencySlice'
+import languageReducer from "./Slices/languageSlice";
+
 export const store = configureStore({
     reducer: {
         auth: authReducer,
@@ -12,6 +14,7 @@ export const store = configureStore({
         ui: uiReducer,
         favorites: favoritesSlice,
         currency: currencyReducer,
+        language: languageReducer,
         [AuthApi.reducerPath]: AuthApi.reducer,
     },
     middleware: (getDefaultMiddleware) =>

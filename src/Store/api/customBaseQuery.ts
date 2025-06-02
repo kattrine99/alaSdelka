@@ -1,7 +1,5 @@
-// customBaseQuery.ts
 import { fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { logout } from "../Slices/authSlice";
-import { setSessionExpired } from "../Slices/uiSlice";
+import { logout, setLogoutReason } from "../Slices/authSlice";
 import qs from "qs";
 
 const rawBaseQuery = fetchBaseQuery({
@@ -17,14 +15,23 @@ const rawBaseQuery = fetchBaseQuery({
 
 const customBaseQuery: typeof rawBaseQuery = async (args, api, extraOptions) => {
     const result = await rawBaseQuery(args, api, extraOptions);
-
+    console.log(result)
     if (result.error?.status === 401) {
-        localStorage.removeItem("accessToken");
-        api.dispatch(logout());
-        api.dispatch(setSessionExpired(true));
+        const expiresAt = localStorage.getItem("expiresAt");
+        const isExpired = expiresAt && Date.now() > Number(expiresAt);
+
+        if (isExpired) {
+            localStorage.removeItem("accessToken");
+            localStorage.removeItem("expiresAt");
+            api.dispatch(logout());
+            api.dispatch(setLogoutReason("expired"));
+        } else {
+            api.dispatch(setLogoutReason("unauthorized"));
+        }
     }
 
     return result;
 };
+
 
 export default customBaseQuery;

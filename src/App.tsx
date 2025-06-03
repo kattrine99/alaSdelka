@@ -36,15 +36,6 @@ const Layout = () => {
     const expiresAt = localStorage.getItem("expiresAt");
     const isExpired = expiresAt && Date.now() > Number(expiresAt);
 
-    const isProtectedPath = location.pathname.startsWith("/profile") ||
-      location.pathname.startsWith("/favorites") ||
-      location.pathname.startsWith("/announcements") ||
-      location.pathname.startsWith("/add-offer") ||
-      location.pathname.startsWith("/promotion") ||
-      location.pathname.startsWith("/notices") ||
-      location.pathname.startsWith("/statistics") ||
-      location.pathname.startsWith("/users");
-
     if (token && !isExpired) {
       dispatch(setIsAuthenticated(true));
       dispatch(setAccessToken(token));
@@ -52,11 +43,9 @@ const Layout = () => {
       localStorage.removeItem("accessToken");
       localStorage.removeItem("expiresAt");
 
-      if (isProtectedPath) {
-        dispatch(setLogoutReason("unauthorized"));
-      }
 
       dispatch(setIsAuthenticated(false));
+      dispatch(setLogoutReason("expired"));
     }
 
     dispatch(setAuthReady(true));

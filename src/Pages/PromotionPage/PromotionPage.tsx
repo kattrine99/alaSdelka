@@ -25,7 +25,7 @@ import { useNavigate, useParams } from "react-router-dom";
 export const PromotionPage = () => {
     const [selectedTariff, setSelectedTariff] = useState<number | null>(null);
     const { data: filtersData, isLoading: isTariffsLoading } = useGetFiltersDataQuery();
-    const { data: cardsData, isLoading: isCardsLoading } = useGetUserCardsQuery();
+    const { data: cardsData, } = useGetUserCardsQuery();
     const { data: userInfo } = useGetUserInfoQuery();
     const navigate = useNavigate();
 
@@ -35,7 +35,6 @@ export const PromotionPage = () => {
     const [expiryMonth, setExpiryMonth] = useState("");
     const [expiryYear, setExpiryYear] = useState("");
     const expireDate = `${expiryMonth}${expiryYear}`;
-    const [cardType, setCardType] = useState<string | null>(null);
 
     const [smsCode, setSmsCode] = useState("");
     const [isVerificationStep] = useState(false);
@@ -48,7 +47,7 @@ export const PromotionPage = () => {
     const [timer, setTimer] = useState<number>(60);
     const [canResend, setCanResend] = useState<boolean>(false);
 
-    const [showResultModal, setShowResultModal] = useState(false);
+    const [, setShowResultModal] = useState(false);
     const [maskedPhone, setMaskedPhone] = useState<string>("");
     const [codeInput, setCodeInput] = useState<string[]>(["", "", "", ""]);
     const code = codeInput.join("");
@@ -57,13 +56,12 @@ export const PromotionPage = () => {
     const { id } = useParams();
     const offerId = Number(id);
     const handleAddCardAndPay = async () => {
-        if (!cardNumber || !expiryMonth || !expiryYear || !cardType) return;
+        if (!cardNumber || !expiryMonth || !expiryYear) return;
 
         try {
             const response = await addCard({
                 card_number: cardNumber.replace(/\s/g, ""),
                 expire: expireDate,
-                card_type: cardType,
                 is_default: true,
             }).unwrap();
 
@@ -129,7 +127,6 @@ export const PromotionPage = () => {
         id: number;
         masked_number: string;
         expire: string;
-        card_type: string;
     }) => {
         setSelectedCardId(card.id);
 
@@ -138,8 +135,6 @@ export const PromotionPage = () => {
         const yy = card.expire.slice(2, 4);
         setExpiryMonth(mm || "");
         setExpiryYear(yy || "");
-
-        setCardType(card.card_type);
     };
 
     return (
@@ -250,20 +245,10 @@ export const PromotionPage = () => {
                                             </div>
                                         </div>
                                         <div className="flex gap-6 mt-4 items-end">
-                                            <button
-                                                onClick={() => setCardType("UzCard")}
-                                                className={`transition-opacity duration-200 ${cardType === "Humo" ? "opacity-30" : "opacity-100"}`}
-                                                type="button"
-                                            >
-                                                <UzcardIcon className="w-24" />
-                                            </button>
-                                            <button
-                                                onClick={() => setCardType("Humo")}
-                                                className={`transition-opacity duration-200 ${cardType === "UzCard" ? "opacity-30" : "opacity-100"}`}
-                                                type="button"
-                                            >
-                                                <HumoIcon className="w-24" />
-                                            </button>
+
+                                            <UzcardIcon className="w-24" />
+                                            <HumoIcon className="w-24" />
+
                                         </div>
                                     </div>
 
@@ -298,7 +283,7 @@ export const PromotionPage = () => {
                                         !selectedTariff ||
                                         (
                                             !selectedCardId &&
-                                            (!cardNumber || !expiryMonth || !expiryYear || !cardType)
+                                            (!cardNumber || !expiryMonth || !expiryYear)
                                         )
                                     } className="border border-[#2EAA7B] w-81.5 text-black font-inter font-semibold text-[25px] px-5 py-3 rounded-md hover:bg-[#2EAA7B] hover:text-white"
                                 >

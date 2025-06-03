@@ -13,7 +13,7 @@ import { RootState } from "../../Store/store";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setCurrencyMode } from "../../Store/Slices/currencySlice";
-import { setLanguage } from "./../../Store/Slices/languageSlice";
+// import { setLanguage } from "./../../Store/Slices/languageSlice";
 
 interface HeaderProps {
     showNavLinks?: boolean;
@@ -33,7 +33,7 @@ export const Header: React.FC<HeaderProps> = ({
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const dispatch = useDispatch();
     const selectedCurrency = useSelector((state: RootState) => state.currency.mode);
-    const language = useSelector((state: RootState) => state.language.current);
+    // const language = useSelector((state: RootState) => state.language.current);
 
     return (
         <div className="font-inter font-medium w-full bg-white shadow">
@@ -87,7 +87,7 @@ export const Header: React.FC<HeaderProps> = ({
                     )}
 
                     <div className="flex items-center gap-4 ml-4 shrink-0">
-                        <div className="relative w-[139px] h-[49px]">
+                        {/* <div className="relative w-[139px] h-[49px]">
                             <select
                                 value={language}
                                 onChange={(e) => dispatch(setLanguage(e.target.value as "ru" | "uz"))}
@@ -96,7 +96,7 @@ export const Header: React.FC<HeaderProps> = ({
                                 <option value="uz">O'zbek</option>
                             </select>
                             <MdOutlineArrowDropDown className="absolute right-3 top-1/2 -translate-y-1/2 text-xl text-[#191919] pointer-events-none" />
-                        </div>
+                        </div> */}
                         <div className="relative w-[139px] h-[49px]">
                             <select
                                 value={selectedCurrency}

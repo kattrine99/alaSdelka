@@ -200,7 +200,7 @@ export const CategoryPage = () => {
                             {type && (
                                 <>
                                     <button onClick={() => setIsMobileFiltersOpen(true)} className="btn btn-primary px-5 py-3 bg-[#2EAA7B] text-white rounded-[6px] hover:bg-[#31B683] transition duration-300 lg:hidden">
-                                        Открыть фильтры
+                                        Фильтры
                                     </button>
                                     {isMobileFiltersOpen && (
                                         <div className="mobile-filters-overlay">

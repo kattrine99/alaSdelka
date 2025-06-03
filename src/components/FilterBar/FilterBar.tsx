@@ -8,6 +8,7 @@ import { HiCurrencyDollar } from "react-icons/hi2";
 import { useGetFiltersDataQuery } from "../../Store/api/Api";
 import FrameIcon from "../../assets/frame.svg?react";
 
+
 interface FilterBarProps {
     filters: FiltersState;
     setFilters: React.Dispatch<React.SetStateAction<FiltersState>>;

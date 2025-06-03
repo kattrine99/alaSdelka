@@ -1,5 +1,5 @@
 import { useNavigate, useLocation } from "react-router-dom";
-import { useGetUserInfoQuery, useUpdateUserInfoMutation, useLogoutMutation } from "../../Store/api/Api";
+import { useGetUserInfoQuery, useUpdateUserInfoMutation, useLogoutMutation, useGetFiltersDataQuery } from "../../Store/api/Api";
 import { Heading, Paragraph, Input, Button, Header, Footer, Breadcrumbs, ModalBase } from "../../components";
 import { useDispatch } from "react-redux";
 import { setIsAuthenticated } from "../../Store/Slices/authSlice";
@@ -9,6 +9,7 @@ import { profileNavigate } from "../../utils/categoryMap"
 import { FiAlertCircle } from "react-icons/fi";
 import FlagIcon from '../../assets/Flag.svg?react'
 
+
 export const ProfilePage = () => {
     const navigate = useNavigate();
     const location = useLocation();
@@ -17,6 +18,8 @@ export const ProfilePage = () => {
     const [editMode, setEditMode] = useState(false);
     const { data, isLoading, error, refetch } = useGetUserInfoQuery();
     const [updateUserInfo] = useUpdateUserInfoMutation();
+    const { data: filtersData, isLoading: isLoadingFilters } = useGetFiltersDataQuery();
+    const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
 
     const [fullNameInput, setFullNameInput] = useState("");
 
@@ -63,7 +66,7 @@ export const ProfilePage = () => {
             setFormData({
                 phone: data.phone ?? "",
                 email: data.email ?? "",
-                city_id: data.city?.id ?? 0,
+                city_id: data.city?.id || 1,
                 photo: undefined,
             });
         }
@@ -102,6 +105,32 @@ export const ProfilePage = () => {
 
     return (
         <div className="w-screen">
+            {showLogoutConfirm && (
+                <ModalBase
+                    title="Подтвердите действие"
+                    message="Вы действительно хотите выйти из профиля?"
+                    ModalClassName="w-100 p-9"
+                    showCloseButton={true}
+                    onClose={() => setShowLogoutConfirm(false)}
+                    HeadingClassName="font-inter font-semibold text-[#101828] mt-3 text-3xl leading-[44px]"
+                    actions={
+                        <div className="flex gap-4 mt-6 ">
+                            <Button
+                                className="text-white bg-[#DE5151] w-full px-6 py-3 rounded-[10px]"
+                                onClick={handleLogout}
+                            >
+                                Выйти
+                            </Button>
+                            <Button
+                                className="border border-[#2EAA7B] w-full text-[#2EAA7B] px-6 py-3 rounded-[10px]"
+                                onClick={() => setShowLogoutConfirm(false)}
+                            >
+                                Отмена
+                            </Button>
+                        </div>
+                    }
+                />
+            )}
             {showSuccess && (
                 <ModalBase
                     title="Успешно!"
@@ -140,7 +169,8 @@ export const ProfilePage = () => {
                                 </div>
                                 <div className="flex flex-col w-full md:flex-row gap-x-4 gap-y-4 items-center">
                                     <Button className="px-5 h-13.5 text-white bg-[#31B683] w-full rounded-[6px] cursor-pointer" onClick={handleEditClick}>Редактировать личные данные</Button>
-                                    <Button className="h-13.5 px-5 text-white bg-[#31B683] hover:bg-[#DE5151] w-full rounded-[6px] cursor-pointer" onClick={handleLogout}>Выйти из профиля</Button>
+                                    <Button className="h-13.5 px-5 text-white bg-[#31B683] hover:bg-[#DE5151] w-full rounded-[6px] cursor-pointer" onClick={() => setShowLogoutConfirm(true)}
+                                    >Выйти из профиля</Button>
                                 </div>
                             </div>
                         </>
@@ -181,7 +211,7 @@ export const ProfilePage = () => {
                                     onChange={e => setFullNameInput(e.target.value)}
                                     disabled={!editMode}
                                     isError={false}
-                                    className="bg-[#F2F2F2] rounded-[10px] h-14 px-4 py-3.5 text-[#121212] text-[16px]"
+                                    className="bg-[#F2F2F2] w-full rounded-[10px] h-14 px-4 py-3.5 text-[#121212] text-[16px]"
                                 />) : (
                                     <div className="w-full">
                                         <div className="bg-[#F2F2F2] rounded-[10px] h-14 px-4 py-3.5 text-[#121212] text-[16px]">
@@ -204,7 +234,7 @@ export const ProfilePage = () => {
                                                 onChange={e => setFormData({ ...formData, phone: e.target.value })}
                                                 disabled={!editMode}
                                                 isError={false}
-                                                className="bg-[#F2F2F2] rounded-[10px] h-14 px-4 py-3.5 text-[#121212] text-[16px]"
+                                                className="bg-[#F2F2F2] w-full rounded-[10px] h-14 px-4 py-3.5 text-[#121212] text-[16px]"
                                             />
                                         </div>
 
@@ -218,16 +248,26 @@ export const ProfilePage = () => {
 
                                 <div className="mb-6">
                                     <label className="text-[#121212] text-sm mb-1 block">Город</label>
-                                    {editMode ? (<Input
-                                        title="Город"
-                                        type="number"
-                                        value={formData.city_id.toString()}
-                                        onChange={e => setFormData({ ...formData, city_id: Number(e.target.value) })}
-                                        disabled={!editMode}
-                                        isError={false}
-                                        className="bg-[#F2F2F2] rounded-[10px] h-14 px-4 py-3.5 text-[#121212] text-[16px]"
-
-                                    />) : (
+                                    {editMode ? (
+                                        <select
+                                            value={formData.city_id || ""}
+                                            onChange={(e) => setFormData((prev) => ({
+                                                ...prev,
+                                                city_id: Number(e.target.value),
+                                            }))}
+                                            className="bg-[#F2F2F2] w-full rounded-[10px] h-14 px-4 py-3.5 text-[#121212] text-[16px] overflow-hidden"
+                                        >
+                                            {isLoadingFilters ? (
+                                                <option>Загрузка...</option>
+                                            ) : (
+                                                filtersData?.cities?.map((city) => (
+                                                    <option key={city.id} value={city.id}>
+                                                        {city.name_ru}
+                                                    </option>
+                                                ))
+                                            )}
+                                        </select>
+                                    ) : (
                                         <div className="bg-[#F2F2F2] rounded-[10px] h-14 px-4 py-3.5 text-[#121212] text-[16px]">
                                             {data.city?.name_ru || " "}
                                         </div>
@@ -244,7 +284,7 @@ export const ProfilePage = () => {
                                             onChange={e => setFormData({ ...formData, email: e.target.value })}
                                             disabled={!editMode}
                                             isError={false}
-                                            className="bg-[#F2F2F2] rounded-[10px] h-14 px-4 py-3.5 text-[#121212] text-[16px]"
+                                            className="bg-[#F2F2F2] w-full rounded-[10px] h-14 px-4 py-3.5 text-[#121212] text-[16px]"
 
                                         />
                                     ) : (

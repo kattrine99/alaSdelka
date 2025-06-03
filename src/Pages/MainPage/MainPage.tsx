@@ -8,10 +8,11 @@ import { useGetMainStatisticsQuery } from "../../Store/api/Api";
 import { FiltersState } from "../../utils/variables";
 import { categoryRouteMap } from "../../utils/categoryMap";
 import { Offer } from "../../Store/api/types";
+import { skipToken } from "@reduxjs/toolkit/query";
 
 export const MainPage = () => {
-    const [selectedCategory, setSelectedCategory] = useState<"Бизнес" | "Франшиза" | "Стартапы" | "Инвестиции">("Бизнес")
-        ;
+    const [selectedCategory, setSelectedCategory] = useState<"Бизнес" | "Франшиза" | "Стартапы" | "Инвестиции">("Бизнес");
+
     const navigate = useNavigate();
     const [listingTypes, setListingTypes] = useState<Record<"Бизнес" | "Франшиза" | "Стартапы" | "Инвестиции", "buy" | "sell">>({
         Бизнес: "buy",
@@ -87,11 +88,9 @@ export const MainPage = () => {
     const startupType = listingTypes["Стартапы"];
     const [searchInput, setSearchInput] = useState("");
 
-
     const {
         data: businessOffers,
         isLoading: isLoadingBusiness,
-        isError: isErrorBusiness
     } = useGetHomeOffersQuery(listingTypes["Бизнес"]);
     const {
         data: franchiseOffers,
@@ -103,11 +102,14 @@ export const MainPage = () => {
         isLoading: isLoadingStartup,
         isError: isErrorStartup
     } = useGetHomeOffersQuery(listingTypes["Стартапы"]);
+    const investmentType = listingTypes["Инвестиции"];
     const {
         data: investmentOffers,
         isLoading: isLoadingInvestment,
-        isError: isErrorInvestment
-    } = useGetHomeOffersQuery("");
+        isError: isErrorInvestment,
+    } = useGetHomeOffersQuery(
+        investmentType === "buy" || investmentType === "sell" ? investmentType : skipToken
+    );
 
     const handleApplyFilters = () => {
         const ruToEnOfferTypeMap = {
@@ -243,35 +245,32 @@ export const MainPage = () => {
                             <div
                                 className="w-10 h-10 border-4 border-[#2EAA7B] border-t-transparent rounded-full animate-spin"></div>
                         </div>
-                    ) : isErrorBusiness ? (
-                        <p className=" py-7.5 text-red-500">Ошибка загрузки данных</p>
-                    ) :
-                        ((() => {
-                            const businessCards = Object.values(businessOffers?.business || {});
+                    ) : ((() => {
+                        const businessCards = Object.values(businessOffers?.business || {});
 
-                            if (businessCards.length === 0) {
-                                return (
-                                    <EmptyMessage
-                                        title="Здесь еще нет объявлений"
-                                        subtitle="Ваше может стать первым!"
-                                        hideButton
-                                    />
-                                );
-                            }
-
+                        if (businessCards.length === 0) {
                             return (
-                                <CardSection
-                                    key={businessType}
-                                    title="Бизнес"
-                                    cards={businessCards}
-                                    initialFavorites={favoriteIds}
-                                    onFavoritesChanged={handleFavoritesChanged}
-                                    maxVisible={8}
-                                    Class="grid grid-cols-1 2xl:grid-cols-4 xl:grid-cols-3 lg:grid-cols-2 gap-y-10 gap-x-2 transition duration-300 ease-in-out"
-                                    ClassName="container mx-auto py-7.5"
+                                <EmptyMessage
+                                    title="Здесь еще нет объявлений"
+                                    subtitle="Ваше может стать первым!"
+                                    hideButton
                                 />
                             );
-                        })())
+                        }
+
+                        return (
+                            <CardSection
+                                key={businessType}
+                                title="Бизнес"
+                                cards={businessCards}
+                                initialFavorites={favoriteIds}
+                                onFavoritesChanged={handleFavoritesChanged}
+                                maxVisible={8}
+                                Class="grid grid-cols-1 2xl:grid-cols-4 xl:grid-cols-3 lg:grid-cols-2 gap-y-10 gap-x-2 transition duration-300 ease-in-out"
+                                ClassName="container mx-auto py-7.5"
+                            />
+                        );
+                    })())
                 }
             </section >
             <section className="mt-12.5 mb-8.75 px-3 xl:px-20 max-xl:px-10 md:px-0 transition duration-500 ease-in-out container mx-auto">
@@ -418,13 +417,26 @@ export const MainPage = () => {
                     </div>
                 ) : isErrorInvestment ? (
                     <p className="px-48 py-7.5 text-red-500">Ошибка загрузки данных</p>
-                ) :
-                    (<CardSection
+                ) : ((() => {
+                    const investmentsCards = Object.values(investmentOffers?.investments || {});
+
+                    if (investmentsCards.length === 0) {
+                        return (
+                            <EmptyMessage
+                                title="Здесь еще нет объявлений"
+                                subtitle="Ваше может стать первым!"
+                                hideButton
+                            />
+                        );
+                    }
+
+                    return (<CardSection
                         title="Инвестиции"
                         cards={investmentOffers?.investments || []} maxVisible={4}
                         initialFavorites={favoriteIds}
                         Class="grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-4 xl:grid-cols-3 lg:grid-cols-2 gap-y-10 gap-x-8 transition duration-300 ease-in-out" ClassName={"container mx-auto py-7.5"} />
-                    )}
+                    );
+                })())}
 
             </section>
             {/* Города */}
@@ -447,9 +459,9 @@ export const MainPage = () => {
                                     setSelectedCategory(label as typeof selectedCategory);
                                 }
                             }}
-                            className="flex flex-wrap md:flex-nowrap gap-4 text-[24px] text-start font-openSans mb-[25px] font-bold"
+                            className="flex flex-wrap md:flex-nowrap gap-4 text-[24px] text-start font-openSans mb-6.25 font-bold"
                             activeClassName="w-full px-6 py-4 bg-[#2EAA7B] text-white rounded-xl"
-                            inactiveClassName="w-full px-2 py-1 bg-white font-openSans text-[#232323] border border-[#2EAA7B] rounded-xl hover:bg-[#31B683]/10"
+                            inactiveClassName="w-full px-6 py-4 bg-white font-openSans text-[#232323] border border-[#2EAA7B] rounded-xl hover:bg-[#31B683]/10"
                         />
 
                         {/* ГОРОДА */}
@@ -457,10 +469,10 @@ export const MainPage = () => {
                             {cityStats &&
                                 cityStats.map((city, idx) => (
                                     <div key={idx}
-                                        className="w-full flex flex-col bg-[#1A1A1A] text-white py-4 px-6 rounded-[12px] gap-0.5">
+                                        className="w-full flex flex-col transition duration-300 ease-in-out bg-[#1A1A1A] text-white py-4 px-6 rounded-[12px] gap-0.5">
                                         <span
-                                            className="font-openSans font-bold text-2xl leading-[150%]">{city.name_ru}</span>
-                                        <span className="font-Urbanist font-bold text-[40px] leading-[150%]">
+                                            className="font-openSans font-bold text-2xl max-sm:text-[14px] leading-[150%]">{city.name_ru}</span>
+                                        <span className="font-Urbanist font-bold text-[40px] max-sm:text-[28px] leading-[150%]">
                                             {city.offers_count.toLocaleString("ru-RU")}
                                         </span>
                                     </div>
@@ -495,11 +507,11 @@ export const MainPage = () => {
                     <div className="flex justify-start gap-5 mt-[58px]">
                         <div className="grid grid-cols-2 gap-[20px] md:max-w-2xl w-full">
                             <div className="bg-white w-full font-inter text-black flex flex-col items-center rounded-[30px] py-6 shadow-[0px_4px_21.2px_rgba(46,170,123,0.2)]">
-                                <Paragraph className="text-[40px] max-sm:text-3xl text-center font-bold leading-none transition duration-300">
+                                <Paragraph className="font-inter text-[40px] max-sm:text-3xl text-center font-bold leading-none transition duration-300">
                                     {mainStats?.offers_count?.toLocaleString("ru-RU")}<span
                                         className="text-[#2EAA7B]">+</span>
                                 </Paragraph>
-                                <Paragraph className="text-2xl mt-2">объявлений</Paragraph>
+                                <Paragraph className="font-inter text-2xl max-sm:text-[16px] leading-[100%] mt-2">объявлений</Paragraph>
                             </div>
 
                             <div className="bg-white w-full font-inter text-black flex flex-col items-center rounded-[30px] py-6 shadow-[0px_4px_21.2px_rgba(46,170,123,0.2)]">
@@ -507,23 +519,23 @@ export const MainPage = () => {
                                     {mainStats?.deals_count?.toLocaleString("ru-RU")}<span
                                         className="text-[#2EAA7B]">+</span>
                                 </Paragraph>
-                                <Paragraph className="text-2xl mt-2">сделок</Paragraph>
+                                <Paragraph className="font-inter text-2xl max-sm:text-[16px] leading-[100%] mt-2">сделок</Paragraph>
                             </div>
                             <div
                                 className="bg-white font-inter text-black flex flex-col items-center rounded-[30px] py-6 shadow-[0px_4px_21.2px_rgba(46,170,123,0.2)]">
                                 <Paragraph className="text-[40px] max-sm:text-3xl text-center font-bold leading-none transition duration-300">
                                     {mainStats?.partners_count?.toLocaleString("ru-RU")}
                                 </Paragraph>
-                                <Paragraph className="text-2xl mt-2">партнёров</Paragraph>
+                                <Paragraph className="font-inter text-2xl max-sm:text-[16px] leading-[100%] mt-2">партнёров</Paragraph>
                             </div>
                             <div
                                 className="bg-white font-inter text-black flex flex-col items-center text-center rounded-[30px] py-6 shadow-[0px_4px_21.2px_rgba(46,170,123,0.2)]">
                                 <Paragraph className="text-[40px] max-sm:text-3xl text-center font-bold leading-none transition duration-300">
                                     {mainStats?.total_sold_amount
                                         ? `${(+mainStats.total_sold_amount / 1000000).toFixed(0)} млн `
-                                        : "—"}<span className="text-[#2EAA7B]">$</span>
+                                        : "0"}<span className="text-[#2EAA7B]"> $</span>
                                 </Paragraph>
-                                <Paragraph className=" text-2xl mt-2">продано бизнесов</Paragraph>
+                                <Paragraph className="font-inter text-2xl max-sm:text-[16px] leading-[100%] mt-2">продано бизнесов</Paragraph>
                             </div>
                         </div>
                     </div>

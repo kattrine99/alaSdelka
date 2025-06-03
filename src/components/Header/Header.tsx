@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FaPhone, FaWhatsapp } from "react-icons/fa";
 import { IoIosMail } from "react-icons/io";
 import { FaTelegram } from "react-icons/fa6";
@@ -10,7 +10,7 @@ import FavIcon from '../../assets/heart-circle.svg?react';
 import ProfileIcon from '../../assets/profile-circle.svg?react';
 import { useSelector } from "react-redux";
 import { RootState } from "../../Store/store";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setCurrencyMode } from "../../Store/Slices/currencySlice";
 // import { setLanguage } from "./../../Store/Slices/languageSlice";
@@ -34,6 +34,44 @@ export const Header: React.FC<HeaderProps> = ({
     const dispatch = useDispatch();
     const selectedCurrency = useSelector((state: RootState) => state.currency.mode);
     // const language = useSelector((state: RootState) => state.language.current);
+    const location = useLocation();
+
+    useEffect(() => {
+        setIsMobileMenuOpen(false);
+    }, [location.pathname]);
+    useEffect(() => {
+        let scrollY = 0;
+
+        if (isMobileMenuOpen) {
+            scrollY = window.scrollY;
+            document.body.style.position = 'fixed';
+            document.body.style.top = `-${scrollY}px`;
+            document.body.style.left = '0';
+            document.body.style.right = '0';
+            document.body.style.overflow = 'hidden';
+            document.body.style.width = '100%';
+        } else {
+            const scrollTop = document.body.style.top;
+            document.body.style.position = '';
+            document.body.style.top = '';
+            document.body.style.left = '';
+            document.body.style.right = '';
+            document.body.style.overflow = '';
+            document.body.style.width = '';
+            if (scrollTop) {
+                window.scrollTo(0, -parseInt(scrollTop));
+            }
+        }
+
+        return () => {
+            document.body.style.position = '';
+            document.body.style.top = '';
+            document.body.style.left = '';
+            document.body.style.right = '';
+            document.body.style.overflow = '';
+            document.body.style.width = '';
+        };
+    }, [isMobileMenuOpen]);
 
     return (
         <div className="font-inter font-medium w-full bg-white shadow">
@@ -140,99 +178,101 @@ export const Header: React.FC<HeaderProps> = ({
 
 
             {/* Мобильный header */}
-            <div className="flex lg:hidden justify-between items-center px-4 py-4 border-b border-[#E9E9E9]">
-                <Applink to="/main" className="flex items-center">
-                    <img src="/images/investin_logo.png" alt="Logo" className="h-10 object-contain" />
-                </Applink>
-                <div className="flex items-center gap-3">
-                    <button
-                        className="w-10 h-10 flex items-center justify-center bg-[#D7F4EC] rounded-xl"
-                        onClick={() => setIsMobileMenuOpen(prev => !prev)}
-                    >
-                        <RxHamburgerMenu className="text-[#2EAA7B] w-6 h-6 outline-none" />
-                    </button>
-                </div>
-            </div>
-
-            {isMobileMenuOpen && (
-                <div className="md:hidden fixed top-[72px] left-0 w-full bg-white z-50 px-6 py-4 shadow-md flex flex-col gap-6">
-                    <NavLinks
-                        links={navLinksData ?? categories}
-                        className="flex flex-col gap-4"
-                        linkClassName="text-[#232323] font-inter text-lg hover:text-[#2EAA7B]"
-                    />
-                    {/* Язык и Валюта */}
-                    <div className="flex flex-col gap-3">
-                        {/* Языки */}
-                        <div className="relative w-full h-[49px]">
-                            <select
-                                name="Languages"
-                                className="w-full h-full px-4 pr-10 border border-[#C9CCCF] rounded-[10px] outline-none text-[#191919] font-medium appearance-none"
-                            >
-                                <option id="RU">Русский</option>
-                                <option id="UZ">O'zbek</option>
-                            </select>
-                            <MdOutlineArrowDropDown className="absolute right-3 top-1/2 -translate-y-1/2 text-xl text-[#191919] pointer-events-none" />
-                        </div>
-
-                        {/* Валюта */}
-                        <div className="relative w-full h-[49px]">
-                            <select
-                                value={selectedCurrency}
-                                onChange={(e) => dispatch(setCurrencyMode(e.target.value as "UZS" | "USD"))}
-                                className="w-full h-full px-4 pr-10 border border-[#C9CCCF] rounded-[10px] outline-none text-[#191919] font-medium appearance-none"
-                            >
-                                <option value="UZS">сум</option>
-                                <option value="USD">$ USD</option>
-                            </select>
-                            <MdOutlineArrowDropDown className="absolute right-3 top-1/2 -translate-y-1/2 text-xl text-[#191919] pointer-events-none" />
-                        </div>
+            <div className=" lg:hidden sticky top-0 z-50">
+                <div className="flex justify-between items-center px-4 py-4 border-b border-[#E9E9E9]  bg-white">
+                    <Applink to="/main" className="flex items-center">
+                        <img src="/images/investin_logo.png" alt="Logo" className="h-10 object-contain" />
+                    </Applink>
+                    <div className="flex items-center gap-3">
+                        <button
+                            className="w-10 h-10 flex items-center justify-center bg-[#D7F4EC] rounded-xl"
+                            onClick={() => setIsMobileMenuOpen(prev => !prev)}
+                        >
+                            <RxHamburgerMenu className="text-[#2EAA7B] w-6 h-6 outline-none" />
+                        </button>
                     </div>
-                    {isAuthenticated ? (
-                        <div className="flex gap-4 justify-center">
-                            <Button onClick={() => navigate("/notices")} className={undefined}><NoticeIcon /></Button>
-                            <Button onClick={() => navigate("/favorites")} className={undefined}><FavIcon /></Button>
-                            <Applink to="/profile"><ProfileIcon /></Applink>
-                        </div>
-                    ) : (
+                </div>
+
+                {isMobileMenuOpen && (
+                    <div className="md:hidden fixed top-[64px] left-0 w-full bg-white z-40 px-6 py-4 shadow-md flex flex-col gap-6 overflow-y-auto max-h-[calc(100vh-64px)]">
+                        <NavLinks
+                            links={navLinksData ?? categories}
+                            className="flex flex-col gap-4"
+                            linkClassName="text-[#232323] font-inter text-lg hover:text-[#2EAA7B]"
+                        />
+                        {/* Язык и Валюта */}
                         <div className="flex flex-col gap-3">
-                            <Applink
-                                to="/login"
-                                className="border border-[#31B683] rounded-[10px] px-5 py-3 text-center hover:bg-[#2EAA7B] hover:text-white text-sm font-medium transition duration-600"
-                            >
-                                Войти
+                            {/* Языки */}
+                            <div className="relative w-full h-[49px]">
+                                <select
+                                    name="Languages"
+                                    className="w-full h-full px-4 pr-10 border border-[#C9CCCF] rounded-[10px] outline-none text-[#191919] font-medium appearance-none"
+                                >
+                                    <option id="RU">Русский</option>
+                                    <option id="UZ">O'zbek</option>
+                                </select>
+                                <MdOutlineArrowDropDown className="absolute right-3 top-1/2 -translate-y-1/2 text-xl text-[#191919] pointer-events-none" />
+                            </div>
+
+                            {/* Валюта */}
+                            <div className="relative w-full h-[49px]">
+                                <select
+                                    value={selectedCurrency}
+                                    onChange={(e) => dispatch(setCurrencyMode(e.target.value as "UZS" | "USD"))}
+                                    className="w-full h-full px-4 pr-10 border border-[#C9CCCF] rounded-[10px] outline-none text-[#191919] font-medium appearance-none"
+                                >
+                                    <option value="UZS">сум</option>
+                                    <option value="USD">$ USD</option>
+                                </select>
+                                <MdOutlineArrowDropDown className="absolute right-3 top-1/2 -translate-y-1/2 text-xl text-[#191919] pointer-events-none" />
+                            </div>
+                        </div>
+                        {isAuthenticated ? (
+                            <div className="flex gap-4 justify-center">
+                                <Button onClick={() => navigate("/notices")} className={undefined}><NoticeIcon /></Button>
+                                <Button onClick={() => navigate("/favorites")} className={undefined}><FavIcon /></Button>
+                                <Applink to="/profile"><ProfileIcon /></Applink>
+                            </div>
+                        ) : (
+                            <div className="flex flex-col gap-3">
+                                <Applink
+                                    to="/login"
+                                    className="border border-[#31B683] rounded-[10px] px-5 py-3 text-center hover:bg-[#2EAA7B] hover:text-white text-sm font-medium transition duration-600"
+                                >
+                                    Войти
+                                </Applink>
+                                <Applink
+                                    to="/register"
+                                    className="bg-[#2EAA7B] text-white px-5 py-3 rounded-[10px] text-center hover:bg-[#31B683] text-sm font-medium transition duration-600"
+                                >
+                                    Зарегистрироваться
+                                </Applink>
+                            </div>
+                        )}
+                        {/* Email & Phone */}
+                        <div className="flex flex-wrap items-center justify-center md:justify-start gap-4">
+                            <Paragraph className="flex items-center gap-2 text-[#232323] font-openSans text-sm md:text-base">
+                                <IoIosMail className="text-[#2EAA7B]" />
+                                info@name-com.uz
+                            </Paragraph>
+                            <Paragraph className="flex items-center gap-2 text-[#232323] font-inter text-sm md:text-base">
+                                <FaPhone className="text-[#2EAA7B]" />
+                                +998 71 789 78 78
+                            </Paragraph>
+                        </div>
+
+                        {/* Icons */}
+                        <div className="flex justify-center gap-3">
+                            <Applink to="#">
+                                <FaTelegram className="w-6 h-6 md:w-8 md:h-8 text-[#229ED9]" />
                             </Applink>
-                            <Applink
-                                to="/register"
-                                className="bg-[#2EAA7B] text-white px-5 py-3 rounded-[10px] text-center hover:bg-[#31B683] text-sm font-medium transition duration-600"
-                            >
-                                Зарегистрироваться
+                            <Applink to="#" className="w-6 h-6 rounded-full bg-[#0DC143] flex items-center justify-center">
+                                <FaWhatsapp className="w-[18px] h-[18px] text-white" />
                             </Applink>
                         </div>
-                    )}
-                    {/* Email & Phone */}
-                    <div className="flex flex-wrap items-center justify-center md:justify-start gap-4">
-                        <Paragraph className="flex items-center gap-2 text-[#232323] font-openSans text-sm md:text-base">
-                            <IoIosMail className="text-[#2EAA7B]" />
-                            info@name-com.uz
-                        </Paragraph>
-                        <Paragraph className="flex items-center gap-2 text-[#232323] font-inter text-sm md:text-base">
-                            <FaPhone className="text-[#2EAA7B]" />
-                            +998 71 789 78 78
-                        </Paragraph>
                     </div>
-
-                    {/* Icons */}
-                    <div className="flex justify-center gap-3">
-                        <Applink to="#">
-                            <FaTelegram className="w-6 h-6 md:w-8 md:h-8 text-[#229ED9]" />
-                        </Applink>
-                        <Applink to="#" className="w-6 h-6 rounded-full bg-[#0DC143] flex items-center justify-center">
-                            <FaWhatsapp className="w-[18px] h-[18px] text-white" />
-                        </Applink>
-                    </div>
-                </div>
-            )}
+                )}
+            </div>
         </div>
     );
 };

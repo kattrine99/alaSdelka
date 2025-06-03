@@ -140,7 +140,7 @@ export const PromotionPage = () => {
     return (
         <div className="w-screen">
             <Header navLinksData={profileNavigate} />
-            <div className="py-7.5 px-30">
+            <div className="container mx-auto py-7.5 px-4 sm:px-6 lg:px-8">
                 <Breadcrumbs
                     links={[
                         { label: "Мои объявления", href: "/announcements" },
@@ -186,14 +186,16 @@ export const PromotionPage = () => {
                         <Button className="mt-4" onClick={handleVerifyAndPay}>Подтвердить и оплатить</Button>
                     </div>
                 ) : (
-                    <div className="flex gap-56.75 mt-8">
-                        <div>
+                    <div className="flex max-xl:flex-col">
+                        <div className="w-full mt-8 px-4 max-sm:px-0">
                             {/* Тарифы */}
-                            <div className="flex gap-8.25">
-                                <Paragraph className="border py-3 px-5 w-12.5 h-12.5 items-center border-[#2EAA7B] rounded-full">1</Paragraph>
-                                <Heading className="text-xl font-inter mb-4 w-100" text="Выберите количество дней для продвижения вашего объявления" level={3} />
+                            <div className="flex gap-8.25 items-center mb-5">
+                                <Paragraph className="border py-3 px-5 w-12.5 h-12.5 flex items-center justify-center text-base border-[#2EAA7B] rounded-full">
+                                    1
+                                </Paragraph>
+                                <Heading className="text-xl font-inter w-full" text="Выберите количество дней для продвижения вашего объявления" level={3} />
                             </div>
-                            <div className="flex gap-6.75 mt-5.5">
+                            <div className="flex flex-wrap gap-6.75 mt-5.5 w-full max-md:flex-col">
                                 {isTariffsLoading ? <Paragraph>Загрузка тарифов...</Paragraph> : filtersData?.tariffs?.map((tariff) => (
                                     <Button key={tariff.id} className={`flex flex-col border items-start border-[#2EAA7B] px-6 py-4 rounded-lg ${selectedTariff === tariff.id ? "bg-[#2EAA7B] text-white" : "bg-white"}`} onClick={() => setSelectedTariff(tariff.id)}>
                                         <Paragraph className="font-inter font-semibold text-xl">{tariff.duration} дней</Paragraph>
@@ -204,12 +206,12 @@ export const PromotionPage = () => {
 
                             {/* Карты пользователя */}
                             {cards.length > 0 && (
-                                <div className="mt-10">
-                                    <div className="flex gap-8.25 items-center mb-7">
+                                <div className="mt-10 px-4 sm:px-0 ">
+                                    <div className="flex flex-wrap max-md:flex-col gap-4">
                                         <Paragraph className="border py-3 px-5 w-12.5 h-12.5 items-center border-[#2EAA7B] rounded-full">2</Paragraph>
                                         <Heading level={3} text="Выберите карту для оплаты" className="mb-4" />
                                     </div>
-                                    <div className="flex gap-6.75">
+                                    <div className="flex flex-wrap max-md:flex-col gap-6.75">
                                         {cards.map((card) => (
                                             <Button key={card.id} onClick={() => handleCardSelect(card)} className={`flex flex-col border items-start border-[#2EAA7B] px-6 py-4 rounded-lg ${selectedCardId === card.id ? "bg-[#2EAA7B] text-white" : "bg-white"}`}>
                                                 <Paragraph className="font-inter font-semibold text-xl">{card.masked_number}</Paragraph>
@@ -221,33 +223,33 @@ export const PromotionPage = () => {
                             )}
 
                             {/* Новая карта */}
-                            <div className="mt-10">
+                            <div className="mt-10 px-4 sm:px-0">
                                 <Heading level={3} text="Или введите данные новой карты" className="mb-4" />
-                                <div className="bg-[#F8F8F8] rounded-[40px] py-10 px-12.5 shadow-[1px_1px_10px_0px] shadow-[#00000040]">
-                                    <Input placeholder="0000 0000 0000 0000" LabelText="Номер карты" LabelClassName="font-inter text-[25px] mb-[19px]" value={cardNumber} onChange={(e) => {
+                                <div className="bg-[#F8F8F8] w-full rounded-[20px] md:rounded-[40px] py-8 px-6 md:px-12.5 shadow-md">
+                                    <Input placeholder="0000 0000 0000 0000" LabelText="Номер карты" LabelClassName="font-inter text-[25px] max-sm:text-[18px] mb-[19px]" value={cardNumber} onChange={(e) => {
                                         const rawValue = e.target.value.replace(/\D/g, "").slice(0, 16);
                                         const formatted = rawValue.replace(/(.{4})/g, "$1 ").trim();
                                         setCardNumber(formatted);
-                                    }} isError={false} className="max-w-102 mb-12 flex flex-col outline-none py-3.5 px-4.5 bg-[#F0F1F280] border border-[#DEE0E333] rounded-2xl text-3xl text-[#686A70]" />
-                                    <div className="flex justify-between" >
-                                        <div className="flex flex-col gap-4">
-                                            <Paragraph className="font-inter text-2xl mb-4.5">Срок действия</Paragraph>
-                                            <div className="flex gap-2">
+                                    }} isError={false} className="w-full mb-12 flex flex-col outline-none py-3.5 px-4.5 bg-[#F0F1F280] border border-[#DEE0E333] rounded-2xl text-3xl max-sm:text-[16px] text-[#686A70]" />
+                                    <div className="flex justify-between flex-col md:flex-row gap-6 md:gap-0">
+                                        <div className="flex flex-col w-full gap-4">
+                                            <Paragraph className="font-inter text-2xl max-sm:text-[18px] mb-4.5">Срок действия</Paragraph>
+                                            <div className="flex gap-2 w-full">
                                                 <Input placeholder="MM" value={expiryMonth} onChange={(e) => {
                                                     const value = e.target.value.replace(/\D/g, "").slice(0, 2);
                                                     setExpiryMonth(value);
                                                 }}
-                                                    isError={false} className="bg-[#F0F1F280] rounded-xl outline-none py-3.5 px-4.5 w-33 text-center text-xl text-[#686A70]" />
+                                                    isError={false} className="bg-[#F0F1F280] rounded-xl outline-none py-3.5 px-4.5 max-w-33 max-sm:w-full text-center text-xl max-sm:text-[16px] text-[#686A70]" />
                                                 <Input placeholder="YY" value={expiryYear} onChange={(e) => {
                                                     const value = e.target.value.replace(/\D/g, "").slice(0, 2);
                                                     setExpiryYear(value);
-                                                }} isError={false} className="bg-[#F0F1F280] rounded-xl outline-none py-3.5 px-4.5 w-33 text-center text-xl text-[#686A70]" />
+                                                }} isError={false} className="bg-[#F0F1F280] rounded-xl outline-none py-3.5 px-4.5 max-w-33 max-sm:w-full text-center text-xl max-sm:text-[16px] text-[#686A70]" />
                                             </div>
                                         </div>
                                         <div className="flex gap-6 mt-4 items-end">
 
-                                            <UzcardIcon className="w-24" />
-                                            <HumoIcon className="w-24" />
+                                            <UzcardIcon className="w-24 max-sm:w-18" />
+                                            <HumoIcon className="w-24 max-sm:w-18" />
 
                                         </div>
                                     </div>
@@ -255,21 +257,19 @@ export const PromotionPage = () => {
                                 </div>
                             </div>
 
-                            <div className="flex gap-8.25 mt-9.25 w-170.5">
+                            <div className="flex gap-8.25 items-center mb-5 mt-9.25">
                                 <Paragraph className="border py-3 px-5 w-12.5 h-12.5 items-center border-[#2EAA7B] rounded-full">3</Paragraph>
-                                <Heading className="text-xl font-inter mb-4" level={3} text="После ввода данных, нажмите Оплатить и подтвердите через SMS" />
+                                <Heading className=" w-full text-xl font-inter mb-4" level={3} text="После ввода данных, нажмите Оплатить и подтвердите через SMS" />
                             </div>
                         </div>
 
                         {/* Итог и оплата */}
-                        <div className="mt-8 flex justify-end">
-                            <div className="text-right">
-                                <div className="flex flex-col items-center">
-                                    <Paragraph className="mb-2 font-inter text-3xl">К оплате:</Paragraph>
-                                    <Paragraph className="mb-15 text-3xl font-inter font-bold">
-                                        {filtersData?.tariffs?.find((t) => t.id === selectedTariff)?.price.toLocaleString() || 0} сум
-                                    </Paragraph>
-                                </div>
+                        <div className="mt-10 mb-20 w-full flex justify-center px-4 sm:px-0">
+                            <div className="w-full max-w-[400px] text-center">
+                                <Paragraph className="mb-2 font-inter text-xl md:text-3xl">К оплате:</Paragraph>
+                                <Paragraph className="mb-8 text-xl md:text-3xl font-bold">
+                                    {filtersData?.tariffs?.find((t) => t.id === selectedTariff)?.price.toLocaleString() || 0} сум
+                                </Paragraph>
                                 <Button
                                     onClick={async () => {
                                         if (selectedCardId) {
@@ -285,7 +285,7 @@ export const PromotionPage = () => {
                                             !selectedCardId &&
                                             (!cardNumber || !expiryMonth || !expiryYear)
                                         )
-                                    } className="border border-[#2EAA7B] w-81.5 text-black font-inter font-semibold text-[25px] px-5 py-3 rounded-md hover:bg-[#2EAA7B] hover:text-white"
+                                    } className="w-full text-[18px] md:text-[25px] px-5 py-3 rounded-lg bg-[#2EAA7B] text-white"
                                 >
                                     Оплатить
                                 </Button>
@@ -297,7 +297,7 @@ export const PromotionPage = () => {
                     <ModalBase
                         title=""
                         message={`Введите код, отправленный на номер ${maskedPhone}`}
-                        ModalClassName="py-22 px-10 text-center"
+                        ModalClassName="w-full max-w-[450px] mx-auto px-4 sm:px-10 py-8 text-center"
                         onClose={() => setStep(1)}
                         actions={<div className="">
                             <div className="flex justify-between gap-2 mb-4">

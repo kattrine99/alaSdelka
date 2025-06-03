@@ -53,7 +53,7 @@ const Layout = () => {
       localStorage.removeItem("expiresAt");
 
       if (isProtectedPath) {
-        dispatch(setLogoutReason("expired"));
+        dispatch(setLogoutReason("unauthorized"));
       }
 
       dispatch(setIsAuthenticated(false));
@@ -61,6 +61,23 @@ const Layout = () => {
 
     dispatch(setAuthReady(true));
   }, [dispatch, location]);
+
+  useEffect(() => {
+    const isPublicPath =
+      location.pathname === "/" ||
+      location.pathname === "/main" ||
+      location.pathname === "/login" ||
+      location.pathname === "/register" ||
+      /^\/[a-zA-Z0-9-_]+$/.test(location.pathname) ||
+      /^\/[a-zA-Z0-9-_]+\/card\/\d+$/.test(location.pathname) ||
+      location.pathname === "/user-agreement" ||
+      location.pathname === "/privacy-policy";
+
+    if (isPublicPath && logoutReason) {
+      dispatch(setLogoutReason(null));
+    }
+  }, [location.pathname, logoutReason, dispatch]);
+
 
   const handleCloseModal = () => {
     dispatch(setLogoutReason(null));
@@ -90,13 +107,12 @@ const Layout = () => {
     location.pathname === "/main" ||
     location.pathname === "/login" ||
     location.pathname === "/register" ||
-    /^\/[a-zA-Z0-9-_]+$/.test(location.pathname) || 
-    /^\/[a-zA-Z0-9-_]+\/card\/\d+$/.test(location.pathname) || 
+    /^\/[a-zA-Z0-9-_]+$/.test(location.pathname) ||
+    /^\/[a-zA-Z0-9-_]+\/card\/\d+$/.test(location.pathname) ||
     location.pathname === "/user-agreement" ||
     location.pathname === "/privacy-policy";
 
   const showModal = modalContent && !isPublicPath;
-
   return (
     <>
       <ScrollToTop />

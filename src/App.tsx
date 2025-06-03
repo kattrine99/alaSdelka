@@ -1,5 +1,5 @@
 import { LoginPage, RegistrationPage, MainPage, CategoryPage, ProfilePage, CardDetailPage, FavoritePage, AnnouncemntsPage, NoticePage, UserAnnouncementPage, StatisticsPage } from "./Pages/index";
-import { createBrowserRouter, Outlet, RouterProvider, useNavigate } from "react-router-dom";
+import { createBrowserRouter, Outlet, RouterProvider, useLocation, useNavigate } from "react-router-dom";
 import './index.css';
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -22,6 +22,7 @@ const Layout = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const logoutReason = useSelector((state: RootState) => state.auth.logoutReason);
+  const location = useLocation();
   const { data } = useGetCurrencyRateQuery();
 
   useEffect(() => {
@@ -29,11 +30,20 @@ const Layout = () => {
       dispatch(setCurrencyRate(data.rate));
     }
   }, [data, dispatch]);
+
   useEffect(() => {
     const token = localStorage.getItem("accessToken");
     const expiresAt = localStorage.getItem("expiresAt");
-
     const isExpired = expiresAt && Date.now() > Number(expiresAt);
+
+    const isProtectedPath = location.pathname.startsWith("/profile") ||
+      location.pathname.startsWith("/favorites") ||
+      location.pathname.startsWith("/announcements") ||
+      location.pathname.startsWith("/add-offer") ||
+      location.pathname.startsWith("/promotion") ||
+      location.pathname.startsWith("/notices") ||
+      location.pathname.startsWith("/statistics") ||
+      location.pathname.startsWith("/users");
 
     if (token && !isExpired) {
       dispatch(setIsAuthenticated(true));
@@ -41,19 +51,23 @@ const Layout = () => {
     } else if (token && isExpired) {
       localStorage.removeItem("accessToken");
       localStorage.removeItem("expiresAt");
-      dispatch(setLogoutReason("expired"));
+
+      if (isProtectedPath) {
+        dispatch(setLogoutReason("expired"));
+      }
+
       dispatch(setIsAuthenticated(false));
     }
 
-    dispatch(setAuthReady(true)); 
-  }, [dispatch]);
+    dispatch(setAuthReady(true));
+  }, [dispatch, location]);
 
   const handleCloseModal = () => {
     dispatch(setLogoutReason(null));
     navigate("/login");
   };
 
-  const getModalContent = () => {
+  const modalContent = (() => {
     if (logoutReason === "expired") {
       return {
         title: "Сессия завершена",
@@ -69,32 +83,39 @@ const Layout = () => {
       };
     }
     return null;
-  };
+  })();
 
-  const modalContent = getModalContent();
+  const isPublicPath =
+    location.pathname === "/" ||
+    location.pathname === "/main" ||
+    location.pathname === "/login" ||
+    location.pathname === "/register" ||
+    /^\/[a-zA-Z0-9-_]+$/.test(location.pathname) || 
+    /^\/[a-zA-Z0-9-_]+\/card\/\d+$/.test(location.pathname) || 
+    location.pathname === "/user-agreement" ||
+    location.pathname === "/privacy-policy";
+
+  const showModal = modalContent && !isPublicPath;
+
   return (
     <>
-
       <ScrollToTop />
       <Outlet />
 
-      {modalContent && (
+      {showModal && (
         <ModalBase
           title={modalContent.title}
           message={modalContent.message}
           onClose={handleCloseModal}
-          actions={
-            <Button onClick={handleCloseModal} className="bg-[#2EAA7B] text-white px-6 py-2 rounded-lg">
-              {modalContent.buttonText}
-            </Button>
-          }
-          HeadingClassName=""
-        />
+          actions={<Button onClick={handleCloseModal} className="bg-[#2EAA7B] text-white px-6 py-2 rounded-lg">
+            {modalContent.buttonText}
+          </Button>} HeadingClassName={""} />
       )}
-
     </>
-  )
-}
+  );
+};
+
+
 
 const routerConfig = createBrowserRouter([
   {

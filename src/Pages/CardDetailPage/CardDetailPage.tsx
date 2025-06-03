@@ -89,7 +89,9 @@ export const CardDetailPage = () => {
         if (mod10 >= 2 && mod10 <= 4 && (mod100 < 10 || mod100 >= 20)) return few;
         return many;
     }
-    const formatCurrency = (price: number) => {
+    const formatCurrency = (price?: number) => {
+        if (typeof price !== 'number') return "—";
+
         if (currencyMode === "USD") {
             const converted = Math.round(price / (rate || 1));
             return `${converted.toLocaleString()} $`;

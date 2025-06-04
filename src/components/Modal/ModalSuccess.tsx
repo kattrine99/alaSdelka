@@ -24,11 +24,11 @@ export const ModalBase: React.FC<ModalBaseProps> = ({
 }) => {
     return (
         <div
-            className={`fixed inset-0 w-screen h-screen z-50 flex items-center justify-center bg-[#3B3B3B80] bg-opacity-50`}
+            className="fixed inset-0 z-[9999] flex items-center justify-center  bg-[#3B3B3B80]"
             onClick={onClose}
         >
             <div
-                className={`relative bg-white flex flex-col p-6 rounded-[24px] shadow-lg ${ModalClassName}`}
+                className={`relative bg-white flex flex-col p-6 rounded-[24px] shadow-lg max-w-[90vw] w-[400px] ${ModalClassName}`}
                 onClick={(e) => e.stopPropagation()}
             >
                 {showCloseButton && onClose && (
@@ -45,5 +45,4 @@ export const ModalBase: React.FC<ModalBaseProps> = ({
             </div>
         </div>
     );
-
 };

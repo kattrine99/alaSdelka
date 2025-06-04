@@ -22,7 +22,6 @@ const mapOfferToCard = (data: OfferPayload): ICard => ({
         city: {
             name_ru: data.city_name || "Город не указан"
         },
-
     }, area: data.area || 0,
     image: data.photos?.[0]?.preview ?? null,
     is_favourite: false,

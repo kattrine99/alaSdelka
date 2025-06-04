@@ -32,7 +32,6 @@ export const AnnouncemntsPage = () => {
 
   useEffect(() => {
     if (location.state?.promotionSuccess) {
-      console.log("🏷️ Промо флаг получен, делаю refetch...");
       refetch();
       navigate(location.pathname, { replace: true, state: {} });
     }

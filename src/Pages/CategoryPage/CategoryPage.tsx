@@ -21,8 +21,6 @@ import { routeToCategoryIdMap, typeToTitleMap, urlToTypeMap } from "../../utils/
 import { FiSearch } from "react-icons/fi";
 import { FiltersState, ruToEnOfferTypeMap } from "../../utils/variables";
 import { OfferFilters } from "../../Store/api/types";
-import { useSelector } from "react-redux";
-import { RootState } from "../../Store/store";
 
 function cleanObject<T extends object>(obj: T): Partial<T> {
     return Object.fromEntries(
@@ -34,7 +32,7 @@ export const CategoryPage = () => {
     const { category } = useParams();
     const [searchParams] = useSearchParams();
     const navigate = useNavigate();
-    const language = useSelector((state: RootState) => state.language.current);
+    // const language = useSelector((state: RootState) => state.language.current);
 
     const categoryKey = category?.toLowerCase() ?? "";
     const categoryId = routeToCategoryIdMap[categoryKey] || "";

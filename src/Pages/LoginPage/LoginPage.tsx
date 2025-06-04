@@ -59,8 +59,8 @@ export const LoginPage = () => {
 
             const expiresAt = Date.now() + response.expires_in * 1000;
 
-            localStorage.setItem("accessToken", response.access_token);
-            localStorage.setItem("expiresAt", expiresAt.toString());
+            localStorage.setItem("access_token", response.access_token);
+            localStorage.setItem("expires_in", expiresAt.toString());
 
             dispatch(setLogoutReason(null));
             dispatch(setAccessToken(response.access_token));

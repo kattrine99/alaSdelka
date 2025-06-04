@@ -4,7 +4,7 @@ const UserAgreement = () => {
     return (
         <div className="w-screen">
             <Header />
-            <main className="container sm:px-12 lg:px-48 py-8">
+            <main className="container mx-auto max-md:px-12 lg:px-48 py-8">
                 <Breadcrumbs
                     links={[
                         { label: "Главная", href: "/" },

@@ -1,9 +1,18 @@
-import { LoginPage, RegistrationPage, MainPage, CategoryPage, ProfilePage, CardDetailPage, FavoritePage, AnnouncemntsPage, NoticePage, UserAnnouncementPage, StatisticsPage } from "./Pages/index";
-import { createBrowserRouter, Outlet, RouterProvider, useLocation, useNavigate } from "react-router-dom";
+import {
+  LoginPage, RegistrationPage, MainPage, CategoryPage, ProfilePage,
+  CardDetailPage, FavoritePage, AnnouncemntsPage, NoticePage,
+  UserAnnouncementPage, StatisticsPage
+} from "./Pages/index";
+import {
+  createBrowserRouter, Outlet, RouterProvider, useNavigate
+} from "react-router-dom";
 import './index.css';
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setAccessToken, setAuthReady, setIsAuthenticated, setLogoutReason } from "./Store/Slices/authSlice";
+import {
+  setAccessToken, setAuthReady,
+  setIsAuthenticated, setLogoutReason
+} from "./Store/Slices/authSlice";
 import { getToken } from "./utils/tokenUtils";
 import { ScrollToTop } from "./components/ScrollTop/ScrollTop";
 import { StepsAddingOffer } from "./Pages/Announcements/StepsAddingOffer/StepsAddingOffer";
@@ -22,8 +31,7 @@ const Layout = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const logoutReason = useSelector((state: RootState) => state.auth.logoutReason);
-  const authReady = useSelector((state: RootState) => state.auth.authReady)
-  const location = useLocation();
+  const authReady = useSelector((state: RootState) => state.auth.authReady);
   const { data } = useGetCurrencyRateQuery();
 
   useEffect(() => {
@@ -33,16 +41,16 @@ const Layout = () => {
   }, [data, dispatch]);
 
   useEffect(() => {
-    const token = localStorage.getItem("accessToken");
-    const expiresAt = localStorage.getItem("expiresAt");
+    const token = localStorage.getItem("access_token");
+    const expiresAt = localStorage.getItem("expires_in");
     const isExpired = expiresAt && Date.now() > Number(expiresAt);
 
     if (token && !isExpired) {
       dispatch(setIsAuthenticated(true));
       dispatch(setAccessToken(token));
     } else if (token && isExpired) {
-      localStorage.removeItem("accessToken");
-      localStorage.removeItem("expiresAt");
+      localStorage.removeItem("access_token");
+      localStorage.removeItem("expires_in");
       dispatch(setIsAuthenticated(false));
       dispatch(setLogoutReason("expired"));
     }
@@ -50,75 +58,36 @@ const Layout = () => {
     dispatch(setAuthReady(true));
   }, [dispatch]);
 
+  const showModal = logoutReason === "expired" && authReady;
 
-  useEffect(() => {
-    const isPublicPath =
-      location.pathname === "/" ||
-      location.pathname === "/main" ||
-      location.pathname === "/login" ||
-      location.pathname === "/register" ||
-      /^\/[a-zA-Z0-9-_]+$/.test(location.pathname) ||
-      /^\/[a-zA-Z0-9-_]+\/card\/\d+$/.test(location.pathname) ||
-      location.pathname === "/user-agreement" ||
-      location.pathname === "/privacy-policy";
-
-    if (isPublicPath && logoutReason) {
-      dispatch(setLogoutReason(null));
-    }
-  }, [location.pathname, logoutReason, dispatch]);
-
-  console.log(logoutReason)
   const handleCloseModal = () => {
     dispatch(setLogoutReason(null));
     navigate("/login");
   };
-  const modalContent = (() => {
-    if (logoutReason === "expired") {
-      return {
-        title: "Сессия завершена",
-        message: "Ваша сессия истекла. Пожалуйста, войдите снова.",
-        buttonText: "Войти",
-      };
-    }
-    if (logoutReason === "unauthorized") {
-      return {
-        title: "Требуется вход",
-        message: "Чтобы продолжить, пожалуйста, войдите в систему.",
-        buttonText: "Войти",
-      };
-    }
-    return null;
-  })();
 
-  const isPublicPath =
-    location.pathname === "/" ||
-    location.pathname === "/main" ||
-    location.pathname === "/login" ||
-    location.pathname === "/register" ||
-    /^\/[a-zA-Z0-9-_]+$/.test(location.pathname) ||
-    /^\/[a-zA-Z0-9-_]+\/card\/\d+$/.test(location.pathname) ||
-    location.pathname === "/user-agreement" ||
-    location.pathname === "/privacy-policy";
-
-const showModal = modalContent && !isPublicPath && authReady;
   return (
     <>
       <ScrollToTop />
-      <Outlet />
+      <div className="relative min-h-screen">
+        <Outlet />
+      </div>
 
       {showModal && (
         <ModalBase
-          title={modalContent.title}
-          message={modalContent.message}
+          title="Сессия завершена"
+          message="Ваша сессия истекла. Пожалуйста, войдите снова."
           onClose={handleCloseModal}
-          actions={<Button onClick={handleCloseModal} className="bg-[#2EAA7B] text-white px-6 py-2 rounded-lg">
-            {modalContent.buttonText}
-          </Button>} HeadingClassName={""} />
+          actions={
+            <Button onClick={handleCloseModal} className="bg-[#2EAA7B] text-white px-6 py-2 rounded-lg">
+              Войти
+            </Button>
+          }
+          HeadingClassName=""
+        />
       )}
     </>
   );
 };
-
 
 
 const routerConfig = createBrowserRouter([
@@ -134,26 +103,26 @@ const routerConfig = createBrowserRouter([
       { path: ":category/card/:id", element: <CardDetailPage /> },
       { path: "/user-agreement", element: <UserAgreement /> },
       { path: "/privacy-policy", element: <PrivacyPolicy /> },
-
-
-
       {
-        path: "profile", element:
-          (<ProtectedRoute>
+        path: "profile", element: (
+          <ProtectedRoute>
             <ProfilePage />
-          </ProtectedRoute>),
+          </ProtectedRoute>
+        ),
       },
       {
-        path: "favorites", element:
-          (<ProtectedRoute>
+        path: "favorites", element: (
+          <ProtectedRoute>
             <FavoritePage />
-          </ProtectedRoute>),
+          </ProtectedRoute>
+        ),
       },
       {
-        path: "announcements", element:
-          (<ProtectedRoute>
+        path: "announcements", element: (
+          <ProtectedRoute>
             <AnnouncemntsPage />
-          </ProtectedRoute>),
+          </ProtectedRoute>
+        ),
       },
       {
         path: "add-offer", element: (
@@ -163,12 +132,11 @@ const routerConfig = createBrowserRouter([
         ),
       },
       {
-        path: "/promotion/:id", element:
-          (
-            <ProtectedRoute>
-              <PromotionPage />
-            </ProtectedRoute>
-          ),
+        path: "/promotion/:id", element: (
+          <ProtectedRoute>
+            <PromotionPage />
+          </ProtectedRoute>
+        ),
       },
       {
         path: "/promotion", element: (
@@ -206,17 +174,19 @@ function App() {
   useAuthInit();
   const dispatch = useDispatch();
   useAutoLogout();
+
   useEffect(() => {
     const token = getToken();
     if (token) dispatch(setIsAuthenticated(true));
   }, [dispatch]);
+
   return (
     <div className="">
       <div className="container">
         <RouterProvider router={routerConfig} />
       </div>
     </div>
-  )
+  );
 }
 
-export default App
+export default App;

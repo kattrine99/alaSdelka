@@ -97,14 +97,12 @@ export const RegistrationPage = () => {
             password: data.userpassword,
             password_confirmation: data.confirmPassword
         };
-        console.log("payload отправляется:", payload);
         setFormData(payload);
 
         try {
             await registrationUser(payload).unwrap();
             setStep(2);
         } catch (err) {
-            console.log("REGISTRATION ERROR", err);
             const error = err as ApiError;
             const phoneErrors = error?.data?.errors?.phone;
             if (Array.isArray(phoneErrors) && phoneErrors.includes("validation.unique")) {

@@ -15,15 +15,16 @@ const rawBaseQuery = fetchBaseQuery({
 
 const customBaseQuery: typeof rawBaseQuery = async (args, api, extraOptions) => {
     const result = await rawBaseQuery(args, api, extraOptions);
-    console.log(result)
+
     if (result.error?.status === 401) {
         const expiresAt = localStorage.getItem("expiresAt");
         const isExpired = expiresAt && Date.now() > Number(expiresAt);
 
+        localStorage.removeItem("accessToken");
+        localStorage.removeItem("expiresAt");
+        api.dispatch(logout());
+
         if (isExpired) {
-            localStorage.removeItem("accessToken");
-            localStorage.removeItem("expiresAt");
-            api.dispatch(logout());
             api.dispatch(setLogoutReason("expired"));
         } else {
             api.dispatch(setLogoutReason("unauthorized"));
@@ -32,6 +33,5 @@ const customBaseQuery: typeof rawBaseQuery = async (args, api, extraOptions) => 
 
     return result;
 };
-
 
 export default customBaseQuery;

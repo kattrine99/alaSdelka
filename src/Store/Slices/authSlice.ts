@@ -36,7 +36,11 @@ const authSlice = createSlice({
       state.isAuthenticated = false;
       state.logoutReason = null;
       state.accessToken = null;
+      state.authReady = true;
+      localStorage.removeItem("accessToken");
+      localStorage.removeItem("expiresAt");
     },
+
   },
 });
 

@@ -175,8 +175,8 @@ export const RegistrationPage = () => {
                     <>
                         <div className="w-full grid grid-cols-1 lg:grid-cols-2 lg:px-36 lg:py-15 transition-all duration-500">
                             <div
-                                className="w-full xl:px-25 max-xl:px-10 flex flex-col items-start text-start transition-all duration-300">
-                                <Heading level={2} className="text-[32px] font-inter mb-7 font-bold text-black"
+                                className="w-full xl:px-25 max-xl:px-10 flex max-xl:mt-8 flex-col items-start text-start transition-all duration-300">
+                                <Heading level={2} className="text-[32px] max-xl:text-3xl max-sm:text-2xl font-inter mb-7 font-bold text-black"
                                     text={""}>Зарегистрироваться</Heading>
                                 <div className="w-full ">
                                     <form className="flex flex-col gap-y-3.5">
@@ -222,7 +222,7 @@ export const RegistrationPage = () => {
                                         className={`w-full mt-6 h-[56px] rounded-2xl text-[16px] text-white ${isValid ? "bg-[#2EAA7B]" : "bg-[#AFAFAF] cursor-not-allowed"}`}>
                                         Зарегистрироваться
                                     </Button>
-                                    <div className='w-full flex flex-col items-center'>
+                                    <div className='w-full flex flex-col text-center items-center mb-10'>
                                         <div className='w-[237px] border border-[#DFDFDF] mt-[38px]'></div>
                                         {/*<div className="mt-[30px] justify-center">*/}
                                         {/*    <Button className="w-94.5 h-[56px] flex items-center gap-x-3 justify-center bg-white border border-[#C9CCCF] rounded-2xl text-[#232323] font-semibold  font-inter leading-[24px] transition-all duration-500 hover:bg-gray-100 hover:shadow-lg">*/}

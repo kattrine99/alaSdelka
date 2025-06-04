@@ -22,6 +22,7 @@ const Layout = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const logoutReason = useSelector((state: RootState) => state.auth.logoutReason);
+  const authReady = useSelector((state: RootState) => state.auth.authReady)
   const location = useLocation();
   const { data } = useGetCurrencyRateQuery();
 
@@ -42,14 +43,13 @@ const Layout = () => {
     } else if (token && isExpired) {
       localStorage.removeItem("accessToken");
       localStorage.removeItem("expiresAt");
-
-
       dispatch(setIsAuthenticated(false));
       dispatch(setLogoutReason("expired"));
     }
 
     dispatch(setAuthReady(true));
-  }, [dispatch, location]);
+  }, [dispatch]);
+
 
   useEffect(() => {
     const isPublicPath =
@@ -67,12 +67,11 @@ const Layout = () => {
     }
   }, [location.pathname, logoutReason, dispatch]);
 
-
+  console.log(logoutReason)
   const handleCloseModal = () => {
     dispatch(setLogoutReason(null));
     navigate("/login");
   };
-
   const modalContent = (() => {
     if (logoutReason === "expired") {
       return {
@@ -101,7 +100,7 @@ const Layout = () => {
     location.pathname === "/user-agreement" ||
     location.pathname === "/privacy-policy";
 
-  const showModal = modalContent && !isPublicPath;
+const showModal = modalContent && !isPublicPath && authReady;
   return (
     <>
       <ScrollToTop />

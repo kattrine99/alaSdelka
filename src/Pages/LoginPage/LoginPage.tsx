@@ -2,15 +2,14 @@ import { Footer, Header, Heading, Input, Paragraph, Applink, Button, ModalBase }
 import * as yup from "yup";
 import { Controller, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import './LoginPage.css';
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 import { Description } from '../RegisterPage/Description';
 import { useLoginUserMutation } from '../../Store/api/Api';
-import { useDispatch, useSelector } from 'react-redux';
-import { setAccessToken, setIsAuthenticated } from '../../Store/Slices/authSlice';
+import { useDispatch } from 'react-redux';
+import { setAccessToken, setIsAuthenticated, setLogoutReason } from '../../Store/Slices/authSlice';
 import { useNavigate } from 'react-router-dom';
-import { RootState } from '../../Store/store';
 
 interface LoginFormInputs {
     userphone: string;
@@ -31,18 +30,12 @@ const loginFormschema = yup.object({
 export const LoginPage = () => {
     const [isPasswordVisible, setIsPasswordVisible] = useState(false);
     const [showModal, setShowModal] = useState(false);
-    const [showLogoutModal, setShowLogoutModal] = useState(false);
     const [modalText, setModalText] = useState("");
     const [modalTitle, setModalTitle] = useState("");
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const [loginUser] = useLoginUserMutation();
-    const logoutReason = useSelector((state: RootState) => state.auth.logoutReason);
-    useEffect(() => {
-        if (logoutReason) {
-            setShowLogoutModal(true);
-        }
-    }, [logoutReason]);
+
     const {
         control,
         handleSubmit,
@@ -69,6 +62,7 @@ export const LoginPage = () => {
             localStorage.setItem("accessToken", response.access_token);
             localStorage.setItem("expiresAt", expiresAt.toString());
 
+            dispatch(setLogoutReason(null));
             dispatch(setAccessToken(response.access_token));
             dispatch(setIsAuthenticated(true));
 
@@ -88,6 +82,7 @@ export const LoginPage = () => {
         }
     };
 
+
     return (
 
         <div className="min-w-screen sm:bg-[url('/images/grid.png')] bg-contain bg-no-repeat bg-right">
@@ -99,14 +94,6 @@ export const LoginPage = () => {
                     HeadingClassName="font-inter font-semibold text-[32px] leading-11 "
                     onClose={() => setShowModal(false)}
                     actions={<Button className={"w-full text-center py-4 hover:border-1 hover:bg-white hover:text-[#2EAA7B] hover:border-[#2EAA7B] text-white bg-[#2EAA7B] rounded-[14px]"} onClick={() => { setShowModal(false); }}>Подтвердить</Button>} />}
-                {showLogoutModal && (
-                    <ModalBase
-                        title="Сессия завершена"
-                        message={logoutReason}
-                        ModalClassName='w-115 p-10'
-                        onClose={() => setShowLogoutModal(false)}
-                        actions={<Button className={"w-full text-center py-4 hover:border-1 hover:bg-white hover:text-[#2EAA7B] hover:border-[#2EAA7B] text-white bg-[#2EAA7B] rounded-[14px]"} onClick={() => { setShowLogoutModal(false); }}>Понятно</Button>} HeadingClassName="font-inter font-semibold text-[32px] leading-11 "
-                    />)}
             </div>
             <Header showNavLinks={false} showAuthButtons={false} />
             <div className=" flex items-center justify-center py-[62px] transition-all duration-300">

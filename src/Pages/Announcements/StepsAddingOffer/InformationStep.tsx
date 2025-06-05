@@ -184,11 +184,15 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
 
             setPhotos(safePhotos);
         }
-    }, []);
-
+    }, [offerData?.photos]);
+    useEffect(() => {
+        if (offerData?.communication_channels) {
+            setLinks(offerData.communication_channels);
+        }
+    }, [offerData?.communication_channels]);
 
     return (
-        <div className="flex flex-col gap-6 p-10 bg-[#F8F8F8]">
+        <div className="flex flex-col gap-6 p-10 max-md:p-4 bg-[#F8F8F8]">
             {/*Хединги для всех типов */}
             <div>
                 {/*Для бизнеса */}
@@ -212,7 +216,7 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
             {/*Название */}
             <div className="flex flex-col gap-2">
                 <Input
-                    className={`bg-[#F0F1F280] w-200 rounded-[14px] outline-none py-3.5 px-4.5 ${!title ? 'border border-red-500' : ''
+                    className={`bg-[#F0F1F280] w-full max-w-200 rounded-[14px] outline-none py-3.5 px-4.5 ${!title ? 'border border-red-500' : ''
                         }`}
                     type="text"
                     placeholder="Введите"
@@ -228,7 +232,7 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
                 )}
             </div>
             {/*Описание textarea */}
-            <div className="flex flex-col gap-2 w-full max-w-[800px] relative">
+            <div className="flex flex-col gap-2 w-full max-w-200 relative">
                 <Input
                     isTextArea
                     required
@@ -250,11 +254,11 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
                 )}
             </div>
             {/*Категория объявления */}
-            <div className="flex flex-col gap-2 w-[800px] relative">
+            <div className="flex flex-col gap-2 w-full max-w-200 relative">
                 <label className="text-[#101828] font-inter text-[16px] leading-[130%]">*Категория объявления</label>
                 <select
                     required
-                    className={`bg-[#F0F1F280] w-[800px] rounded-[14px] text-[#686A70] outline-none py-3.5 px-4.5 ${!categoryId ? 'border border-red-500' : ''
+                    className={`bg-[#F0F1F280] w-full max-w-200  rounded-[14px] text-[#686A70] outline-none py-3.5 px-4.5 ${!categoryId ? 'border border-red-500' : ''
                         }`}
                     value={categoryId}
                     onChange={(e) => setCategoryId(e.target.value)}
@@ -272,7 +276,7 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
             </div>
 
             {/*Имя и фамилия*/}
-            <div className="flex gap-3.5 w-200">
+            <div className="flex gap-3.5 w-full max-w-200 ">
                 <Input
                     className="bg-[#b5b5b667]  text-gray-500 cursor-not-allowed w-full rounded-[14px] outline-none py-3.5 px-4.5"
                     LabelClassName="font-inter text-[16px] leading-[130%]"
@@ -285,10 +289,10 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
                 />
             </div>
             {/*Номер телефона */}
-            <div className="flex flex-col gap-2 w-[800px] relative ">
+            <div className="flex flex-col gap-2 w-full max-w-200  relative ">
                 <label className="text-[#101828] font-inter text-[16px] leading-[130%] mb-2.5 block">*Номер телефона</label>
                 <div className="bg-[#b5b5b667] w-full rounded-[14px] flex items-center p-1 ">
-                    <div className="w-[48px] h-[49px] rounded-[10px] bg-[#b4b8cc] flex items-center justify-center mr-3">
+                    <div className="w-12 h-12 p-1 rounded-[10px] bg-[#b4b8cc] flex items-center justify-center mr-3">
                         <FlagIcon className="w-[25px] h-[25px] object-contain" />
                     </div>
                     <span className="text-gray-500 font-inter text-[16px] mr-2">+998</span>
@@ -304,9 +308,9 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
             </div>
             {/*Стадия */}
             {isSell && isStartup &&
-                <div className="flex flex-col gap-2 w-[800px] relative">
+                <div className="flex flex-col gap-2 w-full max-w-200  relative">
                     <label className="text-[#101828] font-inter text-[16px] leading-[130%]">*Стадия</label>
-                    <select className={`bg-[#F0F1F280] w-[800px] rounded-[14px] text-[#686A70] outline-none py-3.5 px-4.5 ${!projectStageId ? 'border border-red-500' : ''
+                    <select className={`bg-[#F0F1F280] w-full rounded-[14px] text-[#686A70] outline-none py-3.5 px-4.5 ${!projectStageId ? 'border border-red-500' : ''
                         }`}
                         value={projectStageId}
                         onChange={(e) => setProjectStageId(e.target.value)}>
@@ -323,9 +327,9 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
                 </div>
             }
             {/*Город */}
-            <div className="flex flex-col gap-2 w-[800px] relative">
+            <div className="flex flex-col gap-2 w-full max-w-200  relative">
                 <label className="text-[#101828] font-inter text-[16px] leading-[130%]">*Город</label>
-                <select className={`bg-[#F0F1F280] w-[800px] rounded-[14px] text-[#686A70] outline-none py-3.5 px-4.5 ${!cityId ? 'border border-red-500' : ''
+                <select className={`bg-[#F0F1F280] w-full rounded-[14px] text-[#686A70] outline-none py-3.5 px-4.5 ${!cityId ? 'border border-red-500' : ''
                     }`}
                     value={cityId}
                     onChange={(e) => setCityId(e.target.value)}>
@@ -341,8 +345,8 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
                 )}
             </div>
             {/*Адрес */}
-            <div className="flex flex-col gap-2 w-[800px] relative">
-                <Input className={`bg-[#F0F1F280] w-200 rounded-[14px] outline-none py-3.5 px-4.5 ${!addressText ? 'border border-red-500' : ''
+            <div className="flex flex-col gap-2 w-full max-w-200 relative">
+                <Input className={`bg-[#F0F1F280] w-full rounded-[14px] outline-none py-3.5 px-4.5 ${!addressText ? 'border border-red-500' : ''
                     }`}
                     LabelText="*Адрес" type="text" placeholder="Введите" isError={!addressText}
                     value={addressText}
@@ -353,7 +357,7 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
             </div>
             {/*Площадь */}
             <Input
-                className="bg-[#F0F1F280] w-200 rounded-[14px] outline-none py-3.5 px-4.5"
+                className="bg-[#F0F1F280] w-full max-w-200 rounded-[14px] outline-none py-3.5 px-4.5"
                 LabelClassName="font-inter text-[16px] leading-[130%] block mb-3"
                 LabelText="Площадь, кв. м."
                 type="text"
@@ -366,10 +370,10 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
                 }}
             />
             {/*Форма владения бизнесом */}
-            <div className="flex flex-col gap-2 w-[393px] relative">
+            <div className="flex flex-col gap-2 w-full max-w-98 relative">
                 <label className="text-[#101828] font-inter text-[16px] leading-[130%]">*Форма владения бизнесом</label>
                 <select
-                    className={`bg-[#F0F1F280] w-[800px] rounded-[14px] text-[#686A70] outline-none py-3.5 px-4.5 ${!businessOwnership ? 'border border-red-500' : ''
+                    className={`bg-[#F0F1F280] w-full rounded-[14px] text-[#686A70] outline-none py-3.5 px-4.5 ${!businessOwnership ? 'border border-red-500' : ''
                         }`}
                     value={businessOwnership}
                     onChange={(e) => setBusinessOwnership(e.target.value)}
@@ -386,9 +390,9 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
                 )}
             </div>
             {/*Форма владения помещением */}
-            <div className="flex flex-col gap-2 w-[393px] relative">
+            <div className="flex flex-col gap-2 w-full max-w-98  relative">
                 <label className="text-[#101828] font-inter text-[16px] leading-[130%]">*Форма владения помещением</label>
-                <select className={`bg-[#F0F1F280] w-[800px] rounded-[14px] text-[#686A70] outline-none py-3.5 px-4.5 ${!propertyOwnershipType ? 'border border-red-500' : ''
+                <select className={`bg-[#F0F1F280] w-full rounded-[14px] text-[#686A70] outline-none py-3.5 px-4.5 ${!propertyOwnershipType ? 'border border-red-500' : ''
                     }`}
                     value={propertyOwnershipType}
                     onChange={(e) => setPropertyOwnershipType(e.target.value)}
@@ -451,9 +455,9 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
                     </div>
                 </div>}
             {/*Сумма */}
-            <div className="flex flex-col gap-2 w-[393px] relative">
+            <div className="flex flex-col gap-2 w-full max-w-98  relative">
                 <Input
-                    className={`bg-[#F0F1F280] w-200 rounded-[14px] outline-none py-3.5 px-4.5 ${!amount ? 'border border-red-500' : ''}`}
+                    className={`bg-[#F0F1F280] w-full rounded-[14px] outline-none py-3.5 px-4.5 ${!amount ? 'border border-red-500' : ''}`}
                     LabelText="*Сумма, сум"
                     type="text"
                     placeholder="Введите"
@@ -520,17 +524,17 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
 
             {/*Ссылки */}
             {isSell && (
-                <div className="flex flex-col w-[800px]">
+                <div className="flex flex-col w-full max-w-200 ">
                     <label className="text-[#101828] font-inter text-[16px] leading-[130%]">Ссылка на официальные каналы коммуникации</label>
 
                     {links.map((item, index) => (
-                        <div key={index} className="flex items-center gap-3">
+                        <div key={index} className="flex max-md:flex-col max-md:items-start items-center gap-3">
                             <Input
                                 type="text"
                                 value={item.channel_name}
                                 placeholder="Например: Telegram"
                                 onChange={(e) => handleChannelNameChange(index, e.target.value)}
-                                className="bg-[#F0F1F280] w-60 rounded-[14px] outline-none py-3.5 px-4.5"
+                                className="bg-[#F0F1F280] w-full rounded-[14px] outline-none py-3.5 px-4.5"
                                 isError={false}
                             />
                             <Input
@@ -553,9 +557,10 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
                 </div>
             )}
 
+            {/*Доля продаваемого бизнеса */}
             {isSell &&
                 <>
-                    <div className="flex flex-col gap-2 w-[393px] relative">
+                    <div className="flex flex-col gap-2 w-full max-w-98 relative">
                         <Input
                             className="bg-[#F0F1F280] w-full rounded-[14px] outline-none py-3.5 px-4.5"
                             LabelClassName="font-inter text-[16px] leading-[130%]"
@@ -565,13 +570,13 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
                             isError={false}
                             value={String(percentageForSale)}
                             onChange={(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-                                const value = e.target.value.replace(/\D/g, ""); // только цифры
-                                const numeric = Math.min(Number(value), 100);   // ограничиваем до 100
+                                const value = e.target.value.replace(/\D/g, "");
+                                const numeric = Math.min(Number(value), 100);
                                 setpercentageForSale(numeric);
                             }}
                         />
                     </div>
-                    <div className="flex flex-col gap-2 w-[393px] relative">
+                    <div className="flex flex-col gap-2 w-full max-w-98 relative">
                         <Input
                             className="bg-[#F0F1F280] w-full rounded-[14px] outline-none py-3.5 px-4.5"
                             LabelClassName="font-inter text-[16px] leading-[130%]"
@@ -587,7 +592,7 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
                         />
                     </div>
 
-                    <div className="flex flex-col gap-2 w-[393px] relative">
+                    <div className="flex flex-col gap-2 w-full max-w-98 relative">
                         <Input
                             className="bg-[#F0F1F280] w-full rounded-[14px] outline-none py-3.5 px-4.5"
                             LabelClassName="font-inter text-[16px] leading-[130%]"
@@ -603,7 +608,7 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
                         />
                     </div>
 
-                    <div className="flex flex-col gap-2 w-[393px] relative">
+                    <div className="flex flex-col gap-2 w-full max-w-98 relative">
                         <Input
                             className="bg-[#F0F1F280] w-full rounded-[14px] outline-none py-3.5 px-4.5"
                             LabelClassName="font-inter text-[16px] leading-[130%]"
@@ -619,13 +624,13 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
                         />
                     </div>
 
-                    <div className="flex flex-col gap-2 w-[393px] relative">
+                    <div className="flex flex-col gap-2 w-full max-w-98 relative">
                         <Input className="bg-[#F0F1F280] w-full rounded-[14px] outline-none py-3.5 px-4.5" LabelClassName="font-inter text-[16px] leading-[130%]"
                             LabelText="Окупаемость (месяц)" type="text" placeholder="Введите" isError={false}
                             value={String(paybackPeriod)}
                             onChange={(e) => handleNumericInput(e, setPaybackPeriod)} />
                     </div>
-                    <div className="flex flex-col gap-2 w-[393px] relative">
+                    <div className="flex flex-col gap-2 w-full max-w-98 relative">
                         <label className="text-[#101828] font-inter text-[16px] leading-[130%]">Год основания бизнеса</label>
                         <select
                             className="bg-[#F0F1F280] w-full rounded-[14px] text-[#686A70] outline-none py-3.5 px-4.5"
@@ -643,7 +648,7 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
                 </>}
             {/* Детали объявления (переключатели) */}
             <Heading text={"Детали объявления"} level={3} className="font-inter font-semibold text-[#232323] text-xl leading-[130%]" />
-            <div className="flex flex-col w-[393px] gap-6">
+            <div className="flex flex-col w-full max-w-98 gap-6">
                 {conveniences.map(({ id, name_ru }) => {
                     const isFranchiseOnly = [10, 11].includes(id);
                     const isInvestmentOnly = [9].includes(id);

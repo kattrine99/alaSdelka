@@ -20,19 +20,16 @@ export const CardPreview: React.FC<CardPreviewProps> = ({ card, onPreview }) => 
 
     return (
         <div className="relative rounded-xl bg-white shadow-sm py-7.5 px-4.5 w-full max-w-[400px] flex flex-col">
-            <div className="relative md:w-[360px] w-full h-[160px] md:h-auto bg-gray-100 flex items-center justify-center overflow-hidden rounded-md">
-                {imageUrl ? (
-                    <img
-                        src={imageUrl}
-                        alt="preview"
-                        className="object-cover w-full h-full"
-                    />
-                ) : (
-                    <div className="flex items-center justify-center text-gray-400 text-sm">
-                    </div>
-                )}
-            </div>
-
+            {imageUrl ? (
+                <img
+                    src={imageUrl}
+                    alt="preview"
+                    className="object-cover w-full h-full"
+                />
+            ) : (
+                <div className="flex items-center justify-center text-gray-400 text-sm">
+                </div>
+            )}
             <div className="flex-1 flex flex-col ">
                 <div>
                     <Heading text={`${String(card.price)} сум`} level={2} className="font-inter text-[24px] font-bold text-[#232323] mb-2" />
@@ -43,16 +40,21 @@ export const CardPreview: React.FC<CardPreviewProps> = ({ card, onPreview }) => 
                         Адрес: <span className=" font-bold text-[14px] ml-1.5">{card.address?.address}, {card.address?.city?.name_ru}</span>
                     </Paragraph>
 
-                    {card.area && (
+                    {card.area ? (
                         <Paragraph className="flex items-center font-inter font-medium text-[14px] mt-3 text-[#667085]">
                             <FaLocationCrosshairs className="text-[#2EAA7B] mr-1.5" />
                             {card.area} кв. м.
                         </Paragraph>
+                    ):(
+                        <Paragraph className="flex items-center font-inter font-medium text-[14px] mt-3 text-[#667085]">
+                            <FaLocationCrosshairs className="text-[#2EAA7B] mr-1.5" />
+                             Не указано
+                        </Paragraph>
                     )}
                 </div>
 
-                <div className="mt-4.5">
-                    <Button onClick={onPreview} className="bg-[#2EAA7B] text-white px-4 py-2 rounded-md flex items-center gap-2">
+                <div className="mt-4.5 w-full">
+                    <Button onClick={onPreview} className="bg-[#2EAA7B] w-full text-white px-4 py-2 rounded-md flex justify-center items-center gap-2">
                         Просмотреть <FaArrowRight />
                     </Button>
                 </div>

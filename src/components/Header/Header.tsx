@@ -13,6 +13,7 @@ import { RootState } from "../../Store/store";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setCurrencyMode } from "../../Store/Slices/currencySlice";
+import FlagUzbIcon from "../../assets/Flag.svg?react";
 // import { setLanguage } from "./../../Store/Slices/languageSlice";
 
 interface HeaderProps {
@@ -141,8 +142,10 @@ export const Header: React.FC<HeaderProps> = ({
                                 onChange={(e) => dispatch(setCurrencyMode(e.target.value as "UZS" | "USD"))}
                                 className="w-full h-full px-4 pr-10 border border-[#C9CCCF] rounded-[10px] outline-none text-[#191919] font-medium appearance-none"
                             >
-                                <option value="UZS">сум</option>
-                                <option value="USD">$ USD</option>
+                                <option value="UZS">
+                                    <FlagUzbIcon className="w-[10px] h-[10px] object-contain" />
+                                    Cум</option>
+                                <option value="USD">USD</option>
                             </select>
                             <MdOutlineArrowDropDown className="absolute right-3 top-1/2 -translate-y-1/2 text-xl text-[#191919] pointer-events-none" />
                         </div>
@@ -221,7 +224,7 @@ export const Header: React.FC<HeaderProps> = ({
                                     onChange={(e) => dispatch(setCurrencyMode(e.target.value as "UZS" | "USD"))}
                                     className="w-full h-full px-4 pr-10 border border-[#C9CCCF] rounded-[10px] outline-none text-[#191919] font-medium appearance-none"
                                 >
-                                    <option value="UZS">сум</option>
+                                    <option value="UZS">Сум</option>
                                     <option value="USD">$ USD</option>
                                 </select>
                                 <MdOutlineArrowDropDown className="absolute right-3 top-1/2 -translate-y-1/2 text-xl text-[#191919] pointer-events-none" />

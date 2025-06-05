@@ -1,4 +1,4 @@
-import { Button, Paragraph, CardPreview } from "../../../components";
+import { Button, Paragraph, CardPreview, ModalBase } from "../../../components";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../../Store/store";
 import { OfferPayload } from "../../../Store/api/types";
@@ -38,6 +38,7 @@ export const PublicationStep: React.FC<Props> = ({ onPublish, onPreview }) => {
     const [isPublishing, setIsPublishing] = useState(false);
     const [, setIsPublished] = useState(false);
     const [, setError] = useState(false);
+    const [isErrorModalOpen, setIsErrorModalOpen] = useState(false);
 
     if (!cardData) return null;
 
@@ -105,34 +106,52 @@ export const PublicationStep: React.FC<Props> = ({ onPublish, onPreview }) => {
             dispatch(clearOfferData());
             onPublish();
         } catch (err) {
-            console.error("Ошибка при создании или публикации оффера:", err);
+            console.error("Ошибка при публикации оффера:", err);
             setError(true);
+            setIsErrorModalOpen(true);
         } finally {
             setIsPublishing(false);
         }
     };
 
     return (
-        <div className="flex flex-col items-start gap-6 bg-[#F8F8F8] p-5">
-            <Paragraph className="text-3xl font-inter font-semibold text-[#101828] leading-10">
-                Подтвердите и публикуйте
-            </Paragraph>
-            <Paragraph className="font-inter text-[#667085] text-[16px] leading-5 max-w-[600px]">
-                Вы почти у цели! Посмотрите, как будет выглядеть ваш готовый листинг после окончательного одобрения.
-            </Paragraph>
+        <div>
+            {isErrorModalOpen && (
+                <ModalBase
+                    title="Что-то пошло не так"
+                    message={
+                        <Paragraph className="text-[#232323] text-base">
+                            Пожалуйста, проверьте информацию в объявлении или повторите попытку позже.
+                        </Paragraph>
+                    }
+                    onClose={() => setIsErrorModalOpen(false)}
+                    ModalClassName="p-8"
+                    HeadingClassName="text-[#101828] font-bold text-xl"
+                />
+            )
+            }
+            <div className="flex flex-col items-start gap-6 bg-[#F8F8F8] p-5">
+                <Paragraph className="text-3xl font-inter font-semibold text-[#101828] leading-10">
+                    Подтвердите и публикуйте
+                </Paragraph>
+                <Paragraph className="font-inter text-[#667085] text-[16px] leading-5 max-w-[600px]">
+                    Вы почти у цели! Посмотрите, как будет выглядеть ваш готовый листинг после окончательного одобрения.
+                </Paragraph>
 
-            <div className="w-full max-w-[600px]">
-                <CardPreview card={card} onPreview={onPreview} />
+                <div className="w-full max-w-150">
+                    <CardPreview card={card} onPreview={onPreview} />
+                </div>
+
+                <Button
+                    className="bg-[#2EAA7B] text-white px-6 py-3 rounded-md mt-6"
+                    onClick={handlePublish}
+                    disabled={isPublishing}
+                >
+                    {isPublishing ? "Публикация..." : "Опубликовать"}
+                </Button>
             </div>
 
-            <Button
-                className="bg-[#2EAA7B] text-white px-6 py-3 rounded-md mt-6"
-                onClick={handlePublish}
-                disabled={isPublishing}
-            >
-                {isPublishing ? "Публикация..." : "Опубликовать"}
-            </Button>
-        </div>
+        </div >
     );
 };
 

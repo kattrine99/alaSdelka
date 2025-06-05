@@ -81,16 +81,16 @@ export const CardDetailPreview: React.FC<CardDetailPreviewProps> = ({ onBack }) 
         filtersData?.categories?.find((c) => c.id === Number(data?.category_id))?.title_ru || "Категория не указана";
 
     return (
-        <div className="px-[192px] py-10 ">
+        <div className="container mx-auto py-10 max-md:p-4 ">
             <div className="mb-6 flex items-center gap-2 cursor-pointer text-[#28B13D]" onClick={onBack}>
                 <HiOutlineArrowNarrowLeft className="w-5 h-5" />
                 <span className="font-medium text-[15px]">Предварительный просмотр вашего объявления</span>
             </div>
 
             {/* Основной блок */}
-            <div className="bg-[#F8F8F8] p-10">
-                <Heading level={2} text={data.title || "Название"} className="text-[24px] mb-3.75" />
-                \                <div className='flex gap-1.5'>
+            <div className="bg-[#F8F8F8] p-10 max-md:p-4">
+                <Heading level={2} text={data.title || "Название"} className="text-2xl mb-3.75" />
+                <div className='flex gap-1.5'>
                     <FaLocationDot className="text-[#2EAA7B] w-4 h-4" />
                     <Paragraph className="text-[#667085] text-sm mb-2">
                         {data.city_name ?? ""}, {data.address?.address ?? "Адрес не указан"}
@@ -123,7 +123,7 @@ export const CardDetailPreview: React.FC<CardDetailPreviewProps> = ({ onBack }) 
                 {/* Удобства */}
                 <div className="mb-6">
                     <Heading level={3} text="Удобства" className="text-[18px] mb-2" />
-                    <div className="grid grid-cols-5 gap-x-12.5 gap-y-4">
+                    <div className="grid grid-cols-5 max-lg:grid-cols-3 max-sm:flex max-sm:flex-col gap-x-12.5 gap-y-4">
                         {conveniences.map((id) => {
                             const name = convenienceMap[id];
                             if (!name) return null;
@@ -185,7 +185,7 @@ export const CardDetailPreview: React.FC<CardDetailPreviewProps> = ({ onBack }) 
                 {data.average_monthly_revenue === 0 &&
                     <div className="mb-6">
                         <Heading level={3} text="Информация и финансы" className="text-[18px] mb-2" />
-                        <div className="mt-3 w-203.25 flex flex-wrap gap-x-3 gap-y-4">
+                        <div className="mt-3 max-w-203.25 max-md:w-full flex flex-wrap gap-x-3 gap-y-4">
                             <div className="flex w-65.75 gap-2 border border-[#2EAA7B] items-center rounded-[10px] py-3 px-4.25">
                                 <WalletIcon className='w-10 h-10' />
                                 <div className='flex flex-col'>
@@ -232,11 +232,10 @@ export const CardDetailPreview: React.FC<CardDetailPreviewProps> = ({ onBack }) 
                     </div>
                 }
 
-
                 {/* Локация */}
                 <div>
                     <Heading level={3} text="Местоположение" className="text-[18px] mb-2" />
-                    <Paragraph className="flex items-center text-[#667085] text-[14px]">
+                    <Paragraph className="flex items-center text-[#667085] text-[14px] mb-2">
                         <FaLocationDot className="text-[#2EAA7B] mr-2" />
                         {data.city_name}, {data.address?.address}
                     </Paragraph>

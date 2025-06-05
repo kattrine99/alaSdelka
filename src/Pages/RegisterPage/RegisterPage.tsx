@@ -123,10 +123,16 @@ export const RegistrationPage = () => {
                 code
             }).unwrap();
 
+            const expiresAt = Date.now() + response.expires_in * 1000;
+
+            localStorage.setItem("access_token", response.access_token);
+            localStorage.setItem("expires_in", expiresAt.toString());
+
+            dispatch(setIsAuthenticated(true));
+
             setSuccessMessage(response.message);
             setShowSuccessModal(true);
-            dispatch(setIsAuthenticated(true));
-            localStorage.setItem("accessToken", response.access_token);
+
 
             setTimeout(() => {
                 setShowSuccessModal(false);

@@ -98,18 +98,16 @@ export const Cards: React.FC<ICards & { forceAllFavorite?: boolean }> = ({
                         )}
 
                         {/* ИЗОБРАЖЕНИЕ И СЕРДЕЧКО */}
-                        <div className={`relative ${cardIconClass ?? ""}`}>
+                        <div className={`relative  ${cardIconClass ?? ""}`}>
 
                             <img
                                 src={
-                                    typeof card.image === "string"
-                                        ? card.image
-                                        : card.image instanceof File
-                                            ? URL.createObjectURL(card.image)
-                                            : "/images/business_abstract.jpg"
+                                    card.photos && card.photos.length > 0 && card.photos[0].photo
+                                        ? card.photos[0].photo
+                                        : "/images/business_abstract.jpg"
                                 }
                                 alt={`${card.id}`}
-                                className="w-full object-cover"
+                                className="w-full"
                             />
                             {isAuthenticated && (
                                 <FavoriteButton

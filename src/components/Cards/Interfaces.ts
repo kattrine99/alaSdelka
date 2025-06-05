@@ -4,6 +4,11 @@ export interface ICard {
     offer_type: "бизнес" | "франшиза" | "стартап" | "инвестиции" | "business" | "franchise" | "startup" | "investments";
     id: number;
     image?: File | string | null;
+    photos?: {
+        id: number;
+        photo: string;
+        order: number;
+    }[];
     price: number;
     title: string;
     description?: string;

@@ -235,7 +235,7 @@ export const CardDetailPage = () => {
                                             <MoneySendIcon className='w-10 h-10' />
                                             <div className='flex flex-col'>
                                                 <Paragraph className="font-inter text-[13px] leading-5 text-[#7D7D7D]">Окупаемость</Paragraph>
-                                                <Paragraph className="font-inter text-xl font-bold text-[#2EAA7B]">{formatMonthsToYears(card.profitability)}</Paragraph>
+                                                <Paragraph className="font-inter text-xl font-bold text-[#2EAA7B]">{formatMonthsToYears(card.payback_period)}</Paragraph>
                                             </div>
                                         </div>
                                         <div className="flex gap-2 w-full border border-[#2EAA7B] items-center rounded-[10px] py-3 px-4.25">

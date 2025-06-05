@@ -257,9 +257,9 @@ export const PromotionPage = () => {
                                 </div>
                             </div>
 
-                            <div className="flex gap-8.25 items-center mb-5 mt-9.25">
+                            <div className="flex gap-8.25 items-center text-center mb-5 mt-9.25">
                                 <Paragraph className="border py-3 px-5 w-12.5 h-12.5 items-center border-[#2EAA7B] rounded-full">3</Paragraph>
-                                <Heading className=" w-full text-xl font-inter mb-4" level={3} text="После ввода данных, нажмите Оплатить и подтвердите через SMS" />
+                                <Heading className=" w-full text-xl font-inter" level={3} text="После ввода данных, нажмите Оплатить и подтвердите через SMS" />
                             </div>
                         </div>
 

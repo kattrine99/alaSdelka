@@ -92,7 +92,7 @@ export const Cards: React.FC<ICards & { forceAllFavorite?: boolean }> = ({
                             </div>
                         )}
                         {card.offer_status === "sold" && (
-                            <div className="absolute w-[125px] left-5 font-openSans translate-y-[-50%] bg-white border border-[#301DFF] text-[#301DFF] py-1.25 px-1.5 rounded-md font-semibold z-10 shadow-sm flex">
+                            <div className="absolute w-[125px] left-5 font-openSans translate-y-[-50%] bg-white border border-[#301DFF] text-[#301DFF] py-1.25 px-1.5 rounded-md font-semibold z-10 shadow-sm flex justify-center">
                                 <Paragraph>Продано</Paragraph>
                             </div>
                         )}

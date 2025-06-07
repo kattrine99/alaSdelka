@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ModalBase, Button, Paragraph } from "../../../components";
 import { BiHeart, BiSolidHeart } from "react-icons/bi";
 import { OfferDetail } from "../../../Store/api/types";
@@ -23,22 +23,24 @@ export const SellerInfoCard = ({ card, offer_type, userId }: { card: OfferDetail
             : (card.price || 0).toLocaleString() + " сум";
 
     const handleToggleFavorite = async () => {
-        setIsFavorite((prev) => !prev);
-
         try {
-            const res = await toggleFavoriteAPI(card.id).unwrap();
-            if (res.status === "added") {
+            const res = await toggleFavoriteAPI({ id: card.id }).unwrap();
+
+            if (res?.status === "added") {
                 setIsFavorite(true);
-            } else {
+            } else if (res?.status === "removed" || res?.status === "deleted") {
                 setIsFavorite(false);
             }
         } catch (e) {
             console.error("Ошибка при переключении избранного:", e);
-            setIsFavorite((prev) => !prev);
         }
     };
+    useEffect(() => {
+        setIsFavorite(card?.is_favourite ?? false);
+    }, [card?.is_favourite]);
+
     return (
-        <div className="lg:max-w-113 w-full p-4 rounded-md shadow-md shadow-[#2EAA7B2E] flex flex-col gap-4 relative">
+        <div className="xl:max-w-113 w-full p-4 rounded-md shadow-md shadow-[#2EAA7B2E] flex flex-col gap-4 relative">
             <button
                 onClick={handleToggleFavorite}
                 className="absolute top-4 right-4 p-1 border rounded-full border-green-500 text-green-500"
@@ -60,7 +62,7 @@ export const SellerInfoCard = ({ card, offer_type, userId }: { card: OfferDetail
                     <div className="rounded-full">
                         <img
                             src={`${card.user_photo || "../../../../images/profile.png"}`}
-                            className="w-10"
+                            className="w-12 h-12 rounded-full object-cover"
                             alt="User photo"
                         />
                     </div>

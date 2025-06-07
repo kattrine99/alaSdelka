@@ -14,7 +14,7 @@ import {
     ModalBase,
 } from "../../components";
 import { ICard } from "../../components/Cards/Interfaces";
-import { useGetUserOffersQuery, useGetOfferContactViewQuery } from "../../Store/api/Api";
+import { useGetUserOffersQuery, useGetOfferContactViewQuery, useToggleFavoriteMutation } from "../../Store/api/Api";
 
 import { FiltersState } from "../../utils/variables";
 import { FiSearch } from "react-icons/fi";
@@ -66,10 +66,12 @@ export const UserAnnouncementPage = () => {
     const { data: contactData, isLoading: isLoadingPhone } = useGetOfferContactViewQuery(firstOfferId!, {
         skip: !isContactModalOpen || !firstOfferId,
     });
-
+    const [toggleFavorite] = useToggleFavoriteMutation();
+    const [favoriteStates, setFavoriteStates] = useState<{ [key: number]: boolean }>({});
     useEffect(() => {
         if (contactData?.phone) setContactPhone(contactData.phone);
     }, [contactData]);
+    const [isMobileFiltersOpen, setIsMobileFiltersOpen] = useState(false);
 
     const cards = data?.offers ?? [];
     const mappedCards: ICard[] = cards
@@ -78,7 +80,7 @@ export const UserAnnouncementPage = () => {
             id: card.id,
             title: card.title || "Название не указано",
             price: card.price ?? "Цена не указана",
-            image: card.photos?.[0]?.photo || "/images/business_abstract.jpg",
+            photos: card.photos ?? [],
             address: {
                 address: card.address?.address || "Адрес не указан",
                 city: {
@@ -88,9 +90,40 @@ export const UserAnnouncementPage = () => {
             area: card.area ? `${card.area} кв. м.` : "Площадь не указана",
             offer_type: card.offer_type,
             user_phone: card.user_phone || "",
+            is_favourite: card.is_favourite ?? false,
         }));
     const totalPages = Math.ceil((data?.user_offers_count ?? 0) / itemsPerPage);
     const user = data?.user;
+    useEffect(() => {
+        if (cards.length) {
+            const initialFavorites: { [key: number]: boolean } = {};
+            cards.forEach((c) => {
+                if (c) initialFavorites[c.id] = c.is_favourite ?? false;
+            });
+            setFavoriteStates(initialFavorites);
+        }
+    }, [cards]);
+    const handleToggleFavorite = async (offerId: number) => {
+        const prev = favoriteStates[offerId];
+        setFavoriteStates((prevState) => ({
+            ...prevState,
+            [offerId]: !prev,
+        }));
+
+        try {
+            const res = await toggleFavorite(offerId).unwrap();
+            setFavoriteStates((prevState) => ({
+                ...prevState,
+                [offerId]: res.status === "added",
+            }));
+        } catch (e) {
+            console.error("Ошибка при переключении избранного:", e);
+            setFavoriteStates((prevState) => ({
+                ...prevState,
+                [offerId]: prev,
+            }));
+        }
+    };
 
     return (
 
@@ -108,18 +141,51 @@ export const UserAnnouncementPage = () => {
             )}
 
             <Header />
-            <div className="flex px-48 py-[30px] pb-10 gap-10 items-start">
+            <div className="flex container mx-auto max-xl:flex-col py-[30px] pb-10 gap-10 items-start">
                 <aside className="flex flex-col">
                     <Breadcrumbs category={category} title="Объявления пользователя" />
                     <Heading text="Объявления пользователя" level={2} className="text-[30px] font-bold text-black mt-4.5" />
-
                     {type && (
-                        <Filters
-                            offer_type={type as "business" | "startup" | "franchise" | "investments" | "бизнес" | "франшиза" | "стартапы" | "инвстиции"}
-                            filters={filters}
-                            setFilters={setFilters}
-                            onApplyFilters={() => setCurrentPage(1)}
-                        />
+                        <>
+                            {/* Кнопка фильтров (только для mobile) */}
+                            <button
+                                onClick={() => setIsMobileFiltersOpen(true)}
+                                className="lg:hidden px-5 py-3 bg-[#2EAA7B] text-white rounded-[6px] hover:bg-[#31B683] transition duration-300 mb-4"
+                            >
+                                Фильтры
+                            </button>
+
+                            {/* Фильтры для desktop */}
+                            <div className="hidden lg:block">
+                                <Filters
+                                    offer_type={type as "business" | "startup" | "franchise" | "investments" | "бизнес" | "франшиза" | "стартапы" | "инвстиции"}
+                                    filters={filters}
+                                    setFilters={setFilters}
+                                    onApplyFilters={() => setCurrentPage(1)}
+                                />
+                            </div>
+
+                            {/* Мобильное модальное меню фильтров */}
+                            {isMobileFiltersOpen && (
+                                <div className="fixed inset-0 bg-white z-50 p-6 overflow-y-auto">
+                                    <button
+                                        onClick={() => setIsMobileFiltersOpen(false)}
+                                        className="text-xl font-bold mb-4"
+                                    >
+                                        ×
+                                    </button>
+                                    <Filters
+                                        offer_type={type as "business" | "startup" | "franchise" | "investments" | "бизнес" | "франшиза" | "стартапы" | "инвстиции"}
+                                        filters={filters}
+                                        setFilters={setFilters}
+                                        onApplyFilters={() => {
+                                            setIsMobileFiltersOpen(false);
+                                            setCurrentPage(1);
+                                        }}
+                                    />
+                                </div>
+                            )}
+                        </>
                     )}
                 </aside>
 
@@ -151,12 +217,12 @@ export const UserAnnouncementPage = () => {
 
                     {/* Карточка пользователя */}
                     {user && (
-                        <div className="w-full border border-[#2EAA7B] rounded-2xl p-6 flex flex-col  items-start mt-16">
+                        <div className="border border-[#2EAA7B] rounded-2xl p-6 w-full flex flex-col gap-4">
                             <div className="flex items-center gap-4">
                                 <div className="rounded-full">
                                     <img
                                         src={`${user.photo || "../../../../images/profile.png"}`}
-                                        className="w-10 h-10"
+                                        className="w-14 h-14 rounded-full object-cover"
                                         alt="User photo"
                                     />
                                 </div>                                <div>
@@ -212,7 +278,7 @@ export const UserAnnouncementPage = () => {
                             cards={mappedCards}
                             containerClass="flex flex-col gap-7.5 rounded-xl w-317.75 mt-25"
                             cardWrapperClass="shadow-[1px_1px_4.5px_0px] shadow-[#28B13D4D]"
-                            cardIconClass="w-85 h-58"
+                            cardIconClass="max-w-85 h-[230px] overflow-hidden"
                             WhatchButtonClass="py-3 px-5 w-79.5 bg-[#2EAA7B] text-white font-medium rounded-md flex justify-center hover:bg-[#31B683] transition duration-300 cursor-pointer"
                         />
 

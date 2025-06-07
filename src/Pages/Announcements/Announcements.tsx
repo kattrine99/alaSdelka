@@ -14,6 +14,10 @@ export const AnnouncemntsPage = () => {
 
   const navigate = useNavigate();
   const [showModal, setShowModal] = useState(false);
+  const [successModal, setSuccessModal] = useState<{
+    isOpen: boolean;
+    message: string;
+  }>({ isOpen: false, message: "" });
   const [currentPage, setCurrentPage] = useState(1);
   const { data, isLoading, isError, refetch } = useGetMyOffersQuery({ page: currentPage, per_page: 5 });
 
@@ -77,6 +81,11 @@ export const AnnouncemntsPage = () => {
                   try {
                     await sellOffer(selectedOfferId).unwrap();
                     setShowModal(false);
+                    setSuccessModal({
+                      isOpen: true,
+                      message: "Объявление успешно отмечено как проданное!",
+                    });
+                    await refetch();
                   } catch (err) {
                     console.error("Ошибка при отправке запроса:", err);
                   }
@@ -112,6 +121,11 @@ export const AnnouncemntsPage = () => {
                   try {
                     await archiveOffer(selectedOfferId).unwrap();
                     setShowArchiveModal(false);
+                    setSuccessModal({
+                      isOpen: true,
+                      message: "Объявление успешно перемещено в архив!",
+                    });
+                    await refetch();
                   } catch (err) {
                     console.error("Ошибка при архивировании:", err);
                   }
@@ -123,7 +137,23 @@ export const AnnouncemntsPage = () => {
           }
         />
       )}
-
+      {successModal.isOpen && (
+        <ModalBase
+          title="Успешно!"
+          HeadingClassName="font-inter text-[35px] leading-[100%]"
+          ModalClassName="w-120 p-9"
+          message={successModal.message}
+          onClose={() => setSuccessModal({ isOpen: false, message: "" })}
+          actions={
+            <Button
+              className="bg-[#2EAA7B] hover:bg-[#31B683] text-white px-6 py-3 rounded-md w-full"
+              onClick={() => setSuccessModal({ isOpen: false, message: "" })}
+            >
+              Понятно
+            </Button>
+          }
+        />
+      )}
       <Header navLinksData={profileNavigate} />
       <div className="container mx-auto px-3 md:px-0 py-9">
         <Heading text={"Мои объявления"} level={2} className="font-inter text-xl font-bold leading-5 space-x-[-0.5%]" />

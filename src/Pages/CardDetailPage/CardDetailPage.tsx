@@ -108,9 +108,9 @@ export const CardDetailPage = () => {
 
             ) :
                 (
-                    <div className='container mx-auto px-3 md:px-0 py-7.5 '>
+                    <div className=''>
                         <Breadcrumbs category={category} title={card.title} />
-                        <div className='flex flex-wrap lg:flex-nowrap'>
+                        <div className='flex flex-wrap xl:flex-nowrap'>
                             <div className='flex flex-col w-full'>
                                 <Heading className="text-[24px] md:text-4xl font-inter leading-10 font-bold mt-6 mb-3.5" text={card.title} level={2} />
                                 <div className='flex flex-col gap-2 mb-[15px]'>
@@ -280,7 +280,7 @@ export const CardDetailPage = () => {
 
                                 </div>
                             </div>
-                            <div className="lg:mt-0 mt-6 w-full lg:w-4/12">
+                            <div className="xl:mt-0 mt-6 w-full xl:w-4/12">
                                 <SellerInfoCard card={data.data} userId={card.user_id} offer_type={card.offer_type} />
                             </div>
                         </div>

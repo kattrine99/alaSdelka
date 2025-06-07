@@ -32,7 +32,7 @@ export const FavoritePage = () => {
         id: offer.id,
         title: offer.title || "Название не указано",
         price: offer.price ?? 0,
-        image: offer.photos?.[0]?.photo || "/images/business_abstract.jpg",
+        photos: offer.photos ?? [], 
         address: {
           address: offer.address?.address || "Адрес не указан",
           city: {
@@ -46,6 +46,7 @@ export const FavoritePage = () => {
       })),
     [offers]
   );
+
 
   const handleFavoritesChanged = async (id: number) => {
     try {

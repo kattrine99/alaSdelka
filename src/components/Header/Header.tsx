@@ -197,7 +197,7 @@ export const Header: React.FC<HeaderProps> = ({
                 </div>
 
                 {isMobileMenuOpen && (
-                    <div className="md:hidden fixed top-[64px] left-0 w-full bg-white z-40 px-6 py-4 shadow-md flex flex-col gap-6 overflow-y-auto max-h-[calc(100vh-64px)]">
+                    <div className="lg:hidden fixed top-[64px] left-0 w-full bg-white z-40 px-6 py-4 shadow-md flex flex-col gap-6 overflow-y-auto max-h-[calc(100vh-64px)]">
                         <NavLinks
                             links={navLinksData ?? categories}
                             className="flex flex-col gap-4"
@@ -206,7 +206,7 @@ export const Header: React.FC<HeaderProps> = ({
                         {/* Язык и Валюта */}
                         <div className="flex flex-col gap-3">
                             {/* Языки */}
-                            <div className="relative w-full h-[49px]">
+                            {/* <div className="relative w-full h-[49px]">
                                 <select
                                     name="Languages"
                                     className="w-full h-full px-4 pr-10 border border-[#C9CCCF] rounded-[10px] outline-none text-[#191919] font-medium appearance-none"
@@ -215,7 +215,7 @@ export const Header: React.FC<HeaderProps> = ({
                                     <option id="UZ">O'zbek</option>
                                 </select>
                                 <MdOutlineArrowDropDown className="absolute right-3 top-1/2 -translate-y-1/2 text-xl text-[#191919] pointer-events-none" />
-                            </div>
+                            </div> */}
 
                             {/* Валюта */}
                             <div className="relative w-full h-[49px]">

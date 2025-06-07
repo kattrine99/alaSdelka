@@ -251,6 +251,7 @@ export interface SellOfferResponse {
     data: OfferDetails
 }
 export interface OfferDetails {
+    is_favourite: boolean;
     id: number;
     title: string;
     description: string;

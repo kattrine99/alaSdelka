@@ -301,7 +301,7 @@ export const PromotionPage = () => {
                         onClose={() => setStep(1)}
                         actions={<div className="">
                             <div className="flex justify-between gap-2 mb-4">
-                                {Array.from({ length: 4 }).map((_, index) => (
+                                {Array.from({ length: 6 }).map((_, index) => (
                                     <Input
                                         key={index}
                                         maxLength={1}

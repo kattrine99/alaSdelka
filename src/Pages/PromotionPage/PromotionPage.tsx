@@ -49,7 +49,7 @@ export const PromotionPage = () => {
 
     const [, setShowResultModal] = useState(false);
     const [maskedPhone, setMaskedPhone] = useState<string>("");
-    const [codeInput, setCodeInput] = useState<string[]>(["", "", "", ""]);
+    const [codeInput, setCodeInput] = useState<string[]>(["", "", "", "", "", ""]);
     const code = codeInput.join("");
     const inputsRef = useRef<Array<HTMLInputElement | HTMLTextAreaElement | null>>([]);
     const [paymentSuccess, setPaymentSuccess] = useState<null | boolean>(null);
@@ -297,7 +297,7 @@ export const PromotionPage = () => {
                     <ModalBase
                         title=""
                         message={`Введите код, отправленный на номер ${maskedPhone}`}
-                        ModalClassName="w-full max-w-[450px] mx-auto px-4 sm:px-10 py-8 text-center"
+                        ModalClassName="w-full max-w-[650px] mx-auto px-4 sm:px-10 py-8 text-center"
                         onClose={() => setStep(1)}
                         actions={<div className="">
                             <div className="flex justify-between gap-2 mb-4">
@@ -327,7 +327,7 @@ export const PromotionPage = () => {
                                 )}
                             </div>
                             <Button
-                                disabled={code.length !== 4}
+                                disabled={code.length !== 6}
                                 onClick={async () => {
                                     try {
                                         await verifyCard({ card_id: newCardId!, code }).unwrap();

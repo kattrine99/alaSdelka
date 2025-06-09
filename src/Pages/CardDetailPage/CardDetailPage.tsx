@@ -108,7 +108,7 @@ export const CardDetailPage = () => {
 
             ) :
                 (
-                    <div className=''>
+                    <div className='container mx-auto pt-10 max-md:p-5'>
                         <Breadcrumbs category={category} title={card.title} />
                         <div className='flex flex-wrap xl:flex-nowrap'>
                             <div className='flex flex-col w-full'>

@@ -8,6 +8,7 @@ import GpsIcon from '../../assets/gps.svg?react'
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../Store/store";
+import { getRefetchNotifications } from "../../utils/notificationRefetch";
 
 export const AnnouncemntsPage = () => {
 
@@ -35,11 +36,12 @@ export const AnnouncemntsPage = () => {
   }, [currentPage]);
 
   useEffect(() => {
-    if (location.state?.promotionSuccess) {
+    if (location.state?.promotionSuccess || location.state?.newOffer) {
       refetch();
       navigate(location.pathname, { replace: true, state: {} });
     }
   }, [location.state]);
+
 
   const formatPrice = (price?: number | string) => {
     const numericPrice = typeof price === "string" ? parseFloat(price) : price;
@@ -85,6 +87,9 @@ export const AnnouncemntsPage = () => {
                       isOpen: true,
                       message: "Объявление успешно отмечено как проданное!",
                     });
+                    const refetchNotifications = getRefetchNotifications();
+                    refetchNotifications?.();
+
                     await refetch();
                   } catch (err) {
                     console.error("Ошибка при отправке запроса:", err);
@@ -185,28 +190,35 @@ export const AnnouncemntsPage = () => {
                   <div key={offer.id} className="bg-white border border-[#E0E0E0] rounded-xl flex w-full">
 
                     <div className="relative grid grid-cols-1 md:grid-cols-3 w-full">
-                      {offer.offer_status === "sold" && (
-                        <div className="absolute w-[125px] left-5 top-[-20px] font-openSans bg-white border border-[#301DFF] text-[#301DFF] py-1.25 px-1.5 rounded-md font-semibold z-10 shadow-sm text-center gap-1">
-                          <Paragraph className="text-sm">Продано</Paragraph>
-                        </div>)}
-                      {offer.is_paid === true && (
-                        <div className="absolute left-5 top-[-20px] bg-white border border-[#FD6A0D] text-[#FD6A0D] py-1.25 px-1.5 rounded-md font-semibold z-10 shadow-sm flex items-center gap-1">
-                          <FireIcon className="w-5 h-5 text-[#FD6A0D]" />
-                          <Paragraph className="text-sm">Популярное</Paragraph>
+                      {(offer.offer_status === "sold" || offer.is_paid === true) && (
+                        <div className="absolute left-5 top-[-20px] z-10 flex gap-2">
+                          {offer.offer_status === "sold" && (
+                            <div className="w-[125px] font-openSans bg-white border border-[#301DFF] text-[#301DFF] py-1.25 px-1.5 rounded-md font-semibold shadow-sm text-center">
+                              <Paragraph className="text-sm">Продано</Paragraph>
+                            </div>
+                          )}
+                          {offer.is_paid === true && (
+                            <div className="font-openSans bg-white border border-[#FD6A0D] text-[#FD6A0D] py-1.25 px-1.5 rounded-md font-semibold shadow-sm flex items-center gap-1">
+                              <FireIcon className="w-5 h-5 text-[#FD6A0D]" />
+                              <Paragraph className="text-sm">Популярное</Paragraph>
+                            </div>
+                          )}
                         </div>
                       )}
-                      <div className="relative col-span-1">
-                        <Link to={`/${offerTypeToUrlMap[offer.offer_type || 'category']}/card/${offer.id}`} className="w-full flex justify-center h-full">
 
-                          <img
-                            src={offer.photos[0]?.photo ?? "/images/business_abstract.jpg"}
-                            alt="cover"
-                            className="w-full h-full rounded object-cover bg-gray-100"
-                          />
-                        </Link>
+                      {offer.photos[0]?.photo && (
+                        <div className="relative col-span-1">
+                          <Link to={`/${offerTypeToUrlMap[offer.offer_type || 'category']}/card/${offer.id}`} className="w-full flex justify-center h-full">
 
-                      </div>
+                            <img
+                              src={offer.photos[0]?.photo}
+                              alt="cover"
+                              className="w-full h-full rounded object-cover bg-gray-100"
+                            />
+                          </Link>
 
+                        </div>
+                      )}
                       <div className="flex flex-3/4 flex-col gap-1 py-9.5 px-7 md:col-span-2">
                         <div className="flex flex-col mb-11">
                           <Link to={`/${offerTypeToUrlMap[offer.offer_type || 'category']}/card/${offer.id}`} className="w-full hover:text-[#2EAA7B]">

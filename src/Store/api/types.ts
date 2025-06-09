@@ -432,6 +432,7 @@ export interface Notification {
     text_uz: string;
     created_at: string;
     updated_at: string;
+    is_read: boolean;
 }
 export interface Notifications {
     data: Notification[],
@@ -441,6 +442,7 @@ export interface Notifications {
         last_page: number;
         per_page: number;
         total: number;
+        unread_count: number;
     };
 }
 export interface FavoritesResponse {

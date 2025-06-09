@@ -154,6 +154,12 @@ export const AuthApi = createApi({
         getNotifications: builder.query<Notifications, { page: number; per_page?: number; }>({
             query: ({ page, per_page = 5 }) => `/notifications?page=${page}&per_page=${per_page}`,
         }),
+        markAllRead: builder.mutation<Notifications, void>({
+            query: () => ({
+                url: '/notifications/mark-all-read',
+                method: 'POST',
+            }),
+        }),
         getUserOffers: builder.query<GetUserOffersResponse, GetUserOffersParams>({
             query: ({ user_id, ...params }) => ({
                 url: `/users/${user_id}/offers`,
@@ -251,6 +257,7 @@ export const {
     useGetFiltersDataQuery,
     useGetFavoritesQuery,
     useGetNotificationsQuery,
+    useMarkAllReadMutation,
     useGetUserOffersQuery,
     useGetOfferStatsQuery,
     useLazyGetOfferStatsQuery,

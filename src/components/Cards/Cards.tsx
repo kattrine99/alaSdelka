@@ -84,16 +84,19 @@ export const Cards: React.FC<ICards & { forceAllFavorite?: boolean }> = ({
 
                 return (
                     <div key={card.id} className={`relative bg-white rounded-lg flex ${cardWrapperClass ?? ""}`}>
-                        {/* СТАТУСЫ */}
-                        {card.is_paid === true && (
-                            <div className="absolute w-[125px] left-5 font-openSans translate-y-[-50%] bg-white border border-[#FD6A0D] text-[#FD6A0D] py-[5px] px-1.5 rounded-md font-semibold z-10 shadow-sm flex">
-                                <FireIcon className="z-10 w-5 h-5 text-[#FD6A0D]" />
-                                <Paragraph>Популярное</Paragraph>
-                            </div>
-                        )}
-                        {card.offer_status === "sold" && (
-                            <div className="absolute w-[125px] left-5 font-openSans translate-y-[-50%] bg-white border border-[#301DFF] text-[#301DFF] py-1.25 px-1.5 rounded-md font-semibold z-10 shadow-sm flex justify-center">
-                                <Paragraph>Продано</Paragraph>
+                        {(card.is_paid || card.offer_status === "sold") && (
+                            <div className="absolute -top-5 left-5 z-10 flex gap-2">
+                                {card.is_paid && card.offer_status !== "sold" && (
+                                    <div className="font-openSans bg-white border border-[#FD6A0D] text-[#FD6A0D] py-[5px] px-1.5 rounded-md font-semibold shadow-sm flex items-center gap-1">
+                                        <FireIcon className="w-5 h-5 text-[#FD6A0D]" />
+                                        <Paragraph>Популярное</Paragraph>
+                                    </div>
+                                )}
+                                {card.offer_status === "sold" && (
+                                    <div className="font-openSans bg-white border border-[#301DFF] text-[#301DFF] py-1.25 px-1.5 rounded-md font-semibold shadow-sm flex items-center justify-center">
+                                        <Paragraph>Продано</Paragraph>
+                                    </div>
+                                )}
                             </div>
                         )}
 
@@ -104,7 +107,7 @@ export const Cards: React.FC<ICards & { forceAllFavorite?: boolean }> = ({
                                 src={
                                     card.photos && card.photos.length > 0 && card.photos[0].photo
                                         ? card.photos[0].photo
-                                        : "/images/business_abstract.jpg"
+                                        : ""
                                 }
                                 alt={`${card.id}`}
                                 className="w-full"

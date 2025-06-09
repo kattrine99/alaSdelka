@@ -169,10 +169,10 @@ export const ProfilePage = () => {
                                     </div>
 
                                     <div className="flex flex-col gap-2 w-full">
-                                        <Paragraph className="font-inter font-medium text-xl leading-7 text-center md:text-left tracking-[-1%]">
+                                        <Paragraph className="font-inter font-medium text-xl leading-7  md:text-left tracking-[-1%]">
                                             {data.name}
                                         </Paragraph>
-                                        <Paragraph className="font-inter font-semibold text-[14px] text-center md:text-left text-[#667085] leading-5">
+                                        <Paragraph className="font-inter font-semibold text-[14px] md:text-left text-[#667085] leading-5">
                                             ID: {data.id}
                                         </Paragraph>
                                     </div>

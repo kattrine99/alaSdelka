@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { FaPhone, FaWhatsapp } from "react-icons/fa";
 import { IoIosMail } from "react-icons/io";
 import { FaTelegram } from "react-icons/fa6";
@@ -14,6 +14,8 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setCurrencyMode } from "../../Store/Slices/currencySlice";
 import FlagUzbIcon from "../../assets/Flag.svg?react";
+import { useGetNotificationsQuery, useMarkAllReadMutation } from "../../Store/api/Api";
+import { setRefetchNotifications } from "../../utils/notificationRefetch";
 // import { setLanguage } from "./../../Store/Slices/languageSlice";
 
 interface HeaderProps {
@@ -36,6 +38,34 @@ export const Header: React.FC<HeaderProps> = ({
     const selectedCurrency = useSelector((state: RootState) => state.currency.mode);
     // const language = useSelector((state: RootState) => state.language.current);
     const location = useLocation();
+    const menuRef = useRef<HTMLDivElement>(null)
+    const { data, refetch } = useGetNotificationsQuery({ page: 1, per_page: 1000 });
+    const [markAllAsRead] = useMarkAllReadMutation();
+    const [localUnreadCount, setLocalUnreadCount] = useState(0);
+    useEffect(() => {
+        if (data?.meta?.unread_count !== undefined) {
+            setLocalUnreadCount(data.meta.unread_count);
+        }
+    }, [data]);
+    useEffect(() => {
+        setRefetchNotifications(refetch);
+    }, []);
+
+    useEffect(() => {
+        const onNoticesPage = location.pathname === "/notices";
+        const alreadyVisited = localStorage.getItem("hasVisitedNotices") === "true";
+
+        if (onNoticesPage && (data?.meta?.unread_count ?? 0) > 0 && !alreadyVisited) {
+            markAllAsRead()
+                .unwrap()
+                .then(() => {
+                    localStorage.setItem("hasVisitedNotices", "true");
+                    setLocalUnreadCount(0); 
+                    refetch();
+                })
+                .catch((e) => console.error("Ошибка при отметке уведомлений:", e));
+        }
+    }, [location.pathname, data?.meta?.unread_count]);
 
     useEffect(() => {
         setIsMobileMenuOpen(false);
@@ -71,6 +101,26 @@ export const Header: React.FC<HeaderProps> = ({
             document.body.style.right = '';
             document.body.style.overflow = '';
             document.body.style.width = '';
+        };
+    }, [isMobileMenuOpen]);
+    useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+            if (
+                menuRef.current &&
+                !menuRef.current.contains(event.target as Node)
+            ) {
+                setIsMobileMenuOpen(false);
+            }
+        };
+
+        if (isMobileMenuOpen) {
+            document.addEventListener("mousedown", handleClickOutside);
+        } else {
+            document.removeEventListener("mousedown", handleClickOutside);
+        }
+
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
         };
     }, [isMobileMenuOpen]);
 
@@ -116,10 +166,10 @@ export const Header: React.FC<HeaderProps> = ({
                     </Applink>
 
                     {showNavLinks && (
-                        <nav className="flex gap-8.5 items-center flex-wrap">
+                        <nav className="flex gap-8.5 max-2xl:gap-4 items-center flex-wrap">
                             <NavLinks
                                 links={navLinksData ?? categories}
-                                className="flex  gap-x-8.5 font-medium"
+                                className="flex  gap-x-8.5 max-2xl:gap-4 font-medium"
                                 linkClassName="font-inter leading-[100%] text-[#232323] text-[clamp(14px,1.4vw,18px)] hover:text-[#2EAA7B] transition-all duration-500"
                             />
                         </nav>
@@ -153,7 +203,16 @@ export const Header: React.FC<HeaderProps> = ({
                         {showAuthButtons && (
                             isAuthenticated ? (
                                 <div className="flex gap-2 items-center">
-                                    <Button onClick={() => navigate("/notices")} className={undefined}><NoticeIcon /></Button>
+                                    <Button onClick={() => navigate("/notices")} className='relative'>
+                                        <NoticeIcon className="cursor-pointer items" />
+                                        {localUnreadCount > 0 && (
+                                            <span className="absolute -top-1 right-[1px] bg-[#DE5151] text-white text-xs w-4 h-4 rounded-full flex items-center justify-center">
+                                                {localUnreadCount > 9 ? "9+" : localUnreadCount}
+                                            </span>
+                                        )}
+
+                                    </Button>
+
                                     <Button onClick={() => navigate("/favorites")} className={undefined}><FavIcon /></Button>
                                     <Applink to="/profile"><ProfileIcon /></Applink>
                                 </div>
@@ -186,8 +245,10 @@ export const Header: React.FC<HeaderProps> = ({
                     <Applink to="/main" className="flex items-center">
                         <img src="/images/investin_logo.png" alt="Logo" className="h-10 object-contain" />
                     </Applink>
-                    <div className="flex items-center gap-3">
+                    <div ref={menuRef}
+                        className="flex items-center gap-3">
                         <button
+
                             className="w-10 h-10 flex items-center justify-center bg-[#D7F4EC] rounded-xl"
                             onClick={() => setIsMobileMenuOpen(prev => !prev)}
                         >
@@ -197,7 +258,8 @@ export const Header: React.FC<HeaderProps> = ({
                 </div>
 
                 {isMobileMenuOpen && (
-                    <div className="lg:hidden fixed top-[64px] left-0 w-full bg-white z-40 px-6 py-4 shadow-md flex flex-col gap-6 overflow-y-auto max-h-[calc(100vh-64px)]">
+                    <div
+                        className="lg:hidden fixed top-[64px] left-0 w-full bg-white z-40 px-6 py-4 shadow-md flex flex-col gap-6 overflow-y-auto max-h-[calc(100vh-64px)]">
                         <NavLinks
                             links={navLinksData ?? categories}
                             className="flex flex-col gap-4"
@@ -232,9 +294,9 @@ export const Header: React.FC<HeaderProps> = ({
                         </div>
                         {isAuthenticated ? (
                             <div className="flex gap-4 justify-center">
-                                <Button onClick={() => navigate("/notices")} className={undefined}><NoticeIcon /></Button>
-                                <Button onClick={() => navigate("/favorites")} className={undefined}><FavIcon /></Button>
-                                <Applink to="/profile"><ProfileIcon /></Applink>
+                                <Button onClick={() => navigate("/notices")} className={undefined}><NoticeIcon className="cursor-pointer" /></Button>
+                                <Button onClick={() => navigate("/favorites")} className={undefined}><FavIcon className="cursor-pointer" /></Button>
+                                <Applink to="/profile"><ProfileIcon className="cursor-pointer" /></Applink>
                             </div>
                         ) : (
                             <div className="flex flex-col gap-3">
@@ -269,13 +331,13 @@ export const Header: React.FC<HeaderProps> = ({
                             <Applink to="#">
                                 <FaTelegram className="w-6 h-6 md:w-8 md:h-8 text-[#229ED9]" />
                             </Applink>
-                            <Applink to="#" className="w-6 h-6 rounded-full bg-[#0DC143] flex items-center justify-center">
+                            <Applink to="#" className="w-6 h-6 md:w-8 md:h-8 rounded-full bg-[#0DC143] flex items-center justify-center">
                                 <FaWhatsapp className="w-[18px] h-[18px] text-white" />
                             </Applink>
                         </div>
                     </div>
                 )}
             </div>
-        </div>
+        </div >
     );
 };

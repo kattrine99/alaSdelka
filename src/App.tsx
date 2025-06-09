@@ -51,6 +51,7 @@ const Layout = () => {
     } else if (token && isExpired) {
       localStorage.removeItem("access_token");
       localStorage.removeItem("expires_in");
+      localStorage.removeItem("hasVisitedNotices");
       dispatch(setIsAuthenticated(false));
       dispatch(setLogoutReason("expired"));
     }

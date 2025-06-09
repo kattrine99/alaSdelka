@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
     EmptyMessage,
     Footer,
@@ -8,19 +8,40 @@ import {
     Pagination,
 } from "../../components";
 import { profileNavigate } from "../../utils/categoryMap";
-import { useGetNotificationsQuery } from "../../Store/api/Api";
+import { useGetNotificationsQuery, useMarkAllReadMutation } from "../../Store/api/Api";
 import { Notification } from "../../Store/api/types";
 import { CiCalendar } from "react-icons/ci";
 import { IoMdTime } from "react-icons/io";
+import CheckedAllIcon from "../../assets/check2-all.svg?react";
 
 export const NoticePage = () => {
     const [page, setPage] = useState(1);
     const perPage = 5;
 
-    const { data, isLoading, isError } = useGetNotificationsQuery({ page, per_page: perPage });
+    const { data, isLoading, isError, refetch } = useGetNotificationsQuery({ page, per_page: perPage });
 
     const notifications = data?.data ?? [];
     const totalPages = data?.meta?.last_page ?? 1;
+    const unreadCount = data?.meta?.unread_count ?? 0;
+    const [markAllAsRead] = useMarkAllReadMutation();
+    useEffect(() => {
+        if (unreadCount > 0) {
+            markAllAsRead()
+                .unwrap()
+                .then(() => {
+                    localStorage.setItem("hasVisitedNotices", "true");
+                    refetch();
+                })
+                .catch(err => {
+                    console.error("Ошибка при отметке уведомлений как прочитанных:", err);
+                });
+        }
+    }, [unreadCount]);
+    useEffect(() => {
+        if (unreadCount > 0) {
+            localStorage.removeItem("hasVisitedNotices");
+        }
+    }, [unreadCount]);
 
     return (
         <div className="w-screen">
@@ -73,13 +94,19 @@ export const NoticePage = () => {
                                         <Paragraph className="font-inter text-lg text-[#232323] mb-3.5">
                                             {item.text_ru}
                                         </Paragraph>
-                                        <div className="text-[#727272] text-sm flex gap-3 items-center">
-                                            <span className="flex gap-2">
-                                                <CiCalendar className="w-4 h-4 text-[#727272]" /> {date}
-                                            </span>
-                                            <span className="flex gap-2">
-                                                <IoMdTime className="w-4 h-4 text-[#727272]" /> {time}
-                                            </span>
+                                        <div className="flex justify-between">
+                                            <div className="text-[#727272] text-sm flex gap-3 items-center">
+                                                <span className="flex gap-2">
+                                                    <CiCalendar className="w-4 h-4 text-[#727272]" /> {date}
+                                                </span>
+                                                <span className="flex gap-2">
+                                                    <IoMdTime className="w-4 h-4 text-[#727272]" /> {time}
+                                                </span>
+                                            </div>
+                                            <div className="text-[#2EAA7B] items-center mr-2">
+                                                {item?.is_read == true && <Paragraph className="flex gap-2">Прочитано <CheckedAllIcon /></Paragraph>
+                                                }
+                                            </div>
                                         </div>
                                     </div>
                                 );

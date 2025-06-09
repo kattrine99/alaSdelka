@@ -150,7 +150,7 @@ export const PromotionPage = () => {
                 {paymentSuccess === true ? (
                     <div className="flex max-xl:flex-wrap gap-10 mt-10 justify-between bg-[url('/images/grid.png')] bg-contain bg-no-repeat bg-right duration-300 ease-in-out">
                         <div className="flex max-w-150 flex-col  items-start text-start">
-                            <Heading className="font-inter text-4xl max-lg:text-2xl transition duration-300 ease-in-out" text={""} level={2}>Поздравляем,<span className="font-bold">оплата прошла успешно!</span>Вы можете снова перейти к вашим объявлениям</Heading>
+                            <Heading className="font-inter text-4xl max-lg:text-2xl transition duration-300 ease-in-out" text={""} level={2}>Поздравляем,<span className="font-bold"> оплата прошла успешно!</span> Вы можете снова перейти к вашим объявлениям</Heading>
                             <Button
                                 className="mt-16 w-full max-w-83 px-5 py-3 bg-[#2EAA7B] shadow-[0px_1px_2px] shadow-[#1018280A] rounded-lg text-white font-inter font-semibold text-2xl max-md:text-xl duration-300 ease-in-out"
                                 onClick={() => navigate("/announcements", { state: { promotionSuccess: true } })}
@@ -331,7 +331,7 @@ export const PromotionPage = () => {
                                 onClick={async () => {
                                     try {
                                         await verifyCard({ card_id: newCardId!, code }).unwrap();
-                                        await promoteOffer({ offer_id: 10, card_id: newCardId!, tariff_id: selectedTariff! }).unwrap();
+                                        await promoteOffer({ offer_id: offerId, card_id: newCardId!, tariff_id: selectedTariff! }).unwrap();
                                         setPaymentSuccess(true);
                                         setStep(3);
                                         setShowResultModal(true);

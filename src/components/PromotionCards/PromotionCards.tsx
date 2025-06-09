@@ -22,7 +22,7 @@ export const PromotionCards = () => {
     const perPage = 6;
     const navigate = useNavigate();
 
-    const { data, isLoading, isError } = useGetMyOffersQuery({page:page, per_page: 1000, is_paid: true });
+    const { data, isLoading, isError } = useGetMyOffersQuery({ page: page, per_page: 1000, is_paid: true });
 
     const offers = (data?.data || []).filter(
         (offer) => offer.paid_offer?.is_active === true

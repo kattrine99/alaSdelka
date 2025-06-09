@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
     Breadcrumbs,
     Button,
@@ -75,6 +75,14 @@ export const PromotionPage = () => {
             setPaymentSuccess(false);
         }
     };
+    useEffect(() => {
+        if (!canResend && step === 2 && timer > 0) {
+            const interval = setInterval(() => setTimer(t => t - 1), 1000);
+            return () => clearInterval(interval);
+        }
+        if (timer === 0) setCanResend(true);
+    }, [canResend, timer, step]);
+
     const handleVerifyAndPay = async () => {
         try {
             await verifyCard({
@@ -108,6 +116,7 @@ export const PromotionPage = () => {
             setPaymentSuccess(false);
         }
     };
+
     const handleCodeChange = (value: string, index: number) => {
         if (!/^\d?$/.test(value)) return;
         const newCode = [...codeInput];
@@ -183,6 +192,20 @@ export const PromotionPage = () => {
                             isError={false}
                             className="w-60"
                         />
+                        <div className="text-center text-[14px] text-[#28B13D] font-semibold">
+                            {canResend ? (
+                                <button onClick={() => {
+                                    setTimer(60);
+                                    setCanResend(false);
+                                }} className="hover:underline">
+                                    Отправить снова
+                                </button>
+                            ) : (
+                                <span>Отправить снова через <span
+                                    className="font-bold">0:{timer.toString().padStart(2, "0")}</span></span>
+                            )}
+                        </div>
+
                         <Button className="mt-4" onClick={handleVerifyAndPay}>Подтвердить и оплатить</Button>
                     </div>
                 ) : (
@@ -341,7 +364,7 @@ export const PromotionPage = () => {
                                         setShowResultModal(true);
                                     }
                                 }}
-                                className="w-full bg-[#2EAA7B] text-white py-6 rounded-lg "
+                                className="w-full mt-5 bg-[#2EAA7B] text-white py-6 rounded-lg "
                             >
                                 Подтвердить
                             </Button>

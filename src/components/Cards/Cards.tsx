@@ -107,7 +107,7 @@ export const Cards: React.FC<ICards & { forceAllFavorite?: boolean }> = ({
                                         : "/images/business_abstract.jpg"
                                 }
                                 alt={`${card.id}`}
-                                className="w-full"
+                                className="w-full object-contain"
                             />
                             {isAuthenticated && (
                                 <FavoriteButton

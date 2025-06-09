@@ -108,10 +108,14 @@ export const CardDetailPage = () => {
 
             ) :
                 (
+<<<<<<< HEAD
                     <div className='container mx-auto pt-10 max-md:p-5'>
+=======
+                    <div className='container mx-auto px-3 md:px-0 pt-6'>
+>>>>>>> a8374fb98d14ec82529f668065ef807303384f2a
                         <Breadcrumbs category={category} title={card.title} />
                         <div className='flex flex-wrap xl:flex-nowrap'>
-                            <div className='flex flex-col w-full'>
+                            <div className='flex flex-col w-full lg:w-3/4 justify-center'>
                                 <Heading className="text-[24px] md:text-4xl font-inter leading-10 font-bold mt-6 mb-3.5" text={card.title} level={2} />
                                 <div className='flex flex-col gap-2 mb-[15px]'>
                                     <Paragraph className='font-inter font-bold text-[#363636] text-[16px]'>ID {card.id}</Paragraph>

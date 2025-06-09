@@ -110,7 +110,7 @@ export const Cards: React.FC<ICards & { forceAllFavorite?: boolean }> = ({
                                         : ""
                                 }
                                 alt={`${card.id}`}
-                                className="w-full"
+                                className="w-full object-contain"
                             />
                             {isAuthenticated && (
                                 <FavoriteButton

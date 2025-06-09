@@ -141,7 +141,7 @@ export const UserAnnouncementPage = () => {
             )}
 
             <Header />
-            <div className="flex container mx-auto max-xl:flex-col py-[30px] pb-10 gap-10 items-start">
+            <div className="flex container mx-auto px-3 md:px-0 max-xl:flex-col py-[30px] pb-10 gap-10 items-start">
                 <aside className="flex flex-col">
                     <Breadcrumbs category={category} title="Объявления пользователя" />
                     <Heading text="Объявления пользователя" level={2} className="text-[30px] font-bold text-black mt-4.5" />
@@ -189,11 +189,11 @@ export const UserAnnouncementPage = () => {
                     )}
                 </aside>
 
-                <main className="flex-1 justify-end">
+                <main className="flex-1 justify-end max-w-full">
                     <div className="flex justify-end gap-x-4 mb-6">
-                        <div className="flex items-center border border-[#2EAA7B] rounded-xl pl-5 w-[450px] bg-white overflow-hidden">
+                        <div className="flex items-center border border-[#2EAA7B] rounded-xl pl-5 bg-white lg:w-1/2 w-full overflow-hidden">
                             <div className="text-[#2EAA7B]">
-                                <FiSearch className="w-[24px] h-[24px]" />
+                                <FiSearch className="w-full h-[24px]" />
                             </div>
                             <Input
                                 type="text"
@@ -263,7 +263,7 @@ export const UserAnnouncementPage = () => {
                             </div>
                         </div>) : cards.length === 0 ? (
                             <div className="flex flex-col w-full h-full justify-center items-center bg-[url('../../../images/grid.png')] bg-no-repeat bg-contain" >
-                                <div className="w-128 h-100 bg-[url('../../../images/404.png')] bg-contain bg-center bg-no-repeat flex flex-col items-center justify-end">
+                                <div className="w-full h-100 bg-[url('../../../images/404.png')] bg-contain bg-center bg-no-repeat flex flex-col items-center justify-end">
                                     <Paragraph className="text-[20px] font-semibold text-black mb-4">Страница не найдена</Paragraph>
                                     <Button
                                         onClick={() => navigate("/")}
@@ -276,9 +276,9 @@ export const UserAnnouncementPage = () => {
                         ) : (
                         <Cards
                             cards={mappedCards}
-                            containerClass="flex flex-col gap-7.5 rounded-xl w-317.75 mt-25"
-                            cardWrapperClass="shadow-[1px_1px_4.5px_0px] shadow-[#28B13D4D]"
-                            cardIconClass="max-w-85 h-[230px] overflow-hidden"
+                            containerClass="grid mt-10 gap-y-10 gap-x-2 transition duration-600"
+                            cardWrapperClass="shadow-[1px_1px_4.5px_0px] shadow-[#28B13D4D] flex-col lg:flex-row justify-center"
+                            cardIconClass="w-full max-h-48 lg:h-full overflow-hidden"
                             WhatchButtonClass="py-3 px-5 w-79.5 bg-[#2EAA7B] text-white font-medium rounded-md flex justify-center hover:bg-[#31B683] transition duration-300 cursor-pointer"
                         />
 

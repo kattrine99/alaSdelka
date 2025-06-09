@@ -107,188 +107,183 @@ export const CardDetailPage = () => {
                 <p className="px-48 py-7.5 text-red-500">Ошибка загрузки данных</p>
 
             ) :
-                (
-<<<<<<< HEAD
-                    <div className='container mx-auto pt-10 max-md:p-5'>
-=======
-                    <div className='container mx-auto px-3 md:px-0 pt-6'>
->>>>>>> a8374fb98d14ec82529f668065ef807303384f2a
-                        <Breadcrumbs category={category} title={card.title} />
-                        <div className='flex flex-wrap xl:flex-nowrap'>
-                            <div className='flex flex-col w-full lg:w-3/4 justify-center'>
-                                <Heading className="text-[24px] md:text-4xl font-inter leading-10 font-bold mt-6 mb-3.5" text={card.title} level={2} />
-                                <div className='flex flex-col gap-2 mb-[15px]'>
-                                    <Paragraph className='font-inter font-bold text-[#363636] text-[16px]'>ID {card.id}</Paragraph>
-                                    <div className='flex gap-1.5 items-center'>
-                                        <GpsIcon className='w-4 h-4' />
-                                        <Paragraph>{card.area} кв. м.</Paragraph>
-                                    </div>
-                                    <div className='flex gap-1.5 items-center'>
-                                        <CategoryIcon className='w-4 h-4 text-[#2EAA7B]' />
-                                        <Paragraph className="">{card?.category?.title_ru ?? ""}</Paragraph>
-                                    </div>
+                (<div className='container mx-auto pt-10 max-md:p-5'>
+                    <Breadcrumbs category={category} title={card.title} />
+                    <div className='flex flex-wrap xl:flex-nowrap'>
+                        <div className='flex flex-col w-full lg:w-3/4 justify-center'>
+                            <Heading className="text-[24px] md:text-4xl font-inter leading-10 font-bold mt-6 mb-3.5" text={card.title} level={2} />
+                            <div className='flex flex-col gap-2 mb-[15px]'>
+                                <Paragraph className='font-inter font-bold text-[#363636] text-[16px]'>ID {card.id}</Paragraph>
+                                <div className='flex gap-1.5 items-center'>
+                                    <GpsIcon className='w-4 h-4' />
+                                    <Paragraph>{card.area} кв. м.</Paragraph>
                                 </div>
-                                <div className="flex flex-col gap-6">
-                                    <div className="flex-1">
-                                        {card.photos?.length > 0 && (
-                                            <PhotosSwiper photos={card.photos} />
+                                <div className='flex gap-1.5 items-center'>
+                                    <CategoryIcon className='w-4 h-4 text-[#2EAA7B]' />
+                                    <Paragraph className="">{card?.category?.title_ru ?? ""}</Paragraph>
+                                </div>
+                            </div>
+                            <div className="flex flex-col gap-6">
+                                <div className="flex-1">
+                                    {card.photos?.length > 0 && (
+                                        <PhotosSwiper photos={card.photos} />
+                                    )}
+                                </div>
+                                {card.conveniences && card.conveniences.length > 0 && (
+                                    <div className='w-[49.63rem]'>
+                                        <Heading text={'Удобства'} level={3} className='font-inter font-semibold text-xl text-[#3A3A3A]' />
+                                        <div className="mt-3">
+                                            <div className="flex md:flex-row flex-col max-w-full flex-wrap gap-x-12.5 gap-y-4">
+                                                {card.conveniences.map(item => (
+                                                    <div key={item.id} className="flex items-center gap-3 text-sm text-gray-700">
+                                                        {conveniencesIcons[item.name_ru] || <span className="w-5 h-5" />}
+                                                        <div className="flex flex-col">
+                                                            <span>{item.name_ru}</span>
+                                                            <span className='font-inter font-bold text-xl text-[#2EAA7B]'>Есть</span>
+                                                        </div>
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                )}
+                            </div>
+                            {card.documents && card.documents.length > 0 &&
+                                <div>
+                                    <Heading text={'Документация'} level={3} className='font-inter font-semibold text-xl mt-7.5 text-[#3A3A3A]' />
+                                    <div className="flex flex-wrap gap-4 mt-3">
+                                        {card.documents.map((doc, index) => (
+                                            <a
+                                                key={doc.id}
+                                                href={doc.document}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className=" w-65.75 border border-[#2EAA7B] text-[#191919] rounded-lg py-3 px-4 text-center hover:bg-[#2EAA7B] hover:text-white transition"
+                                            >
+                                                {`document ${index + 1}`}
+                                            </a>
+                                        ))}
+                                    </div>
+                                    <Button
+                                        disabled={!card?.documents?.length}
+                                        onClick={handleDownloadAllDocuments}
+                                        className={`w-65.75 rounded-lg px-4.25 py-3 my-4.25 font-semibold flex gap-2 items-center transition ${card?.documents?.length ? 'bg-[#2EAA7B] text-white hover:bg-[#31B683]' : 'bg-gray-400 text-white cursor-not-allowed'
+                                            }`}
+                                    >
+                                        <BiSolidArchiveIn />
+                                        Скачать все документы
+                                    </Button>
+                                </div>
+
+                            }
+
+                            {card.description && (
+                                <div>
+                                    <Heading text={'Описание'} level={3} className='font-inter font-semibold text-xl mt-7.5 text-[#3A3A3A]' />
+                                    <div className="mt-3">
+                                        <Paragraph className="text-gray-700 leading-relaxed whitespace-pre-line">
+                                            {showFullDescription
+                                                ? card.description
+                                                : card.description.slice(0, 300) + (card.description.length > 300 ? "..." : "")}
+                                        </Paragraph>
+
+                                        {card.description.length > 300 && (
+                                            <Button
+                                                onClick={() => setShowFullDescription(!showFullDescription)}
+                                                className="text-[#2EAA7B] mt-2 font-semibold hover:underline transition"
+                                            >
+                                                {showFullDescription ? "Скрыть" : "Читать дальше"}
+                                            </Button>
                                         )}
                                     </div>
-                                    {card.conveniences && card.conveniences.length > 0 && (
-                                        <div className='w-[49.63rem]'>
-                                            <Heading text={'Удобства'} level={3} className='font-inter font-semibold text-xl text-[#3A3A3A]' />
-                                            <div className="mt-3">
-                                                <div className="flex md:flex-row flex-col max-w-full flex-wrap gap-x-12.5 gap-y-4">
-                                                    {card.conveniences.map(item => (
-                                                        <div key={item.id} className="flex items-center gap-3 text-sm text-gray-700">
-                                                            {conveniencesIcons[item.name_ru] || <span className="w-5 h-5" />}
-                                                            <div className="flex flex-col">
-                                                                <span>{item.name_ru}</span>
-                                                                <span className='font-inter font-bold text-xl text-[#2EAA7B]'>Есть</span>
-                                                            </div>
-                                                        </div>
-                                                    ))}
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                    )}
                                 </div>
-                                {card.documents && card.documents.length > 0 &&
-                                    <div>
-                                        <Heading text={'Документация'} level={3} className='font-inter font-semibold text-xl mt-7.5 text-[#3A3A3A]' />
-                                        <div className="flex flex-wrap gap-4 mt-3">
-                                            {card.documents.map((doc, index) => (
-                                                <a
-                                                    key={doc.id}
-                                                    href={doc.document}
-                                                    target="_blank"
-                                                    rel="noopener noreferrer"
-                                                    className=" w-65.75 border border-[#2EAA7B] text-[#191919] rounded-lg py-3 px-4 text-center hover:bg-[#2EAA7B] hover:text-white transition"
-                                                >
-                                                    {`document ${index + 1}`}
-                                                </a>
-                                            ))}
-                                        </div>
-                                        <Button
-                                            disabled={!card?.documents?.length}
-                                            onClick={handleDownloadAllDocuments}
-                                            className={`w-65.75 rounded-lg px-4.25 py-3 my-4.25 font-semibold flex gap-2 items-center transition ${card?.documents?.length ? 'bg-[#2EAA7B] text-white hover:bg-[#31B683]' : 'bg-gray-400 text-white cursor-not-allowed'
-                                                }`}
-                                        >
-                                            <BiSolidArchiveIn />
-                                            Скачать все документы
-                                        </Button>
-                                    </div>
-
-                                }
-
-                                {card.description && (
-                                    <div>
-                                        <Heading text={'Описание'} level={3} className='font-inter font-semibold text-xl mt-7.5 text-[#3A3A3A]' />
-                                        <div className="mt-3">
-                                            <Paragraph className="text-gray-700 leading-relaxed whitespace-pre-line">
-                                                {showFullDescription
-                                                    ? card.description
-                                                    : card.description.slice(0, 300) + (card.description.length > 300 ? "..." : "")}
-                                            </Paragraph>
-
-                                            {card.description.length > 300 && (
-                                                <Button
-                                                    onClick={() => setShowFullDescription(!showFullDescription)}
-                                                    className="text-[#2EAA7B] mt-2 font-semibold hover:underline transition"
-                                                >
-                                                    {showFullDescription ? "Скрыть" : "Читать дальше"}
-                                                </Button>
-                                            )}
+                            )}
+                            <div>
+                                <Heading text={'Информация и финансы'} level={3} className='font-inter font-semibold text-xl mt-7.5 text-[#3A3A3A]' />
+                                <div className="mt-3 grid grid-cols-1 md:grid-cols-3 gap-x-3 gap-y-4">
+                                    <div className="flex w-full gap-2 border border-[#2EAA7B] items-center rounded-[10px] py-3 px-4.25">
+                                        <WalletIcon className='w-10 h-10' />
+                                        <div className='flex flex-col'>
+                                            <Paragraph className="font-inter text-[13px] leading-5 text-[#7D7D7D]">Среднемесячная выручка</Paragraph>
+                                            <Paragraph className="font-inter text-xl font-bold text-[#2EAA7B]">{formatCurrency(card.average_monthly_revenue)}</Paragraph>
                                         </div>
                                     </div>
-                                )}
-                                <div>
-                                    <Heading text={'Информация и финансы'} level={3} className='font-inter font-semibold text-xl mt-7.5 text-[#3A3A3A]' />
-                                    <div className="mt-3 grid grid-cols-1 md:grid-cols-3 gap-x-3 gap-y-4">
-                                        <div className="flex w-full gap-2 border border-[#2EAA7B] items-center rounded-[10px] py-3 px-4.25">
-                                            <WalletIcon className='w-10 h-10' />
-                                            <div className='flex flex-col'>
-                                                <Paragraph className="font-inter text-[13px] leading-5 text-[#7D7D7D]">Среднемесячная выручка</Paragraph>
-                                                <Paragraph className="font-inter text-xl font-bold text-[#2EAA7B]">{formatCurrency(card.average_monthly_revenue)}</Paragraph>
-                                            </div>
-                                        </div>
-                                        <div className="flex gap-2 w-full border border-[#2EAA7B] items-center rounded-[10px] py-3 px-4.25">
-                                            <ReceiptIcon className='w-10 h-10' />
-                                            <div className='flex flex-col'>
-                                                <Paragraph className="font-inter text-[13px] leading-5 text-[#7D7D7D]">Среднемесячные расходы</Paragraph>
-                                                <Paragraph className="font-inter text-xl font-bold text-[#2EAA7B]">{formatCurrency(card.average_monthly_expenses)}</Paragraph>
-                                            </div>
-                                        </div>
-                                        <div className="flex gap-2 w-full border border-[#2EAA7B] items-center rounded-[10px] py-3 px-4.25">
-                                            <CalendarIcon className='w-10 h-10' />
-                                            <div className='flex flex-col'>
-                                                <Paragraph className="font-inter text-[13px] leading-5 text-[#7D7D7D]">Дата основания</Paragraph>
-                                                <Paragraph className="font-inter text-xl font-bold text-[#2EAA7B]">{card.foundation_year} год</Paragraph>
-                                            </div>
-                                        </div>
-                                        <div className="flex gap-2 w-full border border-[#2EAA7B] items-center rounded-[10px] py-3 px-4.25">
-                                            <DollarCircleIcon className='w-10 h-10' />
-                                            <div className='flex flex-col'>
-                                                <Paragraph className="font-inter text-[13px] leading-5 text-[#7D7D7D]">Среднемесячная прибыль</Paragraph>
-                                                <Paragraph className="font-inter text-xl font-bold text-[#2EAA7B]">{formatCurrency(card.average_monthly_profit)}</Paragraph>
-                                            </div>
-                                        </div>
-                                        <div className="flex gap-2 w-full border border-[#2EAA7B] items-center rounded-[10px] py-3 px-4.25">
-                                            <MoneySendIcon className='w-10 h-10' />
-                                            <div className='flex flex-col'>
-                                                <Paragraph className="font-inter text-[13px] leading-5 text-[#7D7D7D]">Окупаемость</Paragraph>
-                                                <Paragraph className="font-inter text-xl font-bold text-[#2EAA7B]">{formatMonthsToYears(card.payback_period)}</Paragraph>
-                                            </div>
-                                        </div>
-                                        <div className="flex gap-2 w-full border border-[#2EAA7B] items-center rounded-[10px] py-3 px-4.25">
-                                            <PercentIcon className='w-10 h-10' />
-                                            <div className='flex flex-col'>
-                                                <Paragraph className="font-inter text-[13px] leading-5 text-[#7D7D7D]">Доля к продаже</Paragraph>
-                                                <Paragraph className="font-inter text-xl font-bold text-[#2EAA7B]">{card.percentage_for_sale}%</Paragraph>
-                                            </div>
+                                    <div className="flex gap-2 w-full border border-[#2EAA7B] items-center rounded-[10px] py-3 px-4.25">
+                                        <ReceiptIcon className='w-10 h-10' />
+                                        <div className='flex flex-col'>
+                                            <Paragraph className="font-inter text-[13px] leading-5 text-[#7D7D7D]">Среднемесячные расходы</Paragraph>
+                                            <Paragraph className="font-inter text-xl font-bold text-[#2EAA7B]">{formatCurrency(card.average_monthly_expenses)}</Paragraph>
                                         </div>
                                     </div>
-                                </div>
-                                <div className='flex flex-col gap-3'>
-                                    <Heading text={'Местоположение'} level={3} className='font-inter font-semibold text-xl mt-7.5 text-[#3A3A3A]' />
-                                    <div className='flex gap-1.5'>
-                                        <FaLocationDot className="text-[#2EAA7B] w-4 h-4" />
-                                        <Paragraph className="">
-                                            {card?.address !== null ? card?.address?.address + ',' : "Адрес не указан"}
-                                            {card?.address?.city?.name_ru ?? ""}
-                                        </Paragraph>
+                                    <div className="flex gap-2 w-full border border-[#2EAA7B] items-center rounded-[10px] py-3 px-4.25">
+                                        <CalendarIcon className='w-10 h-10' />
+                                        <div className='flex flex-col'>
+                                            <Paragraph className="font-inter text-[13px] leading-5 text-[#7D7D7D]">Дата основания</Paragraph>
+                                            <Paragraph className="font-inter text-xl font-bold text-[#2EAA7B]">{card.foundation_year} год</Paragraph>
+                                        </div>
                                     </div>
-                                    {card.address?.latitude && card.address?.longitude ? (
-                                        <iframe
-                                            src={`https://maps.google.com/maps?q=${card.address.latitude},${card.address.longitude}&z=15&output=embed`}
-                                            width="100%"
-                                            height="350"
-                                            className="rounded-lg border border-[#2EAA7B]"
-                                            allowFullScreen
-                                            loading="eager"
-                                        />
-                                    ) : card.address?.address ? (
-                                        <iframe
-                                            src={`https://maps.google.com/maps?q=${encodeURIComponent(card.address.address)}&z=15&output=embed`}
-                                            width="100%"
-                                            height="350"
-                                            className="rounded-lg border border-[#2EAA7B]"
-                                            allowFullScreen
-                                            loading="eager"
-                                        />
-                                    ) : (
-                                        <Paragraph className="text-gray-500">Адрес недоступен</Paragraph>
-                                    )}
-
+                                    <div className="flex gap-2 w-full border border-[#2EAA7B] items-center rounded-[10px] py-3 px-4.25">
+                                        <DollarCircleIcon className='w-10 h-10' />
+                                        <div className='flex flex-col'>
+                                            <Paragraph className="font-inter text-[13px] leading-5 text-[#7D7D7D]">Среднемесячная прибыль</Paragraph>
+                                            <Paragraph className="font-inter text-xl font-bold text-[#2EAA7B]">{formatCurrency(card.average_monthly_profit)}</Paragraph>
+                                        </div>
+                                    </div>
+                                    <div className="flex gap-2 w-full border border-[#2EAA7B] items-center rounded-[10px] py-3 px-4.25">
+                                        <MoneySendIcon className='w-10 h-10' />
+                                        <div className='flex flex-col'>
+                                            <Paragraph className="font-inter text-[13px] leading-5 text-[#7D7D7D]">Окупаемость</Paragraph>
+                                            <Paragraph className="font-inter text-xl font-bold text-[#2EAA7B]">{formatMonthsToYears(card.payback_period)}</Paragraph>
+                                        </div>
+                                    </div>
+                                    <div className="flex gap-2 w-full border border-[#2EAA7B] items-center rounded-[10px] py-3 px-4.25">
+                                        <PercentIcon className='w-10 h-10' />
+                                        <div className='flex flex-col'>
+                                            <Paragraph className="font-inter text-[13px] leading-5 text-[#7D7D7D]">Доля к продаже</Paragraph>
+                                            <Paragraph className="font-inter text-xl font-bold text-[#2EAA7B]">{card.percentage_for_sale}%</Paragraph>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                            <div className="xl:mt-0 mt-6 w-full xl:w-4/12">
-                                <SellerInfoCard card={data.data} userId={card.user_id} offer_type={card.offer_type} />
+                            <div className='flex flex-col gap-3'>
+                                <Heading text={'Местоположение'} level={3} className='font-inter font-semibold text-xl mt-7.5 text-[#3A3A3A]' />
+                                <div className='flex gap-1.5'>
+                                    <FaLocationDot className="text-[#2EAA7B] w-4 h-4" />
+                                    <Paragraph className="">
+                                        {card?.address !== null ? card?.address?.address + ',' : "Адрес не указан"}
+                                        {card?.address?.city?.name_ru ?? ""}
+                                    </Paragraph>
+                                </div>
+                                {card.address?.latitude && card.address?.longitude ? (
+                                    <iframe
+                                        src={`https://maps.google.com/maps?q=${card.address.latitude},${card.address.longitude}&z=15&output=embed`}
+                                        width="100%"
+                                        height="350"
+                                        className="rounded-lg border border-[#2EAA7B]"
+                                        allowFullScreen
+                                        loading="eager"
+                                    />
+                                ) : card.address?.address ? (
+                                    <iframe
+                                        src={`https://maps.google.com/maps?q=${encodeURIComponent(card.address.address)}&z=15&output=embed`}
+                                        width="100%"
+                                        height="350"
+                                        className="rounded-lg border border-[#2EAA7B]"
+                                        allowFullScreen
+                                        loading="eager"
+                                    />
+                                ) : (
+                                    <Paragraph className="text-gray-500">Адрес недоступен</Paragraph>
+                                )}
+
                             </div>
                         </div>
+                        <div className="xl:mt-0 mt-6 w-full xl:w-4/12">
+                            <SellerInfoCard card={data.data} userId={card.user_id} offer_type={card.offer_type} />
+                        </div>
                     </div>
+                </div>
                 )
 
             }

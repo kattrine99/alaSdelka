@@ -101,17 +101,17 @@ export const Cards: React.FC<ICards & { forceAllFavorite?: boolean }> = ({
                         )}
 
                         {/* ИЗОБРАЖЕНИЕ И СЕРДЕЧКО */}
-                        <div className={`relative  ${cardIconClass ?? ""}`}>
+                        <div className={`relative ${cardIconClass ?? ""}`}>
+                            {card.photos && card.photos.length > 0 && card.photos[0].photo ? (
+                                <img
+                                    src={card.photos[0].photo}
+                                    alt={`${card.id}`}
+                                    className="w-full object-contain"
+                                />
+                            ) : (
+                                <div className="w-full h-[220px] bg-[#F0F0F0]" />
+                            )}
 
-                            <img
-                                src={
-                                    card.photos && card.photos.length > 0 && card.photos[0].photo
-                                        ? card.photos[0].photo
-                                        : ""
-                                }
-                                alt={`${card.id}`}
-                                className="w-full object-contain"
-                            />
                             {isAuthenticated && (
                                 <FavoriteButton
                                     isFavorite={isFavorite}
@@ -124,7 +124,6 @@ export const Cards: React.FC<ICards & { forceAllFavorite?: boolean }> = ({
                                         }
                                     }}
                                 />
-
                             )}
                         </div>
 

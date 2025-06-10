@@ -14,7 +14,7 @@ import {
     ModalBase,
 } from "../../components";
 import { ICard } from "../../components/Cards/Interfaces";
-import { useGetUserOffersQuery, useGetOfferContactViewQuery, useToggleFavoriteMutation } from "../../Store/api/Api";
+import { useGetUserOffersQuery, useGetOfferContactViewQuery, useGetFavoritesQuery } from "../../Store/api/Api";
 
 import { FiltersState } from "../../utils/variables";
 import { FiSearch } from "react-icons/fi";
@@ -46,12 +46,15 @@ export const UserAnnouncementPage = () => {
     const [searchInput, setSearchInput] = useState("");
     const [searchQuery, setSearchQuery] = useState("");
     const [contactPhone, setContactPhone] = useState<string | null>(null);
-    const itemsPerPage = 12;
+    const [isMobileFiltersOpen, setIsMobileFiltersOpen] = useState(false);
+    const { data: favoritesData, refetch } = useGetFavoritesQuery({ page: 1, per_page: 1000 });
+    const favoriteIds = favoritesData?.data?.map((offer: { id: number }) => offer.id) ?? [];
+
 
     const { data, isLoading, isError } = useGetUserOffersQuery({
         user_id: Number(userId),
         page: currentPage,
-        per_page: itemsPerPage,
+        per_page: 5,
         search: searchQuery,
         offer_type: filters.offer_type
             ? ruToApiOfferTypeMap[filters.offer_type as keyof typeof ruToApiOfferTypeMap]
@@ -62,71 +65,42 @@ export const UserAnnouncementPage = () => {
         price_min: filters.priceMin ? Number(filters.priceMin) : undefined,
         price_max: filters.priceMax ? Number(filters.priceMax) : undefined,
     });
+
     const firstOfferId = data?.offers?.[0]?.id;
     const { data: contactData, isLoading: isLoadingPhone } = useGetOfferContactViewQuery(firstOfferId!, {
         skip: !isContactModalOpen || !firstOfferId,
     });
-    const [toggleFavorite] = useToggleFavoriteMutation();
-    const [favoriteStates, setFavoriteStates] = useState<{ [key: number]: boolean }>({});
+
+
     useEffect(() => {
         if (contactData?.phone) setContactPhone(contactData.phone);
     }, [contactData]);
-    const [isMobileFiltersOpen, setIsMobileFiltersOpen] = useState(false);
-
     const cards = data?.offers ?? [];
-    const mappedCards: ICard[] = cards
-        .filter((card) => card)
-        .map((card) => ({
-            id: card.id,
-            title: card.title || "Название не указано",
-            price: card.price ?? "Цена не указана",
-            photos: card.photos ?? [],
-            address: {
-                address: card.address?.address || "Адрес не указан",
-                city: {
-                    name_ru: card.address?.city?.name_ru || "",
-                },
-            },
-            area: card.area ? `${card.area} кв. м.` : "Площадь не указана",
-            offer_type: card.offer_type,
-            user_phone: card.user_phone || "",
-            is_favourite: card.is_favourite ?? false,
-        }));
-    const totalPages = Math.ceil((data?.user_offers_count ?? 0) / itemsPerPage);
+    const totalPages = Math.ceil((data?.user_offers_count ?? 0) / 12);
     const user = data?.user;
-    useEffect(() => {
-        if (cards.length) {
-            const initialFavorites: { [key: number]: boolean } = {};
-            cards.forEach((c) => {
-                if (c) initialFavorites[c.id] = c.is_favourite ?? false;
-            });
-            setFavoriteStates(initialFavorites);
-        }
-    }, [cards]);
-    const handleToggleFavorite = async (offerId: number) => {
-        const prev = favoriteStates[offerId];
-        setFavoriteStates((prevState) => ({
-            ...prevState,
-            [offerId]: !prev,
-        }));
 
-        try {
-            const res = await toggleFavorite(offerId).unwrap();
-            setFavoriteStates((prevState) => ({
-                ...prevState,
-                [offerId]: res.status === "added",
-            }));
-        } catch (e) {
-            console.error("Ошибка при переключении избранного:", e);
-            setFavoriteStates((prevState) => ({
-                ...prevState,
-                [offerId]: prev,
-            }));
-        }
+    const mappedCards: ICard[] = cards.map((card) => ({
+        id: card.id,
+        title: card.title || "Название не указано",
+        price: card.price ?? "Цена не указана",
+        photos: card.photos ?? [],
+        address: {
+            address: card.address?.address || "Адрес не указан",
+            city: {
+                name_ru: card.address?.city?.name_ru || "",
+            },
+        },
+        area: card.area ? `${card.area} кв. м.` : "Площадь не указана",
+        offer_type: card.offer_type,
+        user_phone: card.user_phone || "",
+        is_favourite: favoriteIds.includes(card.id),
+    }));
+    const handleFavoritesChanged = async (id: number, status: "added" | "removed") => {
+        console.log(`Card ${id} was ${status}`);
+        await refetch();
     };
 
     return (
-
         <div className="font-openSans min-h-screen w-screen overflow-x-hidden">
             {isContactModalOpen && (
                 <ModalBase
@@ -136,7 +110,8 @@ export const UserAnnouncementPage = () => {
                         ? <span className="text-gray-400">Загрузка...</span>
                         : contactPhone || "Номер отсутствует"}
                     onClose={() => setContactModalOpen(false)}
-                    showCloseButton={true} HeadingClassName={""}
+                    showCloseButton={true}
+                    HeadingClassName={""}
                 />
             )}
 
@@ -229,7 +204,7 @@ export const UserAnnouncementPage = () => {
                                     <Paragraph className="font-bold text-[#101828] text-[16px]">{user.name}</Paragraph>
                                 </div>
                             </div>
-                            <div className="flex justify-between w-full ">
+                            <div className="flex  max-sm:flex-col max-sm:gap-3 justify-between w-full ">
                                 <div>
                                     <Paragraph className="text-[#6B7280] text-[13px] mt-1">
                                         Количество объявлений: {data?.user_offers_count}
@@ -276,6 +251,7 @@ export const UserAnnouncementPage = () => {
                         ) : (
                         <Cards
                             cards={mappedCards}
+                            onFavoritesChanged={handleFavoritesChanged}
                             containerClass="grid mt-10 gap-y-10 gap-x-2 transition duration-600"
                             cardWrapperClass="shadow-[1px_1px_4.5px_0px] shadow-[#28B13D4D] flex-col lg:flex-row justify-center"
                             cardIconClass="w-full max-h-48 lg:h-full overflow-hidden"

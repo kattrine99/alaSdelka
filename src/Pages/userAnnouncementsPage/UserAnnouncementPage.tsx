@@ -254,7 +254,7 @@ export const UserAnnouncementPage = () => {
                             onFavoritesChanged={handleFavoritesChanged}
                             containerClass="grid mt-10 gap-y-10 gap-x-2 transition duration-600"
                             cardWrapperClass="shadow-[1px_1px_4.5px_0px] shadow-[#28B13D4D] flex-col lg:flex-row justify-center"
-                            cardIconClass="w-full max-h-48 lg:h-full overflow-hidden"
+                            cardIconClass="w-full max-h-48 lg:h-full lg:max-w-85 overflow-hidden"
                             WhatchButtonClass="py-3 px-5 w-79.5 bg-[#2EAA7B] text-white font-medium rounded-md flex justify-center hover:bg-[#31B683] transition duration-300 cursor-pointer"
                         />
 

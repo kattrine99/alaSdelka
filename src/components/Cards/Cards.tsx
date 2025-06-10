@@ -2,6 +2,7 @@ import { Button, Heading, ModalBase, Paragraph } from "../index";
 import { FaArrowRight } from "react-icons/fa";
 import { FaLocationDot, FaLocationCrosshairs } from "react-icons/fa6";
 import FireIcon from '../../assets/fire.svg?react';
+import GalleryIcon from '../../assets/gallery.svg?react';
 import { Link } from "react-router-dom";
 import { ICards } from "./Interfaces";
 import { offerTypeToUrlMap } from "../../utils/categoryMap";
@@ -109,7 +110,10 @@ export const Cards: React.FC<ICards & { forceAllFavorite?: boolean }> = ({
                                     className="w-full object-contain"
                                 />
                             ) : (
-                                <div className="w-full h-[220px] bg-[#F0F0F0]" />
+                                <div className="w-full h-[220px] bg-[#F0F0F0]" >
+                                    <GalleryIcon />
+                                    <Paragraph>Изображение отсутствует</Paragraph>
+                                </div>
                             )}
 
                             {isAuthenticated && (

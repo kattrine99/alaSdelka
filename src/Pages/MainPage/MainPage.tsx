@@ -3,15 +3,17 @@ import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ShopIcon from '../../assets/shop.svg?react';
 import InvestInIcon from '../../assets/investin_v15.svg?react';
-import { useGetFavoritesQuery, useGetHomeOffersQuery } from "../../Store/api/Api";
+import { useGetFavoritesQuery, useGetHomeOffersQuery, useGetCurrencyRateQuery } from "../../Store/api/Api";
 import { useGetMainStatisticsQuery } from "../../Store/api/Api";
 import { FiltersState } from "../../utils/variables";
 import { categoryRouteMap } from "../../utils/categoryMap";
 import { Offer } from "../../Store/api/types";
 import { skipToken } from "@reduxjs/toolkit/query";
+import { useTranslation } from "../../../public/Locales/context/TranslationContext";
 
 export const MainPage = () => {
     const [selectedCategory, setSelectedCategory] = useState<"Бизнес" | "Франшиза" | "Стартапы" | "Инвестиции">("Бизнес");
+    const { data: currencyRateData } = useGetCurrencyRateQuery();
 
     const navigate = useNavigate();
     const [listingTypes, setListingTypes] = useState<Record<"Бизнес" | "Франшиза" | "Стартапы" | "Инвестиции", "buy" | "sell">>({
@@ -87,6 +89,7 @@ export const MainPage = () => {
     const franchiseType = listingTypes["Франшиза"];
     const startupType = listingTypes["Стартапы"];
     const [searchInput, setSearchInput] = useState("");
+    const { lang, t } = useTranslation();
 
     const {
         data: businessOffers,
@@ -95,18 +98,15 @@ export const MainPage = () => {
     const {
         data: franchiseOffers,
         isLoading: isLoadingFranchise,
-        isError: isErrorFranchise
     } = useGetHomeOffersQuery(listingTypes["Франшиза"]);
     const {
         data: startupOffers,
         isLoading: isLoadingStartup,
-        isError: isErrorStartup
     } = useGetHomeOffersQuery(listingTypes["Стартапы"]);
     const investmentType = listingTypes["Инвестиции"];
     const {
         data: investmentOffers,
         isLoading: isLoadingInvestment,
-        isError: isErrorInvestment,
     } = useGetHomeOffersQuery(
         investmentType === "buy" || investmentType === "sell" ? investmentType : skipToken
     );
@@ -141,8 +141,24 @@ export const MainPage = () => {
         navigate(`/${categoryRoute}?${query.toString()}`);
 
     };
-
-
+    function formatAmountUSD(amount: number): string {
+        if (amount >= 1000000000000) {
+            return `${(amount / 1000000000000).toFixed(1)} ${t("трлн")}`;
+        } else if (amount >= 1000000000) {
+            return `${(amount / 1000000000).toFixed(1)} ${t("млрд")}`;
+        } else if (amount >= 1000000) {
+            return `${(amount / 1000000).toFixed(0)} ${t("млн")}`;
+        } else {
+            return amount.toLocaleString();
+        }
+    }
+    const amountInUSD = (mainStats?.total_sold_amount ?? 0) / (currencyRateData?.rate ?? 1);
+    const displayAmount = formatAmountUSD(amountInUSD);
+    const translatedCategories = categories.map((item) => ({
+        ...item,
+        label: t(item.label),
+        id: item.label
+    }));
     return (
         <div className="font-openSans min-h-screen w-screen overflow-x-hidden">
             <Header />
@@ -156,7 +172,7 @@ export const MainPage = () => {
                     <div className="order-2 lg:order-1 flex flex-col gap-6 max-w-3xl w-full">
                         <Heading
                             level={1}
-                            text="Купите, продайте или инвестируйте в бизнес"
+                            text={t("Купите, продайте или инвестируйте в бизнес")}
                             className="text-[clamp(32px,4vw,60px)] font-bold leading-tight text-white"
                         />
                         <Paragraph
@@ -164,8 +180,7 @@ export const MainPage = () => {
                             <span className="inline-flex items-baseline align-baseline relative top-2 mr-1">
                                 <InvestInIcon className="w-[120px] md:w-[168.39px] h-auto" />
                             </span>
-                            — первая в Узбекистане специализированная площадка для размещения объявлений
-                            о продаже готового бизнеса, стартапов, франшиз и инвестиционных проектов.
+                            — {t("первая в Узбекистане специализированная площадка для размещения объявлений о продаже готового бизнеса, стартапов, франшиз и инвестиционных проектов")}
                         </Paragraph>
                     </div>
                     {/* Поиск */}
@@ -173,7 +188,7 @@ export const MainPage = () => {
                         {/* Категории */}
                         <div className="max-w-142 bg-white rounded-t-xl border-b border-[#E0E0E0]">
                             <NavLinks
-                                links={categories}
+                                links={translatedCategories}
                                 variant="tabs"
                                 activeLabel={selectedCategory}
                                 onClick={(label) => {
@@ -214,26 +229,26 @@ export const MainPage = () => {
                             <Button onClick={() => {
                                 navigate("/business")
                             }} className={""}>
-                                <Heading level={2} text="Бизнес" className="font-openSans font-bold hover:text-[#2EAA7B] hover:underline hover:decoration-1 transition duration-500 text-3xl cursor-pointer" />
+                                <Heading level={2} text={t("Бизнес")} className="font-openSans font-bold hover:text-[#2EAA7B] hover:underline hover:decoration-1 transition duration-500 text-3xl cursor-pointer" />
                             </Button>
                         </div>
                         <div className="col-span-1 max-lg:mt-2 max-sm:flex-col max-lg:w-full flex justify-center gap-4">
                             <Button
                                 onClick={() => setListingTypes(prev => ({ ...prev, [selectedCategory]: "buy" }))}
                                 className={`flex items-center justify-center gap-2 border rounded-[8px] h-13 min-w-70 max-sm:w-full max-sm:mt-3 whitespace-nowrap px-6 text-[16px] font-inter font-semibold transition
-  ${businessType === "buy" ? "bg-[#2EAA7B] text-white border-[#2EAA7B]" : "border-[#2EAA7B] text-[#2EAA7B] hover:bg-[#2EAA7B] hover:text-white"}`}
+  ${businessType === "buy" ? "bg-[#2EAA7B] text-white border-[#2EAA7B]" : "border-[#2EAA7B] text-[#2EAA7B] hover:bg-[#2EAA7B] hover:text-white"} `}
                             >
                                 <ShopIcon className="w-5 h-5" />
-                                Покупка бизнеса
+                                {t("Покупка бизнеса")}
                             </Button>
 
                             <Button onClick={() => setListingTypes(prev => ({ ...prev, [selectedCategory]: "sell" }))}
-                                className={`flex items-center justify-center gap-x-2 rounded-[8px] h-13  min-w-70 max-sm:w-full whitespace-nowrap px-6 border border-[#2EAA7B] text-[#2EAA7B] text-[16px] hover:bg-[#2EAA7B] hover:text-white transition duration-500 font-inter leading-[150%] font-semibold
+                                className={`flex items-center justify-center gap-x-2 rounded-[8px] h-13  min-w-70 max-"sm: w - full whitespace - nowrap px - 6 border border-[#2EAA7B] text-[#2EAA7B] text-[16px] hover:bg-[#2EAA7B] hover:text-white transition duration - 500 font - inter leading - [150 %] font - semibold
                         ${businessType === "sell" ? "bg-[#2EAA7B] text-white border-[#2EAA7B]"
                                         : "border-[#2EAA7B] text-[#2EAA7B] hover:bg-[#2EAA7B] hover:text-white"
-                                    }`}>
+                                    } `}>
                                 <ShopIcon className="w-5 h-5 hover:text-white" />
-                                Продажа бизнеса
+                                {t("Продажа бизнеса")}
                             </Button>
                         </div>
                     </div>
@@ -251,8 +266,8 @@ export const MainPage = () => {
                         if (businessCards.length === 0) {
                             return (
                                 <EmptyMessage
-                                    title="Здесь еще нет объявлений"
-                                    subtitle="Ваше может стать первым!"
+                                    title={t("Здесь еще нет объявлений")}
+                                    subtitle={t("Ваше может стать первым!")}
                                     hideButton
                                 />
                             );
@@ -280,22 +295,22 @@ export const MainPage = () => {
                             <Button onClick={() => {
                                 navigate("/franchise")
                             }} className={""}>
-                                <Heading level={2} text="Франшиза" className="font-openSans font-bold hover:text-[#2EAA7B] hover:underline hover:decoration-1 transition duration-500 text-3xl cursor-pointer" />
+                                <Heading level={2} text={t("Франшиза")} className="font-openSans font-bold hover:text-[#2EAA7B] hover:underline hover:decoration-1 transition duration-500 text-3xl cursor-pointer" />
                             </Button>
                         </div>
                         <div className="col-span-1 max-lg:mt-2 max-sm:flex-col max-lg:w-full flex justify-center gap-4">
                             <Button onClick={() => setListingTypes(prev => ({ ...prev, Франшиза: "buy" }))} className={`flex items-center justify-center gap-2 border rounded-[8px] h-13 min-w-70 max-sm:w-full max-sm:mt-3 whitespace-nowrap px-6 text-[16px] font-inter font-semibold transition
-  ${franchiseType === "buy" ? "bg-[#2EAA7B] text-white border-[#2EAA7B]" : "border-[#2EAA7B] text-[#2EAA7B] hover:bg-[#2EAA7B] hover:text-white"}`}>
+  ${franchiseType === "buy" ? "bg-[#2EAA7B] text-white border-[#2EAA7B]" : "border-[#2EAA7B] text-[#2EAA7B] hover:bg-[#2EAA7B] hover:text-white"} `}>
                                 <ShopIcon className="w-5 h-5 hover:text-white" />
-                                Покупка франшизы
+                                {t("Покупка франшизы")}
                             </Button>
 
-                            <Button onClick={() => setListingTypes(prev => ({ ...prev, Франшиза: "sell" }))} className={`flex items-center justify-center gap-x-2 rounded-[8px] h-13  min-w-70 max-sm:w-full whitespace-nowrap px-6 border border-[#2EAA7B] text-[#2EAA7B] text-[16px] hover:bg-[#2EAA7B] hover:text-white transition duration-500 font-inter leading-[150%] font-semibold
+                            <Button onClick={() => setListingTypes(prev => ({ ...prev, Франшиза: "sell" }))} className={`flex items-center justify-center gap-x-2 rounded-[8px] h-13  min-w-70 max-sm:w-full whitespace-nowrap px-6 border border-[#2EAA7B] text-[#2EAA7B] text-[16px] hover:bg-[#2EAA7B] hover:text-white transition duration-500 font-inter leading-[150 %] font-semibold
                         ${franchiseType === "sell" ? "bg-[#2EAA7B] text-white border-[#2EAA7B]"
                                     : "border-[#2EAA7B] text-[#2EAA7B] hover:bg-[#2EAA7B] hover:text-white"
-                                }`}>
+                                } `}>
                                 <ShopIcon className="w-5 h-5 hover:text-white" />
-                                Продажа франшизы
+                                {t("Продажа франшизы")}
                             </Button>
                         </div>
                     </div>
@@ -305,35 +320,32 @@ export const MainPage = () => {
                         <div
                             className="w-10 h-10 border-4 border-[#2EAA7B] border-t-transparent rounded-full animate-spin"></div>
                     </div>
-                ) : isErrorFranchise ? (
-                    <p className="px-48 py-[30px] text-red-500">Ошибка загрузки данных</p>
-                ) :
-                    (
-                        ((() => {
-                            const franchiseCards = Object.values(franchiseOffers?.franchise || {});
+                ) : (
+                    ((() => {
+                        const franchiseCards = Object.values(franchiseOffers?.franchise || {});
 
-                            if (franchiseCards.length === 0) {
-                                return (
-                                    <EmptyMessage
-                                        title="Здесь еще нет объявлений"
-                                        subtitle="Ваше может стать первым!"
-                                        hideButton
-                                    />
-                                );
-                            }
-
+                        if (franchiseCards.length === 0) {
                             return (
-                                <CardSection
-                                    key={franchiseType}
-                                    title="Франшиза"
-                                    cards={franchiseCards}
-                                    initialFavorites={favoriteIds}
-                                    maxVisible={8}
-                                    Class="grid grid-cols-1 2xl:grid-cols-4 xl:grid-cols-3 lg:grid-cols-2 gap-y-10 gap-x-8 transition duration-300 ease-in-out"
-                                    ClassName="container mx-auto py-7.5"
+                                <EmptyMessage
+                                    title={t("Здесь еще нет объявлений")}
+                                    subtitle={t("Ваше может стать первым!")}
+                                    hideButton
                                 />
                             );
-                        })()))}
+                        }
+
+                        return (
+                            <CardSection
+                                key={franchiseType}
+                                title="Франшиза"
+                                cards={franchiseCards}
+                                initialFavorites={favoriteIds}
+                                maxVisible={8}
+                                Class="grid grid-cols-1 2xl:grid-cols-4 xl:grid-cols-3 lg:grid-cols-2 gap-y-10 gap-x-8 transition duration-300 ease-in-out"
+                                ClassName="container mx-auto py-7.5"
+                            />
+                        );
+                    })()))}
 
 
             </section>
@@ -344,22 +356,22 @@ export const MainPage = () => {
                             <Button onClick={() => {
                                 navigate("/startups")
                             }} className={""}>
-                                <Heading level={2} text="Стартапы" className="font-openSans font-bold hover:text-[#2EAA7B] hover:underline hover:decoration-1 transition duration-500 text-3xl cursor-pointer" />
+                                <Heading level={2} text={t("Стартапы")} className="font-openSans font-bold hover:text-[#2EAA7B] hover:underline hover:decoration-1 transition duration-500 text-3xl cursor-pointer" />
                             </Button>
                         </div>
                         <div className="col-span-1 max-lg:mt-2 max-sm:flex-col max-lg:w-full flex justify-center gap-4">
                             <Button onClick={() => setListingTypes(prev => ({ ...prev, Стартапы: "buy" }))} className={`flex items-center justify-center gap-2 border rounded-[8px] h-13 min-w-70 max-sm:w-full max-sm:mt-3 whitespace-nowrap px-6 text-[16px] font-inter font-semibold transition
-  ${startupType === "buy" ? "bg-[#2EAA7B] text-white border-[#2EAA7B]" : "border-[#2EAA7B] text-[#2EAA7B] hover:bg-[#2EAA7B] hover:text-white"}`}>
+  ${startupType === "buy" ? "bg-[#2EAA7B] text-white border-[#2EAA7B]" : "border-[#2EAA7B] text-[#2EAA7B] hover:bg-[#2EAA7B] hover:text-white"} `}>
                                 <ShopIcon className="w-5 h-5 hover:text-white" />
-                                Покупка стартапа
+                                {t("Покупка стартапа")}
                             </Button>
 
                             <Button onClick={() => setListingTypes(prev => ({ ...prev, Стартапы: "sell" }))} className={`flex items-center justify-center gap-x-2 rounded-[8px] h-13  min-w-70 max-sm:w-full whitespace-nowrap px-6 border border-[#2EAA7B] text-[#2EAA7B] text-[16px] hover:bg-[#2EAA7B] hover:text-white transition duration-500 font-inter leading-[150%] font-semibold
                         ${startupType === "sell" ? "bg-[#2EAA7B] text-white border-[#2EAA7B]"
                                     : "border-[#2EAA7B] text-[#2EAA7B] hover:bg-[#2EAA7B] hover:text-white"
-                                }`}>
+                                } `}>
                                 <ShopIcon className="w-5 h-5 hover:text-white" />
-                                Продажа стартапа
+                                {t("Продажа стартапа")}
                             </Button>
                         </div>
                     </div>
@@ -369,8 +381,6 @@ export const MainPage = () => {
                         <div
                             className="w-10 h-10 border-4 border-[#2EAA7B] border-t-transparent rounded-full animate-spin"></div>
                     </div>
-                ) : isErrorStartup ? (
-                    <p className="px-48 py-[30px] text-red-500">Ошибка загрузки данных</p>
                 ) :
                     ((() => {
                         const startupCards = Object.values(startupOffers?.startup || {});
@@ -378,8 +388,8 @@ export const MainPage = () => {
                         if (startupCards.length === 0) {
                             return (
                                 <EmptyMessage
-                                    title="Здесь еще нет объявлений"
-                                    subtitle="Ваше может стать первым!"
+                                    title={t("Здесь еще нет объявлений")}
+                                    subtitle={t("Ваше может стать первым!")}
                                     hideButton
                                 />
                             );
@@ -405,7 +415,7 @@ export const MainPage = () => {
                         <Button onClick={() => {
                             navigate('/investments')
                         }} className={""}>
-                            <Heading level={2} text="Инвестиции"
+                            <Heading level={2} text={t("Инвестиции")}
                                 className="font-openSans font-bold text-3xl hover:text-[#2EAA7B] hover:underline hover:decoration-1 transition duration-500 cursor-pointer" />
                         </Button>
                     </div>
@@ -415,16 +425,14 @@ export const MainPage = () => {
                         <div
                             className="w-10 h-10 border-4 border-[#2EAA7B] border-t-transparent rounded-full animate-spin"></div>
                     </div>
-                ) : isErrorInvestment ? (
-                    <p className="px-48 py-7.5 text-red-500">Ошибка загрузки данных</p>
                 ) : ((() => {
                     const investmentsCards = Object.values(investmentOffers?.investments || {});
 
                     if (investmentsCards.length === 0) {
                         return (
                             <EmptyMessage
-                                title="Здесь еще нет объявлений"
-                                subtitle="Ваше может стать первым!"
+                                title={t("Здесь еще нет объявлений")}
+                                subtitle={t("Ваше может стать первым!")}
                                 hideButton
                             />
                         );
@@ -445,7 +453,7 @@ export const MainPage = () => {
                 <div className="min-h-[610px] bg-[url(./images/Streets.png)] bg-center-bottom bg-no-repeat bg-cover">
                     <div className="py-[70px] px-4 sm:px-8 md:px-[96px] xl:px-48">
                         <Heading
-                            text={"Города"}
+                            text={t("Города")}
                             level={2}
                             className="font-openSans font-bold text-3xl leading-[100%] mb-[25px]"
                         />
@@ -468,12 +476,15 @@ export const MainPage = () => {
                         <div className="grid 2xl:grid-cols-6 lg:grid-cols-4 grid-cols-2 gap-3">
                             {cityStats &&
                                 cityStats.map((city, idx) => (
-                                    <div key={idx}
-                                        className="w-full flex flex-col transition duration-300 ease-in-out bg-[#1A1A1A] text-white py-4 px-6 rounded-[12px] gap-0.5">
-                                        <span
-                                            className="font-openSans font-bold text-2xl max-sm:text-[14px] leading-[150%]">{city.name_ru}</span>
+                                    <div
+                                        key={idx}
+                                        className="w-full flex flex-col transition duration-300 ease-in-out bg-[#1A1A1A] text-white py-4 px-6 rounded-[12px] gap-0.5"
+                                    >
+                                        <span className="font-openSans font-bold text-2xl max-sm:text-[14px] leading-[150%]">
+                                            {lang === "uz" ? city.name_uz : city.name_ru}
+                                        </span>
                                         <span className="font-Urbanist font-bold text-[40px] max-sm:text-[28px] leading-[150%]">
-                                            {city.offers_count.toLocaleString("ru-RU")}
+                                            {city.offers_count.toLocaleString(lang === "uz" ? "uz-UZ" : "ru-RU")}
                                         </span>
                                     </div>
                                 ))}
@@ -490,14 +501,12 @@ export const MainPage = () => {
                         <Heading
                             level={1}
                             className="text-[24px] md:text-[32px] font-bold leading-tight text-black" text={""}>
-                            Почему <span className="text-[#31B683]">Invest In — лучший инструмент </span>
-                            для продажи бизнеса?
+                            {t("Почему")} <span className="text-[#31B683]">{t("Invest In")}</span> {t("— лучший инструмент для продажи бизнеса?")}
                         </Heading>
 
                         <Paragraph
                             className=" mt-[12px] w-full text-[#232323] font-inter font-normal leading-[125%] text-[16px] md:text-3xl">
-                            С Invest In благодаря поддержке на всех этапах сделки вы сможете продать свой бизнес на
-                            условиях, которые будут выгодны и удобны для вас. На нашем сайте уже:
+                            {t("С Invest In благодаря поддержке на всех этапах сделки вы сможете продать свой бизнес на условиях, которые будут выгодны и удобны для вас. На нашем сайте уже:")}
                         </Paragraph>
                     </div>
                     <div className="2xl:hidden mt-6">
@@ -511,7 +520,7 @@ export const MainPage = () => {
                                     {mainStats?.offers_count?.toLocaleString("ru-RU")}<span
                                         className="text-[#2EAA7B]">+</span>
                                 </Paragraph>
-                                <Paragraph className="font-inter text-2xl max-sm:text-[16px] leading-[100%] mt-2">объявлений</Paragraph>
+                                <Paragraph className="font-inter text-2xl max-sm:text-[16px] leading-[100%] mt-2">{t("объявлений")}</Paragraph>
                             </div>
 
                             <div className="bg-white w-full font-inter text-black flex flex-col items-center rounded-[30px] py-6 shadow-[0px_4px_21.2px_rgba(46,170,123,0.2)]">
@@ -519,23 +528,21 @@ export const MainPage = () => {
                                     {mainStats?.deals_count?.toLocaleString("ru-RU")}<span
                                         className="text-[#2EAA7B]">+</span>
                                 </Paragraph>
-                                <Paragraph className="font-inter text-2xl max-sm:text-[16px] leading-[100%] mt-2">сделок</Paragraph>
+                                <Paragraph className="font-inter text-2xl max-sm:text-[16px] leading-[100%] mt-2">{t("сделок")}</Paragraph>
                             </div>
                             <div
                                 className="bg-white font-inter text-black flex flex-col items-center rounded-[30px] py-6 shadow-[0px_4px_21.2px_rgba(46,170,123,0.2)]">
                                 <Paragraph className="text-[40px] max-sm:text-3xl text-center font-bold leading-none transition duration-300">
                                     {mainStats?.partners_count?.toLocaleString("ru-RU")}
                                 </Paragraph>
-                                <Paragraph className="font-inter text-2xl max-sm:text-[16px] leading-[100%] mt-2">партнёров</Paragraph>
+                                <Paragraph className="font-inter text-2xl max-sm:text-[16px] leading-[100%] mt-2">{t("партнёров")}</Paragraph>
                             </div>
                             <div
                                 className="bg-white font-inter text-black flex flex-col items-center text-center rounded-[30px] py-6 shadow-[0px_4px_21.2px_rgba(46,170,123,0.2)]">
                                 <Paragraph className="text-[40px] max-sm:text-3xl text-center font-bold leading-none transition duration-300">
-                                    {mainStats?.total_sold_amount
-                                        ? `${(+mainStats.total_sold_amount / 1000000).toFixed(0)} млн `
-                                        : "0"}<span className="text-[#2EAA7B]"> $</span>
+                                    {displayAmount}<span className="text-[#2EAA7B]"> $</span>
                                 </Paragraph>
-                                <Paragraph className="font-inter text-2xl max-sm:text-[16px] leading-[100%] mt-2">продано бизнесов</Paragraph>
+                                <Paragraph className="font-inter text-2xl max-sm:text-[16px] leading-[100%] mt-2">{t("продано бизнесов")}</Paragraph>
                             </div>
                         </div>
                     </div>

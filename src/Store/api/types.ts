@@ -108,7 +108,9 @@ export interface MyOffer {
             address: {
                 address: string;
                 city: {
+                    id?: number;
                     name_ru: string;
+                    name_uz: string;
                 };
             };
             photos: { photo: string }[];

@@ -13,11 +13,12 @@ import { Notification } from "../../Store/api/types";
 import { CiCalendar } from "react-icons/ci";
 import { IoMdTime } from "react-icons/io";
 import CheckedAllIcon from "../../assets/check2-all.svg?react";
+import { useTranslation } from "../../../public/Locales/context/TranslationContext";
 
 export const NoticePage = () => {
     const [page, setPage] = useState(1);
     const perPage = 5;
-
+    const { lang, t } = useTranslation()
     const { data, isLoading, isError, refetch } = useGetNotificationsQuery({ page, per_page: perPage });
 
     const notifications = data?.data ?? [];
@@ -49,7 +50,7 @@ export const NoticePage = () => {
 
             <div className="px-4 sm:px-6 md:px-10 xl:px-48 py-9 min-h-screen">
                 <Heading
-                    text="Уведомления"
+                    text={t("Уведомления")}
                     level={2}
                     className="font-inter text-xl font-bold leading-5"
                 />
@@ -59,7 +60,7 @@ export const NoticePage = () => {
                         <div className="w-10 h-10 border-4 border-[#2EAA7B] border-t-transparent rounded-full animate-spin"></div>
                     </div>
                 ) : isError ? (
-                    <p className="text-red-500">Ошибка загрузки</p>
+                    <p className="text-red-500">{t("Ошибка загрузки")}</p>
                 ) : notifications.length === 0 ? (
                     <EmptyMessage
                         title="Нет уведомлений"
@@ -88,11 +89,11 @@ export const NoticePage = () => {
                                     >
                                         <Heading
                                             className="font-inter font-bold text-lg text-[#232323] mb-3.5"
-                                            text={item.title_ru}
+                                            text={lang === "uz" ? item.title_uz : item.title_ru}
                                             level={3}
                                         />
                                         <Paragraph className="font-inter text-lg text-[#232323] mb-3.5">
-                                            {item.text_ru}
+                                            {lang === "uz" ? item.text_uz : item.text_ru}
                                         </Paragraph>
                                         <div className="flex justify-between">
                                             <div className="text-[#727272] text-sm flex gap-3 items-center">
@@ -104,7 +105,7 @@ export const NoticePage = () => {
                                                 </span>
                                             </div>
                                             <div className="text-[#2EAA7B] items-center mr-2">
-                                                {item?.is_read == true && <Paragraph className="flex gap-2">Прочитано <CheckedAllIcon /></Paragraph>
+                                                {item?.is_read == true && <Paragraph className="flex gap-2">{t("Прочитано")} <CheckedAllIcon /></Paragraph>
                                                 }
                                             </div>
                                         </div>

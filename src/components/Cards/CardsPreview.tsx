@@ -3,6 +3,7 @@ import { FaLocationDot, FaLocationCrosshairs } from "react-icons/fa6";
 import { FaArrowRight } from "react-icons/fa";
 import { ICard } from "./Interfaces";
 import { useEffect, useState } from "react";
+import { useTranslation } from "../../../public/Locales/context/TranslationContext";
 
 interface CardPreviewProps {
     card: ICard;
@@ -11,6 +12,7 @@ interface CardPreviewProps {
 
 export const CardPreview: React.FC<CardPreviewProps> = ({ card, onPreview }) => {
     const [imageUrl, setImageUrl] = useState<string | null>(null);
+    const { lang, t } = useTranslation();
 
     useEffect(() => {
         if (typeof card.image === "string") {
@@ -32,30 +34,30 @@ export const CardPreview: React.FC<CardPreviewProps> = ({ card, onPreview }) => 
             )}
             <div className="flex-1 flex flex-col ">
                 <div>
-                    <Heading text={`${String(card.price)} сум`} level={2} className="font-inter text-[24px] font-bold text-[#232323] mb-2" />
+                    <Heading text={`${String(card.price)} ${t("сум")}`} level={2} className="font-inter text-[24px] font-bold text-[#232323] mb-2" />
                     <Paragraph className="font-inter text-[#232323] text-[18px] font-bold">{card.title}</Paragraph>
 
                     <Paragraph className="flex font-inter font-medium text-[14px] mt-3 text-[#667085]">
                         <FaLocationDot className="text-[#2EAA7B] mr-1.5" />
-                        Адрес: <span className=" font-bold text-[14px] ml-1.5">{card.address?.address}, {card.address?.city?.name_ru}</span>
+                        {t("Адрес:")} <span className=" font-bold text-[14px] ml-1.5">{card.address?.address}, {lang === "uz" ? card.address?.city?.name_uz : card.address?.city?.name_ru}</span>
                     </Paragraph>
 
                     {card.area ? (
                         <Paragraph className="flex items-center font-inter font-medium text-[14px] mt-3 text-[#667085]">
                             <FaLocationCrosshairs className="text-[#2EAA7B] mr-1.5" />
-                            {card.area} кв. м.
+                            {card.area} {t("кв. м.")}
                         </Paragraph>
-                    ):(
+                    ) : (
                         <Paragraph className="flex items-center font-inter font-medium text-[14px] mt-3 text-[#667085]">
                             <FaLocationCrosshairs className="text-[#2EAA7B] mr-1.5" />
-                             Не указано
+                            {t("Не указано")}
                         </Paragraph>
                     )}
                 </div>
 
                 <div className="mt-4.5 w-full">
                     <Button onClick={onPreview} className="bg-[#2EAA7B] w-full text-white px-4 py-2 rounded-md flex justify-center items-center gap-2">
-                        Просмотреть <FaArrowRight />
+                        {t("Просмотреть")} <FaArrowRight />
                     </Button>
                 </div>
             </div>

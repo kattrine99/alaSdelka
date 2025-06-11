@@ -11,6 +11,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../Store/store";
 import { FavoriteButton } from "./FavoriteButton";
 import { useState } from "react";
+import { useTranslation } from "../../../public/Locales/context/TranslationContext";
 
 export const Cards: React.FC<ICards & { forceAllFavorite?: boolean }> = ({
     cards,
@@ -34,7 +35,7 @@ export const Cards: React.FC<ICards & { forceAllFavorite?: boolean }> = ({
     );
     const currencyMode = useSelector((state: RootState) => state.currency.mode);
     const currencyRate = useSelector((state: RootState) => state.currency.rate);
-
+    const { lang, t } = useTranslation();
     const handleToggle = async (id: number) => {
         const isAlreadyFavorite = favoriteIds.includes(id);
         setFavoriteIds((prev) =>
@@ -75,7 +76,7 @@ export const Cards: React.FC<ICards & { forceAllFavorite?: boolean }> = ({
             return `$ ${Math.round(numericPrice / currencyRate).toLocaleString()}`;
         }
 
-        return `${numericPrice.toLocaleString()} сум`;
+        return `${numericPrice.toLocaleString()} ${t("сум")}`;
     };
 
     return (
@@ -90,12 +91,12 @@ export const Cards: React.FC<ICards & { forceAllFavorite?: boolean }> = ({
                                 {card.is_paid && card.offer_status !== "sold" && (
                                     <div className="font-openSans bg-white border border-[#FD6A0D] text-[#FD6A0D] py-[5px] px-1.5 rounded-md font-semibold shadow-sm flex items-center gap-1">
                                         <FireIcon className="w-5 h-5 text-[#FD6A0D]" />
-                                        <Paragraph>Популярное</Paragraph>
+                                        <Paragraph>{t("Популярное")}</Paragraph>
                                     </div>
                                 )}
                                 {card.offer_status === "sold" && (
                                     <div className="font-openSans bg-white border border-[#301DFF] text-[#301DFF] py-1.25 px-1.5 rounded-md font-semibold shadow-sm flex items-center justify-center">
-                                        <Paragraph>Продано</Paragraph>
+                                        <Paragraph>{t("Продано")}</Paragraph>
                                     </div>
                                 )}
                             </div>
@@ -110,9 +111,11 @@ export const Cards: React.FC<ICards & { forceAllFavorite?: boolean }> = ({
                                     className="w-full object-contain"
                                 />
                             ) : (
-                                <div className="w-full h-[220px] bg-[#F0F0F0]" >
-                                    <GalleryIcon />
-                                    <Paragraph>Изображение отсутствует</Paragraph>
+                                <div className="w-full h-full flex justify-center bg-[#F0F0F0]" >
+                                    <div className="flex flex-col justify-center items-center">
+                                        <GalleryIcon />
+                                        <Paragraph>{t("Изображение отсутствует")}</Paragraph>
+                                    </div>
                                 </div>
                             )}
 
@@ -149,14 +152,14 @@ export const Cards: React.FC<ICards & { forceAllFavorite?: boolean }> = ({
                                 >
                                     <FaLocationDot className="text-[#2EAA7B] h-[16px]" />
                                     <span className="font-bold text-[12px]">
-                                        {card.address?.address ?? "Адрес не указан"}, {card.address?.city?.name_ru ?? ""}
+                                        {card.address?.address ?? t("Адрес не указан")}, {lang === "uz" ? card.address?.city?.name_uz : card.address?.city?.name_ru ?? ""}
                                     </span>
                                 </Paragraph>
                                 <Paragraph
                                     className={`text-gray-600 flex gap-x-2 font-inter text-[14px] font-medium mb-[18px] ${cardTextClass ?? ""}`}
                                 >
                                     <FaLocationCrosshairs className="text-[#2EAA7B] h-[16px]" />
-                                    {card.area} кв.м
+                                    {card.area} {t("кв. м.")}
                                 </Paragraph>
                             </div>
 
@@ -164,7 +167,7 @@ export const Cards: React.FC<ICards & { forceAllFavorite?: boolean }> = ({
                                 <Link to={`/${offerTypeToUrlMap[card.offer_type]}/card/${card.id}`} className="w-full">
                                     <Button className={WhatchButtonClass}>
                                         <span className="flex gap-2 items-center">
-                                            Просмотреть <FaArrowRight />
+                                            {t("Просмотреть")} <FaArrowRight />
                                         </span>
                                     </Button>
                                 </Link>
@@ -176,13 +179,13 @@ export const Cards: React.FC<ICards & { forceAllFavorite?: boolean }> = ({
             })}
             {showModal && (
                 <ModalBase
-                    title="Удалить из избранного?"
-                    message="Вы действительно хотите исключить это объявление из избранного?"
+                    title={t("Удалить из избранного?")}
+                    message={t("Вы действительно хотите исключить это объявление из избранного?")}
                     onClose={() => setShowModal(false)}
                     ModalClassName="max-w-100 p-8"
                     actions={<div className="flex flex-col gap-4 justify-end">
-                        <Button onClick={handleConfirmRemove} className="w-full py-4 rounded-xl bg-red-500 text-white">Удалить</Button>
-                        <Button onClick={() => setShowModal(false)} className="w-full py-4 rounded-xl bg-[#2EAA7B] text-white">Отмена</Button>
+                        <Button onClick={handleConfirmRemove} className="w-full py-4 rounded-xl bg-red-500 text-white">{t("Удалить")}</Button>
+                        <Button onClick={() => setShowModal(false)} className="w-full py-4 rounded-xl bg-[#2EAA7B] text-white">{t("Отмена")}</Button>
                     </div>} HeadingClassName={"font-inter font-semibold text-4xl leading-11"} />
             )}
         </div>

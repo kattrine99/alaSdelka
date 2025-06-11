@@ -18,8 +18,9 @@ import { JSX, useState } from 'react';
 import { SellerInfoCard } from './SellerInfoCard/SellerInfoCard';
 import { useSelector } from "react-redux";
 import { RootState } from "../../Store/store";
-
+import { useTranslation } from '../../../public/Locales/context/TranslationContext';
 export const CardDetailPage = () => {
+    const { lang, t } = useTranslation()
     const { id, category } = useParams();
     const offerId = Number(id);
     const { data, isLoading, isError } = useGetOfferByIdQuery(offerId);
@@ -71,11 +72,11 @@ export const CardDetailPage = () => {
 
         let result = '';
         if (years > 0) {
-            result += `${years} ${getPlural(years, 'год', 'года', 'лет')}`;
+            result += `${years} ${getPlural(years, t('год'), t('года'), t('лет'))}`;
         }
         if (remainingMonths > 0 || result === '') {
             if (result) result += ' ';
-            result += `${remainingMonths} ${getPlural(remainingMonths, 'месяц', 'месяца', 'месяцев')}`;
+            result += `${remainingMonths} ${getPlural(remainingMonths, t('месяц'), t('месяца'), t('месяцев'))}`;
         }
 
         return result;
@@ -96,7 +97,7 @@ export const CardDetailPage = () => {
             const converted = Math.round(price / (rate || 1));
             return `${converted.toLocaleString()} $`;
         }
-        return `${price.toLocaleString()} сум`;
+        return `${price.toLocaleString()} ${t("сум")}`;
     };
     return (
         <div className="w-screen">
@@ -104,7 +105,7 @@ export const CardDetailPage = () => {
             {isLoading ? (<div className="flex justify-center items-center py-[30px]">
                 <div className="w-10 h-10 border-4 border-[#2EAA7B] border-t-transparent rounded-full animate-spin"></div>
             </div>) : isError || !card ? (
-                <p className="px-48 py-7.5 text-red-500">Ошибка загрузки данных</p>
+                <p className="px-48 py-7.5 text-red-500">{t("Ошибка загрузки данных")}</p>
 
             ) :
                 (<div className='container mx-auto pt-10 max-md:p-5'>
@@ -116,11 +117,11 @@ export const CardDetailPage = () => {
                                 <Paragraph className='font-inter font-bold text-[#363636] text-[16px]'>ID {card.id}</Paragraph>
                                 <div className='flex gap-1.5 items-center'>
                                     <GpsIcon className='w-4 h-4' />
-                                    <Paragraph>{card.area} кв. м.</Paragraph>
+                                    <Paragraph>{card.area} {t("кв. м.")}</Paragraph>
                                 </div>
                                 <div className='flex gap-1.5 items-center'>
                                     <CategoryIcon className='w-4 h-4 text-[#2EAA7B]' />
-                                    <Paragraph className="">{card?.category?.title_ru ?? ""}</Paragraph>
+                                    <Paragraph className="">{lang === "uz" ? card?.category?.title_uz : card?.category?.title_ru ?? ""}</Paragraph>
                                 </div>
                             </div>
                             <div className="flex flex-col gap-6">
@@ -131,15 +132,15 @@ export const CardDetailPage = () => {
                                 </div>
                                 {card.conveniences && card.conveniences.length > 0 && (
                                     <div className='w-[49.63rem]'>
-                                        <Heading text={'Удобства'} level={3} className='font-inter font-semibold text-xl text-[#3A3A3A]' />
+                                        <Heading text={t('Удобства')} level={3} className='font-inter font-semibold text-xl text-[#3A3A3A]' />
                                         <div className="mt-3">
                                             <div className="flex md:flex-row flex-col max-w-full flex-wrap gap-x-12.5 gap-y-4">
                                                 {card.conveniences.map(item => (
                                                     <div key={item.id} className="flex items-center gap-3 text-sm text-gray-700">
                                                         {conveniencesIcons[item.name_ru] || <span className="w-5 h-5" />}
                                                         <div className="flex flex-col">
-                                                            <span>{item.name_ru}</span>
-                                                            <span className='font-inter font-bold text-xl text-[#2EAA7B]'>Есть</span>
+                                                            <span>{lang === "uz" ? item.name_uz : item.name_ru}</span>
+                                                            <span className='font-inter font-bold text-xl text-[#2EAA7B]'>{t("Есть")}</span>
                                                         </div>
                                                     </div>
                                                 ))}
@@ -151,7 +152,7 @@ export const CardDetailPage = () => {
                             </div>
                             {card.documents && card.documents.length > 0 &&
                                 <div>
-                                    <Heading text={'Документация'} level={3} className='font-inter font-semibold text-xl mt-7.5 text-[#3A3A3A]' />
+                                    <Heading text={t('Документация')} level={3} className='font-inter font-semibold text-xl mt-7.5 text-[#3A3A3A]' />
                                     <div className="flex flex-wrap gap-4 mt-3">
                                         {card.documents.map((doc, index) => (
                                             <a
@@ -172,7 +173,7 @@ export const CardDetailPage = () => {
                                             }`}
                                     >
                                         <BiSolidArchiveIn />
-                                        Скачать все документы
+                                        {t("Скачать все документы")}
                                     </Button>
                                 </div>
 
@@ -180,7 +181,7 @@ export const CardDetailPage = () => {
 
                             {card.description && (
                                 <div>
-                                    <Heading text={'Описание'} level={3} className='font-inter font-semibold text-xl mt-7.5 text-[#3A3A3A]' />
+                                    <Heading text={t('Описание')} level={3} className='font-inter font-semibold text-xl mt-7.5 text-[#3A3A3A]' />
                                     <div className="mt-3">
                                         <Paragraph className="text-gray-700 leading-relaxed whitespace-pre-line">
                                             {showFullDescription
@@ -193,66 +194,66 @@ export const CardDetailPage = () => {
                                                 onClick={() => setShowFullDescription(!showFullDescription)}
                                                 className="text-[#2EAA7B] mt-2 font-semibold hover:underline transition"
                                             >
-                                                {showFullDescription ? "Скрыть" : "Читать дальше"}
+                                                {showFullDescription ? t("Скрыть") : t("Читать дальше")}
                                             </Button>
                                         )}
                                     </div>
                                 </div>
                             )}
                             <div>
-                                <Heading text={'Информация и финансы'} level={3} className='font-inter font-semibold text-xl mt-7.5 text-[#3A3A3A]' />
+                                <Heading text={t('Информация и финансы')} level={3} className='font-inter font-semibold text-xl mt-7.5 text-[#3A3A3A]' />
                                 <div className="mt-3 grid grid-cols-1 md:grid-cols-3 gap-x-3 gap-y-4">
                                     <div className="flex w-full gap-2 border border-[#2EAA7B] items-center rounded-[10px] py-3 px-4.25">
                                         <WalletIcon className='w-10 h-10' />
                                         <div className='flex flex-col'>
-                                            <Paragraph className="font-inter text-[13px] leading-5 text-[#7D7D7D]">Среднемесячная выручка</Paragraph>
+                                            <Paragraph className="font-inter text-[13px] leading-5 text-[#7D7D7D]">{t("Среднемесячная выручка")}</Paragraph>
                                             <Paragraph className="font-inter text-xl font-bold text-[#2EAA7B]">{formatCurrency(card.average_monthly_revenue)}</Paragraph>
                                         </div>
                                     </div>
                                     <div className="flex gap-2 w-full border border-[#2EAA7B] items-center rounded-[10px] py-3 px-4.25">
                                         <ReceiptIcon className='w-10 h-10' />
                                         <div className='flex flex-col'>
-                                            <Paragraph className="font-inter text-[13px] leading-5 text-[#7D7D7D]">Среднемесячные расходы</Paragraph>
+                                            <Paragraph className="font-inter text-[13px] leading-5 text-[#7D7D7D]">{t("Среднемесячные расходы")}</Paragraph>
                                             <Paragraph className="font-inter text-xl font-bold text-[#2EAA7B]">{formatCurrency(card.average_monthly_expenses)}</Paragraph>
                                         </div>
                                     </div>
                                     <div className="flex gap-2 w-full border border-[#2EAA7B] items-center rounded-[10px] py-3 px-4.25">
                                         <CalendarIcon className='w-10 h-10' />
                                         <div className='flex flex-col'>
-                                            <Paragraph className="font-inter text-[13px] leading-5 text-[#7D7D7D]">Дата основания</Paragraph>
-                                            <Paragraph className="font-inter text-xl font-bold text-[#2EAA7B]">{card.foundation_year} год</Paragraph>
+                                            <Paragraph className="font-inter text-[13px] leading-5 text-[#7D7D7D]">{t("Дата основания")}</Paragraph>
+                                            <Paragraph className="font-inter text-xl font-bold text-[#2EAA7B]">{card.foundation_year} {t("год")}</Paragraph>
                                         </div>
                                     </div>
                                     <div className="flex gap-2 w-full border border-[#2EAA7B] items-center rounded-[10px] py-3 px-4.25">
                                         <DollarCircleIcon className='w-10 h-10' />
                                         <div className='flex flex-col'>
-                                            <Paragraph className="font-inter text-[13px] leading-5 text-[#7D7D7D]">Среднемесячная прибыль</Paragraph>
+                                            <Paragraph className="font-inter text-[13px] leading-5 text-[#7D7D7D]">{t("Среднемесячная прибыль")}</Paragraph>
                                             <Paragraph className="font-inter text-xl font-bold text-[#2EAA7B]">{formatCurrency(card.average_monthly_profit)}</Paragraph>
                                         </div>
                                     </div>
                                     <div className="flex gap-2 w-full border border-[#2EAA7B] items-center rounded-[10px] py-3 px-4.25">
                                         <MoneySendIcon className='w-10 h-10' />
                                         <div className='flex flex-col'>
-                                            <Paragraph className="font-inter text-[13px] leading-5 text-[#7D7D7D]">Окупаемость</Paragraph>
+                                            <Paragraph className="font-inter text-[13px] leading-5 text-[#7D7D7D]">{t("Окупаемость")}</Paragraph>
                                             <Paragraph className="font-inter text-xl font-bold text-[#2EAA7B]">{formatMonthsToYears(card.payback_period)}</Paragraph>
                                         </div>
                                     </div>
                                     <div className="flex gap-2 w-full border border-[#2EAA7B] items-center rounded-[10px] py-3 px-4.25">
                                         <PercentIcon className='w-10 h-10' />
                                         <div className='flex flex-col'>
-                                            <Paragraph className="font-inter text-[13px] leading-5 text-[#7D7D7D]">Доля к продаже</Paragraph>
+                                            <Paragraph className="font-inter text-[13px] leading-5 text-[#7D7D7D]">{t("Доля к продаже")}</Paragraph>
                                             <Paragraph className="font-inter text-xl font-bold text-[#2EAA7B]">{card.percentage_for_sale}%</Paragraph>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div className='flex flex-col gap-3'>
-                                <Heading text={'Местоположение'} level={3} className='font-inter font-semibold text-xl mt-7.5 text-[#3A3A3A]' />
+                                <Heading text={t('Местоположение')} level={3} className='font-inter font-semibold text-xl mt-7.5 text-[#3A3A3A]' />
                                 <div className='flex gap-1.5'>
                                     <FaLocationDot className="text-[#2EAA7B] w-4 h-4" />
                                     <Paragraph className="">
-                                        {card?.address !== null ? card?.address?.address + ',' : "Адрес не указан"}
-                                        {card?.address?.city?.name_ru ?? ""}
+                                        {card?.address !== null ? card?.address?.address + ',' : t("Адрес не указан")}
+                                        {lang === "uz" ? card?.address?.city?.name_uz : card?.address?.city?.name_ru ?? ""}
                                     </Paragraph>
                                 </div>
                                 {card.address?.latitude && card.address?.longitude ? (
@@ -274,7 +275,7 @@ export const CardDetailPage = () => {
                                         loading="eager"
                                     />
                                 ) : (
-                                    <Paragraph className="text-gray-500">Адрес недоступен</Paragraph>
+                                    <Paragraph className="text-gray-500">{t("Адрес недоступен")}</Paragraph>
                                 )}
 
                             </div>

@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setOfferData } from "../../../Store/tempStorage";
 import { useGetUserInfoQuery } from "../../../Store/api/Api";
 import { RootState } from "../../../Store/store";
+import { useTranslation } from "../../../../public/Locales/context/TranslationContext";
 
 interface Props {
     offerType: "business" | "franchise" | "startup" | "investments";
@@ -34,6 +35,7 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
     );
 
     const [selectedConveniences, setSelectedConveniences] = useState<number[]>(offerData?.conveniences || []);
+    const { lang, t } = useTranslation();
 
     const [title, setTitle] = useState(offerData?.title || "");
     const [amount, setAmount] = useState(
@@ -197,21 +199,21 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
             <div>
                 {/*Для бизнеса */}
                 {isBusiness &&
-                    <Heading className="text-3xl font-inter text-[#101828] mb-1.5 font-semibold leading-10 space-x-[-1%]" text={"Информация о бизнесе"} level={2} />
+                    <Heading className="text-3xl font-inter text-[#101828] mb-1.5 font-semibold leading-10 space-x-[-1%]" text={t("Информация о бизнесе")} level={2} />
                 }
                 {/*Для Франшизы */}
                 {isFranchise &&
-                    <Heading className="text-3xl font-inter text-[#101828] mb-1.5 font-semibold leading-10 space-x-[-1%]" text={"Информация о франшизе"} level={2} />
+                    <Heading className="text-3xl font-inter text-[#101828] mb-1.5 font-semibold leading-10 space-x-[-1%]" text={t("Информация о франшизе")} level={2} />
                 }
                 {/*Для Инвестиций */}
                 {isInvestments &&
-                    <Heading className="text-3xl font-inter text-[#101828] mb-1.5 font-semibold leading-10 space-x-[-1%]" text={"Информация об инвестициях"} level={2} />
+                    <Heading className="text-3xl font-inter text-[#101828] mb-1.5 font-semibold leading-10 space-x-[-1%]" text={t("Информация об инвестициях")} level={2} />
                 }
                 {/*Для стартапа */}
                 {isStartup &&
-                    <Heading className="text-3xl font-inter text-[#101828] mb-1.5 font-semibold leading-10 space-x-[-1%]" text={"Информация о стартапе"} level={2} />
+                    <Heading className="text-3xl font-inter text-[#101828] mb-1.5 font-semibold leading-10 space-x-[-1%]" text={t("Информация о стартапе")} level={2} />
                 }
-                <Paragraph className="text-[#667085] font-inter text-[16px] leading-5 space-x-3.5">Заполните все необходимые данные для добавления нового объявления</Paragraph>
+                <Paragraph className="text-[#667085] font-inter text-[16px] leading-5 space-x-3.5">{t("Заполните все необходимые данные для добавления нового объявления")}</Paragraph>
             </div>
             {/*Название */}
             <div className="flex flex-col gap-2">
@@ -219,16 +221,16 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
                     className={`bg-[#F0F1F280] w-full max-w-200 rounded-[14px] outline-none py-3.5 px-4.5 ${!title ? 'border border-red-500' : ''
                         }`}
                     type="text"
-                    placeholder="Введите"
+                    placeholder={t("Введите")}
                     isError={!title}
                     required
                     value={title}
                     onChange={(e) => setTitle(e.target.value)}
                     LabelClassName="font-inter text-[16px] leading-[130%] block mb-3"
-                    LabelText="*Название бизнеса"
+                    LabelText={t("Название бизнеса")}
                 />
                 {!title && (
-                    <p className="text-red-500 text-sm">Пожалуйста, введите название бизнеса</p>
+                    <p className="text-red-500 text-sm">{t("Пожалуйста, введите название бизнеса")}</p>
                 )}
             </div>
             {/*Описание textarea */}
@@ -237,8 +239,8 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
                     isTextArea
                     required
                     LabelClassName="font-inter text-[16px] leading-[130%]"
-                    LabelText="*Описание"
-                    placeholder="Введите текст"
+                    LabelText={t("Описание")}
+                    placeholder={t("Введите текст")}
                     value={description}
                     onChange={(e) => setDescription(e.target.value)}
                     className={`bg-[#F0F1F280] resize-none w-full h-[118px] rounded-[14px] outline-none py-3.5 px-4.5 ${!description ? 'border border-red-500' : ''
@@ -250,12 +252,12 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
                     {description.length}/{offerType === "business" ? 3000 : 2000}
                 </span>
                 {!description && (
-                    <p className="text-red-500 text-sm">Пожалуйста, введите описание</p>
+                    <p className="text-red-500 text-sm">{t("Пожалуйста, введите описание")}</p>
                 )}
             </div>
             {/*Категория объявления */}
             <div className="flex flex-col gap-2 w-full max-w-200 relative">
-                <label className="text-[#101828] font-inter text-[16px] leading-[130%]">*Категория объявления</label>
+                <label className="text-[#101828] font-inter text-[16px] leading-[130%]">{t("Категория объявления")}</label>
                 <select
                     required
                     className={`bg-[#F0F1F280] w-full max-w-200  rounded-[14px] text-[#686A70] outline-none py-3.5 px-4.5 ${!categoryId ? 'border border-red-500' : ''
@@ -263,15 +265,15 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
                     value={categoryId}
                     onChange={(e) => setCategoryId(e.target.value)}
                 >
-                    <option value="">Выбрать</option>
+                    <option value="">{t("Выбрать")}</option>
                     {filtersData?.categories.map((cat) => (
                         <option key={cat.id} value={String(cat.id)}>
-                            {cat.title_ru}
+                            {lang === "uz" ? cat.title_uz : cat.title_ru}
                         </option>
                     ))}
                 </select>
                 {!categoryId && (
-                    <p className="text-red-500 text-sm mt-1">Пожалуйста, выберите категорию</p>
+                    <p className="text-red-500 text-sm mt-1">{t("Пожалуйста, выберите категорию")}</p>
                 )}
             </div>
 
@@ -280,9 +282,9 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
                 <Input
                     className="bg-[#b5b5b667]  text-gray-500 cursor-not-allowed w-full rounded-[14px] outline-none py-3.5 px-4.5"
                     LabelClassName="font-inter text-[16px] leading-[130%]"
-                    LabelText="*Имя Фамилия"
+                    LabelText={t("Имя Фамилия")}
                     type="text"
-                    placeholder="Введите"
+                    placeholder={t("Введите")}
                     isError={false}
                     value={fullName}
                     disabled
@@ -290,7 +292,7 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
             </div>
             {/*Номер телефона */}
             <div className="flex flex-col gap-2 w-full max-w-200  relative ">
-                <label className="text-[#101828] font-inter text-[16px] leading-[130%] mb-2.5 block">*Номер телефона</label>
+                <label className="text-[#101828] font-inter text-[16px] leading-[130%] mb-2.5 block">{t("Номер телефона")}</label>
                 <div className="bg-[#b5b5b667] w-full rounded-[14px] flex items-center p-1 ">
                     <div className="w-12 h-12 p-1 rounded-[10px] bg-[#b4b8cc] flex items-center justify-center mr-3">
                         <FlagIcon className="w-[25px] h-[25px] object-contain" />
@@ -309,59 +311,59 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
             {/*Стадия */}
             {isSell && isStartup &&
                 <div className="flex flex-col gap-2 w-full max-w-200  relative">
-                    <label className="text-[#101828] font-inter text-[16px] leading-[130%]">*Стадия</label>
+                    <label className="text-[#101828] font-inter text-[16px] leading-[130%]">{t("Стадия")}</label>
                     <select className={`bg-[#F0F1F280] w-full rounded-[14px] text-[#686A70] outline-none py-3.5 px-4.5 ${!projectStageId ? 'border border-red-500' : ''
                         }`}
                         value={projectStageId}
                         onChange={(e) => setProjectStageId(e.target.value)}>
-                        <option className="">Выбрать</option>
+                        <option className="">{t("Выбрать")}</option>
                         {filtersData?.project_stages.map((stage) => (
                             <option key={stage.id} value={String(stage.id)}>
-                                {stage.name_ru}
+                                {lang === "uz" ? stage.name_uz : stage.name_ru}
                             </option>
                         ))}
                     </select>
                     {!projectStageId && (
-                        <p className="text-red-500 text-sm mt-1">Пожалуйста, выберите стадию проекта</p>
+                        <p className="text-red-500 text-sm mt-1">{t("Пожалуйста, выберите стадию проекта")}</p>
                     )}
                 </div>
             }
             {/*Город */}
             <div className="flex flex-col gap-2 w-full max-w-200  relative">
-                <label className="text-[#101828] font-inter text-[16px] leading-[130%]">*Город</label>
+                <label className="text-[#101828] font-inter text-[16px] leading-[130%]">{t("Город")}</label>
                 <select className={`bg-[#F0F1F280] w-full rounded-[14px] text-[#686A70] outline-none py-3.5 px-4.5 ${!cityId ? 'border border-red-500' : ''
                     }`}
                     value={cityId}
                     onChange={(e) => setCityId(e.target.value)}>
-                    <option className="">Выбрать</option>
+                    <option className="">{t("Выбрать")}</option>
                     {filtersData?.cities.map((city) => (
                         <option key={city.id} value={String(city.id)}>
-                            {city.name_ru}
+                            {lang === "uz" ? city.name_uz : city.name_ru}
                         </option>
                     ))}
                 </select>
                 {!cityId && (
-                    <p className="text-red-500 text-sm mt-1">Пожалуйста, выберите город</p>
+                    <p className="text-red-500 text-sm mt-1">{t("Пожалуйста, выберите город")}</p>
                 )}
             </div>
             {/*Адрес */}
             <div className="flex flex-col gap-2 w-full max-w-200 relative">
                 <Input className={`bg-[#F0F1F280] w-full rounded-[14px] outline-none py-3.5 px-4.5 ${!addressText ? 'border border-red-500' : ''
                     }`}
-                    LabelText="*Адрес" type="text" placeholder="Введите" isError={!addressText}
+                    LabelText={t("Адрес")} type="text" placeholder={t("Введите")} isError={!addressText}
                     value={addressText}
                     onChange={(e) => setAddressText(e.target.value)} />
                 {!addressText && (
-                    <p className="text-red-500 text-sm">Пожалуйста, введите Адрес</p>
+                    <p className="text-red-500 text-sm">{t("Пожалуйста, введите Адрес")}</p>
                 )}
             </div>
             {/*Площадь */}
             <Input
                 className="bg-[#F0F1F280] w-full max-w-200 rounded-[14px] outline-none py-3.5 px-4.5"
                 LabelClassName="font-inter text-[16px] leading-[130%] block mb-3"
-                LabelText="Площадь, кв. м."
+                LabelText={t("Площадь, кв. м.")}
                 type="text"
-                placeholder="Введите"
+                placeholder={t("Введите")}
                 isError={false}
                 value={Area}
                 onChange={(e) => {
@@ -371,48 +373,48 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
             />
             {/*Форма владения бизнесом */}
             <div className="flex flex-col gap-2 w-full max-w-98 relative">
-                <label className="text-[#101828] font-inter text-[16px] leading-[130%]">*Форма владения бизнесом</label>
+                <label className="text-[#101828] font-inter text-[16px] leading-[130%]">{t("Форма владения бизнесом")}</label>
                 <select
                     className={`bg-[#F0F1F280] w-full rounded-[14px] text-[#686A70] outline-none py-3.5 px-4.5 ${!businessOwnership ? 'border border-red-500' : ''
                         }`}
                     value={businessOwnership}
                     onChange={(e) => setBusinessOwnership(e.target.value)}
                 >
-                    <option value="">Выбрать</option>
+                    <option value="">{t("Выбрать")}</option>
                     {filtersData?.business_types.map((type) => (
                         <option key={type.value} value={type.value}>
-                            {type.label_ru}
+                            {lang === "uz" ? type.label_uz : type.label_ru}
                         </option>
                     ))}
                 </select>
                 {!businessOwnership && (
-                    <p className="text-red-500 text-sm mt-1">Пожалуйста, выберите форму</p>
+                    <p className="text-red-500 text-sm mt-1">{t("Пожалуйста, выберите форму")}</p>
                 )}
             </div>
             {/*Форма владения помещением */}
             <div className="flex flex-col gap-2 w-full max-w-98  relative">
-                <label className="text-[#101828] font-inter text-[16px] leading-[130%]">*Форма владения помещением</label>
+                <label className="text-[#101828] font-inter text-[16px] leading-[130%]">{t("Форма владения помещением")}</label>
                 <select className={`bg-[#F0F1F280] w-full rounded-[14px] text-[#686A70] outline-none py-3.5 px-4.5 ${!propertyOwnershipType ? 'border border-red-500' : ''
                     }`}
                     value={propertyOwnershipType}
                     onChange={(e) => setPropertyOwnershipType(e.target.value)}
                 >
-                    <option className="">Выбрать</option>
+                    <option className="">{t("Выбрать")}</option>
                     {filtersData?.premises_ownership_form.map((form) => (
                         <option key={form.value} value={String(form.value)}>
-                            {form.label_ru}
+                            {lang === "uz" ? form.label_uz : form.label_ru}
                         </option>
                     ))}
                 </select>
                 {!propertyOwnershipType && (
-                    <p className="text-red-500 text-sm mt-1">Пожалуйста, выберите форму</p>
+                    <p className="text-red-500 text-sm mt-1">{t("Пожалуйста, выберите форму")}</p>
                 )}
             </div>
 
             {isSell &&
                 <div className="flex flex-col gap-2">
                     <label className="text-[#101828] font-inter text-[16px] leading-[130%] mb-2.5">
-                        Документы и лицензии
+                        {t("Документы и лицензии")}
                     </label>
 
                     <div className="flex gap-4 flex-wrap">
@@ -441,8 +443,8 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
                             <div className="bg-[#EBF9F5] w-9 h-9 rounded-full flex items-center justify-center mb-2">
                                 <HiPlus className="text-[#2EAA7B] text-lg" />
                             </div>
-                            <p className="text-[#232323] font-medium">Загрузить документ</p>
-                            <p className="text-[#667085] text-sm">Формат: PDF, Excel</p>
+                            <p className="text-[#232323] font-medium">{t("Загрузить документ")}</p>
+                            <p className="text-[#667085] text-sm">{t("Формат")}: PDF, Excel</p>
                             <input
                                 ref={inputRef}
                                 type="file"
@@ -458,9 +460,9 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
             <div className="flex flex-col gap-2 w-full max-w-98  relative">
                 <Input
                     className={`bg-[#F0F1F280] w-full rounded-[14px] outline-none py-3.5 px-4.5 ${!amount ? 'border border-red-500' : ''}`}
-                    LabelText="*Сумма, сум"
+                    LabelText={t("Сумма, Cум")}
                     type="text"
-                    placeholder="Введите"
+                    placeholder={t("Введите")}
                     isError={false}
                     value={amount}
                     onChange={(e) => {
@@ -470,7 +472,7 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
                     }}
                 />
                 {!amount && (
-                    <p className="text-red-500 text-sm">Пожалуйста, введите сумму</p>
+                    <p className="text-red-500 text-sm">{t("Пожалуйста, введите сумму")}</p>
                 )}
             </div>
 
@@ -478,7 +480,7 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
             {isSell &&
                 <div className="flex flex-col gap-2">
                     <label className="text-[#101828] font-inter text-[16px] leading-[130%] mb-2.5">
-                        Изображение
+                        {t("Изображение")}
                     </label>
 
                     <div className="flex gap-4 flex-wrap">
@@ -507,7 +509,7 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
                             <div className="bg-[#EBF9F5] w-9 h-9 rounded-full flex items-center justify-center mb-2">
                                 <HiPlus className="text-[#2EAA7B] text-lg" />
                             </div>
-                            <p className="text-[#232323] font-medium">Загрузить изображение</p>
+                            <p className="text-[#232323] font-medium">{t("Загрузить изображение")}</p>
                             <p className="text-[#667085] text-sm">620×220 px</p>
 
                             <Input
@@ -525,14 +527,14 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
             {/*Ссылки */}
             {isSell && (
                 <div className="flex flex-col w-full max-w-200 ">
-                    <label className="text-[#101828] font-inter text-[16px] leading-[130%]">Ссылка на официальные каналы коммуникации</label>
+                    <label className="text-[#101828] font-inter text-[16px] leading-[130%]">{t("Ссылка на официальные каналы коммуникации")}</label>
 
                     {links.map((item, index) => (
                         <div key={index} className="flex max-md:flex-col max-md:items-start items-center gap-3">
                             <Input
                                 type="text"
                                 value={item.channel_name}
-                                placeholder="Например: Telegram"
+                                placeholder={t("Например: Telegram")}
                                 onChange={(e) => handleChannelNameChange(index, e.target.value)}
                                 className="bg-[#F0F1F280] w-full rounded-[14px] outline-none py-3.5 px-4.5"
                                 isError={false}
@@ -552,7 +554,7 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
                         onClick={handleAddLink}
                         className="text-[#2EAA7B] font-inter font-semibold text-[16px] leading-[130%] underline text-left w-max mt-2"
                     >
-                        + Добавить доп. канал
+                        + {t("Добавить доп. канал")}
                     </button>
                 </div>
             )}
@@ -564,9 +566,9 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
                         <Input
                             className="bg-[#F0F1F280] w-full rounded-[14px] outline-none py-3.5 px-4.5"
                             LabelClassName="font-inter text-[16px] leading-[130%]"
-                            LabelText="Доля продаваемого бизнеса"
+                            LabelText={t("Доля продаваемого бизнеса")}
                             type="text"
-                            placeholder="Введите"
+                            placeholder={t("Введите")}
                             isError={false}
                             value={String(percentageForSale)}
                             onChange={(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -580,9 +582,9 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
                         <Input
                             className="bg-[#F0F1F280] w-full rounded-[14px] outline-none py-3.5 px-4.5"
                             LabelClassName="font-inter text-[16px] leading-[130%]"
-                            LabelText="Сумма среднемесячного дохода"
+                            LabelText={t("Сумма среднемесячного дохода")}
                             type="text"
-                            placeholder="Введите"
+                            placeholder={t("Введите")}
                             isError={false}
                             value={monthlyIncome?.toLocaleString("ru-RU").replace(/,/g, " ")}
                             onChange={(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -596,9 +598,9 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
                         <Input
                             className="bg-[#F0F1F280] w-full rounded-[14px] outline-none py-3.5 px-4.5"
                             LabelClassName="font-inter text-[16px] leading-[130%]"
-                            LabelText="Сумма среднемесячного расхода"
+                            LabelText={t("Сумма среднемесячного расхода")}
                             type="text"
-                            placeholder="Введите"
+                            placeholder={t("Введите")}
                             isError={false}
                             value={expences?.toLocaleString("ru-RU").replace(/,/g, " ")}
                             onChange={(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -612,9 +614,9 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
                         <Input
                             className="bg-[#F0F1F280] w-full rounded-[14px] outline-none py-3.5 px-4.5"
                             LabelClassName="font-inter text-[16px] leading-[130%]"
-                            LabelText="Сумма прибыли"
+                            LabelText={t("Сумма прибыли")}
                             type="text"
-                            placeholder="Введите"
+                            placeholder={t("Введите")}
                             isError={false}
                             value={profit?.toLocaleString("ru-RU").replace(/,/g, " ")}
                             onChange={(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -626,18 +628,18 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
 
                     <div className="flex flex-col gap-2 w-full max-w-98 relative">
                         <Input className="bg-[#F0F1F280] w-full rounded-[14px] outline-none py-3.5 px-4.5" LabelClassName="font-inter text-[16px] leading-[130%]"
-                            LabelText="Окупаемость (месяц)" type="text" placeholder="Введите" isError={false}
+                            LabelText={t("Окупаемость (месяц)")} type="text" placeholder={t("Введите")} isError={false}
                             value={String(paybackPeriod)}
                             onChange={(e) => handleNumericInput(e, setPaybackPeriod)} />
                     </div>
                     <div className="flex flex-col gap-2 w-full max-w-98 relative">
-                        <label className="text-[#101828] font-inter text-[16px] leading-[130%]">Год основания бизнеса</label>
+                        <label className="text-[#101828] font-inter text-[16px] leading-[130%]">{t("Год основания бизнеса")}</label>
                         <select
                             className="bg-[#F0F1F280] w-full rounded-[14px] text-[#686A70] outline-none py-3.5 px-4.5"
                             value={String(FoundationYear)}
                             onChange={(e) => setFoundationYear(Number(e.target.value))}
                         >
-                            <option value="">Выбрать</option>
+                            <option value="">{t("Выбрать")}</option>
                             {foundationYears.map((year) => (
                                 <option key={year} value={year}>
                                     {year}
@@ -647,9 +649,9 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
                     </div>
                 </>}
             {/* Детали объявления (переключатели) */}
-            <Heading text={"Детали объявления"} level={3} className="font-inter font-semibold text-[#232323] text-xl leading-[130%]" />
+            <Heading text={t("Детали объявления")} level={3} className="font-inter font-semibold text-[#232323] text-xl leading-[130%]" />
             <div className="flex flex-col w-full max-w-98 gap-6">
-                {conveniences.map(({ id, name_ru }) => {
+                {conveniences.map(({ id, name_ru, name_uz }) => {
                     const isFranchiseOnly = [10, 11].includes(id);
                     const isInvestmentOnly = [9].includes(id);
 
@@ -658,15 +660,17 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
 
                     return (
                         <label key={id} className="flex items-center justify-between cursor-pointer">
-                            <span className="text-[#101828] w-full font-inter text-[16px] leading-[130%]">{name_ru}</span>
+                            <span className="text-[#101828] w-full font-inter text-[16px] leading-[130%]">
+                                {lang === "uz" ? name_uz : name_ru}
+                            </span>
                             <Input
                                 type="checkbox"
                                 isError={false}
                                 checked={selectedConveniences.includes(id)}
                                 onChange={() => toggleConvenience(id)}
                                 className="appearance-none w-[44px] h-[24px] bg-gray-300 rounded-full relative transition-all duration-300 checked:bg-[#2EAA7B]
-                before:content-[''] before:absolute before:top-[2px] before:left-[2px] before:w-[20px] before:h-[20px]
-                before:bg-white before:rounded-full before:transition-all before:duration-300 checked:before:translate-x-[20px]"
+            before:content-[''] before:absolute before:top-[2px] before:left-[2px] before:w-[20px] before:h-[20px]
+            before:bg-white before:rounded-full before:transition-all before:duration-300 checked:before:translate-x-[20px]"
                             />
                         </label>
                     );
@@ -681,7 +685,7 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
                     className={`flex items-center gap-2 ${isNextDisabled() ? "bg-gray-300 cursor-not-allowed" : "bg-[#2EAA7B] text-white"
                         } px-6 py-2 rounded-md`}
                 >
-                    Дальше <FiChevronRight />
+                    {t("Дальше")} <FiChevronRight />
                 </Button>
             </div>
         </div>

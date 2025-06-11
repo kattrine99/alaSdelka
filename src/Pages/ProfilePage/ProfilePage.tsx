@@ -8,13 +8,14 @@ import { FiEdit2 } from "react-icons/fi";
 import { profileNavigate } from "../../utils/categoryMap"
 import { FiAlertCircle } from "react-icons/fi";
 import FlagIcon from '../../assets/Flag.svg?react'
+import { useTranslation } from "../../../public/Locales/context/TranslationContext";
 
 
 export const ProfilePage = () => {
     const navigate = useNavigate();
     const location = useLocation();
     const dispatch = useDispatch();
-
+    const { lang, t } = useTranslation()
     const [editMode, setEditMode] = useState(false);
     const { data, isLoading, error, refetch } = useGetUserInfoQuery();
     const [updateUserInfo] = useUpdateUserInfoMutation();
@@ -43,9 +44,9 @@ export const ProfilePage = () => {
         <div className="w-12 h-12 flex items-center justify-center rounded-full bg-red-100 mb-3">
             <FiAlertCircle className="text-red-600 text-[28px]" />
         </div>
-        <p className="text-red-600 text-lg font-semibold">Произошла ошибка при загрузке</p>
+        <p className="text-red-600 text-lg font-semibold">{t("Произошла ошибка при загрузке")}</p>
     </div>;
-    if (!data) return <div>Нет данных</div>
+    if (!data) return <div>{t("Нет данных")}</div>
     const fullName = data.name || "";
     const handleLogout = async () => {
         try {
@@ -107,8 +108,8 @@ export const ProfilePage = () => {
         <div className="w-screen">
             {showLogoutConfirm && (
                 <ModalBase
-                    title="Подтвердите действие"
-                    message="Вы действительно хотите выйти из профиля?"
+                    title={t("Подтвердите действие")}
+                    message={t("Вы действительно хотите выйти из профиля?")}
                     ModalClassName="w-100 p-9"
                     showCloseButton={true}
                     onClose={() => setShowLogoutConfirm(false)}
@@ -119,13 +120,13 @@ export const ProfilePage = () => {
                                 className="text-white bg-[#DE5151] w-full px-6 py-3 rounded-[10px]"
                                 onClick={handleLogout}
                             >
-                                Выйти
+                                {t("Выйти")}
                             </Button>
                             <Button
                                 className="border border-[#2EAA7B] w-full text-[#2EAA7B] px-6 py-3 rounded-[10px]"
                                 onClick={() => setShowLogoutConfirm(false)}
                             >
-                                Отмена
+                                {t("Отмена")}
                             </Button>
                         </div>
                     }
@@ -133,8 +134,8 @@ export const ProfilePage = () => {
             )}
             {showSuccess && (
                 <ModalBase
-                    title="Успешно!"
-                    message="Данные успешно обновлены"
+                    title={t("Успешно!")}
+                    message={t("Данные успешно обновлены")}
                     ModalClassName='w-100 p-9'
                     showCloseButton={true}
                     onClose={() => setShowSuccess(false)}
@@ -156,7 +157,7 @@ export const ProfilePage = () => {
                         <>
                             <Heading
                                 className="text-[#121212] font-inter font-bold text-4xl leading-10"
-                                text={`Добро пожаловать, ${fullName}!`}
+                                text={`${t("Добро пожаловать")}, ${fullName}!`}
                                 level={2} />
                             <div className="flex flex-col md:flex-row justify-center md:justify-between max-w-281.75 mt-6">
                                 <div className="flex gap-x-6 mb-1.5 items-center w-full h-full">
@@ -179,9 +180,9 @@ export const ProfilePage = () => {
                                 </div>
 
                                 <div className="flex flex-col w-full md:flex-row gap-x-4 gap-y-4 items-center">
-                                    <Button className="px-5 h-13.5 text-white bg-[#31B683] w-full rounded-[6px] cursor-pointer" onClick={handleEditClick}>Редактировать личные данные</Button>
+                                    <Button className="px-5 h-13.5 text-white bg-[#31B683] w-full rounded-[6px] cursor-pointer" onClick={handleEditClick}>{t("Редактировать личные данные")}</Button>
                                     <Button className="h-13.5 px-5 text-white bg-[#31B683] hover:bg-[#DE5151] w-full rounded-[6px] cursor-pointer" onClick={() => setShowLogoutConfirm(true)}
-                                    >Выйти из профиля</Button>
+                                    >{t("Выйти из профиля")}</Button>
                                 </div>
                             </div>
                         </>
@@ -213,13 +214,13 @@ export const ProfilePage = () => {
                             </div>
                         )}
 
-                        <Heading className="text-[#101828] font-inter font-semibold text-xl leading-7 mb-3.5" text="Основная информация" level={3} />
+                        <Heading className="text-[#101828] font-inter font-semibold text-xl leading-7 mb-3.5" text={t("Основная информация")} level={3} />
 
                         <div className="flex flex-col gap-y-6">
                             <div className="flex flex-col">
-                                <label className="text-[#121212] text-sm mb-1 block">Имя Фамилия</label>
+                                <label className="text-[#121212] text-sm mb-1 block">{t("Имя Фамилия")}</label>
                                 {editMode ? (<Input
-                                    title="Имя Фамилия"
+                                    title={t("Имя Фамилия")}
                                     type="text"
                                     value={editMode && fullNameInput}
                                     onChange={e => setFullNameInput(e.target.value)}
@@ -237,12 +238,12 @@ export const ProfilePage = () => {
 
                             <div>
                                 <div className="mb-6">
-                                    <label className="text-[#121212] text-sm mb-1 block">Номер телефона</label>
+                                    <label className="text-[#121212] text-sm mb-1 block">{t("Номер телефона")}</label>
                                     {editMode ? (
                                         <div className="flex items-center bg-[#F2F2F2] rounded-[10px] px-4 py-[10px]">
                                             <FlagIcon className="w-6.25 h-6.25 object-contain mr-3" />
                                             <Input
-                                                title="Телефон"
+                                                title={t("Телефон")}
                                                 type="text"
                                                 value={formData.phone}
                                                 onChange={e => setFormData({ ...formData, phone: e.target.value })}
@@ -261,7 +262,7 @@ export const ProfilePage = () => {
                                 </div>
 
                                 <div className="mb-6">
-                                    <label className="text-[#121212] text-sm mb-1 block">Город</label>
+                                    <label className="text-[#121212] text-sm mb-1 block">{t("Город")}</label>
                                     {editMode ? (
                                         <select
                                             value={formData.city_id || ""}
@@ -272,27 +273,27 @@ export const ProfilePage = () => {
                                             className="bg-[#F2F2F2] w-full rounded-[10px] h-14 px-4 py-3.5 text-[#121212] text-[16px] overflow-hidden"
                                         >
                                             {isLoadingFilters ? (
-                                                <option>Загрузка...</option>
+                                                <option>{t('Загрузка...')}</option>
                                             ) : (
                                                 filtersData?.cities?.map((city) => (
                                                     <option key={city.id} value={city.id}>
-                                                        {city.name_ru}
+                                                        {lang === "uz" ? city.name_uz : city.name_ru}
                                                     </option>
                                                 ))
                                             )}
                                         </select>
                                     ) : (
                                         <div className="bg-[#F2F2F2] rounded-[10px] h-14 px-4 py-3.5 text-[#121212] text-[16px]">
-                                            {data.city?.name_ru || " "}
+                                            {lang === "uz" ? data.city?.name_uz : data.city?.name_ru || " "}
                                         </div>
                                     )}
                                 </div>
 
                                 <div className="mb-6">
-                                    <label className="text-[#121212] text-sm mb-1 block">Электронная почта</label>
+                                    <label className="text-[#121212] text-sm mb-1 block">{t("Электронная почта")}</label>
                                     {editMode ? (
                                         <Input
-                                            title="Email"
+                                            title={t("Email")}
                                             type="text"
                                             value={formData.email ?? ""}
                                             onChange={e => setFormData({ ...formData, email: e.target.value })}
@@ -312,8 +313,8 @@ export const ProfilePage = () => {
 
                         {editMode && (
                             <div className="flex gap-4 mt-6">
-                                <Button className="text-white bg-[#2EAA7B] px-6 py-3 rounded-[10px] cursor-pointer" onClick={handleSave}>Сохранить</Button>
-                                <Button className="border border-[#2EAA7B] text-[#2EAA7B] px-6 py-3 rounded-[10px] cursor-pointer" onClick={handleCancel}>Отменить</Button>
+                                <Button className="text-white bg-[#2EAA7B] px-6 py-3 rounded-[10px] cursor-pointer" onClick={handleSave}>{t("Сохранить")}</Button>
+                                <Button className="border border-[#2EAA7B] text-[#2EAA7B] px-6 py-3 rounded-[10px] cursor-pointer" onClick={handleCancel}>{t("Отменить")}</Button>
                             </div>
                         )}
                     </div>

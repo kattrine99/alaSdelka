@@ -7,6 +7,7 @@ import { MdOutlineArrowDropDown } from "react-icons/md";
 import { HiCurrencyDollar } from "react-icons/hi2";
 import { useGetFiltersDataQuery } from "../../Store/api/Api";
 import FrameIcon from "../../assets/frame.svg?react";
+import { useTranslation } from "../../../public/Locales/context/TranslationContext";
 
 
 interface FilterBarProps {
@@ -28,6 +29,7 @@ export const FilterBar: React.FC<FilterBarProps> = ({
 }) => {
     const navigate = useNavigate();
     const { data: filterOptions, isLoading } = useGetFiltersDataQuery();
+    const { t, lang } = useTranslation();
 
     if (isLoading || !filterOptions) return null;
 
@@ -65,10 +67,10 @@ export const FilterBar: React.FC<FilterBarProps> = ({
                         value={filters.city}
                         onChange={(e) => setFilters((prev) => ({ ...prev, city: e.target.value }))}
                         className="text-[15px] text-black px-3 py-2 rounded-md focus:outline-none bg-white appearance-none pr-6">
-                        <option value="">Город</option>
+                        <option value="">{t("Город")}</option>
                         {filterOptions.cities.map((city) => (
-                            <option className="px-1.5" key={city.id} value={String(city.id)}>
-                                {city.name_ru}
+                            <option key={city.id} value={String(city.id)}>
+                                {lang === "uz" ? city.name_uz : city.name_ru}
                             </option>
                         ))}
                     </select>
@@ -109,10 +111,10 @@ export const FilterBar: React.FC<FilterBarProps> = ({
 
                         className="text-[15px] text-black px-3 py-2 rounded-md focus:outline-none bg-white appearance-none pr-6 max-h-[200px] overflow-y-auto"
                     >
-                        <option value="">Категория</option>
+                        <option value="">{t("Категория")}</option>
                         {filterOptions.categories.map((cat) => (
                             <option key={cat.id} value={String(cat.id)}>
-                                {cat.title_ru}
+                                {lang === "uz" ? cat.title_uz : cat.title_ru}
                             </option>
                         ))}
                     </select>
@@ -126,10 +128,10 @@ export const FilterBar: React.FC<FilterBarProps> = ({
                     <span className="text-[#2EAA7B] text-2xl">
                         <HiCurrencyDollar />
                     </span>
-                    <span className="text-[15px] text-black">Цена</span>
+                    <span className="text-[15px] text-black">{t("Цена")}</span>
                     <div className="flex gap-2">
                         <div className="flex items-center gap-x-1 px-4 py-1.5 w-44 bg-[#F0F1F2] rounded-[14px]">
-                            <span className="text-[16px] text-black">от</span>
+                            <span className="text-[16px] text-black">{t("от")}</span>
                             <Input
                                 type="text"
                                 value={filters.priceMin}
@@ -138,10 +140,10 @@ export const FilterBar: React.FC<FilterBarProps> = ({
                                 className="text-[16px] w-full font-semibold text-[#3C3C3C] bg-transparent outline-none placeholder:text-[#787878]"
                                 isError={false}
                             />
-                            <span className="text-[16px] text-black">сум</span>
+                            <span className="text-[16px] text-black">{t("сум")}</span>
                         </div>
                         <div className="flex items-center gap-1 px-4 py-1.5 w-44 bg-[#F0F1F2] rounded-[14px]">
-                            <span className="text-[16px] text-black">до</span>
+                            <span className="text-[16px] text-black">{t("до")}</span>
                             <Input
                                 type="text"
                                 value={filters.priceMax}
@@ -150,7 +152,7 @@ export const FilterBar: React.FC<FilterBarProps> = ({
                                 className="text-[16px] w-full font-semibold text-[#3C3C3C] bg-transparent outline-none placeholder:text-[#787878]"
                                 isError={false}
                             />
-                            <span className="text-[16px] text-black">сум</span>
+                            <span className="text-[16px] text-black">{t("сум")}</span>
                         </div>
                     </div>
                 </div>
@@ -165,7 +167,7 @@ export const FilterBar: React.FC<FilterBarProps> = ({
                     </div>
                     <Input
                         type="text"
-                        placeholder="Поиск по названию или ID"
+                        placeholder={t("Поиск по названию или ID")}
                         value={searchInput}
                         onChange={(e) => setSearchInput(e.target.value)}
                         isError={false}
@@ -175,7 +177,7 @@ export const FilterBar: React.FC<FilterBarProps> = ({
                         onClick={onSearch}
                         className="px-5 text-sm font-semibold bg-[#2EAA7B] hover:bg-[#31B683] text-white transition duration-500 rounded-none"
                     >
-                        Поиск
+                        {t("Поиск")}
                     </Button>
                 </div>
 
@@ -184,7 +186,7 @@ export const FilterBar: React.FC<FilterBarProps> = ({
                     onClick={handleNavigateToCategory}
                     className="text-[#2EAA7B] py-1 px-5 border rounded-xl font-semibold hover:bg-[#2EAA7B] hover:text-white transition text-[15px] duration-500"
                 >
-                    Перейти к категории
+                    {t("Перейти к категории")}
                 </Button>
             </div>
 

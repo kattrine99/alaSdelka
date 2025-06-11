@@ -13,10 +13,9 @@ import { RootState } from "../../Store/store";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setCurrencyMode } from "../../Store/Slices/currencySlice";
-import FlagUzbIcon from "../../assets/Flag.svg?react";
 import { useGetNotificationsQuery, useMarkAllReadMutation } from "../../Store/api/Api";
 import { setRefetchNotifications } from "../../utils/notificationRefetch";
-// import { setLanguage } from "./../../Store/Slices/languageSlice";
+import { useTranslation } from "../../../public/Locales/context/TranslationContext";
 
 interface HeaderProps {
     showNavLinks?: boolean;
@@ -36,7 +35,7 @@ export const Header: React.FC<HeaderProps> = ({
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const dispatch = useDispatch();
     const selectedCurrency = useSelector((state: RootState) => state.currency.mode);
-    // const language = useSelector((state: RootState) => state.language.current);
+    const { lang, setLang, t } = useTranslation();
     const location = useLocation();
     const menuRef = useRef<HTMLDivElement>(null)
     const { data, refetch } = useGetNotificationsQuery({ page: 1, per_page: 1000 });
@@ -60,7 +59,7 @@ export const Header: React.FC<HeaderProps> = ({
                 .unwrap()
                 .then(() => {
                     localStorage.setItem("hasVisitedNotices", "true");
-                    setLocalUnreadCount(0); 
+                    setLocalUnreadCount(0);
                     refetch();
                 })
                 .catch((e) => console.error("Ошибка при отметке уведомлений:", e));
@@ -123,7 +122,6 @@ export const Header: React.FC<HeaderProps> = ({
             document.removeEventListener("mousedown", handleClickOutside);
         };
     }, [isMobileMenuOpen]);
-
     return (
         <div className="font-inter font-medium w-full bg-white shadow">
             {showtoBar && (
@@ -168,7 +166,10 @@ export const Header: React.FC<HeaderProps> = ({
                     {showNavLinks && (
                         <nav className="flex gap-8.5 max-2xl:gap-4 items-center flex-wrap">
                             <NavLinks
-                                links={navLinksData ?? categories}
+                                links={(navLinksData ?? categories).map(link => ({
+                                    ...link,
+                                    label: t(link.label),
+                                }))}
                                 className="flex  gap-x-8.5 max-2xl:gap-4 font-medium"
                                 linkClassName="font-inter leading-[100%] text-[#232323] text-[clamp(14px,1.4vw,18px)] hover:text-[#2EAA7B] transition-all duration-500"
                             />
@@ -176,25 +177,24 @@ export const Header: React.FC<HeaderProps> = ({
                     )}
 
                     <div className="flex items-center gap-4 ml-4 shrink-0">
-                        {/* <div className="relative w-[139px] h-[49px]">
+                        <div className="relative w-[139px] h-[49px]">
                             <select
-                                value={language}
-                                onChange={(e) => dispatch(setLanguage(e.target.value as "ru" | "uz"))}
-                                className="w-full h-full px-4 pr-10 border border-[#C9CCCF] rounded-[10px] outline-none text-[#191919] font-medium appearance-none">
+                                value={lang}
+                                onChange={e => setLang(e.target.value as "ru" | "uz")}
+                                className="w-full h-full px-4 pr-10 border border-[#C9CCCF] rounded-[10px] outline-none text-[#191919] font-medium appearance-none"
+                            >
                                 <option value="ru">Русский</option>
-                                <option value="uz">O'zbek</option>
+                                <option value="uz">O&#39;zbek</option>
                             </select>
                             <MdOutlineArrowDropDown className="absolute right-3 top-1/2 -translate-y-1/2 text-xl text-[#191919] pointer-events-none" />
-                        </div> */}
+                        </div>
                         <div className="relative w-[139px] h-[49px]">
                             <select
                                 value={selectedCurrency}
                                 onChange={(e) => dispatch(setCurrencyMode(e.target.value as "UZS" | "USD"))}
                                 className="w-full h-full px-4 pr-10 border border-[#C9CCCF] rounded-[10px] outline-none text-[#191919] font-medium appearance-none"
                             >
-                                <option value="UZS">
-                                    <FlagUzbIcon className="w-[10px] h-[10px] object-contain" />
-                                    Cум</option>
+                                <option value="UZS">{t("Cум")}</option>
                                 <option value="USD">USD</option>
                             </select>
                             <MdOutlineArrowDropDown className="absolute right-3 top-1/2 -translate-y-1/2 text-xl text-[#191919] pointer-events-none" />
@@ -222,13 +222,13 @@ export const Header: React.FC<HeaderProps> = ({
                                         to="/login"
                                         className="border border-[#31B683] rounded-[10px] px-5 py-3 hover:bg-[#2EAA7B] hover:text-white text-sm font-medium transition duration-600"
                                     >
-                                        Войти
+                                        {t("Войти")}
                                     </Applink>
                                     <Applink
                                         to="/register"
                                         className="bg-[#2EAA7B] text-white px-5 py-3 rounded-[10px] hover:bg-[#31B683] text-sm font-medium transition duration-600"
                                     >
-                                        Зарегистрироваться
+                                        {t("Зарегистрироваться")}
                                     </Applink>
                                 </div>
                             )
@@ -261,23 +261,27 @@ export const Header: React.FC<HeaderProps> = ({
                     <div
                         className="lg:hidden fixed top-[64px] left-0 w-full bg-white z-40 px-6 py-4 shadow-md flex flex-col gap-6 overflow-y-auto max-h-[calc(100vh-64px)]">
                         <NavLinks
-                            links={navLinksData ?? categories}
+                            links={(navLinksData ?? categories).map(link => ({
+                                ...link,
+                                label: t(link.label),
+                            }))}
                             className="flex flex-col gap-4"
                             linkClassName="text-[#232323] font-inter text-lg hover:text-[#2EAA7B]"
                         />
                         {/* Язык и Валюта */}
                         <div className="flex flex-col gap-3">
                             {/* Языки */}
-                            {/* <div className="relative w-full h-[49px]">
+                            <div className="relative w-[139px] h-[49px]">
                                 <select
-                                    name="Languages"
+                                    value={lang}
+                                    onChange={e => setLang(e.target.value as "ru" | "uz")}
                                     className="w-full h-full px-4 pr-10 border border-[#C9CCCF] rounded-[10px] outline-none text-[#191919] font-medium appearance-none"
                                 >
-                                    <option id="RU">Русский</option>
-                                    <option id="UZ">O'zbek</option>
+                                    <option value="ru">Русский</option>
+                                    <option value="uz">O&#39;zbek</option>
                                 </select>
                                 <MdOutlineArrowDropDown className="absolute right-3 top-1/2 -translate-y-1/2 text-xl text-[#191919] pointer-events-none" />
-                            </div> */}
+                            </div>
 
                             {/* Валюта */}
                             <div className="relative w-full h-[49px]">
@@ -286,7 +290,7 @@ export const Header: React.FC<HeaderProps> = ({
                                     onChange={(e) => dispatch(setCurrencyMode(e.target.value as "UZS" | "USD"))}
                                     className="w-full h-full px-4 pr-10 border border-[#C9CCCF] rounded-[10px] outline-none text-[#191919] font-medium appearance-none"
                                 >
-                                    <option value="UZS">Сум</option>
+                                    <option value="UZS">{t("Сум")}</option>
                                     <option value="USD">$ USD</option>
                                 </select>
                                 <MdOutlineArrowDropDown className="absolute right-3 top-1/2 -translate-y-1/2 text-xl text-[#191919] pointer-events-none" />
@@ -304,13 +308,13 @@ export const Header: React.FC<HeaderProps> = ({
                                     to="/login"
                                     className="border border-[#31B683] rounded-[10px] px-5 py-3 text-center hover:bg-[#2EAA7B] hover:text-white text-sm font-medium transition duration-600"
                                 >
-                                    Войти
+                                    {t("Войти")}
                                 </Applink>
                                 <Applink
                                     to="/register"
                                     className="bg-[#2EAA7B] text-white px-5 py-3 rounded-[10px] text-center hover:bg-[#31B683] text-sm font-medium transition duration-600"
                                 >
-                                    Зарегистрироваться
+                                    {t("Зарегистрироваться")}
                                 </Applink>
                             </div>
                         )}

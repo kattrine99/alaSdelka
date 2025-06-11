@@ -7,21 +7,23 @@ import { useGetOfferContactViewQuery, useToggleFavoriteMutation } from "../../..
 import { skipToken } from "@reduxjs/toolkit/query";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../Store/store";
+import { useTranslation } from "../../../../public/Locales/context/TranslationContext";
 
-export const SellerInfoCard = ({ card, offer_type, userId }: { card: OfferDetail['data'], userId: number, offer_type?: string }) => {
+export const    SellerInfoCard = ({ card, offer_type, userId }: { card: OfferDetail['data'], userId: number, offer_type?: string }) => {
     const [isContactModalOpen, setContactModalOpen] = useState(false);
     const [isLinksModalOpen, setLinksModalOpen] = useState(false);
     const { data: contactData, isLoading: isContactLoading } = useGetOfferContactViewQuery(
         isContactModalOpen ? card.id : skipToken
     );
+    const { t } = useTranslation()
     const [isFavorite, setIsFavorite] = useState(card?.is_favourite ?? false);
     const [toggleFavoriteAPI] = useToggleFavoriteMutation();
     const { mode: currencyMode, rate } = useSelector((state: RootState) => state.currency);
     const convertedPrice =
         currencyMode === "USD"
             ? Math.round((card.price || 0) / (rate || 1)).toLocaleString() + " $"
-            : (card.price || 0).toLocaleString() + " сум";
-
+            : (card.price || 0).toLocaleString() + t("сум");
+    
     const handleToggleFavorite = async () => {
         try {
             const res = await toggleFavoriteAPI({ id: card.id }).unwrap();
@@ -75,22 +77,22 @@ export const SellerInfoCard = ({ card, offer_type, userId }: { card: OfferDetail
                 className="w-full bg-[#2EAA7B] text-white font-semibold py-2 rounded-md hover:bg-[#31B683] transition"
                 onClick={() => setContactModalOpen(true)}
             >
-                Контакты продавца
+                {t("Контакты продавца")}
             </Button>
             <Button
                 className="w-full bg-[#E9F7F1] text-[#2EAA7B] font-semibold py-2 rounded-md hover:bg-[#d1f0e3] transition"
                 onClick={() => setLinksModalOpen(true)}
             >
-                Ссылки
+                {t("Ссылки")}
             </Button>
 
             {isContactModalOpen && (
                 <ModalBase
-                    title="Контакты продавца"
+                    title={t("Контакты продавца")}
                     ModalClassName="w-100 p-9"
                     message={isContactLoading
-                        ? "Загрузка..."
-                        : contactData?.phone || "Номер не найден"}
+                        ? t("Загрузка...")
+                        : contactData?.phone || t("Номер не найден")}
                     onClose={() => setContactModalOpen(false)}
                     showCloseButton={true} HeadingClassName={"font-inter font-bold text-3xl"}
                 />
@@ -98,7 +100,7 @@ export const SellerInfoCard = ({ card, offer_type, userId }: { card: OfferDetail
 
             {isLinksModalOpen && (
                 <ModalBase
-                    title="Ссылки"
+                    title={t("Ссылки")}
                     ModalClassName="w-100 p-9"
                     message={card.communication_channels?.length ? (
                         <div className="flex flex-col gap-2">
@@ -115,7 +117,7 @@ export const SellerInfoCard = ({ card, offer_type, userId }: { card: OfferDetail
                             ))}
                         </div>
                     ) : (
-                        "Ссылки отсутствуют"
+                        t("Ссылки отсутствуют")
                     )}
                     onClose={() => setLinksModalOpen(false)}
                     showCloseButton={true} HeadingClassName={"font-inter font-bold text-3xl"}

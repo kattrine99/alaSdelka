@@ -16,6 +16,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../Store/store";
 import { FaLocationDot } from "react-icons/fa6";
 import GpsIcon from '../../assets/gps.svg?react'
+import { useTranslation } from "../../../public/Locales/context/TranslationContext";
 
 export const PromotionCards = () => {
     const [page, setPage] = useState(1);
@@ -23,7 +24,7 @@ export const PromotionCards = () => {
     const navigate = useNavigate();
 
     const { data, isLoading, isError } = useGetMyOffersQuery({ page: page, per_page: 1000, is_paid: true });
-
+    const { lang, t } = useTranslation()
     const offers = (data?.data || []).filter(
         (offer) => offer.paid_offer?.is_active === true
     );
@@ -39,7 +40,7 @@ export const PromotionCards = () => {
             return `$ ${Math.round(numericPrice / currencyRate).toLocaleString()}`;
         }
 
-        return `${numericPrice.toLocaleString()} сум`;
+        return `${numericPrice.toLocaleString()} ${t("сум")}`;
     };
     return (
         <div className="w-screen">
@@ -48,8 +49,8 @@ export const PromotionCards = () => {
             <div className="container px-4 sm:px-6 md:px-10 xl:mx-auto py-7.5">
                 <Breadcrumbs
                     links={[
-                        { label: "Мои объявления", href: "/announcements" },
-                        { label: "Продвигаемые объявления" },
+                        { label: t("Мои объявления"), href: "/announcements" },
+                        { label: t("Продвигаемые объявления") },
                     ]}
                 />
 
@@ -58,7 +59,7 @@ export const PromotionCards = () => {
                         <div className="w-10 h-10 border-4 border-[#2EAA7B] border-t-transparent rounded-full animate-spin" />
                     </div>
                 ) : isError ? (
-                    <div className="text-center text-red-500 text-lg">Ошибка загрузки объявлений</div>
+                    <div className="text-center text-red-500 text-lg">{t("Ошибка загрузки объявлений")}</div>
                 ) : offers.length === 0 ? (
                     <EmptyMessage
                         title="Нет продвигаемых объявлений"
@@ -94,7 +95,7 @@ export const PromotionCards = () => {
                                             <div className="flex gap-1.5 mb-1">
                                                 <FaLocationDot className="text-[#2EAA7B] w-4 h-4 mt-[2px]" />
                                                 <Paragraph className="font-inter font-medium text-sm">
-                                                    {offer?.address?.address ?? "Адрес не указан"}, {offer?.address?.city?.name_ru ?? ""}
+                                                    {offer?.address?.address ?? t("Адрес не указан")}, {lang === "uz" ? offer?.address?.city?.name_uz : eoffer?.address?.city?.name_ru ?? ""}
                                                 </Paragraph>
                                             </div>
                                             <div className="flex gap-1.5 items-center">

@@ -11,12 +11,13 @@ import { profileNavigate } from "../../utils/categoryMap";
 import { registerLocale } from "react-datepicker";
 import { ru } from "date-fns/locale/ru";
 import './StatisticsPage.css'
+import { useTranslation } from "../../../public/Locales/context/TranslationContext";
 registerLocale("ru", ru);
 
 export const StatisticsPage = () => {
-
     const { id } = useParams<{ id: string }>();
     const offerId = Number(id);
+    const { lang, t } = useTranslation()
 
     const [dateRange, setDateRange] = useState<[Date, Date]>(() => {
         const end = new Date();
@@ -144,7 +145,7 @@ export const StatisticsPage = () => {
 
         series: [
             {
-                name: "Итого по всем метрикам",
+                name: t("Итого по всем метрикам"),
                 data:
                     data?.data.map((entry) =>
                         (entry.view_count ?? 0) +
@@ -173,7 +174,7 @@ export const StatisticsPage = () => {
                 <div className="w-12 h-12 flex items-center justify-center rounded-full bg-red-100 mb-3">
                     <FiAlertCircle className="text-red-600 text-[28px]" />
                 </div>
-                <p className="text-red-600 text-lg font-semibold">Произошла ошибка при загрузке</p>
+                <p className="text-red-600 text-lg font-semibold">{t("Произошла ошибка при загрузке")}</p>
             </div>
         );
     }
@@ -190,22 +191,22 @@ export const StatisticsPage = () => {
                         ]} />
                 </div>
                 <div className="mb-6">
-                    <Heading level={2} text="Статистика объявления" className="font-inter font-bold text-xl leading-5 -space-x-[-0.5%]" />
+                    <Heading level={2} text={t("Статистика объявления")} className="font-inter font-bold text-xl leading-5 -space-x-[-0.5%]" />
                 </div>
 
                 <div className="flex justify-start flex-wrap md:flex-nowrap gap-6 mb-12">
                     <StatsCard
-                        label="Всего посещений"
+                        label={t("Всего посещений")}
                         value={data?.metrics.view_count.current_week}
                         diff={data?.metrics.view_count.change}
                     />
                     <StatsCard
-                        label="Всего добавлено в избранное"
+                        label={t("Всего добавлено в избранное")}
                         value={data?.metrics.favourite_count.current_week}
                         diff={data?.metrics.favourite_count.change}
                     />
                     <StatsCard
-                        label="Всего просмотров контактов"
+                        label={t("Всего просмотров контактов")}
                         value={data?.metrics.contact_view_count.current_week}
                         diff={data?.metrics.contact_view_count.change}
                     />
@@ -222,7 +223,7 @@ export const StatisticsPage = () => {
                         dayClassName={() => "custom-day"}
                         dateFormat="dd.MM.yyyy"
                         showPopperArrow={false}
-                        placeholderText="Выберите диапазон"
+                        placeholderText={("Выберите диапазон")}
                         className="bg-white w-full text-center shadow-[0px_1px_3px_rgba(0,0,0,0.40)] p-2 rounded my-6 mx-12.5 font-inter font-medium text-[16px] text-[#728197] leading-5"
                     />
                     <Chart
@@ -241,12 +242,14 @@ export const StatisticsPage = () => {
 
 const StatsCard = ({ label, value, diff }: { label: string; value?: number; diff?: number }) => {
     const isPositive = (diff ?? 0) >= 0;
+    const { t } = useTranslation()
+
     return (
         <div className="w-full py-3.5 border font-inter  border-[#2EAA7B] rounded-xl text-center">
             <Paragraph className="font-bold text-[15px] uppercase mb-1.5">{label}</Paragraph>
             <Paragraph className="text-xl font-bold">{value ?? 0}</Paragraph>
             <Paragraph className={`font-inter text-[15px] leading-[100%] ${isPositive ? "text-[#2EAA7B]" : "text-red-500"}`}>
-                {isPositive ? "↑" : "↓"} {Math.abs(diff ?? 0)} за неделю
+                {isPositive ? "↑" : "↓"} {Math.abs(diff ?? 0)} {t("за неделю")}
             </Paragraph>
         </div>
     );

@@ -9,9 +9,10 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../Store/store";
 import { getRefetchNotifications } from "../../utils/notificationRefetch";
+import { useTranslation } from "../../../public/Locales/context/TranslationContext";
+import GalleryIcon from '../../assets/gallery.svg?react';
 
 export const AnnouncemntsPage = () => {
-
 
   const navigate = useNavigate();
   const [showModal, setShowModal] = useState(false);
@@ -21,6 +22,7 @@ export const AnnouncemntsPage = () => {
   }>({ isOpen: false, message: "" });
   const [currentPage, setCurrentPage] = useState(1);
   const { data, isLoading, isError, refetch } = useGetMyOffersQuery({ page: currentPage, per_page: 5 });
+  const { t, lang } = useTranslation();
 
   const offers = data?.data || [];
   const meta = data?.meta;
@@ -54,17 +56,17 @@ export const AnnouncemntsPage = () => {
 
     return `${numericPrice.toLocaleString()} сум`;
   };
+
   return (
     <div className="w-screen">
       {showModal && selectedOfferId !== null && (
         <ModalBase
-          title="Вы уверены, что хотите отметить объявление как проданное?"
+          title={t("Вы уверены, что хотите отметить объявление как проданное?")}
           HeadingClassName="font-inter text-[35px] leading-[100%]"
           ModalClassName="w-150 p-9"
           message={
             <>
-              После подтверждения объявление будет исключено из общего каталога,
-              и пользователи, добавившие его в избранное, получат уведомление о продаже.
+              {t("После подтверждения объявление будет исключено из общего каталога, и пользователи, добавившие его в избранное, получат уведомление о продаже.")}
             </>
           }
           onClose={() => setShowModal(false)}
@@ -74,7 +76,7 @@ export const AnnouncemntsPage = () => {
                 className="border bg-[#2EAA7B] hover:bg-[#31B683] w-66.25 text-white px-5 py-3 rounded-md"
                 onClick={() => setShowModal(false)}
               >
-                Отменить
+                {t("Отменить")}
               </Button>
               <Button
                 className="bg-orange-500 text-white w-66.25 px-5 py-3 rounded-md"
@@ -85,7 +87,7 @@ export const AnnouncemntsPage = () => {
                     setShowModal(false);
                     setSuccessModal({
                       isOpen: true,
-                      message: "Объявление успешно отмечено как проданное!",
+                      message: t("Объявление успешно отмечено как проданное!"),
                     });
                     const refetchNotifications = getRefetchNotifications();
                     refetchNotifications?.();
@@ -96,7 +98,7 @@ export const AnnouncemntsPage = () => {
                   }
                 }}
               >
-                Продано
+                {t("Продано")}
               </Button>
             </div>
           }
@@ -104,11 +106,11 @@ export const AnnouncemntsPage = () => {
       )}
       {showArchiveModal && selectedOfferId !== null && (
         <ModalBase
-          title="Вы уверены, что хотите поместить объявление в архив?"
+          title={t("Вы уверены, что хотите поместить объявление в архив?")}
           HeadingClassName="font-inter text-[35px] leading-[100%]"
           ModalClassName="w-150 p-9"
           message={
-            <>После подтверждения объявление будет перемещено в архив</>
+            <>{t("После подтверждения объявление будет перемещено в архив")}</>
           }
           onClose={() => setShowArchiveModal(false)}
           actions={
@@ -117,7 +119,7 @@ export const AnnouncemntsPage = () => {
                 className="border bg-[#2EAA7B] hover:bg-[#31B683] w-66.25 text-white px-5 py-3 rounded-md"
                 onClick={() => setShowArchiveModal(false)}
               >
-                Отменить
+                {t("Отменить")}
               </Button>
               <Button
                 className="bg-orange-500 text-white w-66.25 px-5 py-3 rounded-md"
@@ -128,7 +130,7 @@ export const AnnouncemntsPage = () => {
                     setShowArchiveModal(false);
                     setSuccessModal({
                       isOpen: true,
-                      message: "Объявление успешно перемещено в архив!",
+                      message: t("Объявление успешно перемещено в архив!"),
                     });
                     await refetch();
                   } catch (err) {
@@ -136,7 +138,7 @@ export const AnnouncemntsPage = () => {
                   }
                 }}
               >
-                Архивировать
+                {t("Архивировать")}
               </Button>
             </div>
           }
@@ -144,7 +146,7 @@ export const AnnouncemntsPage = () => {
       )}
       {successModal.isOpen && (
         <ModalBase
-          title="Успешно!"
+          title={t("Успешно!")}
           HeadingClassName="font-inter text-[35px] leading-[100%]"
           ModalClassName="w-120 p-9"
           message={successModal.message}
@@ -154,25 +156,25 @@ export const AnnouncemntsPage = () => {
               className="bg-[#2EAA7B] hover:bg-[#31B683] text-white px-6 py-3 rounded-md w-full"
               onClick={() => setSuccessModal({ isOpen: false, message: "" })}
             >
-              Понятно
+              {t("Понятно")}
             </Button>
           }
         />
       )}
       <Header navLinksData={profileNavigate} />
       <div className="container mx-auto px-3 md:px-0 py-9">
-        <Heading text={"Мои объявления"} level={2} className="font-inter text-xl font-bold leading-5 space-x-[-0.5%]" />
+        <Heading text={t("Мои объявления")} level={2} className="font-inter text-xl font-bold leading-5 space-x-[-0.5%]" />
 
         {isLoading ? (
           <div className="h-[400px] flex justify-center items-center">
             <div className="w-10 h-10 border-4 border-[#2EAA7B] border-t-transparent rounded-full animate-spin" />
           </div>
         ) : isError ? (
-          <div className="text-center text-red-500 text-lg">Ошибка загрузки объявлений</div>
+          <div className="text-center text-red-500 text-lg">{t("Ошибка загрузки объявлений")}</div>
         ) : offers.length === 0 ? (
           <EmptyMessage
-            title="Нет объявлений"
-            subtitle="Здесь будут отображаться ваши объявления"
+            title={t("Нет объявлений")}
+            subtitle={t("Здесь будут отображаться ваши объявления")}
             buttonLink="/add-offer"
           />) : (
           <div>
@@ -181,44 +183,51 @@ export const AnnouncemntsPage = () => {
                 className="bg-[#2EAA7B] text-white rounded-md w-60.5 px-5 py-3"
                 onClick={() => navigate('/add-offer')}
               >
-                {'Добавить объявление'}
+                {t("Добавить объявление")}
               </Button>
             </div>
             <div className="flex gap-6 mt-8 w-full">
               <div className="flex flex-col gap-10.5 w-full">
                 {offers.map((offer) => (
                   <div key={offer.id} className="bg-white border border-[#E0E0E0] rounded-xl flex w-full">
-
+                    { }
                     <div className="relative grid grid-cols-1 md:grid-cols-3 w-full">
                       {(offer.offer_status === "sold" || offer.is_paid === true) && (
                         <div className="absolute left-5 top-[-20px] z-10 flex gap-2">
                           {offer.offer_status === "sold" && (
                             <div className="w-[125px] font-openSans bg-white border border-[#301DFF] text-[#301DFF] py-1.25 px-1.5 rounded-md font-semibold shadow-sm text-center">
-                              <Paragraph className="text-sm">Продано</Paragraph>
+                              <Paragraph className="text-sm">{t("Продано")}</Paragraph>
                             </div>
                           )}
                           {offer.is_paid === true && (
                             <div className="font-openSans bg-white border border-[#FD6A0D] text-[#FD6A0D] py-1.25 px-1.5 rounded-md font-semibold shadow-sm flex items-center gap-1">
                               <FireIcon className="w-5 h-5 text-[#FD6A0D]" />
-                              <Paragraph className="text-sm">Популярное</Paragraph>
+                              <Paragraph className="text-sm">{t("Популярное")}</Paragraph>
                             </div>
                           )}
                         </div>
                       )}
-
-                      {offer.photos[0]?.photo && (
-                        <div className="relative col-span-1">
-                          <Link to={`/${offerTypeToUrlMap[offer.offer_type || 'category']}/card/${offer.id}`} className="w-full flex justify-center h-full">
-
+                      <div className="relative col-span-1">
+                        <Link
+                          to={`/${offerTypeToUrlMap[offer.offer_type || 'category']}/card/${offer.id}`}
+                          className="w-full flex justify-center h-full"
+                        >
+                          {offer.photos[0]?.photo ? (
                             <img
-                              src={offer.photos[0]?.photo}
+                              src={offer.photos[0].photo}
                               alt="cover"
-                              className="w-full h-full rounded object-cover bg-gray-100"
+                              className="w-full  rounded object-cover bg-gray-100"
                             />
-                          </Link>
-
-                        </div>
-                      )}
+                          ) : (
+                            <div className="w-full bg-[#F0F0F0] flex flex-col items-center justify-center rounded">
+                              <GalleryIcon className="w-8 h-8 text-[#B0B0B0]" />
+                              <Paragraph className="text-[#999] text-sm mt-2">
+                                {t("Изображение отсутствует")}
+                              </Paragraph>
+                            </div>
+                          )}
+                        </Link>
+                      </div>
                       <div className="flex flex-3/4 flex-col gap-1 py-9.5 px-7 md:col-span-2">
                         <div className="flex flex-col mb-11">
                           <Link to={`/${offerTypeToUrlMap[offer.offer_type || 'category']}/card/${offer.id}`} className="w-full hover:text-[#2EAA7B]">
@@ -230,14 +239,16 @@ export const AnnouncemntsPage = () => {
                           </Link>
                           <div className='flex gap-1.5'>
                             <FaLocationDot className="text-[#2EAA7B] w-4 h-4" />
-                            <Paragraph className="font-inter font-bold text-sm"><span className="font-medium">Адрес: </span>
-                              {offer?.address?.address ?? "Адрес не указан"},
-                              {offer?.address?.city?.name_ru ?? ""}
+                            <Paragraph className="font-inter font-bold text-sm"><span className="font-medium">{t("Адрес:")} </span>
+                              {offer?.address?.address ?? `${t("Адрес не указан")}`},
+                              {lang === "uz"
+                                ? offer?.address?.city?.name_uz ?? ""
+                                : offer?.address?.city?.name_ru ?? ""}
                             </Paragraph>
                           </div>
                           <div className='flex gap-1.5 items-center'>
                             <GpsIcon className='w-4 h-4' />
-                            <Paragraph className="font-inter font-medium text-sm">{offer.area} кв. м.</Paragraph>
+                            <Paragraph className="font-inter font-medium text-sm">{offer.area} {t("кв. м.")}</Paragraph>
 
                           </div>
                         </div>
@@ -245,7 +256,7 @@ export const AnnouncemntsPage = () => {
                           <div className="grid grid-cols-1 gap-y-3 gap-x-5 md:grid-cols-2 w-full">
                             {offer.is_paid == true ? (
                               <div className="bg-[#2EAA7B] text-white px-5 h-12 rounded-md flex items-center gap-2 font-semibold">
-                                Идет продвижение (осталось {offer.paid_offer?.promotion_days_left} дней)
+                                {t("Идет продвижение (осталось {{count}} дней)").replace("{{count}}", String(offer.paid_offer?.promotion_days_left ?? 0))}
                                 <FireIcon className="z-10 w-5 h-5 text-white" />
                               </div>
                             ) : (
@@ -253,18 +264,19 @@ export const AnnouncemntsPage = () => {
                                 className="bg-[#2EAA7B] text-white px-5 h-12 rounded-md cursor-pointer"
                                 onClick={() => navigate(`/promotion/${offer.id}`)}
                               >
-                                Продвигать объявление
+                                {t("Продвигать объявление")}
                               </Button>
                             )}
                             <Button className="text-white bg-[#FF8707] px-4 h-12 rounded-md cursor-pointer"
                               onClick={() => {
                                 setSelectedOfferId(offer.id);
                                 setShowModal(true);
-                              }}>Продано
+                              }}>
+                              {t("Продано")}
                             </Button>
                             <Button className=" text-[#2EAA7B] border border-[#2EAA7B] px-5 h-12 rounded-md cursor-pointer"
                               onClick={() => navigate(`/statistics/${offer.id}`)}>
-                              Посмотреть статистику
+                              {t("Посмотреть статистику")}
                             </Button>
 
                             <Button className="bg-[#FF1D1D] px-5 h-12 rounded-md text-white cursor-pointer"
@@ -272,10 +284,8 @@ export const AnnouncemntsPage = () => {
                                 setSelectedOfferId(offer.id);
                                 setShowArchiveModal(true);
                               }}>
-                              Поместить в архив
+                              {t("Поместить в архив")}
                             </Button>
-
-
                           </div>
                         </div>
                       </div>

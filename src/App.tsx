@@ -26,6 +26,7 @@ import UserAgreement from "./components/Footer/UserAgreement";
 import PrivacyPolicy from "./components/Footer/PrivacyPolicy";
 import { useGetCurrencyRateQuery } from "./Store/api/Api";
 import { setCurrencyRate } from "./Store/Slices/currencySlice";
+import { TranslationProvider } from "./../public/Locales/context/TranslationContext";
 
 const Layout = () => {
   const dispatch = useDispatch();
@@ -184,7 +185,10 @@ function App() {
   return (
     <div className="">
       <div className="container">
-        <RouterProvider router={routerConfig} />
+        <TranslationProvider>
+
+          <RouterProvider router={routerConfig} />
+        </TranslationProvider>
       </div>
     </div>
   );

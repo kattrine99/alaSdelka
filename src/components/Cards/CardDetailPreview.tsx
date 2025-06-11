@@ -16,12 +16,15 @@ import MoneySendIcon from "../../assets/money-send.svg?react"
 import PercentIcon from "../../assets/percentage-square.svg?react"
 import ReceiptIcon from "../../assets/receipt-item.svg?react"
 import WalletIcon from "../../assets/wallet-add.svg?react"
+import { useTranslation } from "../../../public/Locales/context/TranslationContext";
+
 interface CardDetailPreviewProps {
     onBack: () => void;
 }
 
 export const CardDetailPreview: React.FC<CardDetailPreviewProps> = ({ onBack }) => {
     const { mode: currencyMode, rate } = useSelector((state: RootState) => state.currency);
+    const { lang, t } = useTranslation()
 
     const conveniencesIcons: Record<string, JSX.Element> = {
         "Парковка": <FaParking className="w-[40px] h-[40px] text-[#7E7E7E]" />,
@@ -66,39 +69,40 @@ export const CardDetailPreview: React.FC<CardDetailPreviewProps> = ({ onBack }) 
             const converted = Math.round(price / (rate || 1));
             return `${converted.toLocaleString()} $`;
         }
-        return `${price.toLocaleString()} сум`;
+        return `${price.toLocaleString()} ${t("сум")}`;
     };
 
 
 
-    if (!data) return <Paragraph>Нет данных для предпросмотра</Paragraph>;
+    if (!data) return <Paragraph>{t("Нет данных для предпросмотра")}</Paragraph>;
     const conveniences = data.conveniences ?? [];
     const convenienceMap = filtersData?.conveniences?.reduce((acc, item) => {
         acc[item.id] = item.name_ru;
         return acc;
     }, {} as Record<number, string>) ?? {};
     const categoryName =
-        filtersData?.categories?.find((c) => c.id === Number(data?.category_id))?.title_ru || "Категория не указана";
-
+        filtersData?.categories?.find((c) => c.id === Number(data?.category_id))?.[
+        lang === "uz" ? "title_uz" : "title_ru"
+        ] || t("Категория не указана");
     return (
         <div className="container mx-auto py-10 max-md:p-4 ">
             <div className="mb-6 flex items-center gap-2 cursor-pointer text-[#28B13D]" onClick={onBack}>
                 <HiOutlineArrowNarrowLeft className="w-5 h-5" />
-                <span className="font-medium text-[15px]">Предварительный просмотр вашего объявления</span>
+                <span className="font-medium text-[15px]">{t("Предварительный просмотр вашего объявления")}</span>
             </div>
 
             {/* Основной блок */}
             <div className="bg-[#F8F8F8] p-10 max-md:p-4">
-                <Heading level={2} text={data.title || "Название"} className="text-2xl mb-3.75" />
+                <Heading level={2} text={data.title || t("Название")} className="text-2xl mb-3.75" />
                 <div className='flex gap-1.5'>
                     <FaLocationDot className="text-[#2EAA7B] w-4 h-4" />
                     <Paragraph className="text-[#667085] text-sm mb-2">
-                        {data.city_name ?? ""}, {data.address?.address ?? "Адрес не указан"}
+                        {data.city_name ?? ""}, {data.address?.address ?? t("Адрес не указан")}
                     </Paragraph>
                 </div>
                 <div className='flex gap-1.5 mb-2 items-center'>
                     <GpsIcon className='w-4 h-4' />
-                    <Paragraph>{data.area} кв. м.</Paragraph>
+                    <Paragraph>{data.area} {t("кв. м.")}</Paragraph>
                 </div>
                 <div className='flex gap-1.5 items-center mb-3.75'>
                     <CategoryIcon className='w-4 h-4 text-[#2EAA7B]' />
@@ -122,7 +126,7 @@ export const CardDetailPreview: React.FC<CardDetailPreviewProps> = ({ onBack }) 
 
                 {/* Удобства */}
                 <div className="mb-6">
-                    <Heading level={3} text="Удобства" className="text-[18px] mb-2" />
+                    <Heading level={3} text={t("Удобства")} className="text-[18px] mb-2" />
                     <div className="grid grid-cols-5 max-lg:grid-cols-3 max-sm:flex max-sm:flex-col gap-x-12.5 gap-y-4">
                         {conveniences.map((id) => {
                             const name = convenienceMap[id];
@@ -133,7 +137,7 @@ export const CardDetailPreview: React.FC<CardDetailPreviewProps> = ({ onBack }) 
                                     {conveniencesIcons[name] ?? <span className="w-[40px] h-[40px]" />}
                                     <div className="flex flex-col">
                                         <span>{name}</span>
-                                        <span className='font-inter font-bold text-xl text-[#2EAA7B]'>Есть</span>
+                                        <span className='font-inter font-bold text-xl text-[#2EAA7B]'>{t("Есть")}</span>
                                     </div>
                                 </div>
                             );
@@ -143,7 +147,7 @@ export const CardDetailPreview: React.FC<CardDetailPreviewProps> = ({ onBack }) 
                 </div>
                 {data.documents && data.documents.length > 0 && (
                     <div>
-                        <Heading text={'Документация'} level={3} className='font-inter font-semibold text-xl mt-7.5 text-[#3A3A3A]' />
+                        <Heading text={t('Документация')} level={3} className='font-inter font-semibold text-xl mt-7.5 text-[#3A3A3A]' />
                         <div className="flex flex-wrap gap-4 mt-3">
                             {data.documents.map((doc, index) => (
                                 <a
@@ -162,7 +166,7 @@ export const CardDetailPreview: React.FC<CardDetailPreviewProps> = ({ onBack }) 
 
                 {/* Описание */}
                 <div className="mb-6">
-                    <Heading level={3} text="Описание" className="text-[18px] mb-2" />
+                    <Heading level={3} text={t("Описание")} className="text-[18px] mb-2" />
                     <div className="mt-3">
                         <Paragraph className="text-gray-700 leading-relaxed whitespace-pre-line">
                             {showFullDescription
@@ -175,7 +179,7 @@ export const CardDetailPreview: React.FC<CardDetailPreviewProps> = ({ onBack }) 
                                 onClick={() => setShowFullDescription(!showFullDescription)}
                                 className="text-[#2EAA7B] mt-2 font-semibold hover:underline transition"
                             >
-                                {showFullDescription ? "Скрыть" : "Читать дальше"}
+                                {showFullDescription ? t("Скрыть") : t("Читать дальше")}
                             </Button>
                         )}
                     </div>
@@ -184,47 +188,47 @@ export const CardDetailPreview: React.FC<CardDetailPreviewProps> = ({ onBack }) 
                 {/* Финансы */}
                 {data.average_monthly_revenue === 0 &&
                     <div className="mb-6">
-                        <Heading level={3} text="Информация и финансы" className="text-[18px] mb-2" />
+                        <Heading level={3} text={t("Информация и финансы")} className="text-[18px] mb-2" />
                         <div className="mt-3 max-w-203.25 max-md:w-full flex flex-wrap gap-x-3 gap-y-4">
                             <div className="flex w-65.75 gap-2 border border-[#2EAA7B] items-center rounded-[10px] py-3 px-4.25">
                                 <WalletIcon className='w-10 h-10' />
                                 <div className='flex flex-col'>
-                                    <Paragraph className="font-inter text-[13px] leading-5 text-[#7D7D7D]">Среднемесячная выручка</Paragraph>
+                                    <Paragraph className="font-inter text-[13px] leading-5 text-[#7D7D7D]">{t("Среднемесячная выручка")}</Paragraph>
                                     <Paragraph className="font-inter text-xl font-bold text-[#2EAA7B]">{formatCurrency(data.average_monthly_revenue)}</Paragraph>
                                 </div>
                             </div>
                             <div className="flex gap-2 w-65.75 border border-[#2EAA7B] items-center rounded-[10px] py-3 px-4.25">
                                 <ReceiptIcon className='w-10 h-10' />
                                 <div className='flex flex-col'>
-                                    <Paragraph className="font-inter text-[13px] leading-5 text-[#7D7D7D]">Среднемесячные расходы</Paragraph>
+                                    <Paragraph className="font-inter text-[13px] leading-5 text-[#7D7D7D]">{t("Среднемесячные расходы")}</Paragraph>
                                     <Paragraph className="font-inter text-xl font-bold text-[#2EAA7B]">{formatCurrency(data.average_monthly_expenses)}</Paragraph>
                                 </div>
                             </div>
                             <div className="flex gap-2 w-65.75 border border-[#2EAA7B] items-center rounded-[10px] py-3 px-4.25">
                                 <CalendarIcon className='w-10 h-10' />
                                 <div className='flex flex-col'>
-                                    <Paragraph className="font-inter text-[13px] leading-5 text-[#7D7D7D]">Дата основания</Paragraph>
-                                    <Paragraph className="font-inter text-xl font-bold text-[#2EAA7B]">{data.foundation_year} год</Paragraph>
+                                    <Paragraph className="font-inter text-[13px] leading-5 text-[#7D7D7D]">{t("Дата основания")}</Paragraph>
+                                    <Paragraph className="font-inter text-xl font-bold text-[#2EAA7B]">{data.foundation_year} {t("год")}</Paragraph>
                                 </div>
                             </div>
                             <div className="flex gap-2 w-65.75 border border-[#2EAA7B] items-center rounded-[10px] py-3 px-4.25">
                                 <DollarCircleIcon className='w-10 h-10' />
                                 <div className='flex flex-col'>
-                                    <Paragraph className="font-inter text-[13px] leading-5 text-[#7D7D7D]">Среднемесячная прибыль</Paragraph>
+                                    <Paragraph className="font-inter text-[13px] leading-5 text-[#7D7D7D]">{t("Среднемесячная прибыль")}</Paragraph>
                                     <Paragraph className="font-inter text-xl font-bold text-[#2EAA7B]">{formatCurrency(data.average_monthly_profit)}</Paragraph>
                                 </div>
                             </div>
                             <div className="flex gap-2 w-65.75 border border-[#2EAA7B] items-center rounded-[10px] py-3 px-4.25">
                                 <MoneySendIcon className='w-10 h-10' />
                                 <div className='flex flex-col'>
-                                    <Paragraph className="font-inter text-[13px] leading-5 text-[#7D7D7D]">Окупаемость</Paragraph>
-                                    <Paragraph className="font-inter text-xl font-bold text-[#2EAA7B]">{data.payback_period} месяцев</Paragraph>
+                                    <Paragraph className="font-inter text-[13px] leading-5 text-[#7D7D7D]">{t("Окупаемость")}</Paragraph>
+                                    <Paragraph className="font-inter text-xl font-bold text-[#2EAA7B]">{data.payback_period} {t("месяцев")}</Paragraph>
                                 </div>
                             </div>
                             <div className="flex gap-2 w-65.75 border border-[#2EAA7B] items-center rounded-[10px] py-3 px-4.25">
                                 <PercentIcon className='w-10 h-10' />
                                 <div className='flex flex-col'>
-                                    <Paragraph className="font-inter text-[13px] leading-5 text-[#7D7D7D]">Доля к продаже</Paragraph>
+                                    <Paragraph className="font-inter text-[13px] leading-5 text-[#7D7D7D]">{t("Доля к продаже")}</Paragraph>
                                     <Paragraph className="font-inter text-xl font-bold text-[#2EAA7B]">{data.percentage_for_sale} %</Paragraph>
                                 </div>
                             </div>
@@ -234,7 +238,7 @@ export const CardDetailPreview: React.FC<CardDetailPreviewProps> = ({ onBack }) 
 
                 {/* Локация */}
                 <div>
-                    <Heading level={3} text="Местоположение" className="text-[18px] mb-2" />
+                    <Heading level={3} text={t("Местоположение")} className="text-[18px] mb-2" />
                     <Paragraph className="flex items-center text-[#667085] text-[14px] mb-2">
                         <FaLocationDot className="text-[#2EAA7B] mr-2" />
                         {data.city_name}, {data.address?.address}
@@ -258,7 +262,7 @@ export const CardDetailPreview: React.FC<CardDetailPreviewProps> = ({ onBack }) 
                             loading="eager"
                         />
                     ) : (
-                        <Paragraph className="text-gray-500">Адрес недоступен</Paragraph>
+                        <Paragraph className="text-gray-500">{t("Адрес недоступен")}</Paragraph>
                     )}
                 </div>
             </div>

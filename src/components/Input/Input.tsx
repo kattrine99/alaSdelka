@@ -1,3 +1,4 @@
+import { useTranslation } from "../../../public/Locales/context/TranslationContext";
 import { Paragraph } from "../Typography/Paragraph/Paragraph";
 import {
     forwardRef,
@@ -29,7 +30,7 @@ type InputProps = BaseProps &
 export const Input = forwardRef<HTMLInputElement | HTMLTextAreaElement, InputProps>(
     ({ type, placeholder, isError, errorMessage, value, onChange, isTextArea = false, LabelClassName, LabelText, ...props }, ref) => {
         const [inputStatus, setInputStatus] = useState<"default" | "error" | "success">("default");
-
+        const { t } = useTranslation()
         useEffect(() => {
             if (isError) {
                 console.log("isError: ", isError)

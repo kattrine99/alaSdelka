@@ -21,6 +21,7 @@ import { routeToCategoryIdMap, typeToTitleMap, urlToTypeMap } from "../../utils/
 import { FiSearch } from "react-icons/fi";
 import { FiltersState, ruToEnOfferTypeMap } from "../../utils/variables";
 import { OfferFilters } from "../../Store/api/types";
+import { useTranslation } from "../../../public/Locales/context/TranslationContext";
 
 function cleanObject<T extends object>(obj: T): Partial<T> {
     return Object.fromEntries(
@@ -32,8 +33,7 @@ export const CategoryPage = () => {
     const { category } = useParams();
     const [searchParams] = useSearchParams();
     const navigate = useNavigate();
-    // const language = useSelector((state: RootState) => state.language.current);
-
+    const { t } = useTranslation()
     const categoryKey = category?.toLowerCase() ?? "";
     const categoryId = routeToCategoryIdMap[categoryKey] || "";
     const type = useMemo(() => urlToTypeMap[categoryKey] ?? "", [categoryKey]);
@@ -169,10 +169,10 @@ export const CategoryPage = () => {
             <Header />
             <div className="grid grid-cols-3 container mx-auto px-3 xl:px-0 py-[30px] pb-10 gap-10 items-start">
                 <aside className="hidden lg:flex flex-col mr-[60px] col-span-1">
-                    <Breadcrumbs category={type} />
-                    <Heading text={pageTitle} level={2} className="text-[30px] font-bold text-black" />
+                    <Breadcrumbs category={t(type)} />
+                    <Heading text={t(pageTitle)} level={2} className="text-[30px] font-bold text-black" />
                     <Paragraph className="text-[#787878] font-inter font-medium text-[14px] mt-3.5">
-                        {cards.length.toLocaleString("ru-RU")} объявлений
+                        {cards.length.toLocaleString("ru-RU")} {t("объявлений")}
                     </Paragraph>
 
                     {type && (
@@ -191,14 +191,14 @@ export const CategoryPage = () => {
                             <Breadcrumbs category={type} />
                             <Heading text={pageTitle} level={2} className="text-[30px] font-bold text-black" />
                             <Paragraph className="text-[#787878] font-inter font-medium text-[14px] mt-3.5">
-                                {cards.length.toLocaleString("ru-RU")} объявлений
+                                {cards.length.toLocaleString("ru-RU")} {t("объявлений")}
                             </Paragraph>
                         </aside>
                         <div className="flex items-center">
                             {type && (
                                 <>
                                     <button onClick={() => setIsMobileFiltersOpen(true)} className="btn btn-primary px-5 py-3 bg-[#2EAA7B] text-white rounded-[6px] hover:bg-[#31B683] transition duration-300 lg:hidden">
-                                        Фильтры
+                                        {t("Фильтры")}
                                     </button>
                                     {isMobileFiltersOpen && (
                                         <div className="mobile-filters-overlay">
@@ -222,7 +222,7 @@ export const CategoryPage = () => {
                             className="px-5 py-3 bg-[#2EAA7B] text-white rounded-[6px] hover:bg-[#31B683] transition duration-300"
                             onClick={() => navigate('/add-offer')}
                         >
-                            Добавить объявление
+                            {t("Добавить объявление")}
                         </Button>
                         <div
                             className="flex items-center border border-[#2EAA7B] rounded-xl pl-5 w-[450px] bg-white overflow-hidden">
@@ -233,7 +233,7 @@ export const CategoryPage = () => {
                                 type="text"
                                 value={searchInput}
                                 onChange={(e) => setSearchInput(e.target.value)}
-                                placeholder="Поиск по названию или ID"
+                                placeholder={t("Поиск по названию или ID")}
                                 isError={false}
                                 className="flex-1 w-full px-2.5 text-[#787878] placeholder-[#787878] bg-white outline-none"
                             />
@@ -247,7 +247,7 @@ export const CategoryPage = () => {
                                     }
                                     setCurrentPage(1);
                                 }}>
-                                Поиск
+                                {t("Поиск")}
                             </Button>
                         </div>
                     </div>
@@ -259,12 +259,12 @@ export const CategoryPage = () => {
                     ) : isError ? (
                         <div className="flex flex-col w-full h-full justify-center items-center bg-[url('../../../images/grid.png')] bg-no-repeat  bg-contain">
                             <div className="w-128 h-100 bg-[url('../../../images/404.png')] bg-contain bg-center bg-no-repeat flex flex-col items-center justify-end">
-                                <Paragraph className="text-[20px] font-semibold text-black mb-4">Страница не найдена</Paragraph>
+                                <Paragraph className="text-[20px] font-semibold text-black mb-4">{t("Страница не найдена")}</Paragraph>
                                 <Button
                                     onClick={() => navigate("/")}
                                     className="bg-[#2EAA7B] text-white py-2.5 px-6 rounded-[12px] text-[16px] font-medium"
                                 >
-                                    Перейти на главную
+                                    {t("Перейти на главную")}
                                 </Button>
                             </div>
                         </div>) : exactCards.length === 0 ? (

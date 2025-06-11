@@ -16,6 +16,7 @@ export interface ICard {
         address: string;
         city: {
             name_ru: string;
+            name_uz: string;
         };
         longitude?: number;
         latitude?: number;

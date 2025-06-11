@@ -5,11 +5,12 @@ import "swiper/css";
 import "swiper/css/navigation";
 import { Navigation } from "swiper/modules";
 import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from "react-icons/md";
+import { useTranslation } from "../../../public/Locales/context/TranslationContext";
 
 export const PopularSliderSection = () => {
   const { data: sellData, isLoading: isSellLoading } = useGetHomeOffersQuery("sell");
   const { data: buyData, isLoading: isBuyLoading } = useGetHomeOffersQuery("buy");
-
+  const { t } = useTranslation()
   if (isSellLoading || isBuyLoading) return null;
 
   const allSell = [
@@ -34,7 +35,7 @@ export const PopularSliderSection = () => {
       <div className="mb-6">
         <Heading
           level={2}
-          text="Популярное"
+          text={t("Популярное")}
           className="text-[30px] font-bold text-black"
         />
       </div>

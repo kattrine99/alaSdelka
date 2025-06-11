@@ -14,7 +14,7 @@ import { useDispatch } from "react-redux";
 import { setIsAuthenticated } from "../../Store/Slices/authSlice";
 import { Description } from '../RegisterPage/Description';
 import { RegistrationUserPayload } from "../../Store/api/types"
-
+import { useTranslation } from "../../../public/Locales/context/TranslationContext";
 interface RegistrationFormInputs {
     username: string;
     userphone: string;
@@ -53,7 +53,7 @@ export const RegistrationPage = () => {
     const code = codeInput.join("");
     const navigate = useNavigate();
     const dispatch = useDispatch();
-
+    const { t } = useTranslation()
     const {
         control,
         handleSubmit,
@@ -108,7 +108,7 @@ export const RegistrationPage = () => {
             if (Array.isArray(phoneErrors) && phoneErrors.includes("validation.unique")) {
                 setError("userphone", {
                     type: "manual",
-                    message: "Этот номер уже зарегистрирован",
+                    message: t("Этот номер уже зарегистрирован"),
                 });
             }
         }
@@ -181,28 +181,28 @@ export const RegistrationPage = () => {
                             <div
                                 className="w-full xl:px-25 max-xl:px-10 flex max-xl:mt-8 flex-col items-start text-start transition-all duration-300">
                                 <Heading level={2} className="text-[32px] max-xl:text-3xl max-sm:text-2xl font-inter mb-7 font-bold text-black"
-                                    text={""}>Зарегистрироваться</Heading>
+                                    text={""}>{t("Зарегистрироваться")}</Heading>
                                 <div className="w-full ">
                                     <form className="flex flex-col gap-y-3.5">
                                         <Controller name="username" control={control} render={({ field }) => (
-                                            <Input {...field} placeholder="Имя Фамилия" isError={!!errors.username}
-                                                errorMessage={errors.username?.message}
+                                            <Input {...field} placeholder={t("Имя Фамилия")} isError={!!errors.username}
+                                                errorMessage={t(errors.username?.message || "")}
                                                 className="py-3.5 w-full px-4.5 bg-[#EEEEEE80] outline-none rounded-[14px]" />)} />
                                         <Controller name="userphone" control={control} render={({ field }) => (
                                             <Input
                                                 {...field}
-                                                placeholder="Телефон (+998...)"
+                                                placeholder={t("Телефон (+998...)")}
                                                 isError={!!errors.userphone}
-                                                errorMessage={errors.userphone?.message}
+                                                errorMessage={t(errors.userphone?.message || "")}
                                                 className="py-3.5 w-full px-4.5 bg-[#EEEEEE80] outline-none rounded-[14px]"
                                             />
                                         )} />
                                         <Controller name="userpassword" control={control} render={({ field }) => (
                                             <div className="relative w-full">
-                                                <Input {...field} placeholder="Пароль"
+                                                <Input {...field} placeholder={t("Пароль")}
                                                     type={isPasswordVisible ? "text" : "password"}
                                                     isError={!!errors.userpassword}
-                                                    errorMessage={errors.userpassword?.message}
+                                                    errorMessage={t(errors.userpassword?.message || "")}
                                                     className="py-3.5 w-full px-4.5 bg-[#EEEEEE80] outline-none rounded-[14px]" />
                                                 <span onClick={togglePasswordVisibility}
                                                     className="absolute right-5 top-[clamp(12px,1.8vw,20px)] cursor-pointer text-[#28B13D]">
@@ -211,10 +211,10 @@ export const RegistrationPage = () => {
                                             </div>)} />
                                         <Controller name="confirmPassword" control={control} render={({ field }) => (
                                             <div className="relative w-full">
-                                                <Input {...field} placeholder="Подтверждение пароля"
+                                                <Input {...field} placeholder={t("Подтверждение пароля")}
                                                     type={isConfirmPasswordVisible ? "text" : "password"}
                                                     isError={!!errors.confirmPassword}
-                                                    errorMessage={errors.confirmPassword?.message}
+                                                    errorMessage={t(errors.confirmPassword?.message || "")}
                                                     className="py-3.5 w-full px-4.5 bg-[#EEEEEE80] outline-none rounded-[14px]" />
                                                 <span onClick={toggleConfirmPasswordVisibility}
                                                     className="absolute right-5 top-[clamp(12px,1.8vw,20px)] cursor-pointer text-[#28B13D]">
@@ -224,7 +224,7 @@ export const RegistrationPage = () => {
                                     </form>
                                     <Button type="submit" onClick={handleSubmit(handleRegistration)} disabled={!isValid}
                                         className={`w-full mt-6 h-[56px] rounded-2xl text-[16px] text-white ${isValid ? "bg-[#2EAA7B]" : "bg-[#AFAFAF] cursor-not-allowed"}`}>
-                                        Зарегистрироваться
+                                        {t("Зарегистрироваться")}
                                     </Button>
                                     <div className='w-full flex flex-col text-center items-center mb-10'>
                                         <div className='w-[237px] border border-[#DFDFDF] mt-[38px]'></div>
@@ -236,9 +236,9 @@ export const RegistrationPage = () => {
                                         {/*</div>*/}
                                         <Paragraph
                                             className="text-[16px] font-inter text-[#232323] leading-[130%] mt-10 transition-all duration-300">
-                                            У вас уже есть аккаунт?
+                                            {t("У вас уже есть аккаунт?")}
                                             <Applink to='/login'
-                                                className="text-[#2EAA7B] hover:underline ml-1 font-semibold transition duration-500">Авторизоваться</Applink>
+                                                className="text-[#2EAA7B] hover:underline ml-1 font-semibold transition duration-500">{t("Авторизоваться")}</Applink>
                                         </Paragraph>
                                     </div>
 
@@ -259,12 +259,12 @@ export const RegistrationPage = () => {
                                 </Button>
                                 <Heading level={2} className="md:text-3xl text-2xl text-center font-inter font-bold text-black"
                                     text={""}>
-                                    Мы отправили вам код для подтверждения аккаунта на номер
+                                    {t("Мы отправили вам код для подтверждения аккаунта на номер")}
                                 </Heading>
                             </div>
                             <div className="mx-auto flex flex-col items-center gap-6">
                                 <p className="text-sm text-gray-500 w-full text-left">
-                                    Введите код, отправленный на номер <span
+                                    {t("Введите код, отправленный на номер")} <span
                                         className="text-black font-semibold">{maskedPhone}</span>
                                 </p>
 
@@ -294,10 +294,10 @@ export const RegistrationPage = () => {
                                             setTimer(60);
                                             setCanResend(false);
                                         }} className="hover:underline">
-                                            Отправить снова
+                                            {t("Отправить снова")}
                                         </button>
                                     ) : (
-                                        <span>Отправить снова через <span
+                                        <span>{t("Отправить снова через")} <span
                                             className="font-bold">0:{timer.toString().padStart(2, "0")}</span></span>
                                     )}
                                 </div>
@@ -307,10 +307,10 @@ export const RegistrationPage = () => {
                                     disabled={code.length !== 4}
                                     className={`w-full h-14 rounded-2xl text-[16px] text-white ${code.length === 4 ? "bg-[#2EAA7B]" : "bg-[#AFAFAF] cursor-not-allowed"}`}
                                 >
-                                    Подтвердить
+                                    {t("Подтвердить")}
                                 </Button>
                                 <Button onClick={() => setStep(1)} className="block md:hidden text-black outline-none w-full h-14 rounded-2xl text-[16px] ">
-                                    Назад
+                                    {t("Назад")}
                                 </Button>
                             </div>
                         </div>
@@ -323,14 +323,14 @@ export const RegistrationPage = () => {
             </div>
             {showSuccessModal && (
                 <ModalBase
-                    title="Успешно!"
+                    title={t("Успешно!")}
                     message={successMessage}
                     onClose={() => setShowSuccessModal(false)}
                     actions={<Button
                         className="w-full text-center py-4 hover:border hover:bg-white hover:text-[#2EAA7B] hover:border-[#2EAA7B] text-white bg-[#2EAA7B] rounded-[14px]"
                         onClick={() => setShowSuccessModal(false)}
                     >
-                        Подтвердить
+                        {t("Подтвердить")}
                     </Button>}
                     HeadingClassName={"font-bold font-inter text-xl"}
                     ModalClassName="w-115" />

@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { HiChevronRight } from "react-icons/hi";
 import { urlToTypeMap, typeToUrlMap } from "../../utils/categoryMap";
 import { useLocation } from "react-router-dom";
+import { useTranslation } from "../../../public/Locales/context/TranslationContext";
 
 type CrumbLink = {
     label: string;
@@ -18,7 +19,7 @@ export const Breadcrumbs = ({
     links?: CrumbLink[];
 }) => {
     const location = useLocation();
-
+    const { t } = useTranslation()
     if (links?.length) {
         return (
             <div className="w-full max-w-full overflow-hidden">
@@ -36,10 +37,10 @@ export const Breadcrumbs = ({
                                             : "hover:text-[#28B13D] text-[#68727D]"
                                             }`}
                                     >
-                                        {link.label}
+                                        {t(link.label)}
                                     </Link>
                                 ) : (
-                                    <span className="text-[#28B13D]">{link.label}</span>
+                                    <span className="text-[#28B13D]">{t(link.label)}</span>
                                 )}
                                 {index !== links.length - 1 && (
                                     <HiChevronRight className="text-gray-400 w-[20px] h-[20px]" />
@@ -63,9 +64,9 @@ export const Breadcrumbs = ({
     if (!category && title) {
         return (
             <nav className="text-[15px] font-inter font-medium leading-[22px] text-[#68727D] flex items-center gap-2">
-                <Link to="/" className="hover:text-[#28B13D] transition duration-500">Главная</Link>
+                <Link to="/" className="hover:text-[#28B13D] transition duration-500">{t("Главная")}</Link>
                 <HiChevronRight className="text-gray-400 w-[20px] h-[20px]" />
-                <span className="text-[#28B13D]">{title}</span>
+                <span className="text-[#28B13D]">{t(title)}</span>
             </nav>
         );
     }
@@ -74,17 +75,17 @@ export const Breadcrumbs = ({
 
     return (
         <nav className="text-[15px] font-inter font-medium leading-[22px] text-[#68727D] flex items-center gap-2">
-            <Link to="/" className="hover:text-[#28B13D] transition duration-500">Главная</Link>
+            <Link to="/" className="hover:text-[#28B13D] transition duration-500">{t("Главная")}</Link>
             <HiChevronRight className="text-gray-400 w-[20px] h-[20px]" />
 
             <Link to={`/${categoryUrl}`} className="hover:text-[#28B13D] transition duration-500 capitalize">
-                {readableName}
+                {t(readableName)}
             </Link>
 
             {title && (
                 <>
                     <HiChevronRight className="text-gray-400 w-[20px] h-[20px]" />
-                    <span className="text-[#28B13D]">{title}</span>
+                    <span className="text-[#28B13D]">{t(title)}</span>
                 </>
             )}
         </nav>

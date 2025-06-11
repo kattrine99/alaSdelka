@@ -14,6 +14,7 @@ import { RootState } from "../../../Store/store";
 import { FiChevronRight } from "react-icons/fi";
 import { CardDetailPreview } from "../../../components/Cards/CardDetailPreview";
 import { FaCheckCircle } from "react-icons/fa";
+import { useTranslation } from "../../../../public/Locales/context/TranslationContext";
 
 
 const steps = [
@@ -52,10 +53,10 @@ export const StepsAddingOffer = () => {
     const [offerType, setOfferType] = useState<OfferType | null>(null);
     const savedData = useSelector((state: RootState) => state.tempOffer.offerData);
     const [showHelperModal, setShowHelperModal] = useState(false);
-
+    const { lang, t } = useTranslation()
     const getListingTypeLabel = (type: "buy" | "sell") => {
         if (offerType === "investments") {
-            return type === "buy" ? "Найти инвестиции" : "Инвестировать";
+            return type === "buy" ? t("Найти инвестиции") : t("Инвестировать");
         }
         return type === "buy" ? "Купить" : "Продать";
     };

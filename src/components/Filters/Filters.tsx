@@ -9,6 +9,7 @@ import { MdOutlineArrowDropDown } from "react-icons/md";
 import { useGetFiltersDataQuery } from "../../Store/api/Api";
 import { FiltersState } from "../../utils/variables";
 import { useEffect } from "react";
+import { useTranslation } from "../../../public/Locales/context/TranslationContext";
 
 interface FiltersProps {
     offer_type: "business" | "startup" | "franchise" | "investments" | "бизнес" | "франшиза" | "стартапы" | "инвстиции";
@@ -26,7 +27,7 @@ export const Filters: React.FC<FiltersProps> = ({ offer_type, filters, setFilter
     const showProfit = offer_type === "franchise";
     const showInvestments = ["franchise", "startup"].includes(offer_type);
     const showPrice = ["business", "investments"].includes(offer_type);
-
+    const { lang, t } = useTranslation()
     const update = (field: keyof FiltersState, value: string) => {
         setFilters(prev => ({ ...prev, [field]: value }));
     };
@@ -67,7 +68,7 @@ export const Filters: React.FC<FiltersProps> = ({ offer_type, filters, setFilter
             <div className="gap-y-2">
                 <div className="flex items-center gap-2">
                     <FrameIcon className="text-[#2EAA7B]" />
-                    <Paragraph>Категория проекта</Paragraph>
+                    <Paragraph>{t("Категория проекта")}</Paragraph>
                 </div>
                 <div className="relative mt-2 mb-4">
                     <select
@@ -75,10 +76,10 @@ export const Filters: React.FC<FiltersProps> = ({ offer_type, filters, setFilter
                         onChange={handleCategoryChange}
                         className="bg-[#F2F2F2] w-full h-[42.4px] rounded-[8px] pl-4 text-black focus:outline-none appearance-none"
                     >
-                        <option value="">Все категории</option>
+                        <option value="">{t("Все категории")}</option>
                         {filterOptions.categories.map(cat => (
                             <option key={cat.id} value={String(cat.id)}>
-                                {cat.title_ru}
+                                {lang === "uz" ? cat.title_uz : cat.title_ru}
                             </option>
                         ))}
                     </select>
@@ -90,7 +91,7 @@ export const Filters: React.FC<FiltersProps> = ({ offer_type, filters, setFilter
             <div className="gap-y-2">
                 <div className="flex items-center gap-2">
                     <FaLocationDot className="text-[#2EAA7B]" />
-                    <Paragraph>Город</Paragraph>
+                    <Paragraph>{t("Город")}</Paragraph>
                 </div>
                 <div className="relative mt-2 mb-4">
                     <select
@@ -98,10 +99,10 @@ export const Filters: React.FC<FiltersProps> = ({ offer_type, filters, setFilter
                         onChange={(e) => update("city", e.target.value)}
                         className="bg-[#F2F2F2] w-full h-[42.4px] rounded-[8px] pl-4 text-black focus:outline-none appearance-none"
                     >
-                        <option value="">Выбрать</option>
+                        <option value="">{t("Выбрать")}</option>
                         {filterOptions.cities.map(city => (
                             <option key={city.id} value={String(city.id)}>
-                                {city.name_ru}
+                                {lang === "uz" ? city.name_uz : city.name_ru}
                             </option>
                         ))}
                     </select>
@@ -114,7 +115,7 @@ export const Filters: React.FC<FiltersProps> = ({ offer_type, filters, setFilter
                 <div className="gap-y-2">
                     <div className="flex items-center gap-2">
                         <CopyIcon className="text-[#2EAA7B]" />
-                        <Paragraph>Стадия проекта</Paragraph>
+                        <Paragraph>{t("Стадия проекта")}</Paragraph>
                     </div>
                     <div className="relative mt-2 mb-4">
                         <select
@@ -122,10 +123,10 @@ export const Filters: React.FC<FiltersProps> = ({ offer_type, filters, setFilter
                             onChange={(e) => update("stage", e.target.value)}
                             className="bg-[#F2F2F2] w-full h-[42.4px] rounded-[8px] pl-4 text-black focus:outline-none appearance-none"
                         >
-                            <option value="">Выбрать</option>
+                            <option value="">{t("Выбрать")}</option>
                             {filterOptions.project_stages.map(stage => (
                                 <option key={stage.id} value={String(stage.id)}>
-                                    {stage.name_ru}
+                                    {lang === "uz" ? stage.name_uz : stage.name_ru}
                                 </option>
                             ))}
                         </select>
@@ -139,7 +140,7 @@ export const Filters: React.FC<FiltersProps> = ({ offer_type, filters, setFilter
                 <div className="gap-y-2">
                     <div className="flex items-center gap-2">
                         <FaClock className="text-[#2EAA7B]" />
-                        <Paragraph>Период окупаемости</Paragraph>
+                        <Paragraph>{t("Период окупаемости")}</Paragraph>
                     </div>
                     <div className="flex flex-wrap gap-2 mt-2 mb-4">
                         {buttonsData.map(item => (
@@ -151,7 +152,7 @@ export const Filters: React.FC<FiltersProps> = ({ offer_type, filters, setFilter
                                     : "bg-white text-black border-gray-300"
                                     }`}
                             >
-                                {item}
+                                {t(item)}
                             </Button>
                         ))}
                     </div>
@@ -163,11 +164,11 @@ export const Filters: React.FC<FiltersProps> = ({ offer_type, filters, setFilter
                 <div className="gap-y-2">
                     <div className="flex items-center gap-2">
                         <HiCurrencyDollar className="text-[#2EAA7B]" />
-                        <Paragraph>Цена</Paragraph>
+                        <Paragraph>{t("Цена")}</Paragraph>
                     </div>
                     <div className="flex gap-x-1.5 mt-2">
                         <div className="flex items-center gap-1 px-4 py-3.5 bg-[#F0F1F2] rounded-[14px]">
-                            <span className="text-[14px] text-black">от</span>
+                            <span className="text-[14px] text-black">{t("от")}</span>
                             <Input
                                 type="text"
                                 value={filters.priceMin}
@@ -176,10 +177,10 @@ export const Filters: React.FC<FiltersProps> = ({ offer_type, filters, setFilter
                                 className="w-full text-[16px] font-semibold text-[#3C3C3C] bg-transparent outline-none placeholder:text-[#787878]"
                                 isError={false}
                             />
-                            <span className="text-[14px] text-black">сум</span>
+                            <span className="text-[14px] text-black">{t("сум")}</span>
                         </div>
                         <div className="flex items-center gap-1 px-4 py-[14px] bg-[#F0F1F2] rounded-[14px]">
-                            <span className="text-[14px] text-black">до</span>
+                            <span className="text-[14px] text-black">{t("до")}</span>
                             <Input
                                 type="text"
                                 value={filters.priceMax}
@@ -188,7 +189,7 @@ export const Filters: React.FC<FiltersProps> = ({ offer_type, filters, setFilter
                                 className="w-full text-[16px] font-semibold text-[#3C3C3C] bg-transparent outline-none placeholder:text-[#787878]"
                                 isError={false}
                             />
-                            <span className="text-[14px] text-black">сум</span>
+                            <span className="text-[14px] text-black">{t("сум")}</span>
                         </div>
                     </div>
                 </div>
@@ -199,11 +200,11 @@ export const Filters: React.FC<FiltersProps> = ({ offer_type, filters, setFilter
                 <div className="gap-y-2 mt-4">
                     <div className="flex items-center gap-2">
                         <WalletIcon className="text-[#2EAA7B]" />
-                        <Paragraph>Вложения</Paragraph>
+                        <Paragraph>{t("Вложения")}</Paragraph>
                     </div>
                     <div className="flex gap-x-1.5 mt-2">
                         <div className="flex items-center gap-1 px-4 bg-[#F0F1F2] rounded-[14px]">
-                            <span className="text-[14px] text-black">от</span>
+                            <span className="text-[14px] text-black">{t("от")}</span>
                             <Input
                                 type="text"
                                 value={filters.investmentMin}
@@ -214,7 +215,7 @@ export const Filters: React.FC<FiltersProps> = ({ offer_type, filters, setFilter
                             />
                         </div>
                         <div className="flex items-center gap-1 px-4 bg-[#F0F1F2] rounded-[14px]">
-                            <span className="text-[14px] text-black">до</span>
+                            <span className="text-[14px] text-black">{t("до")}</span>
                             <Input
                                 type="text"
                                 value={filters.investmentMax}
@@ -223,7 +224,7 @@ export const Filters: React.FC<FiltersProps> = ({ offer_type, filters, setFilter
                                 className="w-full py-3 text-[16px] font-semibold text-[#3C3C3C] bg-transparent outline-none placeholder:text-[#787878]"
                                 isError={false}
                             />
-                            <span className="text-[14px] text-black">сум</span>
+                            <span className="text-[14px] text-black">{t("сум")}</span>
                         </div>
                     </div>
                 </div>
@@ -234,11 +235,11 @@ export const Filters: React.FC<FiltersProps> = ({ offer_type, filters, setFilter
                 <div className="gap-y-2 mt-4">
                     <div className="flex items-center gap-2">
                         <ChartIcon className="text-[#2EAA7B]" />
-                        <Paragraph>Рентабельность</Paragraph>
+                        <Paragraph>{t("Рентабельность")}</Paragraph>
                     </div>
                     <div className="flex gap-x-1.5 mt-2">
                         <div className="flex items-center gap-1 px-4 py-[14px] bg-[#F0F1F2] rounded-[14px]">
-                            <span className="text-[14px] text-black">от</span>
+                            <span className="text-[14px] text-black">{t("от")}</span>
                             <Input
                                 type="text"
                                 value={filters.profitabilityMin}
@@ -247,10 +248,10 @@ export const Filters: React.FC<FiltersProps> = ({ offer_type, filters, setFilter
                                 className="w-full text-[16px] font-semibold text-[#3C3C3C] bg-transparent outline-none placeholder:text-[#787878]"
                                 isError={false}
                             />
-                            <span className="text-[14px] text-black">сум</span>
+                            <span className="text-[14px] text-black">{t("сум")}</span>
                         </div>
                         <div className="flex items-center gap-1 px-4 py-[14px] bg-[#F0F1F2] rounded-[14px]">
-                            <span className="text-[14px] text-black">до</span>
+                            <span className="text-[14px] text-black">{t("до")}</span>
                             <Input
                                 type="text"
                                 value={filters.profitabilityMax}
@@ -259,7 +260,7 @@ export const Filters: React.FC<FiltersProps> = ({ offer_type, filters, setFilter
                                 className="w-full text-[16px] font-semibold text-[#3C3C3C] bg-transparent outline-none placeholder:text-[#787878]"
                                 isError={false}
                             />
-                            <span className="text-[14px] text-black">сум</span>
+                            <span className="text-[14px] text-black">{t("сум")}</span>
                         </div>
                     </div>
                 </div>
@@ -271,7 +272,7 @@ export const Filters: React.FC<FiltersProps> = ({ offer_type, filters, setFilter
                     onClick={onApplyFilters}
                     className="w-full py-3 px-5 border border-[#2EAA7B] mb-2.5 hover:bg-[#2EAA7B] hover:text-white focus:bg-[#2EAA7B] focus:text-white rounded-[6px] font-inter font-semibold text-[15px] leading-5.5 text-[#2EAA7B] outline-none"
                 >
-                    Найти
+                    {t("Найти")}
                 </Button>
                 <Button
                     onClick={() => {
@@ -295,7 +296,7 @@ export const Filters: React.FC<FiltersProps> = ({ offer_type, filters, setFilter
                     }}
                     className="w-full py-3 px-5 border border-[#2EAA7B] mb-2.5 hover:bg-[#2EAA7B] hover:text-white focus:bg-[#2EAA7B] focus:text-white rounded-[6px] font-inter font-semibold text-[15px] leading-5.5 text-[#2EAA7B] outline-none"
                 >
-                    Сбросить
+                    {t("Сбросить")}
                 </Button>
             </div>
         </div>

@@ -6,6 +6,7 @@ import { ICard } from "../../../components/Cards/Interfaces";
 import { useCreateOfferMutation, usePublishOfferMutation } from "../../../Store/api/Api";
 import { useState } from "react";
 import { clearOfferData } from "../../../Store/tempStorage";
+import { useTranslation } from "../../../../public/Locales/context/TranslationContext";
 
 interface Props {
     onPublish: () => void;
@@ -39,7 +40,7 @@ export const PublicationStep: React.FC<Props> = ({ onPublish, onPreview }) => {
     const [, setIsPublished] = useState(false);
     const [, setError] = useState(false);
     const [isErrorModalOpen, setIsErrorModalOpen] = useState(false);
-
+    const { lang, t } = useTranslation()
     if (!cardData) return null;
 
     const card = mapOfferToCard(cardData);
@@ -118,10 +119,10 @@ export const PublicationStep: React.FC<Props> = ({ onPublish, onPreview }) => {
         <div>
             {isErrorModalOpen && (
                 <ModalBase
-                    title="Что-то пошло не так"
+                    title={t("Что-то пошло не так")}
                     message={
                         <Paragraph className="text-[#232323] text-base">
-                            Пожалуйста, проверьте информацию в объявлении или повторите попытку позже.
+                            {t("Пожалуйста, проверьте информацию в объявлении или повторите попытку позже.")}
                         </Paragraph>
                     }
                     onClose={() => setIsErrorModalOpen(false)}
@@ -132,10 +133,10 @@ export const PublicationStep: React.FC<Props> = ({ onPublish, onPreview }) => {
             }
             <div className="flex flex-col items-start gap-6 bg-[#F8F8F8] p-5">
                 <Paragraph className="text-3xl font-inter font-semibold text-[#101828] leading-10">
-                    Подтвердите и публикуйте
+                    {t("Подтвердите и публикуйте")}
                 </Paragraph>
                 <Paragraph className="font-inter text-[#667085] text-[16px] leading-5 max-w-[600px]">
-                    Вы почти у цели! Посмотрите, как будет выглядеть ваш готовый листинг после окончательного одобрения.
+                    {t("Вы почти у цели! Посмотрите, как будет выглядеть ваш готовый листинг после окончательного одобрения.")}
                 </Paragraph>
 
                 <div className="w-full max-w-150">
@@ -147,7 +148,7 @@ export const PublicationStep: React.FC<Props> = ({ onPublish, onPreview }) => {
                     onClick={handlePublish}
                     disabled={isPublishing}
                 >
-                    {isPublishing ? "Публикация..." : "Опубликовать"}
+                    {isPublishing ? t("Публикация...") : t("Опубликовать")}
                 </Button>
             </div>
 

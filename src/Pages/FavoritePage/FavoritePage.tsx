@@ -11,6 +11,7 @@ import { ICard } from "../../components/Cards/Interfaces";
 import { useGetFavoritesQuery, useToggleFavoriteMutation } from "../../Store/api/Api";
 import { profileNavigate } from "../../utils/categoryMap";
 import { Offer } from "../../Store/api/types";
+import { useTranslation } from "../../../public/Locales/context/TranslationContext";
 
 export const FavoritePage = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -22,7 +23,7 @@ export const FavoritePage = () => {
   } = useGetFavoritesQuery({ page: currentPage });
 
   const [toggleFavorite] = useToggleFavoriteMutation();
-
+  const { t } = useTranslation()
   const offers = useMemo(() => data?.data ?? [], [data]);
   const meta = data?.meta;
 
@@ -32,7 +33,7 @@ export const FavoritePage = () => {
         id: offer.id,
         title: offer.title || "Название не указано",
         price: offer.price ?? 0,
-        photos: offer.photos ?? [], 
+        photos: offer.photos ?? [],
         address: {
           address: offer.address?.address || "Адрес не указан",
           city: {
@@ -68,11 +69,11 @@ export const FavoritePage = () => {
   }, [offers, isLoading, isError, currentPage]);
 
   return (
-    <div className="w-screen">
+    <div className="w-screen ">
       <Header navLinksData={profileNavigate} />
-      <div className="px-48 max-lg:px-20 max-md:px-3 py-9">
+      <div className="px-48 h-screen max-lg:px-20 max-md:px-3 py-9">
         <Heading
-          text="Избранное"
+          text={t("Избранное")}
           level={2}
           className="font-inter text-xl font-bold leading-5 mb-10"
         />
@@ -82,7 +83,7 @@ export const FavoritePage = () => {
             <div className="w-10 h-10 border-4 border-[#2EAA7B] border-t-transparent rounded-full animate-spin"></div>
           </div>
         ) : isError ? (
-          <p className="text-red-500">Ошибка загрузки</p>
+          <p className="text-red-500">{t('Ошибка загрузки')}</p>
         ) : mappedFavorites.length === 0 ? (
           <EmptyMessage
             title="Нет избранных"

@@ -10,6 +10,7 @@ import { useLoginUserMutation } from '../../Store/api/Api';
 import { useDispatch } from 'react-redux';
 import { setAccessToken, setIsAuthenticated, setLogoutReason } from '../../Store/Slices/authSlice';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from '../../../public/Locales/context/TranslationContext';
 
 interface LoginFormInputs {
     userphone: string;
@@ -28,6 +29,7 @@ const loginFormschema = yup.object({
 });
 
 export const LoginPage = () => {
+    const { lang, t } = useTranslation()
     const [isPasswordVisible, setIsPasswordVisible] = useState(false);
     const [showModal, setShowModal] = useState(false);
     const [modalText, setModalText] = useState("");
@@ -88,8 +90,8 @@ export const LoginPage = () => {
         <div className="min-w-screen sm:bg-[url('/images/grid.png')] bg-contain bg-no-repeat bg-right">
             <div className='flex flex-col'>
                 {showModal && <ModalBase
-                    title={modalTitle}
-                    message={modalText}
+                    title={t(modalTitle)}
+                    message={t(modalText)}
                     ModalClassName='w-115 p-10'
                     HeadingClassName="font-inter font-semibold text-[32px] leading-11 "
                     onClose={() => setShowModal(false)}
@@ -99,7 +101,7 @@ export const LoginPage = () => {
             <div className=" flex items-center justify-center py-[62px] transition-all duration-300">
                 <div className="w-full grid grid-cols-1 lg:grid-cols-2 lg:px-36 transition-all duration-500">
                     <div className="w-full p-[clamp(30px,4vw,70px)] flex flex-col items-start text-start transition-all duration-300">
-                        <Heading className="text-[32px] mb-[32px] font-inter font-bold text-black" text={'Вход в личный кабинет'} level={1} />
+                        <Heading className="text-[32px] mb-[32px] font-inter font-bold text-black" text={t('Вход в личный кабинет')} level={1} />
                         <form onSubmit={handleSubmit(onSubmit)} className="w-full flex flex-col gap-[clamp(14px,1.8vw,28px)]">
                             <Controller
                                 name="userphone"
@@ -108,9 +110,9 @@ export const LoginPage = () => {
                                     <Input
                                         {...field}
                                         isError={!!errors.userphone}
-                                        errorMessage={errors.userphone?.message}
+                                        errorMessage={t(errors.userphone?.message || "")}
                                         type="text"
-                                        placeholder="Номер телефона"
+                                        placeholder={t("Номер телефона")}
                                         className={`w-full px-[18px] py-[17px] border-2 bg-[#EEEEEE80] rounded-[14px] focus:outline-none text-[16px] font-semibold leading-[130%] transition-all duration-500 ${errors.userphone ? 'border-red-500 focus:ring-red-500' : field.value ? 'border-green-500 focus:ring-green-500' : 'border-[#9C9C9C33] focus:ring-[#2EAA7B]'}`}
                                     />
                                 )}
@@ -123,9 +125,9 @@ export const LoginPage = () => {
                                         <Input
                                             {...field}
                                             isError={!!errors.userpassword}
-                                            errorMessage={errors.userpassword?.message}
+                                            errorMessage={t(errors.userpassword?.message ||"")}
                                             type={isPasswordVisible ? "text" : "password"}
-                                            placeholder="Пароль"
+                                            placeholder={t("Пароль")}
                                             className={`w-full px-[18px] py-[17px] border-2 bg-[#EEEEEE80] rounded-[14px] focus:outline-none text-[16px] font-semibold leading-[130%] transition-all duration-500 ${errors.userpassword ? 'border-red-500 focus:ring-red-500' : field.value ? 'border-green-500 focus:ring-green-500' : 'border-[#9C9C9C33] focus:ring-[#2EAA7B]'}`}
                                         />
                                         <span
@@ -142,7 +144,7 @@ export const LoginPage = () => {
                                 disabled={!isValid}
                                 className={`w-full h-[56px] text-white rounded-2xl font-bold transition-all duration-500 ${isValid ? 'bg-[#2EAA7B]' : 'bg-gray-300 cursor-not-allowed'}`}
                             >
-                                Войти
+                                {t("Войти")}
                             </Button>
                         </form>
                         <div className='w-full flex flex-col items-center'>
@@ -154,8 +156,8 @@ export const LoginPage = () => {
                             {/*    </Button>*/}
                             {/*</div>*/}
                             <Paragraph className="w-full text-center text-[16px] font-inter text-[#232323] leading-[130%] mt-10 transition-all duration-300">
-                                Еще нет аккаунта?
-                                <Applink to='/register' className="text-[#2EAA7B] hover:underline ml-1 font-semibold transition duration-500">Зарегистрироваться</Applink>
+                                {t("Еще нет аккаунта?")}
+                                <Applink to='/register' className="text-[#2EAA7B] hover:underline ml-1 font-semibold transition duration-500">{t("Зарегистрироваться")}</Applink>
                             </Paragraph>
                         </div>
                     </div>

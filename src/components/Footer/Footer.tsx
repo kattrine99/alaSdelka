@@ -2,11 +2,14 @@ import { Link, useNavigate } from "react-router-dom";
 import { FaPhone } from "react-icons/fa";
 import { IoIosMail } from "react-icons/io";
 import { Paragraph, NavLinks, categories, Button } from "../index";
+import { useTranslation } from "../../../public/Locales/context/TranslationContext";
+
 interface FooterProps {
     showSmallFooter: boolean;
 }
 export const Footer: React.FC<FooterProps> = ({ showSmallFooter }) => {
     const navigate = useNavigate();
+    const { t } = useTranslation();
 
     return (
         <div className="font-[Inter] font-medium w-full bg-white shadow ">
@@ -40,13 +43,13 @@ export const Footer: React.FC<FooterProps> = ({ showSmallFooter }) => {
                                 onClick={() => navigate("/user-agreement")}
                                 className="flex items-center gap-1 text-[#232323] font-openSans font-normal text-[16px] leading-[125%] hover:text-[#28B13D] transition"
                             >
-                                Пользовательское соглашение
+                                {t("Пользовательское соглашение")}
                             </Button>
                             <Button
                                 onClick={() => navigate("/privacy-policy")}
                                 className="flex items-center gap-1 text-[#232323] font-inter font-normal text-[16px] leading-[125%] hover:text-[#28B13D] transition"
                             >
-                                Политика конфиденциальности
+                                {t("Политика конфиденциальности")}
                             </Button>
                         </div>
                     </div></>)}
@@ -71,13 +74,13 @@ export const Footer: React.FC<FooterProps> = ({ showSmallFooter }) => {
                                 onClick={() => navigate("/user-agreement")}
                                 className="hover:text-[#28B13D] transition"
                             >
-                                Пользовательское соглашение
+                                {t("Пользовательское соглашение")}
                             </Button>
                             <Button
                                 onClick={() => navigate("/privacy-policy")}
                                 className="hover:text-[#28B13D] transition"
                             >
-                                Политика конфиденциальности
+                                {t("Политика конфиденциальности")}
                             </Button>
                         </div>
 

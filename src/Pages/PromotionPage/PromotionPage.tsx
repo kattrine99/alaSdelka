@@ -21,6 +21,7 @@ import {
 import UzcardIcon from "../../assets/uzcard.svg?react";
 import HumoIcon from "../../assets/humo.svg?react";
 import { useNavigate, useParams } from "react-router-dom";
+import { useTranslation } from "../../../public/Locales/context/TranslationContext";
 
 export const PromotionPage = () => {
     const [selectedTariff, setSelectedTariff] = useState<number | null>(null);
@@ -28,7 +29,7 @@ export const PromotionPage = () => {
     const { data: cardsData, } = useGetUserCardsQuery();
     const { data: userInfo } = useGetUserInfoQuery();
     const navigate = useNavigate();
-
+    const { lang, t } = useTranslation()
     const cards = cardsData?.cards || [];
     const [selectedCardId, setSelectedCardId] = useState<number | null>(null);
     const [cardNumber, setCardNumber] = useState("");
@@ -102,7 +103,7 @@ export const PromotionPage = () => {
         }
     };
     if (!offerId || isNaN(offerId)) {
-        return <Paragraph className="text-red-500 px-30 py-7.5">Ошибка: некорректный ID объявления</Paragraph>;
+        return <Paragraph className="text-red-500 px-30 py-7.5">{t("Ошибка: некорректный ID объявления")}</Paragraph>;
     }
     const handleExistingCardPayment = async () => {
         try {
@@ -159,12 +160,14 @@ export const PromotionPage = () => {
                 {paymentSuccess === true ? (
                     <div className="flex max-xl:flex-wrap gap-10 mt-10 justify-between bg-[url('/images/grid.png')] bg-contain bg-no-repeat bg-right duration-300 ease-in-out">
                         <div className="flex max-w-150 flex-col  items-start text-start">
-                            <Heading className="font-inter text-4xl max-lg:text-2xl transition duration-300 ease-in-out" text={""} level={2}>Поздравляем,<span className="font-bold"> оплата прошла успешно!</span> Вы можете снова перейти к вашим объявлениям</Heading>
+                            <Heading className="font-inter text-4xl max-lg:text-2xl transition duration-300 ease-in-out" text="" level={2}>
+                                {t("Поздравляем,")} <span className="font-bold">{t("оплата прошла успешно!")}</span> {t("Вы можете снова перейти к вашим объявлениям")}
+                            </Heading>
                             <Button
                                 className="mt-16 w-full max-w-83 px-5 py-3 bg-[#2EAA7B] shadow-[0px_1px_2px] shadow-[#1018280A] rounded-lg text-white font-inter font-semibold text-2xl max-md:text-xl duration-300 ease-in-out"
                                 onClick={() => navigate("/announcements", { state: { promotionSuccess: true } })}
                             >
-                                Вернуться к объявлениям
+                                {t("Вернуться к объявлениям")}
                             </Button>
                         </div>
                         <div className="max-w-90 max-md:hidden">
@@ -174,9 +177,9 @@ export const PromotionPage = () => {
                 ) : paymentSuccess === false ? (
                     <div className="flex max-xl:flex-wrap gap-10 mt-10 justify-between bg-[url('/images/grid.png')] bg-contain bg-no-repeat bg-right ">
                         <div className="flex max-w-150 flex-col  items-start text-start">
-                            <Heading className="font-inter text-4xl max-lg:text-2xl duration-300 ease-in-out" text={""} level={2}><span className="font-bold">Что-то пошло не так.</span>Попробуйте оплатить ещё раз.</Heading>
+                            <Heading className="font-inter text-4xl max-lg:text-2xl duration-300 ease-in-out" text={""} level={2}><span className="font-bold">{t("Что-то пошло не так.")}</span>{t("Попробуйте оплатить ещё раз.")}</Heading>
                             <Button className="mt-16 w-full max-w-83 px-5 py-3 bg-[#2EAA7B] shadow-[0px_1px_2px] shadow-[#1018280A] rounded-lg text-white font-inter font-semibold text-2xl max-md:text-xl duration-300 ease-in-out" onClick={() => navigate("/announcements")}
-                            >Вернуться</Button>
+                            >{t("Вернуться")}</Button>
                         </div>
                         <div className="max-w-90 max-md:hidden duration-300 ease-in-out">
                             <img src="/images/wrong.png" />
@@ -184,9 +187,9 @@ export const PromotionPage = () => {
                     </div>
                 ) : isVerificationStep ? (
                     <div className="mt-10">
-                        <Heading level={3} text="Введите код из SMS для подтверждения карты" className="mb-4" />
+                        <Heading level={3} text={t("Введите код из SMS для подтверждения карты")} className="mb-4" />
                         <Input
-                            placeholder="Код из SMS"
+                            placeholder={t("Код из SMS")}
                             value={smsCode}
                             onChange={(e) => setSmsCode(e.target.value)}
                             isError={false}
@@ -198,15 +201,15 @@ export const PromotionPage = () => {
                                     setTimer(60);
                                     setCanResend(false);
                                 }} className="hover:underline">
-                                    Отправить снова
+                                    {t("Отправить снова")}
                                 </button>
                             ) : (
-                                <span>Отправить снова через <span
+                                <span>{t("Отправить снова через")} <span
                                     className="font-bold">0:{timer.toString().padStart(2, "0")}</span></span>
                             )}
                         </div>
 
-                        <Button className="mt-4" onClick={handleVerifyAndPay}>Подтвердить и оплатить</Button>
+                        <Button className="mt-4" onClick={handleVerifyAndPay}>{t("Подтвердить и оплатить")}</Button>
                     </div>
                 ) : (
                     <div className="flex max-xl:flex-col">
@@ -216,13 +219,13 @@ export const PromotionPage = () => {
                                 <Paragraph className="border py-3 px-5 w-12.5 h-12.5 flex items-center justify-center text-base border-[#2EAA7B] rounded-full">
                                     1
                                 </Paragraph>
-                                <Heading className="text-xl font-inter w-full" text="Выберите количество дней для продвижения вашего объявления" level={3} />
+                                <Heading className="text-xl font-inter w-full" text={t("Выберите количество дней для продвижения вашего объявления")} level={3} />
                             </div>
                             <div className="flex flex-wrap gap-6.75 mt-5.5 w-full max-md:flex-col">
-                                {isTariffsLoading ? <Paragraph>Загрузка тарифов...</Paragraph> : filtersData?.tariffs?.map((tariff) => (
+                                {isTariffsLoading ? <Paragraph>{t("Загрузка тарифов...")}</Paragraph> : filtersData?.tariffs?.map((tariff) => (
                                     <Button key={tariff.id} className={`flex flex-col border items-start border-[#2EAA7B] px-6 py-4 rounded-lg ${selectedTariff === tariff.id ? "bg-[#2EAA7B] text-white" : "bg-white"}`} onClick={() => setSelectedTariff(tariff.id)}>
-                                        <Paragraph className="font-inter font-semibold text-xl">{tariff.duration} дней</Paragraph>
-                                        <Paragraph>{tariff.price.toLocaleString()} сум</Paragraph>
+                                        <Paragraph className="font-inter font-semibold text-xl">{tariff.duration} {t("дней")}</Paragraph>
+                                        <Paragraph>{tariff.price.toLocaleString()} {t("сум")}</Paragraph>
                                     </Button>
                                 ))}
                             </div>
@@ -232,13 +235,13 @@ export const PromotionPage = () => {
                                 <div className="mt-10 px-4 sm:px-0 ">
                                     <div className="flex flex-wrap max-md:flex-col gap-4">
                                         <Paragraph className="border py-3 px-5 w-12.5 h-12.5 items-center border-[#2EAA7B] rounded-full">2</Paragraph>
-                                        <Heading level={3} text="Выберите карту для оплаты" className="mb-4" />
+                                        <Heading level={3} text={t("Выберите карту для оплаты")} className="mb-4" />
                                     </div>
                                     <div className="flex flex-wrap max-md:flex-col gap-6.75">
                                         {cards.map((card) => (
                                             <Button key={card.id} onClick={() => handleCardSelect(card)} className={`flex flex-col border items-start border-[#2EAA7B] px-6 py-4 rounded-lg ${selectedCardId === card.id ? "bg-[#2EAA7B] text-white" : "bg-white"}`}>
                                                 <Paragraph className="font-inter font-semibold text-xl">{card.masked_number}</Paragraph>
-                                                <Paragraph>Срок: {card.expire.slice(0, 2)}/{card.expire.slice(2, 4)}</Paragraph>
+                                                <Paragraph>{t("Срок:")} {card.expire.slice(0, 2)}/{card.expire.slice(2, 4)}</Paragraph>
                                             </Button>
                                         ))}
                                     </div>
@@ -247,16 +250,16 @@ export const PromotionPage = () => {
 
                             {/* Новая карта */}
                             <div className="mt-10 px-4 sm:px-0">
-                                <Heading level={3} text="Или введите данные новой карты" className="mb-4" />
+                                <Heading level={3} text={t("Или введите данные новой карты")} className="mb-4" />
                                 <div className="bg-[#F8F8F8] w-full rounded-[20px] md:rounded-[40px] py-8 px-6 md:px-12.5 shadow-md">
-                                    <Input placeholder="0000 0000 0000 0000" LabelText="Номер карты" LabelClassName="font-inter text-[25px] max-sm:text-[18px] mb-[19px]" value={cardNumber} onChange={(e) => {
+                                    <Input placeholder="0000 0000 0000 0000" LabelText={t("Номер карты")} LabelClassName="font-inter text-[25px] max-sm:text-[18px] mb-[19px]" value={cardNumber} onChange={(e) => {
                                         const rawValue = e.target.value.replace(/\D/g, "").slice(0, 16);
                                         const formatted = rawValue.replace(/(.{4})/g, "$1 ").trim();
                                         setCardNumber(formatted);
                                     }} isError={false} className="w-full mb-12 flex flex-col outline-none py-3.5 px-4.5 bg-[#F0F1F280] border border-[#DEE0E333] rounded-2xl text-3xl max-sm:text-[16px] text-[#686A70]" />
                                     <div className="flex justify-between flex-col md:flex-row gap-6 md:gap-0">
                                         <div className="flex flex-col w-full gap-4">
-                                            <Paragraph className="font-inter text-2xl max-sm:text-[18px] mb-4.5">Срок действия</Paragraph>
+                                            <Paragraph className="font-inter text-2xl max-sm:text-[18px] mb-4.5">{t("Срок действия")}</Paragraph>
                                             <div className="flex gap-2 w-full">
                                                 <Input placeholder="MM" value={expiryMonth} onChange={(e) => {
                                                     const value = e.target.value.replace(/\D/g, "").slice(0, 2);
@@ -282,16 +285,16 @@ export const PromotionPage = () => {
 
                             <div className="flex gap-8.25 items-center text-center mb-5 mt-9.25">
                                 <Paragraph className="border py-3 px-5 w-12.5 h-12.5 items-center border-[#2EAA7B] rounded-full">3</Paragraph>
-                                <Heading className=" w-full text-xl font-inter" level={3} text="После ввода данных, нажмите Оплатить и подтвердите через SMS" />
+                                <Heading className=" w-full text-xl font-inter" level={3} text={t("После ввода данных, нажмите Оплатить и подтвердите через SMS")} />
                             </div>
                         </div>
 
                         {/* Итог и оплата */}
                         <div className="mt-10 mb-20 w-full flex justify-center px-4 sm:px-0">
                             <div className="w-full max-w-[400px] text-center">
-                                <Paragraph className="mb-2 font-inter text-xl md:text-3xl">К оплате:</Paragraph>
+                                <Paragraph className="mb-2 font-inter text-xl md:text-3xl">{t("К оплате:")}</Paragraph>
                                 <Paragraph className="mb-8 text-xl md:text-3xl font-bold">
-                                    {filtersData?.tariffs?.find((t) => t.id === selectedTariff)?.price.toLocaleString() || 0} сум
+                                    {filtersData?.tariffs?.find((t) => t.id === selectedTariff)?.price.toLocaleString() || 0} {t("сум")}
                                 </Paragraph>
                                 <Button
                                     onClick={async () => {
@@ -308,9 +311,9 @@ export const PromotionPage = () => {
                                             !selectedCardId &&
                                             (!cardNumber || !expiryMonth || !expiryYear)
                                         )
-                                    } className="w-full text-[18px] md:text-[25px] px-5 py-3 rounded-lg bg-[#2EAA7B] text-white"
+                                    } className="w-full text-[18px] md:text-[25px] px-5 py-3 rounded-lg bg-[#2EAA7B] text-white cursor-pointer"
                                 >
-                                    Оплатить
+                                    {t("Оплатить")}
                                 </Button>
                             </div>
                         </div>
@@ -343,10 +346,10 @@ export const PromotionPage = () => {
                             <div className="text-center text-[14px] text-[#28B13D] font-semibold">
                                 {canResend ? (
                                     <button onClick={() => { setTimer(60); setCanResend(false); }} className="hover:underline">
-                                        Отправить снова
+                                        {t("Отправить снова")}
                                     </button>
                                 ) : (
-                                    <span>Отправить снова через <span className="font-bold">0:{timer.toString().padStart(2, "0")}</span></span>
+                                    <span>{t("Отправить снова через")} <span className="font-bold">0:{timer.toString().padStart(2, "0")}</span></span>
                                 )}
                             </div>
                             <Button
@@ -364,9 +367,9 @@ export const PromotionPage = () => {
                                         setShowResultModal(true);
                                     }
                                 }}
-                                className="w-full mt-5 bg-[#2EAA7B] text-white py-6 rounded-lg "
+                                className="w-full mt-5 bg-[#2EAA7B] text-white py-6 rounded-lg cursor-pointer"
                             >
-                                Подтвердить
+                                {t("Подтвердить")}
                             </Button>
                         </div>} HeadingClassName={""} />
                 )}

@@ -166,6 +166,26 @@ export const AuthApi = createApi({
                 params,
             }),
         }),
+        updateOffer: builder.mutation({
+            query: ({ id, payload }) => ({
+                url: `/offers/${id}`,
+                method: 'PUT',
+                body: payload,
+            }),
+        }),
+
+        deleteOfferDocument: builder.mutation<void, { offerId: number; documentId: number }>({
+            query: ({ offerId, documentId }) => ({
+                url: `/offers/${offerId}/documents/${documentId}`,
+                method: 'DELETE'
+            }),
+        }),
+        deleteOfferPhoto: builder.mutation<void, { offerId: number; photoId: number }>({
+            query: ({ offerId, photoId }) => ({
+                url: `/offers/${offerId}/photos/${photoId}`,
+                method: 'DELETE'
+            }),
+        }),
         createOffer: builder.mutation<{ data: OfferResponse }, FormData>({
             query: (formData) => ({
                 url: "/offers",
@@ -260,6 +280,8 @@ export const {
     useMarkAllReadMutation,
     useGetUserOffersQuery,
     useGetOfferStatsQuery,
+    useDeleteOfferDocumentMutation,
+    useDeleteOfferPhotoMutation,
     useLazyGetOfferStatsQuery,
     useGetUserInfoQuery,
     useGetOfferContactViewQuery,
@@ -268,5 +290,7 @@ export const {
     useGetCurrencyRateQuery,
     useAddUserCardMutation,
     useVerifyUserCardMutation,
+    useUpdateOfferMutation,
+
 
 } = AuthApi;

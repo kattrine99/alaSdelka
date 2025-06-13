@@ -144,7 +144,7 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
             listing_type: listingType,
             offer_type: offerType,
             price: priceInUzs,
-            category_id: categoryId,
+            category_id: Number(categoryId),
             area: Number(Area),
             user_name: fullName,
             user_phone: "+998" + phoneNumber,

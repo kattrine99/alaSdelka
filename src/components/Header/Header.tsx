@@ -38,7 +38,10 @@ export const Header: React.FC<HeaderProps> = ({
     const { lang, setLang, t } = useTranslation();
     const location = useLocation();
     const menuRef = useRef<HTMLDivElement>(null)
-    const { data, refetch } = useGetNotificationsQuery({ page: 1, per_page: 1000 });
+    const { data, refetch } = useGetNotificationsQuery({ page: 1, per_page: 1000 },
+        { pollingInterval: 10000 }
+    );
+
     const [markAllAsRead] = useMarkAllReadMutation();
     const [localUnreadCount, setLocalUnreadCount] = useState(0);
     useEffect(() => {

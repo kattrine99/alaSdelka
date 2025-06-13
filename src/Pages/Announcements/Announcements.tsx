@@ -11,6 +11,7 @@ import { RootState } from "../../Store/store";
 import { getRefetchNotifications } from "../../utils/notificationRefetch";
 import { useTranslation } from "../../../public/Locales/context/TranslationContext";
 import GalleryIcon from '../../assets/gallery.svg?react';
+import { FiEdit } from "react-icons/fi";
 
 export const AnnouncemntsPage = () => {
 
@@ -21,11 +22,20 @@ export const AnnouncemntsPage = () => {
     message: string;
   }>({ isOpen: false, message: "" });
   const [currentPage, setCurrentPage] = useState(1);
-  const { data, isLoading, isError, refetch } = useGetMyOffersQuery({ page: currentPage, per_page: 5 });
+  const { data, isLoading, isError, refetch } = useGetMyOffersQuery({ page: 1, per_page: 1000 });
   const { t, lang } = useTranslation();
 
   const offers = data?.data || [];
   const meta = data?.meta;
+  const sortedOffers = [...offers].sort((a, b) => {
+    if (a.offer_status === "sold" && b.offer_status !== "sold") return 1;
+    if (a.offer_status !== "sold" && b.offer_status === "sold") return -1;
+    return 0;
+  });
+  const pageSize = 5;
+  const paginatedOffers = sortedOffers.slice((currentPage - 1) * pageSize, currentPage * pageSize);
+  const totalPages = Math.ceil(sortedOffers.length / pageSize);
+
   const [selectedOfferId, setSelectedOfferId] = useState<number | null>(null);
   const [sellOffer] = useSellOfferMutation();
   const [showArchiveModal, setShowArchiveModal] = useState(false);
@@ -56,6 +66,7 @@ export const AnnouncemntsPage = () => {
 
     return `${numericPrice.toLocaleString()} сум`;
   };
+
 
   return (
     <div className="w-screen">
@@ -188,10 +199,23 @@ export const AnnouncemntsPage = () => {
             </div>
             <div className="flex gap-6 mt-8 w-full">
               <div className="flex flex-col gap-10.5 w-full">
-                {offers.map((offer) => (
+                {paginatedOffers.map((offer) => (
                   <div key={offer.id} className="bg-white border border-[#E0E0E0] rounded-xl flex w-full">
-                    { }
                     <div className="relative grid grid-cols-1 md:grid-cols-3 w-full">
+                      {/* КНОПКА РЕДАКТИРОВАНИЯ */}
+                      {["draft", "in_moderation", "published", "denied"].includes(offer.offer_status) && (
+                        <div className="absolute top-3 right-3 z-20 group">
+                          <button
+                            onClick={() => navigate(`/edit/${offer.id}`)}
+                            className="p-2 bg-white border border-[#F8F8F8] rounded-full shadow hover:bg-gray-100 transition cursor-pointer"
+                          >
+                            <FiEdit className="w-5 h-5 text-[#2EAA7B]" />
+                          </button>
+                          <div className="absolute top-full mt-2 -right-2.5 bg-[#F8F8F8] text-[#2EAA7B] text-xs rounded px-2 py-1 opacity-0 group-hover:opacity-100 transition">
+                            {t("Изменить")}
+                          </div>
+                        </div>
+                      )}
                       {(offer.offer_status === "sold" || offer.is_paid === true) && (
                         <div className="absolute left-5 top-[-20px] z-10 flex gap-2">
                           {offer.offer_status === "sold" && (
@@ -296,10 +320,10 @@ export const AnnouncemntsPage = () => {
               </div>
 
             </div>
-            {meta && meta.last_page > 1 && (
+            {totalPages > 1 && (
               <Pagination
-                currentPage={meta.current_page}
-                totalPages={meta.last_page}
+                currentPage={currentPage}
+                totalPages={totalPages}
                 onPageChange={(page: number) => setCurrentPage(page)}
               />
             )}

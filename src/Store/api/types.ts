@@ -428,10 +428,12 @@ export interface FilterData {
     ]
 }
 export interface Notification {
+    id: number;
     title_ru: string;
     title_uz: string;
     text_ru: string;
     text_uz: string;
+    type: string;
     created_at: string;
     updated_at: string;
     is_read: boolean;
@@ -478,6 +480,18 @@ export interface GetUserOffersParams {
     offer_type?: "business" | "startup" | "franchise" | "investments";
     city_id?: number;
 }
+interface PhotoData {
+    id?: number;
+    photo: File | string;
+    preview?: string;
+    order: number;
+}
+
+interface DocumentData {
+    id?: number;
+    document: File | string;
+    name: string;
+}
 export interface OfferPayload {
     area: number;
     id?: number;
@@ -495,7 +509,7 @@ export interface OfferPayload {
     }
 
     city_name?: string;
-    category_id: string;
+    category_id: number;
 
     price: number;
 
@@ -504,8 +518,8 @@ export interface OfferPayload {
 
     // SELL-specific
     property_ownership_type?: string;
-    documents?: File[];
-    photos?: { photo: File; preview?: string; order: number }[];
+    documents: DocumentData[];
+    photos: PhotoData[];
     communication_channels?: { channel_name: string; link: string }[];
     business_share?: number;
     premises_ownership_form?: string;
@@ -615,4 +629,34 @@ export interface VerifyCardResponse {
 export interface TempOfferState {
     offerData?: OfferPayload;
     offerId?: number;
+}
+export interface UpdateOfferPayload {
+    title: string;
+    description: string;
+    user_name: string;
+    user_phone: string;
+    premises_ownership_form: string;
+    business_type: string;
+    category_id: number;
+    project_stage_id: number;
+    price: number;
+    average_monthly_revenue: number;
+    average_monthly_profit: number;
+    average_monthly_expenses: number;
+    percentage_for_sale: number;
+    profitability: number;
+    foundation_year: number;
+    employee_count: number;
+    area: number;
+    address: {
+        address: string;
+        latitude: number;
+        longitude: number;
+        city_id: number;
+    };
+    conveniences: number[];
+    communication_channels: {
+        channel_name: string;
+        link: string;
+    }[];
 }

@@ -1,7 +1,8 @@
 import {
   LoginPage, RegistrationPage, MainPage, CategoryPage, ProfilePage,
   CardDetailPage, FavoritePage, AnnouncemntsPage, NoticePage,
-  UserAnnouncementPage, StatisticsPage
+  UserAnnouncementPage, StatisticsPage,
+  UpdatePage
 } from "./Pages/index";
 import {
   createBrowserRouter, Outlet, RouterProvider, useNavigate
@@ -103,6 +104,7 @@ const routerConfig = createBrowserRouter([
       { path: "register", element: <RegistrationPage /> },
       { path: ":category", element: <CategoryPage /> },
       { path: ":category/card/:id", element: <CardDetailPage /> },
+      { path: "/card/:id", element: <CardDetailPage /> },
       { path: "/user-agreement", element: <UserAgreement /> },
       { path: "/privacy-policy", element: <PrivacyPolicy /> },
       {
@@ -123,6 +125,13 @@ const routerConfig = createBrowserRouter([
         path: "announcements", element: (
           <ProtectedRoute>
             <AnnouncemntsPage />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "/edit/:id", element: (
+          <ProtectedRoute>
+            <UpdatePage />
           </ProtectedRoute>
         ),
       },

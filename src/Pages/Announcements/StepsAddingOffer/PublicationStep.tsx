@@ -21,7 +21,8 @@ const mapOfferToCard = (data: OfferPayload): ICard => ({
     address: {
         address: data.address?.address || "Адрес не указан",
         city: {
-            name_ru: data.city_name || "Город не указан"
+            name_ru: data.city_name || "Город не указан",
+            name_uz: data.city_name || "Город не указан"
         },
     }, area: data.area || 0,
     image: data.photos?.[0]?.preview ?? null,
@@ -55,7 +56,7 @@ export const PublicationStep: React.FC<Props> = ({ onPublish, onPreview }) => {
             formData.append("description", cardData.description);
             formData.append("listing_type", cardData.listing_type);
             formData.append("offer_type", cardData.offer_type);
-            formData.append("category_id", cardData.category_id);
+            formData.append("category_id", String(cardData.category_id));
             formData.append("price", String(cardData.price));
             formData.append("user_name", cardData.user_name);
             formData.append("user_phone", cardData.user_phone);

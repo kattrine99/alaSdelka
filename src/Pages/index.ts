@@ -9,4 +9,5 @@ export { AnnouncemntsPage } from "./Announcements/Announcements"
 export { NoticePage } from "./Notices/NoticePage"
 export { UserAnnouncementPage } from "./userAnnouncementsPage/UserAnnouncementPage"
 export { StatisticsPage } from "./Statistics/StatisticsPage"
+export { UpdatePage } from "./Announcements/UpdatePage"
 

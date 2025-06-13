@@ -6,6 +6,7 @@ import {
     Heading,
     Paragraph,
     Pagination,
+    Button,
 } from "../../components";
 import { profileNavigate } from "../../utils/categoryMap";
 import { useGetNotificationsQuery, useMarkAllReadMutation } from "../../Store/api/Api";
@@ -14,6 +15,7 @@ import { CiCalendar } from "react-icons/ci";
 import { IoMdTime } from "react-icons/io";
 import CheckedAllIcon from "../../assets/check2-all.svg?react";
 import { useTranslation } from "../../../public/Locales/context/TranslationContext";
+import { useNavigate } from "react-router-dom";
 
 export const NoticePage = () => {
     const [page, setPage] = useState(1);
@@ -25,12 +27,15 @@ export const NoticePage = () => {
     const totalPages = data?.meta?.last_page ?? 1;
     const unreadCount = data?.meta?.unread_count ?? 0;
     const [markAllAsRead] = useMarkAllReadMutation();
+    const navigate = useNavigate()
     useEffect(() => {
         if (unreadCount > 0) {
             markAllAsRead()
                 .unwrap()
                 .then(() => {
                     localStorage.setItem("hasVisitedNotices", "true");
+                    data?.data?.forEach(n => n.is_read = true);
+
                     refetch();
                 })
                 .catch(err => {
@@ -38,6 +43,7 @@ export const NoticePage = () => {
                 });
         }
     }, [unreadCount]);
+
     useEffect(() => {
         if (unreadCount > 0) {
             localStorage.removeItem("hasVisitedNotices");
@@ -105,6 +111,44 @@ export const NoticePage = () => {
                                                 </span>
                                             </div>
                                             <div className="text-[#2EAA7B] items-center mr-2">
+                                                {item.type === "offer" && item.offer_id && (
+                                                    <>
+                                                        {item.offer_status === "published" && (
+                                                            <Button
+                                                                className="bg-[#2EAA7B] text-white px-5 py-2 rounded-md"
+                                                                onClick={() => navigate(`/card/${item.offer_id}`)}
+                                                            >
+                                                                {t("Посмотреть")}
+                                                            </Button>
+                                                        )}
+                                                        {item.offer_status === "denied" && (
+                                                            <Button
+                                                                className="bg-[#FF8707] text-white px-5 py-2 rounded-md"
+                                                                onClick={() => navigate(`/edit/${item.offer_id}`)}
+                                                            >
+                                                                {t("Исправить")}
+                                                            </Button>
+                                                        )}
+                                                    </>
+                                                )}
+
+                                                {item.type === "promotion" && item.offer_id && (
+                                                    <Button
+                                                        className="bg-[#2EAA7B] text-white px-5 py-2 rounded-md"
+                                                        onClick={() => navigate(`/promotion/${item.offer_id}`)}
+                                                    >
+                                                        {t("Продвижение")}
+                                                    </Button>
+                                                )}
+
+                                                {item.type === "statistics" && item.offer_id && (
+                                                    <Button
+                                                        className="bg-[#2EAA7B] text-white px-5 py-2 rounded-md"
+                                                        onClick={() => navigate(`/statistics/${item.offer_id}`)}
+                                                    >
+                                                        {t("Статистика")}
+                                                    </Button>
+                                                )}
                                                 {item?.is_read == true && <Paragraph className="flex gap-2">{t("Прочитано")} <CheckedAllIcon /></Paragraph>
                                                 }
                                             </div>

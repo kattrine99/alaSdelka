@@ -12,15 +12,15 @@ export const titleToTypeMap: Record<
 
 
 
-export const typeToTitleMap: Record<ICard["offer_type"], string> = {
-    "бизнес": "Бизнес",
-    "франшиза": "Франшиза",
-    "стартап": "Стартапы",
-    "инвестиции": "Инвестиции",
-    business: "",
-    franchise: "",
-    startup: "",
-    investments: ""
+export const typeToTitleMap: Record<ICard["offer_type"], { ru: string; uz: string }> = {
+    "бизнес": { ru: "Бизнес", uz: "Biznes" },
+    "франшиза": { ru: "Франшиза", uz: "Franshiza" },
+    "стартап": { ru: "Стартапы", uz: "Startaplar" },
+    "инвестиции": { ru: "Инвестиции", uz: "Investitsiyalar" },
+    business: { ru: "Бизнес", uz: "Biznes" },
+    franchise: { ru: "Франшиза", uz: "Franshiza" },
+    startup: { ru: "Стартапы", uz: "Startaplar" },
+    investments: { ru: "Инвестиции", uz: "Investitsiyalar" },
 };
 export const urlToTypeMap: Record<string, ICard["offer_type"]> = {
     business: "бизнес",
@@ -75,7 +75,7 @@ export const categoryRouteMap: Record<string, string> = {
     франшиза: "franchise",
     стартапы: "startups",
     инвестиции: "investments",
-    
+
 };
 export const routeToCategoryIdMap: Record<string, string> = {
     business: "1",

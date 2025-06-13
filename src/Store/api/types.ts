@@ -433,10 +433,14 @@ export interface Notification {
     title_uz: string;
     text_ru: string;
     text_uz: string;
+    is_read: boolean;
     type: string;
+    offer_id: number;
+    offer_status: string;
+    user_id?: number;
     created_at: string;
     updated_at: string;
-    is_read: boolean;
+
 }
 export interface Notifications {
     data: Notification[],

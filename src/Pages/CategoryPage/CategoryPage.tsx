@@ -33,12 +33,12 @@ export const CategoryPage = () => {
     const { category } = useParams();
     const [searchParams] = useSearchParams();
     const navigate = useNavigate();
-    const { t } = useTranslation()
+    const { lang, t } = useTranslation() as { lang: 'ru' | 'uz', t: (key: string) => string };
     const categoryKey = category?.toLowerCase() ?? "";
     const categoryId = routeToCategoryIdMap[categoryKey] || "";
     const type = useMemo(() => urlToTypeMap[categoryKey] ?? "", [categoryKey]);
 
-    const pageTitle = typeToTitleMap[type as ICard["offer_type"]] ?? "Категория";
+    const pageTitle = typeToTitleMap[type as ICard["offer_type"]]?.[lang] ?? "Категория";
     const offerTypeFromURL = searchParams.get("offer_type") ?? "";
     const allowedOfferTypes = ["", "business", "franchise", "startup", "investments"] as const;
     type OfferType = typeof allowedOfferTypes[number];
@@ -169,7 +169,7 @@ export const CategoryPage = () => {
             <Header />
             <div className="grid grid-cols-3 container mx-auto px-3 xl:px-0 py-[30px] pb-10 gap-10 items-start">
                 <aside className="hidden lg:flex flex-col mr-[60px] col-span-1">
-                    <Breadcrumbs category={t(type)} />
+                    <Breadcrumbs category={typeToTitleMap[type]?.[lang] || ""} />
                     <Heading text={t(pageTitle)} level={2} className="text-[30px] font-bold text-black" />
                     <Paragraph className="text-[#787878] font-inter font-medium text-[14px] mt-3.5">
                         {cards.length.toLocaleString("ru-RU")} {t("объявлений")}

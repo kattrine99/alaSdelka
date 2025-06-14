@@ -111,27 +111,24 @@ export const NoticePage = () => {
                                                 </span>
                                             </div>
                                             <div className="text-[#2EAA7B] items-center mr-2">
-                                                {item.type === "offer" && item.offer_id && (
-                                                    <>
-                                                        {item.offer_status === "published" && (
-                                                            <Button
-                                                                className="bg-[#2EAA7B] text-white px-5 py-2 rounded-md"
-                                                                onClick={() => navigate(`/card/${item.offer_id}`)}
-                                                            >
-                                                                {t("Посмотреть")}
-                                                            </Button>
-                                                        )}
-                                                        {item.offer_status === "denied" && (
-                                                            <Button
-                                                                className="bg-[#FF8707] text-white px-5 py-2 rounded-md"
-                                                                onClick={() => navigate(`/edit/${item.offer_id}`)}
-                                                            >
-                                                                {t("Исправить")}
-                                                            </Button>
-                                                        )}
-                                                    </>
-                                                )}
+                                                {item.type === "offer_show" && item.offer_id && (
 
+                                                    <Button
+                                                        className="bg-[#2EAA7B] text-white px-5 py-2 rounded-md"
+                                                        onClick={() => navigate(`/card/${item.offer_id}`)}
+                                                    >
+                                                        {t("Посмотреть")}
+                                                    </Button>
+
+                                                )}
+                                                {item.type === "offer_edit" && (
+                                                    <Button
+                                                        className="bg-[#FF8707] text-white px-5 py-2 rounded-md"
+                                                        onClick={() => navigate(`/edit/${item.offer_id}`)}
+                                                    >
+                                                        {t("Исправить")}
+                                                    </Button>
+                                                )}
                                                 {item.type === "promotion" && item.offer_id && (
                                                     <Button
                                                         className="bg-[#2EAA7B] text-white px-5 py-2 rounded-md"

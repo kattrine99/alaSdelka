@@ -256,27 +256,27 @@ export const CardDetailPage = () => {
                                         {lang === "uz" ? card?.address?.city?.name_uz : card?.address?.city?.name_ru ?? ""}
                                     </Paragraph>
                                 </div>
-                                {card.address?.latitude && card.address?.longitude ? (
-                                    <iframe
-                                        src={`https://maps.google.com/maps?q=${card.address.latitude},${card.address.longitude}&z=15&output=embed`}
-                                        width="100%"
-                                        height="350"
-                                        className="rounded-lg border border-[#2EAA7B]"
-                                        allowFullScreen
-                                        loading="eager"
-                                    />
-                                ) : card.address?.address ? (
-                                    <iframe
-                                        src={`https://maps.google.com/maps?q=${encodeURIComponent(card.address.address)}&z=15&output=embed`}
-                                        width="100%"
-                                        height="350"
-                                        className="rounded-lg border border-[#2EAA7B]"
-                                        allowFullScreen
-                                        loading="eager"
-                                    />
-                                ) : (
-                                    <Paragraph className="text-gray-500">{t("Адрес недоступен")}</Paragraph>
-                                )}
+                                    {card.address?.latitude && card.address?.longitude ? (
+                                        <iframe
+                                            src={`https://maps.google.com/maps?q=${card.address.latitude},${card.address.longitude}&z=15&output=embed`}
+                                            width="100%"
+                                            height="350"
+                                            className="rounded-lg border border-[#2EAA7B]"
+                                            allowFullScreen
+                                            loading="eager"
+                                        />
+                                    ) : card.address?.address ? (
+                                        <iframe
+                                            src={`https://maps.google.com/maps?q=${encodeURIComponent(card.address.address)}&z=15&output=embed`}
+                                            width="100%"
+                                            height="350"
+                                            className="rounded-lg border border-[#2EAA7B]"
+                                            allowFullScreen
+                                            loading="eager"
+                                        />
+                                    ) : (
+                                        <Paragraph className="text-gray-500">{t("Адрес недоступен")}</Paragraph>
+                                    )}
 
                             </div>
                         </div>

@@ -148,6 +148,8 @@ export const MainPage = () => {
             return `${(amount / 1000000000).toFixed(1)} ${t("млрд")}`;
         } else if (amount >= 1000000) {
             return `${(amount / 1000000).toFixed(0)} ${t("млн")}`;
+        } else if (amount >= 1_000) {
+            return `${(amount / 1_000).toFixed(0)} ${t("тыс")}`;
         } else {
             return amount.toLocaleString();
         }

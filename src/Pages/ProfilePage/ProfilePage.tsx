@@ -8,6 +8,7 @@ import { FiEdit2 } from "react-icons/fi";
 import { profileNavigate } from "../../utils/categoryMap"
 import { FiAlertCircle } from "react-icons/fi";
 import FlagIcon from '../../assets/Flag.svg?react'
+import ProfilePlaceholder from '../../assets/profile-circle.svg';
 import { useTranslation } from "../../../public/Locales/context/TranslationContext";
 
 
@@ -169,7 +170,7 @@ export const ProfilePage = () => {
                                 <div className="flex gap-x-6 mb-1.5 items-center w-full h-full">
                                     <div className="w-[100px] h-[100px] rounded-full overflow-hidden flex items-center justify-center shrink-0">
                                         <img
-                                            src={data.photo || "/images/profile-circle.svg"}
+                                            src={data.photo || ProfilePlaceholder}
                                             alt="profile_Photo"
                                             className="w-full h-full object-cover"
                                         />

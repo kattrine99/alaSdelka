@@ -97,7 +97,7 @@ export const FavoritePage = () => {
               forceAllFavorite={true}
               onFavoritesChanged={handleFavoritesChanged}
               containerClass="flex flex-col gap-7.5 rounded-xl w-full"
-              cardIconClass="w-85 max-xl:w-full h-full"
+              cardIconClass="w-85 max-xl:w-full m-3"
               cardWrapperClass="max-lg:flex max-lg:flex-col shadow-[1px_1px_4.5px_0px] shadow-[#28B13D4D] transition duration-500 ease-in-out"
               WhatchButtonClass="py-3 px-5 w-79.5 max-lg:w-full bg-[#2EAA7B] text-white font-medium rounded-md flex justify-center hover:bg-[#31B683] transition duration-300 cursor-pointer"
             />

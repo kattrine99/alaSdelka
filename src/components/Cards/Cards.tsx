@@ -111,8 +111,8 @@ export const Cards: React.FC<ICards & { forceAllFavorite?: boolean }> = ({
                                     className="w-full object-contain"
                                 />
                             ) : (
-                                <div className="w-full h-full flex justify-center bg-[#F0F0F0]" >
-                                    <div className="flex flex-col justify-center items-center">
+                                <div className="w-full h-49 flex justify-center bg-[#F0F0F0]" >
+                                    <div className="flex flex-col justify-center items-center ">
                                         <GalleryIcon />
                                         <Paragraph>{t("Изображение отсутствует")}</Paragraph>
                                     </div>

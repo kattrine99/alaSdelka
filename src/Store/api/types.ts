@@ -92,6 +92,7 @@ export interface MyOffer {
         {
             offer_type?: "business" | "franchise" | "startup" | "investments";
             id: number;
+            slug: string;
             title: string;
             price: number;
             area: number;
@@ -436,6 +437,7 @@ export interface Notification {
     is_read: boolean;
     type: string;
     offer_id: number;
+    offer_slug: string;
     offer_status: string;
     user_id?: number;
     created_at: string;
@@ -499,6 +501,7 @@ interface DocumentData {
 export interface OfferPayload {
     area: number;
     id?: number;
+    slug?: string;
     title: string;
     description: string;
     listing_type: "buy" | "sell";

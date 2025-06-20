@@ -111,11 +111,11 @@ export const NoticePage = () => {
                                                 </span>
                                             </div>
                                             <div className="text-[#2EAA7B] items-center mr-2">
-                                                {item.type === "offer_show" && item.offer_id && (
+                                                {item.type === "offer_show" && item.offer_slug && (
 
                                                     <Button
                                                         className="bg-[#2EAA7B] text-white px-5 py-2 rounded-md"
-                                                        onClick={() => navigate(`/card/${item.offer_id}`)}
+                                                        onClick={() => navigate(`/card/${item.offer_slug}`)}
                                                     >
                                                         {t("Посмотреть")}
                                                     </Button>
@@ -124,24 +124,24 @@ export const NoticePage = () => {
                                                 {item.type === "offer_edit" && (
                                                     <Button
                                                         className="bg-[#FF8707] text-white px-5 py-2 rounded-md"
-                                                        onClick={() => navigate(`/edit/${item.offer_id}`)}
+                                                        onClick={() => navigate(`/edit/${item.offer_slug}`)}
                                                     >
                                                         {t("Исправить")}
                                                     </Button>
                                                 )}
-                                                {item.type === "promotion" && item.offer_id && (
+                                                {item.type === "promotion" && item.offer_slug && (
                                                     <Button
                                                         className="bg-[#2EAA7B] text-white px-5 py-2 rounded-md"
-                                                        onClick={() => navigate(`/promotion/${item.offer_id}`)}
+                                                        onClick={() => navigate(`/promotion/${item.offer_slug}`)}
                                                     >
                                                         {t("Продвижение")}
                                                     </Button>
                                                 )}
 
-                                                {item.type === "statistics" && item.offer_id && (
+                                                {item.type === "statistics" && item.offer_slug && (
                                                     <Button
                                                         className="bg-[#2EAA7B] text-white px-5 py-2 rounded-md"
-                                                        onClick={() => navigate(`/statistics/${item.offer_id}`)}
+                                                        onClick={() => navigate(`/statistics/${item.offer_slug}`)}
                                                     >
                                                         {t("Статистика")}
                                                     </Button>

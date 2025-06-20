@@ -15,8 +15,8 @@ import { useTranslation } from "../../../public/Locales/context/TranslationConte
 registerLocale("ru", ru);
 
 export const StatisticsPage = () => {
-    const { id } = useParams<{ id: string }>();
-    const offerId = Number(id);
+    const { slug } = useParams<{ slug: string }>();
+    const offerSlug = String(slug);
     const { lang, t } = useTranslation()
 
     const [dateRange, setDateRange] = useState<[Date, Date]>(() => {
@@ -37,15 +37,15 @@ export const StatisticsPage = () => {
         const to = format(endDate, "yyyy-MM-dd");
 
         trigger({
-            offer_id: Number(offerId),
+            offer_slug: String(offerSlug),
             from,
             to,
         });
-    }, [offerId, startDate, endDate, trigger]);
+    }, [offerSlug, startDate, endDate, trigger]);
 
     useEffect(() => {
         fetchStats();
-    }, [fetchStats, offerId]);
+    }, [fetchStats, offerSlug]);
 
     const handleDateChange = (range: [Date, Date]) => {
         setDateRange(range);
@@ -187,7 +187,7 @@ export const StatisticsPage = () => {
                     <Breadcrumbs
                         links={[
                             { label: "Мои объявления", href: "/announcements" },
-                            { label: "Статистика", href: `/statistics/${offerId}` },
+                            { label: "Статистика", href: `/statistics/${offerSlug}` },
                         ]} />
                 </div>
                 <div className="mb-6">

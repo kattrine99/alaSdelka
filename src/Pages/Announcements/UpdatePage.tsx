@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { useGetOfferByIdQuery } from "../../Store/api/Api";
+import { useGetOfferBySlugQuery } from "../../Store/api/Api";
 import { useDispatch } from "react-redux";
-import { setOfferData, clearOfferData } from "../../Store/tempStorage";
+import { setOfferData, clearOfferData, setOfferId } from "../../Store/tempStorage";
 import { ModalBase, Button, Footer, Header, Breadcrumbs } from "../../components";
 import { useTranslation } from "../../../public/Locales/context/TranslationContext";
 import { profileNavigate } from "../../utils/categoryMap";
@@ -11,11 +11,11 @@ import { UpdateInformationPage } from "./UpdateInformationStep";
 
 export const UpdatePage = () => {
     const { t } = useTranslation();
-    const { id } = useParams<{ id: string }>();
+    const { slug } = useParams<{ slug: string }>();
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
-    const { data, isLoading, isError } = useGetOfferByIdQuery(Number(id));
+    const { data, isLoading, isError } = useGetOfferBySlugQuery(String(slug));
     const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
 
     useEffect(() => {
@@ -45,12 +45,14 @@ export const UpdatePage = () => {
                         { label: t("Изменение объявления") }
                     ]} />
                 </div>
-                <div className="container mx-auto py-12">
-                    <UpdateInformationPage
-                        id={Number(id)}
-                        onSuccess={handleSuccess}
-                    />
-                </div>
+                {data?.data && (
+                    <div className="container mx-auto py-12">
+                        <UpdateInformationPage
+                            id={data.data.id}
+                            onSuccess={handleSuccess}
+                        />
+                    </div>
+                )}
 
                 {isSuccessModalOpen && (
                     <ModalBase

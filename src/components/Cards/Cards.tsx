@@ -164,7 +164,7 @@ export const Cards: React.FC<ICards & { forceAllFavorite?: boolean }> = ({
                             </div>
 
                             <div className="w-full h-[44px] mt-auto">
-                                <Link to={`/${offerTypeToUrlMap[card.offer_type]}/card/${card.id}`} className="w-full">
+                                <Link to={`/${offerTypeToUrlMap[card.offer_type]}/card/${card.slug}`} className="w-full">
                                     <Button className={WhatchButtonClass}>
                                         <span className="flex gap-2 items-center">
                                             {t("Просмотреть")} <FaArrowRight />

@@ -130,6 +130,9 @@ export const AuthApi = createApi({
         getOfferById: builder.query<OfferDetail, number>({
             query: (id) => `/offers/${id}`,
         }),
+        getOfferBySlug: builder.query<OfferDetail, string>({
+            query: (slug) => `/offers/${slug}`,
+        }),
         getFiltersData: builder.query<FilterData, void>({
             query: () => ({
                 url: "/filters",
@@ -202,7 +205,7 @@ export const AuthApi = createApi({
         }),
         promoteOffer: builder.mutation<
             { message: string; offer: OfferDetail },
-            { tariff_id: number; offer_id: number; card_id: number }
+            { tariff_id: number; offer_slug: string; card_id: number }
         >({
             query: (payload) => ({
                 url: "/promotions",
@@ -232,9 +235,9 @@ export const AuthApi = createApi({
                 body: payload,
             }),
         }),
-        getOfferStats: builder.query<OfferStatsResponse, { offer_id: number; from: string; to: string }>({
-            query: ({ offer_id, from, to }) => ({
-                url: `/offers/${offer_id}/stats`,
+        getOfferStats: builder.query<OfferStatsResponse, { offer_slug: string; from: string; to: string }>({
+            query: ({ offer_slug, from, to }) => ({
+                url: `/offers/${offer_slug}/stats`,
                 method: 'GET',
                 params: { from, to },
             }),
@@ -274,6 +277,7 @@ export const {
     useGetOffersQuery,
     useGetMainStatisticsQuery,
     useGetOfferByIdQuery,
+    useGetOfferBySlugQuery,
     useGetFiltersDataQuery,
     useGetFavoritesQuery,
     useGetNotificationsQuery,

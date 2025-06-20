@@ -103,8 +103,8 @@ const routerConfig = createBrowserRouter([
       { path: "login", element: <LoginPage /> },
       { path: "register", element: <RegistrationPage /> },
       { path: ":category", element: <CategoryPage /> },
-      { path: ":category/card/:id", element: <CardDetailPage /> },
-      { path: "/card/:id", element: <CardDetailPage /> },
+      { path: ":category/card/:slug", element: <CardDetailPage /> },
+      { path: "/card/:slug", element: <CardDetailPage /> },
       { path: "/user-agreement", element: <UserAgreement /> },
       { path: "/privacy-policy", element: <PrivacyPolicy /> },
       {
@@ -129,7 +129,7 @@ const routerConfig = createBrowserRouter([
         ),
       },
       {
-        path: "/edit/:id", element: (
+        path: "/edit/:slug", element: (
           <ProtectedRoute>
             <UpdatePage />
           </ProtectedRoute>
@@ -143,7 +143,7 @@ const routerConfig = createBrowserRouter([
         ),
       },
       {
-        path: "/promotion/:id", element: (
+        path: "/promotion/:slug", element: (
           <ProtectedRoute>
             <PromotionPage />
           </ProtectedRoute>
@@ -164,7 +164,7 @@ const routerConfig = createBrowserRouter([
         ),
       },
       {
-        path: "/statistics/:id", element: (
+        path: "/statistics/:slug", element: (
           <ProtectedRoute>
             <StatisticsPage />
           </ProtectedRoute>

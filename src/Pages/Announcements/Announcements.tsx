@@ -206,7 +206,7 @@ export const AnnouncemntsPage = () => {
                       {["draft", "in_moderation", "published", "denied"].includes(offer.offer_status) && (
                         <div className="absolute top-3 right-3 z-20 group">
                           <button
-                            onClick={() => navigate(`/edit/${offer.id}`)}
+                            onClick={() => navigate(`/edit/${offer.slug}`)}
                             className="p-2 bg-white border border-[#F8F8F8] rounded-full shadow hover:bg-gray-100 transition cursor-pointer"
                           >
                             <FiEdit className="w-5 h-5 text-[#2EAA7B]" />
@@ -233,7 +233,7 @@ export const AnnouncemntsPage = () => {
                       )}
                       <div className="relative col-span-1">
                         <Link
-                          to={`/${offerTypeToUrlMap[offer.offer_type || 'category']}/card/${offer.id}`}
+                          to={`/${offerTypeToUrlMap[offer.offer_type || 'category']}/card/${offer.slug}`}
                           className="w-full flex justify-center h-full"
                         >
                           {offer.photos[0]?.photo ? (
@@ -254,7 +254,7 @@ export const AnnouncemntsPage = () => {
                       </div>
                       <div className="flex flex-3/4 flex-col gap-1 py-9.5 px-7 md:col-span-2">
                         <div className="flex flex-col mb-11">
-                          <Link to={`/${offerTypeToUrlMap[offer.offer_type || 'category']}/card/${offer.id}`} className="w-full hover:text-[#2EAA7B]">
+                          <Link to={`/${offerTypeToUrlMap[offer.offer_type || 'category']}/card/${offer.slug}`} className="w-full hover:text-[#2EAA7B]">
 
                             <Paragraph className="text-[#232323] text-2xl font-inter font-bold mb-2">
                               {formatPrice(offer.price)}
@@ -286,7 +286,7 @@ export const AnnouncemntsPage = () => {
                             ) : (
                               <Button
                                 className="bg-[#2EAA7B] text-white px-5 h-12 rounded-md cursor-pointer"
-                                onClick={() => navigate(`/promotion/${offer.id}`)}
+                                onClick={() => navigate(`/promotion/${offer.slug}`)}
                               >
                                 {t("Продвигать объявление")}
                               </Button>
@@ -299,7 +299,7 @@ export const AnnouncemntsPage = () => {
                               {t("Продано")}
                             </Button>
                             <Button className=" text-[#2EAA7B] border border-[#2EAA7B] px-5 h-12 rounded-md cursor-pointer"
-                              onClick={() => navigate(`/statistics/${offer.id}`)}>
+                              onClick={() => navigate(`/statistics/${offer.slug}`)}>
                               {t("Посмотреть статистику")}
                             </Button>
 

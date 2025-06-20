@@ -110,7 +110,7 @@ export const PromotionCards = () => {
                                         <div className="flex flex-col gap-4 mt-4">
                                             <Button
                                                 className="text-[#2EAA7B] border border-[#2EAA7B] px-5 h-11 rounded-md"
-                                                onClick={() => navigate(`/statistics/${offer.id}`)}
+                                                onClick={() => navigate(`/statistics/${offer.slug}`)}
                                             >
                                                 Посмотреть статистику
                                             </Button>

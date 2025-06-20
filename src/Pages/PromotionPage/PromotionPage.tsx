@@ -54,8 +54,8 @@ export const PromotionPage = () => {
     const code = codeInput.join("");
     const inputsRef = useRef<Array<HTMLInputElement | HTMLTextAreaElement | null>>([]);
     const [paymentSuccess, setPaymentSuccess] = useState<null | boolean>(null);
-    const { id } = useParams();
-    const offerId = Number(id);
+    const { slug } = useParams();
+    const offerSlug = String(slug);
     const handleAddCardAndPay = async () => {
         if (!cardNumber || !expiryMonth || !expiryYear) return;
 
@@ -92,7 +92,7 @@ export const PromotionPage = () => {
             }).unwrap();
 
             await promoteOffer({
-                offer_id: offerId,
+                offer_slug: offerSlug,
                 card_id: selectedCardId!,
                 tariff_id: selectedTariff!,
             }).unwrap();
@@ -102,13 +102,13 @@ export const PromotionPage = () => {
             setPaymentSuccess(false);
         }
     };
-    if (!offerId || isNaN(offerId)) {
+    if (!offerSlug) {
         return <Paragraph className="text-red-500 px-30 py-7.5">{t("Ошибка: некорректный ID объявления")}</Paragraph>;
     }
     const handleExistingCardPayment = async () => {
         try {
             await promoteOffer({
-                offer_id: offerId,
+                offer_slug: offerSlug,
                 card_id: selectedCardId!,
                 tariff_id: selectedTariff!,
             }).unwrap();
@@ -357,7 +357,7 @@ export const PromotionPage = () => {
                                 onClick={async () => {
                                     try {
                                         await verifyCard({ card_id: newCardId!, code }).unwrap();
-                                        await promoteOffer({ offer_id: offerId, card_id: newCardId!, tariff_id: selectedTariff! }).unwrap();
+                                        await promoteOffer({ offer_slug: offerSlug, card_id: newCardId!, tariff_id: selectedTariff! }).unwrap();
                                         setPaymentSuccess(true);
                                         setStep(3);
                                         setShowResultModal(true);

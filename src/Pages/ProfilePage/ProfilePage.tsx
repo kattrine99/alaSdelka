@@ -3,7 +3,7 @@ import { useGetUserInfoQuery, useUpdateUserInfoMutation, useLogoutMutation, useG
 import { Heading, Paragraph, Input, Button, Header, Footer, Breadcrumbs, ModalBase } from "../../components";
 import { useDispatch } from "react-redux";
 import { setIsAuthenticated } from "../../Store/Slices/authSlice";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FiEdit2 } from "react-icons/fi";
 import { profileNavigate } from "../../utils/categoryMap"
 import { FiAlertCircle } from "react-icons/fi";
@@ -37,6 +37,12 @@ export const ProfilePage = () => {
     });
     const [logout] = useLogoutMutation();
     const [showSuccess, setShowSuccess] = useState(false);
+    useEffect(() => {
+        if (location.pathname === "/profile") {
+            refetch();
+        }
+    }, [location.pathname]);
+    
     if (isLoading) return <div className="w-screen h-[670px] flex justify-center items-center py-[30px]">
         <div className="w-30 h-30 border-10 border-[#2EAA7B] border-t-transparent rounded-full animate-spin"></div>
     </div>;
@@ -201,7 +207,6 @@ export const ProfilePage = () => {
                                     ) : (
                                         <img
                                             src={data.photo || "/src/assets/profile-circle.svg"}
-                                            alt="profile_Photo"
                                             className="w-full h-full object-cover"
                                         />
                                     )}

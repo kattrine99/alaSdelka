@@ -15,6 +15,7 @@ interface Props {
 
 const mapOfferToCard = (data: OfferPayload): ICard => ({
     id: data.id ?? 0,
+    slug: data.slug,
     title: data.title,
     description: data.description,
     price: data.price,

@@ -1,6 +1,6 @@
 import { useParams } from 'react-router-dom';
 import { Breadcrumbs, Button, Footer, Header, Heading, Paragraph, PhotosSwiper } from '../../components/index';
-import { useGetOfferByIdQuery, useDownloadOfferDocumentsQuery } from "../../Store/api/Api";
+import { useGetOfferBySlugQuery, useDownloadOfferDocumentsQuery } from "../../Store/api/Api";
 import { FaLocationDot } from "react-icons/fa6";
 import { FaParking, FaUsers, FaShoppingBasket, FaTools, FaGlobeAmericas, FaBuilding, FaCopyright, FaGlobe, FaUniversity } from "react-icons/fa";
 import { RiContactsFill } from "react-icons/ri";
@@ -21,9 +21,9 @@ import { RootState } from "../../Store/store";
 import { useTranslation } from '../../../public/Locales/context/TranslationContext';
 export const CardDetailPage = () => {
     const { lang, t } = useTranslation()
-    const { id, category } = useParams();
-    const offerId = Number(id);
-    const { data, isLoading, isError } = useGetOfferByIdQuery(offerId);
+    const { slug, category } = useParams();
+    const offerSlug = String(slug);
+    const { data, isLoading, isError } = useGetOfferBySlugQuery(offerSlug);
     const card = data?.data;
     const [showFullDescription, setShowFullDescription] = useState(false);
     const { mode: currencyMode, rate } = useSelector((state: RootState) => state.currency);

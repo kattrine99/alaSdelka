@@ -42,7 +42,7 @@ export const ProfilePage = () => {
             refetch();
         }
     }, [location.pathname]);
-    
+
     if (isLoading) return <div className="w-screen h-[670px] flex justify-center items-center py-[30px]">
         <div className="w-30 h-30 border-10 border-[#2EAA7B] border-t-transparent rounded-full animate-spin"></div>
     </div>;

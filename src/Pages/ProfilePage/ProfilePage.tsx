@@ -169,7 +169,7 @@ export const ProfilePage = () => {
                                 <div className="flex gap-x-6 mb-1.5 items-center w-full h-full">
                                     <div className="w-[100px] h-[100px] rounded-full overflow-hidden flex items-center justify-center shrink-0">
                                         <img
-                                            src={data.photo || "/src/assets/profile-circle.svg"}
+                                            src={data.photo || "/images/profile-circle.svg"}
                                             alt="profile_Photo"
                                             className="w-full h-full object-cover"
                                         />

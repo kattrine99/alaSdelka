@@ -74,7 +74,7 @@ export const ProfilePage = () => {
             setFormData({
                 phone: data.phone ?? "",
                 email: data.email ?? "",
-                city_id: data.city?.id || 1,
+                city_id: data.city?.id || (filtersData?.cities.at(0)?.id ?? 0),
                 photo: undefined,
             });
         }

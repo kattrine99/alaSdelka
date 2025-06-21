@@ -31,6 +31,7 @@ export const FavoritePage = () => {
     () =>
       offers.map((offer: Offer) => ({
         id: offer.id,
+        slug: offer.slug,
         title: offer.title || "Название не указано",
         price: offer.price ?? 0,
         photos: offer.photos ?? [],

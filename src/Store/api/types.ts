@@ -332,6 +332,7 @@ export interface OfferDetails {
 export interface Offer {
     is_favourite: boolean;
     id: number;
+    slug: string;
     title: string;
     price: number;
     area: number;

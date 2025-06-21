@@ -207,7 +207,7 @@ export const ProfilePage = () => {
                                         />
                                     ) : (
                                         <img
-                                            src={data.photo || "/src/assets/profile-circle.svg"}
+                                            src={data.photo || ProfilePlaceholder}
                                             className="w-full h-full object-cover"
                                         />
                                     )}

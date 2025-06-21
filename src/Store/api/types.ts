@@ -256,6 +256,7 @@ export interface SellOfferResponse {
 export interface OfferDetails {
     is_favourite: boolean;
     id: number;
+    slug: string,
     title: string;
     description: string;
     listing_type: "sell" | "buy";

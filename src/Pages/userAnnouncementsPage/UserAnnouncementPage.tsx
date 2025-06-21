@@ -82,6 +82,7 @@ export const UserAnnouncementPage = () => {
 
     const mappedCards: ICard[] = cards.map((card) => ({
         id: card.id,
+        slug: card.slug,
         title: card.title || t("Название не указано"),
         price: card.price ?? t("Цена не указана"),
         photos: card.photos ?? [],

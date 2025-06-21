@@ -261,7 +261,7 @@ export const CardDetailPage = () => {
                                             src={`https://maps.google.com/maps?q=${card.address.latitude},${card.address.longitude}&z=15&output=embed`}
                                             width="100%"
                                             height="350"
-                                            className="rounded-lg border border-[#2EAA7B]"
+                                            className="rounded-lg border mb-5 border-[#2EAA7B]"
                                             allowFullScreen
                                             loading="eager"
                                         />
@@ -270,7 +270,7 @@ export const CardDetailPage = () => {
                                             src={`https://maps.google.com/maps?q=${encodeURIComponent(card.address.address)}&z=15&output=embed`}
                                             width="100%"
                                             height="350"
-                                            className="rounded-lg border border-[#2EAA7B]"
+                                            className="rounded-lg border mb-5 border-[#2EAA7B]"
                                             allowFullScreen
                                             loading="eager"
                                         />

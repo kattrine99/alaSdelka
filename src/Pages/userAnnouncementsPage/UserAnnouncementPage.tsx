@@ -61,7 +61,7 @@ export const UserAnnouncementPage = () => {
             ? ruToApiOfferTypeMap[filters.offer_type as keyof typeof ruToApiOfferTypeMap]
             : undefined,
         listing_type: filters.listing_type || undefined,
-        category_id: filters.category ? Number(filters.category) : undefined,
+        category_id: filters.category_id ? Number(filters.category_id) : undefined,
         city_id: filters.city ? Number(filters.city) : undefined,
         price_min: filters.priceMin ? Number(filters.priceMin) : undefined,
         price_max: filters.priceMax ? Number(filters.priceMax) : undefined,
@@ -138,8 +138,11 @@ export const UserAnnouncementPage = () => {
                                 <Filters
                                     offer_type={type as "business" | "startup" | "franchise" | "investments" | "бизнес" | "франшиза" | "стартапы" | "инвстиции"}
                                     filters={filters}
-                                    setFilters={setFilters}
-                                    onApplyFilters={() => setCurrentPage(1)}
+                                    setFilters={function(filters) {
+                                        console.log('setFilters');
+                                        setFilters(filters);
+                                    }}
+                                    onApplyFilters={function () { console.log('apply'), setCurrentPage(1)}}
                                 />
                             </div>
 

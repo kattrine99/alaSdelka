@@ -340,12 +340,15 @@ export const Header: React.FC<HeaderProps> = ({
                         </div>
 
                         <div className="flex justify-center gap-3">
-                            <Button onClick={() => { navigate("/"); setIsMobileMenuOpen(false); }} className={undefined}>
+                            <Applink
+                                to="#"
+                                onClick={() => setIsMobileMenuOpen(false)}
+                            >
                                 <FaTelegram className="w-6 h-6 md:w-8 md:h-8 text-[#229ED9]" />
-                            </Button>
-                            <Button onClick={() => { navigate("/"); setIsMobileMenuOpen(false); }} className="w-6 h-6 md:w-8 md:h-8 rounded-full bg-[#0DC143] flex items-center justify-center">
+                            </Applink>
+                            <Applink to="#" onClick={() => setIsMobileMenuOpen(false)} className="w-6 h-6 md:w-8 md:h-8 rounded-full bg-[#0DC143] flex items-center justify-center">
                                 <FaWhatsapp className="w-[18px] h-[18px] text-white" />
-                            </Button>
+                            </Applink>
                         </div>
                     </div>
                 )}

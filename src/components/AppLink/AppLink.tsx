@@ -4,10 +4,12 @@ interface ApplinkProps {
     to: string
     children?: ReactNode
     className?: string
+    onClick?: React.MouseEventHandler<HTMLAnchorElement>;
+
 }
-export const Applink = ({ to, children, className }: ApplinkProps) => {
+export const Applink = ({ to, children, className, onClick }: ApplinkProps) => {
     return (
-        <Link to={to} className={className}>
+        <Link to={to} onClick={onClick} className={className}>
             {children}
         </Link>
     )

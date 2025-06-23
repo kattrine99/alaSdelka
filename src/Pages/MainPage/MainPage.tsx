@@ -542,7 +542,7 @@ export const MainPage = () => {
                             <div
                                 className="bg-white font-inter text-black flex flex-col items-center text-center rounded-[30px] py-6 shadow-[0px_4px_21.2px_rgba(46,170,123,0.2)]">
                                 <Paragraph className="text-[40px] max-sm:text-3xl text-center font-bold leading-none transition duration-300">
-                                    {displayAmount}<span className="text-[#2EAA7B]"> $</span>
+                                    <span className="text-[#2EAA7B]">$</span>{displayAmount}
                                 </Paragraph>
                                 <Paragraph className="font-inter text-2xl max-sm:text-[16px] leading-[100%] mt-2">{t("продано бизнесов")}</Paragraph>
                             </div>

@@ -57,7 +57,7 @@ export const PopularSliderSection = () => {
           }}
         >
           {popularCards.map((card) => (
-            <SwiperSlide key={card.id}>
+            <SwiperSlide key={card.id} className="mt-2 md:mt-0">
               <Cards
                 cards={[card]}
                 cardIconClass="rounded-t-xl overflow-hidden"
@@ -68,10 +68,10 @@ export const PopularSliderSection = () => {
           ))}
         </Swiper>
 
-        <button className="swiper-button-prev-custom absolute -left-6 max-md:-left-1 top-1/2 transform -translate-y-1/2 z-10 w-[40px] h-[40px] rounded-[10px] bg-white shadow-md flex items-center justify-center hover:bg-gray-100">
+        <button className="swiper-button-prev-custom absolute -left-6 max-md:-left-1 top-0 md:top-1/2 transform -translate-y-1/2 z-10 w-[40px] h-[40px] rounded-[10px] bg-white shadow-md flex items-center justify-center hover:bg-gray-100">
           <MdKeyboardArrowLeft className="text-2xl text-[#4B5563]" />
         </button>
-        <button className="swiper-button-next-custom absolute -right-6 max-md:-right-1 top-1/2 transform -translate-y-1/2 z-10 w-[40px] h-[40px] rounded-[10px] bg-white shadow-md flex items-center justify-center hover:bg-gray-100">
+        <button className="swiper-button-next-custom absolute -right-6 max-md:-right-1 top-0 md:top-1/2 transform -translate-y-1/2 z-10 w-[40px] h-[40px] rounded-[10px] bg-white shadow-md flex items-center justify-center hover:bg-gray-100">
           <MdKeyboardArrowRight className="text-2xl text-[#4B5563]" />
         </button>
       </div>

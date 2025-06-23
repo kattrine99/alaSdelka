@@ -40,3 +40,12 @@ body {
 .animate-fade {
     animation: fade 0.25s ease-in-out;
 }
+
+.no-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+
+.no-scrollbar {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}

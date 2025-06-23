@@ -230,13 +230,14 @@ export const PromotionPage = () => {
                                 ))}
                             </div>
 
+                            <div className="flex gap-8.25 items-center mb-5 mt-9.25">
+                                <Paragraph className="border py-3 px-5 w-12.5 h-12.5 items-center border-[#2EAA7B] rounded-full">2</Paragraph>
+                                <Heading level={3} className="text-xl font-inter w-full" text={t("Выберите карту для оплаты или введите данные новой карты")} />
+                            </div>
+
                             {/* Карты пользователя */}
                             {cards.length > 0 && (
                                 <div className="mt-10 px-4 sm:px-0 ">
-                                    <div className="flex flex-wrap max-md:flex-col gap-4">
-                                        <Paragraph className="border py-3 px-5 w-12.5 h-12.5 items-center border-[#2EAA7B] rounded-full">2</Paragraph>
-                                        <Heading level={3} text={t("Выберите карту для оплаты")} className="mb-4" />
-                                    </div>
                                     <div className="flex flex-wrap max-md:flex-col gap-6.75">
                                         {cards.map((card) => (
                                             <Button key={card.id} onClick={() => handleCardSelect(card)} className={`flex flex-col border items-start border-[#2EAA7B] px-6 py-4 rounded-lg ${selectedCardId === card.id ? "bg-[#2EAA7B] text-white" : "bg-white"}`}>
@@ -250,7 +251,6 @@ export const PromotionPage = () => {
 
                             {/* Новая карта */}
                             <div className="mt-10 px-4 sm:px-0">
-                                <Heading level={3} text={t("Или введите данные новой карты")} className="mb-4" />
                                 <div className="bg-[#F8F8F8] w-full rounded-[20px] md:rounded-[40px] py-8 px-6 md:px-12.5 shadow-md">
                                     <Input placeholder="0000 0000 0000 0000" LabelText={t("Номер карты")} LabelClassName="font-inter text-[25px] max-sm:text-[18px] mb-[19px]" value={cardNumber} onChange={(e) => {
                                         const rawValue = e.target.value.replace(/\D/g, "").slice(0, 16);
@@ -283,7 +283,7 @@ export const PromotionPage = () => {
                                 </div>
                             </div>
 
-                            <div className="flex gap-8.25 items-center text-center mb-5 mt-9.25">
+                            <div className="flex gap-8.25 items-center mb-5 mt-9.25">
                                 <Paragraph className="border py-3 px-5 w-12.5 h-12.5 items-center border-[#2EAA7B] rounded-full">3</Paragraph>
                                 <Heading className=" w-full text-xl font-inter" level={3} text={t("После ввода данных, нажмите Оплатить и подтвердите через SMS")} />
                             </div>

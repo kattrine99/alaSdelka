@@ -275,7 +275,7 @@ export const CategoryPage = () => {
                             />
                         ) : (
                         <CardSection
-                            Class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-y-10 gap-x-2 transition duration-600"
+                            Class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-y-10 gap-x-2 transition duration-600"
                             title={pageTitle}
                             ClassName="py-9.75"
                             cards={exactCards}

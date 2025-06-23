@@ -243,7 +243,7 @@ export const AnnouncemntsPage = () => {
                               className="w-full  rounded object-cover bg-gray-100"
                             />
                           ) : (
-                            <div className="w-full bg-[#F0F0F0] flex flex-col items-center justify-center rounded">
+                            <div className="w-full bg-[#F0F0F0] md:h-full h-49 flex flex-col items-center justify-center rounded">
                               <GalleryIcon className="w-8 h-8 text-[#B0B0B0]" />
                               <Paragraph className="text-[#999] text-sm mt-2">
                                 {t("Изображение отсутствует")}
@@ -279,7 +279,7 @@ export const AnnouncemntsPage = () => {
                         <div className="flex w-full">
                           <div className="grid grid-cols-1 gap-y-3 gap-x-5 md:grid-cols-2 w-full">
                             {offer.is_paid == true ? (
-                              <div className="bg-[#2EAA7B] text-white px-5 h-12 rounded-md flex items-center gap-2 font-semibold">
+                              <div className="bg-[#2EAA7B] text-white px-5 py-1 rounded-md flex items-center gap-2 font-semibold">
                                 {t("Идет продвижение (осталось {{count}} дней)").replace("{{count}}", String(offer.paid_offer?.promotion_days_left ?? 0))}
                                 <FireIcon className="z-10 w-5 h-5 text-white" />
                               </div>

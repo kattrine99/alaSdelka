@@ -28,7 +28,7 @@ export const ModalBase: React.FC<ModalBaseProps> = ({
             onClick={onClose}
         >
             <div
-                className={`relative bg-white flex flex-col p-6 rounded-[24px] shadow-lg max-w-[90vw] w-[400px] ${ModalClassName}`}
+                className={`relative bg-white flex h-4/5 no-scrollbar flex-col p-6 rounded-[24px] shadow-lg max-w-[90vw] w-[400px] ${ModalClassName}`}
                 onClick={(e) => e.stopPropagation()}
             >
                 {showCloseButton && onClose && (
@@ -40,7 +40,7 @@ export const ModalBase: React.FC<ModalBaseProps> = ({
                     </button>
                 )}
                 <Heading className={`${HeadingClassName} mb-4`} level={2} text={title} />
-                <Paragraph className="text-[#667085] text-[16px] leading-5 space-[30px] tracking-[0.5%] mb-6">{message}</Paragraph>
+                <Paragraph className="text-[#667085] text-[16px] leading-5 overflow-y-scroll no-scrollbar space-[30px] tracking-[0.5%] mb-6">{message}</Paragraph>
                 {actions && <div>{actions}</div>}
             </div>
         </div>

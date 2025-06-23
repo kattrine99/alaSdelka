@@ -114,7 +114,7 @@ export const PromotionCards = () => {
                                             >
                                                 Посмотреть статистику
                                             </Button>
-                                            <div className="bg-[#FF1D1D] sm:w-2/3 md:w-3/4 lg:w-2/3 w-full text-white px-5 h-11 rounded-md flex justify-center items-center gap-2 font-semibold">
+                                            <div className="bg-[#FF1D1D] sm:w-2/3 md:w-3/4 lg:w-2/3 w-full text-white px-5 py-1 rounded-md flex justify-center items-center gap-2 font-semibold">
                                                 Идёт продвижение (осталось {offer.paid_offer?.promotion_days_left} дней)
                                                 <FireIcon className="w-5 h-5 text-white" />
                                             </div>

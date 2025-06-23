@@ -101,7 +101,7 @@ export const NoticePage = () => {
                                         <Paragraph className="font-inter text-lg text-[#232323] mb-3.5">
                                             {lang === "uz" ? item.text_uz : item.text_ru}
                                         </Paragraph>
-                                        <div className="flex justify-between">
+                                        <div className="flex flex-col sm:flex-row justify-between">
                                             <div className="text-[#727272] text-sm flex gap-3 items-center">
                                                 <span className="flex gap-2">
                                                     <CiCalendar className="w-4 h-4 text-[#727272]" /> {date}
@@ -110,7 +110,7 @@ export const NoticePage = () => {
                                                     <IoMdTime className="w-4 h-4 text-[#727272]" /> {time}
                                                 </span>
                                             </div>
-                                            <div className="text-[#2EAA7B] items-center mr-2">
+                                            <div className="text-[#2EAA7B] items-center mr-2 mt-3 sm:mt-0">
                                                 {item.type === "offer_show" && item.offer_slug && (
 
                                                     <Button
@@ -146,8 +146,6 @@ export const NoticePage = () => {
                                                         {t("Статистика")}
                                                     </Button>
                                                 )}
-                                                {item?.is_read == true && <Paragraph className="flex gap-2">{t("Прочитано")} <CheckedAllIcon /></Paragraph>
-                                                }
                                             </div>
                                         </div>
                                     </div>

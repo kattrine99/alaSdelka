@@ -12,7 +12,7 @@ const UserAgreement = () => {
                     ]}
                 />
                 <Heading className="text-2xl font-bold my-4" text={"Пользовательское соглашение"} level={2}></Heading>
-                <Paragraph className="text-base leading-7 text-gray-700">
+                <Paragraph className="text-base leading-7 text-gray-700 text-justify">
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque at velit quam. Vivamus sed magna ut ante consectetur ullamcorper at nec purus. Nunc venenatis consequat justo, ut aliquam massa. Quisque interdum euismod egestas. Suspendisse ut varius erat, ut vulputate dui. Integer sodales mi sed ipsum accumsan, eu suscipit dolor viverra. Suspendisse congue sem id bibendum venenatis. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin urna tortor, aliquam ut tempor ac, tempus vitae ante. Vivamus faucibus ornare mollis. Ut id imperdiet sem, vitae semper tellus.
 
                     Vivamus dictum, dui eget euismod hendrerit, libero urna mollis nunc, sed pellentesque libero lorem at ante. Maecenas commodo commodo elit ac feugiat. Aliquam eget cursus ante. Etiam sapien urna, tempus quis imperdiet at, vulputate et justo. Quisque auctor magna mi, id malesuada sapien fermentum id. In in arcu vitae ligula vestibulum gravida vel dapibus metus. Cras ac lobortis eros, vitae efficitur tortor. Nam vel posuere quam. Sed dictum lacinia nisl, quis luctus magna commodo eu. Aliquam sed quam sapien. Vestibulum elementum vitae leo vel semper. Vivamus mauris mi, fermentum sed convallis et, vestibulum eget purus. Pellentesque vel magna vitae massa facilisis rhoncus.

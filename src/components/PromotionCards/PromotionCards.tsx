@@ -43,10 +43,10 @@ export const PromotionCards = () => {
         return `${numericPrice.toLocaleString()} ${t("сум")}`;
     };
     return (
-        <div className="w-screen">
+        <div className="w-screen min-h-screen flex-col flex">
             <Header navLinksData={profileNavigate} />
 
-            <div className="container px-4 sm:px-6 md:px-10 xl:mx-auto py-7.5">
+            <div className="container px-4 sm:px-6 md:px-10 xl:mx-auto py-7.5 flex-1">
                 <Breadcrumbs
                     links={[
                         { label: t("Мои объявления"), href: "/announcements" },
@@ -109,12 +109,12 @@ export const PromotionCards = () => {
                                         {/* Кнопки: В одну линию */}
                                         <div className="flex flex-col gap-4 mt-4">
                                             <Button
-                                                className="text-[#2EAA7B] border border-[#2EAA7B] px-5 h-11 rounded-md"
+                                                className="text-[#2EAA7B] sm:w-2/3 md:w-3/4 lg:w-2/3 w-full border border-[#2EAA7B] px-5 h-11 rounded-md"
                                                 onClick={() => navigate(`/statistics/${offer.slug}`)}
                                             >
                                                 Посмотреть статистику
                                             </Button>
-                                            <div className="bg-[#FF1D1D] text-white px-5 h-11 rounded-md flex justify-center items-center gap-2 font-semibold">
+                                            <div className="bg-[#FF1D1D] sm:w-2/3 md:w-3/4 lg:w-2/3 w-full text-white px-5 h-11 rounded-md flex justify-center items-center gap-2 font-semibold">
                                                 Идёт продвижение (осталось {offer.paid_offer?.promotion_days_left} дней)
                                                 <FireIcon className="w-5 h-5 text-white" />
                                             </div>

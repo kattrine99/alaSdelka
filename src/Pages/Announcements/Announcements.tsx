@@ -69,7 +69,7 @@ export const AnnouncemntsPage = () => {
 
 
   return (
-    <div className="w-screen">
+    <div className="w-screen min-h-screen flex-col flex">
       {showModal && selectedOfferId !== null && (
         <ModalBase
           title={t("Вы уверены, что хотите отметить объявление как проданное?")}
@@ -173,7 +173,7 @@ export const AnnouncemntsPage = () => {
         />
       )}
       <Header navLinksData={profileNavigate} />
-      <div className="container h-screen mx-auto px-3 md:px-0 py-9">
+      <div className="container mx-auto px-3 md:px-0 py-9 flex-1">
         <Heading text={t("Мои объявления")} level={2} className="font-inter text-xl font-bold leading-5 space-x-[-0.5%]" />
 
         {isLoading ? (

@@ -82,7 +82,7 @@ export const StepsAddingOffer = () => {
             {showHelperModal && (
                 <ModalBase
                     title=""
-                    ModalClassName="w-198"
+                    ModalClassName="w-198 h-4/5"
                     onClose={() => setShowHelperModal(false)}
                     message={
                         <>

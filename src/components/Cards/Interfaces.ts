@@ -30,6 +30,18 @@ export interface ICard {
     user_phone?: string;
 }
 
+export interface ICardComponent {
+    card: ICard
+    is_favourite: boolean
+    cardWrapperClass?: string;
+    cardIconClass?: string;
+    cardHeadingClass?: string;
+    cardTextClass?: string;
+    WhatchButtonClass?: string;
+    handleFavorite: (id: number) => void;
+    handleConfirmRemove: (id: number | null) => void;
+}
+
 export interface ICards {
     cards: ICard[];
     initialFavorites?: number[];

@@ -19,6 +19,7 @@ import { SellerInfoCard } from './SellerInfoCard/SellerInfoCard';
 import { useSelector } from "react-redux";
 import { RootState } from "../../Store/store";
 import { useTranslation } from '../../../public/Locales/context/TranslationContext';
+import { translationService } from '../../utils/googleTranslate';
 export const CardDetailPage = () => {
     const { lang, t } = useTranslation()
     const { slug, category } = useParams();
@@ -26,6 +27,26 @@ export const CardDetailPage = () => {
     const { data, isLoading, isError } = useGetOfferBySlugQuery(offerSlug);
     const card = data?.data;
     const [showFullDescription, setShowFullDescription] = useState(false);
+    const [translatedTitle, setTranslatedTitle] = useState(card?.title)
+    const [translatedDescription, setTranslaedDescription] = useState(card?.description)
+    if (lang != 'ru') {
+        if (card) {
+            translationService.translateText(card.title, lang).then(function (value) {
+                if (value) {
+                    setTranslatedTitle(value);
+                }
+            });
+            translationService.translateText(card.description, lang).then(function (value) {
+                if (value) {
+                    setTranslaedDescription(value);
+                }
+            })
+        }
+    }
+    // if (lang == 'ru') {
+    //     setTranslatedTitle(card?.title);
+    //     setTranslaedDescription(card?.description);
+    // }
     const { mode: currencyMode, rate } = useSelector((state: RootState) => state.currency);
     const conveniencesIcons: Record<string, JSX.Element> = {
         "Парковка": <FaParking className="w-10 h-10 text-[#7E7E7E]" />,
@@ -109,10 +130,11 @@ export const CardDetailPage = () => {
 
             ) :
                 (<div className='container mx-auto pt-10 max-md:p-5'>
-                    <Breadcrumbs category={category} title={card.title} />
+                    {translatedTitle != null ? (<Breadcrumbs category={category} title={translatedTitle} />) : (<Breadcrumbs category={category} title={card.title} />)}
                     <div className='flex flex-wrap xl:flex-nowrap'>
                         <div className='flex flex-col w-full lg:w-3/4 justify-center'>
-                            <Heading className="text-[24px] md:text-4xl font-inter leading-10 font-bold mt-6 mb-3.5" text={card.title} level={2} />
+                            {translatedTitle != null ? (<Heading className="text-[24px] md:text-4xl font-inter leading-10 font-bold mt-6 mb-3.5" text={translatedTitle} level={2} />) : (<Heading className="text-[24px] md:text-4xl font-inter leading-10 font-bold mt-6 mb-3.5" text={card.title} level={2} />)}
+
                             <div className='flex flex-col gap-2 mb-[15px]'>
                                 <Paragraph className='font-inter font-bold text-[#363636] text-[16px]'>ID {card.id}</Paragraph>
                                 <div className='flex gap-1.5 items-center'>
@@ -179,17 +201,17 @@ export const CardDetailPage = () => {
 
                             }
 
-                            {card.description && (
+                            {translatedDescription && (
                                 <div>
                                     <Heading text={t('Описание')} level={3} className='font-inter font-semibold text-xl mt-7.5 text-[#3A3A3A]' />
                                     <div className="mt-3">
                                         <Paragraph className="text-gray-700 leading-relaxed whitespace-pre-line">
                                             {showFullDescription
-                                                ? card.description
-                                                : card.description.slice(0, 300) + (card.description.length > 300 ? "..." : "")}
+                                                ? translatedDescription
+                                                : translatedDescription.slice(0, 300) + (translatedDescription.length > 300 ? "..." : "")}
                                         </Paragraph>
 
-                                        {card.description.length > 300 && (
+                                        {translatedDescription.length > 300 && (
                                             <Button
                                                 onClick={() => setShowFullDescription(!showFullDescription)}
                                                 className="text-[#2EAA7B] mt-2 font-semibold hover:underline transition"
@@ -256,27 +278,27 @@ export const CardDetailPage = () => {
                                         {lang === "uz" ? card?.address?.city?.name_uz : card?.address?.city?.name_ru ?? ""}
                                     </Paragraph>
                                 </div>
-                                    {card.address?.latitude && card.address?.longitude ? (
-                                        <iframe
-                                            src={`https://maps.google.com/maps?q=${card.address.latitude},${card.address.longitude}&z=15&output=embed`}
-                                            width="100%"
-                                            height="350"
-                                            className="rounded-lg border mb-5 border-[#2EAA7B]"
-                                            allowFullScreen
-                                            loading="eager"
-                                        />
-                                    ) : card.address?.address ? (
-                                        <iframe
-                                            src={`https://maps.google.com/maps?q=${encodeURIComponent(card.address.address)}&z=15&output=embed`}
-                                            width="100%"
-                                            height="350"
-                                            className="rounded-lg border mb-5 border-[#2EAA7B]"
-                                            allowFullScreen
-                                            loading="eager"
-                                        />
-                                    ) : (
-                                        <Paragraph className="text-gray-500">{t("Адрес недоступен")}</Paragraph>
-                                    )}
+                                {card.address?.latitude && card.address?.longitude ? (
+                                    <iframe
+                                        src={`https://maps.google.com/maps?q=${card.address.latitude},${card.address.longitude}&z=15&output=embed`}
+                                        width="100%"
+                                        height="350"
+                                        className="rounded-lg border mb-5 border-[#2EAA7B]"
+                                        allowFullScreen
+                                        loading="eager"
+                                    />
+                                ) : card.address?.address ? (
+                                    <iframe
+                                        src={`https://maps.google.com/maps?q=${encodeURIComponent(card.address.address)}&z=15&output=embed`}
+                                        width="100%"
+                                        height="350"
+                                        className="rounded-lg border mb-5 border-[#2EAA7B]"
+                                        allowFullScreen
+                                        loading="eager"
+                                    />
+                                ) : (
+                                    <Paragraph className="text-gray-500">{t("Адрес недоступен")}</Paragraph>
+                                )}
 
                             </div>
                         </div>

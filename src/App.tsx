@@ -28,6 +28,7 @@ import PrivacyPolicy from "./components/Footer/PrivacyPolicy";
 import { useGetCurrencyRateQuery } from "./Store/api/Api";
 import { setCurrencyRate } from "./Store/Slices/currencySlice";
 import { TranslationProvider } from "./../public/Locales/context/TranslationContext";
+import { ArchivePage } from "./Pages/Announcements/Archive";
 
 const Layout = () => {
   const dispatch = useDispatch();
@@ -125,6 +126,13 @@ const routerConfig = createBrowserRouter([
         path: "announcements", element: (
           <ProtectedRoute>
             <AnnouncemntsPage />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "announcements/archived", element: (
+          <ProtectedRoute>
+            <ArchivePage />
           </ProtectedRoute>
         ),
       },

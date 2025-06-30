@@ -82,15 +82,15 @@ export const AnnouncemntsPage = () => {
           }
           onClose={() => setShowModal(false)}
           actions={
-            <div className="flex gap-11 ">
+            <div className="flex gap-2 lg:gap-11">
               <Button
-                className="border bg-[#2EAA7B] hover:bg-[#31B683] w-66.25 text-white px-5 py-3 rounded-md"
+                className="border bg-[#2EAA7B] hover:bg-[#31B683] w-full text-white px-5 py-3 rounded-md"
                 onClick={() => setShowModal(false)}
               >
                 {t("Отменить")}
               </Button>
               <Button
-                className="bg-orange-500 text-white w-66.25 px-5 py-3 rounded-md"
+                className="bg-orange-500 text-white w-full px-5 py-3 rounded-md"
                 onClick={async () => {
                   if (selectedOfferId === null) return;
                   try {
@@ -125,15 +125,15 @@ export const AnnouncemntsPage = () => {
           }
           onClose={() => setShowArchiveModal(false)}
           actions={
-            <div className="flex gap-11">
+            <div className="flex gap-2 lg:gap-11">
               <Button
-                className="border bg-[#2EAA7B] hover:bg-[#31B683] w-66.25 text-white px-5 py-3 rounded-md"
+                className="border bg-[#2EAA7B] hover:bg-[#31B683] w-full text-white px-5 py-3 rounded-md"
                 onClick={() => setShowArchiveModal(false)}
               >
                 {t("Отменить")}
               </Button>
               <Button
-                className="bg-orange-500 text-white w-66.25 px-5 py-3 rounded-md"
+                className="bg-orange-500 w-full text-white  px-5 py-3 rounded-md"
                 onClick={async () => {
                   if (selectedOfferId === null) return;
                   try {
@@ -189,12 +189,18 @@ export const AnnouncemntsPage = () => {
             buttonLink="/add-offer"
           />) : (
           <div>
-            <div className="flex md:justify-end mt-5">
+            <div className="flex md:justify-end mt-5 gap-3">
               <Button
                 className="bg-[#2EAA7B] text-white rounded-md w-60.5 px-5 py-3"
                 onClick={() => navigate('/add-offer')}
               >
                 {t("Добавить объявление")}
+              </Button>
+              <Button
+                className="bg-[#FF1D1D] text-white rounded-md px-5 py-3"
+                onClick={() => navigate('/announcements/archived')}
+              >
+                {t("Архив")}
               </Button>
             </div>
             <div className="flex gap-6 mt-8 w-full">
@@ -291,7 +297,8 @@ export const AnnouncemntsPage = () => {
                                 {t("Продвигать объявление")}
                               </Button>
                             )}
-                            <Button className="text-white bg-[#FF8707] px-4 h-12 rounded-md cursor-pointer"
+                            <Button className={"text-white bg-[#FF8707] px-4 h-12 rounded-md" + (offer.offer_status === "sold" ? " opacity-50 cursor-not-allowed" : " cursor-pointer")}
+                            disabled={offer.offer_status === "sold"}
                               onClick={() => {
                                 setSelectedOfferId(offer.id);
                                 setShowModal(true);

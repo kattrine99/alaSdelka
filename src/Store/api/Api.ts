@@ -106,6 +106,10 @@ export const AuthApi = createApi({
             query: ({ page, per_page = 5 }) =>
                 `/my-offers?page=${page}&per_page=${per_page}`,
         }),
+        getMyArchivedOffers: builder.query<MyOffer, { page: number, per_page?: number;}>({
+            query: ({ page, per_page = 5 }) =>
+                `/my-offers/archived?page=${page}&per_page=${per_page}`,
+        }),
 
         sellOffer: builder.mutation<SellOfferResponse, number>({
             query: (offerId) => ({
@@ -274,6 +278,7 @@ export const {
     useArchiveOfferMutation,
     useGetHomeOffersQuery,
     useGetMyOffersQuery,
+    useGetMyArchivedOffersQuery,
     useGetOffersQuery,
     useGetMainStatisticsQuery,
     useGetOfferByIdQuery,

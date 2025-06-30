@@ -9,7 +9,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../../Store/store";
 import { useTranslation } from "../../../../public/Locales/context/TranslationContext";
 
-export const    SellerInfoCard = ({ card, offer_type, userId }: { card: OfferDetail['data'], userId: number, offer_type?: string }) => {
+export const SellerInfoCard = ({ card, offer_type, userId }: { card: OfferDetail['data'], userId: number, offer_type?: string }) => {
     const [isContactModalOpen, setContactModalOpen] = useState(false);
     const [isLinksModalOpen, setLinksModalOpen] = useState(false);
     const { data: contactData, isLoading: isContactLoading } = useGetOfferContactViewQuery(
@@ -23,7 +23,7 @@ export const    SellerInfoCard = ({ card, offer_type, userId }: { card: OfferDet
         currencyMode === "USD"
             ? Math.round((card.price || 0) / (rate || 1)).toLocaleString() + " $"
             : (card.price || 0).toLocaleString() + t("сум");
-    
+
     const handleToggleFavorite = async () => {
         try {
             const res = await toggleFavoriteAPI({ id: card.id }).unwrap();
@@ -43,42 +43,49 @@ export const    SellerInfoCard = ({ card, offer_type, userId }: { card: OfferDet
 
     return (
         <div className="xl:max-w-113 w-full p-4 rounded-md shadow-md shadow-[#2EAA7B2E] flex flex-col gap-4 relative">
-            <button
-                onClick={handleToggleFavorite}
-                className="absolute top-4 right-4 p-1 border rounded-full border-green-500 text-green-500"
-            >
-                {isFavorite ? (
-                    <BiSolidHeart className="w-5 h-5 text-red-500" />
-                ) : (
-                    <BiHeart className="w-5 h-5" />
-                )}
-            </button>
+            {card.offer_status !== 'sold' && (
+                <button
+                    onClick={handleToggleFavorite}
+                    className="absolute top-4 right-4 p-1 border rounded-full border-green-500 text-green-500"
+                >
+                    {isFavorite ? (
+                        <BiSolidHeart className="w-6 h-6" />
+                    ) : (
+                        <BiHeart className="w-6 h-6" />
+                    )}
+                </button>
+            )}
             <Paragraph className="text-[22px] font-bold text-[#101828] text-left">
                 {convertedPrice}
             </Paragraph>
-            <div className="flex items-center bg-[#E9F7F1] rounded-md p-3 gap-3">
-                <Link
-                    to={`/users/${userId}/${offer_type}`}
-                    state={{ category: offer_type }}
-                    className="flex gap-5 items-center">
-                    <div className="rounded-full">
-                        <img
-                            src={`${card.user_photo || "../../../../images/profile.png"}`}
-                            className="w-12 h-12 rounded-full object-cover"
-                            alt="User photo"
-                        />
-                    </div>
-                    <Paragraph className="text-[#101828] font-semibold">
-                        {card.user_name || "Имя продавца"}
-                    </Paragraph>
-                </Link>
-            </div>
-            <Button
-                className="w-full bg-[#2EAA7B] text-white font-semibold py-2 rounded-md hover:bg-[#31B683] transition"
-                onClick={() => setContactModalOpen(true)}
-            >
-                {t("Контакты продавца")}
-            </Button>
+            {card.offer_status !== 'sold' && (
+                <div className="flex items-center bg-[#E9F7F1] rounded-md p-3 gap-3">
+                    <Link
+                        to={`/users/${userId}/${offer_type}`}
+                        state={{ category: offer_type }}
+                        className="flex gap-5 items-center">
+                        <div className="rounded-full">
+                            <img
+                                src={`${card.user_photo || "../../../../images/profile.png"}`}
+                                className="w-12 h-12 rounded-full object-cover"
+                                alt="User photo"
+                            />
+                        </div>
+                        <Paragraph className="text-[#101828] font-semibold">
+                            {card.user_name || "Имя продавца"}
+                        </Paragraph>
+                    </Link>
+                </div>
+            )}
+
+            {card.offer_status !== 'sold' && (
+                <Button
+                    className="w-full bg-[#2EAA7B] text-white font-semibold py-2 rounded-md hover:bg-[#31B683] transition"
+                    onClick={() => setContactModalOpen(true)}
+                >
+                    {t("Контакты продавца")}
+                </Button>
+            )}
             <Button
                 className="w-full bg-[#E9F7F1] text-[#2EAA7B] font-semibold py-2 rounded-md hover:bg-[#d1f0e3] transition"
                 onClick={() => setLinksModalOpen(true)}

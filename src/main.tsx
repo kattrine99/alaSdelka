@@ -5,12 +5,19 @@ import App from './App.tsx'
 import { Provider } from "react-redux";
 import { store } from "./Store/store.ts";
 import 'swiper/css';
+import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 
 
-createRoot(document.getElementById('root')!).render(
+const root = createRoot(
+  document.getElementById('root') as HTMLElement
+);
+
+root.render(
   <React.StrictMode>
     <Provider store={store}>
       <App />
     </Provider>
   </React.StrictMode>
 )
+
+serviceWorkerRegistration.register();

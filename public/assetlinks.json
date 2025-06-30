@@ -1,0 +1,12 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "uz.invin.twa",
+      "sha256_cert_fingerprints": [
+        "6aa3425f673d5c69c5855fe7dcecf37ee7050ef549efab74b795fbc3b61b49d5"
+      ]
+    }
+  }
+]

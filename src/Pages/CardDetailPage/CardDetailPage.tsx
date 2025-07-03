@@ -29,24 +29,18 @@ export const CardDetailPage = () => {
     const [showFullDescription, setShowFullDescription] = useState(false);
     const [translatedTitle, setTranslatedTitle] = useState(card?.title)
     const [translatedDescription, setTranslaedDescription] = useState(card?.description)
-    if (lang != 'ru') {
-        if (card) {
-            translationService.translateText(card.title, lang).then(function (value) {
-                if (value) {
-                    setTranslatedTitle(value);
-                }
-            });
-            translationService.translateText(card.description, lang).then(function (value) {
-                if (value) {
-                    setTranslaedDescription(value);
-                }
-            })
-        }
+    if (card) {
+        translationService.translateText(card.title, lang).then(function (value) {
+            if (value) {
+                setTranslatedTitle(value);
+            }
+        });
+        translationService.translateText(card.description, lang).then(function (value) {
+            if (value) {
+                setTranslaedDescription(value);
+            }
+        })
     }
-    // if (lang == 'ru') {
-    //     setTranslatedTitle(card?.title);
-    //     setTranslaedDescription(card?.description);
-    // }
     const { mode: currencyMode, rate } = useSelector((state: RootState) => state.currency);
     const conveniencesIcons: Record<string, JSX.Element> = {
         "Парковка": <FaParking className="w-10 h-10 text-[#7E7E7E]" />,

@@ -45,15 +45,12 @@ export const Card: React.FC<ICardComponent & { forceAllFavorite: boolean }> = ({
 
         return `${numericPrice.toLocaleString()} ${t("сум")}`;
     };
-
-    if (lang != 'ru') {
-        if (card) {
-            translationService.translateText(card.title, lang).then(function (value) {
-                if (value) {
-                    setTranslatedTitle(value);
-                }
-            });
-        }
+    if (card) {
+        translationService.translateText(card.title, lang).then(function (value) {
+            if (value) {
+                setTranslatedTitle(value);
+            }
+        });
     }
     return (
         <div key={card.id} className={`relative bg-white rounded-lg flex ${cardWrapperClass ?? ""}`}>

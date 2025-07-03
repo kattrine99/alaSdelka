@@ -298,7 +298,7 @@ export const AnnouncemntsPage = () => {
                               </Button>
                             )}
                             <Button className={"text-white bg-[#FF8707] px-4 h-12 rounded-md" + (offer.offer_status === "sold" ? " opacity-50 cursor-not-allowed" : " cursor-pointer")}
-                            disabled={offer.offer_status === "sold"}
+                              disabled={offer.offer_status === "sold"}
                               onClick={() => {
                                 setSelectedOfferId(offer.id);
                                 setShowModal(true);

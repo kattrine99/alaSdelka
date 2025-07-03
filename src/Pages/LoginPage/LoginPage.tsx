@@ -87,8 +87,8 @@ export const LoginPage = () => {
 
     return (
 
-        <div className="min-w-screen sm:bg-[url('/images/grid.png')] bg-contain bg-no-repeat bg-right">
-            <div className='flex flex-col'>
+        <div className="min-w-screen flex flex-col min-h-screen sm:bg-[url('/images/grid.png')] bg-contain bg-no-repeat bg-right">
+            <div className='flex flex-col flex-0'>
                 {showModal && <ModalBase
                     title={t(modalTitle)}
                     message={t(modalText)}
@@ -98,7 +98,7 @@ export const LoginPage = () => {
                     actions={<Button className={"w-full text-center py-4 hover:border-1 hover:bg-white hover:text-[#2EAA7B] hover:border-[#2EAA7B] text-white bg-[#2EAA7B] rounded-[14px]"} onClick={() => { setShowModal(false); }}>Подтвердить</Button>} />}
             </div>
             <Header showNavLinks={false} showAuthButtons={false} />
-            <div className=" flex items-center justify-center py-[62px] transition-all duration-300">
+            <div className=" flex flex-1 items-center justify-center py-[62px] transition-all duration-300">
                 <div className="w-full grid grid-cols-1 lg:grid-cols-2 lg:px-36 transition-all duration-500">
                     <div className="w-full p-[clamp(30px,4vw,70px)] flex flex-col items-start text-start transition-all duration-300">
                         <Heading className="text-[32px] mb-[32px] font-inter font-bold text-black" text={t('Вход в личный кабинет')} level={1} />

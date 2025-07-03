@@ -104,7 +104,7 @@ export const UserAnnouncementPage = () => {
     };
 
     return (
-        <div className="font-openSans min-h-screen w-screen overflow-x-hidden">
+        <div className="font-openSans min-h-screen flex flex-col w-screen overflow-x-hidden">
             {isContactModalOpen && (
                 <ModalBase
                     title={t("Контакты продавца")}
@@ -119,7 +119,7 @@ export const UserAnnouncementPage = () => {
             )}
 
             <Header />
-            <div className="flex container mx-auto px-3 md:px-0 max-xl:flex-col py-[30px] pb-10 gap-10 items-start">
+            <div className="flex flex-1 container mx-auto px-3 md:px-0 max-xl:flex-col py-[30px] pb-10 gap-10 items-start">
                 <aside className="flex flex-col">
                     <Breadcrumbs category={category} title={t("Объявления пользователя")} />
                     <Heading text={t("Объявления пользователя")} level={2} className="text-[30px] font-bold text-black mt-4.5" />

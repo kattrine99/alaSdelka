@@ -77,7 +77,7 @@ export const StepsAddingOffer = () => {
     };
 
     return (
-        <div className="w-screen">
+        <div className="w-screen min-h-screen flex flex-col">
             <Header navLinksData={profileNavigate} />
             {showHelperModal && (
                 <ModalBase
@@ -99,7 +99,7 @@ export const StepsAddingOffer = () => {
                 />
             )}
 
-            <div className="container mx-auto py-12 ">
+            <div className="container mx-auto py-12 flex-1">
                 {step !== 5 ? (
                     <div className="max-lg:mx-6 items-center">
                         <Breadcrumbs title="Добавить объявление" />

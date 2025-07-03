@@ -112,7 +112,7 @@ export const ProfilePage = () => {
     const isEditingProfile = location.pathname.includes("profile") && editMode;
 
     return (
-        <div className="w-screen">
+        <div className="w-screen min-h-screen flex flex-col">
             {showLogoutConfirm && (
                 <ModalBase
                     title={t("Подтвердите действие")}
@@ -149,7 +149,7 @@ export const ProfilePage = () => {
                     HeadingClassName={"font-inter font-semibold text-[#101828] text-3xl leading-[44px]"} />
             )}
             <Header navLinksData={profileNavigate} />
-            <div className="w-full px-48 max-lg:px-20 max-md:px-2 mt-6">
+            <div className="w-full px-48 max-lg:px-20 max-md:px-2 mt-6 flex-1">
                 {isEditingProfile && <Breadcrumbs
                     links={[
                         { label: "Главная", href: "/" },

@@ -17,9 +17,9 @@ export const Description: React.FC<Descriptionprops> = ({
                         <img src="/images/benefits-img-1.png" className="w-62 h-auto relative z-10" />
                     </div>
                     <div>
-                        <h3 className="text-[#252525] font-inter text-[36px] font-semibold mb-[15px] relative z-10">{t("Описание")}</h3>
+                        <h3 className="text-[#252525] font-inter text-[24px] font-semibold mb-[15px] relative z-10">{t("Начни свой бизнес легко!")}</h3>
                         <p className="text-[#252525] font-inter font-normal text-[16px] text-sm relative z-10">
-                            {t("Gain access to AAA-funded accounts with the capacity to hold up to 400k in funded accounts within 72 hours of successfully completing the evaluation stage.")}                        </p>
+                            {t("Выберите готовый бизнес, франшизу или инвестиционный проект. Простая регистрация, удобный поиск, множество актуальных предложений от собственников и инвесторов")}                        </p>
                         <span className="absolute top-[387px] text-[160px] leading-[105%] opacity-[10%] font-bold text-[#252525] z-0" style={{ fontFamily: "Actay Wide Bd" }}>01</span>
                     </div>
 
@@ -30,9 +30,9 @@ export const Description: React.FC<Descriptionprops> = ({
                         <img src="/images/benefits-img-2.png" className="w-[250px] h-auto mb-4 relative z-10" />
                     </div>
                     <div>
-                        <h3 className="text-[#252525] text-inter text-[36px] font-semibold mb-[15px] relative z-10">{t("Описание")}</h3>
+                        <h3 className="text-[#252525] text-inter text-[24px] font-semibold mb-[15px] relative z-10">{t("Развивайся вместе с нами!")}</h3>
                         <p className="text-[#252525] font-inter font-normal text-[16px] text-sm relative z-10">
-                            {t("Gain access to AAA-funded accounts with the capacity to hold up to 400k in funded accounts within 72 hours of successfully completing the evaluation stage.")}                        </p>
+                            {t("У нас вы найдете надежных партнеров, инвесторов и готовые решения для роста вашего бизнеса. Инвестируйте или привлекайте капитал легко и быстро через нашу платформу.")}                        </p>
                         <span className="absolute bottom-[340px] right-[33px] text-[160px] font-bold text-[#252525] leading-[105%] opacity-[10%] z-0" style={{ fontFamily: "Actay Wide Bd" }}>02</span>
 
                     </div>
@@ -43,9 +43,9 @@ export const Description: React.FC<Descriptionprops> = ({
                     <div className="mx-8.25 mb-7.75">
                         <img src="/images/benefits-img-3.png" className="w-[250px] h-auto mb-4 relative z-10" />
                     </div>
-                    <h3 className="text-[#252525] text-inter text-[36px] font-semibold mb-[15px] relative z-10">{t("Описание")}</h3>
+                    <h3 className="text-[#252525] text-inter text-[24px] font-semibold mb-[15px] relative z-10">{t("Инвестируй с умом!")}</h3>
                     <p className="text-[#252525] font-inter font-normal text-[16px] text-sm relative z-10">
-                        {("Gain access to AAA-funded accounts with the capacity to hold up to 400k in funded accounts within 72 hours of successfully completing the evaluation stage.")}                    </p>
+                        {("Платформа объединяет предпринимателей и инвесторов. Здесь каждый может найти выгодный проект, купить готовый бизнес или вложиться в перспективную франшизу.")}                    </p>
                     <span className="absolute top-[397px] right-[9px] text-[160px] font-bold text-[#252525] leading-[105%] opacity-[10%] z-0" style={{ fontFamily: "Actay Wide Bd" }}>03</span>
 
                 </div>

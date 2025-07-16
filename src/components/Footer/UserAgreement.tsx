@@ -13,15 +13,48 @@ const UserAgreement = () => {
                 />
                 <Heading className="text-2xl font-bold my-4" text={"Пользовательское соглашение"} level={2}></Heading>
                 <Paragraph className="text-base leading-7 text-gray-700 text-justify">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque at velit quam. Vivamus sed magna ut ante consectetur ullamcorper at nec purus. Nunc venenatis consequat justo, ut aliquam massa. Quisque interdum euismod egestas. Suspendisse ut varius erat, ut vulputate dui. Integer sodales mi sed ipsum accumsan, eu suscipit dolor viverra. Suspendisse congue sem id bibendum venenatis. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin urna tortor, aliquam ut tempor ac, tempus vitae ante. Vivamus faucibus ornare mollis. Ut id imperdiet sem, vitae semper tellus.
-
-                    Vivamus dictum, dui eget euismod hendrerit, libero urna mollis nunc, sed pellentesque libero lorem at ante. Maecenas commodo commodo elit ac feugiat. Aliquam eget cursus ante. Etiam sapien urna, tempus quis imperdiet at, vulputate et justo. Quisque auctor magna mi, id malesuada sapien fermentum id. In in arcu vitae ligula vestibulum gravida vel dapibus metus. Cras ac lobortis eros, vitae efficitur tortor. Nam vel posuere quam. Sed dictum lacinia nisl, quis luctus magna commodo eu. Aliquam sed quam sapien. Vestibulum elementum vitae leo vel semper. Vivamus mauris mi, fermentum sed convallis et, vestibulum eget purus. Pellentesque vel magna vitae massa facilisis rhoncus.
-
-                    Donec egestas enim ac enim vulputate rutrum. Phasellus lobortis bibendum turpis a ultrices. Mauris felis diam, facilisis nec enim sit amet, vehicula dignissim sapien. Proin suscipit dictum cursus. Etiam vel condimentum ipsum, sed imperdiet odio. Nullam bibendum lacus et erat condimentum ullamcorper. Integer malesuada lorem sed lorem pretium lacinia. Morbi non diam tortor. Maecenas sodales sem ut pellentesque laoreet. Duis lobortis dignissim velit, sit amet euismod quam sollicitudin at. Donec risus quam, condimentum eu nulla vitae, ultrices placerat dolor. Sed nec dapibus elit.
-
-                    Aliquam aliquet ligula sit amet orci venenatis blandit. Aliquam augue tortor, lobortis sit amet odio ut, posuere mattis lectus. Nullam rhoncus, nibh eu pharetra imperdiet, lorem mauris auctor urna, a imperdiet orci massa eu est. Sed felis magna, facilisis sed massa eu, dignissim faucibus magna. Pellentesque in diam libero. Vivamus elementum velit non nisi facilisis tincidunt. Cras a ullamcorper libero. Nullam ullamcorper, ligula ac convallis ornare, mi magna sollicitudin urna, vel ultricies lacus lacus a turpis.
-
-                    Etiam sed est a purus posuere vestibulum et a nulla. Pellentesque mattis massa id risus elementum, eget suscipit nunc imperdiet. Interdum et malesuada fames ac ante ipsum primis in faucibus. Cras magna augue, egestas quis mauris a, porta volutpat lacus. Quisque iaculis ac purus vel porta. Proin consectetur diam in ligula ullamcorper tincidunt. Nullam porttitor ipsum sapien, vitae rutrum ligula placerat sit amet. Etiam dapibus euismod arcu.
+                    Настоящее Пользовательское соглашение (далее - "Соглашение") регулирует отношения между Администрацией сайта (далее - "Администрация") и физическим или юридическим лицом (далее - "Пользователь") по использованию веб-сайта [Название проекта] (далее - "Сайт").
+                    <br/>
+                    1. Предмет соглашения
+                    <br/>
+                    1.1. Администрация предоставляет Пользователю доступ к функционалу Сайта: размещение и просмотр объявлений о продаже бизнеса, франшиз и инвестиционных проектов.
+                    <br/>
+                    1.2. Пользователь обязуется использовать Сайт в соответствии с настоящим Соглашением и действующим законодательством Республики Узбекистан.
+                    <br/>
+                    2. Регистрация и учетная запись
+                    <br/>
+                    2.1. Для доступа к полному функционалу Сайта требуется регистрация.
+                    <br/>
+                    2.2. Пользователь обязан предоставить достоверную и актуальную информацию.
+                    <br/>
+                    2.3. Пользователь несет ответственность за сохранность своих регистрационных данных.
+                    <br/>
+                    3. Размещение объявлений
+                    <br/>
+                    3.1. Пользователь имеет право размещать объявления, соответствующие тематике Сайта.
+                    <br/>
+                    3.2. Администрация оставляет за собой право модерации, изменения или удаления объявлений, не соответствующих правилам или законодательству.
+                    <br/>
+                    4. Ответственность
+                    <br/>
+                    4.1. Администрация не несет ответственности за достоверность информации, размещенной Пользователями.
+                    <br/>
+                    4.2. Пользователь самостоятельно несет ответственность за размещенные материалы и действия на Сайте.
+                    <br/>
+                    5. Ограничение доступа
+                    <br/>
+                    5.1. Администрация имеет право ограничить или заблокировать доступ Пользователя при нарушении условий Соглашения.
+                    <br/>
+                    6. Изменения соглашения
+                    <br/>
+                    6.1. Администрация вправе изменять настоящее Соглашение без предварительного уведомления. Новая редакция вступает в силу с момента публикации.
+                    <br/>
+                    7. Заключительные положения
+                    <br/>
+                    7.1. Настоящее Соглашение регулируется законодательством Республики Узбекистан.
+                    <br/>
+                    7.2. Все споры решаются путем переговоров или в судебном порядке.
+                    <br/>
                 </Paragraph>
             </main>
             <Footer showSmallFooter={true} />

@@ -86,12 +86,55 @@ export const StepsAddingOffer = () => {
                     onClose={() => setShowHelperModal(false)}
                     message={
                         <>
-                            <Heading level={3} text="Название" className="text-black mb-2" />
+                            <Heading level={2} text="Инструкция по размещению объявления" className="text-black mb-2" />
                             <Paragraph className="mb-4 text-sm leading-[150%] text-[#667085]">
-                                Lorem ipsum dolor sit amet consectetur. Tellus vestibulum sit lectus fusce amet. Enim lacus nibh nulla blandit hendrerit. Urna risus quis elit sed pellentesque eget nulla sit placerat. Sagittis feugiat consectetur ultrices et. Nunc vehicula sit dolor potenti ipsum donec quam enim etiam. In sollicitudin velit facilisis justo. Libero ullamcorper massa massa tincidunt sit tincidunt cum. Est aliquet aliquam mi eu enim vulputate pharetra tincidunt. Sed diam turpis sit nunc. Feugiat gravida aliquam facilisis risus. Aliquet quis sed consectetur aenean. Maecenas odio lectus dis vitae eu. Etiam ut penatibus lorem nec urna viverra odio nisi nisl. Ut massa dignissim sem leo. Lacus quis ultricies fames volutpat a condimentum. Tortor praesent interdum non dui eget tincidunt ac sapien integer. Volutpat ornare ut ut eget. Mauris posuere sed ac sagittis ante. Convallis ultrices enim tempor urna nisl. Nulla ut neque volutpat urna. Tellus dolor integer quis nunc sed purus. Cursus molestie tempus dolor morbi praesent blandit proin. Elementum mauris ac facilisis amet mauris. Erat dictum auctor ridiculus vivamus donec pulvinar viverra. Cursus dolor vel fermentum dignissim ut amet diam. Mi convallis nascetur massa tempor. Dignissim id elementum elit aliquet mattis neque pharetra ornare amet. A nullam venenatis dolor eget nulla ac et. Ligula ipsum enim orci egestas suscipit libero.                            </Paragraph>
-                            <Heading level={3} text="Название" className="text-black mb-2" />
-                            <Paragraph className="text-sm leading-[150%] text-[#667085]">
-                                Lorem ipsum dolor sit amet consectetur. Tellus vestibulum sit lectus faucibus amet. ...
+                                Добро пожаловать! Вот как легко и быстро разместить свое объявление:
+                            </Paragraph>
+                            <Heading level={3} text="Шаг 1. Раздел объявления" className="text-black mb-2" />
+                            <Paragraph className="text-sm leading-[150%] text-[#667085] mb-2">
+                                Выберите, что вы хотите разместить:
+                                <ul>
+                                    <li><b>Бизнес</b> — продажа или покупка готового бизнеса</li>
+                                    <li><b>Франшиза</b> — покупка или продажа франшизы</li>
+                                    <li><b>Стартап</b> — поиск инвестиций для стартапа</li>
+                                    <li><b>Инвестиции</b> — проекты для привлечения инвестиций</li>
+                                </ul>
+                                Нажмите «Дальше».
+                            </Paragraph>
+                            <Heading level={3} text="Шаг 2. Тип объявления" className="text-black mb-2" />
+                            <Paragraph className="text-sm leading-[150%] text-[#667085] mb-2">
+                                Выберите действие:
+                                <ul>
+                                    <li><b>Продать</b></li>
+                                    <li><b>Купить</b></li>
+                                </ul>
+                                Нажмите «Дальше».
+                            </Paragraph>
+                            <Heading level={3} text="Шаг 3. Информация" className="text-black mb-2" />
+                            <Paragraph className="text-sm leading-[150%] text-[#667085] mb-2">
+                                Заполните поля:
+                                <ul>
+                                    <li><b>Название бизнеса</b> — кратко и понятно</li>
+                                    <li><b>Описание</b> — опишите, что продаете или ищете</li>
+                                    <li><b>Категория объявления</b> — выберите из списка</li>
+                                    <li><b>Ваше имя и телефон</b> — для связи</li>
+                                    <li><b>Город</b> — где находится бизнес или проект</li>
+                                    <li><b>Адрес</b> — местоположение бизнеса или объекта</li>
+                                    <li><b>Площадь, кв.м.</b> — укажите площадь помещения (если применимо).</li>
+                                    <li><b>Форма владения бизнесом</b> — выберите из списка: ИП, ООО и т.д.</li>
+                                    <li><b>Форма владения помещением</b> — собственность, аренда и др.</li>
+                                    <li><b>Документы и лицензии</b> (формат PDF или Excel) — если есть.</li>
+                                    <li><b>Стоимость (Сумма, Сум)</b> — в национальной валюте.</li>
+                                </ul>
+                                Заполните все обязательные поля и жмите «Дальше».
+                            </Paragraph>
+                            <Heading level={3} text="Шаг 4. Черновик" className="text-black mb-2" />
+                            <Paragraph className="text-sm leading-[150%] text-[#667085] mb-2">
+                                Проверьте все данные. Можете сохранить как черновик или сразу перейти к публикации.
+                            </Paragraph>
+                            <Heading level={3} text="Шаг 5. Публикация" className="text-black mb-2" />
+                            <Paragraph className="text-sm leading-[150%] text-[#667085] mb-2">
+                                Если все верно — нажмите «<b>Опубликовать</b>». Ваше объявление станет видно потенциальным покупателям и инвесторам.
                             </Paragraph>
                         </>
                     }

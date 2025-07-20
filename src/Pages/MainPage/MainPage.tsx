@@ -413,13 +413,30 @@ export const MainPage = () => {
             </section>
             <section className="mt-12.5 mb-8.75 px-3 xl:px-20 max-xl:px-10 md:px-0 transition duration-500 ease-in-out container mx-auto">
                 <div className="flex justify-start">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-y-4">
-                        <Button onClick={() => {
-                            navigate('/investments')
-                        }} className={""}>
-                            <Heading level={2} text={t("Инвестиции")}
-                                className="font-openSans font-bold text-3xl hover:text-[#2EAA7B] hover:underline hover:decoration-1 transition duration-500 cursor-pointer" />
-                        </Button>
+                    <div className="grid grid-cols-3 max-lg:flex max-lg:flex-col max-sm:justify-center items-start w-full mb-6">
+                        <div>
+                            <Button onClick={() => {
+                                navigate('/investments')
+                            }} className={""}>
+                                <Heading level={2} text={t("Инвестиции")}
+                                    className="font-openSans font-bold text-3xl hover:text-[#2EAA7B] hover:underline hover:decoration-1 transition duration-500 cursor-pointer" />
+                            </Button>
+                        </div>
+                        <div className="col-span-1 max-lg:mt-2 max-sm:flex-col max-lg:w-full flex justify-center gap-4">
+                            <Button onClick={() => setListingTypes(prev => ({ ...prev, Инвестиции: "buy" }))} className={`flex items-center justify-center gap-2 border rounded-[8px] h-13 min-w-70 max-sm:w-full max-sm:mt-3 whitespace-nowrap px-6 text-[16px] font-inter font-semibold transition
+  ${investmentType === "buy" ? "bg-[#2EAA7B] text-white border-[#2EAA7B]" : "border-[#2EAA7B] text-[#2EAA7B] hover:bg-[#2EAA7B] hover:text-white"} `}>
+                                <ShopIcon className="w-5 h-5 hover:text-white" />
+                                {t("Инвестировать")}
+                            </Button>
+
+                            <Button onClick={() => setListingTypes(prev => ({ ...prev, Инвестиции: "sell" }))} className={`flex items-center justify-center gap-x-2 rounded-[8px] h-13  min-w-70 max-sm:w-full whitespace-nowrap px-6 border border-[#2EAA7B] text-[#2EAA7B] text-[16px] hover:bg-[#2EAA7B] hover:text-white transition duration-500 font-inter leading-[150%] font-semibold
+                        ${investmentType === "sell" ? "bg-[#2EAA7B] text-white border-[#2EAA7B]"
+                                    : "border-[#2EAA7B] text-[#2EAA7B] hover:bg-[#2EAA7B] hover:text-white"
+                                } `}>
+                                <ShopIcon className="w-5 h-5 hover:text-white" />
+                                {t("Получить инвестиции")}
+                            </Button>
+                        </div>
                     </div>
                 </div>
                 {isLoadingInvestment ? (

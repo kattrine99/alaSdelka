@@ -58,6 +58,8 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
     const imageInputRef = useRef<HTMLInputElement>(null);
     const [addressText, setAddressText] = useState(offerData?.address?.address || "");
     const [propertyOwnershipType, setPropertyOwnershipType] = useState(offerData?.premises_ownership_form || "");
+    const [currency, setCurrency] = useState("sum");
+    const currencyRate = useSelector((state: RootState) => state.currency.rate);
     const [monthlyIncome, setMonthlyIncome] = useState<number | undefined>(offerData?.average_monthly_revenue || 0);
     const [profit, setProfit] = useState<number | undefined>(offerData?.average_monthly_profit || 0);
     const [expences, setExpences] = useState<number | undefined>(offerData?.average_monthly_expenses || 0);
@@ -138,12 +140,16 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
     const dispatch = useDispatch();
 
     const handleSubmit = () => {
+        let price = priceInUzs;
+        if (currency == 'dollar') {
+            price = priceInUzs * currencyRate;
+        }
         dispatch(setOfferData({
             title,
             description,
             listing_type: listingType,
             offer_type: offerType,
-            price: priceInUzs,
+            price: price,
             category_id: Number(categoryId),
             area: Number(Area),
             user_name: fullName,
@@ -457,23 +463,33 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
                     </div>
                 </div>}
             {/*Сумма */}
-            <div className="flex flex-col gap-2 w-full max-w-98  relative">
-                <Input
-                    className={`bg-[#F0F1F280] w-full rounded-[14px] outline-none py-3.5 px-4.5 ${!amount ? 'border border-red-500' : ''}`}
-                    LabelText={t("Сумма, Cум")}
-                    type="text"
-                    placeholder={t("Введите")}
-                    isError={false}
-                    value={amount}
-                    onChange={(e) => {
-                        const rawValue = e.target.value.replace(/\D/g, "");
-                        const formatted = rawValue.replace(/\B(?=(\d{3})+(?!\d))/g, " ");
-                        setAmount(formatted);
-                    }}
-                />
-                {!amount && (
-                    <p className="text-red-500 text-sm">{t("Пожалуйста, введите сумму")}</p>
-                )}
+            <div className="flex gap-4 items-center">
+                <div className="flex flex-col gap-2 w-full max-w-98  relative">
+                    <Input
+                        className={`bg-[#F0F1F280] w-full rounded-[14px] outline-none py-3.5 px-4.5 ${!amount ? 'border border-red-500' : ''}`}
+                        LabelText={t("Сумма")}
+                        type="text"
+                        placeholder={t("Введите")}
+                        isError={false}
+                        value={amount}
+                        onChange={(e) => {
+                            const rawValue = e.target.value.replace(/\D/g, "");
+                            const formatted = rawValue.replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+                            setAmount(formatted);
+                        }}
+                    />
+                    {!amount && (
+                        <p className="text-red-500 text-sm">{t("Пожалуйста, введите сумму")}</p>
+                    )}
+                </div>
+                <select value={currency}
+                    onChange={(e ) => setCurrency(e.target.value)}
+                    className={`bg-[#F0F1F280] max-w-40 h-full w-full rounded-[14px] text-[#686A70] outline-none py-3.5 px-4.5`}
+                >
+                    <option value="sum">{t("Сум")}</option>
+                    <option value="dollar">{t("Доллар США")}</option>
+                </select>
+
             </div>
 
             {/*Изображения */}

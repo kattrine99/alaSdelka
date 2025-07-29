@@ -21,7 +21,7 @@ class TranslationService {
                 body: JSON.stringify({
                     q: text,
                     target: targetLang,
-                    source: sourceLang,
+                    // source: sourceLang,
                     format: 'text'
                 })
             });

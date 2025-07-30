@@ -135,7 +135,7 @@ export const Header: React.FC<HeaderProps> = ({
         };
     }, [isMobileMenuOpen]);
     return (
-        <div className={"font-inter font-medium w-full bg-white shadow" + (isMobileUI ? ' hidden' : '')}>
+        <div className={"font-inter font-medium w-full bg-white shadow"}>
             {showtoBar && (
                 <div className="hidden lg:block bg-white py-[20px] border-b border-[#E9E9E9]">
                     <div className="container mx-auto px-4 flex justify-between items-center">
@@ -251,7 +251,7 @@ export const Header: React.FC<HeaderProps> = ({
 
             {/* Мобильный header */}
             <div ref={menuRef} className="lg:hidden sticky top-0 z-50">
-                <div className="flex justify-between items-center px-4 py-4 border-b border-[#E9E9E9] bg-white">
+                <div className={"flex justify-between items-center px-4 py-4 border-b border-[#E9E9E9] bg-white"  + (isMobileUI ? ' hidden' : '')}>
                     <Applink to="/main" className="flex items-center">
                         <img src="/images/investin_logo.png" alt="Logo" className="h-10 object-contain" />
                     </Applink>
@@ -267,7 +267,7 @@ export const Header: React.FC<HeaderProps> = ({
 
                 {isMobileMenuOpen && (
                     <div
-                        className="fixed top-[64px] left-0 w-full bg-white z-40 px-6 py-4 shadow-md flex flex-col gap-6 overflow-y-auto max-h-[calc(100vh-64px)]"
+                        className={"fixed left-0 w-full bg-white z-40 px-6 py-4 shadow-md flex flex-col gap-6 overflow-y-auto max-h-[calc(100vh-64px)]" + (isMobileUI ? '' : ' top-[64px]')}
                     >
                         <NavLinks
                             links={(navLinksData ?? categories).map(link => ({
@@ -275,8 +275,8 @@ export const Header: React.FC<HeaderProps> = ({
                                 label: t(link.label),
                             }))}
                             onClick={() => setIsMobileMenuOpen(false)}  // Закрываем меню при клике
-                            className="flex flex-col gap-4"
-                            linkClassName="text-[#232323] font-inter text-lg hover:text-[#2EAA7B]"
+                            className={"flex-col gap-4" + (isMobileUI ? ' hidden': ' flex')}
+                            linkClassName={"text-[#232323] font-inter text-lg hover:text-[#2EAA7B]"}
                         />
                         {/* Язык и Валюта */}
                         <div className="flex flex-col gap-3">
@@ -340,11 +340,12 @@ export const Header: React.FC<HeaderProps> = ({
                         <div className="flex flex-wrap items-center justify-center md:justify-start gap-4">
                             <Paragraph className="flex items-center gap-2 text-[#232323] font-openSans text-sm md:text-base">
                                 <IoIosMail className="text-[#2EAA7B]" />
-                                info@name-com.uz
+                                <a href="mailto:info@name-com.uz">info@name-com.uz</a>
+                                
                             </Paragraph>
                             <Paragraph className="flex items-center gap-2 text-[#232323] font-inter text-sm md:text-base">
                                 <FaPhone className="text-[#2EAA7B]" />
-                                +998 71 789 78 78
+                                <a href="tel:+99871789878">+998 71 789 78 78</a>
                             </Paragraph>
                         </div>
 

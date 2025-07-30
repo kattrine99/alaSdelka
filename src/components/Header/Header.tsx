@@ -10,12 +10,13 @@ import FavIcon from '../../assets/heart-circle.svg?react';
 import ProfileIcon from '../../assets/profile-circle.svg?react';
 import { useSelector } from "react-redux";
 import { RootState } from "../../Store/store";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setCurrencyMode } from "../../Store/Slices/currencySlice";
 import { useGetNotificationsQuery, useMarkAllReadMutation } from "../../Store/api/Api";
 import { setRefetchNotifications } from "../../utils/notificationRefetch";
 import { useTranslation } from "../../../public/Locales/context/TranslationContext";
+import { setIsMobileUi } from "../../Store/Slices/uiSlice";
 
 interface HeaderProps {
     showNavLinks?: boolean;
@@ -31,6 +32,8 @@ export const Header: React.FC<HeaderProps> = ({
     navLinksData,
 }) => {
     const isAuthenticated = useSelector((state: RootState) => state.auth.isAuthenticated);
+    const isMobileUI = useSelector((state: RootState) => state.ui.isMobileUI);
+    const [searchParams] = useSearchParams();
     const navigate = useNavigate();
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const dispatch = useDispatch();
@@ -51,6 +54,12 @@ export const Header: React.FC<HeaderProps> = ({
     }, [data]);
     useEffect(() => {
         setRefetchNotifications(refetch);
+        searchParams.forEach((value, key) => {
+            if (key == 'mobile' && value == 'true') {
+                dispatch(setIsMobileUi(true))
+                console.log('set is mobile ui', isMobileUI);
+            }
+        })
     }, []);
 
     useEffect(() => {
@@ -126,7 +135,7 @@ export const Header: React.FC<HeaderProps> = ({
         };
     }, [isMobileMenuOpen]);
     return (
-        <div className="font-inter font-medium w-full bg-white shadow">
+        <div className={"font-inter font-medium w-full bg-white shadow" + (isMobileUI ? ' hidden' : '')}>
             {showtoBar && (
                 <div className="hidden lg:block bg-white py-[20px] border-b border-[#E9E9E9]">
                     <div className="container mx-auto px-4 flex justify-between items-center">

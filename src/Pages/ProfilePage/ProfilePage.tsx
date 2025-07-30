@@ -1,5 +1,5 @@
 import { useNavigate, useLocation } from "react-router-dom";
-import { useGetUserInfoQuery, useUpdateUserInfoMutation, useLogoutMutation, useGetFiltersDataQuery } from "../../Store/api/Api";
+import { useGetUserInfoQuery, useUpdateUserInfoMutation, useLogoutMutation, useGetFiltersDataQuery, useDeleteAccountMutation } from "../../Store/api/Api";
 import { Heading, Paragraph, Input, Button, Header, Footer, Breadcrumbs, ModalBase } from "../../components";
 import { useDispatch } from "react-redux";
 import { setIsAuthenticated } from "../../Store/Slices/authSlice";
@@ -20,8 +20,10 @@ export const ProfilePage = () => {
     const [editMode, setEditMode] = useState(false);
     const { data, isLoading, error, refetch } = useGetUserInfoQuery();
     const [updateUserInfo] = useUpdateUserInfoMutation();
+    const [deleteAccount] = useDeleteAccountMutation();
     const { data: filtersData, isLoading: isLoadingFilters } = useGetFiltersDataQuery();
     const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
+    const [showDeleteAccountConfirm, setShowDeleteAccountConfirm] = useState(false);
 
     const [fullNameInput, setFullNameInput] = useState("");
 
@@ -66,6 +68,18 @@ export const ProfilePage = () => {
             navigate("/main");
         }
     };
+
+    const handleDeleteAccount = async () => {
+        try {
+            await deleteAccount().unwrap();
+        } catch (error) {
+            console.error("Ошибка при удалении аккаунта:", error)
+        } finally {
+            localStorage.removeItem("access_token");
+            dispatch(setIsAuthenticated(false));
+            navigate("/main");
+        }
+    }
 
     const handleEditClick = () => {
         setEditMode(true);
@@ -132,6 +146,32 @@ export const ProfilePage = () => {
                             <Button
                                 className="border border-[#2EAA7B] w-full text-[#2EAA7B] px-6 py-3 rounded-[10px]"
                                 onClick={() => setShowLogoutConfirm(false)}
+                            >
+                                {t("Отмена")}
+                            </Button>
+                        </div>
+                    }
+                />
+            )}
+            {showDeleteAccountConfirm && (
+                <ModalBase
+                    title={t("Подтвердите действие")}
+                    message={t("Вы действительно хотите удалить свой аккаунт?")}
+                    ModalClassName="w-100 p-9"
+                    showCloseButton={true}
+                    onClose={() => setShowDeleteAccountConfirm(false)}
+                    HeadingClassName="font-inter font-semibold text-[#101828] mt-3 text-3xl leading-[44px]"
+                    actions={
+                        <div className="flex gap-4 mt-6 ">
+                            <Button
+                                className="text-white bg-[#DE5151] w-full px-6 py-3 rounded-[10px]"
+                                onClick={handleDeleteAccount}
+                            >
+                                {t("Удалить")}
+                            </Button>
+                            <Button
+                                className="border border-[#2EAA7B] w-full text-[#2EAA7B] px-6 py-3 rounded-[10px]"
+                                onClick={() => setShowDeleteAccountConfirm(false)}
                             >
                                 {t("Отмена")}
                             </Button>
@@ -316,6 +356,12 @@ export const ProfilePage = () => {
                                 </div>
                             </div>
                         </div>
+
+                        {!editMode && (
+                            <div className="flex gap-4 justify-end mt-6">
+                                <Button className="text-white bg-[#DE5151] px-6 py-3  rounded-[10px] cursor-pointer" onClick={() => setShowDeleteAccountConfirm(true)}>{t("Удалить аккаунт")}</Button>
+                            </div>
+                        )}
 
                         {editMode && (
                             <div className="flex gap-4 mt-6">

@@ -259,6 +259,12 @@ export const AuthApi = createApi({
                 },
             }),
         }),
+        deleteAccount: builder.mutation<void, void>({
+            query: () => ({
+                url: '/user',
+                method: 'delete'
+            })
+        })
 
     }),
 
@@ -272,6 +278,7 @@ export const {
     useLogoutMutation,
     usePublishOfferMutation,
     useUpdateUserInfoMutation,
+    useDeleteAccountMutation,
     usePromoteOfferMutation,
     useToggleFavoriteMutation,
     useSellOfferMutation,

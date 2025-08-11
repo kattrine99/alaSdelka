@@ -25,8 +25,9 @@ import { RootState } from "./Store/store";
 import { ProtectedRoute } from "./ProtectedRoute";
 import UserAgreement from "./components/Footer/UserAgreement";
 import PrivacyPolicy from "./components/Footer/PrivacyPolicy";
-import { useGetCurrencyRateQuery } from "./Store/api/Api";
+import { useGetCurrencyRateQuery, useGetSiteSettingsQuery } from "./Store/api/Api";
 import { setCurrencyRate } from "./Store/Slices/currencySlice";
+import { setSiteSettings } from "./Store/Slices/siteSettings";
 import { TranslationProvider } from "./../public/Locales/context/TranslationContext";
 import { ArchivePage } from "./Pages/Announcements/Archive";
 
@@ -35,13 +36,20 @@ const Layout = () => {
   const navigate = useNavigate();
   const logoutReason = useSelector((state: RootState) => state.auth.logoutReason);
   const authReady = useSelector((state: RootState) => state.auth.authReady);
-  const { data } = useGetCurrencyRateQuery();
 
+  const { data } = useGetCurrencyRateQuery();
   useEffect(() => {
     if (data?.rate) {
       dispatch(setCurrencyRate(data.rate));
     }
   }, [data, dispatch]);
+
+  const { data: siteSettings } = useGetSiteSettingsQuery();
+  useEffect(() => {
+    if (siteSettings) {
+      dispatch(setSiteSettings(siteSettings));
+    }
+  }, [siteSettings, dispatch]);
 
   useEffect(() => {
     const token = localStorage.getItem("access_token");

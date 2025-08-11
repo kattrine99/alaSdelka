@@ -25,6 +25,7 @@ import type {
     AddCardPayload,
     VerifyCardResponse,
     VerifyCardPayload,
+    SiteSettings,
 } from "./types";
 import { ICard } from "../../components/Cards/Interfaces";
 import customBaseQuery from "./customBaseQuery";
@@ -101,6 +102,9 @@ export const AuthApi = createApi({
         }),
         getCurrencyRate: builder.query<{ rate: number }, void>({
             query: () => "/currency/usd-uzs",
+        }),
+        getSiteSettings: builder.query<SiteSettings, void>({
+            query: () => "/seo/settings",
         }),
         getMyOffers: builder.query<MyOffer, { page: number; per_page?: number; is_paid?: boolean; is_active?: boolean; }>({
             query: ({ page, per_page = 5 }) =>
@@ -304,6 +308,7 @@ export const {
     useDownloadOfferDocumentsQuery,
     useGetUserCardsQuery,
     useGetCurrencyRateQuery,
+    useGetSiteSettingsQuery,
     useAddUserCardMutation,
     useVerifyUserCardMutation,
     useUpdateOfferMutation,

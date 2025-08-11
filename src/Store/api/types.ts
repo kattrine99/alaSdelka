@@ -172,6 +172,83 @@ interface CityStats {
     offers_count: number;
 }
 
+interface SeoHomeSettings {
+    title: string | null;
+    description: string | null;
+    keywords: string | null;
+}
+
+interface SeoBusinessSettings {
+    title: string | null;
+    description: string | null;
+    keywords: string | null;
+    content_top: string | null;
+    content_bottom: string | null;
+}
+
+interface SeoFranchiseSettings {
+    title: string | null;
+    description: string | null;
+    keywords: string | null;
+    content_top: string | null;
+    content_bottom: string | null;
+}
+
+interface SeoInvestmentsSettings {
+    title: string | null;
+    description: string | null;
+    keywords: string | null;
+    content_top: string | null;
+    content_bottom: string | null;
+}
+
+interface SeoStartupSettings {
+    title: string | null;
+    description: string | null;
+    keywords: string | null;
+    content_top: string | null;
+    content_bottom: string | null;
+}
+
+export interface SeoSettings {
+    home: SeoHomeSettings;
+    business: SeoBusinessSettings;
+    franchise: SeoFranchiseSettings;
+    investments: SeoInvestmentsSettings;
+    startups: SeoStartupSettings;
+    sitemap_url: string | null;
+    google_analytics_id: string | null;
+    yandex_metrika_id: string | null;
+    google_site_verification: string | null;
+    yandex_verification: string | null;
+    robots_txt: string | null;
+    enable_og_tags: boolean;
+    enable_schema_markup: boolean;
+}
+
+export interface ContactsSocialSettings {
+    telegram: string | null;
+    whatsapp: string | null;
+    instagram: string | null;
+    facebook: string | null;
+    linkedin: string | null;
+    youtube: string | null;
+}
+
+export interface ContactsSettings {
+    email: string | null;
+    phone: string | null;
+    phone_secondary: string | null;
+    address: string | null;
+    work_hours: string | null;
+    social: ContactsSocialSettings;
+}
+
+export interface SiteSettings {
+    seo: SeoSettings;
+    contacts: ContactsSettings;
+}
+
 export interface OfferDetail {
     data: {
         id: number;

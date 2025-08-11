@@ -589,6 +589,7 @@ export interface OfferResponse {
     id: number;
     photos?: PhotoResponse[];
     documents?: DocumentResponse[];
+    slug: string;
 }
 export interface UserCard {
     id: number;

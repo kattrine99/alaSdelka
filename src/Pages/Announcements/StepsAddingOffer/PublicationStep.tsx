@@ -3,13 +3,13 @@ import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../../Store/store";
 import { OfferPayload } from "../../../Store/api/types";
 import { ICard } from "../../../components/Cards/Interfaces";
-import { useCreateOfferMutation, usePublishOfferMutation } from "../../../Store/api/Api";
+import { useCreateOfferMutation } from "../../../Store/api/Api";
 import { useState } from "react";
 import { clearOfferData } from "../../../Store/tempStorage";
 import { useTranslation } from "../../../../public/Locales/context/TranslationContext";
 
 interface Props {
-    onPublish: () => void;
+    onPublish: (offerSlug: string) => void;
     onPreview: () => void;
 }
 
@@ -36,13 +36,12 @@ export const PublicationStep: React.FC<Props> = ({ onPublish, onPreview }) => {
     const cardData = useSelector((state: RootState) => state.tempOffer.offerData);
     const dispatch = useDispatch();
     const [createOffer] = useCreateOfferMutation();
-    const [publishOffer] = usePublishOfferMutation();
 
     const [isPublishing, setIsPublishing] = useState(false);
     const [, setIsPublished] = useState(false);
     const [, setError] = useState(false);
     const [isErrorModalOpen, setIsErrorModalOpen] = useState(false);
-    const { lang, t } = useTranslation()
+    const { t } = useTranslation()
     if (!cardData) return null;
 
     const card = mapOfferToCard(cardData);
@@ -101,13 +100,13 @@ export const PublicationStep: React.FC<Props> = ({ onPublish, onPreview }) => {
             }
 
             const createResponse = await createOffer(formData).unwrap();
-            const newOfferId = createResponse.data.id;
+            const newOfferSlug = createResponse.data.slug;
 
-            await publishOffer(newOfferId).unwrap();
+            // await publishOffer(newOfferId).unwrap();
 
             setIsPublished(true);
             dispatch(clearOfferData());
-            onPublish();
+            onPublish(newOfferSlug);
         } catch (err) {
             console.error("Ошибка при публикации оффера:", err);
             setError(true);
@@ -148,9 +147,8 @@ export const PublicationStep: React.FC<Props> = ({ onPublish, onPreview }) => {
                 <Button
                     className="bg-[#2EAA7B] text-white px-6 py-3 rounded-md mt-6"
                     onClick={handlePublish}
-                    disabled={isPublishing}
                 >
-                    {isPublishing ? t("Публикация...") : t("Опубликовать")}
+                    {isPublishing ? t("Создание...") : t("Создать объявление")}
                 </Button>
             </div>
 

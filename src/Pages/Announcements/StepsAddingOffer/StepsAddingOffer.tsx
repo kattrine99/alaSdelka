@@ -9,6 +9,7 @@ import HeadphonesIcon from '../../../assets/headphones.svg?react';
 import { InformationStep } from "./InformationStep";
 import { PublicationStep } from "./PublicationStep";
 import { ModerationStep } from "./ModerationStep";
+import { PaymentStep } from "./PaymentStep"
 import { useSelector } from "react-redux";
 import { RootState } from "../../../Store/store";
 import { FiChevronRight } from "react-icons/fi";
@@ -21,6 +22,7 @@ const steps = [
     { title: "Раздел объявления", subtitle: "Выберите категорию объявления" },
     { title: "Тип объявления", subtitle: "Выберите что вы хотите сделать" },
     { title: "Информация", subtitle: "Заполните детали объявления" },
+    { title: "Оплата", subtitle: "Выберите способ оплаты" },
     { title: "Публикация", subtitle: "Проверьте и подтвердите" },
     { title: "Готово", subtitle: "На модерации" }
 ];
@@ -51,9 +53,10 @@ export const StepsAddingOffer = () => {
     const [step, setStep] = useState(0);
     const [listingType, setListingType] = useState<"buy" | "sell" | null>(null);
     const [offerType, setOfferType] = useState<OfferType | null>(null);
+    const [offerSlug, setOfferSlug] = useState<string | null>(null);
     const savedData = useSelector((state: RootState) => state.tempOffer.offerData);
     const [showHelperModal, setShowHelperModal] = useState(false);
-    const { lang, t } = useTranslation()
+    const { t } = useTranslation()
     const getListingTypeLabel = (type: "buy" | "sell") => {
         if (offerType === "investments") {
             return type === "buy" ? t("Найти инвестиции") : t("Инвестировать");
@@ -72,8 +75,9 @@ export const StepsAddingOffer = () => {
         return false;
     };
 
-    const handlePublish = () => {
-        setStep(4);
+    const handlePublish = (offerSlug: string) => {
+        setOfferSlug(offerSlug);
+        setStep(6);
     };
 
     return (
@@ -270,6 +274,9 @@ export const StepsAddingOffer = () => {
                                 {/* Step-4 - Готово */}
                                 {step === 4 && (
                                     <ModerationStep />
+                                )}
+                                {step === 6 && offerSlug != null && (
+                                    <PaymentStep offerSlug={offerSlug} onPayment={() => {setStep(4)}} />
                                 )}
                             </div>
                         </div></div>

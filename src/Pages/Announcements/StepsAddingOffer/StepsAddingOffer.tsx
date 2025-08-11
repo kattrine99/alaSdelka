@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button, Paragraph, Footer, Header, Breadcrumbs, Heading, ModalBase } from "../../../components/index";
 import { profileNavigate } from "../../../utils/categoryMap";
 import ShopIcon from '../../../assets/shop.svg?react';
@@ -16,6 +16,7 @@ import { FiChevronRight } from "react-icons/fi";
 import { CardDetailPreview } from "../../../components/Cards/CardDetailPreview";
 import { FaCheckCircle } from "react-icons/fa";
 import { useTranslation } from "../../../../public/Locales/context/TranslationContext";
+import { useSearchParams } from "react-router-dom";
 
 
 const steps = [
@@ -56,6 +57,7 @@ export const StepsAddingOffer = () => {
     const [offerSlug, setOfferSlug] = useState<string | null>(null);
     const savedData = useSelector((state: RootState) => state.tempOffer.offerData);
     const [showHelperModal, setShowHelperModal] = useState(false);
+    const [searchParams] = useSearchParams()
     const { t } = useTranslation()
     const getListingTypeLabel = (type: "buy" | "sell") => {
         if (offerType === "investments") {
@@ -79,6 +81,14 @@ export const StepsAddingOffer = () => {
         setOfferSlug(offerSlug);
         setStep(6);
     };
+
+    useEffect(() => {
+        const offerSlug = searchParams.get("offerSlug");
+        if (offerSlug) {
+            setOfferSlug(offerSlug);
+            setStep(6);
+        }
+    }, [searchParams]);
 
     return (
         <div className="w-screen min-h-screen flex flex-col">
@@ -161,7 +171,7 @@ export const StepsAddingOffer = () => {
                                             <Button
                                                 onClick={() => i <= step && setStep(i)}
                                                 className="flex items-center gap-3 text-left z-10"
-                                                disabled={i > step}
+                                                disabled={i > step || offerSlug != null}
                                             >
                                                 <div
                                                     className={`w-8 h-8 flex items-center justify-center rounded-full border-2 transition

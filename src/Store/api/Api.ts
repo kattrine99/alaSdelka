@@ -201,9 +201,9 @@ export const AuthApi = createApi({
             }),
         }),
 
-        publishOffer: builder.mutation<{ data: OfferDetail }, number>({
-            query: (id) => ({
-                url: `/offer/${id}/publish`,
+        publishOffer: builder.mutation<{ data: OfferDetail }, string>({
+            query: (slug) => ({
+                url: `/offer/${slug}/publish`,
                 method: "POST",
             }),
         }),
@@ -213,6 +213,13 @@ export const AuthApi = createApi({
         >({
             query: (payload) => ({
                 url: "/promotions",
+                method: "POST",
+                body: payload,
+            }),
+        }),
+        payPublishOffer: builder.mutation<{message: string}, {tariff_id: number; offer_slug: string; card_id: number}>({
+            query: (payload) => ({
+                url: "/pay-publish",
                 method: "POST",
                 body: payload,
             }),
@@ -280,6 +287,7 @@ export const {
     useUpdateUserInfoMutation,
     useDeleteAccountMutation,
     usePromoteOfferMutation,
+    usePayPublishOfferMutation,
     useToggleFavoriteMutation,
     useSellOfferMutation,
     useArchiveOfferMutation,

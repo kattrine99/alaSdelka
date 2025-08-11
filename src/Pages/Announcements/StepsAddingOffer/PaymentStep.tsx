@@ -9,14 +9,15 @@ import {
 import {
     useGetFiltersDataQuery,
     useGetUserCardsQuery,
-    usePromoteOfferMutation,
     useAddUserCardMutation,
     useVerifyUserCardMutation,
     useGetUserInfoQuery,
+    usePayPublishOfferMutation,
+    usePublishOfferMutation,
 } from "../../../Store/api/Api";
 import UzcardIcon from "../../../assets/uzcard.svg?react";
 import HumoIcon from "../../../assets/humo.svg?react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useTranslation } from "../../../../public/Locales/context/TranslationContext";
 
 interface Props {
@@ -44,7 +45,8 @@ export const PaymentStep: React.FC<Props> = ({onPayment, offerSlug}) => {
 
     const [addCard] = useAddUserCardMutation();
     const [verifyCard] = useVerifyUserCardMutation();
-    const [promoteOffer] = usePromoteOfferMutation();
+    const [payPublishOffer] = usePayPublishOfferMutation();
+    const [publishOffer] = usePublishOfferMutation();
     const [step, setStep] = useState<1 | 2 | 3>(1);
     const [timer, setTimer] = useState<number>(60);
     const [canResend, setCanResend] = useState<boolean>(false);
@@ -90,13 +92,14 @@ export const PaymentStep: React.FC<Props> = ({onPayment, offerSlug}) => {
                 code: smsCode,
             }).unwrap();
 
-            await promoteOffer({
+            await payPublishOffer({
                 offer_slug: offerSlug,
                 card_id: selectedCardId!,
                 tariff_id: selectedTariff!,
             }).unwrap();
 
             setPaymentSuccess(true);
+            await publishOffer(offerSlug).unwrap();
             onPayment();
         } catch {
             setPaymentSuccess(false);
@@ -107,7 +110,7 @@ export const PaymentStep: React.FC<Props> = ({onPayment, offerSlug}) => {
     }
     const handleExistingCardPayment = async () => {
         try {
-            await promoteOffer({
+            await payPublishOffer({
                 offer_slug: offerSlug,
                 card_id: selectedCardId!,
                 tariff_id: selectedTariff!,
@@ -212,12 +215,12 @@ export const PaymentStep: React.FC<Props> = ({onPayment, offerSlug}) => {
                                 <Paragraph className="border py-3 px-5 w-12.5 h-12.5 flex items-center justify-center text-base border-[#2EAA7B] rounded-full">
                                     1
                                 </Paragraph>
-                                <Heading className="text-xl font-inter w-full" text={t("Выберите количество дней для публикации вашего объявления")} level={3} />
+                                <Heading className="font-inter w-full" text={t("Выберите количество дней для публикации вашего объявления")} level={3} />
                             </div>
                             <div className="flex flex-wrap gap-6.75 mt-5.5 w-full max-md:flex-col">
-                                {isTariffsLoading ? <Paragraph>{t("Загрузка тарифов...")}</Paragraph> : filtersData?.tariffs?.map((tariff) => (
+                                {isTariffsLoading ? <Paragraph>{t("Загрузка тарифов...")}</Paragraph> : filtersData?.publish_tariffs?.map((tariff) => (
                                     <Button key={tariff.id} className={`flex flex-col border items-start border-[#2EAA7B] px-6 py-4 rounded-lg ${selectedTariff === tariff.id ? "bg-[#2EAA7B] text-white" : "bg-white"}`} onClick={() => setSelectedTariff(tariff.id)}>
-                                        <Paragraph className="font-inter font-semibold text-xl">{tariff.duration} {t("дней")}</Paragraph>
+                                        <Paragraph className="font-inter font-semibold">{tariff.duration_in_days} {t("дней")}</Paragraph>
                                         <Paragraph>{tariff.price.toLocaleString()} {t("сум")}</Paragraph>
                                     </Button>
                                 ))}
@@ -225,7 +228,7 @@ export const PaymentStep: React.FC<Props> = ({onPayment, offerSlug}) => {
 
                             <div className="flex gap-8.25 items-center mb-5 mt-9.25">
                                 <Paragraph className="border py-3 px-5 w-12.5 h-12.5 items-center border-[#2EAA7B] rounded-full">2</Paragraph>
-                                <Heading level={3} className="text-xl font-inter w-full" text={t("Выберите карту для оплаты или введите данные новой карты")} />
+                                <Heading level={3} className=" font-inter w-full" text={t("Выберите карту для оплаты или введите данные новой карты")} />
                             </div>
 
                             {/* Карты пользователя */}
@@ -234,7 +237,7 @@ export const PaymentStep: React.FC<Props> = ({onPayment, offerSlug}) => {
                                     <div className="flex flex-wrap max-md:flex-col gap-6.75">
                                         {cards.map((card) => (
                                             <Button key={card.id} onClick={() => handleCardSelect(card)} className={`flex flex-col border items-start border-[#2EAA7B] px-6 py-4 rounded-lg ${selectedCardId === card.id ? "bg-[#2EAA7B] text-white" : "bg-white"}`}>
-                                                <Paragraph className="font-inter font-semibold text-xl">{card.masked_number}</Paragraph>
+                                                <Paragraph className="font-inter font-semibold">{card.masked_number}</Paragraph>
                                                 <Paragraph>{t("Срок:")} {card.expire.slice(0, 2)}/{card.expire.slice(2, 4)}</Paragraph>
                                             </Button>
                                         ))}
@@ -245,24 +248,24 @@ export const PaymentStep: React.FC<Props> = ({onPayment, offerSlug}) => {
                             {/* Новая карта */}
                             <div className="mt-10 px-4 sm:px-0">
                                 <div className="bg-[#F8F8F8] w-full rounded-[20px] md:rounded-[40px] py-8 px-6 md:px-12.5 shadow-md">
-                                    <Input placeholder="0000 0000 0000 0000" LabelText={t("Номер карты")} LabelClassName="font-inter text-[25px] max-sm:text-[18px] mb-[19px]" value={cardNumber} onChange={(e) => {
+                                    <Input placeholder="0000 0000 0000 0000" LabelText={t("Номер карты")} LabelClassName="font-inter max-sm:text-[18px] mb-[19px]" value={cardNumber} onChange={(e) => {
                                         const rawValue = e.target.value.replace(/\D/g, "").slice(0, 16);
                                         const formatted = rawValue.replace(/(.{4})/g, "$1 ").trim();
                                         setCardNumber(formatted);
-                                    }} isError={false} className="w-full mb-12 flex flex-col outline-none py-3.5 px-4.5 bg-[#F0F1F280] border border-[#DEE0E333] rounded-2xl text-3xl max-sm:text-[16px] text-[#686A70]" />
+                                    }} isError={false} className="w-full mb-12 flex flex-col outline-none py-3.5 px-4.5 bg-[#F0F1F280] border border-[#DEE0E333] rounded-2xl max-sm:text-[16px] text-[#686A70]" />
                                     <div className="flex justify-between flex-col md:flex-row gap-6 md:gap-0">
                                         <div className="flex flex-col w-full gap-4">
-                                            <Paragraph className="font-inter text-2xl max-sm:text-[18px] mb-4.5">{t("Срок действия")}</Paragraph>
+                                            <Paragraph className="font-inter max-sm:text-[18px] mb-4.5">{t("Срок действия")}</Paragraph>
                                             <div className="flex gap-2 w-full">
                                                 <Input placeholder="MM" value={expiryMonth} onChange={(e) => {
                                                     const value = e.target.value.replace(/\D/g, "").slice(0, 2);
                                                     setExpiryMonth(value);
                                                 }}
-                                                    isError={false} className="bg-[#F0F1F280] rounded-xl outline-none py-3.5 px-4.5 max-w-33 max-sm:w-full text-center text-xl max-sm:text-[16px] text-[#686A70]" />
+                                                    isError={false} className="bg-[#F0F1F280] rounded-xl outline-none py-3.5 px-4.5 max-w-33 max-sm:w-full text-center max-sm:text-[16px] text-[#686A70]" />
                                                 <Input placeholder="YY" value={expiryYear} onChange={(e) => {
                                                     const value = e.target.value.replace(/\D/g, "").slice(0, 2);
                                                     setExpiryYear(value);
-                                                }} isError={false} className="bg-[#F0F1F280] rounded-xl outline-none py-3.5 px-4.5 max-w-33 max-sm:w-full text-center text-xl max-sm:text-[16px] text-[#686A70]" />
+                                                }} isError={false} className="bg-[#F0F1F280] rounded-xl outline-none py-3.5 px-4.5 max-w-33 max-sm:w-full text-center max-sm:text-[16px] text-[#686A70]" />
                                             </div>
                                         </div>
                                         <div className="flex gap-6 mt-4 items-end">
@@ -278,16 +281,16 @@ export const PaymentStep: React.FC<Props> = ({onPayment, offerSlug}) => {
 
                             <div className="flex gap-8.25 items-center mb-5 mt-9.25">
                                 <Paragraph className="border py-3 px-5 w-12.5 h-12.5 items-center border-[#2EAA7B] rounded-full">3</Paragraph>
-                                <Heading className=" w-full text-xl font-inter" level={3} text={t("После ввода данных, нажмите Оплатить и подтвердите через SMS")} />
+                                <Heading className=" w-full font-inter" level={3} text={t("После ввода данных, нажмите Оплатить и подтвердите через SMS")} />
                             </div>
                         </div>
 
                         {/* Итог и оплата */}
                         <div className="mt-10 mb-20 w-full flex justify-center px-4 sm:px-0">
                             <div className="w-full max-w-[400px] text-center">
-                                <Paragraph className="mb-2 font-inter text-xl md:text-3xl">{t("К оплате:")}</Paragraph>
-                                <Paragraph className="mb-8 text-xl md:text-3xl font-bold">
-                                    {filtersData?.tariffs?.find((t) => t.id === selectedTariff)?.price.toLocaleString() || 0} {t("сум")}
+                                <Paragraph className="mb-2 font-inter">{t("К оплате:")}</Paragraph>
+                                <Paragraph className="mb-8 font-bold">
+                                    {filtersData?.publish_tariffs?.find((t) => t.id === selectedTariff)?.price.toLocaleString() || 0} {t("сум")}
                                 </Paragraph>
                                 <Button
                                     onClick={async () => {
@@ -304,7 +307,7 @@ export const PaymentStep: React.FC<Props> = ({onPayment, offerSlug}) => {
                                             !selectedCardId &&
                                             (!cardNumber || !expiryMonth || !expiryYear)
                                         )
-                                    } className="w-full text-[18px] md:text-[25px] px-5 py-3 rounded-lg bg-[#2EAA7B] text-white cursor-pointer"
+                                    } className="w-full px-5 py-3 rounded-lg bg-[#2EAA7B] text-white cursor-pointer"
                                 >
                                     {t("Оплатить")}
                                 </Button>
@@ -350,7 +353,7 @@ export const PaymentStep: React.FC<Props> = ({onPayment, offerSlug}) => {
                                 onClick={async () => {
                                     try {
                                         await verifyCard({ card_id: newCardId!, code }).unwrap();
-                                        await promoteOffer({ offer_slug: offerSlug, card_id: newCardId!, tariff_id: selectedTariff! }).unwrap();
+                                        await payPublishOffer({ offer_slug: offerSlug, card_id: newCardId!, tariff_id: selectedTariff! }).unwrap();
                                         setPaymentSuccess(true);
                                         setStep(3);
                                         setShowResultModal(true);
@@ -366,9 +369,7 @@ export const PaymentStep: React.FC<Props> = ({onPayment, offerSlug}) => {
                             </Button>
                         </div>} HeadingClassName={""} />
                 )}
-
             </div>
-            <Footer showSmallFooter={true} />
         </div>
     );
 };

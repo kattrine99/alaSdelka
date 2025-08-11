@@ -422,6 +422,14 @@ export interface FilterData {
             duration: number,
         }
     ],
+    publish_tariffs: [
+        {
+            id: number,
+            name: string,
+            price: number,
+            duration_in_days: number,
+        }
+    ],
     premises_ownership_form: [
         {
             value: string,

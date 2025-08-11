@@ -173,39 +173,39 @@ interface CityStats {
 }
 
 interface SeoHomeSettings {
-    title: string | null;
-    description: string | null;
-    keywords: string | null;
+    title: string;
+    description: string;
+    keywords?: string;
 }
 
 interface SeoBusinessSettings {
-    title: string | null;
-    description: string | null;
-    keywords: string | null;
+    title: string;
+    description: string;
+    keywords?: string;
     content_top: string | null;
     content_bottom: string | null;
 }
 
 interface SeoFranchiseSettings {
-    title: string | null;
-    description: string | null;
-    keywords: string | null;
+    title: string;
+    description: string;
+    keywords?: string;
     content_top: string | null;
     content_bottom: string | null;
 }
 
 interface SeoInvestmentsSettings {
-    title: string | null;
-    description: string | null;
-    keywords: string | null;
+    title: string;
+    description: string;
+    keywords?: string;
     content_top: string | null;
     content_bottom: string | null;
 }
 
 interface SeoStartupSettings {
-    title: string | null;
-    description: string | null;
-    keywords: string | null;
+    title: string;
+    description: string;
+    keywords?: string;
     content_top: string | null;
     content_bottom: string | null;
 }

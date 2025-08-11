@@ -22,6 +22,10 @@ import { FiSearch } from "react-icons/fi";
 import { FiltersState, ruToEnOfferTypeMap } from "../../utils/variables";
 import { OfferFilters } from "../../Store/api/types";
 import { useTranslation } from "../../../public/Locales/context/TranslationContext";
+import { useSelector } from "react-redux";
+import { RootState } from "../../Store/store";
+import { MetaTags } from "../../components/MetaTags";
+import { SearchResultsSchema, StaticPageSchema } from "../../components/SchemaMarkup";
 
 function cleanObject<T extends object>(obj: T): Partial<T> {
     return Object.fromEntries(
@@ -34,6 +38,7 @@ export const CategoryPage = () => {
     const [searchParams] = useSearchParams();
     const navigate = useNavigate();
     const { lang, t } = useTranslation() as { lang: 'ru' | 'uz', t: (key: string) => string };
+    const siteSettings = useSelector((state: RootState) => state.siteSettings.settings);
     const categoryKey = category?.toLowerCase() ?? "";
     const categoryId = routeToCategoryIdMap[categoryKey] || "";
     const type = useMemo(() => urlToTypeMap[categoryKey] ?? "", [categoryKey]);
@@ -165,133 +170,153 @@ export const CategoryPage = () => {
     }
 
     return (
-        <div className="font-openSans min-h-screen w-screen overflow-x-hidden">
-            <Header />
-            <div className="grid grid-cols-3 container mx-auto px-3 xl:px-0 py-[30px] pb-10 gap-10 items-start">
-                <aside className="hidden lg:flex flex-col mr-[60px] col-span-1">
-                    <Breadcrumbs category={typeToTitleMap[type]?.[lang] || ""} />
-                    <Heading text={t(pageTitle)} level={2} className="text-[30px] font-bold text-black" />
-                    <Paragraph className="text-[#787878] font-inter font-medium text-[14px] mt-3.5">
-                        {cards.length.toLocaleString("ru-RU")} {t("объявлений")}
-                    </Paragraph>
-
-                    {type && (
-                        <Filters
-                            offer_type={categoryKey as "business" | "startup" | "franchise" | "investments"}
-                            filters={localFilters}
-                            setFilters={setLocalFilters}
-                            onApplyFilters={handleApplyFilters}
-                        />
+        <>
+            {(siteSettings != null) && (
+                <>
+                    {(categoryKey == 'business') && (
+                        <MetaTags title={siteSettings.seo.business.title} description={siteSettings.seo.business.description} keywords={siteSettings.seo.business.keywords} />
                     )}
-                </aside>
+                    {(categoryKey == 'franchise') && (
+                        <MetaTags title={siteSettings.seo.franchise.title} description={siteSettings.seo.franchise.description} keywords={siteSettings.seo.franchise.keywords} />
+                    )}
+                    {(categoryKey == 'investments') && (
+                        <MetaTags title={siteSettings.seo.investments.title} description={siteSettings.seo.investments.description} keywords={siteSettings.seo.investments.keywords} />
+                    )}
+                    {(categoryKey == 'startup') && (
+                        <MetaTags title={siteSettings.seo.startups.title} description={siteSettings.seo.startups.description} keywords={siteSettings.seo.startups.keywords} />
+                    )}
+                    <StaticPageSchema pageType="business" title={siteSettings.seo.business.title}  description={siteSettings.seo.business.description} locale={lang}/>
+                    <SearchResultsSchema query={""} offers={cards} filters={{ offer_type: categoryKey }} resultsCount={cards.length} locale={lang} />
+                </>
+            )}
+            <div className="font-openSans min-h-screen w-screen overflow-x-hidden">
+                <Header />
+                <div className="grid grid-cols-3 container mx-auto px-3 xl:px-0 py-[30px] pb-10 gap-10 items-start">
+                    <aside className="hidden lg:flex flex-col mr-[60px] col-span-1">
+                        <Breadcrumbs category={typeToTitleMap[type]?.[lang] || ""} />
+                        <Heading text={t(pageTitle)} level={2} className="text-[30px] font-bold text-black" />
+                        <Paragraph className="text-[#787878] font-inter font-medium text-[14px] mt-3.5">
+                            {cards.length.toLocaleString("ru-RU")} {t("объявлений")}
+                        </Paragraph>
 
-                <main className="flex-1 col-span-3 lg:col-span-2 justify-end">
-                    <div className="flex justify-between">
-                        <aside className="flex lg:hidden flex-col mr-[60px]">
-                            <Breadcrumbs category={type} />
-                            <Heading text={pageTitle} level={2} className="text-[30px] font-bold text-black" />
-                            <Paragraph className="text-[#787878] font-inter font-medium text-[14px] mt-3.5">
-                                {cards.length.toLocaleString("ru-RU")} {t("объявлений")}
-                            </Paragraph>
-                        </aside>
-                        <div className="flex items-center">
-                            {type && (
-                                <>
-                                    <button onClick={() => setIsMobileFiltersOpen(true)} className="btn btn-primary px-5 py-3 bg-[#2EAA7B] text-white rounded-[6px] hover:bg-[#31B683] transition duration-300 lg:hidden">
-                                        {t("Фильтры")}
-                                    </button>
-                                    {isMobileFiltersOpen && (
-                                        <div className="mobile-filters-overlay">
-                                            <div className="mobile-filters">
-                                                <button onClick={() => setIsMobileFiltersOpen(false)} className="close-btn">×</button>
-                                                <Filters
-                                                    offer_type={categoryKey as "business" | "startup" | "franchise" | "investments"}
-                                                    filters={localFilters}
-                                                    setFilters={setLocalFilters}
-                                                    onApplyFilters={handleApplyFilters}
-                                                />
-                                            </div>
-                                        </div>
-                                    )}
-                                </>
-                            )}
-                        </div>
-                    </div>
-                    <div className="hidden lg:flex justify-end gap-x-4">
-                        <Button
-                            className="px-5 py-3 bg-[#2EAA7B] text-white rounded-[6px] hover:bg-[#31B683] transition duration-300"
-                            onClick={() => navigate('/add-offer')}
-                        >
-                            {t("Добавить объявление")}
-                        </Button>
-                        <div
-                            className="flex items-center border border-[#2EAA7B] rounded-xl pl-5 w-[450px] bg-white overflow-hidden">
-                            <div className="text-[#2EAA7B]">
-                                <FiSearch className="w-[24px] h-[24px]" />
-                            </div>
-                            <Input
-                                type="text"
-                                value={searchInput}
-                                onChange={(e) => setSearchInput(e.target.value)}
-                                placeholder={t("Поиск по названию или ID")}
-                                isError={false}
-                                className="flex-1 w-full px-2.5 text-[#787878] placeholder-[#787878] bg-white outline-none"
+                        {type && (
+                            <Filters
+                                offer_type={categoryKey as "business" | "startup" | "franchise" | "investments"}
+                                filters={localFilters}
+                                setFilters={setLocalFilters}
+                                onApplyFilters={handleApplyFilters}
                             />
-                            <Button
-                                className="h-full bg-[#2EAA7B] text-white text-sm font-semibold px-5 hover:bg-[#31B683] transition duration-300 rounded-none"
-                                onClick={() => {
-                                    if (searchInput.trim() === "") {
-                                        setSearchQuery("");
-                                    } else {
-                                        setSearchQuery(searchInput.trim());
-                                    }
-                                    setCurrentPage(1);
-                                }}>
-                                {t("Поиск")}
-                            </Button>
-                        </div>
-                    </div>
+                        )}
+                    </aside>
 
-                    {isLoading ? (
-                        <div className="flex justify-center items-center py-[30px]">
-                            <div className="w-10 h-10 border-4 border-[#2EAA7B] border-t-transparent rounded-full animate-spin"></div>
+                    <main className="flex-1 col-span-3 lg:col-span-2 justify-end">
+                        <div className="flex justify-between">
+                            <aside className="flex lg:hidden flex-col mr-[60px]">
+                                <Breadcrumbs category={type} />
+                                <Heading text={pageTitle} level={2} className="text-[30px] font-bold text-black" />
+                                <Paragraph className="text-[#787878] font-inter font-medium text-[14px] mt-3.5">
+                                    {cards.length.toLocaleString("ru-RU")} {t("объявлений")}
+                                </Paragraph>
+                            </aside>
+                            <div className="flex items-center">
+                                {type && (
+                                    <>
+                                        <button onClick={() => setIsMobileFiltersOpen(true)} className="btn btn-primary px-5 py-3 bg-[#2EAA7B] text-white rounded-[6px] hover:bg-[#31B683] transition duration-300 lg:hidden">
+                                            {t("Фильтры")}
+                                        </button>
+                                        {isMobileFiltersOpen && (
+                                            <div className="mobile-filters-overlay">
+                                                <div className="mobile-filters">
+                                                    <button onClick={() => setIsMobileFiltersOpen(false)} className="close-btn">×</button>
+                                                    <Filters
+                                                        offer_type={categoryKey as "business" | "startup" | "franchise" | "investments"}
+                                                        filters={localFilters}
+                                                        setFilters={setLocalFilters}
+                                                        onApplyFilters={handleApplyFilters}
+                                                    />
+                                                </div>
+                                            </div>
+                                        )}
+                                    </>
+                                )}
+                            </div>
                         </div>
-                    ) : isError ? (
-                        <div className="flex flex-col w-full h-full justify-center items-center bg-[url('../../../images/grid.png')] bg-no-repeat  bg-contain">
-                            <div className="w-128 h-100 bg-[url('../../../images/404.png')] bg-contain bg-center bg-no-repeat flex flex-col items-center justify-end">
-                                <Paragraph className="text-[20px] font-semibold text-black mb-4">{t("Страница не найдена")}</Paragraph>
+                        <div className="hidden lg:flex justify-end gap-x-4">
+                            <Button
+                                className="px-5 py-3 bg-[#2EAA7B] text-white rounded-[6px] hover:bg-[#31B683] transition duration-300"
+                                onClick={() => navigate('/add-offer')}
+                            >
+                                {t("Добавить объявление")}
+                            </Button>
+                            <div
+                                className="flex items-center border border-[#2EAA7B] rounded-xl pl-5 w-[450px] bg-white overflow-hidden">
+                                <div className="text-[#2EAA7B]">
+                                    <FiSearch className="w-[24px] h-[24px]" />
+                                </div>
+                                <Input
+                                    type="text"
+                                    value={searchInput}
+                                    onChange={(e) => setSearchInput(e.target.value)}
+                                    placeholder={t("Поиск по названию или ID")}
+                                    isError={false}
+                                    className="flex-1 w-full px-2.5 text-[#787878] placeholder-[#787878] bg-white outline-none"
+                                />
                                 <Button
-                                    onClick={() => navigate("/")}
-                                    className="bg-[#2EAA7B] text-white py-2.5 px-6 rounded-[12px] text-[16px] font-medium"
-                                >
-                                    {t("Перейти на главную")}
+                                    className="h-full bg-[#2EAA7B] text-white text-sm font-semibold px-5 hover:bg-[#31B683] transition duration-300 rounded-none"
+                                    onClick={() => {
+                                        if (searchInput.trim() === "") {
+                                            setSearchQuery("");
+                                        } else {
+                                            setSearchQuery(searchInput.trim());
+                                        }
+                                        setCurrentPage(1);
+                                    }}>
+                                    {t("Поиск")}
                                 </Button>
                             </div>
-                        </div>) : exactCards.length === 0 ? (
-                            <EmptyMessage
-                                title="Здесь еще нет объявлений"
-                                subtitle="Ваше может стать первым!"
-                                hideButton
-                            />
-                        ) : (
-                        <CardSection
-                            Class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-y-10 gap-x-2 transition duration-600"
-                            title={pageTitle}
-                            ClassName="py-9.75"
-                            cards={exactCards}
-                            hideViewAllButton
-                        />
-                    )}
+                        </div>
 
-                    <Pagination
-                        currentPage={currentPage}
-                        totalPages={totalPages}
-                        onPageChange={(page: number) => setCurrentPage(page)}
-                    />
-                </main>
+                        {isLoading ? (
+                            <div className="flex justify-center items-center py-[30px]">
+                                <div className="w-10 h-10 border-4 border-[#2EAA7B] border-t-transparent rounded-full animate-spin"></div>
+                            </div>
+                        ) : isError ? (
+                            <div className="flex flex-col w-full h-full justify-center items-center bg-[url('../../../images/grid.png')] bg-no-repeat  bg-contain">
+                                <div className="w-128 h-100 bg-[url('../../../images/404.png')] bg-contain bg-center bg-no-repeat flex flex-col items-center justify-end">
+                                    <Paragraph className="text-[20px] font-semibold text-black mb-4">{t("Страница не найдена")}</Paragraph>
+                                    <Button
+                                        onClick={() => navigate("/")}
+                                        className="bg-[#2EAA7B] text-white py-2.5 px-6 rounded-[12px] text-[16px] font-medium"
+                                    >
+                                        {t("Перейти на главную")}
+                                    </Button>
+                                </div>
+                            </div>) : exactCards.length === 0 ? (
+                                <EmptyMessage
+                                    title="Здесь еще нет объявлений"
+                                    subtitle="Ваше может стать первым!"
+                                    hideButton
+                                />
+                            ) : (
+                            <CardSection
+                                Class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-y-10 gap-x-2 transition duration-600"
+                                title={pageTitle}
+                                ClassName="py-9.75"
+                                cards={exactCards}
+                                hideViewAllButton
+                            />
+                        )}
+
+                        <Pagination
+                            currentPage={currentPage}
+                            totalPages={totalPages}
+                            onPageChange={(page: number) => setCurrentPage(page)}
+                        />
+                    </main>
+                </div >
+                <PopularSliderSection />
+                <Footer showSmallFooter={true} />
             </div >
-            <PopularSliderSection />
-            <Footer showSmallFooter={true} />
-        </div >
+        </>
     );
 };

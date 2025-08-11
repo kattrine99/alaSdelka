@@ -6,6 +6,7 @@ import tempOfferReducer from "./tempStorage";
 import favoritesSlice from './Slices/favoriteSlice';
 import currencyReducer from './Slices/currencySlice'
 import languageReducer from "./Slices/languageSlice";
+import siteSettingReducer from "./Slices/siteSettings";
 
 export const store = configureStore({
     reducer: {
@@ -15,6 +16,7 @@ export const store = configureStore({
         favorites: favoritesSlice,
         currency: currencyReducer,
         language: languageReducer,
+        siteSettings: siteSettingReducer,
         [AuthApi.reducerPath]: AuthApi.reducer,
     },
     middleware: (getDefaultMiddleware) =>

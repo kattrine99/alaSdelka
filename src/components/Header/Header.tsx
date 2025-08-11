@@ -34,6 +34,7 @@ export const Header: React.FC<HeaderProps> = ({
     const isAuthenticated = useSelector((state: RootState) => state.auth.isAuthenticated);
     const isMobileUI = useSelector((state: RootState) => state.ui.isMobileUI);
     const [searchParams] = useSearchParams();
+    const siteSettings = useSelector((state: RootState) => state.siteSettings.settings);
     const navigate = useNavigate();
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const dispatch = useDispatch();
@@ -143,22 +144,26 @@ export const Header: React.FC<HeaderProps> = ({
                         <div className="flex flex-wrap items-center justify-center md:justify-start gap-4">
                             <Paragraph className="flex items-center gap-2 text-[#232323] font-openSans text-sm md:text-base">
                                 <IoIosMail className="text-[#2EAA7B]" />
-                                info@name-com.uz
+                                {siteSettings?.contacts.email}
                             </Paragraph>
                             <Paragraph className="flex items-center gap-2 text-[#232323] font-inter text-sm md:text-base">
                                 <FaPhone className="text-[#2EAA7B]" />
-                                +998 71 789 78 78
+                                {siteSettings?.contacts.phone}
                             </Paragraph>
                         </div>
 
                         {/* Icons */}
                         <div className="flex gap-3">
-                            <Applink to="#">
-                                <FaTelegram className="w-6 h-6 md:w-8 md:h-8 text-[#229ED9]" />
-                            </Applink>
-                            <Applink to="#" className="w-8 h-8 rounded-full bg-[#0DC143] flex items-center justify-center">
-                                <FaWhatsapp className="w-[18px] h-[18px] text-white" />
-                            </Applink>
+                            {siteSettings?.contacts.social.telegram && (
+                                <Applink to={siteSettings?.contacts.social.telegram}>
+                                    <FaTelegram className="w-6 h-6 md:w-8 md:h-8 text-[#229ED9]" />
+                                </Applink>
+                            )}
+                            {siteSettings?.contacts.social.whatsapp && (
+                                <Applink to={siteSettings?.contacts.social.whatsapp} className="w-8 h-8 rounded-full bg-[#0DC143] flex items-center justify-center">
+                                    <FaWhatsapp className="w-[18px] h-[18px] text-white" />
+                                </Applink>
+                            )}
                         </div>
                     </div>
                 </div>

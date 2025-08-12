@@ -141,7 +141,7 @@ export const MainPage = () => {
         if (offerTypeValue) query.append("offer_type", offerTypeValue);
 
         const categoryRoute = categoryRouteMap[categoryKey] || "business";
-        navigate(`/${categoryRoute}?${query.toString()}`);
+        navigate(`/${lang}/${categoryRoute}?${query.toString()}`);
 
     };
     function formatAmountUSD(amount: number): string {
@@ -236,7 +236,7 @@ export const MainPage = () => {
                         <div className="grid grid-cols-3 max-lg:flex max-lg:flex-col max-sm:justify-center items-start w-full mb-6">
                             <div >
                                 <Button onClick={() => {
-                                    navigate("/business")
+                                    navigate(`$/{lang}/business`)
                                 }} className={""}>
                                     <Heading level={2} text={t("Бизнес")} className="font-openSans font-bold hover:text-[#2EAA7B] hover:underline hover:decoration-1 transition duration-500 text-3xl cursor-pointer" />
                                 </Button>
@@ -301,7 +301,7 @@ export const MainPage = () => {
                         <div className="grid grid-cols-3 max-lg:flex max-lg:flex-col max-sm:justify-center items-start w-full mb-6">
                             <div>
                                 <Button onClick={() => {
-                                    navigate("/franchise")
+                                    navigate(`$/{lang}/franchise`)
                                 }} className={""}>
                                     <Heading level={2} text={t("Франшиза")} className="font-openSans font-bold hover:text-[#2EAA7B] hover:underline hover:decoration-1 transition duration-500 text-3xl cursor-pointer" />
                                 </Button>
@@ -361,7 +361,7 @@ export const MainPage = () => {
                         <div className="grid grid-cols-3 max-lg:flex max-lg:flex-col max-sm:justify-center items-start w-full mb-6">
                             <div>
                                 <Button onClick={() => {
-                                    navigate("/startups")
+                                    navigate(`/${lang}/startups`)
                                 }} className={""}>
                                     <Heading level={2} text={t("Стартапы")} className="font-openSans font-bold hover:text-[#2EAA7B] hover:underline hover:decoration-1 transition duration-500 text-3xl cursor-pointer" />
                                 </Button>
@@ -420,7 +420,7 @@ export const MainPage = () => {
                         <div className="grid grid-cols-3 max-lg:flex max-lg:flex-col max-sm:justify-center items-start w-full mb-6">
                             <div>
                                 <Button onClick={() => {
-                                    navigate('/investments')
+                                    navigate(`/${lang}/investments`)
                                 }} className={""}>
                                     <Heading level={2} text={t("Инвестиции")}
                                         className="font-openSans font-bold text-3xl hover:text-[#2EAA7B] hover:underline hover:decoration-1 transition duration-500 cursor-pointer" />

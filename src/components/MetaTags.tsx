@@ -1,6 +1,6 @@
 // components/MetaTags.tsx
 import { useLocation } from "react-router-dom";
-import { useTranslation } from "react-i18next";
+import { useTranslation } from "../../public/Locales/context/TranslationContext";
 
 interface MetaTagsProps {
     title: string;
@@ -24,12 +24,12 @@ export const MetaTags: React.FC<MetaTagsProps> = ({
     noindex = false,
 }) => {
     const location = useLocation(); // Gives you current path, e.g. "/about"
-    const { i18n } = useTranslation(); // Gives you current locale, e.g. "ru" or "uz"
+    const { lang } = useTranslation(); // Gives you current locale, e.g. "ru" or "uz"
 
     const baseUrl = 'https://invin.uz';
     // Для русского языка (по умолчанию) URL без префикса
     const currentUrl =
-        i18n.language === "ru"
+        lang === "ru"
             ? `${baseUrl}${location.pathname}`
             : `${baseUrl}/uz${location.pathname}`;
 
@@ -56,7 +56,7 @@ export const MetaTags: React.FC<MetaTagsProps> = ({
             <meta property="og:description" content={ogDescription || description} />
             <meta property="og:url" content={currentUrl} />
             <meta property="og:site_name" content="Invest In" />
-            <meta property="og:locale" content={i18n.language === 'uz' ? 'uz_UZ' : 'ru_RU'} />
+            <meta property="og:locale" content={lang === 'uz' ? 'uz_UZ' : 'ru_RU'} />
             {ogImage && <meta property="og:image" content={`${baseUrl}${ogImage}`} />}
 
             {/* Twitter Card */}

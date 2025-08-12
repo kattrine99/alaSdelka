@@ -1,5 +1,5 @@
 import { ReactNode } from "react"
-import { Link } from "react-router-dom"
+import { Link, useParams } from "react-router-dom"
 interface ApplinkProps {
     to: string
     children?: ReactNode
@@ -8,8 +8,9 @@ interface ApplinkProps {
 
 }
 export const Applink = ({ to, children, className, onClick }: ApplinkProps) => {
+    const { lng } = useParams();
     return (
-        <Link to={to} onClick={onClick} className={className}>
+        <Link to={`/${lng}${to}`} onClick={onClick} className={className}>
             {children}
         </Link>
     )

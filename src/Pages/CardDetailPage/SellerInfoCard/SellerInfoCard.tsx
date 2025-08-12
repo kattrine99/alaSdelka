@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { ModalBase, Button, Paragraph } from "../../../components";
 import { BiHeart, BiSolidHeart } from "react-icons/bi";
 import { OfferDetail } from "../../../Store/api/types";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useGetOfferContactViewQuery, useToggleFavoriteMutation } from "../../../Store/api/Api";
 import { skipToken } from "@reduxjs/toolkit/query";
 import { useSelector } from "react-redux";
@@ -15,6 +15,7 @@ export const SellerInfoCard = ({ card, offer_type, userId }: { card: OfferDetail
     const { data: contactData, isLoading: isContactLoading } = useGetOfferContactViewQuery(
         isContactModalOpen ? card.id : skipToken
     );
+    const { lng } = useParams();
     const { t } = useTranslation()
     const [isFavorite, setIsFavorite] = useState(card?.is_favourite ?? false);
     const [toggleFavoriteAPI] = useToggleFavoriteMutation();
@@ -61,7 +62,7 @@ export const SellerInfoCard = ({ card, offer_type, userId }: { card: OfferDetail
             {card.offer_status !== 'sold' && (
                 <div className="flex items-center bg-[#E9F7F1] rounded-md p-3 gap-3">
                     <Link
-                        to={`/users/${userId}/${offer_type}`}
+                        to={`/${lng}/users/${userId}/${offer_type}`}
                         state={{ category: offer_type }}
                         className="flex gap-5 items-center">
                         <div className="rounded-full">

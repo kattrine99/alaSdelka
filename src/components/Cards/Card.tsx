@@ -3,7 +3,7 @@ import { FaArrowRight } from "react-icons/fa";
 import { FaLocationDot, FaLocationCrosshairs } from "react-icons/fa6";
 import FireIcon from '../../assets/fire.svg?react';
 import GalleryIcon from '../../assets/gallery.svg?react';
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { RootState } from "../../Store/store";
 import { offerTypeToUrlMap } from "../../utils/categoryMap";
@@ -27,6 +27,7 @@ export const Card: React.FC<ICardComponent & { forceAllFavorite: boolean }> = ({
 }) => {
     const isAuthenticated = useSelector((state: RootState) => state.auth.isAuthenticated);
     const { lang, t } = useTranslation();
+    const { lng } = useParams();
     const [showModal, setShowModal] = useState(false);
     const [translaedTitle, setTranslatedTitle] = useState(card.title);
     const currencyMode = useSelector((state: RootState) => state.currency.mode);
@@ -131,7 +132,7 @@ export const Card: React.FC<ICardComponent & { forceAllFavorite: boolean }> = ({
                 </div>
 
                 <div className="w-full h-[44px] mt-auto">
-                    <Link to={`/${offerTypeToUrlMap[card.offer_type]}/card/${card.slug}`} className="w-full">
+                    <Link to={`/${lng}/${offerTypeToUrlMap[card.offer_type]}/card/${card.slug}`} className="w-full">
                         <Button className={WhatchButtonClass}>
                             <span className="flex gap-2 items-center">
                                 {t("Просмотреть")} <FaArrowRight />

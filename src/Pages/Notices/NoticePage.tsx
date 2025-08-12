@@ -115,7 +115,7 @@ export const NoticePage = () => {
 
                                                     <Button
                                                         className="bg-[#2EAA7B] text-white px-5 py-2 rounded-md"
-                                                        onClick={() => navigate(`/card/${item.offer_slug}`)}
+                                                        onClick={() => navigate(`/${lang}/card/${item.offer_slug}`)}
                                                     >
                                                         {t("Посмотреть")}
                                                     </Button>
@@ -124,7 +124,7 @@ export const NoticePage = () => {
                                                 {item.type === "offer_edit" && (
                                                     <Button
                                                         className="bg-[#FF8707] text-white px-5 py-2 rounded-md"
-                                                        onClick={() => navigate(`/edit/${item.offer_slug}`)}
+                                                        onClick={() => navigate(`/${lang}/edit/${item.offer_slug}`)}
                                                     >
                                                         {t("Исправить")}
                                                     </Button>
@@ -132,7 +132,7 @@ export const NoticePage = () => {
                                                 {item.type === "promotion" && item.offer_slug && (
                                                     <Button
                                                         className="bg-[#2EAA7B] text-white px-5 py-2 rounded-md"
-                                                        onClick={() => navigate(`/promotion/${item.offer_slug}`)}
+                                                        onClick={() => navigate(`/${lang}/promotion/${item.offer_slug}`)}
                                                     >
                                                         {t("Продвижение")}
                                                     </Button>
@@ -141,7 +141,7 @@ export const NoticePage = () => {
                                                 {item.type === "statistics" && item.offer_slug && (
                                                     <Button
                                                         className="bg-[#2EAA7B] text-white px-5 py-2 rounded-md"
-                                                        onClick={() => navigate(`/statistics/${item.offer_slug}`)}
+                                                        onClick={() => navigate(`/${lang}/statistics/${item.offer_slug}`)}
                                                     >
                                                         {t("Статистика")}
                                                     </Button>

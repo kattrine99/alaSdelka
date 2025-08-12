@@ -65,7 +65,7 @@ export const ProfilePage = () => {
         } finally {
             localStorage.removeItem("access_token");
             dispatch(setIsAuthenticated(false));
-            navigate("/");
+            navigate(`/${lang}/`);
         }
     };
 
@@ -77,7 +77,7 @@ export const ProfilePage = () => {
         } finally {
             localStorage.removeItem("access_token");
             dispatch(setIsAuthenticated(false));
-            navigate("/");
+            navigate(`/${lang}/`);
         }
     }
 

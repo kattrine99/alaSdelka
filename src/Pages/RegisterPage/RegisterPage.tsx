@@ -45,6 +45,8 @@ export const RegistrationPage = () => {
     const [timer, setTimer] = useState<number>(60);
     const [codeError, setCodeError] = useState(false);
 
+    const { lang } = useTranslation();
+
     const [canResend, setCanResend] = useState<boolean>(false);
     const [showSuccessModal, setShowSuccessModal] = useState<boolean>(false);
     const [successMessage, setSuccessMessage] = useState<string>("");
@@ -136,7 +138,7 @@ export const RegistrationPage = () => {
 
             setTimeout(() => {
                 setShowSuccessModal(false);
-                navigate("/");
+                navigate(`/${lang}/`);
             }, 2000);
         } catch (err) {
             const error = err as ApiError;

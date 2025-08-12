@@ -11,7 +11,7 @@ import { UpdateInformationPage } from "./UpdateInformationStep";
 
 export const UpdatePage = () => {
     const { t } = useTranslation();
-    const { slug } = useParams<{ slug: string }>();
+    const { slug, lng } = useParams<{ slug: string, lng: string }>();
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
@@ -28,7 +28,7 @@ export const UpdatePage = () => {
         setIsSuccessModalOpen(true);
         dispatch(clearOfferData());
         setTimeout(() => {
-            navigate("/announcements");
+            navigate(`/${lng}/announcements`);
         }, 3000);
     };
 
@@ -58,11 +58,11 @@ export const UpdatePage = () => {
                     <ModalBase
                         title={t("Успешно обновлено!")}
                         message={t("Ваше объявление успешно обновлено.")}
-                        onClose={() => navigate("/announcements")}
+                        onClose={() => navigate(`/${lng}/announcements`)}
                         actions={
                             <Button
                                 className="bg-[#2EAA7B] text-white px-6 py-3 rounded-md"
-                                onClick={() => navigate("/announcements")}
+                                onClick={() => navigate(`/${lng}/announcements`)}
                             >
                                 {t("Перейти к списку")}
                             </Button>

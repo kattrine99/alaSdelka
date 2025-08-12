@@ -1,7 +1,7 @@
 import { Button, EmptyMessage, Footer, Header, Heading, ModalBase, Pagination, Paragraph } from "../../components"
 import { offerTypeToUrlMap, profileNavigate } from "../../utils/categoryMap"
 import { useGetMyArchivedOffersQuery, usePublishOfferMutation } from "../../Store/api/Api";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import FireIcon from '../../assets/fire.svg?react';
 import { FaLocationDot } from "react-icons/fa6";
 import GpsIcon from '../../assets/gps.svg?react'
@@ -17,6 +17,7 @@ export const ArchivePage = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const { data, isLoading, isError, refetch } = useGetMyArchivedOffersQuery({ page: 1, per_page: 1000 });
     const { t, lang } = useTranslation();
+    const { lng } = useParams();
 
     const offers = data?.data || [];
     const meta = data?.meta;
@@ -81,7 +82,7 @@ export const ArchivePage = () => {
                         <div className="flex md:justify-end mt-5 gap-3">
                             <Button
                                 className="bg-[#2EAA7B] text-white rounded-md px-5 py-3"
-                                onClick={() => navigate('/announcements')}
+                                onClick={() => navigate(`/${lang}/announcements`)}
                             >
                                 {t("Вернуться")}
                             </Button>
@@ -95,7 +96,7 @@ export const ArchivePage = () => {
                                             {["draft", "in_moderation", "published", "denied"].includes(offer.offer_status) && (
                                                 <div className="absolute top-3 right-3 z-20 group">
                                                     <button
-                                                        onClick={() => navigate(`/edit/${offer.slug}`)}
+                                                        onClick={() => navigate(`/${lang}/edit/${offer.slug}`)}
                                                         className="p-2 bg-white border border-[#F8F8F8] rounded-full shadow hover:bg-gray-100 transition cursor-pointer"
                                                     >
                                                         <FiEdit className="w-5 h-5 text-[#2EAA7B]" />
@@ -122,7 +123,7 @@ export const ArchivePage = () => {
                                             )}
                                             <div className="relative col-span-1">
                                                 <Link
-                                                    to={`/${offerTypeToUrlMap[offer.offer_type || 'category']}/card/${offer.slug}`}
+                                                    to={`/${lng}/${offerTypeToUrlMap[offer.offer_type || 'category']}/card/${offer.slug}`}
                                                     className="w-full flex justify-center h-full"
                                                 >
                                                     {offer.photos[0]?.photo ? (
@@ -143,7 +144,7 @@ export const ArchivePage = () => {
                                             </div>
                                             <div className="flex flex-3/4 flex-col gap-1 py-9.5 px-7 md:col-span-2">
                                                 <div className="flex flex-col mb-11">
-                                                    <Link to={`/${offerTypeToUrlMap[offer.offer_type || 'category']}/card/${offer.slug}`} className="w-full hover:text-[#2EAA7B]">
+                                                    <Link to={`/${lng}/${offerTypeToUrlMap[offer.offer_type || 'category']}/card/${offer.slug}`} className="w-full hover:text-[#2EAA7B]">
 
                                                         <Paragraph className="text-[#232323] text-2xl font-inter font-bold mb-2">
                                                             {formatPrice(offer.price)}
@@ -178,7 +179,7 @@ export const ArchivePage = () => {
                                                         </Button>
                                                         {/* <Button
                                                             className="bg-[#2EAA7B] text-white px-5 h-12 rounded-md cursor-pointer"
-                                                            onClick={() => navigate(`/promotion/${offer.slug}`)}
+                                                            onClick={() => navigate(`/${lang}/promotion/${offer.slug}`)}
                                                         >
                                                             {t("Опубликовать")}
                                                         </Button> */}

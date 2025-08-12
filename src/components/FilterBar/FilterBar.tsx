@@ -52,7 +52,7 @@ export const FilterBar: React.FC<FilterBarProps> = ({
         if (searchInput) query.append("search", searchInput);
         query.append("category", selectedCategory.toLowerCase());
 
-        navigate(`/${currentRoute}?${query.toString()}`);
+        navigate(`/${lang}/${currentRoute}?${query.toString()}`);
     };
 
     return (

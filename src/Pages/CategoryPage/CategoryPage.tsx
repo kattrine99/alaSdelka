@@ -34,7 +34,7 @@ function cleanObject<T extends object>(obj: T): Partial<T> {
 }
 
 export const CategoryPage = () => {
-    const { section, category, city } = useParams();
+    const { section, category, city, lng } = useParams();
     const [searchParams] = useSearchParams();
     const navigate = useNavigate();
     const { lang, t } = useTranslation() as { lang: 'ru' | 'uz', t: (key: string) => string };
@@ -166,7 +166,7 @@ export const CategoryPage = () => {
         Object.entries(localFilters).forEach(([key, value]) => {
             if (value) query.append(key, String(value));
         });
-        navigate(`/${categoryKey}?${query.toString()}`);
+        navigate(`/${lang}/${categoryKey}?${query.toString()}`);
     }
 
     let categorySeo: CategorySeo | null = null;
@@ -287,7 +287,7 @@ export const CategoryPage = () => {
                         <div className="hidden lg:flex justify-end gap-x-4">
                             <Button
                                 className="px-5 py-3 bg-[#2EAA7B] text-white rounded-[6px] hover:bg-[#31B683] transition duration-300"
-                                onClick={() => navigate('/add-offer')}
+                                onClick={() => navigate(`/${lang}/add-offer`)}
                             >
                                 {t("Добавить объявление")}
                             </Button>
@@ -328,7 +328,7 @@ export const CategoryPage = () => {
                                 <div className="w-128 h-100 bg-[url('../../../images/404.png')] bg-contain bg-center bg-no-repeat flex flex-col items-center justify-end">
                                     <Paragraph className="text-[20px] font-semibold text-black mb-4">{t("Страница не найдена")}</Paragraph>
                                     <Button
-                                        onClick={() => navigate("/")}
+                                        onClick={() => navigate(`/${lng}/`)}
                                         className="bg-[#2EAA7B] text-white py-2.5 px-6 rounded-[12px] text-[16px] font-medium"
                                     >
                                         {t("Перейти на главную")}

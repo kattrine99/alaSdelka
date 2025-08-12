@@ -24,6 +24,7 @@ import { useTranslation } from "../../../public/Locales/context/TranslationConte
 export const UserAnnouncementPage = () => {
     const { category, userId } = useParams();
     const navigate = useNavigate();
+    const { lang } = useTranslation();
     const { t } = useTranslation();
     const [filters, setFilters] = useState<FiltersState>({
         city: "",
@@ -234,7 +235,7 @@ export const UserAnnouncementPage = () => {
                             <div className="w-128 h-100 bg-[url('../../../images/404.png')] bg-contain bg-center bg-no-repeat flex flex-col items-center justify-end">
                                 <Paragraph className="text-[20px] font-semibold text-black mb-4">{t("Страница не найдена")}</Paragraph>
                                 <Button
-                                    onClick={() => navigate("/")}
+                                    onClick={() => navigate(`/${lang}/`)}
                                     className="bg-[#2EAA7B] text-white py-2.5 px-6 rounded-[12px] text-[16px] font-medium"
                                 >
                                     {t("Перейти на главную")}
@@ -245,7 +246,7 @@ export const UserAnnouncementPage = () => {
                                 <div className="w-full h-100 bg-[url('../../../images/404.png')] bg-contain bg-center bg-no-repeat flex flex-col items-center justify-end">
                                     <Paragraph className="text-[20px] font-semibold text-black mb-4">{t("Страница не найдена")}</Paragraph>
                                     <Button
-                                        onClick={() => navigate("/")}
+                                        onClick={() => navigate(`/${lang}/`)}
                                         className="bg-[#2EAA7B] text-white py-2.5 px-6 rounded-[12px] text-[16px] font-medium"
                                     >
                                         {t("Перейти на главную")}

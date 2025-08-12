@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
 import translations from "../ru_uz_translation.json";
 
 type LangType = "ru" | "uz";
@@ -19,6 +19,13 @@ export const useTranslation = () => useContext(TranslationContext);
 
 export const TranslationProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     const [lang, setLang] = useState<LangType>("ru");
+
+    useEffect(() => {
+        const urlLang = window.location.pathname.split("/")[1] as LangType;
+        if (urlLang === "ru" || urlLang === "uz") {
+            setLang(urlLang);
+        }
+    }, []);
 
     const t = (text: string) => {
         if (lang === "uz") {

@@ -5,7 +5,7 @@ import {
   UpdatePage
 } from "./Pages/index";
 import {
-  createBrowserRouter, Outlet, RouterProvider, useNavigate
+  createBrowserRouter, Navigate, Outlet, RouterProvider, useNavigate
 } from "react-router-dom";
 import './index.css';
 import { useEffect } from "react";
@@ -30,7 +30,6 @@ import { setCurrencyRate } from "./Store/Slices/currencySlice";
 import { setSiteSettings } from "./Store/Slices/siteSettings";
 import { TranslationProvider } from "./../public/Locales/context/TranslationContext";
 import { ArchivePage } from "./Pages/Announcements/Archive";
-import SectionPage from "./Pages/SectionPage";
 
 const Layout = () => {
   const dispatch = useDispatch();
@@ -102,13 +101,14 @@ const Layout = () => {
   );
 };
 
-const sections = ["business", "franchise", "investments", "startup"] as const;
-type SectionType = typeof sections[number];
-
 
 const routerConfig = createBrowserRouter([
   {
-    path: ":lang(uz)?",
+     path: "/",
+     element: <Navigate to="/ru" replace />
+  },
+  {
+    path: "/:lng",
     element: <Layout />,
     children: [
       { index: true, element: <MainPage /> },

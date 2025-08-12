@@ -165,7 +165,7 @@ export const PromotionPage = () => {
                             </Heading>
                             <Button
                                 className="mt-16 w-full max-w-83 px-5 py-3 bg-[#2EAA7B] shadow-[0px_1px_2px] shadow-[#1018280A] rounded-lg text-white font-inter font-semibold text-2xl max-md:text-xl duration-300 ease-in-out"
-                                onClick={() => navigate("/announcements", { state: { promotionSuccess: true } })}
+                                onClick={() => navigate(`/${lang}/announcements`, { state: { promotionSuccess: true } })}
                             >
                                 {t("Вернуться к объявлениям")}
                             </Button>
@@ -178,7 +178,7 @@ export const PromotionPage = () => {
                     <div className="flex max-xl:flex-wrap gap-10 mt-10 justify-between bg-[url('/images/grid.png')] bg-contain bg-no-repeat bg-right ">
                         <div className="flex max-w-150 flex-col  items-start text-start">
                             <Heading className="font-inter text-4xl max-lg:text-2xl duration-300 ease-in-out" text={""} level={2}><span className="font-bold">{t("Что-то пошло не так.")}</span>{t("Попробуйте оплатить ещё раз.")}</Heading>
-                            <Button className="mt-16 w-full max-w-83 px-5 py-3 bg-[#2EAA7B] shadow-[0px_1px_2px] shadow-[#1018280A] rounded-lg text-white font-inter font-semibold text-2xl max-md:text-xl duration-300 ease-in-out" onClick={() => navigate("/announcements")}
+                            <Button className="mt-16 w-full max-w-83 px-5 py-3 bg-[#2EAA7B] shadow-[0px_1px_2px] shadow-[#1018280A] rounded-lg text-white font-inter font-semibold text-2xl max-md:text-xl duration-300 ease-in-out" onClick={() => navigate(`/${lang}/announcements`)}
                             >{t("Вернуться")}</Button>
                         </div>
                         <div className="max-w-90 max-md:hidden duration-300 ease-in-out">

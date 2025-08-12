@@ -77,7 +77,6 @@ export const MainPage = () => {
         await refetch();
     };
     const [filters, setFilters] = useState<FiltersState>({
-        category: "",
         city: "",
         stage: "",
         paybackPeriod: "",
@@ -129,7 +128,6 @@ export const MainPage = () => {
 
         const query = new URLSearchParams();
         if (searchInput) query.append("search", searchInput);
-        if (filters.category) query.append("category", filters.category);
         if (filters.city) query.append("city", filters.city);
         if (filters.stage) query.append("stage", filters.stage);
         if (filters.category_id) query.append("category_id", filters.category_id.toString());

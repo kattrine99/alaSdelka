@@ -26,7 +26,6 @@ export const UserAnnouncementPage = () => {
     const navigate = useNavigate();
     const { t } = useTranslation();
     const [filters, setFilters] = useState<FiltersState>({
-        category: "",
         city: "",
         stage: "",
         paybackPeriod: "",

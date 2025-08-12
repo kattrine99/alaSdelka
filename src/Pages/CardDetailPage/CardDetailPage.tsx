@@ -23,7 +23,7 @@ import { translationService } from '../../utils/googleTranslate';
 import { MetaTags } from '../../components/MetaTags';
 export const CardDetailPage = () => {
     const { lang, t } = useTranslation()
-    const { slug, category } = useParams();
+    const { slug, section } = useParams();
     const offerSlug = String(slug);
     const { data, isLoading, isError } = useGetOfferBySlugQuery(offerSlug);
     const card = data?.data;
@@ -137,7 +137,7 @@ export const CardDetailPage = () => {
 
                 ) :
                     (<div className='container mx-auto pt-10 max-md:p-5'>
-                        {translatedTitle != null ? (<Breadcrumbs category={category} title={translatedTitle} />) : (<Breadcrumbs category={category} title={card.title} />)}
+                        {translatedTitle != null ? (<Breadcrumbs category={section} title={translatedTitle} />) : (<Breadcrumbs category={section} title={card.title} />)}
                         <div className='flex flex-wrap xl:flex-nowrap'>
                             <div className='flex flex-col w-full lg:w-3/4 justify-center'>
                                 {translatedTitle != null ? (<Heading className="text-[24px] md:text-4xl font-inter leading-10 font-bold mt-6 mb-3.5" text={translatedTitle} level={2} />) : (<Heading className="text-[24px] md:text-4xl font-inter leading-10 font-bold mt-6 mb-3.5" text={card.title} level={2} />)}

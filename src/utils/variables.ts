@@ -24,7 +24,6 @@ export const ruToEnOfferTypeMap: Record<string, "business" | "franchise" | "star
 
 export interface FiltersState {
     category_id?: number;
-    categories?: { id: number; title_ru: string; title_uz: string } | null;
     city: string;
     stage: string;
     paybackPeriod: string;

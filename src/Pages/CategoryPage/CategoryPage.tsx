@@ -16,11 +16,11 @@ import {
 } from "../../components";
 import './CategoryPage.css'
 import { ICard } from "../../components/Cards/Interfaces";
-import { useGetOffersQuery } from "../../Store/api/Api";
-import { routeToCategoryIdMap, typeToTitleMap, urlToTypeMap } from "../../utils/categoryMap";
+import { useGetCategorySeoQuery, useGetCitySeoQuery, useGetOffersQuery } from "../../Store/api/Api";
+import { typeToTitleMap, urlToTypeMap } from "../../utils/categoryMap";
 import { FiSearch } from "react-icons/fi";
 import { FiltersState, ruToEnOfferTypeMap } from "../../utils/variables";
-import { OfferFilters } from "../../Store/api/types";
+import { CategorySeo, CitySeo, OfferFilters } from "../../Store/api/types";
 import { useTranslation } from "../../../public/Locales/context/TranslationContext";
 import { useSelector } from "react-redux";
 import { RootState } from "../../Store/store";
@@ -34,17 +34,16 @@ function cleanObject<T extends object>(obj: T): Partial<T> {
 }
 
 export const CategoryPage = () => {
-    const { category } = useParams();
+    const { section, category, city } = useParams();
     const [searchParams] = useSearchParams();
     const navigate = useNavigate();
     const { lang, t } = useTranslation() as { lang: 'ru' | 'uz', t: (key: string) => string };
     const siteSettings = useSelector((state: RootState) => state.siteSettings.settings);
-    const categoryKey = category?.toLowerCase() ?? "";
-    const categoryId = routeToCategoryIdMap[categoryKey] || "";
-    const type = useMemo(() => urlToTypeMap[categoryKey] ?? "", [categoryKey]);
+    const categoryKey = section?.toLowerCase() ?? "";
+    const type = useMemo(() => urlToTypeMap[categoryKey] ?? "", [categoryKey]) || 'business';
 
-    const pageTitle = typeToTitleMap[type as ICard["offer_type"]]?.[lang] ?? "Категория";
-    const offerTypeFromURL = searchParams.get("offer_type") ?? "";
+    let pageTitle = typeToTitleMap[type as ICard["offer_type"]]?.[lang] ?? "Категория";
+    const offerTypeFromURL = searchParams.get("offer_type") ?? "business";
     const allowedOfferTypes = ["", "business", "franchise", "startup", "investments"] as const;
     type OfferType = typeof allowedOfferTypes[number];
 
@@ -54,8 +53,10 @@ export const CategoryPage = () => {
     const validOfferType: OfferType = isValidOfferType(offerTypeFromURL)
         ? offerTypeFromURL
         : "";
+
     const [localFilters, setLocalFilters] = useState<FiltersState>({
-        city: searchParams.get("city") || "",
+        categorySlug: category || searchParams.get("categorySlug") || "",
+        city: city || searchParams.get("city") || "",
         stage: searchParams.get("stage") || "",
         paybackPeriod: searchParams.get("paybackPeriod") || "",
         priceMin: searchParams.get("priceMin") || "",
@@ -68,7 +69,8 @@ export const CategoryPage = () => {
         offer_type: validOfferType,
     });
     const [appliedFilters, setAppliedFilters] = useState<FiltersState>({
-        city: searchParams.get("city") || "",
+        categorySlug: category || searchParams.get("categorySlug") || "",
+        city: city || searchParams.get("city") || "",
         stage: searchParams.get("stage") || "",
         paybackPeriod: searchParams.get("paybackPeriod") || "",
         priceMin: searchParams.get("priceMin") || "",
@@ -92,10 +94,11 @@ export const CategoryPage = () => {
     const queryParams: OfferFilters = {
         page: currentPage,
         per_page: itemsPerPage,
-        offer_type: ruToEnOfferTypeMap[categoryKey] || "business",
+        offer_type: ruToEnOfferTypeMap[categoryKey],
         ...cleanObject({
-            city_id: appliedFilters.city,
+            city_slug: appliedFilters.city,
             category_id: appliedFilters.category_id,
+            category_slug: appliedFilters.categorySlug,
             stage: appliedFilters.stage,
             payback_period: appliedFilters.paybackPeriod,
             price_from: appliedFilters.priceMin,
@@ -108,7 +111,7 @@ export const CategoryPage = () => {
         }),
     };
 
-    const { data, isLoading, isError } = useGetOffersQuery(queryParams);
+    const { data, isLoading, isError } = useGetOffersQuery(queryParams)
     const cards = data?.data || [];
     const totalPages = data?.meta?.last_page || 1;
 
@@ -129,7 +132,8 @@ export const CategoryPage = () => {
 
         const updated: FiltersState = {
             category_id: numericCategoryId,
-            city: searchParams.get("city") || "",
+            categorySlug: category || searchParams.get("categorySlug") || "",
+            city: city || searchParams.get("city") || "",
             stage: searchParams.get("stage") || "",
             paybackPeriod: searchParams.get("paybackPeriod") || "",
             priceMin: searchParams.get("priceMin") || "",
@@ -165,23 +169,66 @@ export const CategoryPage = () => {
         navigate(`/${categoryKey}?${query.toString()}`);
     }
 
+    let categorySeo: CategorySeo | null = null;
+    let citySeo: CitySeo | null = null;
+
+    if (section == null && category != null) {
+       const {data} = useGetCategorySeoQuery(category);
+       if (data) {
+        categorySeo = data;
+       }
+    }
+    if (section == null && city != null) {
+        const {data} = useGetCitySeoQuery(city);
+        if (data) {
+            citySeo = data;
+        }
+    }
+
     return (
         <>
             {(siteSettings != null) && (
                 <>
-                    {(categoryKey == 'business') && (
-                        <MetaTags title={siteSettings.seo.business.title} description={siteSettings.seo.business.description} keywords={siteSettings.seo.business.keywords} />
+                    {(section != null) && (
+                        <>
+                            {(section == 'business') && (
+                                <>
+                                    <MetaTags title={siteSettings.seo.business.title} description={siteSettings.seo.business.description} keywords={siteSettings.seo.business.keywords} />
+                                    <StaticPageSchema pageType="business" title={siteSettings.seo.business.title} description={siteSettings.seo.business.description} locale={lang} />
+                                </>
+                            )}
+                            {(section == 'franchise') && (
+                                <>
+                                    <MetaTags title={siteSettings.seo.franchise.title} description={siteSettings.seo.franchise.description} keywords={siteSettings.seo.franchise.keywords} />
+                                    <StaticPageSchema pageType="franchise" title={siteSettings.seo.franchise.title} description={siteSettings.seo.franchise.description} locale={lang} />
+                                </>
+                            )}
+                            {(section == 'investments') && (
+                                <>
+                                    <MetaTags title={siteSettings.seo.investments.title} description={siteSettings.seo.investments.description} keywords={siteSettings.seo.investments.keywords} />
+                                    <StaticPageSchema pageType="investments" title={siteSettings.seo.investments.title} description={siteSettings.seo.investments.description} locale={lang} />
+                                </>
+                            )}
+                            {(section == 'startup') && (
+                                <>
+                                    <MetaTags title={siteSettings.seo.startups.title} description={siteSettings.seo.startups.description} keywords={siteSettings.seo.startups.keywords} />
+                                    <StaticPageSchema pageType="startups" title={siteSettings.seo.startups.title} description={siteSettings.seo.startups.description} locale={lang} />
+                                </>
+                            )}
+                        </>
                     )}
-                    {(categoryKey == 'franchise') && (
-                        <MetaTags title={siteSettings.seo.franchise.title} description={siteSettings.seo.franchise.description} keywords={siteSettings.seo.franchise.keywords} />
+                    {(category != null && section == null && categorySeo != null) && (
+                        <>
+                            <MetaTags title={categorySeo.title} description={categorySeo.description} keywords={categorySeo.keywords} ogDescription={categorySeo.og_description} ogImage={categorySeo.og_image} canonical={categorySeo.canonical_url} noindex={!categorySeo.is_indexable}/>
+                            <StaticPageSchema pageType={category} title={categorySeo.title} description={categorySeo.description} locale={lang} />
+                        </>
                     )}
-                    {(categoryKey == 'investments') && (
-                        <MetaTags title={siteSettings.seo.investments.title} description={siteSettings.seo.investments.description} keywords={siteSettings.seo.investments.keywords} />
+                    {(city != null && section == null && citySeo != null) && (
+                        <>
+                            <MetaTags title={citySeo.title} description={citySeo.description} keywords={citySeo.keywords} ogDescription={citySeo.og_description} ogImage={citySeo.og_image} canonical={citySeo.canonical_url} noindex={!citySeo.is_indexable}/>
+                            <StaticPageSchema pageType={city} title={citySeo.title} description={citySeo.description} locale={lang} />
+                        </>
                     )}
-                    {(categoryKey == 'startup') && (
-                        <MetaTags title={siteSettings.seo.startups.title} description={siteSettings.seo.startups.description} keywords={siteSettings.seo.startups.keywords} />
-                    )}
-                    <StaticPageSchema pageType="business" title={siteSettings.seo.business.title}  description={siteSettings.seo.business.description} locale={lang}/>
                     <SearchResultsSchema query={""} offers={cards} filters={{ offer_type: categoryKey }} resultsCount={cards.length} locale={lang} />
                 </>
             )}
@@ -197,7 +244,7 @@ export const CategoryPage = () => {
 
                         {type && (
                             <Filters
-                                offer_type={categoryKey as "business" | "startup" | "franchise" | "investments"}
+                                offer_type={categoryKey as "business" | "startup" | "franchise" | "investments" || "business"}
                                 filters={localFilters}
                                 setFilters={setLocalFilters}
                                 onApplyFilters={handleApplyFilters}
@@ -225,7 +272,7 @@ export const CategoryPage = () => {
                                                 <div className="mobile-filters">
                                                     <button onClick={() => setIsMobileFiltersOpen(false)} className="close-btn">×</button>
                                                     <Filters
-                                                        offer_type={categoryKey as "business" | "startup" | "franchise" | "investments"}
+                                                        offer_type={categoryKey as "business" | "startup" | "franchise" | "investments" || "business"}
                                                         filters={localFilters}
                                                         setFilters={setLocalFilters}
                                                         onApplyFilters={handleApplyFilters}

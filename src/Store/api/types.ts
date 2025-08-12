@@ -129,6 +129,7 @@ export interface OfferFilters {
     per_page: number;
     offer_type: "business" | "franchise" | "startup" | "investments";
     category?: string;
+    category_slug?: string;
     city?: object;
     stage?: string;
     price_from?: string;
@@ -439,14 +440,16 @@ export interface FilterData {
         {
             id: number,
             name_ru: string,
-            name_uz: string
+            name_uz: string,
+            slug: string,
         }
     ],
     categories: [
         {
             id: number,
             title_ru: string,
-            title_uz: string
+            title_uz: string,
+            slug: string,
         }
     ],
     project_stages: [
@@ -745,4 +748,31 @@ export interface UpdateOfferPayload {
         channel_name: string;
         link: string;
     }[];
+}
+
+export interface CategorySeo {
+    title: string;
+    description: string;
+    keywords?: string;
+    og_title?: string;
+    og_description?: string;
+    og_image?: string;
+    canonical_url?: string;
+    is_indexable: boolean;
+    content_top?: string;
+    content_bottom?: string;
+}
+
+export interface CitySeo {
+    title: string;
+    description: string;
+    keywords?: string;
+    og_title?: string;
+    og_description?: string;
+    og_image?: string;
+    canonical_url?: string;
+    is_indexable: boolean;
+    content_top?: string;
+    content_bottom?: string;
+    schema_data?: Record<string, any>;
 }

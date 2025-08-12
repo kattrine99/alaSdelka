@@ -26,6 +26,8 @@ import type {
     VerifyCardResponse,
     VerifyCardPayload,
     SiteSettings,
+    CategorySeo,
+    CitySeo,
 } from "./types";
 import { ICard } from "../../components/Cards/Interfaces";
 import customBaseQuery from "./customBaseQuery";
@@ -133,6 +135,18 @@ export const AuthApi = createApi({
                 url: "/offers",
                 method: "GET",
                 params,
+            }),
+        }),
+        getCategorySeo: builder.query<CategorySeo, string>({
+            query: (slug) => ({
+                url: `/seo/category/${slug}`,
+                method: "GET",
+            }),
+        }),
+        getCitySeo: builder.query<CitySeo, string>({
+            query: (slug) => ({
+                url: `/seo/city/${slug}`,
+                method: "GET",
             }),
         }),
         getOfferById: builder.query<OfferDetail, number>({
@@ -291,6 +305,8 @@ export const {
     useGetMyOffersQuery,
     useGetMyArchivedOffersQuery,
     useGetOffersQuery,
+    useGetCategorySeoQuery,
+    useGetCitySeoQuery,
     useGetMainStatisticsQuery,
     useGetOfferByIdQuery,
     useGetOfferBySlugQuery,

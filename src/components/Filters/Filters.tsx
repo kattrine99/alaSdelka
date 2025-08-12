@@ -32,29 +32,26 @@ export const Filters: React.FC<FiltersProps> = ({ offer_type, filters, setFilter
         setFilters(prev => ({ ...prev, [field]: value }));
     };
     useEffect(() => {
-        if (!filters.categories && filters.category_id && filterOptions?.categories?.length) {
+        if (filters.category_id && filterOptions?.categories?.length) {
             const matched = filterOptions.categories.find(cat => cat.id === filters.category_id);
             if (matched) {
                 setFilters(prev => ({
                     ...prev,
-                    categories: matched,
                 }));
             }
         }
-    }, [filters.category_id, filters.categories, filterOptions, setFilters]);
+    }, [filters.category_id, filterOptions, setFilters]);
     const handleCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-        const selected = filterOptions?.categories.find(cat => String(cat.id) === e.target.value);
+        const selected = filterOptions?.categories.find(cat => String(cat.slug) === e.target.value);
         if (selected) {
             setFilters(prev => ({
                 ...prev,
-                categories: selected,
-                category_id: selected.id,
+                categorySlug: selected.slug,
             }));
         } else {
             setFilters(prev => ({
                 ...prev,
-                categories: null,
-                category_id: undefined,
+                categorySlug: undefined,
             }));
         }
     };
@@ -72,13 +69,13 @@ export const Filters: React.FC<FiltersProps> = ({ offer_type, filters, setFilter
                 </div>
                 <div className="relative mt-2 mb-4">
                     <select
-                        value={filters.category_id || ""}
+                        value={filters.categorySlug || ""}
                         onChange={handleCategoryChange}
                         className="bg-[#F2F2F2] w-full h-[42.4px] rounded-[8px] pl-4 text-black focus:outline-none appearance-none"
                     >
                         <option value="">{t("Все категории")}</option>
                         {filterOptions.categories.map(cat => (
-                            <option key={cat.id} value={String(cat.id)}>
+                            <option key={cat.slug} value={cat.slug}>
                                 {lang === "uz" ? cat.title_uz : cat.title_ru}
                             </option>
                         ))}
@@ -101,7 +98,7 @@ export const Filters: React.FC<FiltersProps> = ({ offer_type, filters, setFilter
                     >
                         <option value="">{t("Выбрать")}</option>
                         {filterOptions.cities.map(city => (
-                            <option key={city.id} value={String(city.id)}>
+                            <option key={city.slug} value={String(city.slug)}>
                                 {lang === "uz" ? city.name_uz : city.name_ru}
                             </option>
                         ))}
@@ -277,9 +274,7 @@ export const Filters: React.FC<FiltersProps> = ({ offer_type, filters, setFilter
                 <Button
                     onClick={() => {
                         const cleared: FiltersState = {
-                            category: "",
                             category_id: undefined,
-                            categories: null,
                             city: "",
                             stage: "",
                             paybackPeriod: "",

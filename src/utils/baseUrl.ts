@@ -1,1 +1,1 @@
-export const baseUrl = 'https://api.invin.uz/api'
+export const baseUrl = 'https://investin-api.comingsoon.uz/api'

@@ -74,7 +74,7 @@ export const LoginPage = () => {
 
             setTimeout(() => {
                 setShowModal(false);
-                navigate("/main");
+                navigate("/");
             }, 2000);
         } catch (error) {
             console.error("Ошибка при логине:", error);

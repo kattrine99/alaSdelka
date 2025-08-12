@@ -99,7 +99,6 @@ export const UserAnnouncementPage = () => {
         is_favourite: favoriteIds.includes(card.id),
     }));
     const handleFavoritesChanged = async (id: number, status: "added" | "removed") => {
-        console.log(`Card ${id} was ${status}`);
         await refetch();
     };
 
@@ -139,10 +138,9 @@ export const UserAnnouncementPage = () => {
                                     offer_type={type as "business" | "startup" | "franchise" | "investments" | "бизнес" | "франшиза" | "стартапы" | "инвстиции"}
                                     filters={filters}
                                     setFilters={function(filters) {
-                                        console.log('setFilters');
                                         setFilters(filters);
                                     }}
-                                    onApplyFilters={function () { console.log('apply'), setCurrentPage(1)}}
+                                    onApplyFilters={function () { setCurrentPage(1)}}
                                 />
                             </div>
 

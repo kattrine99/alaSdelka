@@ -25,7 +25,6 @@ export const ruToEnOfferTypeMap: Record<string, "business" | "franchise" | "star
 export interface FiltersState {
     category_id?: number;
     categories?: { id: number; title_ru: string; title_uz: string } | null;
-    category: string;
     city: string;
     stage: string;
     paybackPeriod: string;
@@ -36,6 +35,7 @@ export interface FiltersState {
     profitabilityMin: string;
     profitabilityMax: string;
     listing_type?: "buy" | "sell" | "" | null;
+    categorySlug?: string;
     offer_type: "business" | "startup" | "franchise" | "investments" | "" | null;
 }
 export interface FileMeta {

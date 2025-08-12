@@ -91,7 +91,6 @@ export const Card: React.FC<ICardComponent & { forceAllFavorite: boolean }> = ({
                     <FavoriteButton
                         isFavorite={is_favourite}
                         onToggle={() => {
-                            console.log(is_favourite, forceAllFavorite);
                             if (is_favourite && forceAllFavorite) {
                                 setShowModal(true);
                             } else {

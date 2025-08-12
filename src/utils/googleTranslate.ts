@@ -27,7 +27,6 @@ class TranslationService {
             });
 
             const data = await response.json();
-            console.log(data)
             const translatedText = data.data.translations[0].translatedText;
 
             this.cache.set(cacheKey, translatedText);

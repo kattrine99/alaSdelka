@@ -33,7 +33,6 @@ export const Input = forwardRef<HTMLInputElement | HTMLTextAreaElement, InputPro
         const { t } = useTranslation()
         useEffect(() => {
             if (isError) {
-                console.log("isError: ", isError)
                 setInputStatus("error");
             } else if (!isError && value) {
                 setInputStatus("success");

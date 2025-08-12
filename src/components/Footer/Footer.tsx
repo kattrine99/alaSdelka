@@ -15,7 +15,7 @@ export const Footer: React.FC<FooterProps> = ({ showSmallFooter }) => {
         <div className="font-[Inter] font-medium w-full bg-white shadow ">
             {!showSmallFooter && (
                 <><div className="flex justify-between items-center  bg-white py-[20px] px-[96px] border-t border-[#E9E9E9]">
-                    <Link to="/main" className="flex items-center gap-2">
+                    <Link to="/" className="flex items-center gap-2">
                         <img src="/images/investin_logo.png" alt="Logo" className="h-[56px] w-auto object-contain" />
                     </Link>
                     <div className="hidden md:flex gap-8.5 items-center">
@@ -59,7 +59,7 @@ export const Footer: React.FC<FooterProps> = ({ showSmallFooter }) => {
 
                         {/* ЛОГОТИП */}
                         <div className="flex justify-center lg:justify-start">
-                            <Link to="/main">
+                            <Link to="/">
                                 <img
                                     src="/images/investin_logo.png"
                                     alt="Logo"

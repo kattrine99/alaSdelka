@@ -55,7 +55,6 @@ export const CategoryPage = () => {
         ? offerTypeFromURL
         : "";
     const [localFilters, setLocalFilters] = useState<FiltersState>({
-        category: categoryId,
         city: searchParams.get("city") || "",
         stage: searchParams.get("stage") || "",
         paybackPeriod: searchParams.get("paybackPeriod") || "",
@@ -69,7 +68,6 @@ export const CategoryPage = () => {
         offer_type: validOfferType,
     });
     const [appliedFilters, setAppliedFilters] = useState<FiltersState>({
-        category: categoryId,
         city: searchParams.get("city") || "",
         stage: searchParams.get("stage") || "",
         paybackPeriod: searchParams.get("paybackPeriod") || "",
@@ -96,7 +94,6 @@ export const CategoryPage = () => {
         per_page: itemsPerPage,
         offer_type: ruToEnOfferTypeMap[categoryKey] || "business",
         ...cleanObject({
-            category: appliedFilters.category,
             city_id: appliedFilters.city,
             category_id: appliedFilters.category_id,
             stage: appliedFilters.stage,
@@ -131,7 +128,6 @@ export const CategoryPage = () => {
         const numericCategoryId = categoryIdFromURL ? Number(categoryIdFromURL) : undefined;
 
         const updated: FiltersState = {
-            category: searchParams.get("category") || "",
             category_id: numericCategoryId,
             city: searchParams.get("city") || "",
             stage: searchParams.get("stage") || "",

@@ -58,7 +58,6 @@ export const Header: React.FC<HeaderProps> = ({
         searchParams.forEach((value, key) => {
             if (key == 'mobile' && value == 'true') {
                 dispatch(setIsMobileUi(true))
-                console.log('set is mobile ui', isMobileUI);
             }
         })
     }, []);
@@ -172,7 +171,7 @@ export const Header: React.FC<HeaderProps> = ({
             {/* Десктопный header */}
             <div className="hidden lg:block bg-white py-[20px] border-b border-[#E9E9E9]">
                 <div className="container mx-auto px-4 flex justify-between items-center">
-                    <Applink to="/main" className="flex items-center gap-2 shrink-0">
+                    <Applink to="/" className="flex items-center gap-2 shrink-0">
                         <img
                             src="/images/investin_logo.png"
                             alt="Logo"
@@ -257,7 +256,7 @@ export const Header: React.FC<HeaderProps> = ({
             {/* Мобильный header */}
             <div ref={menuRef} className="lg:hidden sticky top-0 z-50">
                 <div className={"flex justify-between items-center px-4 py-4 border-b border-[#E9E9E9] bg-white"  + (isMobileUI ? ' hidden' : '')}>
-                    <Applink to="/main" className="flex items-center">
+                    <Applink to="/" className="flex items-center">
                         <img src="/images/investin_logo.png" alt="Logo" className="h-10 object-contain" />
                     </Applink>
                     <div className="flex items-center gap-3">

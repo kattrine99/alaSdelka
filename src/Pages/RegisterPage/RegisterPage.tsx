@@ -136,7 +136,7 @@ export const RegistrationPage = () => {
 
             setTimeout(() => {
                 setShowSuccessModal(false);
-                navigate("/main");
+                navigate("/");
             }, 2000);
         } catch (err) {
             const error = err as ApiError;

@@ -30,6 +30,7 @@ import { setCurrencyRate } from "./Store/Slices/currencySlice";
 import { setSiteSettings } from "./Store/Slices/siteSettings";
 import { TranslationProvider } from "./../public/Locales/context/TranslationContext";
 import { ArchivePage } from "./Pages/Announcements/Archive";
+import SectionPage from "./Pages/SectionPage";
 
 const Layout = () => {
   const dispatch = useDispatch();
@@ -101,21 +102,26 @@ const Layout = () => {
   );
 };
 
+const sections = ["business", "franchise", "investments", "startup"] as const;
+type SectionType = typeof sections[number];
+
 
 const routerConfig = createBrowserRouter([
   {
-    path: "/",
+    path: ":lang(uz)?",
     element: <Layout />,
     children: [
+      ...sections.map((section) => ({
+        path: section,
+        element: <SectionPage section={section} />,
+      })),
       { index: true, element: <MainPage /> },
-      { path: "main", element: <MainPage /> },
       { path: "login", element: <LoginPage /> },
       { path: "register", element: <RegistrationPage /> },
-      { path: ":category", element: <CategoryPage /> },
       { path: ":category/card/:slug", element: <CardDetailPage /> },
-      { path: "/card/:slug", element: <CardDetailPage /> },
-      { path: "/user-agreement", element: <UserAgreement /> },
-      { path: "/privacy-policy", element: <PrivacyPolicy /> },
+      { path: "card/:slug", element: <CardDetailPage /> },
+      { path: "user-agreement", element: <UserAgreement /> },
+      { path: "privacy-policy", element: <PrivacyPolicy /> },
       {
         path: "profile", element: (
           <ProtectedRoute>
@@ -145,7 +151,7 @@ const routerConfig = createBrowserRouter([
         ),
       },
       {
-        path: "/edit/:slug", element: (
+        path: "edit/:slug", element: (
           <ProtectedRoute>
             <UpdatePage />
           </ProtectedRoute>
@@ -159,14 +165,14 @@ const routerConfig = createBrowserRouter([
         ),
       },
       {
-        path: "/promotion/:slug", element: (
+        path: "promotion/:slug", element: (
           <ProtectedRoute>
             <PromotionPage />
           </ProtectedRoute>
         ),
       },
       {
-        path: "/promotion", element: (
+        path: "promotion", element: (
           <ProtectedRoute>
             <PromotionCards />
           </ProtectedRoute>
@@ -180,14 +186,14 @@ const routerConfig = createBrowserRouter([
         ),
       },
       {
-        path: "/statistics/:slug", element: (
+        path: "statistics/:slug", element: (
           <ProtectedRoute>
             <StatisticsPage />
           </ProtectedRoute>
         ),
       },
       {
-        path: "/users/:userId/:category", element: (
+        path: "users/:userId/:category", element: (
           <ProtectedRoute>
             <UserAnnouncementPage />
           </ProtectedRoute>

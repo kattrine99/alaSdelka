@@ -63,6 +63,12 @@ export const Header: React.FC<HeaderProps> = ({
         })
     }, []);
 
+    function onLangChange(newLang: "ru" | "uz") {
+        setLang(newLang);
+        const currentPath = location.pathname.split("/").slice(2).join("/");
+        navigate(`/${newLang}/${currentPath}`);
+    }
+
     useEffect(() => {
         const onNoticesPage = location.pathname === "/notices";
         const alreadyVisited = localStorage.getItem("hasVisitedNotices") === "true";
@@ -197,7 +203,7 @@ export const Header: React.FC<HeaderProps> = ({
                         <div className="relative w-[139px] h-[49px]">
                             <select
                                 value={lang}
-                                onChange={e => setLang(e.target.value as "ru" | "uz")}
+                                onChange={e => onLangChange(e.target.value as "ru" | "uz")}
                                 className="w-full h-full px-4 pr-10 border border-[#C9CCCF] rounded-[10px] outline-none text-[#191919] font-medium appearance-none"
                             >
                                 <option value="ru">Русский</option>
@@ -289,7 +295,7 @@ export const Header: React.FC<HeaderProps> = ({
                                 <select
                                     value={lang}
                                     onChange={(e) => {
-                                        setLang(e.target.value as "ru" | "uz");
+                                        onLangChange(e.target.value as "ru" | "uz");
                                         setIsMobileMenuOpen(false);
                                     }} className="w-full h-full px-4 pr-10 border border-[#C9CCCF] rounded-[10px] outline-none text-[#191919] font-medium appearance-none"
                                 >

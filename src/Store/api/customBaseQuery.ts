@@ -3,7 +3,7 @@ import { logout, setLogoutReason } from "../Slices/authSlice";
 import qs from "qs";
 
 const rawBaseQuery = fetchBaseQuery({
-    baseUrl: import.meta.env.VITE_API_URL || "https://investin-api.comingsoon.uz/api",
+    baseUrl: import.meta.env.VITE_API_URL || "https://api.invin.uz/api",
     prepareHeaders: (headers) => {
         const token = localStorage.getItem("access_token");
         if (token) headers.set("Authorization", `Bearer ${token}`);

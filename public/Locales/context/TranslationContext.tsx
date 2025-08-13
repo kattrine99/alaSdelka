@@ -24,6 +24,8 @@ export const TranslationProvider: React.FC<{ children: React.ReactNode }> = ({ c
         const urlLang = window.location.pathname.split("/")[1] as LangType;
         if (urlLang === "ru" || urlLang === "uz") {
             setLang(urlLang);
+        } else {
+            setLang("ru");
         }
     }, []);
 

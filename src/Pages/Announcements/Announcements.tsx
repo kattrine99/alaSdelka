@@ -1,4 +1,4 @@
-import { Button, EmptyMessage, Footer, Header, Heading, ModalBase, Pagination, Paragraph } from "../../components"
+import { Applink, Button, EmptyMessage, Footer, Header, Heading, ModalBase, Pagination, Paragraph } from "../../components"
 import { offerTypeToUrlMap, profileNavigate } from "../../utils/categoryMap"
 import { useArchiveOfferMutation, useGetMyOffersQuery, useSellOfferMutation } from "../../Store/api/Api";
 import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
@@ -24,10 +24,8 @@ export const AnnouncemntsPage = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const { data, isLoading, isError, refetch } = useGetMyOffersQuery({ page: 1, per_page: 1000 });
   const { t, lang } = useTranslation();
-  const { lng } = useParams();
 
   const offers = data?.data || [];
-  const meta = data?.meta;
   const sortedOffers = [...offers].sort((a, b) => {
     if (a.offer_status === "sold" && b.offer_status !== "sold") return 1;
     if (a.offer_status !== "sold" && b.offer_status === "sold") return -1;
@@ -239,8 +237,8 @@ export const AnnouncemntsPage = () => {
                         </div>
                       )}
                       <div className="relative col-span-1">
-                        <Link
-                          to={`/${lng}/${offerTypeToUrlMap[offer.offer_type || 'category']}/card/${offer.slug}`}
+                        <Applink
+                          to={`/${offerTypeToUrlMap[offer.offer_type || 'category']}/card/${offer.slug}`}
                           className="w-full flex justify-center h-full"
                         >
                           {offer.photos[0]?.photo ? (
@@ -257,17 +255,17 @@ export const AnnouncemntsPage = () => {
                               </Paragraph>
                             </div>
                           )}
-                        </Link>
+                        </Applink>
                       </div>
                       <div className="flex flex-3/4 flex-col gap-1 py-9.5 px-7 md:col-span-2">
                         <div className="flex flex-col mb-11">
-                          <Link to={`/${lng}/${offerTypeToUrlMap[offer.offer_type || 'category']}/card/${offer.slug}`} className="w-full hover:text-[#2EAA7B]">
+                          <Applink to={`/${offerTypeToUrlMap[offer.offer_type || 'category']}/card/${offer.slug}`} className="w-full hover:text-[#2EAA7B]">
 
                             <Paragraph className="text-[#232323] text-2xl font-inter font-bold mb-2">
                               {formatPrice(offer.price)}
                             </Paragraph>
                             <Paragraph className="text-[#232323] text-lg font-bold font-inter mb-3 ">{offer.title}</Paragraph>
-                          </Link>
+                          </Applink>
                           <div className='flex gap-1.5'>
                             <FaLocationDot className="text-[#2EAA7B] w-4 h-4" />
                             <Paragraph className="font-inter font-bold text-sm"><span className="font-medium">{t("Адрес:")} </span>

@@ -5,7 +5,7 @@ import {
   UpdatePage
 } from "./Pages/index";
 import {
-  createBrowserRouter, Navigate, Outlet, RouterProvider, useNavigate
+  createBrowserRouter, Navigate, Outlet, RouterProvider, useLocation, useNavigate
 } from "react-router-dom";
 import './index.css';
 import { useEffect } from "react";
@@ -101,25 +101,59 @@ const Layout = () => {
   );
 };
 
+const LanguageRedirect: React.FC = () => {
+  const location = useLocation();
+  const language = window.location.pathname.split("/")[1];
+  const pathWithoutLang = '/' + location.pathname.split("/").slice(2).join("/");
+  console.log(pathWithoutLang);
+
+
+  // Если это русский язык с префиксом /ru/ - редиректим без префикса
+  if (language === 'ru' && location.pathname.startsWith('/ru')) {
+    return <Navigate to={pathWithoutLang} replace />;
+  }
+
+  return null;
+};
+
 
 const routerConfig = createBrowserRouter([
   {
-     path: "/",
-     element: <Navigate to="/ru" replace />
+    path: "ru/*", element: <LanguageRedirect />
   },
   {
-    path: "/:lng",
+    path: "/:lng?",
     element: <Layout />,
     children: [
       { index: true, element: <MainPage /> },
       { path: "login", element: <LoginPage /> },
       { path: "register", element: <RegistrationPage /> },
-      { path: ":section", element: <CategoryPage /> },
-      { path: ":section/category/:category", element: <CategoryPage /> },
-      { path: ":section/city/:city", element: <CategoryPage /> },
+
+      // Section routes
+      { path: "business", element: <CategoryPage section="business" /> },
+      { path: "franchise", element: <CategoryPage section="franchise" /> },
+      { path: "startup", element: <CategoryPage section="startup" /> },
+      { path: "investments", element: <CategoryPage section="investments" /> },
+
+      // Section with category routes
+      { path: "business/category/:category", element: <CategoryPage section="business" /> },
+      { path: "franchise/category/:category", element: <CategoryPage section="franchise" /> },
+      { path: "startup/category/:category", element: <CategoryPage section="startup" /> },
+      { path: "investments/category/:category", element: <CategoryPage section="investments" /> },
+
+      // Section with city routes
+      { path: "business/city/:city", element: <CategoryPage section="business" /> },
+      { path: "franchise/city/:city", element: <CategoryPage section="franchise" /> },
+      { path: "startup/city/:city", element: <CategoryPage section="startup" /> },
+      { path: "investments/city/:city", element: <CategoryPage section="investments" /> },
+
+      { path: "business/card/:slug", element: <CardDetailPage section="business" /> },
+      { path: "franchise/card/:slug", element: <CardDetailPage section="franchise" /> },
+      { path: "startup/card/:slug", element: <CardDetailPage section="startup" /> },
+      { path: "investments/card/:slug", element: <CardDetailPage section="investments" /> },
+
       { path: "category/:category", element: <CategoryPage /> },
       { path: "city/:city", element: <CategoryPage /> },
-      { path: ":section/card/:slug", element: <CardDetailPage /> },
       { path: "card/:slug", element: <CardDetailPage /> },
       { path: "user-agreement", element: <UserAgreement /> },
       { path: "privacy-policy", element: <PrivacyPolicy /> },

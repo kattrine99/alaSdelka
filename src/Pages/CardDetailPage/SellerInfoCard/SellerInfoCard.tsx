@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { ModalBase, Button, Paragraph } from "../../../components";
+import { ModalBase, Button, Paragraph, Applink } from "../../../components";
 import { BiHeart, BiSolidHeart } from "react-icons/bi";
 import { OfferDetail } from "../../../Store/api/types";
 import { Link, useParams } from "react-router-dom";
@@ -15,8 +15,7 @@ export const SellerInfoCard = ({ card, offer_type, userId }: { card: OfferDetail
     const { data: contactData, isLoading: isContactLoading } = useGetOfferContactViewQuery(
         isContactModalOpen ? card.id : skipToken
     );
-    const { lng } = useParams();
-    const { t } = useTranslation()
+    const { t, lang } = useTranslation()
     const [isFavorite, setIsFavorite] = useState(card?.is_favourite ?? false);
     const [toggleFavoriteAPI] = useToggleFavoriteMutation();
     const { mode: currencyMode, rate } = useSelector((state: RootState) => state.currency);
@@ -61,8 +60,8 @@ export const SellerInfoCard = ({ card, offer_type, userId }: { card: OfferDetail
             </Paragraph>
             {card.offer_status !== 'sold' && (
                 <div className="flex items-center bg-[#E9F7F1] rounded-md p-3 gap-3">
-                    <Link
-                        to={`/${lng}/users/${userId}/${offer_type}`}
+                    <Applink
+                        to={`/users/${userId}/${offer_type}`}
                         state={{ category: offer_type }}
                         className="flex gap-5 items-center">
                         <div className="rounded-full">
@@ -75,7 +74,7 @@ export const SellerInfoCard = ({ card, offer_type, userId }: { card: OfferDetail
                         <Paragraph className="text-[#101828] font-semibold">
                             {card.user_name || "Имя продавца"}
                         </Paragraph>
-                    </Link>
+                    </Applink>
                 </div>
             )}
 

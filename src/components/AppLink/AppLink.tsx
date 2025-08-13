@@ -1,5 +1,6 @@
 import { ReactNode } from "react"
 import { Link, useParams } from "react-router-dom"
+import { useTranslation } from "../../../public/Locales/context/TranslationContext"
 interface ApplinkProps {
     to: string
     children?: ReactNode
@@ -8,10 +9,17 @@ interface ApplinkProps {
 
 }
 export const Applink = ({ to, children, className, onClick }: ApplinkProps) => {
-    const { lng } = useParams();
+    const { lang } = useTranslation();
+    if (lang === "uz") {
+        return (
+            <Link to={`/${lang}${to}`} onClick={onClick} className={className}>
+                {children}
+            </Link>
+        )
+    }
     return (
-        <Link to={`/${lng}${to}`} onClick={onClick} className={className}>
-            {children}
-        </Link>
-    )
+            <Link to={`${to}`} onClick={onClick} className={className}>
+                {children}
+            </Link>
+        )
 }

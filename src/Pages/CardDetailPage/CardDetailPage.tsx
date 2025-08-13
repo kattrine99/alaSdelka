@@ -14,16 +14,21 @@ import ReceiptIcon from "../../assets/receipt-item.svg?react"
 import WalletIcon from "../../assets/wallet-add.svg?react"
 import GpsIcon from '../../assets/gps.svg?react'
 import CategoryIcon from '../../assets/frame.svg?react'
-import { JSX, useState } from 'react';
+import React, { JSX, useState } from 'react';
 import { SellerInfoCard } from './SellerInfoCard/SellerInfoCard';
 import { useSelector } from "react-redux";
 import { RootState } from "../../Store/store";
 import { useTranslation } from '../../../public/Locales/context/TranslationContext';
 import { translationService } from '../../utils/googleTranslate';
 import { MetaTags } from '../../components/MetaTags';
-export const CardDetailPage = () => {
+
+interface CardDetailPageProps {
+    section?: string
+}
+
+export const CardDetailPage: React.FC<CardDetailPageProps> = ({section}) => {
     const { lang, t } = useTranslation()
-    const { slug, section } = useParams();
+    const { slug } = useParams();
     const offerSlug = String(slug);
     const { data, isLoading, isError } = useGetOfferBySlugQuery(offerSlug);
     const card = data?.data;

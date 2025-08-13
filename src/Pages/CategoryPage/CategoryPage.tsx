@@ -33,8 +33,12 @@ function cleanObject<T extends object>(obj: T): Partial<T> {
     ) as Partial<T>;
 }
 
-export const CategoryPage = () => {
-    const { section, category, city, lng } = useParams();
+interface CategoryPageProps {
+    section?: string;
+}
+
+export const CategoryPage: React.FC<CategoryPageProps> = ({section}) => {
+    const { category, city, lng } = useParams();
     const [searchParams] = useSearchParams();
     const navigate = useNavigate();
     const { lang, t } = useTranslation() as { lang: 'ru' | 'uz', t: (key: string) => string };

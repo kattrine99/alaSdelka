@@ -2,7 +2,8 @@ import { useSelector } from "react-redux";
 import { RootState } from "./Store/store";
 import { JSX } from "react";
 import { ModalBase, Button } from "./components";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { useTranslation } from "../public/Locales/context/TranslationContext";
 
 interface ProtectedRouteProps {
     children: JSX.Element;
@@ -12,13 +13,13 @@ export const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
     const isAuthenticated = useSelector((state: RootState) => state.auth.isAuthenticated);
     const authReady = useSelector((state: RootState) => state.auth.authReady);
     const navigate = useNavigate();
-    const { lng } = useParams();
+    const { lang } = useTranslation();
 
     if (!authReady) return null;
 
     if (!isAuthenticated) {
         const handleLogin = () => {
-            navigate(`/${lng}/login`);
+            navigate(`/${lang}/login`);
         };
 
         return (

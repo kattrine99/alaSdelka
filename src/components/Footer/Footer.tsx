@@ -1,7 +1,7 @@
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { FaPhone } from "react-icons/fa";
 import { IoIosMail } from "react-icons/io";
-import { Paragraph, NavLinks, categories, Button } from "../index";
+import { Paragraph, NavLinks, categories, Button, Applink } from "../index";
 import { useTranslation } from "../../../public/Locales/context/TranslationContext";
 
 interface FooterProps {
@@ -9,16 +9,15 @@ interface FooterProps {
 }
 export const Footer: React.FC<FooterProps> = ({ showSmallFooter }) => {
     const navigate = useNavigate();
-    const { t } = useTranslation();
-    const { lng } = useParams();
+    const { t, lang } = useTranslation();
 
     return (
         <div className="font-[Inter] font-medium w-full bg-white shadow ">
             {!showSmallFooter && (
                 <><div className="flex justify-between items-center  bg-white py-[20px] px-[96px] border-t border-[#E9E9E9]">
-                    <Link to={`/${lng}/`} className="flex items-center gap-2">
+                    <Applink to={`/`} className="flex items-center gap-2">
                         <img src="/images/investin_logo.png" alt="Logo" className="h-[56px] w-auto object-contain" />
-                    </Link>
+                    </Applink>
                     <div className="hidden md:flex gap-8.5 items-center">
                         <NavLinks
                             links={categories}
@@ -41,13 +40,13 @@ export const Footer: React.FC<FooterProps> = ({ showSmallFooter }) => {
                         </Paragraph>
                         <div className="md:flex gap-[50px] text-sm ">
                             <Button
-                                onClick={() => navigate(`/${lng}/user-agreement`)}
+                                onClick={() => navigate(`/${lang}/user-agreement`)}
                                 className="flex items-center gap-1 text-[#232323] font-openSans font-normal text-[16px] leading-[125%] hover:text-[#28B13D] transition"
                             >
                                 {t("Пользовательское соглашение")}
                             </Button>
                             <Button
-                                onClick={() => navigate(`/${lng}/privacy-policy`)}
+                                onClick={() => navigate(`/${lang}/privacy-policy`)}
                                 className="flex items-center gap-1 text-[#232323] font-inter font-normal text-[16px] leading-[125%] hover:text-[#28B13D] transition"
                             >
                                 {t("Политика конфиденциальности")}
@@ -60,25 +59,25 @@ export const Footer: React.FC<FooterProps> = ({ showSmallFooter }) => {
 
                         {/* ЛОГОТИП */}
                         <div className="flex justify-center lg:justify-start">
-                            <Link to={`/${lng}/`}>
+                            <Applink to={`/`}>
                                 <img
                                     src="/images/investin_logo.png"
                                     alt="Logo"
                                     className="h-[48px] w-auto object-contain sm:h-[56px]"
                                 />
-                            </Link>
+                            </Applink>
                         </div>
 
                         {/* КНОПКИ */}
                         <div className="flex justify-center gap-6 flex-wrap text-[14px] sm:text-[16px] text-[#232323]">
                             <Button
-                                onClick={() => navigate(`/${lng}/user-agreement`)}
+                                onClick={() => navigate(`/${lang}/user-agreement`)}
                                 className="hover:text-[#28B13D] transition"
                             >
                                 {t("Пользовательское соглашение")}
                             </Button>
                             <Button
-                                onClick={() => navigate(`/${lng}/privacy-policy`)}
+                                onClick={() => navigate(`/${lang}/privacy-policy`)}
                                 className="hover:text-[#28B13D] transition"
                             >
                                 {t("Политика конфиденциальности")}

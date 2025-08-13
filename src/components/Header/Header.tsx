@@ -36,7 +36,6 @@ export const Header: React.FC<HeaderProps> = ({
     const [searchParams] = useSearchParams();
     const siteSettings = useSelector((state: RootState) => state.siteSettings.settings);
     const navigate = useNavigate();
-    const { lng } = useParams();
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const dispatch = useDispatch();
     const selectedCurrency = useSelector((state: RootState) => state.currency.mode);
@@ -66,7 +65,12 @@ export const Header: React.FC<HeaderProps> = ({
     function onLangChange(newLang: "ru" | "uz") {
         setLang(newLang);
         const currentPath = location.pathname.split("/").slice(2).join("/");
-        navigate(`/${newLang}/${currentPath}`);
+        if (newLang === 'uz') {
+            // Если язык узбекский, добавляем префикс /uz
+            navigate(`/${newLang}/${currentPath}`);
+        } else {
+            navigate(`/${currentPath}`);
+        }
     }
 
     useEffect(() => {
@@ -226,7 +230,7 @@ export const Header: React.FC<HeaderProps> = ({
                         {showAuthButtons && (
                             isAuthenticated ? (
                                 <div className="flex gap-2 items-center">
-                                    <Button onClick={() => navigate(`/${lng}/notices`)} className='relative'>
+                                    <Button onClick={() => navigate(`/${lang}/notices`)} className='relative'>
                                         <NoticeIcon className="cursor-pointer items" />
                                         {localUnreadCount > 0 && (
                                             <span className="absolute -top-1 right-[1px] bg-[#DE5151] text-white text-xs w-4 h-4 rounded-full flex items-center justify-center">
@@ -236,7 +240,7 @@ export const Header: React.FC<HeaderProps> = ({
 
                                     </Button>
 
-                                    <Button onClick={() => navigate(`/${lng}/favorites`)} className={undefined}><FavIcon /></Button>
+                                    <Button onClick={() => navigate(`/${lang}/favorites`)} className={undefined}><FavIcon /></Button>
                                     <Applink to="/profile"><ProfileIcon /></Applink>
                                 </div>
                             ) : (
@@ -323,24 +327,24 @@ export const Header: React.FC<HeaderProps> = ({
 
                         {isAuthenticated ? (
                             <div className="flex gap-4 justify-center">
-                                <Button onClick={() => { navigate(`/${lng}/notices`); setIsMobileMenuOpen(false); }} className={undefined}>
+                                <Button onClick={() => { navigate(`/${lang}/notices`); setIsMobileMenuOpen(false); }} className={undefined}>
                                     <NoticeIcon className="cursor-pointer" />
                                 </Button>
-                                <Button onClick={() => { navigate(`/${lng}/favorites`); setIsMobileMenuOpen(false); }} className={undefined}>
+                                <Button onClick={() => { navigate(`/${lang}/favorites`); setIsMobileMenuOpen(false); }} className={undefined}>
                                     <FavIcon className="cursor-pointer" />
                                 </Button>
-                                <Button onClick={() => { navigate(`/${lng}/profile`); setIsMobileMenuOpen(false); }} className={undefined}>
+                                <Button onClick={() => { navigate(`/${lang}/profile`); setIsMobileMenuOpen(false); }} className={undefined}>
                                     <ProfileIcon className="cursor-pointer" />
                                 </Button>
                             </div>
                         ) : (
                             <div className="flex flex-col gap-3">
-                                <Button onClick={() => { navigate(`/${lng}/login`); setIsMobileMenuOpen(false); }}
+                                <Button onClick={() => { navigate(`/${lang}/login`); setIsMobileMenuOpen(false); }}
                                     className="border border-[#31B683] rounded-[10px] px-5 py-3 text-center hover:bg-[#2EAA7B] hover:text-white text-sm font-medium transition duration-600"
                                 >
                                     {t("Войти")}
                                 </Button>
-                                <Button onClick={() => { navigate(`/${lng}/register`); setIsMobileMenuOpen(false); }}
+                                <Button onClick={() => { navigate(`/${lang}/register`); setIsMobileMenuOpen(false); }}
                                     className="bg-[#2EAA7B] text-white px-5 py-3 rounded-[10px] text-center hover:bg-[#31B683] text-sm font-medium transition duration-600"
                                 >
                                     {t("Зарегистрироваться")}

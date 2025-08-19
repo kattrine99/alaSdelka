@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button, Paragraph, Footer, Header, Breadcrumbs, Heading, ModalBase } from "../../../components/index";
 import { profileNavigate } from "../../../utils/categoryMap";
 import ShopIcon from '../../../assets/shop.svg?react';
@@ -9,18 +9,21 @@ import HeadphonesIcon from '../../../assets/headphones.svg?react';
 import { InformationStep } from "./InformationStep";
 import { PublicationStep } from "./PublicationStep";
 import { ModerationStep } from "./ModerationStep";
+import { PaymentStep } from "./PaymentStep"
 import { useSelector } from "react-redux";
 import { RootState } from "../../../Store/store";
 import { FiChevronRight } from "react-icons/fi";
 import { CardDetailPreview } from "../../../components/Cards/CardDetailPreview";
 import { FaCheckCircle } from "react-icons/fa";
 import { useTranslation } from "../../../../public/Locales/context/TranslationContext";
+import { useSearchParams } from "react-router-dom";
 
 
 const steps = [
     { title: "Раздел объявления", subtitle: "Выберите категорию объявления" },
     { title: "Тип объявления", subtitle: "Выберите что вы хотите сделать" },
     { title: "Информация", subtitle: "Заполните детали объявления" },
+    { title: "Оплата", subtitle: "Выберите способ оплаты" },
     { title: "Публикация", subtitle: "Проверьте и подтвердите" },
     { title: "Готово", subtitle: "На модерации" }
 ];
@@ -51,9 +54,11 @@ export const StepsAddingOffer = () => {
     const [step, setStep] = useState(0);
     const [listingType, setListingType] = useState<"buy" | "sell" | null>(null);
     const [offerType, setOfferType] = useState<OfferType | null>(null);
+    const [offerSlug, setOfferSlug] = useState<string | null>(null);
     const savedData = useSelector((state: RootState) => state.tempOffer.offerData);
     const [showHelperModal, setShowHelperModal] = useState(false);
-    const { lang, t } = useTranslation()
+    const [searchParams] = useSearchParams()
+    const { t } = useTranslation()
     const getListingTypeLabel = (type: "buy" | "sell") => {
         if (offerType === "investments") {
             return type === "buy" ? t("Найти инвестиции") : t("Инвестировать");
@@ -72,9 +77,18 @@ export const StepsAddingOffer = () => {
         return false;
     };
 
-    const handlePublish = () => {
-        setStep(4);
+    const handlePublish = (offerSlug: string) => {
+        setOfferSlug(offerSlug);
+        setStep(6);
     };
+
+    useEffect(() => {
+        const offerSlug = searchParams.get("offerSlug");
+        if (offerSlug) {
+            setOfferSlug(offerSlug);
+            setStep(6);
+        }
+    }, [searchParams]);
 
     return (
         <div className="w-screen min-h-screen flex flex-col">
@@ -157,7 +171,7 @@ export const StepsAddingOffer = () => {
                                             <Button
                                                 onClick={() => i <= step && setStep(i)}
                                                 className="flex items-center gap-3 text-left z-10"
-                                                disabled={i > step}
+                                                disabled={i > step || offerSlug != null}
                                             >
                                                 <div
                                                     className={`w-8 h-8 flex items-center justify-center rounded-full border-2 transition
@@ -270,6 +284,9 @@ export const StepsAddingOffer = () => {
                                 {/* Step-4 - Готово */}
                                 {step === 4 && (
                                     <ModerationStep />
+                                )}
+                                {step === 6 && offerSlug != null && (
+                                    <PaymentStep offerSlug={offerSlug} onPayment={() => {setStep(4)}} />
                                 )}
                             </div>
                         </div></div>

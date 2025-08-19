@@ -236,6 +236,34 @@ export const AnnouncemntsPage = () => {
                           )}
                         </div>
                       )}
+                      {(offer.offer_status === 'draft') && (
+                        <div className="absolute left-5 top-[-20px] z-10 flex gap-2">
+                          <div className="w-[125px] font-openSans bg-white border border-[#2EAA7B] text-[#2EAA7B] py-1.25 px-1.5 rounded-md font-semibold shadow-sm text-center">
+                            <Paragraph className="text-sm">{t("Черновик")}</Paragraph>
+                          </div>
+                        </div>
+                      )}
+                      {(offer.offer_status === 'in_moderation') && (
+                        <div className="absolute left-5 top-[-20px] z-10 flex gap-2">
+                          <div className="w-[125px] font-openSans bg-white border border-[#FF8700] text-[#FF8700] py-1.25 px-1.5 rounded-md font-semibold shadow-sm text-center">
+                            <Paragraph className="text-sm">{t("На модерации")}</Paragraph>
+                          </div>
+                        </div>
+                      )}
+                      {(offer.offer_status === 'published') && (
+                        <div className="absolute left-5 top-[-20px] z-10 flex gap-2">
+                          <div className="w-[125px] font-openSans bg-white border border-[#2EAA7B] text-[#2EAA7B] py-1.25 px-1.5 rounded-md font-semibold shadow-sm text-center">
+                            <Paragraph className="text-sm">{t("Опубликовано")}</Paragraph>
+                          </div>
+                        </div>
+                      )}
+                      {(offer.offer_status === 'denied') && (
+                        <div className="absolute left-5 top-[-20px] z-10 flex gap-2">
+                          <div className="w-[125px] font-openSans bg-white border border-[#FF4D4D] text-[#FF4D4D] py-1.25 px-1.5 rounded-md font-semibold shadow-sm text-center">
+                            <Paragraph className="text-sm">{t("Отклонено")}</Paragraph>
+                          </div>
+                        </div>
+                      )}
                       <div className="relative col-span-1">
                         <Applink
                           to={`/${offerTypeToUrlMap[offer.offer_type || 'category']}/card/${offer.slug}`}
@@ -283,31 +311,46 @@ export const AnnouncemntsPage = () => {
                         </div>
                         <div className="flex w-full">
                           <div className="grid grid-cols-1 gap-y-3 gap-x-5 md:grid-cols-2 w-full">
-                            {offer.is_paid == true ? (
-                              <div className="bg-[#2EAA7B] text-white px-5 py-1 rounded-md flex items-center gap-2 font-semibold">
-                                {t("Идет продвижение (осталось {{count}} дней)").replace("{{count}}", String(offer.paid_offer?.promotion_days_left ?? 0))}
-                                <FireIcon className="z-10 w-5 h-5 text-white" />
+                            {(offer.offer_status == 'published') && (
+                              <div className="w-full">
+                                {offer.is_paid == true ? (
+                                  <div>
+                                    <div className="bg-[#2EAA7B] w-full text-white px-5 py-1 rounded-md flex items-center gap-2 font-semibold">
+                                      {t("Идет продвижение (осталось {{count}} дней)").replace("{{count}}", String(offer.paid_offer?.promotion_days_left ?? 0))}
+                                      <FireIcon className="z-10 w-5 h-5 text-white" />
+                                    </div>
+                                  </div>
+                                ) : (
+                                  <Button
+                                    className="bg-[#2EAA7B] w-full text-white px-5 h-12 rounded-md cursor-pointer"
+                                    onClick={() => navigate(`/promotion/${offer.slug}`)}
+                                  >
+                                    {t("Продвигать объявление")}
+                                  </Button>
+                                )}
                               </div>
-                            ) : (
-                              <Button
-                                className="bg-[#2EAA7B] text-white px-5 h-12 rounded-md cursor-pointer"
-                                onClick={() => navigate(`/${lang}/promotion/${offer.slug}`)}
-                              >
-                                {t("Продвигать объявление")}
+                            )}
+                            {(offer.offer_status === 'published') && (
+                              <Button className={"text-white bg-[#FF8707] px-4 h-12 rounded-md" + " cursor-pointer"}
+                                onClick={() => {
+                                  setSelectedOfferId(offer.id);
+                                  setShowModal(true);
+                                }}>
+                                {t("Продано")}
                               </Button>
                             )}
-                            <Button className={"text-white bg-[#FF8707] px-4 h-12 rounded-md" + (offer.offer_status === "sold" ? " opacity-50 cursor-not-allowed" : " cursor-pointer")}
-                              disabled={offer.offer_status === "sold"}
-                              onClick={() => {
-                                setSelectedOfferId(offer.id);
-                                setShowModal(true);
-                              }}>
-                              {t("Продано")}
-                            </Button>
-                            <Button className=" text-[#2EAA7B] border border-[#2EAA7B] px-5 h-12 rounded-md cursor-pointer"
-                              onClick={() => navigate(`/${lang}/statistics/${offer.slug}`)}>
-                              {t("Посмотреть статистику")}
-                            </Button>
+                            {(offer.offer_status === 'published') && (
+                              <Button className=" text-[#2EAA7B] border border-[#2EAA7B] px-5 h-12 rounded-md cursor-pointer"
+                                onClick={() => navigate(`/statistics/${offer.slug}`)}>
+                                {t("Посмотреть статистику")}
+                              </Button>
+                            )}
+                            {(offer.offer_status === 'draft') && (
+                              <Button className="bg-[#2EAA7B] w-full text-white px-5 h-12 rounded-md cursor-pointer"
+                                onClick={() => {navigate('/add-offer?offerSlug=' + offer.slug)}}>
+                                {t("Опубликовать")}
+                              </Button>
+                            )}
 
                             <Button className="bg-[#FF1D1D] px-5 h-12 rounded-md text-white cursor-pointer"
                               onClick={() => {

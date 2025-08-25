@@ -1,4 +1,4 @@
-import { Header, Heading, Paragraph, NavLinks, CardSection, FilterBar, categories, Button, Footer, EmptyMessage } from "../../components";
+import { Header, Heading, Paragraph, NavLinks, CardSection, FilterBar, categories, Button, Footer, EmptyMessage, Applink } from "../../components";
 import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ShopIcon from '../../assets/shop.svg?react';
@@ -13,6 +13,7 @@ import { useTranslation } from "../../../public/Locales/context/TranslationConte
 import { useSelector } from "react-redux";
 import { RootState } from "../../Store/store";
 import { MetaTags } from "../../components/MetaTags";
+import { FaArrowRight } from "react-icons/fa6";
 
 export const MainPage = () => {
     const [selectedCategory, setSelectedCategory] = useState<"Бизнес" | "Франшиза" | "Стартапы" | "Инвестиции">("Бизнес");
@@ -167,7 +168,7 @@ export const MainPage = () => {
     return (
         <>
             {(home != null && home) && (
-                <MetaTags title={home.title} description={home.description} keywords={home.keywords}/>
+                <MetaTags title={home.title} description={home.description} keywords={home.keywords} />
             )}
             <div className="font-openSans min-h-screen w-screen overflow-x-hidden">
                 <Header />
@@ -233,7 +234,7 @@ export const MainPage = () => {
                 {/* Карточки */}
                 <section className="mt-12.5 mb-8.75 px-3 xl:px-20 max-xl:px-10 md:px-0 transition duration-500 ease-in-out container mx-auto">
                     <div className="flex justify-start">
-                        <div className="grid grid-cols-3 max-lg:flex max-lg:flex-col max-sm:justify-center items-start w-full mb-6">
+                        <div className="flex justify-between items-center max-lg:flex max-lg:flex-col max-sm:justify-center items-start w-full mb-6">
                             <div >
                                 <Button onClick={() => {
                                     navigate(`$/{lang}/business`)
@@ -241,7 +242,7 @@ export const MainPage = () => {
                                     <Heading level={2} text={t("Бизнес")} className="font-openSans font-bold hover:text-[#2EAA7B] hover:underline hover:decoration-1 transition duration-500 text-3xl cursor-pointer" />
                                 </Button>
                             </div>
-                            <div className="col-span-1 max-lg:mt-2 max-sm:flex-col max-lg:w-full flex justify-center gap-4">
+                            <div className="col-span-2 max-lg:mt-2 max-sm:flex-col max-lg:w-full flex justify-center gap-4">
                                 <Button onClick={() => setListingTypes(prev => ({ ...prev, [selectedCategory]: "sell" }))}
                                     className={`flex items-center justify-center gap-x-2 rounded-[8px] h-13  min-w-70 max-"sm: w - full whitespace - nowrap px - 6 border border-[#2EAA7B] text-[#2EAA7B] text-[16px] hover:bg-[#2EAA7B] hover:text-white transition duration - 500 font - inter leading - [150 %] font - semibold
                         ${businessType === "sell" ? "bg-[#2EAA7B] text-white border-[#2EAA7B]"
@@ -259,6 +260,9 @@ export const MainPage = () => {
                                     {t("Покупка бизнеса")}
                                 </Button>
                             </div>
+                            <Applink to='/business' className={"hidden md:block"}>
+                                <FaArrowRight />
+                            </Applink>
                         </div>
 
                     </div>
@@ -298,7 +302,7 @@ export const MainPage = () => {
                 </section >
                 <section className="mt-12.5 mb-8.75 px-3 xl:px-20 max-xl:px-10 md:px-0 transition duration-500 ease-in-out container mx-auto">
                     <div className="flex justify-start">
-                        <div className="grid grid-cols-3 max-lg:flex max-lg:flex-col max-sm:justify-center items-start w-full mb-6">
+                        <div className="flex justify-between items-center max-lg:flex max-lg:flex-col max-sm:justify-center w-full mb-6">
                             <div>
                                 <Button onClick={() => {
                                     navigate(`$/{lang}/franchise`)
@@ -320,6 +324,9 @@ export const MainPage = () => {
                                     {t("Покупка франшизы")}
                                 </Button>
                             </div>
+                            <Applink to='/franchise' className={"hidden md:block"}>
+                                <FaArrowRight />
+                            </Applink>
                         </div>
                     </div>
                     {isLoadingFranchise ? (
@@ -358,7 +365,7 @@ export const MainPage = () => {
                 </section>
                 <section className="mt-12.5 mb-8.75 px-3 xl:px-20 max-xl:px-10 md:px-0 transition duration-500 ease-in-out container mx-auto">
                     <div className="flex justify-start">
-                        <div className="grid grid-cols-3 max-lg:flex max-lg:flex-col max-sm:justify-center items-start w-full mb-6">
+                        <div className="flex justify-between items-center max-lg:flex max-lg:flex-col max-sm:justify-center w-full mb-6">
                             <div>
                                 <Button onClick={() => {
                                     navigate(`/${lang}/startups`)
@@ -380,6 +387,9 @@ export const MainPage = () => {
                                     {t("Покупка стартапа")}
                                 </Button>
                             </div>
+                            <Applink to='/startups' className={"hidden md:block"}>
+                                <FaArrowRight />
+                            </Applink>
                         </div>
                     </div>
                     {isLoadingStartup ? (
@@ -417,7 +427,7 @@ export const MainPage = () => {
                 </section>
                 <section className="mt-12.5 mb-8.75 px-3 xl:px-20 max-xl:px-10 md:px-0 transition duration-500 ease-in-out container mx-auto">
                     <div className="flex justify-start">
-                        <div className="grid grid-cols-3 max-lg:flex max-lg:flex-col max-sm:justify-center items-start w-full mb-6">
+                        <div className="flex justify-between items-center max-lg:flex max-lg:flex-col max-sm:justify-center w-full mb-6">
                             <div>
                                 <Button onClick={() => {
                                     navigate(`/${lang}/investments`)
@@ -440,6 +450,9 @@ export const MainPage = () => {
                                     {t("Инвестировать")}
                                 </Button>
                             </div>
+                            <Applink to='/investments' className={"hidden md:block"}>
+                                <FaArrowRight />
+                            </Applink>
                         </div>
                     </div>
                     {isLoadingInvestment ? (

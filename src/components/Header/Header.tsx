@@ -152,14 +152,14 @@ export const Header: React.FC<HeaderProps> = ({
                     <div className="container mx-auto px-4 flex justify-between items-center">
                         {/* Email & Phone */}
                         <div className="flex flex-wrap items-center justify-center md:justify-start gap-4">
-                            <Paragraph className="flex items-center gap-2 text-[#232323] font-openSans text-sm md:text-base">
+                            <a href={`mailto:${siteSettings?.contacts.email}`} className="flex items-center gap-2 text-[#232323] font-openSans text-sm md:text-base">
                                 <IoIosMail className="text-[#2EAA7B]" />
                                 {siteSettings?.contacts.email}
-                            </Paragraph>
-                            <Paragraph className="flex items-center gap-2 text-[#232323] font-inter text-sm md:text-base">
+                            </a>
+                            {/* <Paragraph className="flex items-center gap-2 text-[#232323] font-inter text-sm md:text-base">
                                 <FaPhone className="text-[#2EAA7B]" />
                                 {siteSettings?.contacts.phone}
-                            </Paragraph>
+                            </Paragraph> */}
                         </div>
 
                         {/* Icons */}

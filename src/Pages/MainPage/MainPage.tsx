@@ -368,7 +368,7 @@ export const MainPage = () => {
                         <div className="flex justify-between items-center max-lg:flex max-lg:flex-col max-sm:justify-center w-full mb-6">
                             <div>
                                 <Button onClick={() => {
-                                    navigate(`/${lang}/startups`)
+                                    navigate(`/${lang}/startup`)
                                 }} className={""}>
                                     <Heading level={2} text={t("Стартапы")} className="font-openSans font-bold hover:text-[#2EAA7B] hover:underline hover:decoration-1 transition duration-500 text-3xl cursor-pointer" />
                                 </Button>
@@ -387,7 +387,7 @@ export const MainPage = () => {
                                     {t("Покупка стартапа")}
                                 </Button>
                             </div>
-                            <Applink to='/startups' className={"hidden md:block"}>
+                            <Applink to='/startup' className={"hidden md:block"}>
                                 <FaArrowRight />
                             </Applink>
                         </div>
@@ -442,12 +442,12 @@ export const MainPage = () => {
                                         : "border-[#2EAA7B] text-[#2EAA7B] hover:bg-[#2EAA7B] hover:text-white"
                                     } `}>
                                     <ShopIcon className="w-5 h-5 hover:text-white" />
-                                    {t("Получить инвестиции")}
+                                    {t("Поиск инвестора")}
                                 </Button>
                                 <Button onClick={() => setListingTypes(prev => ({ ...prev, Инвестиции: "buy" }))} className={`flex items-center justify-center gap-2 border rounded-[8px] h-13 min-w-70 max-sm:w-full max-sm:mt-3 whitespace-nowrap px-6 text-[16px] font-inter font-semibold transition
   ${investmentType === "buy" ? "bg-[#2EAA7B] text-white border-[#2EAA7B]" : "border-[#2EAA7B] text-[#2EAA7B] hover:bg-[#2EAA7B] hover:text-white"} `}>
                                     <ShopIcon className="w-5 h-5 hover:text-white" />
-                                    {t("Инвестировать")}
+                                    {t("Поиск инвестпроекта")}
                                 </Button>
                             </div>
                             <Applink to='/investments' className={"hidden md:block"}>

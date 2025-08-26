@@ -32,6 +32,7 @@ export const ArchivePage = () => {
         message: string;
     }>({ isOpen: false, message: "" });
     const [selectedOfferId, setSelectedOfferId] = useState<number | null>(null);
+    const [selectedOfferSlug, setSelectedOfferSlug] = useState<string | null>(null);
 
     const [publishOffer] = usePublishOfferMutation();
 
@@ -170,6 +171,7 @@ export const ArchivePage = () => {
                                                             className="bg-[#2EAA7B] text-white px-5 h-12 rounded-md cursor-pointer"
                                                             onClick={() => {
                                                                 setSelectedOfferId(offer.id);
+                                                                setSelectedOfferSlug(offer.slug)
                                                                 setShowPublishModal(true);
                                                             }}
                                                         >
@@ -203,11 +205,11 @@ export const ArchivePage = () => {
             </div>
             {showPublishModal && selectedOfferId !== null && (
                 <ModalBase
-                    title={t("Вы уверены, что хотите опубликовать объявление?")}
+                    title={t("Вы уверены, что хотите восстановить объявление?")}
                     HeadingClassName="font-inter text-[35px] leading-[100%]"
                     ModalClassName="w-150 p-9"
                     message={
-                        <>{t("После подтверждения объявление будет отправлено на модерацию")}</>
+                        <>{t("После подтверждения объявление будет восстановлено")}</>
                     }
                     onClose={() => setShowPublishModal(false)}
                     actions={
@@ -220,20 +222,7 @@ export const ArchivePage = () => {
                             </Button>
                             <Button
                                 className="bg-[#2EAA7B] text-white w-full px-5 py-3 rounded-md"
-                                onClick={async () => {
-                                    if (selectedOfferId === null) return;
-                                    try {
-                                        await publishOffer(selectedOfferId).unwrap();
-                                        setShowPublishModal(false);
-                                        setSuccessModal({
-                                            isOpen: true,
-                                            message: t("Объявление отправлено на модерацию!"),
-                                        });
-                                        await refetch();
-                                    } catch (err) {
-                                        console.error("Ошибка при публикации:", err);
-                                    }
-                                }}
+                                onClick={() => {navigate('/add-offer?offerSlug=' + selectedOfferSlug)}}
                             >
                                 {t("Опубликовать")}
                             </Button>

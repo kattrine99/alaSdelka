@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { Button, Paragraph } from "../index";
+import { Applink, Button, Paragraph } from "../index";
 import { useTranslation } from "../../../public/Locales/context/TranslationContext";
 
 interface EmptyMessageProps {
@@ -37,12 +37,20 @@ export const EmptyMessage: React.FC<EmptyMessageProps> = ({
                 <Paragraph className="text-[#667085] text-sm">{t(subtitle)}</Paragraph>
             )}
             {!hideButton && (
-                <Button
-                    className="bg-[#2EAA7B] text-white rounded-md px-6 py-2 mt-3"
-                    onClick={() => navigate(buttonLink)}
-                >
-                    {t(buttonText)}
-                </Button>
+                <>
+                    <Applink
+                        className="bg-[#2EAA7B] text-white w-60.5 rounded-md px-6 py-2 mt-3"
+                        to={buttonLink}
+                    >
+                        {t(buttonText)}
+                    </Applink>
+                    <Applink
+                        className="bg-[#FF1D1D] text-white w-60.5 rounded-md px-6 py-2 mt-3"
+                        to='/announcements/archived'
+                    >
+                        {t("Архив")}
+                    </Applink>
+                </>
             )}
         </div>
     );

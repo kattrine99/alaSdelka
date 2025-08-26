@@ -61,7 +61,7 @@ export const StepsAddingOffer = () => {
     const { t } = useTranslation()
     const getListingTypeLabel = (type: "buy" | "sell") => {
         if (offerType === "investments") {
-            return type === "buy" ? t("Найти инвестиции") : t("Инвестировать");
+            return type === "buy" ? t("Поиск инвестора") : t("Поиск инвестпроекта");
         }
         return type === "buy" ? "Купить" : "Продать";
     };

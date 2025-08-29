@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef } from "react";
-import { FaPhone, FaWhatsapp } from "react-icons/fa";
+import { FaWhatsapp } from "react-icons/fa";
 import { IoIosMail } from "react-icons/io";
 import { FaTelegram } from "react-icons/fa6";
 import { RxHamburgerMenu } from "react-icons/rx";
@@ -357,10 +357,6 @@ export const Header: React.FC<HeaderProps> = ({
                                 <IoIosMail className="text-[#2EAA7B]" />
                                 <a href="mailto:info@name-com.uz">info@name-com.uz</a>
                                 
-                            </Paragraph>
-                            <Paragraph className="flex items-center gap-2 text-[#232323] font-inter text-sm md:text-base">
-                                <FaPhone className="text-[#2EAA7B]" />
-                                <a href="tel:+99871789878">+998 71 789 78 78</a>
                             </Paragraph>
                         </div>
 

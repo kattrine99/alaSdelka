@@ -1,5 +1,4 @@
-import { Link, useNavigate, useParams } from "react-router-dom";
-import { FaPhone } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 import { IoIosMail } from "react-icons/io";
 import { Paragraph, NavLinks, categories, Button, Applink } from "../index";
 import { useTranslation } from "../../../public/Locales/context/TranslationContext";
@@ -28,10 +27,6 @@ export const Footer: React.FC<FooterProps> = ({ showSmallFooter }) => {
                         <Paragraph className="flex items-center gap-1 text-[#232323] font-openSans font-normal text-[16px] leading-[125%]">
                             <IoIosMail className="text-[#2EAA7B] text-base" />
                             info@name-com.uz
-                        </Paragraph>
-                        <Paragraph className="flex items-center gap-1 text-[#232323] font-inter font-normal text-[16px] leading-[125%]">
-                            <FaPhone className="text-[#2EAA7B] text-base" />
-                            +998 71 789 78 78
                         </Paragraph>
                     </div>
                 </div><div className="flex justify-start items-center py-[25px] px-[96px]">

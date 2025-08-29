@@ -379,12 +379,12 @@ export const MainPage = () => {
                                         : "border-[#2EAA7B] text-[#2EAA7B] hover:bg-[#2EAA7B] hover:text-white"
                                     } `}>
                                     <ShopIcon className="w-5 h-5 hover:text-white" />
-                                    {t("Продажа стартапа")}
+                                    {t("Поиск инвестора")}
                                 </Button>
                                 <Button onClick={() => setListingTypes(prev => ({ ...prev, Стартапы: "buy" }))} className={`flex items-center justify-center gap-2 border rounded-[8px] h-13 min-w-70 max-sm:w-full max-sm:mt-3 whitespace-nowrap px-6 text-[16px] font-inter font-semibold transition
   ${startupType === "buy" ? "bg-[#2EAA7B] text-white border-[#2EAA7B]" : "border-[#2EAA7B] text-[#2EAA7B] hover:bg-[#2EAA7B] hover:text-white"} `}>
                                     <ShopIcon className="w-5 h-5 hover:text-white" />
-                                    {t("Покупка стартапа")}
+                                    {t("Поиск инвестпроекта")}
                                 </Button>
                             </div>
                             <Applink to='/startup' className={"hidden md:block"}>

@@ -531,58 +531,58 @@ export const MainPage = () => {
                 {/*Почему Invest In*/}
                 <section className="relative overflow-hidden w-full bg-[url('/images/Mask.png')] bg-repeat">
                     <div className="absolute right-[197px] hidden 2xl:block top-[61px] w-175.5 h-full bg-[url('/images/WhyInvestIn.png')] bg-no-repeat bg-contain px-48" ></div>
-                    <div className="relative py-17.5 max-2xl:px-10 px-4 sm:px-8 md:px-[96px] xl:px-48 overflow-hidden">
-                        <div className="order-2 lg:order-1 flex flex-col gap-6 max-w-2xl w-full">
-                            <Heading
-                                level={1}
-                                className="text-[24px] md:text-[32px] font-bold leading-tight text-black" text={""}>
-                                {t("Почему")} <span className="text-[#31B683]">{t("Invest In")}</span> {t("— лучший инструмент для продажи бизнеса?")}
-                            </Heading>
+                    <div className="py-17.5 flex lg:flex-row justify-between flex-col max-2xl:px-10 px-4 sm:px-8 md:px-[96px] xl:px-48 overflow-hidden">
+                        <div className="flex flex-col">
+                            <div className="flex flex-col gap-6 max-w-2xl w-full">
+                                <Heading
+                                    level={1}
+                                    className="text-[24px] md:text-[32px] font-bold leading-tight text-black" text={""}>
+                                    {t("Почему")} <span className="text-[#31B683]">{t("Invest In")}</span> {t("— лучший инструмент для продажи бизнеса?")}
+                                </Heading>
 
-                            <Paragraph
-                                className=" mt-[12px] w-full text-[#232323] font-inter font-normal leading-[125%] text-[16px] md:text-3xl">
-                                {t("С Invest In благодаря поддержке на всех этапах сделки вы сможете продать свой бизнес на условиях, которые будут выгодны и удобны для вас. На нашем сайте уже:")}
-                            </Paragraph>
+                                <Paragraph
+                                    className=" mt-[12px] w-full text-[#232323] font-inter font-normal leading-[125%] text-[16px] md:text-3xl">
+                                    {t("С Invest In благодаря поддержке на всех этапах сделки вы сможете продать свой бизнес на условиях, которые будут выгодны и удобны для вас. На нашем сайте уже:")}
+                                </Paragraph>
+                            </div>
+                            {/*Цифры*/}
+                            <div className="flex justify-start gap-5 mt-[58px]">
+                                <div className="grid grid-cols-2 gap-[20px] md:max-w-2xl w-full">
+                                    <div className="bg-white w-full font-inter text-black flex flex-col items-center rounded-[30px] py-6 shadow-[0px_4px_21.2px_rgba(46,170,123,0.2)]">
+                                        <Paragraph className="font-inter text-[40px] max-sm:text-3xl text-center font-bold leading-none transition duration-300">
+                                            {mainStats?.offers_count?.toLocaleString("ru-RU")}<span
+                                                className="text-[#2EAA7B]">+</span>
+                                        </Paragraph>
+                                        <Paragraph className="font-inter text-2xl max-sm:text-[16px] leading-[100%] mt-2">{t("объявлений")}</Paragraph>
+                                    </div>
+
+                                    <div className="bg-white w-full font-inter text-black flex flex-col items-center rounded-[30px] py-6 shadow-[0px_4px_21.2px_rgba(46,170,123,0.2)]">
+                                        <Paragraph className="text-[40px] max-sm:text-3xl text-center font-bold leading-none transition duration-300">
+                                            {mainStats?.deals_count?.toLocaleString("ru-RU")}<span
+                                                className="text-[#2EAA7B]">+</span>
+                                        </Paragraph>
+                                        <Paragraph className="font-inter text-2xl max-sm:text-[16px] leading-[100%] mt-2">{t("сделок")}</Paragraph>
+                                    </div>
+                                    <div
+                                        className="bg-white font-inter text-black flex flex-col items-center rounded-[30px] py-6 shadow-[0px_4px_21.2px_rgba(46,170,123,0.2)]">
+                                        <Paragraph className="text-[40px] max-sm:text-3xl text-center font-bold leading-none transition duration-300">
+                                            {mainStats?.partners_count?.toLocaleString("ru-RU")}
+                                        </Paragraph>
+                                        <Paragraph className="font-inter text-2xl max-sm:text-[16px] leading-[100%] mt-2">{t("партнёров")}</Paragraph>
+                                    </div>
+                                    <div
+                                        className="bg-white font-inter text-black flex flex-col items-center text-center rounded-[30px] py-6 shadow-[0px_4px_21.2px_rgba(46,170,123,0.2)]">
+                                        <Paragraph className="text-[40px] max-sm:text-3xl text-center font-bold leading-none transition duration-300">
+                                            <span className="text-[#2EAA7B]">$</span>{displayAmount}
+                                        </Paragraph>
+                                        <Paragraph className="font-inter text-2xl max-sm:text-[16px] leading-[100%] mt-2">{t("продано бизнесов")}</Paragraph>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <div className="2xl:hidden mt-6">
                             <img src="/images/WhyInvestIn.png" alt="" className="w-full max-w-3xl" />
                         </div>
-                        {/*Цифры*/}
-                        <div className="flex justify-start gap-5 mt-[58px]">
-                            <div className="grid grid-cols-2 gap-[20px] md:max-w-2xl w-full">
-                                <div className="bg-white w-full font-inter text-black flex flex-col items-center rounded-[30px] py-6 shadow-[0px_4px_21.2px_rgba(46,170,123,0.2)]">
-                                    <Paragraph className="font-inter text-[40px] max-sm:text-3xl text-center font-bold leading-none transition duration-300">
-                                        {mainStats?.offers_count?.toLocaleString("ru-RU")}<span
-                                            className="text-[#2EAA7B]">+</span>
-                                    </Paragraph>
-                                    <Paragraph className="font-inter text-2xl max-sm:text-[16px] leading-[100%] mt-2">{t("объявлений")}</Paragraph>
-                                </div>
-
-                                <div className="bg-white w-full font-inter text-black flex flex-col items-center rounded-[30px] py-6 shadow-[0px_4px_21.2px_rgba(46,170,123,0.2)]">
-                                    <Paragraph className="text-[40px] max-sm:text-3xl text-center font-bold leading-none transition duration-300">
-                                        {mainStats?.deals_count?.toLocaleString("ru-RU")}<span
-                                            className="text-[#2EAA7B]">+</span>
-                                    </Paragraph>
-                                    <Paragraph className="font-inter text-2xl max-sm:text-[16px] leading-[100%] mt-2">{t("сделок")}</Paragraph>
-                                </div>
-                                <div
-                                    className="bg-white font-inter text-black flex flex-col items-center rounded-[30px] py-6 shadow-[0px_4px_21.2px_rgba(46,170,123,0.2)]">
-                                    <Paragraph className="text-[40px] max-sm:text-3xl text-center font-bold leading-none transition duration-300">
-                                        {mainStats?.partners_count?.toLocaleString("ru-RU")}
-                                    </Paragraph>
-                                    <Paragraph className="font-inter text-2xl max-sm:text-[16px] leading-[100%] mt-2">{t("партнёров")}</Paragraph>
-                                </div>
-                                <div
-                                    className="bg-white font-inter text-black flex flex-col items-center text-center rounded-[30px] py-6 shadow-[0px_4px_21.2px_rgba(46,170,123,0.2)]">
-                                    <Paragraph className="text-[40px] max-sm:text-3xl text-center font-bold leading-none transition duration-300">
-                                        <span className="text-[#2EAA7B]">$</span>{displayAmount}
-                                    </Paragraph>
-                                    <Paragraph className="font-inter text-2xl max-sm:text-[16px] leading-[100%] mt-2">{t("продано бизнесов")}</Paragraph>
-                                </div>
-                            </div>
-                        </div>
-
-
                     </div>
                 </section>
                 <Footer showSmallFooter={true} />

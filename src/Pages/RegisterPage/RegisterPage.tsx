@@ -109,7 +109,7 @@ export const RegistrationPage = () => {
             console.log(error);
             
             const phoneErrors = error?.data?.errors?.phone;
-            if (Array.isArray(phoneErrors) && phoneErrors.includes("validation.unique")) {
+            if (Array.isArray(phoneErrors) && phoneErrors.includes("The phone has already been taken.")) {
                 setError("userphone", {
                     type: "manual",
                     message: t("Этот номер уже зарегистрирован"),

@@ -20,6 +20,10 @@ export const CardPreview: React.FC<CardPreviewProps> = ({ card, onPreview }) => 
         }
     }, [card.image]);
 
+    function numberWithSpaces(x: number) {
+        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+    }
+
     return (
         <div className="relative rounded-xl bg-white shadow-sm py-7.5 px-4.5 w-full max-w-[400px] flex flex-col">
             {imageUrl ? (
@@ -34,7 +38,7 @@ export const CardPreview: React.FC<CardPreviewProps> = ({ card, onPreview }) => 
             )}
             <div className="flex-1 flex flex-col ">
                 <div>
-                    <Heading text={`${String(card.price)} ${t("сум")}`} level={2} className="font-inter text-[24px] font-bold text-[#232323] mb-2" />
+                    <Heading text={`${numberWithSpaces(card.price)} ${t("сум")}`} level={2} className="font-inter text-[24px] font-bold text-[#232323] mb-2" />
                     <Paragraph className="font-inter text-[#232323] text-[18px] font-bold">{card.title}</Paragraph>
 
                     <Paragraph className="flex font-inter font-medium text-[14px] mt-3 text-[#667085]">

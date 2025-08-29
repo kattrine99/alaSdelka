@@ -12,7 +12,7 @@ import { ModerationStep } from "./ModerationStep";
 import { PaymentStep } from "./PaymentStep"
 import { useSelector } from "react-redux";
 import { RootState } from "../../../Store/store";
-import { FiChevronRight } from "react-icons/fi";
+import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
 import { CardDetailPreview } from "../../../components/Cards/CardDetailPreview";
 import { FaCheckCircle } from "react-icons/fa";
 import { useTranslation } from "../../../../public/Locales/context/TranslationContext";
@@ -71,11 +71,19 @@ export const StepsAddingOffer = () => {
             setStep((prev) => prev + 1);
         }
     };
+    const handleBack = () => {
+        if (step > 0) {
+            setStep((prev) => prev - 1);
+        }
+    }
     const isNextDisabled = () => {
         if (step === 0) return !offerType;
         if (step === 1) return !listingType;
         return false;
     };
+    const isBackDisabled = () => {
+        return step === 0;
+    }
 
     const handlePublish = (offerSlug: string) => {
         setOfferSlug(offerSlug);
@@ -228,7 +236,10 @@ export const StepsAddingOffer = () => {
                                                     className={`border rounded-lg w-48.75 max-sm:w-full max-sm:h-33 h-43 cursor-pointer text-center 
           flex items-center justify-center
           ${offerType === type ? "border-[#2EAA7B] bg-[#F5FFFA]" : "border-gray-300"}`}
-                                                    onClick={() => setOfferType(type)}
+                                                    onClick={() => {
+                                                        setOfferType(type);
+                                                        handleNext();
+                                                    }}
                                                 >
                                                     <Paragraph className="font-semibold">{offerTypeMap[type]}</Paragraph>
                                                 </div>
@@ -249,7 +260,10 @@ export const StepsAddingOffer = () => {
                                                     key={type}
                                                     className={`  border rounded-lg w-48.75 h-43 max-sm:w-full max-sm:h-33 cursor-pointer text-center 
           flex flex-col items-center justify-center ${listingType === type ? "border-[#2EAA7B] bg-[#F5FFFA]" : "border-gray-300"}`}
-                                                    onClick={() => setListingType(type as "buy" | "sell")}
+                                                    onClick={() => {
+                                                        setListingType(type as "buy" | "sell");
+                                                        handleNext();
+                                                    }}
                                                 >
                                                     <span className="text-[#2EAA7B]">{ListingTypesIcons[index]}</span>
                                                     <Paragraph className="font-semibold">{getListingTypeLabel(type)}</Paragraph>
@@ -269,15 +283,14 @@ export const StepsAddingOffer = () => {
                                 {step === 3 && savedData && (
                                     <PublicationStep onPublish={handlePublish} onPreview={() => setStep(5)} />
                                 )}
-
-                                {step < 2 && (
+                                {step == 1 && (
                                     <div className="mt-10">
                                         <Button
-                                            onClick={handleNext}
-                                            disabled={isNextDisabled()}
-                                            className={`flex items-center gap-2 ${isNextDisabled() ? "bg-gray-300 cursor-not-allowed" : "bg-[#2EAA7B] text-white"} px-6 py-2 rounded-md`}
+                                            onClick={handleBack}
+                                            disabled={isBackDisabled()}
+                                            className={`flex items-center gap-2 ${isBackDisabled() ? "bg-gray-300 cursor-not-allowed" : "bg-[#2EAA7B] text-white"} px-6 py-2 rounded-md`}
                                         >
-                                            Дальше <FiChevronRight />
+                                            <FiChevronLeft /> Назад
                                         </Button>
                                     </div>
                                 )}
@@ -286,7 +299,7 @@ export const StepsAddingOffer = () => {
                                     <ModerationStep />
                                 )}
                                 {step === 6 && offerSlug != null && (
-                                    <PaymentStep offerSlug={offerSlug} onPayment={() => {setStep(4)}} />
+                                    <PaymentStep offerSlug={offerSlug} onPayment={() => { setStep(4) }} />
                                 )}
                             </div>
                         </div></div>

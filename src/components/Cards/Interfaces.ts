@@ -53,4 +53,5 @@ export interface ICards {
     cardIconClass?: string;
     cardHeadingClass?: string;
     cardTextClass?: string;
+    allViewLink?: string;
 }

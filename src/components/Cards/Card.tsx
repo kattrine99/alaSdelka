@@ -3,7 +3,6 @@ import { FaArrowRight } from "react-icons/fa";
 import { FaLocationDot, FaLocationCrosshairs } from "react-icons/fa6";
 import FireIcon from '../../assets/fire.svg?react';
 import GalleryIcon from '../../assets/gallery.svg?react';
-import { Link, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { RootState } from "../../Store/store";
 import { offerTypeToUrlMap } from "../../utils/categoryMap";

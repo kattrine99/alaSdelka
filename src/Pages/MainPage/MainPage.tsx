@@ -1,4 +1,4 @@
-import { Header, Heading, Paragraph, NavLinks, CardSection, FilterBar, categories, Button, Footer, EmptyMessage, Applink } from "../../components";
+import { Header, Heading, Paragraph, NavLinks, CardSection, FilterBar, categories, Button, Footer, EmptyMessage, Applink, HomeCardSection } from "../../components";
 import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ShopIcon from '../../assets/shop.svg?react';
@@ -234,7 +234,7 @@ export const MainPage = () => {
                 {/* Карточки */}
                 <section className="mt-12.5 mb-8.75 px-3 xl:px-20 max-xl:px-10 md:px-0 transition duration-500 ease-in-out container mx-auto">
                     <div className="flex justify-start">
-                        <div className="flex justify-between items-center max-lg:flex max-lg:flex-col max-sm:justify-center items-start w-full mb-6">
+                        <div className="flex items-center justify-between items-center max-lg:flex max-lg:flex-col max-sm:justify-center items-start w-full mb-6">
                             <div >
                                 <Button onClick={() => {
                                     navigate(`$/{lang}/business`)
@@ -260,9 +260,7 @@ export const MainPage = () => {
                                     {t("Покупка бизнеса")}
                                 </Button>
                             </div>
-                            <Applink to='/business' className={"hidden md:block"}>
-                                <FaArrowRight />
-                            </Applink>
+                            <div></div>
                         </div>
 
                     </div>
@@ -286,14 +284,15 @@ export const MainPage = () => {
                             }
 
                             return (
-                                <CardSection
+                                <HomeCardSection
                                     key={businessType}
                                     title="Бизнес"
+                                    allViewLink="/business"
                                     cards={businessCards}
                                     initialFavorites={favoriteIds}
                                     onFavoritesChanged={handleFavoritesChanged}
                                     maxVisible={8}
-                                    Class="grid grid-cols-1 2xl:grid-cols-4 xl:grid-cols-3 lg:grid-cols-2 gap-y-10 gap-x-2 transition duration-300 ease-in-out"
+                                    Class="grid grid-cols-1 2xl:grid-cols-4 xl:grid-cols-4 lg:grid-cols-2 gap-y-10 gap-x-2 transition duration-300 ease-in-out"
                                     ClassName="container mx-auto py-7.5"
                                 />
                             );
@@ -324,9 +323,7 @@ export const MainPage = () => {
                                     {t("Покупка франшизы")}
                                 </Button>
                             </div>
-                            <Applink to='/franchise' className={"hidden md:block"}>
-                                <FaArrowRight />
-                            </Applink>
+                            <div></div>
                         </div>
                     </div>
                     {isLoadingFranchise ? (
@@ -349,13 +346,14 @@ export const MainPage = () => {
                             }
 
                             return (
-                                <CardSection
+                                <HomeCardSection
                                     key={franchiseType}
                                     title="Франшиза"
                                     cards={franchiseCards}
+                                    allViewLink="/franchise"
                                     initialFavorites={favoriteIds}
                                     maxVisible={8}
-                                    Class="grid grid-cols-1 2xl:grid-cols-4 xl:grid-cols-3 lg:grid-cols-2 gap-y-10 gap-x-8 transition duration-300 ease-in-out"
+                                    Class="grid grid-cols-1 2xl:grid-cols-4 xl:grid-cols-4 lg:grid-cols-2 gap-y-10 gap-x-8 transition duration-300 ease-in-out"
                                     ClassName="container mx-auto py-7.5"
                                 />
                             );
@@ -387,9 +385,7 @@ export const MainPage = () => {
                                     {t("Поиск инвестпроекта")}
                                 </Button>
                             </div>
-                            <Applink to='/startup' className={"hidden md:block"}>
-                                <FaArrowRight />
-                            </Applink>
+                            <div></div>
                         </div>
                     </div>
                     {isLoadingStartup ? (
@@ -412,13 +408,14 @@ export const MainPage = () => {
                             }
 
                             return (
-                                <CardSection
+                                <HomeCardSection
                                     key={startupType}
                                     title="Стартапы"
                                     cards={startupCards}
                                     initialFavorites={favoriteIds}
                                     maxVisible={8}
-                                    Class="grid grid-cols-1 2xl:grid-cols-4 xl:grid-cols-3 lg:grid-cols-2 gap-y-10 gap-x-4 md:gap-x-8 transition duration-300 ease-in-out"
+                                    allViewLink="/startup"
+                                    Class="grid grid-cols-1 2xl:grid-cols-4 xl:grid-cols-4 lg:grid-cols-2 gap-y-10 gap-x-4 md:gap-x-8 transition duration-300 ease-in-out"
                                     ClassName="container mx-auto py-7.5"
                                 />
                             );
@@ -450,9 +447,7 @@ export const MainPage = () => {
                                     {t("Поиск инвестпроекта")}
                                 </Button>
                             </div>
-                            <Applink to='/investments' className={"hidden md:block"}>
-                                <FaArrowRight />
-                            </Applink>
+                            <div></div>
                         </div>
                     </div>
                     {isLoadingInvestment ? (
@@ -473,11 +468,12 @@ export const MainPage = () => {
                             );
                         }
 
-                        return (<CardSection
+                        return (<HomeCardSection
                             title="Инвестиции"
                             cards={investmentOffers?.investments || []} maxVisible={4}
                             initialFavorites={favoriteIds}
-                            Class="grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-4 xl:grid-cols-3 lg:grid-cols-2 gap-y-10 gap-x-8 transition duration-300 ease-in-out" ClassName={"container mx-auto py-7.5"} />
+                            allViewLink="/investments"
+                            Class="grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-4 xl:grid-cols-4 lg:grid-cols-2 gap-y-10 gap-x-8 transition duration-300 ease-in-out" ClassName={"container mx-auto py-7.5"} />
                         );
                     })())}
 

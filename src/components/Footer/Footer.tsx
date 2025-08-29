@@ -26,7 +26,7 @@ export const Footer: React.FC<FooterProps> = ({ showSmallFooter }) => {
                     <div className="md:flex gap-6 text-sm ">
                         <Paragraph className="flex items-center gap-1 text-[#232323] font-openSans font-normal text-[16px] leading-[125%]">
                             <IoIosMail className="text-[#2EAA7B] text-base" />
-                            info@name-com.uz
+                            info@invin.uz
                         </Paragraph>
                     </div>
                 </div><div className="flex justify-start items-center py-[25px] px-[96px]">

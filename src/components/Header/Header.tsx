@@ -355,7 +355,7 @@ export const Header: React.FC<HeaderProps> = ({
                         <div className="flex flex-wrap items-center justify-center md:justify-start gap-4">
                             <Paragraph className="flex items-center gap-2 text-[#232323] font-openSans text-sm md:text-base">
                                 <IoIosMail className="text-[#2EAA7B]" />
-                                <a href="mailto:info@name-com.uz">info@name-com.uz</a>
+                                <a href="mailto:info@invin.uz">info@invin.uz</a>
                                 
                             </Paragraph>
                         </div>

@@ -29,6 +29,8 @@ export interface FiltersState {
     paybackPeriod: string;
     priceMin: string;
     priceMax: string;
+    areaFrom: string;
+    areaTo: string;
     investmentMin: string;
     investmentMax: string;
     profitabilityMin: string;

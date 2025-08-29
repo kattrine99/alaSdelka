@@ -26,7 +26,7 @@ interface CardDetailPageProps {
     section?: string
 }
 
-export const CardDetailPage: React.FC<CardDetailPageProps> = ({section}) => {
+export const CardDetailPage: React.FC<CardDetailPageProps> = ({ section }) => {
     const { lang, t } = useTranslation()
     const { slug } = useParams();
     const offerSlug = String(slug);
@@ -151,7 +151,13 @@ export const CardDetailPage: React.FC<CardDetailPageProps> = ({section}) => {
                                     <Paragraph className='font-inter font-bold text-[#363636] text-[16px]'>ID {card.id}</Paragraph>
                                     <div className='flex gap-1.5 items-center'>
                                         <GpsIcon className='w-4 h-4' />
-                                        <Paragraph>{card.area} {t("кв. м.")}</Paragraph>
+                                        <Paragraph>{card.area == 0 && card.area_from !== null && card.area_to !== null ? (
+                                            <>
+                                                {card.area_from} - {card.area_to} {t("кв. м.")}
+                                            </>
+                                        ) : (
+                                            <>{card.area} {t("кв. м.")}</>
+                                        )}</Paragraph>
                                     </div>
                                     <div className='flex gap-1.5 items-center'>
                                         <CategoryIcon className='w-4 h-4 text-[#2EAA7B]' />

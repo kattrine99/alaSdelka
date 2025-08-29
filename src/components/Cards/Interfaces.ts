@@ -23,6 +23,8 @@ export interface ICard {
         latitude?: number;
     };
     area: number | string;
+    area_from: number | string | null;
+    area_to: number | string | null;
     offer_status?: string;
     category?: string;
     is_favourite?: boolean;

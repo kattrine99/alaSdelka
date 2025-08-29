@@ -61,6 +61,8 @@ export const PublicationStep: React.FC<Props> = ({ onPublish, onPreview }) => {
             formData.append("user_name", cardData.user_name);
             formData.append("user_phone", cardData.user_phone);
             formData.append("area", String(cardData.area));
+            formData.append("area_from", String(cardData.area_from));
+            formData.append("area_to", String(cardData.area_to));
             formData.append("address[address]", cardData.address?.address || "Не указан");
             formData.append("address[latitude]", "0");
             formData.append("address[longitude]", "0");

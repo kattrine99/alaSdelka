@@ -55,6 +55,8 @@ export const UpdateInformationPage: React.FC<Props> = ({ onSuccess, id }) => {
     const [cityId, setCityId] = useState(String(offerData?.address?.city_id || ""));
     const [addressText, setAddressText] = useState(offerData?.address?.address || "");
     const [area, setArea] = useState(String(offerData?.area || ""));
+    const [areaFrom, setAreaFrom] = useState(offerData?.area_from?.toString() || "");
+    const [areaTo, setAreaTo] = useState(offerData?.area_to?.toString() || "");
     const [propertyOwnershipType, setPropertyOwnershipType] = useState(offerData?.premises_ownership_form || "");
     const [businessOwnership, setBusinessOwnership] = useState(offerData?.business_type || "");
     const [amount, setAmount] = useState(offerData?.price?.toLocaleString("ru-RU").replace(/,/g, " ") || "");
@@ -89,6 +91,8 @@ export const UpdateInformationPage: React.FC<Props> = ({ onSuccess, id }) => {
             setCityId(String(offerData?.address?.city_id || ""));
             setAddressText(offerData?.address?.address || "");
             setArea(String(offerData.area || ""));
+            setAreaFrom(String(offerData.area_from) || "");
+            setAreaTo(String(offerData.area_to) || "");
             setPropertyOwnershipType(offerData.premises_ownership_form || "");
             setBusinessOwnership(offerData.business_type || "");
             setAmount(offerData?.price?.toLocaleString("ru-RU").replace(/,/g, " ") || "");
@@ -412,19 +416,48 @@ export const UpdateInformationPage: React.FC<Props> = ({ onSuccess, id }) => {
                 )}
             </div>
             {/*Площадь */}
-            <Input
-                className="bg-[#F0F1F280] w-full max-w-200 rounded-[14px] outline-none py-3.5 px-4.5"
-                LabelClassName="font-inter text-[16px] leading-[130%] block mb-3"
-                LabelText={t("Площадь, кв. м.")}
-                type="text"
-                placeholder={t("Введите")}
-                isError={false}
-                value={area}
-                onChange={(e) => {
-                    const value = e.target.value.replace(/\D/g, "");
-                    setArea(value);
-                }}
-            />
+            {offerType == 'business' && listingType == 'buy' ? (
+                <>
+                    <Input
+                        className="bg-[#F0F1F280] w-full max-w-200 rounded-[14px] outline-none py-3.5 px-4.5"
+                        LabelClassName="font-inter text-[16px] leading-[130%] block mb-3"
+                        LabelText={t("Площадь от, кв. м.")}
+                        type="text"
+                        isError={false}
+                        value={areaFrom}
+                        onChange={(e) => {
+                            const value = e.target.value.replace(/\D/g, "");
+                            setAreaFrom(value);
+                        }}
+                    />
+                    <Input
+                        className="bg-[#F0F1F280] w-full max-w-200 rounded-[14px] outline-none py-3.5 px-4.5"
+                        LabelClassName="font-inter text-[16px] leading-[130%] block mb-3"
+                        LabelText={t("Площадь до, кв. м.")}
+                        type="text"
+                        isError={false}
+                        value={areaTo}
+                        onChange={(e) => {
+                            const value = e.target.value.replace(/\D/g, "");
+                            setAreaTo(value);
+                        }}
+                    />
+                </>
+            ) : (
+                <Input
+                    className="bg-[#F0F1F280] w-full max-w-200 rounded-[14px] outline-none py-3.5 px-4.5"
+                    LabelClassName="font-inter text-[16px] leading-[130%] block mb-3"
+                    LabelText={t("Площадь, кв. м.")}
+                    type="text"
+                    placeholder={t("Введите")}
+                    isError={false}
+                    value={area}
+                    onChange={(e) => {
+                        const value = e.target.value.replace(/\D/g, "");
+                        setArea(value);
+                    }}
+                />
+            )}
             {/*Форма владения бизнесом */}
             <div className="flex flex-col gap-2 w-full max-w-98 relative">
                 <label className="text-[#101828] font-inter text-[16px] leading-[130%]">{t("Форма владения бизнесом")}</label>

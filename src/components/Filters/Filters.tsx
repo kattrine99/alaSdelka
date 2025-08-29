@@ -12,6 +12,7 @@ import { useEffect } from "react";
 import { useTranslation } from "../../../public/Locales/context/TranslationContext";
 import { useSelector } from "react-redux";
 import { RootState } from "../../Store/store";
+import GpsIcon from '../../assets/gps.svg?react'
 
 interface FiltersProps {
     offer_type: "business" | "startup" | "franchise" | "investments" | "бизнес" | "франшиза" | "стартапы" | "инвстиции";
@@ -31,6 +32,7 @@ export const Filters: React.FC<FiltersProps> = ({ offer_type, filters, setFilter
     const showProfit = offer_type === "franchise";
     const showInvestments = ["franchise", "startup"].includes(offer_type);
     const showPrice = ["business", "investments"].includes(offer_type);
+    const showAreaFilters = ["business"].includes(offer_type);
     const { lang, t } = useTranslation()
     const update = (field: keyof FiltersState, value: string) => {
         setFilters(prev => ({ ...prev, [field]: value }));
@@ -195,6 +197,38 @@ export const Filters: React.FC<FiltersProps> = ({ offer_type, filters, setFilter
                     </div>
                 </div>
             )}
+            {showAreaFilters && (
+                <div className="gap-y-2 mt-2">
+                    <div className="flex items-center gap-2">
+                        <GpsIcon className="text-[#2EAA7B]" />
+                        <Paragraph>{t("Площадь, кв. м.")}</Paragraph>
+                    </div>
+                    <div className="flex gap-x-1.5 mt-2">
+                        <div className="flex items-center gap-1 px-4 py-3.5 bg-[#F0F1F2] rounded-[14px]">
+                            <span className="text-[14px] text-black">{t("от")}</span>
+                            <Input
+                                type="text"
+                                value={filters.areaFrom}
+                                onChange={(e) => update("areaFrom", e.target.value)}
+                                placeholder="10"
+                                className="w-full text-[16px] font-semibold text-[#3C3C3C] bg-transparent outline-none placeholder:text-[#787878]"
+                                isError={false}
+                            />
+                        </div>
+                        <div className="flex items-center gap-1 px-4 py-[14px] bg-[#F0F1F2] rounded-[14px]">
+                            <span className="text-[14px] text-black">{t("до")}</span>
+                            <Input
+                                type="text"
+                                value={filters.areaTo}
+                                onChange={(e) => update("areaTo", e.target.value)}
+                                placeholder="100 000"
+                                className="w-full text-[16px] font-semibold text-[#3C3C3C] bg-transparent outline-none placeholder:text-[#787878]"
+                                isError={false}
+                            />
+                        </div>
+                    </div>
+                </div>
+            )}
 
             {/* Вложения */}
             {showInvestments && (
@@ -284,6 +318,8 @@ export const Filters: React.FC<FiltersProps> = ({ offer_type, filters, setFilter
                             paybackPeriod: "",
                             priceMin: "",
                             priceMax: "",
+                            areaFrom: "",
+                            areaTo: "",
                             investmentMin: "",
                             investmentMax: "",
                             profitabilityMin: "",

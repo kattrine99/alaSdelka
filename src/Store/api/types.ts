@@ -134,6 +134,8 @@ export interface OfferFilters {
     stage?: string;
     price_min?: string;
     price_max?: string;
+    area_from?: string;
+    area_to?: string;
     investment_min?: string;
     investment_max?: string;
     profitability_min?: string;
@@ -269,6 +271,8 @@ export interface OfferDetail {
         foundation_year: number;
         employee_count: number;
         area: number;
+        area_from: number | null;
+        area_to: number | null;
         view_count: number;
         closed_successfully: boolean;
         offer_status: string;
@@ -590,6 +594,8 @@ interface DocumentData {
 }
 export interface OfferPayload {
     area: number;
+    area_from: number | null;
+    area_to: number | null;
     id?: number;
     slug?: string;
     title: string;

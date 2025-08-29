@@ -1,6 +1,6 @@
 import { FiChevronRight } from "react-icons/fi";
 import { Button, Heading, Input, Paragraph } from "../../../components";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { use, useEffect, useMemo, useRef, useState } from "react";
 import FlagIcon from '../../../assets/Flag.svg?react';
 import PdfIcon from '../../../assets/pdf.svg?react';
 import GalleryIcon from '../../../assets/gallery.svg?react';
@@ -30,6 +30,8 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
     const [categoryId, setCategoryId] = useState(offerData?.category_id || "");
     const [cityId, setCityId] = useState(offerData?.address?.city_id?.toString() || "");
     const [Area, setArea] = useState(offerData?.area?.toString() || "");
+    const [areaFrom, setAreaFrom] = useState(offerData?.area_from?.toString() || "");
+    const [areaTo, setAreaTo] = useState(offerData?.area_to?.toString() || "");
     const [projectStageId, setProjectStageId] = useState(
         offerData?.project_stage_id?.toString() || ""
     );
@@ -152,6 +154,8 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
             price: price,
             category_id: Number(categoryId),
             area: Number(Area),
+            area_from: Number(areaFrom) || 0,
+            area_to: Number(areaTo) || 0,
             user_name: fullName,
             user_phone: "+998" + phoneNumber,
             address: {
@@ -364,19 +368,48 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
                 )}
             </div>
             {/*Площадь */}
-            <Input
-                className="bg-[#F0F1F280] w-full max-w-200 rounded-[14px] outline-none py-3.5 px-4.5"
-                LabelClassName="font-inter text-[16px] leading-[130%] block mb-3"
-                LabelText={t("Площадь, кв. м.")}
-                type="text"
-                placeholder={t("Введите")}
-                isError={false}
-                value={Area}
-                onChange={(e) => {
-                    const value = e.target.value.replace(/\D/g, "");
-                    setArea(value);
-                }}
-            />
+            {offerType == 'business' && listingType == 'buy' ? (
+                <>
+                    <Input
+                        className="bg-[#F0F1F280] w-full max-w-200 rounded-[14px] outline-none py-3.5 px-4.5"
+                        LabelClassName="font-inter text-[16px] leading-[130%] block mb-3"
+                        LabelText={t("Площадь от, кв. м.")}
+                        type="text"
+                        isError={false}
+                        value={areaFrom}
+                        onChange={(e) => {
+                            const value = e.target.value.replace(/\D/g, "");
+                            setAreaFrom(value);
+                        }}
+                    />
+                    <Input
+                        className="bg-[#F0F1F280] w-full max-w-200 rounded-[14px] outline-none py-3.5 px-4.5"
+                        LabelClassName="font-inter text-[16px] leading-[130%] block mb-3"
+                        LabelText={t("Площадь до, кв. м.")}
+                        type="text"
+                        isError={false}
+                        value={areaTo}
+                        onChange={(e) => {
+                            const value = e.target.value.replace(/\D/g, "");
+                            setAreaTo(value);
+                        }}
+                    />
+                </>
+            ) : (
+                <Input
+                    className="bg-[#F0F1F280] w-full max-w-200 rounded-[14px] outline-none py-3.5 px-4.5"
+                    LabelClassName="font-inter text-[16px] leading-[130%] block mb-3"
+                    LabelText={t("Площадь, кв. м.")}
+                    type="text"
+                    placeholder={t("Введите")}
+                    isError={false}
+                    value={Area}
+                    onChange={(e) => {
+                        const value = e.target.value.replace(/\D/g, "");
+                        setArea(value);
+                    }}
+                />
+            )}
             {/*Форма владения бизнесом */}
             <div className="flex flex-col gap-2 w-full max-w-98 relative">
                 <label className="text-[#101828] font-inter text-[16px] leading-[130%]">{t("Форма владения бизнесом")}</label>
@@ -483,7 +516,7 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
                     )}
                 </div>
                 <select value={currency}
-                    onChange={(e ) => setCurrency(e.target.value)}
+                    onChange={(e) => setCurrency(e.target.value)}
                     className={`bg-[#F0F1F280] max-w-40 h-full w-full rounded-[14px] text-[#686A70] outline-none py-3.5 px-4.5`}
                 >
                     <option value="sum">{t("Сум")}</option>

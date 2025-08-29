@@ -126,7 +126,13 @@ export const Card: React.FC<ICardComponent & { forceAllFavorite: boolean }> = ({
                         className={`text-gray-600 flex gap-x-2 font-inter text-[14px] font-medium mb-[18px] ${cardTextClass ?? ""}`}
                     >
                         <FaLocationCrosshairs className="text-[#2EAA7B] h-[16px]" />
-                        {card.area} {t("кв. м.")}
+                        {card.area == 0 && card.area_from !== null && card.area_to !== null ? (
+                            <>
+                                {card.area_from} - {card.area_to} {t("кв. м.")}
+                            </>
+                        ) : (
+                            <>{card.area} {t("кв. м.")}</>
+                        )}
                     </Paragraph>
                 </div>
 

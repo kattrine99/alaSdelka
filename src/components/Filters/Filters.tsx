@@ -10,6 +10,8 @@ import { useGetFiltersDataQuery } from "../../Store/api/Api";
 import { FiltersState } from "../../utils/variables";
 import { useEffect } from "react";
 import { useTranslation } from "../../../public/Locales/context/TranslationContext";
+import { useSelector } from "react-redux";
+import { RootState } from "../../Store/store";
 
 interface FiltersProps {
     offer_type: "business" | "startup" | "franchise" | "investments" | "бизнес" | "франшиза" | "стартапы" | "инвстиции";
@@ -21,6 +23,8 @@ interface FiltersProps {
 export const Filters: React.FC<FiltersProps> = ({ offer_type, filters, setFilters, onApplyFilters }) => {
     const { data: filterOptions, isLoading, isError } = useGetFiltersDataQuery();
     const buttonsData = ["Не важно", "До 6 месяцев", "До 1 года", "До 3 лет"];
+    const selectedCurrency = useSelector((state: RootState) => state.currency.mode);
+    const currencySymbol = selectedCurrency === "UZS" ? "сум" : "$";
 
     const showPayback = ["business", "franchise"].includes(offer_type);
     const showStage = offer_type === "startup";
@@ -174,7 +178,7 @@ export const Filters: React.FC<FiltersProps> = ({ offer_type, filters, setFilter
                                 className="w-full text-[16px] font-semibold text-[#3C3C3C] bg-transparent outline-none placeholder:text-[#787878]"
                                 isError={false}
                             />
-                            <span className="text-[14px] text-black">{t("сум")}</span>
+                            <span className="text-[14px] text-black">{t(currencySymbol)}</span>
                         </div>
                         <div className="flex items-center gap-1 px-4 py-[14px] bg-[#F0F1F2] rounded-[14px]">
                             <span className="text-[14px] text-black">{t("до")}</span>
@@ -186,7 +190,7 @@ export const Filters: React.FC<FiltersProps> = ({ offer_type, filters, setFilter
                                 className="w-full text-[16px] font-semibold text-[#3C3C3C] bg-transparent outline-none placeholder:text-[#787878]"
                                 isError={false}
                             />
-                            <span className="text-[14px] text-black">{t("сум")}</span>
+                            <span className="text-[14px] text-black">{t(currencySymbol)}</span>
                         </div>
                     </div>
                 </div>

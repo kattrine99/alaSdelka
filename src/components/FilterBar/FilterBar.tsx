@@ -8,6 +8,8 @@ import { HiCurrencyDollar } from "react-icons/hi2";
 import { useGetFiltersDataQuery } from "../../Store/api/Api";
 import FrameIcon from "../../assets/frame.svg?react";
 import { useTranslation } from "../../../public/Locales/context/TranslationContext";
+import { useSelector } from "react-redux";
+import { RootState } from "../../Store/store";
 
 
 interface FilterBarProps {
@@ -30,6 +32,8 @@ export const FilterBar: React.FC<FilterBarProps> = ({
     const navigate = useNavigate();
     const { data: filterOptions, isLoading } = useGetFiltersDataQuery();
     const { t, lang } = useTranslation();
+    const selectedCurrency = useSelector((state: RootState) => state.currency.mode);
+    const currencySymbol = selectedCurrency === "UZS" ? "сум" : "$";
 
     if (isLoading || !filterOptions) return null;
 
@@ -140,7 +144,7 @@ export const FilterBar: React.FC<FilterBarProps> = ({
                                 className="text-[16px] w-full font-semibold text-[#3C3C3C] bg-transparent outline-none placeholder:text-[#787878]"
                                 isError={false}
                             />
-                            <span className="text-[16px] text-black">{t("сум")}</span>
+                            <span className="text-[16px] text-black">{t(currencySymbol)}</span>
                         </div>
                         <div className="flex items-center gap-1 px-4 py-1.5 w-44 bg-[#F0F1F2] rounded-[14px]">
                             <span className="text-[16px] text-black">{t("до")}</span>
@@ -152,7 +156,7 @@ export const FilterBar: React.FC<FilterBarProps> = ({
                                 className="text-[16px] w-full font-semibold text-[#3C3C3C] bg-transparent outline-none placeholder:text-[#787878]"
                                 isError={false}
                             />
-                            <span className="text-[16px] text-black">{t("сум")}</span>
+                            <span className="text-[16px] text-black">{t(currencySymbol)}</span>
                         </div>
                     </div>
                 </div>

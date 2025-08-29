@@ -132,12 +132,12 @@ export interface OfferFilters {
     category_slug?: string;
     city?: object;
     stage?: string;
-    price_from?: string;
-    price_to?: string;
-    investment_from?: string;
-    investment_to?: string;
-    profitability_from?: string;
-    profitability_to?: string;
+    price_min?: string;
+    price_max?: string;
+    investment_min?: string;
+    investment_max?: string;
+    profitability_min?: string;
+    profitability_max?: string;
 }
 
 export interface OffersMeta {

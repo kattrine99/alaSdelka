@@ -87,6 +87,8 @@ export const CategoryPage: React.FC<CategoryPageProps> = ({section}) => {
         offer_type: validOfferType,
     });
 
+    
+
     const [currentPage, setCurrentPage] = useState(1);
     const [searchInput, setSearchInput] = useState(searchParams.get("search") || "");
     const [searchQuery, setSearchQuery] = useState(searchParams.get("search") || "");
@@ -94,6 +96,17 @@ export const CategoryPage: React.FC<CategoryPageProps> = ({section}) => {
 
     const itemsPerPage = 12;
     const isNumber = /^\d+$/.test(searchQuery);
+
+    const selectedCurrency = useSelector((state: RootState) => state.currency.mode);
+
+    let convertedPriceFrom = Number(appliedFilters.priceMin);
+    let convertedPriceTo = Number(appliedFilters.priceMax);
+    const currencyRate = useSelector((state: RootState) => state.currency.rate);
+
+    if (selectedCurrency === "USD" && currencyRate != null && !isNaN(currencyRate)) {
+        convertedPriceFrom = Math.round(convertedPriceFrom * currencyRate);
+        convertedPriceTo = Math.round(convertedPriceTo * currencyRate);
+    }
 
     const queryParams: OfferFilters = {
         page: currentPage,
@@ -105,12 +118,12 @@ export const CategoryPage: React.FC<CategoryPageProps> = ({section}) => {
             category_slug: appliedFilters.categorySlug,
             stage: appliedFilters.stage,
             payback_period: appliedFilters.paybackPeriod,
-            price_from: appliedFilters.priceMin,
-            price_to: appliedFilters.priceMax,
-            investment_from: appliedFilters.investmentMin,
-            investment_to: appliedFilters.investmentMax,
-            profitability_from: appliedFilters.profitabilityMin,
-            profitability_to: appliedFilters.profitabilityMax,
+            price_min: convertedPriceFrom == 0 ? undefined : convertedPriceFrom.toString(),
+            price_max: convertedPriceTo == 0 ? undefined : convertedPriceTo.toString(),
+            investment_min: appliedFilters.investmentMin,
+            investment_max: appliedFilters.investmentMax,
+            profitability_min: appliedFilters.profitabilityMin,
+            profitability_max: appliedFilters.profitabilityMax,
             ...(searchQuery && (isNumber ? { id: searchQuery } : { title: searchQuery })),
         }),
     };

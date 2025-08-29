@@ -106,6 +106,8 @@ export const RegistrationPage = () => {
             setStep(2);
         } catch (err) {
             const error = err as ApiError;
+            console.log(error);
+            
             const phoneErrors = error?.data?.errors?.phone;
             if (Array.isArray(phoneErrors) && phoneErrors.includes("validation.unique")) {
                 setError("userphone", {

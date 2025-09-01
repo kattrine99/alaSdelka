@@ -58,7 +58,7 @@ export const Card: React.FC<ICardComponent & { forceAllFavorite: boolean }> = ({
                     {card.is_paid && card.offer_status !== "sold" && (
                         <div className="font-openSans bg-white border border-[#FD6A0D] text-[#FD6A0D] py-[5px] px-1.5 rounded-md font-semibold shadow-sm flex items-center gap-1">
                             <FireIcon className="w-5 h-5 text-[#FD6A0D]" />
-                            <Paragraph>{t("Популярное")}</Paragraph>
+                            <Paragraph>{t("ТОП")}</Paragraph>
                         </div>
                     )}
                     {card.offer_status === "sold" && (

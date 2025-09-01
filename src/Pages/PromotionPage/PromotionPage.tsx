@@ -84,6 +84,12 @@ export const PromotionPage = () => {
         if (timer === 0) setCanResend(true);
     }, [canResend, timer, step]);
 
+    useEffect(() => {
+        if (filtersData) {
+            setSelectedTariff(filtersData.tariffs[0]?.id || null);
+        }
+    }, [filtersData]);
+
     const handleVerifyAndPay = async () => {
         try {
             await verifyCard({

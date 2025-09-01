@@ -85,6 +85,12 @@ export const PaymentStep: React.FC<Props> = ({onPayment, offerSlug}) => {
         if (timer === 0) setCanResend(true);
     }, [canResend, timer, step]);
 
+    useEffect(() => {
+        if (filtersData) {
+            setSelectedTariff(filtersData.publish_tariffs[0]?.id || null);
+        }
+    }, [filtersData]);
+
     const handleVerifyAndPay = async () => {
         try {
             await verifyCard({

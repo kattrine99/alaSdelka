@@ -7,10 +7,12 @@ import { useCreateOfferMutation } from "../../../Store/api/Api";
 import { useState } from "react";
 import { clearOfferData } from "../../../Store/tempStorage";
 import { useTranslation } from "../../../../public/Locales/context/TranslationContext";
+import { FiChevronLeft } from "react-icons/fi";
 
 interface Props {
     onPublish: (offerSlug: string) => void;
     onPreview: () => void;
+    onBack: () => void;
 }
 
 const mapOfferToCard = (data: OfferPayload): ICard => ({
@@ -32,7 +34,7 @@ const mapOfferToCard = (data: OfferPayload): ICard => ({
     listing_type: data.listing_type,
 });
 
-export const PublicationStep: React.FC<Props> = ({ onPublish, onPreview }) => {
+export const PublicationStep: React.FC<Props> = ({ onPublish, onPreview, onBack }) => {
     const cardData = useSelector((state: RootState) => state.tempOffer.offerData);
     const dispatch = useDispatch();
     const [createOffer] = useCreateOfferMutation();
@@ -146,12 +148,22 @@ export const PublicationStep: React.FC<Props> = ({ onPublish, onPreview }) => {
                     <CardPreview card={card} onPreview={onPreview} />
                 </div>
 
-                <Button
-                    className="bg-[#2EAA7B] text-white px-6 py-3 rounded-md mt-6"
-                    onClick={handlePublish}
-                >
-                    {isPublishing ? t("Создание...") : t("Создать объявление")}
-                </Button>
+                <div className="flex items-center gap-3 mt-10">
+                    <div className="">
+                        <Button
+                            onClick={onBack}
+                            className={`flex items-center gap-2 bg-[#2EAA7B] text-white px-6 py-2 rounded-md`}
+                        >
+                            <FiChevronLeft /> {t("Назад")}
+                        </Button>
+                    </div>
+                    <Button
+                        className="bg-[#2EAA7B] text-white px-6 py-2 rounded-md"
+                        onClick={handlePublish}
+                    >
+                        {isPublishing ? t("Создание...") : t("Создать объявление")}
+                    </Button>
+                </div>
             </div>
 
         </div >

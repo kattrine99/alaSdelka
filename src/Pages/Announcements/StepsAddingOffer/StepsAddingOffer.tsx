@@ -275,13 +275,13 @@ export const StepsAddingOffer = () => {
                                 )}
                                 {/* Step-2 - информация */}
                                 {step === 2 && offerType && listingType && (
-                                    <InformationStep offerType={offerType} onNext={handleNext} listingType={listingType} />
+                                    <InformationStep offerType={offerType} onNext={handleNext} onBack={handleBack} listingType={listingType} />
                                 )}
 
 
                                 {/* Step-3 - Публикация */}
                                 {step === 3 && savedData && (
-                                    <PublicationStep onPublish={handlePublish} onPreview={() => setStep(5)} />
+                                    <PublicationStep onPublish={handlePublish} onPreview={() => setStep(5)} onBack={handleBack} />
                                 )}
                                 {step == 1 && (
                                     <div className="mt-10">

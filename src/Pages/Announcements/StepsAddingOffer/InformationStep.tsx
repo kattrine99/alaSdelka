@@ -1,4 +1,4 @@
-import { FiChevronRight } from "react-icons/fi";
+import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
 import { Button, Heading, Input, Paragraph } from "../../../components";
 import { use, useEffect, useMemo, useRef, useState } from "react";
 import FlagIcon from '../../../assets/Flag.svg?react';
@@ -16,10 +16,11 @@ interface Props {
     offerType: "business" | "franchise" | "startup" | "investments";
     listingType: "sell" | "buy";
     onNext: () => void;
+    onBack: () => void;
 }
 
 
-export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNext }) => {
+export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNext, onBack }) => {
     const isFranchise = offerType === "franchise";
     const isStartup = offerType === "startup";
     const isBusiness = offerType === "business";
@@ -111,6 +112,11 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
         setPhotos(prev => [...prev, ...newPhotos]);
     };
 
+    const handleBack = () => {
+        onBack();
+    }
+
+
     const handleImageRemove = (index: number) => {
         setPhotos(prev => prev.filter((_, i) => i !== index));
     };
@@ -137,7 +143,7 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
     };
 
     const isNextDisabled = () => {
-        return !title.trim() || !amount.trim();
+        return !title.trim() || !amount.trim() || !description.trim() || !categoryId || !cityId || !addressText.trim() || !businessOwnership || !propertyOwnershipType
     };
     const dispatch = useDispatch();
 
@@ -727,15 +733,25 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
             </div>
 
 
-            <div className="mt-10">
-                <Button
-                    onClick={handleSubmit}
-                    disabled={isNextDisabled()}
-                    className={`flex items-center gap-2 ${isNextDisabled() ? "bg-gray-300 cursor-not-allowed" : "bg-[#2EAA7B] text-white"
-                        } px-6 py-2 rounded-md`}
-                >
-                    {t("Дальше")} <FiChevronRight />
-                </Button>
+            <div className="flex items-center gap-3">
+                <div className="mt-10">
+                    <Button
+                        onClick={handleBack}
+                        className={`flex items-center gap-2 bg-[#2EAA7B] text-white px-6 py-2 rounded-md`}
+                    >
+                        <FiChevronLeft /> Назад
+                    </Button>
+                </div>
+                <div className="mt-10">
+                    <Button
+                        onClick={handleSubmit}
+                        disabled={isNextDisabled()}
+                        className={`flex items-center gap-2 ${isNextDisabled() ? "bg-gray-300 cursor-not-allowed" : "bg-[#2EAA7B] text-white"
+                            } px-6 py-2 rounded-md`}
+                    >
+                        {t("Дальше")} <FiChevronRight />
+                    </Button>
+                </div>
             </div>
         </div>
     );

@@ -4,6 +4,8 @@ import { FaArrowRight } from "react-icons/fa";
 import { ICard } from "./Interfaces";
 import { useEffect, useState } from "react";
 import { useTranslation } from "../../../public/Locales/context/TranslationContext";
+import { useSelector } from "react-redux";
+import { RootState } from "../../Store/store";
 
 interface CardPreviewProps {
     card: ICard;
@@ -24,6 +26,19 @@ export const CardPreview: React.FC<CardPreviewProps> = ({ card, onPreview }) => 
         return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
     }
 
+    const currencyMode = useSelector((state: RootState) => state.currency.mode);
+    const currencyRate = useSelector((state: RootState) => state.currency.rate);
+
+    const formatCurrency = (price?: number) => {
+        if (typeof price !== 'number') return "—";
+
+        if (currencyMode === "USD") {
+            const converted = Math.round(price / (currencyRate || 1));
+            return `${numberWithSpaces(converted)} $`;
+        }
+        return `${numberWithSpaces(price)} ${t("сум")}`;
+    };
+
     return (
         <div className="relative rounded-xl bg-white shadow-sm py-7.5 px-4.5 w-full max-w-[400px] flex flex-col">
             {imageUrl ? (
@@ -38,7 +53,7 @@ export const CardPreview: React.FC<CardPreviewProps> = ({ card, onPreview }) => 
             )}
             <div className="flex-1 flex flex-col ">
                 <div>
-                    <Heading text={`${numberWithSpaces(card.price)} ${t("сум")}`} level={2} className="font-inter text-[24px] font-bold text-[#232323] mb-2" />
+                    <Heading text={`${formatCurrency(card.price)}`} level={2} className="font-inter text-[24px] font-bold text-[#232323] mb-2" />
                     <Paragraph className="font-inter text-[#232323] text-[18px] font-bold">{card.title}</Paragraph>
 
                     <Paragraph className="flex font-inter font-medium text-[14px] mt-3 text-[#667085]">

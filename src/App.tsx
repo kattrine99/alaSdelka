@@ -30,6 +30,7 @@ import { setCurrencyRate } from "./Store/Slices/currencySlice";
 import { setSiteSettings } from "./Store/Slices/siteSettings";
 import { TranslationProvider } from "./../public/Locales/context/TranslationContext";
 import { ArchivePage } from "./Pages/Announcements/Archive";
+import { BottomNavBar } from "./components/BottomNavBar/BottomNavBar";
 
 const Layout = () => {
   const dispatch = useDispatch();
@@ -82,6 +83,7 @@ const Layout = () => {
       <ScrollToTop />
       <div className="relative min-h-screen">
         <Outlet />
+        <BottomNavBar />
       </div>
 
       {showModal && (

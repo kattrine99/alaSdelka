@@ -130,6 +130,7 @@ export interface OfferFilters {
     offer_type: "business" | "franchise" | "startup" | "investments";
     category?: string;
     category_slug?: string;
+    listing_type?: "buy" | "sell" | "" | null;
     city?: object;
     stage?: string;
     price_min?: string;

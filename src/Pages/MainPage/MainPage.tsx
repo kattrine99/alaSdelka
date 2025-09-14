@@ -80,6 +80,7 @@ export const MainPage = () => {
     const [filters, setFilters] = useState<FiltersState>({
         city: "",
         stage: "",
+        listing_type: "",
         paybackPeriod: "",
         priceMin: "",
         priceMax: "",
@@ -87,7 +88,10 @@ export const MainPage = () => {
         investmentMax: "",
         profitabilityMin: "",
         profitabilityMax: "",
+        categorySlug: "",
         offer_type: "",
+        areaFrom: "",
+        areaTo: "",
     });
 
     const businessType = listingTypes["Бизнес"];

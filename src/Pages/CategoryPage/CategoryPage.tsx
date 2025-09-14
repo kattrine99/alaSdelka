@@ -28,8 +28,10 @@ import { MetaTags } from "../../components/MetaTags";
 import { SearchResultsSchema, StaticPageSchema } from "../../components/SchemaMarkup";
 
 function cleanObject<T extends object>(obj: T): Partial<T> {
+    console.log(obj);
+    
     return Object.fromEntries(
-        Object.entries(obj).filter(([, value]) => value !== "" && value !== undefined)
+        Object.entries(obj).filter(([, value]) => value !== "" && value !== undefined && value !== null)
     ) as Partial<T>;
 }
 
@@ -60,6 +62,7 @@ export const CategoryPage: React.FC<CategoryPageProps> = ({section}) => {
 
     const [localFilters, setLocalFilters] = useState<FiltersState>({
         categorySlug: category || searchParams.get("categorySlug") || "",
+        listing_type: searchParams.get("listing_type") as "buy" | "sell" | "" | null,
         city: city || searchParams.get("city") || "",
         stage: searchParams.get("stage") || "",
         paybackPeriod: searchParams.get("paybackPeriod") || "",
@@ -71,13 +74,13 @@ export const CategoryPage: React.FC<CategoryPageProps> = ({section}) => {
         investmentMax: searchParams.get("investmentMax") || "",
         profitabilityMin: searchParams.get("profitabilityMin") || "",
         profitabilityMax: searchParams.get("profitabilityMax") || "",
-        listing_type: "",
         offer_type: validOfferType,
     });
     const [appliedFilters, setAppliedFilters] = useState<FiltersState>({
         categorySlug: category || searchParams.get("categorySlug") || "",
         city: city || searchParams.get("city") || "",
         stage: searchParams.get("stage") || "",
+        listing_type: searchParams.get("listing_type") as "buy" | "sell" | "" | null,
         paybackPeriod: searchParams.get("paybackPeriod") || "",
         priceMin: searchParams.get("priceMin") || "",
         priceMax: searchParams.get("priceMax") || "",
@@ -87,7 +90,6 @@ export const CategoryPage: React.FC<CategoryPageProps> = ({section}) => {
         investmentMax: searchParams.get("investmentMax") || "",
         profitabilityMin: searchParams.get("profitabilityMin") || "",
         profitabilityMax: searchParams.get("profitabilityMax") || "",
-        listing_type: "",
         offer_type: validOfferType,
     });
 
@@ -117,6 +119,7 @@ export const CategoryPage: React.FC<CategoryPageProps> = ({section}) => {
         per_page: itemsPerPage,
         offer_type: ruToEnOfferTypeMap[categoryKey],
         ...cleanObject({
+            listing_type: appliedFilters.listing_type,
             city_slug: appliedFilters.city,
             category_id: appliedFilters.category_id,
             category_slug: appliedFilters.categorySlug,
@@ -158,6 +161,7 @@ export const CategoryPage: React.FC<CategoryPageProps> = ({section}) => {
             categorySlug: category || searchParams.get("categorySlug") || "",
             city: city || searchParams.get("city") || "",
             stage: searchParams.get("stage") || "",
+            listing_type: searchParams.get("listing_type") as "buy" | "sell" | "" | null,
             paybackPeriod: searchParams.get("paybackPeriod") || "",
             areaFrom: searchParams.get("areaFrom") || "",
             areaTo: searchParams.get("areaTo") || "",
@@ -167,7 +171,6 @@ export const CategoryPage: React.FC<CategoryPageProps> = ({section}) => {
             investmentMax: searchParams.get("investmentMax") || "",
             profitabilityMin: searchParams.get("profitabilityMin") || "",
             profitabilityMax: searchParams.get("profitabilityMax") || "",
-            listing_type: "",
             offer_type: validOfferType,
         };
 

@@ -100,7 +100,7 @@ export const CategoryPage: React.FC<CategoryPageProps> = ({section}) => {
     const [searchQuery, setSearchQuery] = useState(searchParams.get("search") || "");
     const [isMobileFiltersOpen, setIsMobileFiltersOpen] = useState(false);
 
-    const itemsPerPage = 12;
+    const itemsPerPage = 20;
     const isNumber = /^\d+$/.test(searchQuery);
 
     const selectedCurrency = useSelector((state: RootState) => state.currency.mode);

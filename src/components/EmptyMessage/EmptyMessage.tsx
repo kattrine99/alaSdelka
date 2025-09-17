@@ -16,7 +16,7 @@ export const EmptyMessage: React.FC<EmptyMessageProps> = ({
     image = "/images/empty.png",
     title,
     subtitle,
-    buttonText = "Добавить объявление",
+    buttonText = "Создать объявление",
     buttonLink = " ",
     hideButton = false,
     centerImageSize = "w-[96px] h-[96px]",

@@ -148,14 +148,29 @@ export const Header: React.FC<HeaderProps> = ({
     return (
         <div className={"font-inter font-medium w-full bg-white shadow"}>
             {showtoBar && (
-                <div className="hidden lg:block bg-white py-[20px] border-b border-[#E9E9E9]">
+                <div className="hidden lg:block bg-white py-[10px] border-b border-[#E9E9E9]">
                     <div className="container mx-auto px-4 flex justify-between items-center">
                         {/* Email & Phone */}
-                        <div className="flex flex-wrap items-center justify-center md:justify-start gap-4">
+                        <div className="flex flex-wrap items-center justify-center md:justify-between gap-4 w-full">
                             <a href={`mailto:${siteSettings?.contacts.email}`} className="flex items-center gap-2 text-[#232323] font-openSans text-sm md:text-base">
                                 <IoIosMail className="text-[#2EAA7B]" />
                                 {siteSettings?.contacts.email}
                             </a>
+                            {isAuthenticated ? (
+                                <Applink
+                                    to="/add-offer"
+                                    className="bg-[#2EAA7B] text-white px-5 py-3 rounded-[10px] hover:bg-[#31B683] text-sm font-medium transition duration-600"
+                                >
+                                    {t("Создать объявление")}
+                                </Applink>
+                            ) : (
+                                <Applink
+                                    to="/login?next-step=/add-offer"
+                                    className="bg-[#2EAA7B] text-white px-5 py-3 rounded-[10px] hover:bg-[#31B683] text-sm font-medium transition duration-600"
+                                >
+                                    {t("Создать объявление")}
+                                </Applink>
+                            )}
                             {/* <Paragraph className="flex items-center gap-2 text-[#232323] font-inter text-sm md:text-base">
                                 <FaPhone className="text-[#2EAA7B]" />
                                 {siteSettings?.contacts.phone}
@@ -266,7 +281,7 @@ export const Header: React.FC<HeaderProps> = ({
 
             {/* Мобильный header */}
             <div ref={menuRef} className="lg:hidden sticky top-0 z-50">
-                <div className={"flex justify-between items-center px-4 py-4 border-b border-[#E9E9E9] bg-white"  + (isMobileUI ? ' hidden' : '')}>
+                <div className={"flex justify-between items-center px-4 py-4 border-b border-[#E9E9E9] bg-white" + (isMobileUI ? ' hidden' : '')}>
                     <Applink to="/" className="flex items-center">
                         <img src="/images/investin_logo.png" alt="Logo" className="h-10 object-contain" />
                     </Applink>
@@ -290,7 +305,7 @@ export const Header: React.FC<HeaderProps> = ({
                                 label: t(link.label),
                             }))}
                             onClick={() => setIsMobileMenuOpen(false)}  // Закрываем меню при клике
-                            className={"flex-col gap-4" + (isMobileUI ? ' hidden': ' flex')}
+                            className={"flex-col gap-4" + (isMobileUI ? ' hidden' : ' flex')}
                             linkClassName={"text-[#232323] font-inter text-lg hover:text-[#2EAA7B]"}
                         />
                         {/* Язык и Валюта */}
@@ -356,7 +371,7 @@ export const Header: React.FC<HeaderProps> = ({
                             <Paragraph className="flex items-center gap-2 text-[#232323] font-openSans text-sm md:text-base">
                                 <IoIosMail className="text-[#2EAA7B]" />
                                 <a href="mailto:info@invin.uz">info@invin.uz</a>
-                                
+
                             </Paragraph>
                         </div>
 

@@ -193,7 +193,7 @@ export const AnnouncemntsPage = () => {
                 className="bg-[#2EAA7B] text-white rounded-md w-60.5 px-5 py-3"
                 onClick={() => navigate(`/${lang}/add-offer`)}
               >
-                {t("Добавить объявление")}
+                {t("Создать объявление")}
               </Button>
               <Button
                 className="bg-[#FF1D1D] text-white rounded-md px-5 py-3"

@@ -313,12 +313,7 @@ export const CategoryPage: React.FC<CategoryPageProps> = ({section}) => {
                             </div>
                         </div>
                         <div className="hidden lg:flex justify-end gap-x-4">
-                            <Button
-                                className="px-5 py-3 bg-[#2EAA7B] text-white rounded-[6px] hover:bg-[#31B683] transition duration-300"
-                                onClick={() => navigate(`/${lang}/add-offer`)}
-                            >
-                                {t("Добавить объявление")}
-                            </Button>
+                            
                             <div
                                 className="flex items-center border border-[#2EAA7B] rounded-xl pl-5 w-[450px] bg-white overflow-hidden">
                                 <div className="text-[#2EAA7B]">
@@ -328,12 +323,12 @@ export const CategoryPage: React.FC<CategoryPageProps> = ({section}) => {
                                     type="text"
                                     value={searchInput}
                                     onChange={(e) => setSearchInput(e.target.value)}
-                                    placeholder={t("Поиск по названию или ID")}
+                                    placeholder={t("Поиск")}
                                     isError={false}
                                     className="flex-1 w-full px-2.5 text-[#787878] placeholder-[#787878] bg-white outline-none"
                                 />
                                 <Button
-                                    className="h-full bg-[#2EAA7B] text-white text-sm font-semibold px-5 hover:bg-[#31B683] transition duration-300 rounded-none"
+                                    className="h-full bg-[#2EAA7B] text-white text-sm font-semibold py-3 px-5 hover:bg-[#31B683] transition duration-300 rounded-none"
                                     onClick={() => {
                                         if (searchInput.trim() === "") {
                                             setSearchQuery("");
@@ -370,7 +365,7 @@ export const CategoryPage: React.FC<CategoryPageProps> = ({section}) => {
                                 />
                             ) : (
                             <CardSection
-                                Class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-y-10 gap-x-2 transition duration-600"
+                                Class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-y-10 gap-x-2 transition duration-600"
                                 title={pageTitle}
                                 ClassName="py-9.75"
                                 cards={exactCards}

@@ -167,7 +167,7 @@ export const StepsAddingOffer = () => {
             <div className="container mx-auto py-12 flex-1">
                 {step !== 5 ? (
                     <div className="max-lg:mx-6 items-center">
-                        <Breadcrumbs title="Добавить объявление" />
+                        <Breadcrumbs title="Создать объявление" />
                         <div className="flex max-lg:flex-col mt-7 gap-12">
                             <div className="relative w-full lg:max-w-63 flex flex-col gap-2">
                                 {steps.map((s, i) => {

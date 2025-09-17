@@ -79,7 +79,8 @@ export const HomeCards: React.FC<ICards & { forceAllFavorite?: boolean }> = ({
                 <div className="group h-full w-full">
                     <Applink to={allViewLink} className="flex h-full justify-center hover:text-white group-hover:bg-[#2EAA7B] transition items-center border border-[#2EAA7B] rounded-[8px]">
                         <div className="flex flex-col justify-center items-center">
-                            <span className="text-xl group-hover:text-white text-[#2EAA7B]">{t("Все")}</span>
+                            <span className="text-xl group-hover:text-white text-[#2EAA7B]">{t("Посмотреть все")}</span>
+                            <FaArrowRight className="text-[#2EAA7B] mt-2 group-hover:text-white" />
                         </div>
                     </Applink>
                 </div>

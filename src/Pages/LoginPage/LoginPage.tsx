@@ -9,7 +9,7 @@ import { Description } from '../RegisterPage/Description';
 import { useLoginUserMutation } from '../../Store/api/Api';
 import { useDispatch } from 'react-redux';
 import { setAccessToken, setIsAuthenticated, setLogoutReason } from '../../Store/Slices/authSlice';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useTranslation } from '../../../public/Locales/context/TranslationContext';
 
 interface LoginFormInputs {
@@ -31,6 +31,7 @@ const loginFormschema = yup.object({
 export const LoginPage = () => {
     const { lang, t } = useTranslation()
     const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+    const [searchParams] = useSearchParams();
     const [showModal, setShowModal] = useState(false);
     const [modalText, setModalText] = useState("");
     const [modalTitle, setModalTitle] = useState("");
@@ -72,10 +73,18 @@ export const LoginPage = () => {
             setModalTitle("Добро пожаловать!");
             setShowModal(true);
 
-            setTimeout(() => {
-                setShowModal(false);
-                navigate(`/${lang}/`);
-            }, 2000);
+            const nextStepParam = searchParams.get('next-step')
+            if (nextStepParam) {
+                setTimeout(() => {
+                    setShowModal(false);
+                    navigate(`/${lang}${nextStepParam}`);
+                }, 2000)
+            } else {
+                setTimeout(() => {
+                    setShowModal(false);
+                    navigate(`/${lang}/`);
+                }, 2000);
+            }
         } catch (error) {
             console.error("Ошибка при логине:", error);
             setModalTitle("Упс!");
@@ -125,7 +134,7 @@ export const LoginPage = () => {
                                         <Input
                                             {...field}
                                             isError={!!errors.userpassword}
-                                            errorMessage={t(errors.userpassword?.message ||"")}
+                                            errorMessage={t(errors.userpassword?.message || "")}
                                             type={isPasswordVisible ? "text" : "password"}
                                             placeholder={t("Пароль")}
                                             className={`w-full px-[18px] py-[17px] border-2 bg-[#EEEEEE80] rounded-[14px] focus:outline-none text-[16px] font-semibold leading-[130%] transition-all duration-500 ${errors.userpassword ? 'border-red-500 focus:ring-red-500' : field.value ? 'border-green-500 focus:ring-green-500' : 'border-[#9C9C9C33] focus:ring-[#2EAA7B]'}`}

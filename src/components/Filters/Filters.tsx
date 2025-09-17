@@ -101,7 +101,6 @@ export const Filters: React.FC<FiltersProps> = ({ offer_type, filters, setFilter
                         onChange={(e) => update("listing_type", e.target.value)}
                         className="bg-[#F2F2F2] w-full h-[42.4px] rounded-[8px] pl-4 text-black focus:outline-none appearance-none"
                     >
-                        <option value="">{t("Все типы объявлений")}</option>
                         <option value="sell">{(offer_type == 'investments' || offer_type == 'startup') ? (t("Поиск инвестора")) : t("Продажа")}</option>
                         <option value="buy">{(offer_type == 'investments' || offer_type == 'startup') ? (t("Поиск инвестпроекта")) : t("Покупка")}</option>
                     </select>

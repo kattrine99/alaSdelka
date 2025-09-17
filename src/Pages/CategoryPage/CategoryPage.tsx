@@ -62,7 +62,7 @@ export const CategoryPage: React.FC<CategoryPageProps> = ({section}) => {
 
     const [localFilters, setLocalFilters] = useState<FiltersState>({
         categorySlug: category || searchParams.get("categorySlug") || "",
-        listing_type: searchParams.get("listing_type") as "buy" | "sell" | "" | null,
+        listing_type: searchParams.get("listing_type") as "buy" | "sell" | null || "sell",
         city: city || searchParams.get("city") || "",
         stage: searchParams.get("stage") || "",
         paybackPeriod: searchParams.get("paybackPeriod") || "",
@@ -80,7 +80,7 @@ export const CategoryPage: React.FC<CategoryPageProps> = ({section}) => {
         categorySlug: category || searchParams.get("categorySlug") || "",
         city: city || searchParams.get("city") || "",
         stage: searchParams.get("stage") || "",
-        listing_type: searchParams.get("listing_type") as "buy" | "sell" | "" | null,
+        listing_type: searchParams.get("listing_type") as "buy" | "sell" | null || "sell",
         paybackPeriod: searchParams.get("paybackPeriod") || "",
         priceMin: searchParams.get("priceMin") || "",
         priceMax: searchParams.get("priceMax") || "",
@@ -161,7 +161,7 @@ export const CategoryPage: React.FC<CategoryPageProps> = ({section}) => {
             categorySlug: category || searchParams.get("categorySlug") || "",
             city: city || searchParams.get("city") || "",
             stage: searchParams.get("stage") || "",
-            listing_type: searchParams.get("listing_type") as "buy" | "sell" | "" | null,
+            listing_type: searchParams.get("listing_type") as "buy" | "sell" | "" | null || "sell",
             paybackPeriod: searchParams.get("paybackPeriod") || "",
             areaFrom: searchParams.get("areaFrom") || "",
             areaTo: searchParams.get("areaTo") || "",

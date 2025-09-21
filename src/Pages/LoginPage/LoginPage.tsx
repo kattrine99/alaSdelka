@@ -1,16 +1,16 @@
-import { Footer, Header, Heading, Input, Paragraph, Applink, Button, ModalBase } from '../../components/index';
+import {Footer, Header, Heading, Input, Paragraph, Applink, Button, ModalBase} from '../../components/index';
 import * as yup from "yup";
-import { Controller, useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { useState } from "react";
+import {Controller, useForm} from "react-hook-form";
+import {yupResolver} from "@hookform/resolvers/yup";
+import {useState} from "react";
 import './LoginPage.css';
-import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
-import { Description } from '../RegisterPage/Description';
-import { useLoginUserMutation } from '../../Store/api/Api';
-import { useDispatch } from 'react-redux';
-import { setAccessToken, setIsAuthenticated, setLogoutReason } from '../../Store/Slices/authSlice';
-import { useNavigate, useSearchParams } from 'react-router-dom';
-import { useTranslation } from '../../../public/Locales/context/TranslationContext';
+import {FaRegEye, FaRegEyeSlash} from "react-icons/fa";
+import {Description} from '../RegisterPage/Description';
+import {useLoginUserMutation} from '../../Store/api/Api';
+import {useDispatch} from 'react-redux';
+import {setAccessToken, setIsAuthenticated, setLogoutReason} from '../../Store/Slices/authSlice';
+import {useNavigate, useSearchParams} from 'react-router-dom';
+import {useTranslation} from '../../../public/Locales/context/TranslationContext';
 
 interface LoginFormInputs {
     userphone: string;
@@ -29,7 +29,7 @@ const loginFormschema = yup.object({
 });
 
 export const LoginPage = () => {
-    const { lang, t } = useTranslation()
+    const {lang, t} = useTranslation()
     const [isPasswordVisible, setIsPasswordVisible] = useState(false);
     const [searchParams] = useSearchParams();
     const [showModal, setShowModal] = useState(false);
@@ -42,11 +42,11 @@ export const LoginPage = () => {
     const {
         control,
         handleSubmit,
-        formState: { errors, isValid },
+        formState: {errors, isValid},
     } = useForm<LoginFormInputs>({
         resolver: yupResolver(loginFormschema),
         mode: "onChange",
-        defaultValues: { userphone: "", userpassword: "" },
+        defaultValues: {userphone: "", userpassword: ""},
     });
 
     const togglePasswordVisibility = () => {
@@ -96,7 +96,8 @@ export const LoginPage = () => {
 
     return (
 
-        <div className="min-w-screen flex flex-col min-h-screen sm:bg-[url('/images/grid.png')] bg-contain bg-no-repeat bg-right">
+        <div
+            className="min-w-screen flex flex-col min-h-screen sm:bg-[url('/images/grid.png')] bg-contain bg-no-repeat bg-right">
             <div className='flex flex-col flex-0'>
                 {showModal && <ModalBase
                     title={t(modalTitle)}
@@ -104,18 +105,25 @@ export const LoginPage = () => {
                     ModalClassName='w-115 p-10'
                     HeadingClassName="font-inter font-semibold text-[32px] leading-11 "
                     onClose={() => setShowModal(false)}
-                    actions={<Button className={"w-full text-center py-4 hover:border-1 hover:bg-white hover:text-[#2EAA7B] hover:border-[#2EAA7B] text-white bg-[#2EAA7B] rounded-[14px]"} onClick={() => { setShowModal(false); }}>Подтвердить</Button>} />}
+                    actions={<Button
+                        className={"w-full text-center py-4 hover:border-1 hover:bg-white hover:text-[#2EAA7B] hover:border-[#2EAA7B] text-white bg-[#2EAA7B] rounded-[14px]"}
+                        onClick={() => {
+                            setShowModal(false);
+                        }}>Подтвердить</Button>}/>}
             </div>
-            <Header showNavLinks={false} showAuthButtons={false} />
+            <Header showNavLinks={false} showAuthButtons={false}/>
             <div className=" flex flex-1 items-center justify-center py-[62px] transition-all duration-300">
                 <div className="w-full grid grid-cols-1 lg:grid-cols-2 lg:px-36 transition-all duration-500">
-                    <div className="w-full p-[clamp(30px,4vw,70px)] flex flex-col items-start text-start transition-all duration-300">
-                        <Heading className="text-[32px] mb-[32px] font-inter font-bold text-black" text={t('Вход в личный кабинет')} level={1} />
-                        <form onSubmit={handleSubmit(onSubmit)} className="w-full flex flex-col gap-[clamp(14px,1.8vw,28px)]">
+                    <div
+                        className="w-full p-[clamp(30px,4vw,70px)] flex flex-col items-start text-start transition-all duration-300">
+                        <Heading className="text-[32px] mb-[32px] font-inter font-bold text-black"
+                                 text={t('Вход в личный кабинет')} level={1}/>
+                        <form onSubmit={handleSubmit(onSubmit)}
+                              className="w-full flex flex-col gap-[clamp(14px,1.8vw,28px)]">
                             <Controller
                                 name="userphone"
                                 control={control}
-                                render={({ field }) => (
+                                render={({field}) => (
                                     <Input
                                         {...field}
                                         isError={!!errors.userphone}
@@ -129,7 +137,7 @@ export const LoginPage = () => {
                             <Controller
                                 name="userpassword"
                                 control={control}
-                                render={({ field }) => (
+                                render={({field}) => (
                                     <div className="relative w-full">
                                         <Input
                                             {...field}
@@ -143,7 +151,7 @@ export const LoginPage = () => {
                                             onClick={togglePasswordVisibility}
                                             className="absolute right-5 top-[clamp(12px,1.8vw,22px)] cursor-pointer text-[#28B13D] transition-all duration-300"
                                         >
-                                            {isPasswordVisible ? <FaRegEyeSlash /> : <FaRegEye />}
+                                            {isPasswordVisible ? <FaRegEyeSlash/> : <FaRegEye/>}
                                         </span>
                                     </div>
                                 )}
@@ -164,22 +172,26 @@ export const LoginPage = () => {
                             {/*        Войти с помощью Google*/}
                             {/*    </Button>*/}
                             {/*</div>*/}
-                            <Paragraph className="w-full text-center text-[16px] font-inter text-[#232323] leading-[130%] mt-10 transition-all duration-300">
+                            <Paragraph
+                                className="w-full text-center text-[16px] font-inter text-[#232323] leading-[130%] mt-10 transition-all duration-300">
                                 {t("Еще нет аккаунта?")}
-                                <Applink to='/register' className="text-[#2EAA7B] hover:underline ml-1 font-semibold transition duration-500">{t("Зарегистрироваться")}</Applink>
+                                <Applink to='/register'
+                                         className="text-[#2EAA7B] hover:underline ml-1 font-semibold transition duration-500">{t("Зарегистрироваться")}</Applink>
                             </Paragraph>
-                            <Paragraph className="w-full text-center text-[16px] font-inter text-[#232323] leading-[130%] mt-4 transition-all duration-300">
+                            <Paragraph
+                                className="w-full text-center text-[16px] font-inter text-[#232323] leading-[130%] mt-4 transition-all duration-300">
                                 {t("Забыли пароль?")}
-                                <Applink to='/password-reset' className="text-[#2EAA7B] hover:underline ml-1 font-semibold transition duration-500">{t("Восстановить")}</Applink>
+                                <Applink to='/password-reset'
+                                         className="text-[#2EAA7B] hover:underline ml-1 font-semibold transition duration-500">{t("Восстановить")}</Applink>
                             </Paragraph>
                         </div>
                     </div>
                     <div className='hidden md:block'>
-                        <Description showCards={true} showLaptop={false} />
+                        <Description showCards={true} showLaptop={false}/>
                     </div>
                 </div>
             </div>
-            <Footer showSmallFooter={true} />
+            <Footer showSmallFooter={true}/>
         </div>
     );
 };

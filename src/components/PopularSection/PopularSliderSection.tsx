@@ -57,11 +57,11 @@ export const PopularSliderSection = () => {
           }}
         >
           {popularCards.map((card) => (
-            <SwiperSlide key={card.id} className="mt-2 md:mt-0">
+            <SwiperSlide key={card.id} className="mt-2 md:mt-0 max-w-64">
               <Cards
                 cards={[card]}
                 cardIconClass="rounded-t-xl overflow-hidden"
-                cardWrapperClass="rounded-xl flex-col justify-between min-h-120 my-10 shadow-lg"
+                cardWrapperClass="rounded-xl flex-col justify-between my-10 shadow-lg"
                 WhatchButtonClass="py-3 px-5 w-full bg-[#2EAA7B] text-white font-medium rounded-md flex justify-center hover:bg-[#31B683] transition duration-300 cursor-pointer"
               />
             </SwiperSlide>

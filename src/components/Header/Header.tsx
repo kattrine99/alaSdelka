@@ -10,7 +10,7 @@ import FavIcon from '../../assets/heart-circle.svg?react';
 import ProfileIcon from '../../assets/profile-circle.svg?react';
 import { useSelector } from "react-redux";
 import { RootState } from "../../Store/store";
-import { useLocation, useNavigate, useParams, useSearchParams } from "react-router-dom";
+import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setCurrencyMode } from "../../Store/Slices/currencySlice";
 import { useGetNotificationsQuery, useMarkAllReadMutation } from "../../Store/api/Api";
@@ -28,13 +28,11 @@ interface HeaderProps {
 export const Header: React.FC<HeaderProps> = ({
     showNavLinks = true,
     showAuthButtons = true,
-    showtoBar = true,
     navLinksData,
 }) => {
     const isAuthenticated = useSelector((state: RootState) => state.auth.isAuthenticated);
     const isMobileUI = useSelector((state: RootState) => state.ui.isMobileUI);
     const [searchParams] = useSearchParams();
-    const siteSettings = useSelector((state: RootState) => state.siteSettings.settings);
     const navigate = useNavigate();
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const dispatch = useDispatch();
@@ -147,53 +145,6 @@ export const Header: React.FC<HeaderProps> = ({
     }, [isMobileMenuOpen]);
     return (
         <div className={"font-inter font-medium w-full bg-white shadow"}>
-            {showtoBar && (
-                <div className="hidden lg:block bg-white py-[10px] border-b border-[#E9E9E9]">
-                    <div className="container mx-auto px-4 flex justify-between items-center">
-                        {/* Email & Phone */}
-                        <div className="flex flex-wrap items-center justify-center md:justify-between gap-4 w-full">
-                            <a href={`mailto:${siteSettings?.contacts.email}`} className="flex items-center gap-2 text-[#232323] font-openSans text-sm md:text-base">
-                                <IoIosMail className="text-[#2EAA7B]" />
-                                {siteSettings?.contacts.email}
-                            </a>
-                            {isAuthenticated ? (
-                                <Applink
-                                    to="/add-offer"
-                                    className="bg-[#2EAA7B] text-white px-5 py-3 rounded-[10px] hover:bg-[#31B683] text-sm font-medium transition duration-600"
-                                >
-                                    {t("Создать объявление")}
-                                </Applink>
-                            ) : (
-                                <Applink
-                                    to="/login?next-step=/add-offer"
-                                    className="bg-[#2EAA7B] text-white px-5 py-3 rounded-[10px] hover:bg-[#31B683] text-sm font-medium transition duration-600"
-                                >
-                                    {t("Создать объявление")}
-                                </Applink>
-                            )}
-                            {/* <Paragraph className="flex items-center gap-2 text-[#232323] font-inter text-sm md:text-base">
-                                <FaPhone className="text-[#2EAA7B]" />
-                                {siteSettings?.contacts.phone}
-                            </Paragraph> */}
-                        </div>
-
-                        {/* Icons */}
-                        <div className="flex gap-3">
-                            {siteSettings?.contacts.social.telegram && (
-                                <Applink to={siteSettings?.contacts.social.telegram}>
-                                    <FaTelegram className="w-6 h-6 md:w-8 md:h-8 text-[#229ED9]" />
-                                </Applink>
-                            )}
-                            {siteSettings?.contacts.social.whatsapp && (
-                                <Applink to={siteSettings?.contacts.social.whatsapp} className="w-8 h-8 rounded-full bg-[#0DC143] flex items-center justify-center">
-                                    <FaWhatsapp className="w-[18px] h-[18px] text-white" />
-                                </Applink>
-                            )}
-                        </div>
-                    </div>
-                </div>
-            )}
-
             {/* Десктопный header */}
             <div className="hidden lg:block bg-white py-[20px] border-b border-[#E9E9E9]">
                 <div className="container mx-auto px-4 flex justify-between items-center">
@@ -266,12 +217,12 @@ export const Header: React.FC<HeaderProps> = ({
                                     >
                                         {t("Войти")}
                                     </Applink>
-                                    <Applink
+                                    {/* <Applink
                                         to="/register"
                                         className="bg-[#2EAA7B] text-white px-5 py-3 rounded-[10px] hover:bg-[#31B683] text-sm font-medium transition duration-600"
                                     >
                                         {t("Зарегистрироваться")}
-                                    </Applink>
+                                    </Applink> */}
                                 </div>
                             )
                         )}
@@ -359,11 +310,11 @@ export const Header: React.FC<HeaderProps> = ({
                                 >
                                     {t("Войти")}
                                 </Button>
-                                <Button onClick={() => { navigate(`/${lang}/register`); setIsMobileMenuOpen(false); }}
+                                {/* <Button onClick={() => { navigate(`/${lang}/register`); setIsMobileMenuOpen(false); }}
                                     className="bg-[#2EAA7B] text-white px-5 py-3 rounded-[10px] text-center hover:bg-[#31B683] text-sm font-medium transition duration-600"
                                 >
                                     {t("Зарегистрироваться")}
-                                </Button>
+                                </Button> */}
                             </div>
                         )}
 

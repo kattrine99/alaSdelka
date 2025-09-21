@@ -52,7 +52,7 @@ export const Card: React.FC<ICardComponent & { forceAllFavorite: boolean }> = ({
         });
     }
     return (
-        <div key={card.id} className={`relative bg-white rounded-lg flex ${cardWrapperClass ?? ""}`}>
+        <Applink to={`/${offerTypeToUrlMap[card.offer_type]}/card/${card.slug}`} key={card.id} className={`relative bg-white rounded-lg flex ${cardWrapperClass ?? ""}`}>
             {(card.is_paid || card.offer_status === "sold") && (
                 <div className="absolute -top-5 left-5 z-10 flex gap-2">
                     {card.is_paid && card.offer_status !== "sold" && (
@@ -75,13 +75,12 @@ export const Card: React.FC<ICardComponent & { forceAllFavorite: boolean }> = ({
                     <img
                         src={card.photos[0].photo}
                         alt={`${card.id}`}
-                        className="w-full object-contain"
+                        className="w-full  max-h-[140px] object-cover"
                     />
                 ) : (
-                    <div className="w-full h-49 flex justify-center bg-[#F0F0F0]" >
+                    <div className="w-full h-[140px] flex justify-center bg-[#F0F0F0]" >
                         <div className="flex flex-col justify-center items-center ">
                             <GalleryIcon />
-                            <Paragraph>{t("Изображение отсутствует")}</Paragraph>
                         </div>
                     </div>
                 )}
@@ -116,33 +115,11 @@ export const Card: React.FC<ICardComponent & { forceAllFavorite: boolean }> = ({
                     <Paragraph
                         className={`text-gray-600 flex gap-x-2 font-inter text-[14px] font-medium mb-[6px] ${cardTextClass ?? ""}`}
                     >
-                        <FaLocationDot className="text-[#2EAA7B] h-[16px]" />
                         <span className="font-bold text-[12px]">
-                            {card.address?.address ?? t("Адрес не указан")}, {lang === "uz" ? card.address?.city?.name_uz : card.address?.city?.name_ru ?? ""}
+                            {lang === "uz" ? card.address?.city?.name_uz : card.address?.city?.name_ru ?? ""}
                         </span>
+                        <span className="text-neutral-400 text-[12px]">{lang === 'uz' ? card.category.title_uz : card.category.title_ru}</span>
                     </Paragraph>
-                    <Paragraph
-                        className={`text-gray-600 flex gap-x-2 font-inter text-[14px] font-medium mb-[18px] ${cardTextClass ?? ""}`}
-                    >
-                        <FaLocationCrosshairs className="text-[#2EAA7B] h-[16px]" />
-                        {card.area == 0 && card.area_from !== null && card.area_to !== null ? (
-                            <>
-                                {card.area_from} - {card.area_to} {t("кв. м.")}
-                            </>
-                        ) : (
-                            <>{card.area} {t("кв. м.")}</>
-                        )}
-                    </Paragraph>
-                </div>
-
-                <div className="w-full h-[44px] mt-auto">
-                    <Applink to={`/${offerTypeToUrlMap[card.offer_type]}/card/${card.slug}`} className="w-full">
-                        <Button className={WhatchButtonClass}>
-                            <span className="flex gap-2 items-center">
-                                {t("Просмотреть")} <FaArrowRight />
-                            </span>
-                        </Button>
-                    </Applink>
                 </div>
             </div>
             {showModal && (
@@ -159,6 +136,6 @@ export const Card: React.FC<ICardComponent & { forceAllFavorite: boolean }> = ({
                         <Button onClick={() => setShowModal(false)} className="w-full py-4 rounded-xl bg-[#2EAA7B] text-white">{t("Отмена")}</Button>
                     </div>} HeadingClassName={"font-inter font-semibold text-4xl leading-11"} />
             )}
-        </div>
+        </Applink>
     );
 }

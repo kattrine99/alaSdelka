@@ -31,6 +31,7 @@ import { setSiteSettings } from "./Store/Slices/siteSettings";
 import { TranslationProvider } from "./../public/Locales/context/TranslationContext";
 import { ArchivePage } from "./Pages/Announcements/Archive";
 import { BottomNavBar } from "./components/BottomNavBar/BottomNavBar";
+import {PasswordReset} from "./Pages/PasswordReset/PasswordReset.tsx";
 
 const Layout = () => {
   const dispatch = useDispatch();
@@ -130,6 +131,7 @@ const routerConfig = createBrowserRouter([
       { index: true, element: <MainPage /> },
       { path: "login", element: <LoginPage /> },
       { path: "register", element: <RegistrationPage /> },
+        {path: "password-reset", element: <PasswordReset />},
 
       // Section routes
       { path: "business", element: <CategoryPage section="business" /> },

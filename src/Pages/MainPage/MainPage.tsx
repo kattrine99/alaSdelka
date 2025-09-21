@@ -17,6 +17,7 @@ import { FaArrowRight } from "react-icons/fa6";
 
 export const MainPage = () => {
     const [selectedCategory, setSelectedCategory] = useState<"Бизнес" | "Франшиза" | "Стартапы" | "Инвестиции">("Бизнес");
+    const isAuthenticated = useSelector((state: RootState) => state.auth.isAuthenticated);
     const { data: currencyRateData } = useGetCurrencyRateQuery();
     const siteSettings = useSelector((state: RootState) => state.siteSettings.settings);
 
@@ -191,16 +192,34 @@ export const MainPage = () => {
                             />
                             <Paragraph
                                 className="text-white text-[clamp(16px,1.5vw,18px)] max-w-3/5 md:w-full font-semibold leading-snug">
-                                <span className="inline-flex items-baseline align-baseline relative top-2 mr-1">
-                                    <InvestInIcon className="w-[120px] md:w-[168.39px] h-auto" />
+                                <span className="inline-flex items-baseline align-baseline relative top-2">
+                                    {/* <InvestInIcon className="w-[120px] md:w-[168.39px] h-auto" /> */}
                                 </span>
-                                — {t("первая в Узбекистане специализированная площадка для размещения объявлений о продаже готового бизнеса, стартапов, франшиз и инвестиционных проектов")}
+                                {t("Первая в Узбекистане специализированная площадка для размещения объявлений о продаже готового бизнеса, стартапов, франшиз и инвестиционных проектов")}
                             </Paragraph>
                         </div>
+                        <div className="mt-4">
+                            {isAuthenticated ? (
+                                <Applink
+                                    to="/add-offer"
+                                    className="bg-[#2EAA7B] text-white px-5 py-3 rounded-[10px] hover:bg-[#31B683] text-sm font-medium transition duration-600"
+                                >
+                                    {t("Создать объявление")}
+                                </Applink>
+                            ) : (
+                                <Applink
+                                    to="/login?next-step=/add-offer"
+                                    className="bg-[#2EAA7B] text-white px-5 py-3 rounded-[10px] hover:bg-[#31B683] text-sm font-medium transition duration-600"
+                                >
+                                    {t("Создать объявление")}
+                                </Applink>
+                            )}
+                        </div>
                         {/* Поиск */}
-                        <div className="mt-4 w-full flex-col relative hidden md:flex">
+                        <div className="mt-4 flex-col relative flex">
+
                             {/* Категории */}
-                            <div className="max-w-142 bg-white rounded-t-xl border-b border-[#E0E0E0]">
+                            {/* <div className="max-w-142 bg-white rounded-t-xl border-b border-[#E0E0E0]">
                                 <NavLinks
                                     links={translatedCategories}
                                     variant="tabs"
@@ -220,17 +239,17 @@ export const MainPage = () => {
                                     inactiveClassName="text-[#787878] w-34 py-3.5 px-4.25 hover:text-[#2EAA7B] "
                                     underlineColor="bg-[#2EAA7B]"
                                 />
-                            </div>
+                            </div> */}
 
                             {/* Фильтр Поиск*/}
-                            <FilterBar
+                            {/* <FilterBar
                                 filters={filters}
                                 setFilters={setFilters}
                                 searchInput={searchInput}
                                 setSearchInput={setSearchInput}
                                 selectedCategory={selectedCategory}
                                 onSearch={handleApplyFilters}
-                            />
+                            /> */}
                         </div>
                     </div>
                 </section>
@@ -296,7 +315,7 @@ export const MainPage = () => {
                                     initialFavorites={favoriteIds}
                                     onFavoritesChanged={handleFavoritesChanged}
                                     maxVisible={8}
-                                    Class="grid grid-cols-1 2xl:grid-cols-4 xl:grid-cols-4 lg:grid-cols-2 gap-y-10 gap-x-2 transition duration-300 ease-in-out"
+                                    Class="grid grid-cols-1 2xl:grid-cols-5 xl:grid-cols-5 lg:grid-cols-2 gap-y-10 gap-x-2 transition duration-300 ease-in-out"
                                     ClassName="container mx-auto py-7.5"
                                 />
                             );
@@ -357,7 +376,7 @@ export const MainPage = () => {
                                     allViewLink="/franchise"
                                     initialFavorites={favoriteIds}
                                     maxVisible={8}
-                                    Class="grid grid-cols-1 2xl:grid-cols-4 xl:grid-cols-4 lg:grid-cols-2 gap-y-10 gap-x-8 transition duration-300 ease-in-out"
+                                    Class="grid grid-cols-1 2xl:grid-cols-5 xl:grid-cols-5 lg:grid-cols-2 gap-y-10 gap-x-8 transition duration-300 ease-in-out"
                                     ClassName="container mx-auto py-7.5"
                                 />
                             );
@@ -419,7 +438,7 @@ export const MainPage = () => {
                                     initialFavorites={favoriteIds}
                                     maxVisible={8}
                                     allViewLink="/startup"
-                                    Class="grid grid-cols-1 2xl:grid-cols-4 xl:grid-cols-4 lg:grid-cols-2 gap-y-10 gap-x-4 md:gap-x-8 transition duration-300 ease-in-out"
+                                    Class="grid grid-cols-1 2xl:grid-cols-5 xl:grid-cols-5 lg:grid-cols-2 gap-y-10 gap-x-4 md:gap-x-8 transition duration-300 ease-in-out"
                                     ClassName="container mx-auto py-7.5"
                                 />
                             );
@@ -477,7 +496,7 @@ export const MainPage = () => {
                             cards={investmentOffers?.investments || []} maxVisible={4}
                             initialFavorites={favoriteIds}
                             allViewLink="/investments"
-                            Class="grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-4 xl:grid-cols-4 lg:grid-cols-2 gap-y-10 gap-x-8 transition duration-300 ease-in-out" ClassName={"container mx-auto py-7.5"} />
+                            Class="grid grid-cols-1 2xl:grid-cols-5 xl:grid-cols-5 lg:grid-cols-2 gap-y-10 gap-x-8 transition duration-300 ease-in-out" ClassName={"container mx-auto py-7.5"} />
                         );
                     })())}
 
@@ -508,12 +527,12 @@ export const MainPage = () => {
                             />
 
                             {/* ГОРОДА */}
-                            <div className="grid 2xl:grid-cols-6 lg:grid-cols-4 grid-cols-2 gap-3">
+                            <div className="grid 2xl:grid-cols-7 lg:grid-cols-5 md:grid-cols-4 grid-cols-2 gap-3">
                                 {cityStats &&
                                     cityStats.map((city, idx) => (
                                         <div
                                             key={idx}
-                                            className="w-full flex flex-col transition duration-300 ease-in-out bg-[#1A1A1A] text-white py-4 px-6 rounded-[12px] gap-0.5"
+                                            className="w-full flex flex-col transition duration-300 ease-in-out bg-[#4f4f4f] text-white py-4 px-6 rounded-[12px] gap-0.5"
                                         >
                                             <span className="font-openSans font-bold text-2xl max-sm:text-[14px] leading-[150%]">
                                                 {lang === "uz" ? city.name_uz : city.name_ru}

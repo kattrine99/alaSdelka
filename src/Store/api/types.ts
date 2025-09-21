@@ -22,6 +22,16 @@ export interface LoginUserPayload {
     password: string;
 }
 
+export interface RequestPasswordResetPayload {
+    phone: string;
+}
+
+export interface PasswordResetPayload {
+    phone: string;
+    password: string;
+    code: string;
+}
+
 export interface LoginUserResponse {
     message: string;
     access_token: string;

@@ -168,6 +168,10 @@ export const LoginPage = () => {
                                 {t("Еще нет аккаунта?")}
                                 <Applink to='/register' className="text-[#2EAA7B] hover:underline ml-1 font-semibold transition duration-500">{t("Зарегистрироваться")}</Applink>
                             </Paragraph>
+                            <Paragraph className="w-full text-center text-[16px] font-inter text-[#232323] leading-[130%] mt-4 transition-all duration-300">
+                                {t("Забыли пароль?")}
+                                <Applink to='/password-reset' className="text-[#2EAA7B] hover:underline ml-1 font-semibold transition duration-500">{t("Восстановить")}</Applink>
+                            </Paragraph>
                         </div>
                     </div>
                     <div className='hidden md:block'>

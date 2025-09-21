@@ -67,6 +67,23 @@ export const Filters: React.FC<FiltersProps> = ({ offer_type, filters, setFilter
 
     return (
         <div className="w-full mt-5">
+            <div className="gap-y-2">
+                <div className="flex items-center gap-2">
+                    <FrameIcon className="text-[#2EAA7B]" />
+                    <Paragraph>{t("Тип объявления")}</Paragraph>
+                </div>
+                <div className="relative mt-2 mb-4">
+                    <select
+                        value={filters.listing_type || ""}
+                        onChange={(e) => update("listing_type", e.target.value)}
+                        className="bg-[#F2F2F2] w-full h-[42.4px] rounded-[8px] pl-4 text-black focus:outline-none appearance-none"
+                    >
+                        <option value="sell">{(offer_type == 'investments' || offer_type == 'startup') ? (t("Поиск инвестора")) : t("Продажа")}</option>
+                        <option value="buy">{(offer_type == 'investments' || offer_type == 'startup') ? (t("Поиск инвестпроекта")) : t("Покупка")}</option>
+                    </select>
+                    <MdOutlineArrowDropDown className="absolute right-[25px] top-1/2 -translate-y-1/2 text-xl text-[#191919] pointer-events-none" />
+                </div>
+            </div>
             {/* Категория */}
             <div className="gap-y-2">
                 <div className="flex items-center gap-2">
@@ -85,24 +102,6 @@ export const Filters: React.FC<FiltersProps> = ({ offer_type, filters, setFilter
                                 {lang === "uz" ? cat.title_uz : cat.title_ru}
                             </option>
                         ))}
-                    </select>
-                    <MdOutlineArrowDropDown className="absolute right-[25px] top-1/2 -translate-y-1/2 text-xl text-[#191919] pointer-events-none" />
-                </div>
-            </div>
-
-            <div className="gap-y-2">
-                <div className="flex items-center gap-2">
-                    <FrameIcon className="text-[#2EAA7B]" />
-                    <Paragraph>{t("Тип объявления")}</Paragraph>
-                </div>
-                <div className="relative mt-2 mb-4">
-                    <select
-                        value={filters.listing_type || ""}
-                        onChange={(e) => update("listing_type", e.target.value)}
-                        className="bg-[#F2F2F2] w-full h-[42.4px] rounded-[8px] pl-4 text-black focus:outline-none appearance-none"
-                    >
-                        <option value="sell">{(offer_type == 'investments' || offer_type == 'startup') ? (t("Поиск инвестора")) : t("Продажа")}</option>
-                        <option value="buy">{(offer_type == 'investments' || offer_type == 'startup') ? (t("Поиск инвестпроекта")) : t("Покупка")}</option>
                     </select>
                     <MdOutlineArrowDropDown className="absolute right-[25px] top-1/2 -translate-y-1/2 text-xl text-[#191919] pointer-events-none" />
                 </div>

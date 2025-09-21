@@ -27,7 +27,7 @@ import type {
     VerifyCardPayload,
     SiteSettings,
     CategorySeo,
-    CitySeo,
+    CitySeo, RequestPasswordResetPayload, PasswordResetPayload,
 } from "./types";
 import { ICard } from "../../components/Cards/Interfaces";
 import customBaseQuery from "./customBaseQuery";
@@ -289,6 +289,20 @@ export const AuthApi = createApi({
                 url: '/user',
                 method: 'delete'
             })
+        }),
+        requestResetPassword: builder.mutation<void, RequestPasswordResetPayload>({
+            query: (payload) => ({
+                url: "/request-password-reset",
+                method: "POST",
+                body: payload,
+            }),
+        }),
+        resetPassword: builder.mutation<void, PasswordResetPayload>({
+            query: (payload) => ({
+                url: "/reset-password",
+                method: "POST",
+                body: payload,
+            }),
         })
 
     }),
@@ -336,6 +350,7 @@ export const {
     useAddUserCardMutation,
     useVerifyUserCardMutation,
     useUpdateOfferMutation,
-
+    useRequestResetPasswordMutation,
+    useResetPasswordMutation
 
 } = AuthApi;

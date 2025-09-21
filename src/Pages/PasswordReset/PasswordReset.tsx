@@ -1,4 +1,4 @@
-import {Button, Header, Heading, Input, ModalBase, Paragraph} from "../../components";
+import {Button, Footer, Header, Heading, Input, ModalBase, Paragraph} from "../../components";
 import {useState} from "react";
 import {useTranslation} from "../../../public/Locales/context/TranslationContext.tsx";
 import * as yup from "yup";
@@ -8,6 +8,7 @@ import {setAccessToken, setIsAuthenticated, setLogoutReason} from "../../Store/S
 import {useRequestResetPasswordMutation, useResetPasswordMutation} from "../../Store/api/Api.ts";
 import {useNavigate} from "react-router-dom";
 import {FaRegEye, FaRegEyeSlash} from "react-icons/fa";
+import {Description} from "../RegisterPage/Description.tsx";
 
 interface RequestPasswordResetProps {
     userphone: string;
@@ -225,8 +226,12 @@ export const PasswordReset = () => {
                             </>
                         )}
                     </div>
+                    <div className='hidden md:block'>
+                        <Description showCards={true} showLaptop={false}/>
+                    </div>
                 </div>
             </div>
+            <Footer showSmallFooter={true}/>
         </div>
     );
 }

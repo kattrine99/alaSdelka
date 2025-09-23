@@ -13,6 +13,8 @@ type Props = {
     options: Option[];
     placeholder?: string;
     searchable?: boolean;
+    wrapperClassName?: string;
+    selectClassName?: string;
 };
 
 export default function Select({
@@ -20,7 +22,9 @@ export default function Select({
                                          onChange,
                                          options,
                                          placeholder = "Выберите значение",
-                                         searchable = false
+                                         searchable = false,
+                                   wrapperClassName = 'relative mt-2 mb-4',
+    selectClassName = 'bg-[#F2F2F2] w-full h-[42.4px] rounded-[8px] pl-4 pr-8 text-left text-black',
                                      }: Props) {
     const [open, setOpen] = useState(false);
     const [query, setQuery] = useState("");
@@ -42,13 +46,13 @@ export default function Select({
 
     return (
         <div
-            className="relative mt-2 mb-4"
+            className={wrapperClassName}
             onMouseEnter={() => setOpen(true)}
             onMouseLeave={() => setOpen(false)}
         >
             <button
                 type="button"
-                className="bg-[#F2F2F2] w-full h-[42.4px] rounded-[8px] pl-4 pr-8 text-left text-black flex items-center justify-between"
+                className={selectClassName + 'w-full flex items-center justify-between'}
             >
                 {selected ? selected.label : placeholder}
                 <MdOutlineArrowDropDown className="text-xl text-[#191919]" />

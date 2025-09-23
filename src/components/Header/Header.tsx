@@ -1,22 +1,23 @@
-import { useEffect, useState, useRef } from "react";
-import { FaWhatsapp } from "react-icons/fa";
-import { IoIosMail } from "react-icons/io";
-import { FaTelegram } from "react-icons/fa6";
-import { RxHamburgerMenu } from "react-icons/rx";
-import { Paragraph, NavLinks, categories, Applink, Button } from "../index";
-import { MdOutlineArrowDropDown } from "react-icons/md";
+import {useEffect, useState, useRef} from "react";
+import {FaWhatsapp} from "react-icons/fa";
+import {IoIosMail} from "react-icons/io";
+import {FaTelegram} from "react-icons/fa6";
+import {RxHamburgerMenu} from "react-icons/rx";
+import {Paragraph, NavLinks, categories, Applink, Button} from "../index";
+import {MdOutlineArrowDropDown} from "react-icons/md";
 import NoticeIcon from '../../assets/notification.svg?react';
 import FavIcon from '../../assets/heart-circle.svg?react';
 import ProfileIcon from '../../assets/profile-circle.svg?react';
-import { useSelector } from "react-redux";
-import { RootState } from "../../Store/store";
-import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { setCurrencyMode } from "../../Store/Slices/currencySlice";
-import { useGetNotificationsQuery, useMarkAllReadMutation } from "../../Store/api/Api";
-import { setRefetchNotifications } from "../../utils/notificationRefetch";
-import { useTranslation } from "../../../public/Locales/context/TranslationContext";
-import { setIsMobileUi } from "../../Store/Slices/uiSlice";
+import {useSelector} from "react-redux";
+import {RootState} from "../../Store/store";
+import {useLocation, useNavigate, useSearchParams} from "react-router-dom";
+import {useDispatch} from "react-redux";
+import {setCurrencyMode} from "../../Store/Slices/currencySlice";
+import {useGetNotificationsQuery, useMarkAllReadMutation} from "../../Store/api/Api";
+import {setRefetchNotifications} from "../../utils/notificationRefetch";
+import {useTranslation} from "../../../public/Locales/context/TranslationContext";
+import {setIsMobileUi} from "../../Store/Slices/uiSlice";
+import Select from "../Select/Select.tsx";
 
 interface HeaderProps {
     showNavLinks?: boolean;
@@ -26,10 +27,10 @@ interface HeaderProps {
 }
 
 export const Header: React.FC<HeaderProps> = ({
-    showNavLinks = true,
-    showAuthButtons = true,
-    navLinksData,
-}) => {
+                                                  showNavLinks = true,
+                                                  showAuthButtons = true,
+                                                  navLinksData,
+                                              }) => {
     const isAuthenticated = useSelector((state: RootState) => state.auth.isAuthenticated);
     const isMobileUI = useSelector((state: RootState) => state.ui.isMobileUI);
     const [searchParams] = useSearchParams();
@@ -37,11 +38,11 @@ export const Header: React.FC<HeaderProps> = ({
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const dispatch = useDispatch();
     const selectedCurrency = useSelector((state: RootState) => state.currency.mode);
-    const { lang, setLang, t } = useTranslation();
+    const {lang, setLang, t} = useTranslation();
     const location = useLocation();
     const menuRef = useRef<HTMLDivElement>(null)
-    const { data, refetch } = useGetNotificationsQuery({ page: 1, per_page: 1000 },
-        { pollingInterval: 10000 }
+    const {data, refetch} = useGetNotificationsQuery({page: 1, per_page: 1000},
+        {pollingInterval: 10000}
     );
 
     const [markAllAsRead] = useMarkAllReadMutation();
@@ -170,44 +171,49 @@ export const Header: React.FC<HeaderProps> = ({
                     )}
 
                     <div className="flex items-center gap-4 ml-4 shrink-0">
-                        <div className="relative w-[139px] h-[49px]">
-                            <select
-                                value={lang}
-                                onChange={e => onLangChange(e.target.value as "ru" | "uz")}
-                                className="w-full h-full px-4 pr-10 border border-[#C9CCCF] rounded-[10px] outline-none text-[#191919] font-medium appearance-none"
-                            >
-                                <option value="ru">Русский</option>
-                                <option value="uz">O&#39;zbek</option>
-                            </select>
-                            <MdOutlineArrowDropDown className="absolute right-3 top-1/2 -translate-y-1/2 text-xl text-[#191919] pointer-events-none" />
-                        </div>
-                        <div className="relative w-[139px] h-[49px]">
-                            <select
-                                value={selectedCurrency}
-                                onChange={(e) => dispatch(setCurrencyMode(e.target.value as "UZS" | "USD"))}
-                                className="w-full h-full px-4 pr-10 border border-[#C9CCCF] rounded-[10px] outline-none text-[#191919] font-medium appearance-none"
-                            >
-                                <option value="UZS">{t("Cум")}</option>
-                                <option value="USD">USD</option>
-                            </select>
-                            <MdOutlineArrowDropDown className="absolute right-3 top-1/2 -translate-y-1/2 text-xl text-[#191919] pointer-events-none" />
-                        </div>
+                        <Select wrapperClassName={"relative w-[139px] h-[49px]"}
+                                selectClassName="w-full h-full px-4 border border-[#C9CCCF] rounded-[10px] outline-none text-[#191919] font-medium appearance-none"
+                                value={lang} onChange={(value) => onLangChange(value as "ru" | "uz")} options={[
+                            {
+                                value: "ru",
+                                label: "Русский",
+                            },
+                            {
+                                value: "uz",
+                                label: "O'zbek"
+                            }
+                        ]}/>
+
+                        <Select wrapperClassName={"relative w-[139px] h-[49px]"}
+                                selectClassName="w-full h-full px-4 border border-[#C9CCCF] rounded-[10px] outline-none text-[#191919] font-medium appearance-none"
+                                value={selectedCurrency} onChange={(value) => dispatch(setCurrencyMode(value as "UZS" | "USD"))} options={[
+                            {
+                                value: "UZS",
+                                label: t("Cум"),
+                            },
+                            {
+                                value: "USD",
+                                label: "USD"
+                            }
+                        ]}/>
 
                         {showAuthButtons && (
                             isAuthenticated ? (
                                 <div className="flex gap-2 items-center">
                                     <Button onClick={() => navigate(`/${lang}/notices`)} className='relative'>
-                                        <NoticeIcon className="cursor-pointer items" />
+                                        <NoticeIcon className="cursor-pointer items"/>
                                         {localUnreadCount > 0 && (
-                                            <span className="absolute -top-1 right-[1px] bg-[#DE5151] text-white text-xs w-4 h-4 rounded-full flex items-center justify-center">
+                                            <span
+                                                className="absolute -top-1 right-[1px] bg-[#DE5151] text-white text-xs w-4 h-4 rounded-full flex items-center justify-center">
                                                 {localUnreadCount > 9 ? "9+" : localUnreadCount}
                                             </span>
                                         )}
 
                                     </Button>
 
-                                    <Button onClick={() => navigate(`/${lang}/favorites`)} className={undefined}><FavIcon /></Button>
-                                    <Applink to="/profile"><ProfileIcon /></Applink>
+                                    <Button onClick={() => navigate(`/${lang}/favorites`)}
+                                            className={undefined}><FavIcon/></Button>
+                                    <Applink to="/profile"><ProfileIcon/></Applink>
                                 </div>
                             ) : (
                                 <div className="flex gap-2">
@@ -232,16 +238,17 @@ export const Header: React.FC<HeaderProps> = ({
 
             {/* Мобильный header */}
             <div ref={menuRef} className="lg:hidden sticky top-0 z-50">
-                <div className={"flex justify-between items-center px-4 py-4 border-b border-[#E9E9E9] bg-white" + (isMobileUI ? ' hidden' : '')}>
+                <div
+                    className={"flex justify-between items-center px-4 py-4 border-b border-[#E9E9E9] bg-white" + (isMobileUI ? ' hidden' : '')}>
                     <Applink to="/" className="flex items-center">
-                        <img src="/images/investin_logo.png" alt="Logo" className="h-10 object-contain" />
+                        <img src="/images/investin_logo.png" alt="Logo" className="h-10 object-contain"/>
                     </Applink>
                     <div className="flex items-center gap-3">
                         <button
                             className="w-10 h-10 flex items-center justify-center bg-[#D7F4EC] rounded-xl"
                             onClick={() => setIsMobileMenuOpen(prev => !prev)}
                         >
-                            <RxHamburgerMenu className="text-[#2EAA7B] w-6 h-6 outline-none" />
+                            <RxHamburgerMenu className="text-[#2EAA7B] w-6 h-6 outline-none"/>
                         </button>
                     </div>
                 </div>
@@ -267,12 +274,14 @@ export const Header: React.FC<HeaderProps> = ({
                                     onChange={(e) => {
                                         onLangChange(e.target.value as "ru" | "uz");
                                         setIsMobileMenuOpen(false);
-                                    }} className="w-full h-full px-4 pr-10 border border-[#C9CCCF] rounded-[10px] outline-none text-[#191919] font-medium appearance-none"
+                                    }}
+                                    className="w-full h-full px-4 pr-10 border border-[#C9CCCF] rounded-[10px] outline-none text-[#191919] font-medium appearance-none"
                                 >
                                     <option value="ru">Русский</option>
                                     <option value="uz">O&#39;zbek</option>
                                 </select>
-                                <MdOutlineArrowDropDown className="absolute right-3 top-1/2 -translate-y-1/2 text-xl text-[#191919] pointer-events-none" />
+                                <MdOutlineArrowDropDown
+                                    className="absolute right-3 top-1/2 -translate-y-1/2 text-xl text-[#191919] pointer-events-none"/>
                             </div>
 
                             <div className="relative w-full h-[49px]">
@@ -287,26 +296,39 @@ export const Header: React.FC<HeaderProps> = ({
                                     <option value="UZS">{t("Сум")}</option>
                                     <option value="USD">$ USD</option>
                                 </select>
-                                <MdOutlineArrowDropDown className="absolute right-3 top-1/2 -translate-y-1/2 text-xl text-[#191919] pointer-events-none" />
+                                <MdOutlineArrowDropDown
+                                    className="absolute right-3 top-1/2 -translate-y-1/2 text-xl text-[#191919] pointer-events-none"/>
                             </div>
                         </div>
 
                         {isAuthenticated ? (
                             <div className="flex gap-4 justify-center">
-                                <Button onClick={() => { navigate(`/${lang}/notices`); setIsMobileMenuOpen(false); }} className={undefined}>
-                                    <NoticeIcon className="cursor-pointer" />
+                                <Button onClick={() => {
+                                    navigate(`/${lang}/notices`);
+                                    setIsMobileMenuOpen(false);
+                                }} className={undefined}>
+                                    <NoticeIcon className="cursor-pointer"/>
                                 </Button>
-                                <Button onClick={() => { navigate(`/${lang}/favorites`); setIsMobileMenuOpen(false); }} className={undefined}>
-                                    <FavIcon className="cursor-pointer" />
+                                <Button onClick={() => {
+                                    navigate(`/${lang}/favorites`);
+                                    setIsMobileMenuOpen(false);
+                                }} className={undefined}>
+                                    <FavIcon className="cursor-pointer"/>
                                 </Button>
-                                <Button onClick={() => { navigate(`/${lang}/profile`); setIsMobileMenuOpen(false); }} className={undefined}>
-                                    <ProfileIcon className="cursor-pointer" />
+                                <Button onClick={() => {
+                                    navigate(`/${lang}/profile`);
+                                    setIsMobileMenuOpen(false);
+                                }} className={undefined}>
+                                    <ProfileIcon className="cursor-pointer"/>
                                 </Button>
                             </div>
                         ) : (
                             <div className="flex flex-col gap-3">
-                                <Button onClick={() => { navigate(`/${lang}/login`); setIsMobileMenuOpen(false); }}
-                                    className="border border-[#31B683] rounded-[10px] px-5 py-3 text-center hover:bg-[#2EAA7B] hover:text-white text-sm font-medium transition duration-600"
+                                <Button onClick={() => {
+                                    navigate(`/${lang}/login`);
+                                    setIsMobileMenuOpen(false);
+                                }}
+                                        className="border border-[#31B683] rounded-[10px] px-5 py-3 text-center hover:bg-[#2EAA7B] hover:text-white text-sm font-medium transition duration-600"
                                 >
                                     {t("Войти")}
                                 </Button>
@@ -319,8 +341,9 @@ export const Header: React.FC<HeaderProps> = ({
                         )}
 
                         <div className="flex flex-wrap items-center justify-center md:justify-start gap-4">
-                            <Paragraph className="flex items-center gap-2 text-[#232323] font-openSans text-sm md:text-base">
-                                <IoIosMail className="text-[#2EAA7B]" />
+                            <Paragraph
+                                className="flex items-center gap-2 text-[#232323] font-openSans text-sm md:text-base">
+                                <IoIosMail className="text-[#2EAA7B]"/>
                                 <a href="mailto:info@invin.uz">info@invin.uz</a>
 
                             </Paragraph>
@@ -331,16 +354,17 @@ export const Header: React.FC<HeaderProps> = ({
                                 to="#"
                                 onClick={() => setIsMobileMenuOpen(false)}
                             >
-                                <FaTelegram className="w-6 h-6 md:w-8 md:h-8 text-[#229ED9]" />
+                                <FaTelegram className="w-6 h-6 md:w-8 md:h-8 text-[#229ED9]"/>
                             </Applink>
-                            <Applink to="#" onClick={() => setIsMobileMenuOpen(false)} className="w-6 h-6 md:w-8 md:h-8 rounded-full bg-[#0DC143] flex items-center justify-center">
-                                <FaWhatsapp className="w-[18px] h-[18px] text-white" />
+                            <Applink to="#" onClick={() => setIsMobileMenuOpen(false)}
+                                     className="w-6 h-6 md:w-8 md:h-8 rounded-full bg-[#0DC143] flex items-center justify-center">
+                                <FaWhatsapp className="w-[18px] h-[18px] text-white"/>
                             </Applink>
                         </div>
                     </div>
                 )}
             </div>
 
-        </div >
+        </div>
     );
 };

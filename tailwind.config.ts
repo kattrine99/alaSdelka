@@ -1,6 +1,8 @@
 /** @type {import('tailwindcss').Config} */
 import animatePlugin from 'tailwindcss-animate';
 
+import lineClamp from "@tailwindcss/line-clamp";
+
 export default ({
     content: [
         "./index.html",
@@ -38,5 +40,5 @@ export default ({
             },
         },
     },
-    plugins: [animatePlugin],
+    plugins: [animatePlugin, lineClamp],
 });

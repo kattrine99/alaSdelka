@@ -16,6 +16,7 @@
     "@react-input/mask": "^2.0.4",
     "@reduxjs/toolkit": "^2.6.1",
     "@tailwindcss/cli": "^4.0.14",
+    "@tailwindcss/line-clamp": "^0.4.4",
     "apexcharts": "^4.7.0",
     "framer-motion": "^12.6.2",
     "i18next": "^25.2.1",

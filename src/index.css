@@ -49,3 +49,15 @@ body {
     -ms-overflow-style: none;  /* IE and Edge */
     scrollbar-width: none;  /* Firefox */
 }
+
+.custom-bullet {
+    @apply w-full h-1 bg-gray-400 rounded-sm inline-block transition-all;
+}
+
+.custom-bullet-active {
+    @apply w-full h-1 bg-[#2EAA7B] rounded-sm;
+}
+
+.swiper-pagination {
+    @apply absolute justify-between w-full bottom-2 z-10 gap-2 px-2 hidden group-hover:flex transition-opacity
+}

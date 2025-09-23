@@ -1,6 +1,4 @@
 import { Applink, Button, Heading, ModalBase, Paragraph } from "../index";
-import { FaArrowRight } from "react-icons/fa";
-import { FaLocationDot, FaLocationCrosshairs } from "react-icons/fa6";
 import FireIcon from '../../assets/fire.svg?react';
 import GalleryIcon from '../../assets/gallery.svg?react';
 import { useSelector } from "react-redux";
@@ -12,6 +10,11 @@ import { ICardComponent } from "./Interfaces";
 import { useState } from "react";
 import { translationService } from "../../utils/googleTranslate";
 
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css"; // стили свайпера
+import "swiper/css/navigation";
+import { Pagination } from "swiper/modules";
+
 export const Card: React.FC<ICardComponent & { forceAllFavorite: boolean }> = ({
     is_favourite = false,
     forceAllFavorite = false,
@@ -22,7 +25,6 @@ export const Card: React.FC<ICardComponent & { forceAllFavorite: boolean }> = ({
     cardIconClass,
     cardHeadingClass,
     cardTextClass,
-    WhatchButtonClass,
 }) => {
     const isAuthenticated = useSelector((state: RootState) => state.auth.isAuthenticated);
     const { lang, t } = useTranslation();
@@ -70,16 +72,32 @@ export const Card: React.FC<ICardComponent & { forceAllFavorite: boolean }> = ({
             )}
 
             {/* ИЗОБРАЖЕНИЕ И СЕРДЕЧКО */}
-            <div className={`relative ${cardIconClass ?? ""}`}>
-                {card.photos && card.photos.length > 0 && card.photos[0].photo ? (
-                    <img
-                        src={card.photos[0].photo}
-                        alt={`${card.id}`}
-                        className="w-full  max-h-[140px] object-cover"
-                    />
+            <div className={`relative group ${cardIconClass ?? ""}`}>
+                {card.photos && card.photos.length > 0 ? (
+                    <Swiper
+                        modules={[Pagination]}
+                        pagination={ card.photos.length > 1 ?{
+                            clickable: true,
+                            bulletClass: "swiper-pagination-bullet custom-bullet",
+                            bulletActiveClass: "swiper-pagination-bullet-active custom-bullet-active",
+                        } : false}
+                        spaceBetween={0}
+                        slidesPerView={1}
+                        className="w-full max-h-[140px] rounded-md overflow-hidden"
+                    >
+                        {card.photos.map((photo, idx) => (
+                            <SwiperSlide key={idx}>
+                                <img
+                                    src={photo.photo}
+                                    alt={`${card.id}-${idx}`}
+                                    className="w-full h-[140px] object-cover"
+                                />
+                            </SwiperSlide>
+                        ))}
+                    </Swiper>
                 ) : (
-                    <div className="w-full h-[140px] flex justify-center bg-[#F0F0F0]" >
-                        <div className="flex flex-col justify-center items-center ">
+                    <div className="w-full h-[140px] flex justify-center bg-[#F0F0F0]">
+                        <div className="flex flex-col justify-center items-center">
                             <GalleryIcon />
                         </div>
                     </div>
@@ -97,6 +115,9 @@ export const Card: React.FC<ICardComponent & { forceAllFavorite: boolean }> = ({
                         }}
                     />
                 )}
+
+                {/* контейнер для пагинации */}
+                <div className="swiper-pagination swiper-pagination-clickable swiper-pagination-bullets swiper-pagination-horizontal"></div>
             </div>
 
             {/* КОНТЕНТ КАРТОЧКИ */}
@@ -110,7 +131,7 @@ export const Card: React.FC<ICardComponent & { forceAllFavorite: boolean }> = ({
                     <Heading
                         text={translaedTitle}
                         level={3}
-                        className={`text-[14px] md:text-[18px] leading-[22px] font-bold font-inter mb-[12px] ${cardHeadingClass ?? ""}`}
+                        className={`text-[14px] line-clamp-2 md:text-[18px] leading-[22px] font-bold font-inter mb-[12px] ${cardHeadingClass ?? ""}`}
                     />
                     <Paragraph
                         className={`text-gray-600 flex gap-x-2 font-inter text-[14px] font-medium mb-[6px] ${cardTextClass ?? ""}`}

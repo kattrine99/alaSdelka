@@ -549,7 +549,6 @@ export const MainPage = () => {
 
                 {/*Почему Invest In*/}
                 <section className="relative overflow-hidden w-full bg-[url('/images/Mask.png')] bg-repeat">
-                    <div className="absolute right-[197px] hidden 2xl:block top-[61px] w-175.5 h-full bg-[url('/images/WhyInvestIn.png')] bg-no-repeat bg-contain px-48" ></div>
                     <div className="py-17.5 flex lg:flex-row justify-between flex-col max-2xl:px-10 px-4 sm:px-8 md:px-[96px] xl:px-48 overflow-hidden">
                         <div className="flex flex-col">
                             <div className="flex flex-col gap-6 max-w-2xl w-full">
@@ -599,7 +598,7 @@ export const MainPage = () => {
                                 </div>
                             </div>
                         </div>
-                        <div className="2xl:hidden mt-6">
+                        <div className="mt-6">
                             <img src="/images/WhyInvestIn.png" alt="" className="w-full max-w-3xl" />
                         </div>
                     </div>

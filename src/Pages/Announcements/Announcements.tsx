@@ -172,7 +172,7 @@ export const AnnouncemntsPage = () => {
         />
       )}
       <Header navLinksData={profileNavigate} />
-      <div className="container mx-auto px-3 md:px-0 py-9 flex-1">
+      <div className="container mx-auto px-3 md:px-5 py-9 flex-1">
         <Heading text={t("Мои объявления")} level={2} className="font-inter text-xl font-bold leading-5 space-x-[-0.5%]" />
 
         {isLoading ? (

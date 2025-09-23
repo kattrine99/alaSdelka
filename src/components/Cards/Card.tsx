@@ -139,7 +139,7 @@ export const Card: React.FC<ICardComponent & { forceAllFavorite: boolean }> = ({
                         <span className="font-bold text-[12px]">
                             {lang === "uz" ? card.address?.city?.name_uz : card.address?.city?.name_ru ?? ""}
                         </span>
-                        <span className="text-neutral-400 text-[12px]">{lang === 'uz' ? card.category.title_uz : card.category.title_ru}</span>
+                        <span className="text-neutral-400 text-[12px]">{lang === 'uz' ? card.category?.title_uz : card.category?.title_ru}</span>
                     </Paragraph>
                 </div>
             </div>

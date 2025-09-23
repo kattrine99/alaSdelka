@@ -26,7 +26,11 @@ export interface ICard {
     area_from: number | string | null;
     area_to: number | string | null;
     offer_status?: string;
-    category?: string;
+    category?: {
+        id: number,
+        title_ru: string,
+        title_uz: string
+    },
     is_favourite?: boolean;
     listing_type?: string;
     user_phone?: string;

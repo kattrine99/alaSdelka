@@ -34,6 +34,7 @@ export const FavoritePage = () => {
         slug: offer.slug,
         title: offer.title || "Название не указано",
         price: offer.price ?? 0,
+          category: offer.category,
         photos: offer.photos ?? [],
         address: {
           address: offer.address?.address || "Адрес не указан",

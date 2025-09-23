@@ -429,6 +429,11 @@ export interface Offer {
     slug: string;
     title: string;
     price: number;
+    category: {
+        id: number,
+        title_ru: string,
+        title_uz: string
+    },
     area: number;
     offer_type: "business" | "franchise" | "startup" | "investments";
     photos?: { id: number; photo: string; order: number }[];

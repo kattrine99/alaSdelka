@@ -255,7 +255,7 @@ export const MainPage = () => {
                 </section>
 
                 {/* Карточки */}
-                <section className="mt-12.5 mb-8.75 px-3 md:px-5 lg:px-10 xl:px-20 transition duration-500 ease-in-out container mx-auto">
+                <section className="mt-12.5 mb-8.75 px-4 transition duration-500 ease-in-out container mx-auto">
                     <div className="flex justify-start">
                         <div className="flex items-center justify-between  max-lg:flex max-lg:flex-col max-sm:justify-center w-full mb-6">
                             <div >
@@ -322,7 +322,7 @@ export const MainPage = () => {
                         })())
                     }
                 </section >
-                <section className="mt-12.5 mb-8.75 px-3 xl:px-20 lg:px-10 md:px-5 transition duration-500 ease-in-out container mx-auto">
+                <section className="mt-12.5 mb-8.75 px-4 transition duration-500 ease-in-out container mx-auto">
                     <div className="flex justify-start">
                         <div className="flex justify-between items-center max-lg:flex max-lg:flex-col max-sm:justify-center w-full mb-6">
                             <div>
@@ -384,7 +384,7 @@ export const MainPage = () => {
 
 
                 </section>
-                <section className="mt-12.5 mb-8.75 px-3 xl:px-20 lg:px-10 md:px-5 transition duration-500 ease-in-out container mx-auto">
+                <section className="mt-12.5 mb-8.75 px-4 transition duration-500 ease-in-out container mx-auto">
                     <div className="flex justify-start">
                         <div className="flex justify-between items-center max-lg:flex max-lg:flex-col max-sm:justify-center w-full mb-6">
                             <div>
@@ -445,7 +445,7 @@ export const MainPage = () => {
                         })())}
 
                 </section>
-                <section className="mt-12.5 mb-8.75 px-3 xl:px-20 lg:px-10 md:px-5 transition duration-500 ease-in-out container mx-auto">
+                <section className="mt-12.5 mb-8.75 px-4 transition duration-500 ease-in-out container mx-auto">
                     <div className="flex justify-start">
                         <div className="flex justify-between items-center max-lg:flex max-lg:flex-col max-sm:justify-center w-full mb-6">
                             <div>
@@ -505,7 +505,7 @@ export const MainPage = () => {
                 <section
                     className="relative min-h-152.5 w-screen overflow-hidden bg-gradient-to-br from-[#F8FFF5] to-[#FAFFF9]">
                     <div className="min-h-[610px] bg-[url(./images/Streets.png)] bg-center-bottom bg-no-repeat bg-cover">
-                        <div className="py-[70px] px-4 sm:px-8 md:px-[96px] xl:px-48">
+                        <div className="container mx-auto py-[70px] px-4">
                             <Heading
                                 text={t("Города")}
                                 level={2}
@@ -549,7 +549,7 @@ export const MainPage = () => {
 
                 {/*Почему Invest In*/}
                 <section className="relative overflow-hidden w-full bg-[url('/images/Mask.png')] bg-repeat">
-                    <div className="py-17.5 flex lg:flex-row justify-between flex-col max-2xl:px-10 px-4 sm:px-8 md:px-[96px] xl:px-48 overflow-hidden">
+                    <div className="py-17.5 flex lg:flex-row justify-between flex-col mx-auto container px-4 overflow-hidden">
                         <div className="flex flex-col">
                             <div className="flex flex-col gap-6 max-w-2xl w-full">
                                 <Heading

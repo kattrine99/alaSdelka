@@ -127,9 +127,9 @@ export const PasswordReset = () => {
             </div>
             <Header showNavLinks={false} showAuthButtons={false}/>
             <div className=" flex flex-1 items-center justify-center py-[62px] transition-all duration-300">
-                <div className="w-full grid grid-cols-1 lg:grid-cols-2 lg:px-36 transition-all duration-500">
+                <div className="w-full grid grid-cols-1 lg:grid-cols-2 container mx-auto px-4 transition-all duration-500">
                     <div
-                        className="w-full p-[clamp(30px,4vw,70px)] flex flex-col items-start text-start transition-all duration-300">
+                        className="w-full flex flex-col items-start text-start transition-all duration-300">
                         <Heading className="text-[32px] mb-[32px] font-inter font-bold text-black"
                                  text={t('Сброс пароля')} level={1}/>
                         {(step == 1) && (

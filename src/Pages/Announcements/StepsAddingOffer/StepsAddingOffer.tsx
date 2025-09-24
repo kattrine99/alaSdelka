@@ -164,7 +164,7 @@ export const StepsAddingOffer = () => {
                 />
             )}
 
-            <div className="container mx-auto py-12 flex-1">
+            <div className="container mx-auto px-3 py-12 flex-1">
                 {step !== 5 ? (
                     <div className="max-lg:mx-6 items-center">
                         <Breadcrumbs title="Создать объявление" />

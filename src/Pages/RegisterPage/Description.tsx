@@ -10,7 +10,7 @@ export const Description: React.FC<Descriptionprops> = ({
     const { t } = useTranslation()
     return (
         <div>
-            {showCards && (<div className="grid grid-cols-3 max-xl:px-8 pb-[123px] w-full relative">
+            {showCards && (<div className="grid grid-cols-3 pl-8 pb-[123px] w-full relative">
                 {/* Card 01 */}
                 <div className="relative flex flex-col text-left">
                     <div className="mx-8.25 mb-7.75">

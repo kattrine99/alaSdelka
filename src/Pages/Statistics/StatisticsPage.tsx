@@ -180,9 +180,9 @@ export const StatisticsPage = () => {
     }
 
     return (
-        <div className="w-screen">
+        <div className="w-screen min-h-screen flex-col flex">
             <Header navLinksData={profileNavigate} showtoBar={false} />
-            <div className="flex flex-col justify-center py-10 container mx-auto px-3 xl:px-0">
+            <div className="flex flex-col justify-center container mx-auto px-4 flex-1">
                 <div className="mb-12">
                     <Breadcrumbs
                         links={[

@@ -3,9 +3,9 @@ import { Header, Footer, Breadcrumbs, Heading, Paragraph } from "../index";
 
 const PrivacyPolicy = () => {
     return (
-        <div className="w-screen">
+        <div className="w-screen min-h-screen flex-col flex">
             <Header />
-            <main className="container mx-auto max-md:px-3 lg:px-48 py-8">
+            <main className="container mx-auto px-4 py-3 flex-1">
                 <Breadcrumbs
                     links={[
                         { label: "Главная", href: "/" },

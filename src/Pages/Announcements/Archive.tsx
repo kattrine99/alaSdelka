@@ -63,7 +63,7 @@ export const ArchivePage = () => {
     return (
         <div className="w-screen min-h-screen flex-col flex">
             <Header navLinksData={profileNavigate} />
-            <div className="container mx-auto px-3 md:px-5 py-9 flex-1">
+            <div className="container mx-auto px-4 py-9 flex-1">
                 <Heading text={t("Мой архив")} level={2} className="font-inter text-xl font-bold leading-5 space-x-[-0.5%]" />
                 {isLoading ? (
                     <div className="h-[400px] flex justify-center items-center">

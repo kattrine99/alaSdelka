@@ -54,7 +54,7 @@ export const NoticePage = () => {
         <div className="w-screen">
             <Header navLinksData={profileNavigate} />
 
-            <div className="px-4 sm:px-6 md:px-10 xl:px-48 py-9 min-h-screen">
+            <div className="px-4 container mx-auto py-9 min-h-screen">
                 <Heading
                     text={t("Уведомления")}
                     level={2}

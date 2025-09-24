@@ -36,9 +36,9 @@ export const UpdatePage = () => {
     if (isError) return <div>{t("Ошибка загрузки данных")}</div>;
 
     return (
-        <div className="w-screen">
+        <div className="w-screen min-h-screen flex-col flex">
             <Header navLinksData={profileNavigate} />
-            <div className="container mx-auto py-6">
+            <div className="container mx-auto px-4 flex-1 py-6">
                 <div className="mb-6">
                     <Breadcrumbs links={[
                         { label: t("Мои объявления"), href: "/announcements" },

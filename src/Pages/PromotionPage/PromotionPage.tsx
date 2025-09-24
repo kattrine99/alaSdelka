@@ -156,7 +156,7 @@ export const PromotionPage = () => {
     return (
         <div className="w-screen">
             <Header navLinksData={profileNavigate} />
-            <div className="container mx-auto py-7.5 px-4 sm:px-6 lg:px-8">
+            <div className="container mx-auto py-7.5 px-4">
                 <Breadcrumbs
                     links={[
                         { label: "Мои объявления", href: "/announcements" },

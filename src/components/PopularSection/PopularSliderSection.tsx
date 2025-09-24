@@ -31,7 +31,7 @@ export const PopularSliderSection = () => {
   if (popularCards.length === 0) return null;
 
   return (
-    <section className="relative w-full px-4 sm:px-6 md:px-16 lg:px-24 xl:px-[192px] py-12 bg-white">
+    <section className="relative container mx-auto w-full px-4 xl:px-20 lg:px-10 md:px-4 py-12 bg-white">
       <div className="mb-6">
         <Heading
           level={2}

@@ -148,7 +148,7 @@ export const Header: React.FC<HeaderProps> = ({
         <div className={"font-inter font-medium w-full bg-white shadow"}>
             {/* Десктопный header */}
             <div className="hidden lg:block bg-white py-[20px] border-b border-[#E9E9E9]">
-                <div className="container mx-auto px-4 flex justify-between items-center">
+                <div className="container mx-auto px-4 lg:px-10 flex justify-between items-center">
                     <Applink to="/" className="flex items-center gap-2 shrink-0">
                         <img
                             src="/images/investin_logo.png"

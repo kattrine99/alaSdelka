@@ -189,7 +189,7 @@ export const ProfilePage = () => {
                     HeadingClassName={"font-inter font-semibold text-[#101828] text-3xl leading-[44px]"} />
             )}
             <Header navLinksData={profileNavigate} />
-            <div className="w-full container mx-auto px-4 mt-6 flex-1">
+            <div className="w-full container mx-auto px-4 xl:px-20 lg:px-10 md:px-4 mt-6 flex-1">
                 {isEditingProfile && <Breadcrumbs
                     links={[
                         { label: "Главная", href: "/" },

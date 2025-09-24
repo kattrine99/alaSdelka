@@ -262,7 +262,7 @@ export const CategoryPage: React.FC<CategoryPageProps> = ({section}) => {
             )}
             <div className="font-openSans min-h-screen w-screen overflow-x-hidden">
                 <Header />
-                <div className="grid grid-cols-3 container mx-auto px-4 py-[30px] pb-10 gap-10 items-start">
+                <div className="grid grid-cols-3 container mx-auto px-4 xl:px-20 lg:px-10 md:px-4 py-[30px] pb-10 gap-10 items-start">
                     <aside className="hidden lg:flex flex-col mr-[60px] col-span-1">
                         <Breadcrumbs category={typeToTitleMap[type]?.[lang] || ""} />
                         <Heading text={t(pageTitle)} level={2} className="text-[30px] font-bold text-black" />

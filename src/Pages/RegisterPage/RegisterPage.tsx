@@ -35,7 +35,7 @@ interface ApiError {
 
 const stepOneSchema = yup.object({
     username: yup.string().required("Введите имя").min(2, "Минимум 2 буквы").matches(/^[a-zA-Zа-яА-ЯёЁ\s]+$/, "Только буквы"),
-    userphone: yup.string().required("Введите телефон").matches(/^\+998\d{9}$/, "Формат: +998xxxxxxxxx"),
+    userphone: yup.string().required("Введите телефон"),
     userpassword: yup.string().required("Введите пароль").min(8, "Минимум 8 символов"),
     confirmPassword: yup.string().required("Подтвердите пароль").oneOf([yup.ref("userpassword")], "Пароли должны совпадать")
 });
@@ -181,7 +181,7 @@ export const RegistrationPage = () => {
                 <Header showAuthButtons={false} showNavLinks={false} />
                 {step === 1 && (
                     <>
-                        <div className="w-full grid grid-cols-1 lg:grid-cols-2 container mx-auto px-4 lg:py-15 transition-all duration-500">
+                        <div className="w-full grid grid-cols-1 lg:grid-cols-2 container mx-auto ppx-4 xl:px-20 lg:px-10 md:px-4 lg:py-15 transition-all duration-500">
                             <div
                                 className="w-full flex max-xl:mt-8 flex-col items-start text-start transition-all duration-300">
                                 <Heading level={2} className="text-[32px] max-xl:text-3xl max-sm:text-2xl font-inter mb-7 font-bold text-black"

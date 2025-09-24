@@ -20,8 +20,7 @@ interface LoginFormInputs {
 const loginFormschema = yup.object({
     userphone: yup
         .string()
-        .required("Введите номер телефона")
-        .matches(/^\+998\d{9}$/, "Формат: +998xxxxxxxxx"),
+        .required("Введите номер телефона"),
     userpassword: yup
         .string()
         .required("Обязательное поле")

@@ -73,7 +73,7 @@ export const FavoritePage = () => {
   return (
     <div className="w-screen ">
       <Header navLinksData={profileNavigate} />
-      <div className="container mx-auto px-4 h-screen py-9">
+      <div className="container mx-auto px-4 xl:px-20 lg:px-10 md:px-4 h-screen py-9">
         <Heading
           text={t("Избранное")}
           level={2}

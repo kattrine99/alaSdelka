@@ -177,7 +177,7 @@ export const MainPage = () => {
             )}
             <div className="font-openSans min-h-screen w-screen overflow-x-hidden">
                 <Header />
-                <section className="px-4 xl:px-20 lg:px-10 md:px-5 transition duration-500 ease-in-out relative overflow-hidden bg-gradient-to-tr from-[#16503A] to-[#31B683]">
+                <section className="px-4 xl:px-20 lg:px-10 md:px-4 transition duration-500 ease-in-out relative overflow-hidden bg-gradient-to-tr from-[#16503A] to-[#31B683]">
                     <div className="flex justify-end">
                         <div
                             className="absolute right-[-12rem] bottom-[-5rem] w-96 h-96 md:right-[-16rem] lg:right-[-80px] md:bottom-[-9rem] md:w-212.5 md:h-212.5 bg-[url('/images/Check.png')] bg-no-repeat bg-contain rotate-[12deg] pointer-events-none z-0"></div>
@@ -255,7 +255,7 @@ export const MainPage = () => {
                 </section>
 
                 {/* Карточки */}
-                <section className="mt-12.5 mb-8.75 px-4 transition duration-500 ease-in-out container mx-auto">
+                <section className="mt-12.5 mb-8.75 px-4 xl:px-20 lg:px-10 md:px-4 transition duration-500 ease-in-out container mx-auto">
                     <div className="flex justify-start">
                         <div className="flex items-center justify-between  max-lg:flex max-lg:flex-col max-sm:justify-center w-full mb-6">
                             <div >
@@ -322,7 +322,7 @@ export const MainPage = () => {
                         })())
                     }
                 </section >
-                <section className="mt-12.5 mb-8.75 px-4 transition duration-500 ease-in-out container mx-auto">
+                <section className="mt-12.5 mb-8.75 px-4 xl:px-20 lg:px-10 md:px-4 transition duration-500 ease-in-out container mx-auto">
                     <div className="flex justify-start">
                         <div className="flex justify-between items-center max-lg:flex max-lg:flex-col max-sm:justify-center w-full mb-6">
                             <div>
@@ -384,7 +384,7 @@ export const MainPage = () => {
 
 
                 </section>
-                <section className="mt-12.5 mb-8.75 px-4 transition duration-500 ease-in-out container mx-auto">
+                <section className="mt-12.5 mb-8.75 px-4 xl:px-20 lg:px-10 md:px-4 transition duration-500 ease-in-out container mx-auto">
                     <div className="flex justify-start">
                         <div className="flex justify-between items-center max-lg:flex max-lg:flex-col max-sm:justify-center w-full mb-6">
                             <div>
@@ -445,7 +445,7 @@ export const MainPage = () => {
                         })())}
 
                 </section>
-                <section className="mt-12.5 mb-8.75 px-4 transition duration-500 ease-in-out container mx-auto">
+                <section className="mt-12.5 mb-8.75 px-4 xl:px-20 lg:px-10 md:px-4 transition duration-500 ease-in-out container mx-auto">
                     <div className="flex justify-start">
                         <div className="flex justify-between items-center max-lg:flex max-lg:flex-col max-sm:justify-center w-full mb-6">
                             <div>
@@ -505,7 +505,7 @@ export const MainPage = () => {
                 <section
                     className="relative min-h-152.5 w-screen overflow-hidden bg-gradient-to-br from-[#F8FFF5] to-[#FAFFF9]">
                     <div className="min-h-[610px] bg-[url(./images/Streets.png)] bg-center-bottom bg-no-repeat bg-cover">
-                        <div className="container mx-auto py-[70px] px-4">
+                        <div className="container mx-auto py-[70px] px-4 xl:px-20 lg:px-10 md:px-4">
                             <Heading
                                 text={t("Города")}
                                 level={2}
@@ -549,7 +549,7 @@ export const MainPage = () => {
 
                 {/*Почему Invest In*/}
                 <section className="relative overflow-hidden w-full bg-[url('/images/Mask.png')] bg-repeat">
-                    <div className="py-17.5 flex lg:flex-row justify-between flex-col mx-auto container px-4 overflow-hidden">
+                    <div className="py-17.5 flex lg:flex-row justify-between flex-col mx-auto container px-4 xl:px-20 lg:px-10 md:px-4 overflow-hidden">
                         <div className="flex flex-col">
                             <div className="flex flex-col gap-6 max-w-2xl w-full">
                                 <Heading

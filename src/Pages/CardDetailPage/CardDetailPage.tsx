@@ -141,7 +141,7 @@ export const CardDetailPage: React.FC<CardDetailPageProps> = ({ section }) => {
                     <p className="px-48 py-7.5 text-red-500">{t("Ошибка загрузки данных")}</p>
 
                 ) :
-                    (<div className='container mx-auto px-4 pt-10 max-md:p-5'>
+                    (<div className='container mx-auto px-4 xl:px-20 lg:px-10 md:px-4 pt-10 max-md:p-5'>
                         {translatedTitle != null ? (<Breadcrumbs category={section} title={translatedTitle} />) : (<Breadcrumbs category={section} title={card.title} />)}
                         <div className='flex flex-wrap xl:flex-nowrap'>
                             <div className='flex flex-col w-full lg:w-3/4 justify-center'>

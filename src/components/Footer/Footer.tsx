@@ -49,7 +49,7 @@ export const Footer: React.FC<FooterProps> = ({ showSmallFooter }) => {
                         </div>
                     </div></>)}
             {showSmallFooter && (
-                <div className="w-full border-t container mx-auto border-[#E9E9E9] px-4 transition-all duration-300">
+                <div className="w-full border-t container mx-auto border-[#E9E9E9] px-4 xl:px-20 lg:px-10 md:px-4 transition-all duration-300">
                     <div className="flex flex-col lg:flex-row lg:justify-between lg:items-center gap-6 text-center">
 
                         {/* ЛОГОТИП */}

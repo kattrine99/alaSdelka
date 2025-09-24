@@ -46,7 +46,7 @@ export const PromotionCards = () => {
         <div className="w-screen min-h-screen flex-col flex">
             <Header navLinksData={profileNavigate} />
 
-            <div className="container px-4 mx-auto py-7.5 flex-1">
+            <div className="container px-4 xl:px-20 lg:px-10 md:px-4 mx-auto py-7.5 flex-1">
                 <Breadcrumbs
                     links={[
                         { label: t("Мои объявления"), href: "/announcements" },

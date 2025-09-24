@@ -180,7 +180,7 @@ export const MainPage = () => {
                 <section className="px-4 xl:px-20 lg:px-10 md:px-4 transition duration-500 ease-in-out relative overflow-hidden bg-gradient-to-tr from-[#16503A] to-[#31B683]">
                     <div className="flex justify-end">
                         <div
-                            className="absolute right-[-12rem] bottom-[-5rem] w-96 h-96 md:right-[-16rem] lg:right-[-80px] md:bottom-[-9rem] md:w-212.5 md:h-212.5 bg-[url('/images/Check.png')] bg-no-repeat bg-contain rotate-[12deg] pointer-events-none z-0"></div>
+                            className="absolute right-[-12rem] bottom-[-5rem] w-96 h-96 md:w-150 md:h-150 lg:w-178 lg:h-178 md:right-[-16rem] lg:right-[-80px] md:bottom-[-9rem] bg-[url('/images/Check.png')] bg-no-repeat bg-contain rotate-[12deg] pointer-events-none z-0"></div>
                     </div>
                     <div className="relative container mx-auto py-17.5">
                         {/* Текст */}

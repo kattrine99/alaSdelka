@@ -76,9 +76,9 @@ export const PasswordReset = () => {
             setStep(2);
 
         } catch (error) {
-            console.error("Ошибка при сбросе пароля:", error);
+            console.error("Ошибка при смене пароля:", error);
             setModalTitle("Упс!");
-            setModalText("Не удалось сбросить пароль, попробуйте позже");
+            setModalText("Не удалось сменить пароль, попробуйте позже");
             setShowModal(true);
         }
     };
@@ -93,7 +93,7 @@ export const PasswordReset = () => {
                 code: data.code
             }).unwrap();
             setModalText("Теперь войдте в систему с новым паролем");
-            setModalTitle("Вы сбросили пароль!");
+            setModalTitle("Вы сменили пароль!");
             setShowModal(true);
             setTimeout(() => {
                 setShowModal(false)
@@ -101,9 +101,9 @@ export const PasswordReset = () => {
             }, 2000);
 
         } catch (error) {
-            console.error("Ошибка при сбросе пароля:", error);
+            console.error("Ошибка при смене пароля:", error);
             setModalTitle("Упс!");
-            setModalText("Не удалось сбросить пароль, попробуйте позже");
+            setModalText("Не удалось сменить пароль, попробуйте позже");
             setShowModal(true);
         }
     };
@@ -129,7 +129,7 @@ export const PasswordReset = () => {
                     <div
                         className="w-full flex flex-col items-start text-start transition-all duration-300">
                         <Heading className="text-[32px] mb-[32px] font-inter font-bold text-black"
-                                 text={t('Сброс пароля')} level={1}/>
+                                 text={t('Смена пароля')} level={1}/>
                         {(step == 1) && (
                             <form onSubmit={handleRequestSubmit(onRequestSubmit)}
                                   className="w-full flex flex-col gap-[clamp(14px,1.8vw,28px)]">
@@ -218,7 +218,7 @@ export const PasswordReset = () => {
                                         disabled={!resetIsValid}
                                         className={`w-full h-[56px] text-white rounded-2xl font-bold transition-all duration-500 ${resetIsValid ? 'bg-[#2EAA7B]' : 'bg-gray-300 cursor-not-allowed'}`}
                                     >
-                                        {t("Сбросить пароль")}
+                                        {t("Сменить пароль")}
                                     </Button>
                                 </form>
                             </>

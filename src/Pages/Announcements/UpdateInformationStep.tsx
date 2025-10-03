@@ -552,7 +552,7 @@ export const UpdateInformationPage: React.FC<Props> = ({ onSuccess, id }) => {
             <div className="flex flex-col gap-2 w-full max-w-98  relative">
                 <Input
                     className={`bg-[#F0F1F280] w-full rounded-[14px] outline-none py-3.5 px-4.5 ${!amount ? 'border border-red-500' : ''}`}
-                    LabelText={t("Сумма, Cум")}
+                    LabelText={t("Сумма, UZS")}
                     type="text"
                     placeholder={t("Введите")}
                     isError={false}

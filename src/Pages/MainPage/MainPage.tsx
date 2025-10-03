@@ -177,12 +177,12 @@ export const MainPage = () => {
             )}
             <div className="font-openSans min-h-screen w-screen overflow-x-hidden">
                 <Header />
-                <section className="px-4 xl:px-20 lg:px-10 md:px-4 transition duration-500 ease-in-out relative overflow-hidden bg-gradient-to-tr from-[#16503A] to-[#31B683]">
+                <section className="px-4  transition duration-500 ease-in-out relative overflow-hidden bg-gradient-to-tr from-[#16503A] to-[#31B683]">
                     <div className="flex justify-end">
                         <div
                             className="absolute right-[-12rem] bottom-[-5rem] w-96 h-96 md:w-150 md:h-150 lg:w-178 lg:h-178 md:right-[-16rem] lg:right-[-80px] md:bottom-[-9rem] bg-[url('/images/Check.png')] bg-no-repeat bg-contain rotate-[12deg] pointer-events-none z-0"></div>
                     </div>
-                    <div className="relative container mx-auto py-17.5">
+                    <div className="relative container mx-auto py-17.5 px-4 xl:px-20 lg:px-10 md:px-4 transition duration-500 ease-in-out ">
                         {/* Текст */}
                         <div className="order-2 lg:order-1 flex flex-col gap-6 max-w-3xl w-full">
                             <Heading
@@ -197,27 +197,28 @@ export const MainPage = () => {
                                 </span>
                                 {t("Первая в Узбекистане специализированная площадка для размещения объявлений о продаже готового бизнеса, стартапов, франшиз и инвестиционных проектов")}
                             </Paragraph>
+                            <div >
+                                {isAuthenticated ? (
+                                    <Applink
+                                        to="/add-offer"
+                                        className="bg-[#2EAA7B] text-white px-5 py-3 rounded-[10px] hover:bg-[#31B683] text-sm font-medium transition duration-600"
+                                    >
+                                        {t("Разместить объявление")}
+                                    </Applink>
+                                ) : (
+                                    <Applink
+                                        to="/login?next-step=/add-offer"
+                                        className="bg-[#2EAA7B] text-white px-5 py-3 rounded-[10px] hover:bg-[#31B683] text-sm font-medium transition duration-600"
+                                    >
+                                        {t("Разместить объявление")}
+                                    </Applink>
+                                )}
+                            </div>
                         </div>
-                        <div className="mt-4">
-                            {isAuthenticated ? (
-                                <Applink
-                                    to="/add-offer"
-                                    className="bg-[#2EAA7B] text-white px-5 py-3 rounded-[10px] hover:bg-[#31B683] text-sm font-medium transition duration-600"
-                                >
-                                    {t("Создать объявление")}
-                                </Applink>
-                            ) : (
-                                <Applink
-                                    to="/login?next-step=/add-offer"
-                                    className="bg-[#2EAA7B] text-white px-5 py-3 rounded-[10px] hover:bg-[#31B683] text-sm font-medium transition duration-600"
-                                >
-                                    {t("Создать объявление")}
-                                </Applink>
-                            )}
-                        </div>
-                        {/* Поиск */}
-                        <div className="mt-4 flex-col relative flex">
 
+                        {/* Поиск */}
+                        <div >
+                            {/*className="mt-4 flex-col relative flex"*/}
                             {/* Категории */}
                             {/* <div className="max-w-142 bg-white rounded-t-xl border-b border-[#E0E0E0]">
                                 <NavLinks
@@ -257,7 +258,7 @@ export const MainPage = () => {
                 {/* Карточки */}
                 <section className="mt-12.5 mb-8.75 px-4 xl:px-20 lg:px-10 md:px-4 transition duration-500 ease-in-out container mx-auto">
                     <div className="flex justify-start">
-                        <div className="flex items-center justify-between  max-lg:flex max-lg:flex-col max-sm:justify-center w-full mb-6">
+                        <div className="flex items-center justify-between  max-lg:flex max-lg:flex-col max-sm:justify-center w-full mb-0 md:mb-6">
                             <div >
                                 <Button onClick={() => {
                                     navigate(`$/{lang}/business`)
@@ -265,7 +266,7 @@ export const MainPage = () => {
                                     <Heading level={2} text={t("Бизнес")} className="font-openSans font-bold hover:text-[#2EAA7B] hover:underline hover:decoration-1 transition duration-500 text-3xl cursor-pointer" />
                                 </Button>
                             </div>
-                            <div className="col-span-2 max-lg:mt-2 max-sm:flex-col max-lg:w-full flex justify-center gap-4">
+                            <div className="col-span-2 max-lg:mt-2 max-sm:flex-col max-lg:w-full flex justify-center gap-2">
                                 <Button onClick={() => setListingTypes(prev => ({ ...prev, [selectedCategory]: "sell" }))}
                                     className={`flex items-center justify-center gap-x-2 rounded-[8px] h-13  min-w-70 max-"sm: w - full whitespace - nowrap px - 6 border border-[#2EAA7B] text-[#2EAA7B] text-[16px] hover:bg-[#2EAA7B] hover:text-white transition duration - 500 font - inter leading - [150 %] font - semibold
                         ${businessType === "sell" ? "bg-[#2EAA7B] text-white border-[#2EAA7B]"
@@ -276,7 +277,7 @@ export const MainPage = () => {
                                 </Button>
                                 <Button
                                     onClick={() => setListingTypes(prev => ({ ...prev, [selectedCategory]: "buy" }))}
-                                    className={`flex items-center justify-center gap-2 border rounded-[8px] h-13 min-w-70 max-sm:w-full max-sm:mt-3 whitespace-nowrap px-6 text-[16px] font-inter font-semibold transition
+                                    className={`flex items-center justify-center gap-2 border rounded-[8px] h-13 min-w-70 max-sm:w-full max-sm:mt-1 whitespace-nowrap px-6 text-[16px] font-inter font-semibold transition
   ${businessType === "buy" ? "bg-[#2EAA7B] text-white border-[#2EAA7B]" : "border-[#2EAA7B] text-[#2EAA7B] hover:bg-[#2EAA7B] hover:text-white"} `}
                                 >
                                     <ShopIcon className="w-5 h-5" />
@@ -324,7 +325,7 @@ export const MainPage = () => {
                 </section >
                 <section className="mt-12.5 mb-8.75 px-4 xl:px-20 lg:px-10 md:px-4 transition duration-500 ease-in-out container mx-auto">
                     <div className="flex justify-start">
-                        <div className="flex justify-between items-center max-lg:flex max-lg:flex-col max-sm:justify-center w-full mb-6">
+                        <div className="flex justify-between items-center max-lg:flex max-lg:flex-col max-sm:justify-center w-full mb-0 md:mb-6">
                             <div>
                                 <Button onClick={() => {
                                     navigate(`$/{lang}/franchise`)
@@ -332,7 +333,7 @@ export const MainPage = () => {
                                     <Heading level={2} text={t("Франшиза")} className="font-openSans font-bold hover:text-[#2EAA7B] hover:underline hover:decoration-1 transition duration-500 text-3xl cursor-pointer" />
                                 </Button>
                             </div>
-                            <div className="col-span-1 max-lg:mt-2 max-sm:flex-col max-lg:w-full flex justify-center gap-4">
+                            <div className="col-span-1 max-lg:mt-2 max-sm:flex-col max-lg:w-full flex justify-center gap-2">
                                 <Button onClick={() => setListingTypes(prev => ({ ...prev, Франшиза: "sell" }))} className={`flex items-center justify-center gap-x-2 rounded-[8px] h-13  min-w-70 max-sm:w-full whitespace-nowrap px-6 border border-[#2EAA7B] text-[#2EAA7B] text-[16px] hover:bg-[#2EAA7B] hover:text-white transition duration-500 font-inter leading-[150 %] font-semibold
                         ${franchiseType === "sell" ? "bg-[#2EAA7B] text-white border-[#2EAA7B]"
                                         : "border-[#2EAA7B] text-[#2EAA7B] hover:bg-[#2EAA7B] hover:text-white"
@@ -340,7 +341,7 @@ export const MainPage = () => {
                                     <ShopIcon className="w-5 h-5 hover:text-white" />
                                     {t("Продажа франшизы")}
                                 </Button>
-                                <Button onClick={() => setListingTypes(prev => ({ ...prev, Франшиза: "buy" }))} className={`flex items-center justify-center gap-2 border rounded-[8px] h-13 min-w-70 max-sm:w-full max-sm:mt-3 whitespace-nowrap px-6 text-[16px] font-inter font-semibold transition
+                                <Button onClick={() => setListingTypes(prev => ({ ...prev, Франшиза: "buy" }))} className={`flex items-center justify-center gap-2 border rounded-[8px] h-13 min-w-70 max-sm:w-full max-sm:mt-1 whitespace-nowrap px-6 text-[16px] font-inter font-semibold transition
   ${franchiseType === "buy" ? "bg-[#2EAA7B] text-white border-[#2EAA7B]" : "border-[#2EAA7B] text-[#2EAA7B] hover:bg-[#2EAA7B] hover:text-white"} `}>
                                     <ShopIcon className="w-5 h-5 hover:text-white" />
                                     {t("Покупка франшизы")}
@@ -386,7 +387,7 @@ export const MainPage = () => {
                 </section>
                 <section className="mt-12.5 mb-8.75 px-4 xl:px-20 lg:px-10 md:px-4 transition duration-500 ease-in-out container mx-auto">
                     <div className="flex justify-start">
-                        <div className="flex justify-between items-center max-lg:flex max-lg:flex-col max-sm:justify-center w-full mb-6">
+                        <div className="flex justify-between items-center max-lg:flex max-lg:flex-col max-sm:justify-center w-full mb-0 md:mb-6">
                             <div>
                                 <Button onClick={() => {
                                     navigate(`/${lang}/startup`)
@@ -394,7 +395,7 @@ export const MainPage = () => {
                                     <Heading level={2} text={t("Стартапы")} className="font-openSans font-bold hover:text-[#2EAA7B] hover:underline hover:decoration-1 transition duration-500 text-3xl cursor-pointer" />
                                 </Button>
                             </div>
-                            <div className="col-span-1 max-lg:mt-2 max-sm:flex-col max-lg:w-full flex justify-center gap-4">
+                            <div className="col-span-1 max-lg:mt-2 max-sm:flex-col max-lg:w-full flex justify-center gap-2">
                                 <Button onClick={() => setListingTypes(prev => ({ ...prev, Стартапы: "sell" }))} className={`flex items-center justify-center gap-x-2 rounded-[8px] h-13  min-w-70 max-sm:w-full whitespace-nowrap px-6 border border-[#2EAA7B] text-[#2EAA7B] text-[16px] hover:bg-[#2EAA7B] hover:text-white transition duration-500 font-inter leading-[150%] font-semibold
                         ${startupType === "sell" ? "bg-[#2EAA7B] text-white border-[#2EAA7B]"
                                         : "border-[#2EAA7B] text-[#2EAA7B] hover:bg-[#2EAA7B] hover:text-white"
@@ -402,7 +403,7 @@ export const MainPage = () => {
                                     <ShopIcon className="w-5 h-5 hover:text-white" />
                                     {t("Поиск инвестора")}
                                 </Button>
-                                <Button onClick={() => setListingTypes(prev => ({ ...prev, Стартапы: "buy" }))} className={`flex items-center justify-center gap-2 border rounded-[8px] h-13 min-w-70 max-sm:w-full max-sm:mt-3 whitespace-nowrap px-6 text-[16px] font-inter font-semibold transition
+                                <Button onClick={() => setListingTypes(prev => ({ ...prev, Стартапы: "buy" }))} className={`flex items-center justify-center gap-2 border rounded-[8px] h-13 min-w-70 max-sm:w-full max-sm:mt-1 whitespace-nowrap px-6 text-[16px] font-inter font-semibold transition
   ${startupType === "buy" ? "bg-[#2EAA7B] text-white border-[#2EAA7B]" : "border-[#2EAA7B] text-[#2EAA7B] hover:bg-[#2EAA7B] hover:text-white"} `}>
                                     <ShopIcon className="w-5 h-5 hover:text-white" />
                                     {t("Поиск инвестпроекта")}
@@ -447,7 +448,7 @@ export const MainPage = () => {
                 </section>
                 <section className="mt-12.5 mb-8.75 px-4 xl:px-20 lg:px-10 md:px-4 transition duration-500 ease-in-out container mx-auto">
                     <div className="flex justify-start">
-                        <div className="flex justify-between items-center max-lg:flex max-lg:flex-col max-sm:justify-center w-full mb-6">
+                        <div className="flex justify-between items-center max-lg:flex max-lg:flex-col max-sm:justify-center w-full mb-0 md:mb-6">
                             <div>
                                 <Button onClick={() => {
                                     navigate(`/${lang}/investments`)
@@ -456,7 +457,7 @@ export const MainPage = () => {
                                         className="font-openSans font-bold text-3xl hover:text-[#2EAA7B] hover:underline hover:decoration-1 transition duration-500 cursor-pointer" />
                                 </Button>
                             </div>
-                            <div className="col-span-1 max-lg:mt-2 max-sm:flex-col max-lg:w-full flex justify-center gap-4">
+                            <div className="col-span-1 max-lg:mt-2 max-sm:flex-col max-lg:w-full flex justify-center gap-2">
                                 <Button onClick={() => setListingTypes(prev => ({ ...prev, Инвестиции: "sell" }))} className={`flex items-center justify-center gap-x-2 rounded-[8px] h-13  min-w-70 max-sm:w-full whitespace-nowrap px-6 border border-[#2EAA7B] text-[#2EAA7B] text-[16px] hover:bg-[#2EAA7B] hover:text-white transition duration-500 font-inter leading-[150%] font-semibold
                         ${investmentType === "sell" ? "bg-[#2EAA7B] text-white border-[#2EAA7B]"
                                         : "border-[#2EAA7B] text-[#2EAA7B] hover:bg-[#2EAA7B] hover:text-white"
@@ -464,7 +465,7 @@ export const MainPage = () => {
                                     <ShopIcon className="w-5 h-5 hover:text-white" />
                                     {t("Поиск инвестора")}
                                 </Button>
-                                <Button onClick={() => setListingTypes(prev => ({ ...prev, Инвестиции: "buy" }))} className={`flex items-center justify-center gap-2 border rounded-[8px] h-13 min-w-70 max-sm:w-full max-sm:mt-3 whitespace-nowrap px-6 text-[16px] font-inter font-semibold transition
+                                <Button onClick={() => setListingTypes(prev => ({ ...prev, Инвестиции: "buy" }))} className={`flex items-center justify-center gap-2 border rounded-[8px] h-13 min-w-70 max-sm:w-full col-span-1 max-lg:mt-2 max-sm:flex-row max-lg:w-full flex justify-center gap-4 whitespace-nowrap px-6 text-[16px] font-inter font-semibold transition
   ${investmentType === "buy" ? "bg-[#2EAA7B] text-white border-[#2EAA7B]" : "border-[#2EAA7B] text-[#2EAA7B] hover:bg-[#2EAA7B] hover:text-white"} `}>
                                     <ShopIcon className="w-5 h-5 hover:text-white" />
                                     {t("Поиск инвестпроекта")}
@@ -599,7 +600,7 @@ export const MainPage = () => {
                             </div>
                         </div>
                         <div className="mt-6">
-                            <img src="/images/WhyInvestIn.png" alt="" className="w-full max-w-3xl" />
+                            <img src="/images/WhyInvestIn.png" alt="" className="w-full max-w-xl" />
                         </div>
                     </div>
                 </section>

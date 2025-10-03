@@ -22,7 +22,7 @@ export const SellerInfoCard = ({ card, offer_type, userId }: { card: OfferDetail
     const convertedPrice =
         currencyMode === "USD"
             ? Math.round((card.price || 0) / (rate || 1)).toLocaleString() + " $"
-            : (card.price || 0).toLocaleString() + t("сум");
+            : (card.price || 0).toLocaleString() + t("UZS");
 
     const handleToggleFavorite = async () => {
         try {

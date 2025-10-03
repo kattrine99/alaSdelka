@@ -69,7 +69,7 @@ export const CardDetailPreview: React.FC<CardDetailPreviewProps> = ({ onBack }) 
             const converted = Math.round(price / (rate || 1));
             return `${converted.toLocaleString()} $`;
         }
-        return `${price.toLocaleString()} ${t("сум")}`;
+        return `${price.toLocaleString()} ${t("UZS")}`;
     };
 
 

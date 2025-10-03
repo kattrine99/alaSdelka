@@ -33,7 +33,7 @@ export const FilterBar: React.FC<FilterBarProps> = ({
     const { data: filterOptions, isLoading } = useGetFiltersDataQuery();
     const { t, lang } = useTranslation();
     const selectedCurrency = useSelector((state: RootState) => state.currency.mode);
-    const currencySymbol = selectedCurrency === "UZS" ? "сум" : "$";
+    const currencySymbol = selectedCurrency === "UZS" ? "UZS" : "$";
 
     if (isLoading || !filterOptions) return null;
 

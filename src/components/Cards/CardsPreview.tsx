@@ -36,7 +36,7 @@ export const CardPreview: React.FC<CardPreviewProps> = ({ card, onPreview }) => 
             const converted = Math.round(price / (currencyRate || 1));
             return `${numberWithSpaces(converted)} $`;
         }
-        return `${numberWithSpaces(price)} ${t("сум")}`;
+        return `${numberWithSpaces(price)} ${t("UZS")}`;
     };
 
     return (

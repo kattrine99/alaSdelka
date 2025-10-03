@@ -227,7 +227,7 @@ export const PaymentStep: React.FC<Props> = ({onPayment, offerSlug}) => {
                                 {isTariffsLoading ? <Paragraph>{t("Загрузка тарифов...")}</Paragraph> : filtersData?.publish_tariffs?.map((tariff) => (
                                     <Button key={tariff.id} className={`flex flex-col border items-start border-[#2EAA7B] px-6 py-4 rounded-lg ${selectedTariff === tariff.id ? "bg-[#2EAA7B] text-white" : "bg-white"}`} onClick={() => setSelectedTariff(tariff.id)}>
                                         <Paragraph className="font-inter font-semibold">{tariff.duration_in_days} {t("дней")}</Paragraph>
-                                        <Paragraph>{tariff.price.toLocaleString()} {t("сум")}</Paragraph>
+                                        <Paragraph>{tariff.price.toLocaleString()} {t("UZS")}</Paragraph>
                                     </Button>
                                 ))}
                             </div>

@@ -525,7 +525,7 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
                     onChange={(e) => setCurrency(e.target.value)}
                     className={`bg-[#F0F1F280] max-w-40 h-full w-full rounded-[14px] text-[#686A70] outline-none py-3.5 px-4.5`}
                 >
-                    <option value="sum">{t("Сум")}</option>
+                    <option value="sum">{t("UZS")}</option>
                     <option value="dollar">{t("Доллар США")}</option>
                 </select>
 

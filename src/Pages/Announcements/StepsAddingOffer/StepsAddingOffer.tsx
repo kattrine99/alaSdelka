@@ -146,7 +146,7 @@ export const StepsAddingOffer = () => {
                                     <li><b>Форма владения бизнесом</b> — выберите из списка: ИП, ООО и т.д.</li>
                                     <li><b>Форма владения помещением</b> — собственность, аренда и др.</li>
                                     <li><b>Документы и лицензии</b> (формат PDF или Excel) — если есть.</li>
-                                    <li><b>Стоимость (Сумма, Сум)</b> — в национальной валюте.</li>
+                                    <li><b>Стоимость (Сумма, UZS)</b> — в национальной валюте.</li>
                                 </ul>
                                 Заполните все обязательные поля и жмите «Дальше».
                             </Paragraph>
@@ -164,7 +164,7 @@ export const StepsAddingOffer = () => {
                 />
             )}
 
-            <div className="container mx-auto px-3 py-12 flex-1">
+            <div className="container mx-auto px-4 xl:px-20 md:px-4 lg:px-10 py-12 flex-1">
                 {step !== 5 ? (
                     <div className="max-lg:mx-6 items-center">
                         <Breadcrumbs title="Создать объявление" />

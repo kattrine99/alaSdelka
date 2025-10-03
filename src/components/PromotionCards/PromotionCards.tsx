@@ -40,7 +40,7 @@ export const PromotionCards = () => {
             return `$ ${Math.round(numericPrice / currencyRate).toLocaleString()}`;
         }
 
-        return `${numericPrice.toLocaleString()} ${t("сум")}`;
+        return `${numericPrice.toLocaleString()} ${t("UZS")}`;
     };
     return (
         <div className="w-screen min-h-screen flex-col flex">

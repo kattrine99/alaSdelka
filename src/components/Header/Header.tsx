@@ -148,7 +148,7 @@ export const Header: React.FC<HeaderProps> = ({
         <div className={"font-inter font-medium w-full bg-white shadow"}>
             {/* Десктопный header */}
             <div className="hidden lg:block bg-white py-[20px] border-b border-[#E9E9E9]">
-                <div className="container mx-auto px-4 lg:px-10 flex justify-between items-center">
+                <div className="container mx-auto px-4 lg:px-10 flex justify-between items-center xl:px-20 md:px-4 transition duration-500 ease-in-out">
                     <Applink to="/" className="flex items-center gap-2 shrink-0">
                         <img
                             src="/images/investin_logo.png"
@@ -189,7 +189,7 @@ export const Header: React.FC<HeaderProps> = ({
                                 value={selectedCurrency} onChange={(value) => dispatch(setCurrencyMode(value as "UZS" | "USD"))} options={[
                             {
                                 value: "UZS",
-                                label: t("Cум"),
+                                label: t("UZS"),
                             },
                             {
                                 value: "USD",
@@ -239,7 +239,7 @@ export const Header: React.FC<HeaderProps> = ({
             {/* Мобильный header */}
             <div ref={menuRef} className="lg:hidden sticky top-0 z-50">
                 <div
-                    className={"flex justify-between items-center px-4 py-4 border-b border-[#E9E9E9] bg-white" + (isMobileUI ? ' hidden' : '')}>
+                    className={"flex justify-between items-center px-7 py-4 border-b border-[#E9E9E9] bg-white" + (isMobileUI ? ' hidden' : '')}>
                     <Applink to="/" className="flex items-center">
                         <img src="/images/investin_logo.png" alt="Logo" className="h-10 object-contain"/>
                     </Applink>
@@ -293,7 +293,7 @@ export const Header: React.FC<HeaderProps> = ({
                                     }}
                                     className="w-full h-full px-4 pr-10 border border-[#C9CCCF] rounded-[10px] outline-none text-[#191919] font-medium appearance-none"
                                 >
-                                    <option value="UZS">{t("Сум")}</option>
+                                    <option value="UZS">{t("UZS")}</option>
                                     <option value="USD">$ USD</option>
                                 </select>
                                 <MdOutlineArrowDropDown

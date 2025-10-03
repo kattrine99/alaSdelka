@@ -63,7 +63,7 @@ export const AnnouncemntsPage = () => {
       return `$ ${Math.round(numericPrice / currencyRate).toLocaleString()}`;
     }
 
-    return `${numericPrice.toLocaleString()} сум`;
+    return `${numericPrice.toLocaleString()} UZS`;
   };
 
 
@@ -315,7 +315,7 @@ export const AnnouncemntsPage = () => {
                               <div className="w-full">
                                 {offer.is_paid == true ? (
                                   <div>
-                                    <div className="bg-[#2EAA7B] w-full text-white px-5 py-1 rounded-md flex items-center gap-2 font-semibold">
+                                    <div className="bg-[#2EAA7B] w-full text-white px-5 h-12 py-1 rounded-md flex items-center gap-2 font-semibold">
                                       {t("Идет продвижение (осталось {{count}} дней)").replace("{{count}}", String(offer.paid_offer?.promotion_days_left ?? 0))}
                                       <FireIcon className="z-10 w-5 h-5 text-white" />
                                     </div>

@@ -44,7 +44,7 @@ export const Card: React.FC<ICardComponent & { forceAllFavorite: boolean }> = ({
             return `$ ${Math.round(numericPrice / currencyRate).toLocaleString()}`;
         }
 
-        return `${numericPrice.toLocaleString()} ${t("сум")}`;
+        return `${numericPrice.toLocaleString()} ${t("UZS")}`;
     };
     if (card) {
         translationService.translateText(card.title, lang).then(function (value) {

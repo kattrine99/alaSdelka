@@ -231,7 +231,7 @@ export const PromotionPage = () => {
                                 {isTariffsLoading ? <Paragraph>{t("Загрузка тарифов...")}</Paragraph> : filtersData?.tariffs?.map((tariff) => (
                                     <Button key={tariff.id} className={`flex flex-col border items-start border-[#2EAA7B] px-6 py-4 rounded-lg ${selectedTariff === tariff.id ? "bg-[#2EAA7B] text-white" : "bg-white"}`} onClick={() => setSelectedTariff(tariff.id)}>
                                         <Paragraph className="font-inter font-semibold text-xl">{tariff.duration} {t("дней")}</Paragraph>
-                                        <Paragraph>{tariff.price.toLocaleString()} {t("сум")}</Paragraph>
+                                        <Paragraph>{tariff.price.toLocaleString()} {t("UZS")}</Paragraph>
                                     </Button>
                                 ))}
                             </div>
@@ -300,7 +300,7 @@ export const PromotionPage = () => {
                             <div className="w-full max-w-[400px] text-center">
                                 <Paragraph className="mb-2 font-inter text-xl md:text-3xl">{t("К оплате:")}</Paragraph>
                                 <Paragraph className="mb-8 text-xl md:text-3xl font-bold">
-                                    {filtersData?.tariffs?.find((t) => t.id === selectedTariff)?.price.toLocaleString() || 0} {t("сум")}
+                                    {filtersData?.tariffs?.find((t) => t.id === selectedTariff)?.price.toLocaleString() || 0} {t("UZS")}
                                 </Paragraph>
                                 <Button
                                     onClick={async () => {

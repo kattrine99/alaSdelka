@@ -45,7 +45,7 @@ export const ArchivePage = () => {
             return `$ ${Math.round(numericPrice / currencyRate).toLocaleString()}`;
         }
 
-        return `${numericPrice.toLocaleString()} сум`;
+        return `${numericPrice.toLocaleString()} UZS`;
     };
 
     const location = useLocation();

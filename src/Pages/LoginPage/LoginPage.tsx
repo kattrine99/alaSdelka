@@ -115,7 +115,7 @@ export const LoginPage = () => {
                 <div className="w-full grid grid-cols-1 lg:grid-cols-2 container mx-auto px-4 xl:px-20 lg:px-10 md:px-4 transition-all duration-500">
                     <div
                         className="w-full flex flex-col items-start text-start transition-all duration-300">
-                        <Heading className="text-[32px] mb-[32px] font-inter font-bold text-black"
+                        <Heading className="text-[32px] mb-[32px] font-inter font-bold text-[#4f4f4f]"
                                  text={t('Вход в личный кабинет')} level={1}/>
                         <form onSubmit={handleSubmit(onSubmit)}
                               className="w-full flex flex-col gap-[clamp(14px,1.8vw,28px)]">

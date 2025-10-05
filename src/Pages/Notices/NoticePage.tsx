@@ -58,7 +58,7 @@ export const NoticePage = () => {
                 <Heading
                     text={t("Уведомления")}
                     level={2}
-                    className="font-inter text-xl font-bold leading-5"
+                    className="font-inter text-xl font-bold leading-5 text-[#4f4f4f]"
                 />
 
                 {isLoading ? (

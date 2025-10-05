@@ -263,7 +263,7 @@ export const MainPage = () => {
                                 <Button onClick={() => {
                                     navigate(`$/{lang}/business`)
                                 }} className={""}>
-                                    <Heading level={2} text={t("Бизнес")} className="font-openSans font-bold hover:text-[#2EAA7B] hover:underline hover:decoration-1 transition duration-500 text-3xl cursor-pointer" />
+                                    <Heading level={2} text={t("Бизнес")} className="font-openSans font-bold text-[#4f4f4f] hover:text-[#2EAA7B] hover:underline hover:decoration-1 transition duration-500 text-3xl cursor-pointer" />
                                 </Button>
                             </div>
                             <div className="col-span-2 max-lg:mt-2 max-sm:flex-col max-lg:w-full flex justify-center gap-2">
@@ -330,7 +330,7 @@ export const MainPage = () => {
                                 <Button onClick={() => {
                                     navigate(`$/{lang}/franchise`)
                                 }} className={""}>
-                                    <Heading level={2} text={t("Франшиза")} className="font-openSans font-bold hover:text-[#2EAA7B] hover:underline hover:decoration-1 transition duration-500 text-3xl cursor-pointer" />
+                                    <Heading level={2} text={t("Франшиза")} className="font-openSans font-bold text-[#4f4f4f] hover:text-[#2EAA7B] hover:underline hover:decoration-1 transition duration-500 text-3xl cursor-pointer" />
                                 </Button>
                             </div>
                             <div className="col-span-1 max-lg:mt-2 max-sm:flex-col max-lg:w-full flex justify-center gap-2">
@@ -392,7 +392,7 @@ export const MainPage = () => {
                                 <Button onClick={() => {
                                     navigate(`/${lang}/startup`)
                                 }} className={""}>
-                                    <Heading level={2} text={t("Стартапы")} className="font-openSans font-bold hover:text-[#2EAA7B] hover:underline hover:decoration-1 transition duration-500 text-3xl cursor-pointer" />
+                                    <Heading level={2} text={t("Стартапы")} className="font-openSans font-bold text-[#4f4f4f] hover:text-[#2EAA7B] hover:underline hover:decoration-1 transition duration-500 text-3xl cursor-pointer" />
                                 </Button>
                             </div>
                             <div className="col-span-1 max-lg:mt-2 max-sm:flex-col max-lg:w-full flex justify-center gap-2">
@@ -454,7 +454,7 @@ export const MainPage = () => {
                                     navigate(`/${lang}/investments`)
                                 }} className={""}>
                                     <Heading level={2} text={t("Инвестиции")}
-                                        className="font-openSans font-bold text-3xl hover:text-[#2EAA7B] hover:underline hover:decoration-1 transition duration-500 cursor-pointer" />
+                                        className="font-openSans font-bold text-3xl text-[#4f4f4f] hover:text-[#2EAA7B] hover:underline hover:decoration-1 transition duration-500 cursor-pointer" />
                                 </Button>
                             </div>
                             <div className="col-span-1 max-lg:mt-2 max-sm:flex-col max-lg:w-full flex justify-center gap-2">
@@ -510,7 +510,7 @@ export const MainPage = () => {
                             <Heading
                                 text={t("Города")}
                                 level={2}
-                                className="font-openSans font-bold text-3xl leading-[100%] mb-[25px]"
+                                className="font-openSans font-bold text-[#4f4f4f] text-3xl leading-[100%] mb-[25px]"
                             />
                             {/* КАТЕГОРИИ */}
                             <NavLinks
@@ -524,7 +524,7 @@ export const MainPage = () => {
                                 }}
                                 className="flex flex-wrap md:flex-nowrap gap-4 text-[24px] text-start font-openSans mb-6.25 font-bold"
                                 activeClassName="w-full px-6 py-4 bg-[#2EAA7B] text-white rounded-xl"
-                                inactiveClassName="w-full px-6 py-4 bg-white font-openSans text-[#232323] border border-[#2EAA7B] rounded-xl hover:bg-[#31B683]/10"
+                                inactiveClassName="w-full px-6 py-4 bg-white font-openSans text-[#4f4f4f] border border-[#2EAA7B] rounded-xl hover:bg-[#31B683]/10"
                             />
 
                             {/* ГОРОДА */}
@@ -557,6 +557,12 @@ export const MainPage = () => {
                                     level={1}
                                     className="text-[24px] md:text-[32px] font-bold leading-tight text-black" text={""}>
                                     {t("Почему")} <span className="text-[#31B683]">{t("Invest In")}</span> {t("— лучший инструмент для продажи бизнеса?")}
+                                    {/*{t("Почему")} <span className="text-[#31B683]">*/}
+                                    {/*        /!*<span className="inline-flex items-center">*!/*/}
+                                    {/*        /!*    <img className="h-[1em] w-auto mx-1 object-cover object-center" src="/public/images/investin_logo.png"/>*!/*/}
+                                    {/*        /!*</span>*!/*/}
+
+                                    {/*</span> {t("— лучший инструмент для продажи бизнеса?")}*/}
                                 </Heading>
 
                                 <Paragraph
@@ -585,9 +591,9 @@ export const MainPage = () => {
                                     <div
                                         className="bg-white font-inter text-black flex flex-col items-center rounded-[30px] py-6 shadow-[0px_4px_21.2px_rgba(46,170,123,0.2)]">
                                         <Paragraph className="text-[40px] max-sm:text-3xl text-center font-bold leading-none transition duration-300">
-                                            {mainStats?.partners_count?.toLocaleString("ru-RU")}
+                                            {(mainStats?.partners_count+35)?.toLocaleString("ru-RU")}
                                         </Paragraph>
-                                        <Paragraph className="font-inter text-2xl max-sm:text-[16px] leading-[100%] mt-2">{t("партнёров")}</Paragraph>
+                                        <Paragraph className="font-inter text-2xl max-sm:text-[16px] leading-[100%] mt-2">{t("пользователей")}</Paragraph>
                                     </div>
                                     <div
                                         className="bg-white font-inter text-black flex flex-col items-center text-center rounded-[30px] py-6 shadow-[0px_4px_21.2px_rgba(46,170,123,0.2)]">

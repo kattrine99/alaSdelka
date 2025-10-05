@@ -77,7 +77,7 @@ export const FavoritePage = () => {
         <Heading
           text={t("Избранное")}
           level={2}
-          className="font-inter text-xl font-bold leading-5 mb-10"
+          className="font-inter text-xl font-bold leading-5 mb-10 text-[#4f4f4f]"
         />
 
         {isLoading ? (

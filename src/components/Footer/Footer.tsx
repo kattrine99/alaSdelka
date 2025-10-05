@@ -11,7 +11,7 @@ export const Footer: React.FC<FooterProps> = ({ showSmallFooter }) => {
     const { t, lang } = useTranslation();
 
     return (
-        <div className="font-[Inter] font-medium w-full bg-white shadow ">
+        <div className="font-[Inter] font-medium w-full bg-white shadow  w-screen">
             {!showSmallFooter && (
                 <><div className="flex justify-between items-center  bg-white py-[20px] px-[96px] border-t border-[#E9E9E9]">
                     <Applink to={`/`} className="flex items-center gap-2">

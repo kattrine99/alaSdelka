@@ -7,7 +7,7 @@ import { offerTypeToUrlMap } from "../../utils/categoryMap";
 import { FavoriteButton } from "./FavoriteButton";
 import { useTranslation } from "../../../public/Locales/context/TranslationContext";
 import { ICardComponent } from "./Interfaces";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { translationService } from "../../utils/googleTranslate";
 
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -53,6 +53,26 @@ export const Card: React.FC<ICardComponent & { forceAllFavorite: boolean }> = ({
             }
         });
     }
+    const swiperRef = useRef(null);
+    const handleMouseMove = (e) => {
+        
+        const swiper = swiperRef.current;
+        
+        if (!swiper || !swiper.slides || swiper.slides.length <= 1) return;
+
+        const sliderElement = swiper.el;
+        const rect = sliderElement.getBoundingClientRect();
+        const sliderWidth = rect.width;
+        const mouseX = e.clientX - rect.left;
+        const slidesCount = swiper.slides.length;
+
+        const slideWidth = sliderWidth / slidesCount;
+        const slideIndex = Math.floor(mouseX / slideWidth);
+
+        if (slideIndex !== swiper.activeIndex) {
+            swiper.slideTo(slideIndex);
+        }
+    }
     return (
         <Applink to={`/${offerTypeToUrlMap[card.offer_type]}/card/${card.slug}`} key={card.id} className={`relative bg-white rounded-lg flex ${cardWrapperClass ?? ""}`}>
             {(card.is_paid || card.offer_status === "sold") && (
@@ -74,27 +94,29 @@ export const Card: React.FC<ICardComponent & { forceAllFavorite: boolean }> = ({
             {/* ИЗОБРАЖЕНИЕ И СЕРДЕЧКО */}
             <div className={`relative group ${cardIconClass ?? ""}`}>
                 {card.photos && card.photos.length > 0 ? (
-                    <Swiper
-                        modules={[Pagination]}
-                        pagination={ card.photos.length > 1 ?{
-                            clickable: true,
-                            bulletClass: "swiper-pagination-bullet custom-bullet",
-                            bulletActiveClass: "swiper-pagination-bullet-active custom-bullet-active",
-                        } : false}
-                        spaceBetween={0}
-                        slidesPerView={1}
-                        className="w-full max-h-[140px] rounded-md overflow-hidden"
-                    >
-                        {card.photos.map((photo, idx) => (
-                            <SwiperSlide key={idx}>
-                                <img
-                                    src={photo.photo}
-                                    alt={`${card.id}-${idx}`}
-                                    className="w-full h-[140px] object-cover"
-                                />
-                            </SwiperSlide>
-                        ))}
-                    </Swiper>
+                    <div onMouseMove={handleMouseMove} className="w-full max-h-[140px] rounded-md overflow-hidden">
+                        <Swiper
+                            modules={[Pagination]}
+                            pagination={card.photos.length > 1 ? {
+                                clickable: true,
+                                bulletClass: "swiper-pagination-bullet custom-bullet",
+                                bulletActiveClass: "swiper-pagination-bullet-active custom-bullet-active",
+                            } : false}
+                            onSwiper={(swiper) => (swiperRef.current = swiper)}
+                            spaceBetween={0}
+                            slidesPerView={1}
+                        >
+                            {card.photos.map((photo, idx) => (
+                                <SwiperSlide key={idx}>
+                                    <img
+                                        src={photo.photo}
+                                        alt={`${card.id}-${idx}`}
+                                        className="w-full h-[140px] object-cover"
+                                    />
+                                </SwiperSlide>
+                            ))}
+                        </Swiper>
+                    </div>
                 ) : (
                     <div className="w-full h-[140px] flex justify-center bg-[#F0F0F0]">
                         <div className="flex flex-col justify-center items-center">
@@ -126,12 +148,12 @@ export const Card: React.FC<ICardComponent & { forceAllFavorite: boolean }> = ({
                     <Heading
                         text={formatPrice(card.price)}
                         level={2}
-                        className={`text-[16px] md:text-[24px] leading-[22px] font-bold font-inter text-[#232323] mb-[8px] ${cardHeadingClass ?? ""}`}
+                        className={`text-[16px] leading-[22px] font-bold font-inter text-[#232323] mb-[8px] ${cardHeadingClass ?? ""}`}
                     />
                     <Heading
                         text={translaedTitle}
                         level={3}
-                        className={`text-[14px] line-clamp-2 md:text-[18px] leading-[22px] font-bold font-inter mb-[12px] ${cardHeadingClass ?? ""}`}
+                        className={`text-[14px] truncate line-clamp-2 leading-[22px] font-bold font-inter mb-[12px] ${cardHeadingClass ?? ""}`}
                     />
                     <Paragraph
                         className={`text-gray-600 flex gap-x-2 font-inter text-[14px] font-medium mb-[6px] ${cardTextClass ?? ""}`}
@@ -139,7 +161,7 @@ export const Card: React.FC<ICardComponent & { forceAllFavorite: boolean }> = ({
                         <span className="font-bold text-[12px]">
                             {lang === "uz" ? card.address?.city?.name_uz : card.address?.city?.name_ru ?? ""}
                         </span>
-                        <span className="text-neutral-400 text-[12px]">{lang === 'uz' ? card.category?.title_uz : card.category?.title_ru}</span>
+                        <span className="text-neutral-400 truncate text-[12px]">{lang === 'uz' ? card.category?.title_uz : card.category?.title_ru}</span>
                     </Paragraph>
                 </div>
             </div>

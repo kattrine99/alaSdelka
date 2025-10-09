@@ -127,28 +127,28 @@ export const StepsAddingOffer = () => {
                             <Paragraph className="text-sm leading-[150%] text-[#667085] mb-2">
                                 Выберите действие:
                                 <ul>
-                                    <li><b>Продать</b></li>
-                                    <li><b>Купить</b></li>
+                                    <li><b>{t("Продать")}</b></li>
+                                    <li><b>{t("Купить")}</b></li>
                                 </ul>
-                                Нажмите «Дальше».
+                                {t("Нажмите «Дальше».")}
                             </Paragraph>
                             <Heading level={3} text="Шаг 3. Информация" className="text-black mb-2" />
                             <Paragraph className="text-sm leading-[150%] text-[#667085] mb-2">
-                                Заполните поля:
+                                {t("Заполните поля:")}
                                 <ul>
-                                    <li><b>Название бизнеса</b> — кратко и понятно</li>
-                                    <li><b>Описание</b> — опишите, что продаете или ищете</li>
-                                    <li><b>Категория объявления</b> — выберите из списка</li>
-                                    <li><b>Ваше имя и телефон</b> — для связи</li>
-                                    <li><b>Город</b> — где находится бизнес или проект</li>
-                                    <li><b>Адрес</b> — местоположение бизнеса или объекта</li>
-                                    <li><b>Площадь, кв.м.</b> — укажите площадь помещения (если применимо).</li>
-                                    <li><b>Форма владения бизнесом</b> — выберите из списка: ИП, ООО и т.д.</li>
-                                    <li><b>Форма владения помещением</b> — собственность, аренда и др.</li>
-                                    <li><b>Документы и лицензии</b> (формат PDF или Excel) — если есть.</li>
-                                    <li><b>Стоимость (Сумма, UZS)</b> — в национальной валюте.</li>
+                                    <li><b>{t("Название бизнеса")}</b>{t("— кратко и понятно")} </li>
+                                    <li><b>{t("Описание")}</b> {t("— опишите, что продаете или ищете")}</li>
+                                    <li><b>{t("Категория объявления")} </b>{t("— выберите из списка")} </li>
+                                    <li><b>{t("Ваше имя и телефон")}</b> {t("— для связи")}</li>
+                                    <li><b>{t("Город")}</b> {t("— где находится бизнес или проект")}</li>
+                                    <li><b>{t("Адрес")}</b> {t("— местоположение бизнеса или объекта")}</li>
+                                    <li><b>{t("Площадь, кв.м.")}</b> {t("— укажите площадь помещения (если применимо).")}</li>
+                                    <li><b>{t("Форма владения бизнесом")}</b> {t("— выберите из списка: ИП, ООО и т.д.")}</li>
+                                    <li><b>{t("Форма владения помещением")}</b> {t("— собственность, аренда и др.")}</li>
+                                    <li><b>{t("Документы и лицензии")}</b> {t("(формат PDF или Excel) — если есть.")}</li>
+                                    <li><b>{t("Стоимость (Сумма, UZS)")}</b> {t("— в национальной валюте.")}</li>
                                 </ul>
-                                Заполните все обязательные поля и жмите «Дальше».
+                                {t("Заполните все обязательные поля и жмите «Дальше».")}
                             </Paragraph>
                             <Heading level={3} text="Шаг 4. Черновик" className="text-black mb-2" />
                             <Paragraph className="text-sm leading-[150%] text-[#667085] mb-2">
@@ -183,16 +183,16 @@ export const StepsAddingOffer = () => {
                                             >
                                                 <div
                                                     className={`w-8 h-8 flex items-center justify-center rounded-full border-2 transition
-              ${isActive || isCompleted ? "border-[#2EAA7B]" : "border-gray-300"}
+              ${isActive || isCompleted ? "border-[#2EAA62]" : "border-gray-300"}
             `}
                                                 >
-                                                    <span className={isActive || isCompleted ? "text-[#2EAA7B]" : "text-gray-300"}>
+                                                    <span className={isActive || isCompleted ? "text-[#2EAA62]" : "text-gray-300"}>
                                                         {stepIcons[i]}
                                                     </span>
                                                 </div>
 
                                                 <div
-                                                    className={`text-base font-semibold ${isActive || isCompleted ? "text-[#2EAA7B]" : "text-[#667085]"}`}
+                                                    className={`text-base font-semibold ${isActive || isCompleted ? "text-[#2EAA62]" : "text-[#667085]"}`}
                                                 >
                                                     {s.title}
                                                 </div>
@@ -200,7 +200,7 @@ export const StepsAddingOffer = () => {
 
                                             {i < steps.length - 1 && (
                                                 <div
-                                                    className={`ml-[15px] w-[2px] h-12.5 ${step > i ? "bg-[#2EAA7B]" : "bg-gray-300"}`} />
+                                                    className={`ml-[15px] w-[2px] h-12.5 ${step > i ? "bg-[#2EAA62]" : "bg-gray-300"}`} />
                                             )}
                                         </div>
                                     );
@@ -210,10 +210,10 @@ export const StepsAddingOffer = () => {
                                 <div className="mt-6 p-4 w-full bg-gradient-to-r from-[#1CA67A] to-[#24568E] rounded-[10px] flex gap-2 text-white">
                                     <Button onClick={() => setShowHelperModal(true)} className="flex flex-col text-left max-md:w-full cursor-pointer">
                                         <Paragraph className="font-bold text-sm flex justify-start items-center">
-                                            Умный помощник <HeadphonesIcon className="w-8.75 h-9.75 ml-2" />
+                                            {t("Умный помощник")}  <HeadphonesIcon className="w-8.75 h-9.75 ml-2" />
                                         </Paragraph>
                                         <span className="text-xs leading-tight mt-1">
-                                            Здесь вы найдете инструкцию по размещению объявлений
+                                            {t("Здесь вы найдете инструкцию по размещению объявлений")}
                                         </span>
                                     </Button>
                                 </div>
@@ -235,7 +235,7 @@ export const StepsAddingOffer = () => {
                                                     key={type}
                                                     className={`border rounded-lg w-48.75 max-sm:w-full max-sm:h-33 h-43 cursor-pointer text-center 
           flex items-center justify-center
-          ${offerType === type ? "border-[#2EAA7B] bg-[#F5FFFA]" : "border-gray-300"}`}
+          ${offerType === type ? "border-[#2EAA62] bg-[#F5FFFA]" : "border-gray-300"}`}
                                                     onClick={() => {
                                                         setOfferType(type);
                                                         handleNext();
@@ -259,13 +259,13 @@ export const StepsAddingOffer = () => {
                                                 <div
                                                     key={type}
                                                     className={`  border rounded-lg w-48.75 h-43 max-sm:w-full max-sm:h-33 cursor-pointer text-center 
-          flex flex-col items-center justify-center ${listingType === type ? "border-[#2EAA7B] bg-[#F5FFFA]" : "border-gray-300"}`}
+          flex flex-col items-center justify-center ${listingType === type ? "border-[#2EAA62] bg-[#F5FFFA]" : "border-gray-300"}`}
                                                     onClick={() => {
                                                         setListingType(type as "buy" | "sell");
                                                         handleNext();
                                                     }}
                                                 >
-                                                    <span className="text-[#2EAA7B]">{ListingTypesIcons[index]}</span>
+                                                    <span className="text-[#2EAA62]">{ListingTypesIcons[index]}</span>
                                                     <Paragraph className="font-semibold">{getListingTypeLabel(type)}</Paragraph>
                                                 </div>
                                             ))}
@@ -288,7 +288,7 @@ export const StepsAddingOffer = () => {
                                         <Button
                                             onClick={handleBack}
                                             disabled={isBackDisabled()}
-                                            className={`flex items-center gap-2 ${isBackDisabled() ? "bg-gray-300 cursor-not-allowed" : "bg-[#2EAA7B] text-white"} px-6 py-2 rounded-md`}
+                                            className={`flex items-center gap-2 ${isBackDisabled() ? "bg-gray-300 cursor-not-allowed" : "bg-[#2EAA62] text-white"} px-6 py-2 rounded-md`}
                                         >
                                             <FiChevronLeft /> Назад
                                         </Button>

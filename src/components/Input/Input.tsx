@@ -44,7 +44,7 @@ export const Input = forwardRef<HTMLInputElement | HTMLTextAreaElement, InputPro
         const borderColor =
             inputStatus === "error"
                 ? "border border-red-500 focus:ring-red-500"
-                : inputStatus === "success" && "border border-[#2EAA7B] focus:ring-[#2EAA7B]"
+                : inputStatus === "success" && "border border-[#2EAA62] focus:ring-[#2EAA62]"
         if (isTextArea) {
             return (
                 <div className="w-full relative flex flex-col gap-2.5">

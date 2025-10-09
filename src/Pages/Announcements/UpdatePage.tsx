@@ -38,7 +38,7 @@ export const UpdatePage = () => {
     return (
         <div className="w-screen min-h-screen flex-col flex">
             <Header navLinksData={profileNavigate} />
-            <div className="container mx-auto px-4 flex-1 py-6">
+            <div className="container mx-auto px-4 lg:px-10 xl:px-20 md:px-4 flex-1 py-6">
                 <div className="mb-6">
                     <Breadcrumbs links={[
                         { label: t("Мои объявления"), href: "/announcements" },
@@ -61,7 +61,7 @@ export const UpdatePage = () => {
                         onClose={() => navigate(`/${lng}/announcements`)}
                         actions={
                             <Button
-                                className="bg-[#2EAA7B] text-white px-6 py-3 rounded-md"
+                                className="bg-[#2EAA62] text-white px-6 py-3 rounded-md"
                                 onClick={() => navigate(`/${lng}/announcements`)}
                             >
                                 {t("Перейти к списку")}
@@ -70,8 +70,8 @@ export const UpdatePage = () => {
                         HeadingClassName={"font-intere font-bold text-xl"}
                     />
                 )}
-                <Footer showSmallFooter={true} />
-            </div>
+
+            </div><Footer showSmallFooter={true} />
         </div>
     );
 };

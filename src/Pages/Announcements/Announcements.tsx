@@ -59,8 +59,8 @@ export const AnnouncemntsPage = () => {
     if (typeof numericPrice !== "number" || isNaN(numericPrice)) return "—";
 
     if (currencyMode === "USD") {
-      if (!currencyRate || isNaN(currencyRate)) return "$ —";
-      return `$ ${Math.round(numericPrice / currencyRate).toLocaleString()}`;
+      if (!currencyRate || isNaN(currencyRate)) return "USD —";
+      return `${Math.round(numericPrice / currencyRate).toLocaleString()} USD`;
     }
 
     return `${numericPrice.toLocaleString()} UZS`;
@@ -83,7 +83,7 @@ export const AnnouncemntsPage = () => {
           actions={
             <div className="flex gap-2 lg:gap-11">
               <Button
-                className="border bg-[#2EAA7B] hover:bg-[#31B683] w-full text-white px-5 py-3 rounded-md"
+                className="border bg-[#2EAA62] hover:bg-[#2EAA62] w-full text-white px-5 py-3 rounded-md"
                 onClick={() => setShowModal(false)}
               >
                 {t("Отменить")}
@@ -126,7 +126,7 @@ export const AnnouncemntsPage = () => {
           actions={
             <div className="flex gap-2 lg:gap-11">
               <Button
-                className="border bg-[#2EAA7B] hover:bg-[#31B683] w-full text-white px-5 py-3 rounded-md"
+                className="border bg-[#2EAA62] hover:bg-[#2EAA62] w-full text-white px-5 py-3 rounded-md"
                 onClick={() => setShowArchiveModal(false)}
               >
                 {t("Отменить")}
@@ -163,7 +163,7 @@ export const AnnouncemntsPage = () => {
           onClose={() => setSuccessModal({ isOpen: false, message: "" })}
           actions={
             <Button
-              className="bg-[#2EAA7B] hover:bg-[#31B683] text-white px-6 py-3 rounded-md w-full"
+              className="bg-[#2EAA62] hover:bg-[#2EAA62] text-white px-6 py-3 rounded-md w-full"
               onClick={() => setSuccessModal({ isOpen: false, message: "" })}
             >
               {t("Понятно")}
@@ -177,7 +177,7 @@ export const AnnouncemntsPage = () => {
 
         {isLoading ? (
           <div className="h-[400px] flex justify-center items-center">
-            <div className="w-10 h-10 border-4 border-[#2EAA7B] border-t-transparent rounded-full animate-spin" />
+            <div className="w-10 h-10 border-4 border-[#2EAA62] border-t-transparent rounded-full animate-spin" />
           </div>
         ) : isError ? (
           <div className="text-center text-red-500 text-lg">{t("Ошибка загрузки объявлений")}</div>
@@ -190,7 +190,7 @@ export const AnnouncemntsPage = () => {
           <div>
             <div className="flex md:justify-end mt-5 gap-3">
               <Button
-                className="bg-[#2EAA7B] text-white rounded-md w-60.5 px-5 py-3"
+                className="bg-[#2EAA62] text-white rounded-md w-60.5 px-5 py-3"
                 onClick={() => navigate(`/${lang}/add-offer`)}
               >
                 {t("Создать объявление")}
@@ -214,9 +214,9 @@ export const AnnouncemntsPage = () => {
                             onClick={() => navigate(`/${lang}/edit/${offer.slug}`)}
                             className="p-2 bg-white border border-[#F8F8F8] rounded-full shadow hover:bg-gray-100 transition cursor-pointer"
                           >
-                            <FiEdit className="w-5 h-5 text-[#2EAA7B]" />
+                            <FiEdit className="w-5 h-5 text-[#2EAA62]" />
                           </button>
-                          <div className="absolute top-full mt-2 -right-2.5 bg-[#F8F8F8] text-[#2EAA7B] text-xs rounded px-2 py-1 opacity-0 group-hover:opacity-100 transition">
+                          <div className="absolute top-full mt-2 -right-2.5 bg-[#F8F8F8] text-[#2EAA62] text-xs rounded px-2 py-1 opacity-0 group-hover:opacity-100 transition">
                             {t("Изменить")}
                           </div>
                         </div>
@@ -238,7 +238,7 @@ export const AnnouncemntsPage = () => {
                       )}
                       {(offer.offer_status === 'draft') && (
                         <div className="absolute left-5 top-[-20px] z-10 flex gap-2">
-                          <div className="w-[125px] font-openSans bg-white border border-[#2EAA7B] text-[#2EAA7B] py-1.25 px-1.5 rounded-md font-semibold shadow-sm text-center">
+                          <div className="w-[125px] font-openSans bg-white border border-[#2EAA62] text-[#2EAA62] py-1.25 px-1.5 rounded-md font-semibold shadow-sm text-center">
                             <Paragraph className="text-sm">{t("Черновик")}</Paragraph>
                           </div>
                         </div>
@@ -252,7 +252,7 @@ export const AnnouncemntsPage = () => {
                       )}
                       {(offer.offer_status === 'published') && (
                         <div className="absolute left-5 top-[-20px] z-10 flex gap-2">
-                          <div className="w-[125px] font-openSans bg-white border border-[#2EAA7B] text-[#2EAA7B] py-1.25 px-1.5 rounded-md font-semibold shadow-sm text-center">
+                          <div className="w-[125px] font-openSans bg-white border border-[#2EAA62] text-[#2EAA62] py-1.25 px-1.5 rounded-md font-semibold shadow-sm text-center">
                             <Paragraph className="text-sm">{t("Опубликовано")}</Paragraph>
                           </div>
                         </div>
@@ -287,7 +287,7 @@ export const AnnouncemntsPage = () => {
                       </div>
                       <div className="flex flex-3/4 flex-col gap-1 py-9.5 px-7 md:col-span-2">
                         <div className="flex flex-col mb-11">
-                          <Applink to={`/${offerTypeToUrlMap[offer.offer_type || 'category']}/card/${offer.slug}`} className="w-full hover:text-[#2EAA7B]">
+                          <Applink to={`/${offerTypeToUrlMap[offer.offer_type || 'category']}/card/${offer.slug}`} className="w-full hover:text-[#2EAA62]">
 
                             <Paragraph className="text-[#232323] text-2xl font-inter font-bold mb-2">
                               {formatPrice(offer.price)}
@@ -295,7 +295,7 @@ export const AnnouncemntsPage = () => {
                             <Paragraph className="text-[#232323] text-lg font-bold font-inter mb-3 ">{offer.title}</Paragraph>
                           </Applink>
                           <div className='flex gap-1.5'>
-                            <FaLocationDot className="text-[#2EAA7B] w-4 h-4" />
+                            <FaLocationDot className="text-[#2EAA62] w-4 h-4" />
                             <Paragraph className="font-inter font-bold text-sm"><span className="font-medium">{t("Адрес:")} </span>
                               {offer?.address?.address ?? `${t("Адрес не указан")}`},
                               {lang === "uz"
@@ -315,14 +315,14 @@ export const AnnouncemntsPage = () => {
                               <div className="w-full">
                                 {offer.is_paid == true ? (
                                   <div>
-                                    <div className="bg-[#2EAA7B] w-full text-white px-5 h-12 py-1 rounded-md flex items-center gap-2 font-semibold">
+                                    <div className="bg-[#2EAA62] w-full text-white px-5 h-12 py-1 rounded-md flex items-center gap-2 font-semibold">
                                       {t("Идет продвижение (осталось {{count}} дней)").replace("{{count}}", String(offer.paid_offer?.promotion_days_left ?? 0))}
                                       <FireIcon className="z-10 w-5 h-5 text-white" />
                                     </div>
                                   </div>
                                 ) : (
                                   <Button
-                                    className="bg-[#2EAA7B] w-full text-white px-5 h-12 rounded-md cursor-pointer"
+                                    className="bg-[#2EAA62] w-full text-white px-5 h-12 rounded-md cursor-pointer"
                                     onClick={() => navigate(`/promotion/${offer.slug}`)}
                                   >
                                     {t("Продвигать объявление")}
@@ -340,13 +340,13 @@ export const AnnouncemntsPage = () => {
                               </Button>
                             )}
                             {(offer.offer_status === 'published') && (
-                              <Button className=" text-[#2EAA7B] border border-[#2EAA7B] px-5 h-12 rounded-md cursor-pointer"
+                              <Button className=" text-[#2EAA62] border border-[#2EAA62] px-5 h-12 rounded-md cursor-pointer"
                                 onClick={() => navigate(`/statistics/${offer.slug}`)}>
                                 {t("Посмотреть статистику")}
                               </Button>
                             )}
                             {(offer.offer_status === 'draft') && (
-                              <Button className="bg-[#2EAA7B] w-full text-white px-5 h-12 rounded-md cursor-pointer"
+                              <Button className="bg-[#2EAA62] w-full text-white px-5 h-12 rounded-md cursor-pointer"
                                 onClick={() => {navigate('/add-offer?offerSlug=' + offer.slug)}}>
                                 {t("Опубликовать")}
                               </Button>

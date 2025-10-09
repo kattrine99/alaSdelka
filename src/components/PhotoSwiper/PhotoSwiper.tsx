@@ -18,7 +18,7 @@ export const PhotosSwiper = ({ photos }: { photos: { photo: string }[] }) => {
                 spaceBetween={5}
                 thumbs={{ swiper: thumbsSwiper }}
                 modules={[Thumbs]}
-                className="border border-[#2EAA7B] max-md:border-0 rounded-xl">
+                className="border border-[#2EAA62] max-md:border-0 rounded-xl">
                 {photos.map((item, index) => (
                     <SwiperSlide key={index}>
                         <img
@@ -43,7 +43,7 @@ export const PhotosSwiper = ({ photos }: { photos: { photo: string }[] }) => {
                         <img
                             src={item.photo}
                             alt={`thumb-${index}`}
-                            className="w-full h-full object-cover rounded-md border-2 border-transparent hover:border-[#2EAA7B] cursor-pointer"
+                            className="w-full h-full object-cover rounded-md border-2 border-transparent hover:border-[#2EAA62] cursor-pointer"
                         />
                     </SwiperSlide>
                 ))}

@@ -56,7 +56,7 @@ export const PromotionCards = () => {
 
                 {isLoading ? (
                     <div className="h-[400px] flex justify-center items-center">
-                        <div className="w-10 h-10 border-4 border-[#2EAA7B] border-t-transparent rounded-full animate-spin" />
+                        <div className="w-10 h-10 border-4 border-[#2EAA62] border-t-transparent rounded-full animate-spin" />
                     </div>
                 ) : isError ? (
                     <div className="text-center text-red-500 text-lg">{t("Ошибка загрузки объявлений")}</div>
@@ -93,7 +93,7 @@ export const PromotionCards = () => {
                                                 {offer.title}
                                             </Paragraph>
                                             <div className="flex gap-1.5 mb-1">
-                                                <FaLocationDot className="text-[#2EAA7B] w-4 h-4 mt-[2px]" />
+                                                <FaLocationDot className="text-[#2EAA62] w-4 h-4 mt-[2px]" />
                                                 <Paragraph className="font-inter font-medium text-sm">
                                                     {offer?.address?.address ?? t("Адрес не указан")}, {lang === "uz" ? offer?.address?.city?.name_uz : offer?.address?.city?.name_ru ?? ""}
                                                 </Paragraph>
@@ -109,7 +109,7 @@ export const PromotionCards = () => {
                                         {/* Кнопки: В одну линию */}
                                         <div className="flex flex-col gap-4 mt-4">
                                             <Button
-                                                className="text-[#2EAA7B] sm:w-2/3 md:w-3/4 lg:w-2/3 w-full border border-[#2EAA7B] px-5 h-11 rounded-md"
+                                                className="text-[#2EAA62] sm:w-2/3 md:w-3/4 lg:w-2/3 w-full border border-[#2EAA62] px-5 h-11 rounded-md"
                                                 onClick={() => navigate(`/${lang}/statistics/${offer.slug}`)}
                                             >
                                                 Посмотреть статистику

@@ -47,7 +47,7 @@ export const ProfilePage = () => {
     }, [location.pathname]);
 
     if (isLoading) return <div className="w-screen h-[670px] flex justify-center items-center py-[30px]">
-        <div className="w-30 h-30 border-10 border-[#2EAA7B] border-t-transparent rounded-full animate-spin"></div>
+        <div className="w-30 h-30 border-10 border-[#2EAA62] border-t-transparent rounded-full animate-spin"></div>
     </div>;
     if (error) return <div className="w-screen h-[670px] flex flex-col justify-center items-center py-[30px]">
         <div className="w-12 h-12 flex items-center justify-center rounded-full bg-red-100 mb-3">
@@ -144,7 +144,7 @@ export const ProfilePage = () => {
                                 {t("Выйти")}
                             </Button>
                             <Button
-                                className="border border-[#2EAA7B] w-full text-[#2EAA7B] px-6 py-3 rounded-[10px]"
+                                className="border border-[#2EAA62] w-full text-[#2EAA62] px-6 py-3 rounded-[10px]"
                                 onClick={() => setShowLogoutConfirm(false)}
                             >
                                 {t("Отмена")}
@@ -170,7 +170,7 @@ export const ProfilePage = () => {
                                 {t("Удалить")}
                             </Button>
                             <Button
-                                className="border border-[#2EAA7B] w-full text-[#2EAA7B] px-6 py-3 rounded-[10px]"
+                                className="border border-[#2EAA62] w-full text-[#2EAA62] px-6 py-3 rounded-[10px]"
                                 onClick={() => setShowDeleteAccountConfirm(false)}
                             >
                                 {t("Отмена")}
@@ -227,8 +227,8 @@ export const ProfilePage = () => {
                                 </div>
 
                                 <div className="flex flex-col w-full md:flex-row gap-x-4 gap-y-4 items-center">
-                                    <Button className="px-5 h-13.5 text-white bg-[#31B683] w-full rounded-[6px] cursor-pointer" onClick={handleEditClick}>{t("Редактировать личные данные")}</Button>
-                                    <Button className="h-13.5 px-5 text-white bg-[#31B683] hover:bg-[#DE5151] w-full rounded-[6px] cursor-pointer" onClick={() => setShowLogoutConfirm(true)}
+                                    <Button className="px-5 h-13.5 text-white bg-[#2EAA62] w-full rounded-[6px] cursor-pointer" onClick={handleEditClick}>{t("Редактировать личные данные")}</Button>
+                                    <Button className="h-13.5 px-5 text-white bg-[#2EAA62] hover:bg-[#DE5151] w-full rounded-[6px] cursor-pointer" onClick={() => setShowLogoutConfirm(true)}
                                     >{t("Выйти из профиля")}</Button>
                                 </div>
                             </div>
@@ -253,8 +253,8 @@ export const ProfilePage = () => {
                                     )}
                                 </div>
 
-                                <label className="absolute bottom-0 right-0 bg-white border border-[#2EAA7B] rounded-full w-7 h-7 flex items-center justify-center cursor-pointer">
-                                    <FiEdit2 className="text-[#2EAA7B] text-sm" />
+                                <label className="absolute bottom-0 right-0 bg-white border border-[#2EAA62] rounded-full w-7 h-7 flex items-center justify-center cursor-pointer">
+                                    <FiEdit2 className="text-[#2EAA62] text-sm" />
                                     <input type="file" accept="image/*" onChange={handlePhotoChange} className="hidden" />
                                 </label>
                             </div>
@@ -365,8 +365,8 @@ export const ProfilePage = () => {
 
                         {editMode && (
                             <div className="flex gap-4 mt-6">
-                                <Button className="text-white bg-[#2EAA7B] px-6 py-3 rounded-[10px] cursor-pointer" onClick={handleSave}>{t("Сохранить")}</Button>
-                                <Button className="border border-[#2EAA7B] text-[#2EAA7B] px-6 py-3 rounded-[10px] cursor-pointer" onClick={handleCancel}>{t("Отменить")}</Button>
+                                <Button className="text-white bg-[#2EAA62] px-6 py-3 rounded-[10px] cursor-pointer" onClick={handleSave}>{t("Сохранить")}</Button>
+                                <Button className="border border-[#2EAA62] text-[#2EAA62] px-6 py-3 rounded-[10px] cursor-pointer" onClick={handleCancel}>{t("Отменить")}</Button>
                             </div>
                         )}
                     </div>

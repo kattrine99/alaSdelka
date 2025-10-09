@@ -63,7 +63,7 @@ export const NoticePage = () => {
 
                 {isLoading ? (
                     <div className="flex justify-center items-center py-[30px]">
-                        <div className="w-10 h-10 border-4 border-[#2EAA7B] border-t-transparent rounded-full animate-spin"></div>
+                        <div className="w-10 h-10 border-4 border-[#2EAA62] border-t-transparent rounded-full animate-spin"></div>
                     </div>
                 ) : isError ? (
                     <p className="text-red-500">{t("Ошибка загрузки")}</p>
@@ -110,11 +110,11 @@ export const NoticePage = () => {
                                                     <IoMdTime className="w-4 h-4 text-[#727272]" /> {time}
                                                 </span>
                                             </div>
-                                            <div className="text-[#2EAA7B] items-center mr-2 mt-3 sm:mt-0">
+                                            <div className="text-[#2EAA62] items-center mr-2 mt-3 sm:mt-0">
                                                 {item.type === "offer_show" && item.offer_slug && (
 
                                                     <Button
-                                                        className="bg-[#2EAA7B] text-white px-5 py-2 rounded-md"
+                                                        className="bg-[#2EAA62] text-white px-5 py-2 rounded-md"
                                                         onClick={() => navigate(`/${lang}/card/${item.offer_slug}`)}
                                                     >
                                                         {t("Посмотреть")}
@@ -131,7 +131,7 @@ export const NoticePage = () => {
                                                 )}
                                                 {item.type === "promotion" && item.offer_slug && (
                                                     <Button
-                                                        className="bg-[#2EAA7B] text-white px-5 py-2 rounded-md"
+                                                        className="bg-[#2EAA62] text-white px-5 py-2 rounded-md"
                                                         onClick={() => navigate(`/${lang}/promotion/${item.offer_slug}`)}
                                                     >
                                                         {t("Продвижение")}
@@ -140,7 +140,7 @@ export const NoticePage = () => {
 
                                                 {item.type === "statistics" && item.offer_slug && (
                                                     <Button
-                                                        className="bg-[#2EAA7B] text-white px-5 py-2 rounded-md"
+                                                        className="bg-[#2EAA62] text-white px-5 py-2 rounded-md"
                                                         onClick={() => navigate(`/${lang}/statistics/${item.offer_slug}`)}
                                                     >
                                                         {t("Статистика")}

@@ -39,7 +39,7 @@ export const EmptyMessage: React.FC<EmptyMessageProps> = ({
             {!hideButton && (
                 <>
                     <Applink
-                        className="bg-[#2EAA7B] text-white w-60.5 rounded-md px-6 py-2 mt-3"
+                        className="bg-[#2EAA62] text-white w-60.5 rounded-md px-6 py-2 mt-3"
                         to={buttonLink}
                     >
                         {t(buttonText)}

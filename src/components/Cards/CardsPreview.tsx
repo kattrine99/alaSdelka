@@ -57,25 +57,25 @@ export const CardPreview: React.FC<CardPreviewProps> = ({ card, onPreview }) => 
                     <Paragraph className="font-inter text-[#232323] text-[18px] font-bold">{card.title}</Paragraph>
 
                     <Paragraph className="flex font-inter font-medium text-[14px] mt-3 text-[#667085]">
-                        <FaLocationDot className="text-[#2EAA7B] mr-1.5" />
+                        <FaLocationDot className="text-[#2EAA62] mr-1.5" />
                         {t("Адрес:")} <span className=" font-bold text-[14px] ml-1.5">{card.address?.address}, {lang === "uz" ? card.address?.city?.name_uz : card.address?.city?.name_ru}</span>
                     </Paragraph>
 
                     {card.area ? (
                         <Paragraph className="flex items-center font-inter font-medium text-[14px] mt-3 text-[#667085]">
-                            <FaLocationCrosshairs className="text-[#2EAA7B] mr-1.5" />
+                            <FaLocationCrosshairs className="text-[#2EAA62] mr-1.5" />
                             {card.area} {t("кв. м.")}
                         </Paragraph>
                     ) : (
                         <Paragraph className="flex items-center font-inter font-medium text-[14px] mt-3 text-[#667085]">
-                            <FaLocationCrosshairs className="text-[#2EAA7B] mr-1.5" />
+                            <FaLocationCrosshairs className="text-[#2EAA62] mr-1.5" />
                             {t("Не указано")}
                         </Paragraph>
                     )}
                 </div>
 
                 <div className="mt-4.5 w-full">
-                    <Button onClick={onPreview} className="bg-[#2EAA7B] w-full text-white px-4 py-2 rounded-md flex justify-center items-center gap-2">
+                    <Button onClick={onPreview} className="bg-[#2EAA62] w-full text-white px-4 py-2 rounded-md flex justify-center items-center gap-2">
                         {t("Просмотреть")} <FaArrowRight />
                     </Button>
                 </div>

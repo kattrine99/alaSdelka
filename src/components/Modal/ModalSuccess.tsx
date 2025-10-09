@@ -33,7 +33,7 @@ export const ModalBase: React.FC<ModalBaseProps> = ({
             >
                 {showCloseButton && onClose && (
                     <button
-                        className="absolute top-4 right-4 w-10 h-10 bg-white border border-[#2EAA7B] rounded-full flex items-center justify-center text-[#2EAA7B] hover:bg-[#2EAA7B] hover:text-white shadow-md"
+                        className="absolute top-4 right-4 w-10 h-10 bg-white border border-[#2EAA62] rounded-full flex items-center justify-center text-[#2EAA62] hover:bg-[#2EAA62] hover:text-white shadow-md"
                         onClick={onClose}
                     >
                         <RxCross1 className="w-4 h-4" />

@@ -40,8 +40,8 @@ export const Card: React.FC<ICardComponent & { forceAllFavorite: boolean }> = ({
         if (typeof numericPrice !== "number" || isNaN(numericPrice)) return "—";
 
         if (currencyMode === "USD") {
-            if (!currencyRate || isNaN(currencyRate)) return "$ —";
-            return `$ ${Math.round(numericPrice / currencyRate).toLocaleString()}`;
+            if (!currencyRate || isNaN(currencyRate)) return "USD —";
+            return `${Math.round(numericPrice / currencyRate).toLocaleString()} USD`;
         }
 
         return `${numericPrice.toLocaleString()} ${t("UZS")}`;
@@ -176,7 +176,7 @@ export const Card: React.FC<ICardComponent & { forceAllFavorite: boolean }> = ({
                             handleConfirmRemove(card.id);
                             setShowModal(false);
                         }} className="w-full py-4 rounded-xl bg-red-500 text-white">{t("Удалить")}</Button>
-                        <Button onClick={() => setShowModal(false)} className="w-full py-4 rounded-xl bg-[#2EAA7B] text-white">{t("Отмена")}</Button>
+                        <Button onClick={() => setShowModal(false)} className="w-full py-4 rounded-xl bg-[#2EAA62] text-white">{t("Отмена")}</Button>
                     </div>} HeadingClassName={"font-inter font-semibold text-4xl leading-11"} />
             )}
         </Applink>

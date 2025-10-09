@@ -52,7 +52,7 @@ export const Pagination: React.FC<PaginationProps> = ({
                     window.scrollTo({ top: 0, behavior: 'smooth' });
                 }}
                 disabled={currentPage === 1}
-                className="w-10 h-10 text-[#68727D] bg-white border-1 border-[#EAEBF0] rounded hover:bg-[#2EAA7B] hover:text-white"
+                className="w-10 h-10 text-[#68727D] bg-white border-1 border-[#EAEBF0] rounded hover:bg-[#2EAA62] hover:text-white"
             >
                 <FaArrowLeftLong className="m-2.5" />
             </button>
@@ -66,8 +66,8 @@ export const Pagination: React.FC<PaginationProps> = ({
                     }}
                     className={`w-10 h-10 rounded text-sm font-semibold transition border ${
                         currentPage === pageNum
-                            ? "bg-[#2EAA7B] text-white border-[#2EAA7B]"
-                            : "bg-white text-[#2EAA7B] border-[#2EAA7B] hover:bg-[#2EAA7B] hover:text-white"
+                            ? "bg-[#2EAA62] text-white border-[#2EAA62]"
+                            : "bg-white text-[#2EAA62] border-[#2EAA62] hover:bg-[#2EAA62] hover:text-white"
                     }`}
                 >
                     {pageNum}
@@ -80,7 +80,7 @@ export const Pagination: React.FC<PaginationProps> = ({
                     window.scrollTo({ top: 0, behavior: 'smooth' });
                 }}
                 disabled={currentPage === totalPages}
-                className="w-10 h-10 text-[#68727D] bg-white border-1 border-[#EAEBF0] rounded hover:bg-[#2EAA7B] hover:text-white"
+                className="w-10 h-10 text-[#68727D] bg-white border-1 border-[#EAEBF0] rounded hover:bg-[#2EAA62] hover:text-white"
             >
                 <FaArrowRightLong className="m-2.5" />
             </button>

@@ -136,14 +136,14 @@ export const CardDetailPage: React.FC<CardDetailPageProps> = ({ section }) => {
             <div className="w-screen">
                 <Header />
                 {isLoading ? (<div className="flex justify-center items-center py-[30px]">
-                    <div className="w-10 h-10 border-4 border-[#2EAA7B] border-t-transparent rounded-full animate-spin"></div>
+                    <div className="w-10 h-10 border-4 border-[#2EAA62] border-t-transparent rounded-full animate-spin"></div>
                 </div>) : isError || !card ? (
                     <p className="px-48 py-7.5 text-red-500">{t("Ошибка загрузки данных")}</p>
 
                 ) :
                     (<div className='container mx-auto px-4 xl:px-20 lg:px-10 md:px-4 pt-10 max-md:p-5'>
                         {translatedTitle != null ? (<Breadcrumbs category={section} title={translatedTitle} />) : (<Breadcrumbs category={section} title={card.title} />)}
-                        <div className='flex flex-wrap xl:flex-nowrap'>
+                        <div className='flex flex-wrap xl:flex-nowrap gap-4'>
                             <div className='flex flex-col w-full lg:w-3/4 justify-center'>
                                 {translatedTitle != null ? (<Heading className="text-[24px] md:text-4xl font-inter leading-10 font-bold mt-6 mb-3.5" text={translatedTitle} level={2} />) : (<Heading className="text-[24px] md:text-4xl font-inter leading-10 font-bold mt-6 mb-3.5" text={card.title} level={2} />)}
 
@@ -160,7 +160,7 @@ export const CardDetailPage: React.FC<CardDetailPageProps> = ({ section }) => {
                                         )}</Paragraph>
                                     </div>
                                     <div className='flex gap-1.5 items-center'>
-                                        <CategoryIcon className='w-4 h-4 text-[#2EAA7B]' />
+                                        <CategoryIcon className='w-4 h-4 text-[#2EAA62]' />
                                         <Paragraph className="">{lang === "uz" ? card?.category?.title_uz : card?.category?.title_ru ?? ""}</Paragraph>
                                     </div>
                                 </div>
@@ -180,7 +180,7 @@ export const CardDetailPage: React.FC<CardDetailPageProps> = ({ section }) => {
                                                             {conveniencesIcons[item.name_ru] || <span className="w-5 h-5" />}
                                                             <div className="flex flex-col">
                                                                 <span>{lang === "uz" ? item.name_uz : item.name_ru}</span>
-                                                                <span className='font-inter font-bold text-xl text-[#2EAA7B]'>{t("Есть")}</span>
+                                                                <span className='font-inter font-bold text-xl text-[#2EAA62]'>{t("Есть")}</span>
                                                             </div>
                                                         </div>
                                                     ))}
@@ -200,7 +200,7 @@ export const CardDetailPage: React.FC<CardDetailPageProps> = ({ section }) => {
                                                     href={doc.document}
                                                     target="_blank"
                                                     rel="noopener noreferrer"
-                                                    className=" w-65.75 border border-[#2EAA7B] text-[#191919] rounded-lg py-3 px-4 text-center hover:bg-[#2EAA7B] hover:text-white transition"
+                                                    className=" w-65.75 border border-[#2EAA62] text-[#191919] rounded-lg py-3 px-4 text-center hover:bg-[#2EAA62] hover:text-white transition"
                                                 >
                                                     {`document ${index + 1}`}
                                                 </a>
@@ -209,7 +209,7 @@ export const CardDetailPage: React.FC<CardDetailPageProps> = ({ section }) => {
                                         <Button
                                             disabled={!card?.documents?.length}
                                             onClick={handleDownloadAllDocuments}
-                                            className={`w-65.75 rounded-lg px-4.25 py-3 my-4.25 font-semibold flex gap-2 items-center transition ${card?.documents?.length ? 'bg-[#2EAA7B] text-white hover:bg-[#31B683]' : 'bg-gray-400 text-white cursor-not-allowed'
+                                            className={`w-65.75 rounded-lg px-4.25 py-3 my-4.25 font-semibold flex gap-2 items-center transition ${card?.documents?.length ? 'bg-[#2EAA62] text-white hover:bg-[#2EAA62]' : 'bg-gray-400 text-white cursor-not-allowed'
                                                 }`}
                                         >
                                             <BiSolidArchiveIn />
@@ -232,7 +232,7 @@ export const CardDetailPage: React.FC<CardDetailPageProps> = ({ section }) => {
                                             {translatedDescription.length > 300 && (
                                                 <Button
                                                     onClick={() => setShowFullDescription(!showFullDescription)}
-                                                    className="text-[#2EAA7B] mt-2 font-semibold hover:underline transition"
+                                                    className="text-[#2EAA62] mt-2 font-semibold hover:underline transition"
                                                 >
                                                     {showFullDescription ? t("Скрыть") : t("Читать дальше")}
                                                 </Button>
@@ -243,46 +243,46 @@ export const CardDetailPage: React.FC<CardDetailPageProps> = ({ section }) => {
                                 <div>
                                     <Heading text={t('Информация и финансы')} level={3} className='font-inter font-semibold text-xl mt-7.5 text-[#3A3A3A]' />
                                     <div className="mt-3 grid grid-cols-1 md:grid-cols-3 gap-x-3 gap-y-4">
-                                        <div className="flex w-full gap-2 border border-[#2EAA7B] items-center rounded-[10px] py-3 px-4.25">
+                                        <div className="flex w-full gap-2 border border-[#2EAA62] items-center rounded-[10px] py-3 px-4.25">
                                             <WalletIcon className='w-10 h-10' />
                                             <div className='flex flex-col'>
                                                 <Paragraph className="font-inter text-[13px] leading-5 text-[#7D7D7D]">{t("Среднемесячная выручка")}</Paragraph>
-                                                <Paragraph className="font-inter text-xl font-bold text-[#2EAA7B]">{formatCurrency(card.average_monthly_revenue)}</Paragraph>
+                                                <Paragraph className="font-inter text-xl font-bold text-[#2EAA62]">{formatCurrency(card.average_monthly_revenue)}</Paragraph>
                                             </div>
                                         </div>
-                                        <div className="flex gap-2 w-full border border-[#2EAA7B] items-center rounded-[10px] py-3 px-4.25">
+                                        <div className="flex gap-2 w-full border border-[#2EAA62] items-center rounded-[10px] py-3 px-4.25">
                                             <ReceiptIcon className='w-10 h-10' />
                                             <div className='flex flex-col'>
                                                 <Paragraph className="font-inter text-[13px] leading-5 text-[#7D7D7D]">{t("Среднемесячные расходы")}</Paragraph>
-                                                <Paragraph className="font-inter text-xl font-bold text-[#2EAA7B]">{formatCurrency(card.average_monthly_expenses)}</Paragraph>
+                                                <Paragraph className="font-inter text-xl font-bold text-[#2EAA62]">{formatCurrency(card.average_monthly_expenses)}</Paragraph>
                                             </div>
                                         </div>
-                                        <div className="flex gap-2 w-full border border-[#2EAA7B] items-center rounded-[10px] py-3 px-4.25">
+                                        <div className="flex gap-2 w-full border border-[#2EAA62] items-center rounded-[10px] py-3 px-4.25">
                                             <CalendarIcon className='w-10 h-10' />
                                             <div className='flex flex-col'>
                                                 <Paragraph className="font-inter text-[13px] leading-5 text-[#7D7D7D]">{t("Дата основания")}</Paragraph>
-                                                <Paragraph className="font-inter text-xl font-bold text-[#2EAA7B]">{card.foundation_year} {t("год")}</Paragraph>
+                                                <Paragraph className="font-inter text-xl font-bold text-[#2EAA62]">{card.foundation_year} {t("год")}</Paragraph>
                                             </div>
                                         </div>
-                                        <div className="flex gap-2 w-full border border-[#2EAA7B] items-center rounded-[10px] py-3 px-4.25">
+                                        <div className="flex gap-2 w-full border border-[#2EAA62] items-center rounded-[10px] py-3 px-4.25">
                                             <DollarCircleIcon className='w-10 h-10' />
                                             <div className='flex flex-col'>
                                                 <Paragraph className="font-inter text-[13px] leading-5 text-[#7D7D7D]">{t("Среднемесячная прибыль")}</Paragraph>
-                                                <Paragraph className="font-inter text-xl font-bold text-[#2EAA7B]">{formatCurrency(card.average_monthly_profit)}</Paragraph>
+                                                <Paragraph className="font-inter text-xl font-bold text-[#2EAA62]">{formatCurrency(card.average_monthly_profit)}</Paragraph>
                                             </div>
                                         </div>
-                                        <div className="flex gap-2 w-full border border-[#2EAA7B] items-center rounded-[10px] py-3 px-4.25">
+                                        <div className="flex gap-2 w-full border border-[#2EAA62] items-center rounded-[10px] py-3 px-4.25">
                                             <MoneySendIcon className='w-10 h-10' />
                                             <div className='flex flex-col'>
                                                 <Paragraph className="font-inter text-[13px] leading-5 text-[#7D7D7D]">{t("Окупаемость")}</Paragraph>
-                                                <Paragraph className="font-inter text-xl font-bold text-[#2EAA7B]">{formatMonthsToYears(card.payback_period)}</Paragraph>
+                                                <Paragraph className="font-inter text-xl font-bold text-[#2EAA62]">{formatMonthsToYears(card.payback_period)}</Paragraph>
                                             </div>
                                         </div>
-                                        <div className="flex gap-2 w-full border border-[#2EAA7B] items-center rounded-[10px] py-3 px-4.25">
+                                        <div className="flex gap-2 w-full border border-[#2EAA62] items-center rounded-[10px] py-3 px-4.25">
                                             <PercentIcon className='w-10 h-10' />
                                             <div className='flex flex-col'>
                                                 <Paragraph className="font-inter text-[13px] leading-5 text-[#7D7D7D]">{t("Доля к продаже")}</Paragraph>
-                                                <Paragraph className="font-inter text-xl font-bold text-[#2EAA7B]">{card.percentage_for_sale}%</Paragraph>
+                                                <Paragraph className="font-inter text-xl font-bold text-[#2EAA62]">{card.percentage_for_sale}%</Paragraph>
                                             </div>
                                         </div>
                                     </div>
@@ -290,7 +290,7 @@ export const CardDetailPage: React.FC<CardDetailPageProps> = ({ section }) => {
                                 <div className='flex flex-col gap-3'>
                                     <Heading text={t('Местоположение')} level={3} className='font-inter font-semibold text-xl mt-7.5 text-[#3A3A3A]' />
                                     <div className='flex gap-1.5'>
-                                        <FaLocationDot className="text-[#2EAA7B] w-4 h-4" />
+                                        <FaLocationDot className="text-[#2EAA62] w-4 h-4" />
                                         <Paragraph className="">
                                             {card?.address !== null ? card?.address?.address + ',' : t("Адрес не указан")}
                                             {lang === "uz" ? card?.address?.city?.name_uz : card?.address?.city?.name_ru ?? ""}
@@ -301,7 +301,7 @@ export const CardDetailPage: React.FC<CardDetailPageProps> = ({ section }) => {
                                             src={`https://maps.google.com/maps?q=${card.address.latitude},${card.address.longitude}&z=15&output=embed`}
                                             width="100%"
                                             height="350"
-                                            className="rounded-lg border mb-5 border-[#2EAA7B]"
+                                            className="rounded-lg border mb-5 border-[#2EAA62]"
                                             allowFullScreen
                                             loading="eager"
                                         />
@@ -310,7 +310,7 @@ export const CardDetailPage: React.FC<CardDetailPageProps> = ({ section }) => {
                                             src={`https://maps.google.com/maps?q=${encodeURIComponent(card.address.address)}&z=15&output=embed`}
                                             width="100%"
                                             height="350"
-                                            className="rounded-lg border mb-5 border-[#2EAA7B]"
+                                            className="rounded-lg border mb-5 border-[#2EAA62]"
                                             allowFullScreen
                                             loading="eager"
                                         />

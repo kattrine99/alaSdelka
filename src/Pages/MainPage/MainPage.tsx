@@ -177,11 +177,12 @@ export const MainPage = () => {
             )}
             <div className="font-openSans min-h-screen w-screen overflow-x-hidden">
                 <Header />
-                <section className="px-4  transition duration-500 ease-in-out relative overflow-hidden bg-gradient-to-tr from-[#16503A] to-[#31B683]">
+                <section className="px-4  transition duration-500 ease-in-out relative overflow-hidden bg-gradient-to-tr from-[#16503A] to-[#2EAA62]">
                     <div className="flex justify-end">
                         <div
-                            className="absolute right-[-12rem] bottom-[-5rem] w-96 h-96 md:w-150 md:h-150 lg:w-178 lg:h-178 md:right-[-16rem] lg:right-[-80px] md:bottom-[-9rem] bg-[url('/images/Check.png')] bg-no-repeat bg-contain rotate-[12deg] pointer-events-none z-0"></div>
+                            className="absolute right-[-12rem] bottom-[-5rem] w-96 h-96 md:w-150 md:h-150 lg:w-150 lg:h-150 md:right-[-16rem] lg:right-[-80px] md:bottom-[-5rem] bg-[url('/images/Check.png')] bg-no-repeat bg-contain rotate-[12deg] pointer-events-none z-0"></div>
                     </div>
+                    {/*absolute right-[-12rem] bottom-[-5rem] w-96 h-96 md:w-150 md:h-150 lg:w-150 lg:h-150 md:right-[-80px] lg:right-[-80px] md:bottom-[-5rem] bg-[url('/images/Check.png')] bg-no-repeat bg-contain rotate-[12deg] pointer-events-none z-0*/}
                     <div className="relative container mx-auto py-17.5 px-4 xl:px-20 lg:px-10 md:px-4 transition duration-500 ease-in-out ">
                         {/* Текст */}
                         <div className="order-2 lg:order-1 flex flex-col gap-6 max-w-3xl w-full">
@@ -201,14 +202,14 @@ export const MainPage = () => {
                                 {isAuthenticated ? (
                                     <Applink
                                         to="/add-offer"
-                                        className="bg-[#2EAA7B] text-white px-5 py-3 rounded-[10px] hover:bg-[#31B683] text-sm font-medium transition duration-600"
+                                        className="bg-[#2EAA62] text-white px-5 py-3 rounded-[10px] hover:bg-[#2EAA62] text-sm font-medium transition duration-600"
                                     >
                                         {t("Разместить объявление")}
                                     </Applink>
                                 ) : (
                                     <Applink
                                         to="/login?next-step=/add-offer"
-                                        className="bg-[#2EAA7B] text-white px-5 py-3 rounded-[10px] hover:bg-[#31B683] text-sm font-medium transition duration-600"
+                                        className="bg-[#2EAA62] text-white px-5 py-3 rounded-[10px] hover:bg-[#2EAA62] text-sm font-medium transition duration-600"
                                     >
                                         {t("Разместить объявление")}
                                     </Applink>
@@ -236,9 +237,9 @@ export const MainPage = () => {
                                         }
                                     }}
                                     className="flex text-[18px] font-openSans font-semibold"
-                                    activeClassName="text-[#2EAA7B] w-34 py-3.5 px-4.25  border-b"
-                                    inactiveClassName="text-[#787878] w-34 py-3.5 px-4.25 hover:text-[#2EAA7B] "
-                                    underlineColor="bg-[#2EAA7B]"
+                                    activeClassName="text-[#2EAA62] w-34 py-3.5 px-4.25  border-b"
+                                    inactiveClassName="text-[#787878] w-34 py-3.5 px-4.25 hover:text-[#2EAA62] "
+                                    underlineColor="bg-[#2EAA62]"
                                 />
                             </div> */}
 
@@ -263,14 +264,14 @@ export const MainPage = () => {
                                 <Button onClick={() => {
                                     navigate(`$/{lang}/business`)
                                 }} className={""}>
-                                    <Heading level={2} text={t("Бизнес")} className="font-openSans font-bold text-[#4f4f4f] hover:text-[#2EAA7B] hover:underline hover:decoration-1 transition duration-500 text-3xl cursor-pointer" />
+                                    <Heading level={2} text={t("Бизнес")} className="font-openSans font-bold text-[#4f4f4f] hover:text-[#2EAA62] hover:underline hover:decoration-1 transition duration-500 text-3xl cursor-pointer" />
                                 </Button>
                             </div>
                             <div className="col-span-2 max-lg:mt-2 max-sm:flex-col max-lg:w-full flex justify-center gap-2">
                                 <Button onClick={() => setListingTypes(prev => ({ ...prev, [selectedCategory]: "sell" }))}
-                                    className={`flex items-center justify-center gap-x-2 rounded-[8px] h-13  min-w-70 max-"sm: w - full whitespace - nowrap px - 6 border border-[#2EAA7B] text-[#2EAA7B] text-[16px] hover:bg-[#2EAA7B] hover:text-white transition duration - 500 font - inter leading - [150 %] font - semibold
-                        ${businessType === "sell" ? "bg-[#2EAA7B] text-white border-[#2EAA7B]"
-                                            : "border-[#2EAA7B] text-[#2EAA7B] hover:bg-[#2EAA7B] hover:text-white"
+                                    className={`flex items-center justify-center gap-x-2 rounded-[8px] h-13  min-w-70 max-"sm: w - full whitespace - nowrap px - 6 border border-[#2EAA62] text-[#2EAA62] text-[16px] hover:bg-[#2EAA62] hover:text-white transition duration - 500 font - inter leading - [150 %] font - semibold
+                        ${businessType === "sell" ? "bg-[#2EAA62] text-white border-[#2EAA62]"
+                                            : "border-[#2EAA62] text-[#2EAA62] hover:bg-[#2EAA62] hover:text-white"
                                         } `}>
                                     <ShopIcon className="w-5 h-5 hover:text-white" />
                                     {t("Продажа бизнеса")}
@@ -278,7 +279,7 @@ export const MainPage = () => {
                                 <Button
                                     onClick={() => setListingTypes(prev => ({ ...prev, [selectedCategory]: "buy" }))}
                                     className={`flex items-center justify-center gap-2 border rounded-[8px] h-13 min-w-70 max-sm:w-full max-sm:mt-1 whitespace-nowrap px-6 text-[16px] font-inter font-semibold transition
-  ${businessType === "buy" ? "bg-[#2EAA7B] text-white border-[#2EAA7B]" : "border-[#2EAA7B] text-[#2EAA7B] hover:bg-[#2EAA7B] hover:text-white"} `}
+  ${businessType === "buy" ? "bg-[#2EAA62] text-white border-[#2EAA62]" : "border-[#2EAA62] text-[#2EAA62] hover:bg-[#2EAA62] hover:text-white"} `}
                                 >
                                     <ShopIcon className="w-5 h-5" />
                                     {t("Покупка бизнеса")}
@@ -292,7 +293,7 @@ export const MainPage = () => {
                         isLoadingBusiness ? (
                             <div className="flex justify-center items-center py-7.5">
                                 <div
-                                    className="w-10 h-10 border-4 border-[#2EAA7B] border-t-transparent rounded-full animate-spin"></div>
+                                    className="w-10 h-10 border-4 border-[#2EAA62] border-t-transparent rounded-full animate-spin"></div>
                             </div>
                         ) : ((() => {
                             const businessCards = Object.values(businessOffers?.business || {});
@@ -316,7 +317,7 @@ export const MainPage = () => {
                                     initialFavorites={favoriteIds}
                                     onFavoritesChanged={handleFavoritesChanged}
                                     maxVisible={8}
-                                    Class="grid grid-cols-1 2xl:grid-cols-5 xl:grid-cols-5 lg:grid-cols-2 gap-y-10 gap-x-2 transition duration-300 ease-in-out"
+                                    Class="grid w-full grid-cols-1 2xl:grid-cols-5 xl:grid-cols-5 lg:grid-cols-2 gap-y-10 gap-x-2 transition duration-300 ease-in-out"
                                     ClassName="container mx-auto py-7.5"
                                 />
                             );
@@ -330,19 +331,19 @@ export const MainPage = () => {
                                 <Button onClick={() => {
                                     navigate(`$/{lang}/franchise`)
                                 }} className={""}>
-                                    <Heading level={2} text={t("Франшиза")} className="font-openSans font-bold text-[#4f4f4f] hover:text-[#2EAA7B] hover:underline hover:decoration-1 transition duration-500 text-3xl cursor-pointer" />
+                                    <Heading level={2} text={t("Франшиза")} className="font-openSans font-bold text-[#4f4f4f] hover:text-[#2EAA62] hover:underline hover:decoration-1 transition duration-500 text-3xl cursor-pointer" />
                                 </Button>
                             </div>
                             <div className="col-span-1 max-lg:mt-2 max-sm:flex-col max-lg:w-full flex justify-center gap-2">
-                                <Button onClick={() => setListingTypes(prev => ({ ...prev, Франшиза: "sell" }))} className={`flex items-center justify-center gap-x-2 rounded-[8px] h-13  min-w-70 max-sm:w-full whitespace-nowrap px-6 border border-[#2EAA7B] text-[#2EAA7B] text-[16px] hover:bg-[#2EAA7B] hover:text-white transition duration-500 font-inter leading-[150 %] font-semibold
-                        ${franchiseType === "sell" ? "bg-[#2EAA7B] text-white border-[#2EAA7B]"
-                                        : "border-[#2EAA7B] text-[#2EAA7B] hover:bg-[#2EAA7B] hover:text-white"
+                                <Button onClick={() => setListingTypes(prev => ({ ...prev, Франшиза: "sell" }))} className={`flex items-center justify-center gap-x-2 rounded-[8px] h-13  min-w-70 max-sm:w-full whitespace-nowrap px-6 border border-[#2EAA62] text-[#2EAA62] text-[16px] hover:bg-[#2EAA62] hover:text-white transition duration-500 font-inter leading-[150 %] font-semibold
+                        ${franchiseType === "sell" ? "bg-[#2EAA62] text-white border-[#2EAA62]"
+                                        : "border-[#2EAA62] text-[#2EAA62] hover:bg-[#2EAA62] hover:text-white"
                                     } `}>
                                     <ShopIcon className="w-5 h-5 hover:text-white" />
                                     {t("Продажа франшизы")}
                                 </Button>
                                 <Button onClick={() => setListingTypes(prev => ({ ...prev, Франшиза: "buy" }))} className={`flex items-center justify-center gap-2 border rounded-[8px] h-13 min-w-70 max-sm:w-full max-sm:mt-1 whitespace-nowrap px-6 text-[16px] font-inter font-semibold transition
-  ${franchiseType === "buy" ? "bg-[#2EAA7B] text-white border-[#2EAA7B]" : "border-[#2EAA7B] text-[#2EAA7B] hover:bg-[#2EAA7B] hover:text-white"} `}>
+  ${franchiseType === "buy" ? "bg-[#2EAA62] text-white border-[#2EAA62]" : "border-[#2EAA62] text-[#2EAA62] hover:bg-[#2EAA62] hover:text-white"} `}>
                                     <ShopIcon className="w-5 h-5 hover:text-white" />
                                     {t("Покупка франшизы")}
                                 </Button>
@@ -353,7 +354,7 @@ export const MainPage = () => {
                     {isLoadingFranchise ? (
                         <div className="flex justify-center items-center py-[30px]">
                             <div
-                                className="w-10 h-10 border-4 border-[#2EAA7B] border-t-transparent rounded-full animate-spin"></div>
+                                className="w-10 h-10 border-4 border-[#2EAA62] border-t-transparent rounded-full animate-spin"></div>
                         </div>
                     ) : (
                         ((() => {
@@ -377,7 +378,7 @@ export const MainPage = () => {
                                     allViewLink="/franchise"
                                     initialFavorites={favoriteIds}
                                     maxVisible={8}
-                                    Class="grid grid-cols-1 2xl:grid-cols-5 xl:grid-cols-5 lg:grid-cols-2 gap-y-10 gap-x-8 transition duration-300 ease-in-out"
+                                    Class="grid w-full grid-cols-1 2xl:grid-cols-5 xl:grid-cols-5 lg:grid-cols-2 gap-y-10 gap-x-2 transition duration-300 ease-in-out"
                                     ClassName="container mx-auto py-7.5"
                                 />
                             );
@@ -392,19 +393,19 @@ export const MainPage = () => {
                                 <Button onClick={() => {
                                     navigate(`/${lang}/startup`)
                                 }} className={""}>
-                                    <Heading level={2} text={t("Стартапы")} className="font-openSans font-bold text-[#4f4f4f] hover:text-[#2EAA7B] hover:underline hover:decoration-1 transition duration-500 text-3xl cursor-pointer" />
+                                    <Heading level={2} text={t("Стартапы")} className="font-openSans font-bold text-[#4f4f4f] hover:text-[#2EAA62] hover:underline hover:decoration-1 transition duration-500 text-3xl cursor-pointer" />
                                 </Button>
                             </div>
                             <div className="col-span-1 max-lg:mt-2 max-sm:flex-col max-lg:w-full flex justify-center gap-2">
-                                <Button onClick={() => setListingTypes(prev => ({ ...prev, Стартапы: "sell" }))} className={`flex items-center justify-center gap-x-2 rounded-[8px] h-13  min-w-70 max-sm:w-full whitespace-nowrap px-6 border border-[#2EAA7B] text-[#2EAA7B] text-[16px] hover:bg-[#2EAA7B] hover:text-white transition duration-500 font-inter leading-[150%] font-semibold
-                        ${startupType === "sell" ? "bg-[#2EAA7B] text-white border-[#2EAA7B]"
-                                        : "border-[#2EAA7B] text-[#2EAA7B] hover:bg-[#2EAA7B] hover:text-white"
+                                <Button onClick={() => setListingTypes(prev => ({ ...prev, Стартапы: "sell" }))} className={`flex items-center justify-center gap-x-2 rounded-[8px] h-13  min-w-70 max-sm:w-full whitespace-nowrap px-6 border border-[#2EAA62] text-[#2EAA62] text-[16px] hover:bg-[#2EAA62] hover:text-white transition duration-500 font-inter leading-[150%] font-semibold
+                        ${startupType === "sell" ? "bg-[#2EAA62] text-white border-[#2EAA62]"
+                                        : "border-[#2EAA62] text-[#2EAA62] hover:bg-[#2EAA62] hover:text-white"
                                     } `}>
                                     <ShopIcon className="w-5 h-5 hover:text-white" />
                                     {t("Поиск инвестора")}
                                 </Button>
                                 <Button onClick={() => setListingTypes(prev => ({ ...prev, Стартапы: "buy" }))} className={`flex items-center justify-center gap-2 border rounded-[8px] h-13 min-w-70 max-sm:w-full max-sm:mt-1 whitespace-nowrap px-6 text-[16px] font-inter font-semibold transition
-  ${startupType === "buy" ? "bg-[#2EAA7B] text-white border-[#2EAA7B]" : "border-[#2EAA7B] text-[#2EAA7B] hover:bg-[#2EAA7B] hover:text-white"} `}>
+  ${startupType === "buy" ? "bg-[#2EAA62] text-white border-[#2EAA62]" : "border-[#2EAA62] text-[#2EAA62] hover:bg-[#2EAA62] hover:text-white"} `}>
                                     <ShopIcon className="w-5 h-5 hover:text-white" />
                                     {t("Поиск инвестпроекта")}
                                 </Button>
@@ -415,7 +416,7 @@ export const MainPage = () => {
                     {isLoadingStartup ? (
                         <div className="flex justify-center items-center py-[30px]">
                             <div
-                                className="w-10 h-10 border-4 border-[#2EAA7B] border-t-transparent rounded-full animate-spin"></div>
+                                className="w-10 h-10 border-4 border-[#2EAA62] border-t-transparent rounded-full animate-spin"></div>
                         </div>
                     ) :
                         ((() => {
@@ -439,7 +440,7 @@ export const MainPage = () => {
                                     initialFavorites={favoriteIds}
                                     maxVisible={8}
                                     allViewLink="/startup"
-                                    Class="grid grid-cols-1 2xl:grid-cols-5 xl:grid-cols-5 lg:grid-cols-2 gap-y-10 gap-x-4 md:gap-x-8 transition duration-300 ease-in-out"
+                                    Class="grid w-full grid-cols-1 2xl:grid-cols-5 xl:grid-cols-5 lg:grid-cols-2 gap-y-10 gap-x-2 transition duration-300 ease-in-out"
                                     ClassName="container mx-auto py-7.5"
                                 />
                             );
@@ -454,19 +455,19 @@ export const MainPage = () => {
                                     navigate(`/${lang}/investments`)
                                 }} className={""}>
                                     <Heading level={2} text={t("Инвестиции")}
-                                        className="font-openSans font-bold text-3xl text-[#4f4f4f] hover:text-[#2EAA7B] hover:underline hover:decoration-1 transition duration-500 cursor-pointer" />
+                                        className="font-openSans font-bold text-3xl text-[#4f4f4f] hover:text-[#2EAA62] hover:underline hover:decoration-1 transition duration-500 cursor-pointer" />
                                 </Button>
                             </div>
                             <div className="col-span-1 max-lg:mt-2 max-sm:flex-col max-lg:w-full flex justify-center gap-2">
-                                <Button onClick={() => setListingTypes(prev => ({ ...prev, Инвестиции: "sell" }))} className={`flex items-center justify-center gap-x-2 rounded-[8px] h-13  min-w-70 max-sm:w-full whitespace-nowrap px-6 border border-[#2EAA7B] text-[#2EAA7B] text-[16px] hover:bg-[#2EAA7B] hover:text-white transition duration-500 font-inter leading-[150%] font-semibold
-                        ${investmentType === "sell" ? "bg-[#2EAA7B] text-white border-[#2EAA7B]"
-                                        : "border-[#2EAA7B] text-[#2EAA7B] hover:bg-[#2EAA7B] hover:text-white"
+                                <Button onClick={() => setListingTypes(prev => ({ ...prev, Инвестиции: "sell" }))} className={`flex items-center justify-center gap-x-2 rounded-[8px] h-13  min-w-70 max-sm:w-full whitespace-nowrap px-6 border border-[#2EAA62] text-[#2EAA62] text-[16px] hover:bg-[#2EAA62] hover:text-white transition duration-500 font-inter leading-[150%] font-semibold
+                        ${investmentType === "sell" ? "bg-[#2EAA62] text-white border-[#2EAA62]"
+                                        : "border-[#2EAA62] text-[#2EAA62] hover:bg-[#2EAA62] hover:text-white"
                                     } `}>
                                     <ShopIcon className="w-5 h-5 hover:text-white" />
                                     {t("Поиск инвестора")}
                                 </Button>
                                 <Button onClick={() => setListingTypes(prev => ({ ...prev, Инвестиции: "buy" }))} className={`flex items-center justify-center gap-2 border rounded-[8px] h-13 min-w-70 max-sm:w-full col-span-1 max-lg:mt-2 max-sm:flex-row max-lg:w-full flex justify-center gap-4 whitespace-nowrap px-6 text-[16px] font-inter font-semibold transition
-  ${investmentType === "buy" ? "bg-[#2EAA7B] text-white border-[#2EAA7B]" : "border-[#2EAA7B] text-[#2EAA7B] hover:bg-[#2EAA7B] hover:text-white"} `}>
+  ${investmentType === "buy" ? "bg-[#2EAA62] text-white border-[#2EAA62]" : "border-[#2EAA62] text-[#2EAA62] hover:bg-[#2EAA62] hover:text-white"} `}>
                                     <ShopIcon className="w-5 h-5 hover:text-white" />
                                     {t("Поиск инвестпроекта")}
                                 </Button>
@@ -477,7 +478,7 @@ export const MainPage = () => {
                     {isLoadingInvestment ? (
                         <div className="flex justify-center items-center py-[30px]">
                             <div
-                                className="w-10 h-10 border-4 border-[#2EAA7B] border-t-transparent rounded-full animate-spin"></div>
+                                className="w-10 h-10 border-4 border-[#2EAA62] border-t-transparent rounded-full animate-spin"></div>
                         </div>
                     ) : ((() => {
                         const investmentsCards = Object.values(investmentOffers?.investments || {});
@@ -497,7 +498,7 @@ export const MainPage = () => {
                             cards={investmentOffers?.investments || []} maxVisible={4}
                             initialFavorites={favoriteIds}
                             allViewLink="/investments"
-                            Class="grid grid-cols-1 2xl:grid-cols-5 xl:grid-cols-5 lg:grid-cols-2 gap-y-10 gap-x-8 transition duration-300 ease-in-out" ClassName={"container mx-auto py-7.5"} />
+                            Class="grid w-full grid-cols-1 2xl:grid-cols-5 xl:grid-cols-5 lg:grid-cols-2 gap-y-10 gap-x-2 transition duration-300 ease-in-out" ClassName={"container mx-auto py-7.5"} />
                         );
                     })())}
 
@@ -523,8 +524,8 @@ export const MainPage = () => {
                                     }
                                 }}
                                 className="flex flex-wrap md:flex-nowrap gap-4 text-[24px] text-start font-openSans mb-6.25 font-bold"
-                                activeClassName="w-full px-6 py-4 bg-[#2EAA7B] text-white rounded-xl"
-                                inactiveClassName="w-full px-6 py-4 bg-white font-openSans text-[#4f4f4f] border border-[#2EAA7B] rounded-xl hover:bg-[#31B683]/10"
+                                activeClassName="w-full px-6 py-4 bg-[#2EAA62] text-white rounded-xl"
+                                inactiveClassName="w-full px-6 py-4 bg-white font-openSans text-[#4f4f4f] border border-[#2EAA62] rounded-xl hover:bg-[#2EAA62]/10"
                             />
 
                             {/* ГОРОДА */}
@@ -556,8 +557,8 @@ export const MainPage = () => {
                                 <Heading
                                     level={1}
                                     className="text-[24px] md:text-[32px] font-bold leading-tight text-black" text={""}>
-                                    {t("Почему")} <span className="text-[#31B683]">{t("Invest In")}</span> {t("— лучший инструмент для продажи бизнеса?")}
-                                    {/*{t("Почему")} <span className="text-[#31B683]">*/}
+                                    {t("Почему")} <span className="text-[#2EAA62]">{t("Invest In")}</span> {t("— лучший инструмент для продажи бизнеса?")}
+                                    {/*{t("Почему")} <span className="text-[#2EAA62]">*/}
                                     {/*        /!*<span className="inline-flex items-center">*!/*/}
                                     {/*        /!*    <img className="h-[1em] w-auto mx-1 object-cover object-center" src="/public/images/investin_logo.png"/>*!/*/}
                                     {/*        /!*</span>*!/*/}
@@ -576,7 +577,7 @@ export const MainPage = () => {
                                     <div className="bg-white w-full font-inter text-black flex flex-col items-center rounded-[30px] py-6 shadow-[0px_4px_21.2px_rgba(46,170,123,0.2)]">
                                         <Paragraph className="font-inter text-[40px] max-sm:text-3xl text-center font-bold leading-none transition duration-300">
                                             {mainStats?.offers_count?.toLocaleString("ru-RU")}<span
-                                                className="text-[#2EAA7B]">+</span>
+                                                className="text-[#2EAA62]">+</span>
                                         </Paragraph>
                                         <Paragraph className="font-inter text-2xl max-sm:text-[16px] leading-[100%] mt-2">{t("объявлений")}</Paragraph>
                                     </div>
@@ -584,7 +585,7 @@ export const MainPage = () => {
                                     <div className="bg-white w-full font-inter text-black flex flex-col items-center rounded-[30px] py-6 shadow-[0px_4px_21.2px_rgba(46,170,123,0.2)]">
                                         <Paragraph className="text-[40px] max-sm:text-3xl text-center font-bold leading-none transition duration-300">
                                             {mainStats?.deals_count?.toLocaleString("ru-RU")}<span
-                                                className="text-[#2EAA7B]">+</span>
+                                                className="text-[#2EAA62]">+</span>
                                         </Paragraph>
                                         <Paragraph className="font-inter text-2xl max-sm:text-[16px] leading-[100%] mt-2">{t("сделок")}</Paragraph>
                                     </div>
@@ -598,7 +599,7 @@ export const MainPage = () => {
                                     <div
                                         className="bg-white font-inter text-black flex flex-col items-center text-center rounded-[30px] py-6 shadow-[0px_4px_21.2px_rgba(46,170,123,0.2)]">
                                         <Paragraph className="text-[40px] max-sm:text-3xl text-center font-bold leading-none transition duration-300">
-                                            <span className="text-[#2EAA7B]">$</span>{displayAmount}
+                                            {displayAmount}<span className="text-[#2EAA62]"> USD</span>
                                         </Paragraph>
                                         <Paragraph className="font-inter text-2xl max-sm:text-[16px] leading-[100%] mt-2">{t("продано бизнесов")}</Paragraph>
                                     </div>
@@ -606,7 +607,7 @@ export const MainPage = () => {
                             </div>
                         </div>
                         <div className="mt-6">
-                            <img src="/images/WhyInvestIn.png" alt="" className="w-full max-w-xl" />
+                            <img src="/images/WhyInvestIn.png" alt="" className="w-full max-w-lg" />
                         </div>
                     </div>
                 </section>

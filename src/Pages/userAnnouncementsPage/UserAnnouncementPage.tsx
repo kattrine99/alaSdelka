@@ -127,7 +127,7 @@ export const UserAnnouncementPage = () => {
                             {/* Кнопка фильтров (только для mobile) */}
                             <button
                                 onClick={() => setIsMobileFiltersOpen(true)}
-                                className="lg:hidden px-5 py-3 bg-[#2EAA7B] text-white rounded-[6px] hover:bg-[#31B683] transition duration-300 mb-4"
+                                className="lg:hidden px-5 py-3 bg-[#2EAA62] text-white rounded-[6px] hover:bg-[#2EAA62] transition duration-300 mb-4"
                             >
                                 {t("Фильтры")}
                             </button>
@@ -170,8 +170,8 @@ export const UserAnnouncementPage = () => {
 
                 <main className="flex-1 justify-end max-w-full">
                     <div className="flex justify-end gap-x-4 mb-6">
-                        <div className="flex items-center border border-[#2EAA7B] rounded-xl pl-5 bg-white lg:w-1/2 w-full overflow-hidden">
-                            <div className="text-[#2EAA7B]">
+                        <div className="flex items-center border border-[#2EAA62] rounded-xl pl-5 bg-white lg:w-1/2 w-full overflow-hidden">
+                            <div className="text-[#2EAA62]">
                                 <FiSearch className="w-full h-[24px]" />
                             </div>
                             <Input
@@ -187,7 +187,7 @@ export const UserAnnouncementPage = () => {
                                     setSearchQuery(searchInput);
                                     setCurrentPage(1);
                                 }}
-                                className="h-full bg-[#2EAA7B] text-white text-sm font-semibold px-5 hover:bg-green-600 transition rounded-none"
+                                className="h-full bg-[#2EAA62] text-white text-sm font-semibold px-5 hover:bg-green-600 transition rounded-none"
                             >
                                 {t("Поиск")}
                             </Button>
@@ -196,7 +196,7 @@ export const UserAnnouncementPage = () => {
 
                     {/* Карточка пользователя */}
                     {user && (
-                        <div className="border border-[#2EAA7B] rounded-2xl p-6 w-full flex flex-col gap-4">
+                        <div className="border border-[#2EAA62] rounded-2xl p-6 w-full flex flex-col gap-4">
                             <div className="flex items-center gap-4">
                                 <div className="rounded-full">
                                     <img
@@ -218,7 +218,7 @@ export const UserAnnouncementPage = () => {
                                         {t("На сайте с")}: {data?.user.created_at}
                                     </Paragraph>
                                 </div>
-                                <Button className="px-4 py-2 text-white bg-[#2EAA7B] rounded-md font-medium text-sm"
+                                <Button className="px-4 py-2 text-white bg-[#2EAA62] rounded-md font-medium text-sm"
                                     onClick={() => setContactModalOpen(true)}>
                                     {t("Посмотреть контакты")}
                                 </Button>
@@ -228,7 +228,7 @@ export const UserAnnouncementPage = () => {
 
                     {isLoading ? (
                         <div className="flex justify-center items-center py-[30px]">
-                            <div className="w-10 h-10 border-4 border-[#2EAA7B] border-t-transparent rounded-full animate-spin"></div>
+                            <div className="w-10 h-10 border-4 border-[#2EAA62] border-t-transparent rounded-full animate-spin"></div>
                         </div>
                     ) : isError ? (
                         <div className="flex flex-col w-full h-full justify-center items-center bg-[url('../../../images/grid.png')] bg-no-repeat bg-contain" >
@@ -236,7 +236,7 @@ export const UserAnnouncementPage = () => {
                                 <Paragraph className="text-[20px] font-semibold text-black mb-4">{t("Страница не найдена")}</Paragraph>
                                 <Button
                                     onClick={() => navigate(`/${lang}/`)}
-                                    className="bg-[#2EAA7B] text-white py-2.5 px-6 rounded-[12px] text-[16px] font-medium"
+                                    className="bg-[#2EAA62] text-white py-2.5 px-6 rounded-[12px] text-[16px] font-medium"
                                 >
                                     {t("Перейти на главную")}
                                 </Button>
@@ -247,7 +247,7 @@ export const UserAnnouncementPage = () => {
                                     <Paragraph className="text-[20px] font-semibold text-black mb-4">{t("Страница не найдена")}</Paragraph>
                                     <Button
                                         onClick={() => navigate(`/${lang}/`)}
-                                        className="bg-[#2EAA7B] text-white py-2.5 px-6 rounded-[12px] text-[16px] font-medium"
+                                        className="bg-[#2EAA62] text-white py-2.5 px-6 rounded-[12px] text-[16px] font-medium"
                                     >
                                         {t("Перейти на главную")}
                                     </Button>
@@ -260,7 +260,7 @@ export const UserAnnouncementPage = () => {
                             containerClass="grid mt-10 gap-y-10 gap-x-2 transition duration-600"
                             cardWrapperClass="shadow-[1px_1px_4.5px_0px] shadow-[#28B13D4D] flex-col lg:flex-row justify-center"
                             cardIconClass="w-full max-h-48 lg:h-full lg:max-w-85 overflow-hidden"
-                            WhatchButtonClass="py-3 px-5 w-79.5 bg-[#2EAA7B] text-white font-medium rounded-md flex justify-center hover:bg-[#31B683] transition duration-300 cursor-pointer"
+                            WhatchButtonClass="py-3 px-5 w-79.5 bg-[#2EAA62] text-white font-medium rounded-md flex justify-center hover:bg-[#2EAA62] transition duration-300 cursor-pointer"
                         />
 
                     )}

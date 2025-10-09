@@ -152,13 +152,13 @@ export const PublicationStep: React.FC<Props> = ({ onPublish, onPreview, onBack 
                     <div className="">
                         <Button
                             onClick={onBack}
-                            className={`flex items-center gap-2 bg-[#2EAA7B] text-white px-6 py-2 rounded-md`}
+                            className={`flex items-center gap-2 bg-[#2EAA62] text-white px-6 py-2 rounded-md`}
                         >
                             <FiChevronLeft /> {t("Назад")}
                         </Button>
                     </div>
                     <Button
-                        className="bg-[#2EAA7B] text-white px-6 py-2 rounded-md"
+                        className="bg-[#2EAA62] text-white px-6 py-2 rounded-md"
                         onClick={handlePublish}
                     >
                         {isPublishing ? t("Создание...") : t("Создать объявление")}

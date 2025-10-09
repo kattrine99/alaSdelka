@@ -105,7 +105,7 @@ export const LoginPage = () => {
                     HeadingClassName="font-inter font-semibold text-[32px] leading-11 "
                     onClose={() => setShowModal(false)}
                     actions={<Button
-                        className={"w-full text-center py-4 hover:border-1 hover:bg-white hover:text-[#2EAA7B] hover:border-[#2EAA7B] text-white bg-[#2EAA7B] rounded-[14px]"}
+                        className={"w-full text-center py-4 hover:border-1 hover:bg-white hover:text-[#2EAA62] hover:border-[#2EAA62] text-white bg-[#2EAA62] rounded-[14px]"}
                         onClick={() => {
                             setShowModal(false);
                         }}>Подтвердить</Button>}/>}
@@ -129,7 +129,7 @@ export const LoginPage = () => {
                                         errorMessage={t(errors.userphone?.message || "")}
                                         type="text"
                                         placeholder={t("Номер телефона")}
-                                        className={`w-full px-[18px] py-[17px] border-2 bg-[#EEEEEE80] rounded-[14px] focus:outline-none text-[16px] font-semibold leading-[130%] transition-all duration-500 ${errors.userphone ? 'border-red-500 focus:ring-red-500' : field.value ? 'border-green-500 focus:ring-green-500' : 'border-[#9C9C9C33] focus:ring-[#2EAA7B]'}`}
+                                        className={`w-full px-[18px] py-[17px] border-2 bg-[#EEEEEE80] rounded-[14px] focus:outline-none text-[16px] font-semibold leading-[130%] transition-all duration-500 ${errors.userphone ? 'border-red-500 focus:ring-red-500' : field.value ? 'border-green-500 focus:ring-green-500' : 'border-[#9C9C9C33] focus:ring-[#2EAA62]'}`}
                                     />
                                 )}
                             />
@@ -144,7 +144,7 @@ export const LoginPage = () => {
                                             errorMessage={t(errors.userpassword?.message || "")}
                                             type={isPasswordVisible ? "text" : "password"}
                                             placeholder={t("Пароль")}
-                                            className={`w-full px-[18px] py-[17px] border-2 bg-[#EEEEEE80] rounded-[14px] focus:outline-none text-[16px] font-semibold leading-[130%] transition-all duration-500 ${errors.userpassword ? 'border-red-500 focus:ring-red-500' : field.value ? 'border-green-500 focus:ring-green-500' : 'border-[#9C9C9C33] focus:ring-[#2EAA7B]'}`}
+                                            className={`w-full px-[18px] py-[17px] border-2 bg-[#EEEEEE80] rounded-[14px] focus:outline-none text-[16px] font-semibold leading-[130%] transition-all duration-500 ${errors.userpassword ? 'border-red-500 focus:ring-red-500' : field.value ? 'border-green-500 focus:ring-green-500' : 'border-[#9C9C9C33] focus:ring-[#2EAA62]'}`}
                                         />
                                         <span
                                             onClick={togglePasswordVisibility}
@@ -158,7 +158,7 @@ export const LoginPage = () => {
                             <Button
                                 type="submit"
                                 disabled={!isValid}
-                                className={`w-full h-[56px] text-white rounded-2xl font-bold transition-all duration-500 ${isValid ? 'bg-[#2EAA7B]' : 'bg-gray-300 cursor-not-allowed'}`}
+                                className={`w-full h-[56px] text-white rounded-2xl font-bold transition-all duration-500 ${isValid ? 'bg-[#2EAA62]' : 'bg-gray-300 cursor-not-allowed'}`}
                             >
                                 {t("Войти")}
                             </Button>
@@ -175,13 +175,13 @@ export const LoginPage = () => {
                                 className="w-full text-center text-[16px] font-inter text-[#232323] leading-[130%] mt-10 transition-all duration-300">
                                 {t("Еще нет аккаунта?")}
                                 <Applink to='/register'
-                                         className="text-[#2EAA7B] hover:underline ml-1 font-semibold transition duration-500">{t("Зарегистрироваться")}</Applink>
+                                         className="text-[#2EAA62] hover:underline ml-1 font-semibold transition duration-500">{t("Зарегистрироваться")}</Applink>
                             </Paragraph>
                             <Paragraph
                                 className="w-full text-center text-[16px] font-inter text-[#232323] leading-[130%] mt-4 transition-all duration-300">
                                 {t("Забыли пароль?")}
                                 <Applink to='/password-reset'
-                                         className="text-[#2EAA7B] hover:underline ml-1 font-semibold transition duration-500">{t("Восстановить")}</Applink>
+                                         className="text-[#2EAA62] hover:underline ml-1 font-semibold transition duration-500">{t("Восстановить")}</Applink>
                             </Paragraph>
                         </div>
                     </div>

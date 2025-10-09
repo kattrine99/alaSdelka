@@ -63,14 +63,27 @@ export const Header: React.FC<HeaderProps> = ({
 
     function onLangChange(newLang: "ru" | "uz") {
         setLang(newLang);
-        const currentPath = location.pathname.split("/").slice(2).join("/");
-        if (newLang === 'uz') {
-            // Если язык узбекский, добавляем префикс /uz
-            navigate(`/${newLang}/${currentPath}`);
-        } else {
-            navigate(`/${currentPath}`);
-        }
+
+        const { pathname, search, hash } = location;
+        // Разбиваем путь и убираем пустые элементы
+        const segments = pathname.split("/").filter(Boolean);
+
+        // Если первый сегмент — язык, убираем его, иначе оставляем как есть
+        const withoutLang =
+            segments[0] === "ru" || segments[0] === "uz" ? segments.slice(1) : segments;
+
+        const currentPath = withoutLang.join("/"); // может быть "" для главной
+
+        // Формируем новый путь с учётом выбранного языка
+        const nextPath =
+            newLang === "uz"
+                ? currentPath ? `/uz/${currentPath}` : `/uz`
+                : currentPath ? `/${currentPath}` : `/`;
+
+        // Сохраняем query и hash
+        navigate(`${nextPath}${search ?? ""}${hash ?? ""}`);
     }
+
 
     useEffect(() => {
         const onNoticesPage = location.pathname === "/notices";
@@ -165,7 +178,7 @@ export const Header: React.FC<HeaderProps> = ({
                                     label: t(link.label),
                                 }))}
                                 className="flex  gap-x-8.5 max-2xl:gap-4 font-medium"
-                                linkClassName="font-inter leading-[100%] text-[#232323] text-[clamp(14px,1.4vw,18px)] hover:text-[#2EAA7B] transition-all duration-500"
+                                linkClassName="font-inter leading-[100%] text-[#232323] text-[clamp(14px,1.4vw,18px)] hover:text-[#2EAA62] transition-all duration-500"
                             />
                         </nav>
                     )}
@@ -219,13 +232,13 @@ export const Header: React.FC<HeaderProps> = ({
                                 <div className="flex gap-2">
                                     <Applink
                                         to="/login"
-                                        className="border border-[#31B683] rounded-[10px] px-5 py-3 hover:bg-[#2EAA7B] hover:text-white text-sm font-medium transition duration-600"
+                                        className="border border-[#2EAA62] rounded-[10px] px-5 py-3 hover:bg-[#2EAA62] hover:text-white text-sm font-medium transition duration-600"
                                     >
                                         {t("Войти")}
                                     </Applink>
                                     {/* <Applink
                                         to="/register"
-                                        className="bg-[#2EAA7B] text-white px-5 py-3 rounded-[10px] hover:bg-[#31B683] text-sm font-medium transition duration-600"
+                                        className="bg-[#2EAA62] text-white px-5 py-3 rounded-[10px] hover:bg-[#2EAA62] text-sm font-medium transition duration-600"
                                     >
                                         {t("Зарегистрироваться")}
                                     </Applink> */}
@@ -248,7 +261,7 @@ export const Header: React.FC<HeaderProps> = ({
                             className="w-10 h-10 flex items-center justify-center bg-[#D7F4EC] rounded-xl"
                             onClick={() => setIsMobileMenuOpen(prev => !prev)}
                         >
-                            <RxHamburgerMenu className="text-[#2EAA7B] w-6 h-6 outline-none"/>
+                            <RxHamburgerMenu className="text-[#2EAA62] w-6 h-6 outline-none"/>
                         </button>
                     </div>
                 </div>
@@ -264,7 +277,7 @@ export const Header: React.FC<HeaderProps> = ({
                             }))}
                             onClick={() => setIsMobileMenuOpen(false)}  // Закрываем меню при клике
                             className={"flex-col gap-4" + (isMobileUI ? ' hidden' : ' flex')}
-                            linkClassName={"text-[#232323] font-inter text-lg hover:text-[#2EAA7B]"}
+                            linkClassName={"text-[#232323] font-inter text-lg hover:text-[#2EAA62]"}
                         />
                         {/* Язык и Валюта */}
                         <div className="flex flex-col gap-3">
@@ -328,12 +341,12 @@ export const Header: React.FC<HeaderProps> = ({
                                     navigate(`/${lang}/login`);
                                     setIsMobileMenuOpen(false);
                                 }}
-                                        className="border border-[#31B683] rounded-[10px] px-5 py-3 text-center hover:bg-[#2EAA7B] hover:text-white text-sm font-medium transition duration-600"
+                                        className="border border-[#2EAA62] rounded-[10px] px-5 py-3 text-center hover:bg-[#2EAA62] hover:text-white text-sm font-medium transition duration-600"
                                 >
                                     {t("Войти")}
                                 </Button>
                                 {/* <Button onClick={() => { navigate(`/${lang}/register`); setIsMobileMenuOpen(false); }}
-                                    className="bg-[#2EAA7B] text-white px-5 py-3 rounded-[10px] text-center hover:bg-[#31B683] text-sm font-medium transition duration-600"
+                                    className="bg-[#2EAA62] text-white px-5 py-3 rounded-[10px] text-center hover:bg-[#2EAA62] text-sm font-medium transition duration-600"
                                 >
                                     {t("Зарегистрироваться")}
                                 </Button> */}
@@ -343,7 +356,7 @@ export const Header: React.FC<HeaderProps> = ({
                         <div className="flex flex-wrap items-center justify-center md:justify-start gap-4">
                             <Paragraph
                                 className="flex items-center gap-2 text-[#232323] font-openSans text-sm md:text-base">
-                                <IoIosMail className="text-[#2EAA7B]"/>
+                                <IoIosMail className="text-[#2EAA62]"/>
                                 <a href="mailto:info@invin.uz">info@invin.uz</a>
 
                             </Paragraph>

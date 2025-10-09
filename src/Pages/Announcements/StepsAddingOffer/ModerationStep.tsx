@@ -15,7 +15,7 @@ export const ModerationStep = () => {
                 onClick={() =>
                     navigate(`/${lng}/announcements`, { state: { newOffer: true } })
                 }
-                className="bg-[#2EAA7B] text-white px-6 py-3 rounded-md"
+                className="bg-[#2EAA62] text-white px-6 py-3 rounded-md"
             >
                 Спасибо!
             </Button>

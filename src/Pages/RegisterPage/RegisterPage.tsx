@@ -227,7 +227,7 @@ export const RegistrationPage = () => {
                                             </div>)} />
                                     </form>
                                     <Button type="submit" onClick={handleSubmit(handleRegistration)} disabled={!isValid}
-                                        className={`w-full mt-6 h-[56px] rounded-2xl text-[16px] text-white ${isValid ? "bg-[#2EAA7B]" : "bg-[#AFAFAF] cursor-not-allowed"}`}>
+                                        className={`w-full mt-6 h-[56px] rounded-2xl text-[16px] text-white ${isValid ? "bg-[#2EAA62]" : "bg-[#AFAFAF] cursor-not-allowed"}`}>
                                         {t("Зарегистрироваться")}
                                     </Button>
                                     <div className='w-full flex flex-col text-center items-center mb-10'>
@@ -242,7 +242,7 @@ export const RegistrationPage = () => {
                                             className="text-[16px] font-inter text-[#232323] leading-[130%] mt-10 transition-all duration-300">
                                             {t("У вас уже есть аккаунт?")}
                                             <Applink to='/login'
-                                                className="text-[#2EAA7B] hover:underline ml-1 font-semibold transition duration-500">{t("Авторизоваться")}</Applink>
+                                                className="text-[#2EAA62] hover:underline ml-1 font-semibold transition duration-500">{t("Авторизоваться")}</Applink>
                                         </Paragraph>
                                     </div>
 
@@ -285,7 +285,7 @@ export const RegistrationPage = () => {
                                             onKeyDown={(e) => handleKeyDown(e, index)}
                                             autoFocus={index === 0}
                                             className={`w-15 h-18 text-center text-[32px] rounded-[10px] border ${codeError ? "border-red-500" : "border-[#D9D9D9]"
-                                                } focus:outline-none focus:border-[#2EAA7B] font-semibold text-black`}
+                                                } focus:outline-none focus:border-[#2EAA62] font-semibold text-black`}
                                             type="text"
                                             isError={false}
                                         />
@@ -309,7 +309,7 @@ export const RegistrationPage = () => {
                                 <Button
                                     onClick={handleVerifyCode}
                                     disabled={code.length !== 4}
-                                    className={`w-full h-14 rounded-2xl text-[16px] text-white ${code.length === 4 ? "bg-[#2EAA7B]" : "bg-[#AFAFAF] cursor-not-allowed"}`}
+                                    className={`w-full h-14 rounded-2xl text-[16px] text-white ${code.length === 4 ? "bg-[#2EAA62]" : "bg-[#AFAFAF] cursor-not-allowed"}`}
                                 >
                                     {t("Подтвердить")}
                                 </Button>
@@ -331,7 +331,7 @@ export const RegistrationPage = () => {
                     message={successMessage}
                     onClose={() => setShowSuccessModal(false)}
                     actions={<Button
-                        className="w-full text-center py-4 hover:border hover:bg-white hover:text-[#2EAA7B] hover:border-[#2EAA7B] text-white bg-[#2EAA7B] rounded-[14px]"
+                        className="w-full text-center py-4 hover:border hover:bg-white hover:text-[#2EAA62] hover:border-[#2EAA62] text-white bg-[#2EAA62] rounded-[14px]"
                         onClick={() => setShowSuccessModal(false)}
                     >
                         {t("Подтвердить")}

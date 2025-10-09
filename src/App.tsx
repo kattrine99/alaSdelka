@@ -93,7 +93,7 @@ const Layout = () => {
           message="Ваша сессия истекла. Пожалуйста, войдите снова."
           onClose={handleCloseModal}
           actions={
-            <Button onClick={handleCloseModal} className="bg-[#2EAA7B] text-white px-6 py-2 rounded-lg">
+            <Button onClick={handleCloseModal} className="bg-[#2EAA62] text-white px-6 py-2 rounded-lg">
               Войти
             </Button>
           }

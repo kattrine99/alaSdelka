@@ -466,7 +466,7 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
                         {files.map((file, idx) => (
                             <div
                                 key={idx}
-                                className="relative border border-dashed border-[#2EAA7B] rounded-[16px] px-6 py-4 w-[260px] h-[120px] flex flex-col items-center justify-center text-center"
+                                className="relative border border-dashed border-[#2EAA62] rounded-[16px] px-6 py-4 w-[260px] h-[120px] flex flex-col items-center justify-center text-center"
                             >
                                 <button
                                     onClick={() => handleRemove(idx)}
@@ -483,10 +483,10 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
                         <button
                             type="button"
                             onClick={() => inputRef.current?.click()}
-                            className="border border-dashed border-[#2EAA7B] rounded-[16px] px-6 py-4 w-[260px] h-[120px] flex flex-col items-center justify-center text-center"
+                            className="border border-dashed border-[#2EAA62] rounded-[16px] px-6 py-4 w-[260px] h-[120px] flex flex-col items-center justify-center text-center"
                         >
                             <div className="bg-[#EBF9F5] w-9 h-9 rounded-full flex items-center justify-center mb-2">
-                                <HiPlus className="text-[#2EAA7B] text-lg" />
+                                <HiPlus className="text-[#2EAA62] text-lg" />
                             </div>
                             <p className="text-[#232323] font-medium">{t("Загрузить документ")}</p>
                             <p className="text-[#667085] text-sm">{t("Формат")}: PDF, Excel</p>
@@ -542,7 +542,7 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
                         {photos.map((file, idx) => (
                             <div
                                 key={idx}
-                                className="relative border border-dashed border-[#2EAA7B] rounded-[16px] px-6 py-4 w-[260px] h-[120px] flex flex-col items-center justify-center text-center"
+                                className="relative border border-dashed border-[#2EAA62] rounded-[16px] px-6 py-4 w-[260px] h-[120px] flex flex-col items-center justify-center text-center"
                             >
                                 <button
                                     onClick={() => handleImageRemove(idx)}
@@ -559,10 +559,10 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
                         <button
                             type="button"
                             onClick={() => imageInputRef.current?.click()}
-                            className="border border-dashed border-[#2EAA7B] rounded-[16px] px-6 py-4 w-[260px] h-[120px] flex flex-col items-center justify-center text-center"
+                            className="border border-dashed border-[#2EAA62] rounded-[16px] px-6 py-4 w-[260px] h-[120px] flex flex-col items-center justify-center text-center"
                         >
                             <div className="bg-[#EBF9F5] w-9 h-9 rounded-full flex items-center justify-center mb-2">
-                                <HiPlus className="text-[#2EAA7B] text-lg" />
+                                <HiPlus className="text-[#2EAA62] text-lg" />
                             </div>
                             <p className="text-[#232323] font-medium">{t("Загрузить изображение")}</p>
                             <p className="text-[#667085] text-sm">620×220 px</p>
@@ -607,7 +607,7 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
 
                     <button
                         onClick={handleAddLink}
-                        className="text-[#2EAA7B] font-inter font-semibold text-[16px] leading-[130%] underline text-left w-max mt-2"
+                        className="text-[#2EAA62] font-inter font-semibold text-[16px] leading-[130%] underline text-left w-max mt-2"
                     >
                         + {t("Добавить доп. канал")}
                     </button>
@@ -723,7 +723,7 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
                                 isError={false}
                                 checked={selectedConveniences.includes(id)}
                                 onChange={() => toggleConvenience(id)}
-                                className="appearance-none w-[44px] h-[24px] bg-gray-300 rounded-full relative transition-all duration-300 checked:bg-[#2EAA7B]
+                                className="appearance-none w-[44px] h-[24px] bg-gray-300 rounded-full relative transition-all duration-300 checked:bg-[#2EAA62]
             before:content-[''] before:absolute before:top-[2px] before:left-[2px] before:w-[20px] before:h-[20px]
             before:bg-white before:rounded-full before:transition-all before:duration-300 checked:before:translate-x-[20px]"
                             />
@@ -737,7 +737,7 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
                 <div className="mt-10">
                     <Button
                         onClick={handleBack}
-                        className={`flex items-center gap-2 bg-[#2EAA7B] text-white px-6 py-2 rounded-md`}
+                        className={`flex items-center gap-2 bg-[#2EAA62] text-white px-6 py-2 rounded-md`}
                     >
                         <FiChevronLeft /> Назад
                     </Button>
@@ -746,7 +746,7 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
                     <Button
                         onClick={handleSubmit}
                         disabled={isNextDisabled()}
-                        className={`flex items-center gap-2 ${isNextDisabled() ? "bg-gray-300 cursor-not-allowed" : "bg-[#2EAA7B] text-white"
+                        className={`flex items-center gap-2 ${isNextDisabled() ? "bg-gray-300 cursor-not-allowed" : "bg-[#2EAA62] text-white"
                             } px-6 py-2 rounded-md`}
                     >
                         {t("Дальше")} <FiChevronRight />

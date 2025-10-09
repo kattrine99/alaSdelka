@@ -21,11 +21,11 @@ export const Footer: React.FC<FooterProps> = ({ showSmallFooter }) => {
                         <NavLinks
                             links={categories}
                             className="flex flex-wrap gap-x-8.5 font-medium"
-                            linkClassName="font-inter leading-[100%] text-[#232323] text-[clamp(14px,1.4vw,18px)] relative hover:text-[#2EAA7B] transition-all duration-500 " />
+                            linkClassName="font-inter leading-[100%] text-[#232323] text-[clamp(14px,1.4vw,18px)] relative hover:text-[#2EAA62] transition-all duration-500 " />
                     </div>
                     <div className="md:flex gap-6 text-sm ">
                         <Paragraph className="flex items-center gap-1 text-[#232323] font-openSans font-normal text-[16px] leading-[125%]">
-                            <IoIosMail className="text-[#2EAA7B] text-base" />
+                            <IoIosMail className="text-[#2EAA62] text-base" />
                             info@invin.uz
                         </Paragraph>
                     </div>
@@ -81,7 +81,8 @@ export const Footer: React.FC<FooterProps> = ({ showSmallFooter }) => {
 
                         {/* КОПИРАЙТ */}
                         <Paragraph className="text-[#232323] text-[14px] sm:text-[16px] text-center lg:text-right">
-                            © INVESTin 2025
+                            {/*© INVESTin 2025*/}
+                            <a href="mailto:info@invin.uz">info@invin.uz</a>
                         </Paragraph>
                     </div>
                 </div>

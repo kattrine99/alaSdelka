@@ -2,7 +2,7 @@ import { Header, Heading, Paragraph, NavLinks, CardSection, FilterBar, categorie
 import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ShopIcon from '../../assets/shop.svg?react';
-import InvestInIcon from '../../assets/investin_v15.svg?react';
+// import InvestInIcon from '../../assets/investin_v15.svg?react';
 import { useGetFavoritesQuery, useGetHomeOffersQuery, useGetCurrencyRateQuery } from "../../Store/api/Api";
 import { useGetMainStatisticsQuery } from "../../Store/api/Api";
 import { FiltersState } from "../../utils/variables";
@@ -13,7 +13,7 @@ import { useTranslation } from "../../../public/Locales/context/TranslationConte
 import { useSelector } from "react-redux";
 import { RootState } from "../../Store/store";
 import { MetaTags } from "../../components/MetaTags";
-import { FaArrowRight } from "react-icons/fa6";
+// import { FaArrowRight } from "react-icons/fa6";
 
 export const MainPage = () => {
     const [selectedCategory, setSelectedCategory] = useState<"Бизнес" | "Франшиза" | "Стартапы" | "Инвестиции">("Бизнес");

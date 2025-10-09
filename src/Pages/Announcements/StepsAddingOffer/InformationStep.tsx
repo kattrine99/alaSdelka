@@ -739,7 +739,7 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
                         onClick={handleBack}
                         className={`flex items-center gap-2 bg-[#2EAA62] text-white px-6 py-2 rounded-md`}
                     >
-                        <FiChevronLeft /> Назад
+                        <FiChevronLeft /> {t("Назад")}
                     </Button>
                 </div>
                 <div className="mt-10">

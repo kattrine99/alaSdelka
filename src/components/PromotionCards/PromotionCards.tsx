@@ -112,10 +112,10 @@ export const PromotionCards = () => {
                                                 className="text-[#2EAA62] sm:w-2/3 md:w-3/4 lg:w-2/3 w-full border border-[#2EAA62] px-5 h-11 rounded-md"
                                                 onClick={() => navigate(`/${lang}/statistics/${offer.slug}`)}
                                             >
-                                                Посмотреть статистику
+                                                {t("Посмотреть статистику")}
                                             </Button>
-                                            <div className="bg-[#FF1D1D] sm:w-2/3 md:w-3/4 lg:w-2/3 w-full text-white px-5 py-1 rounded-md flex justify-center items-center gap-2 font-semibold">
-                                                Идёт продвижение (осталось {offer.paid_offer?.promotion_days_left} дней)
+                                            <div className="bg-[#FF1D1D] h-11 sm:w-2/3 md:w-3/4 lg:w-2/3 w-full text-white px-5 py-1 rounded-md flex justify-center items-center gap-2 font-semibold">
+                                                {t("Идёт продвижение (осталось ")}{offer.paid_offer?.promotion_days_left} {t("дней)")}
                                                 <FireIcon className="w-5 h-5 text-white" />
                                             </div>
                                         </div>

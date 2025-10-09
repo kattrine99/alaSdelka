@@ -108,31 +108,31 @@ export const StepsAddingOffer = () => {
                     onClose={() => setShowHelperModal(false)}
                     message={
                         <>
-                            <Heading level={2} text="Инструкция по размещению объявления" className="text-black mb-2" />
+                            <Heading level={2} text={t("Инструкция по размещению объявления")} className="text-black mb-2" />
                             <Paragraph className="mb-4 text-sm leading-[150%] text-[#667085]">
-                                Добро пожаловать! Вот как легко и быстро разместить свое объявление:
+                                 {t("Добро пожаловать! Вот как легко и быстро разместить свое объявление:")}
                             </Paragraph>
-                            <Heading level={3} text="Шаг 1. Раздел объявления" className="text-black mb-2" />
+                            <Heading level={3} text= {t("Шаг 1. Раздел объявления")} className="text-black mb-2" />
                             <Paragraph className="text-sm leading-[150%] text-[#667085] mb-2">
-                                Выберите, что вы хотите разместить:
+                                 {t("Выберите, что вы хотите разместить:")}
                                 <ul>
-                                    <li><b>Бизнес</b> — продажа или покупка готового бизнеса</li>
-                                    <li><b>Франшиза</b> — покупка или продажа франшизы</li>
-                                    <li><b>Стартап</b> — поиск инвестиций для стартапа</li>
-                                    <li><b>Инвестиции</b> — проекты для привлечения инвестиций</li>
+                                    <li><b> {t("Бизнес")}</b> {t("— продажа или покупка готового бизнеса")}</li>
+                                    <li><b>{t("Франшиза")}</b> {t("— покупка или продажа франшизы")}</li>
+                                    <li><b>{t("Стартап")}</b> {t("— поиск инвестиций для стартапа")}</li>
+                                    <li><b>{t("Инвестиции")}</b> {t("— проекты для привлечения инвестиций")}</li>
                                 </ul>
-                                Нажмите «Дальше».
+                                {t("Нажмите «Дальше»")}
                             </Paragraph>
-                            <Heading level={3} text="Шаг 2. Тип объявления" className="text-black mb-2" />
+                            <Heading level={3} text= {t("Шаг 2. Тип объявления")} className="text-black mb-2" />
                             <Paragraph className="text-sm leading-[150%] text-[#667085] mb-2">
-                                Выберите действие:
+                                {t("Выберите действие:")}
                                 <ul>
                                     <li><b>{t("Продать")}</b></li>
                                     <li><b>{t("Купить")}</b></li>
                                 </ul>
-                                {t("Нажмите «Дальше».")}
+                                {t("Нажмите «Дальше»")}
                             </Paragraph>
-                            <Heading level={3} text="Шаг 3. Информация" className="text-black mb-2" />
+                            <Heading level={3} text={t("Шаг 3. Информация")} className="text-black mb-2" />
                             <Paragraph className="text-sm leading-[150%] text-[#667085] mb-2">
                                 {t("Заполните поля:")}
                                 <ul>
@@ -150,13 +150,13 @@ export const StepsAddingOffer = () => {
                                 </ul>
                                 {t("Заполните все обязательные поля и жмите «Дальше».")}
                             </Paragraph>
-                            <Heading level={3} text="Шаг 4. Черновик" className="text-black mb-2" />
+                            <Heading level={3} text= {t("Шаг 4. Черновик")}  className="text-black mb-2" />
                             <Paragraph className="text-sm leading-[150%] text-[#667085] mb-2">
-                                Проверьте все данные. Можете сохранить как черновик или сразу перейти к публикации.
+                                {t("Проверьте все данные. Можете сохранить как черновик или сразу перейти к публикации.")}
                             </Paragraph>
-                            <Heading level={3} text="Шаг 5. Публикация" className="text-black mb-2" />
+                            <Heading level={3} text={t("Шаг 5. Публикация")}  className="text-black mb-2" />
                             <Paragraph className="text-sm leading-[150%] text-[#667085] mb-2">
-                                Если все верно — нажмите «<b>Опубликовать</b>». Ваше объявление станет видно потенциальным покупателям и инвесторам.
+                                {t("Если все верно — нажмите ")} «<b>{t("Опубликовать")}</b>».{t("Ваше объявление станет видно потенциальным покупателям и инвесторам.")}
                             </Paragraph>
                         </>
                     }
@@ -194,7 +194,7 @@ export const StepsAddingOffer = () => {
                                                 <div
                                                     className={`text-base font-semibold ${isActive || isCompleted ? "text-[#2EAA62]" : "text-[#667085]"}`}
                                                 >
-                                                    {s.title}
+                                                    {t(s.title)}
                                                 </div>
                                             </Button>
 
@@ -225,8 +225,8 @@ export const StepsAddingOffer = () => {
                                 {/* Step 0 - категория */}
                                 {step === 0 && (
                                     <div >
-                                        <Heading text={"Категория объявления"} level={2} className="font-inter font-semibold text-3xl text-[#101828] mb-1.5" />
-                                        <Paragraph className="font-inter text-[16px] text-[#667085] mb-6">Выберите категорию объявления</Paragraph>
+                                        <Heading text={t("Категория объявления")} level={2} className="font-inter font-semibold text-3xl text-[#101828] mb-1.5" />
+                                        <Paragraph className="font-inter text-[16px] text-[#667085] mb-6">{t("Выберите категорию объявления")} </Paragraph>
 
                                         <div className="grid grid-cols-2 xl:grid-cols-4 max-sm:flex max-sm:flex-col gap-3 text-center">
 
@@ -241,7 +241,7 @@ export const StepsAddingOffer = () => {
                                                         handleNext();
                                                     }}
                                                 >
-                                                    <Paragraph className="font-semibold">{offerTypeMap[type]}</Paragraph>
+                                                    <Paragraph className="font-semibold"> {t(offerTypeMap[type])} </Paragraph>
                                                 </div>
                                             ))}
                                         </div>
@@ -251,8 +251,8 @@ export const StepsAddingOffer = () => {
                                 {/* Step 1 — тип */}
                                 {step === 1 && (
                                     <div>
-                                        <Heading text={"Категория объявления"} level={2} className="font-inter font-semibold text-3xl text-[#101828] mb-1.5" />
-                                        <Paragraph className="font-inter text-[16px] text-[#667085] mb-6">Выберите категорию объявления</Paragraph>
+                                        <Heading text={t("Категория объявления")} level={2} className="font-inter font-semibold text-3xl text-[#101828] mb-1.5" />
+                                        <Paragraph className="font-inter text-[16px] text-[#667085] mb-6">{t("Выберите категорию объявления")}</Paragraph>
                                         <div className="flex max-sm:flex-col gap-6 text-center ">
 
                                             {listingTypes.map((type, index) => (
@@ -265,8 +265,8 @@ export const StepsAddingOffer = () => {
                                                         handleNext();
                                                     }}
                                                 >
-                                                    <span className="text-[#2EAA62]">{ListingTypesIcons[index]}</span>
-                                                    <Paragraph className="font-semibold">{getListingTypeLabel(type)}</Paragraph>
+                                                    <span className="text-[#2EAA62]">{ListingTypesIcons[index]} </span>
+                                                    <Paragraph className="font-semibold"> {t(getListingTypeLabel(type))}</Paragraph>
                                                 </div>
                                             ))}
 
@@ -290,7 +290,7 @@ export const StepsAddingOffer = () => {
                                             disabled={isBackDisabled()}
                                             className={`flex items-center gap-2 ${isBackDisabled() ? "bg-gray-300 cursor-not-allowed" : "bg-[#2EAA62] text-white"} px-6 py-2 rounded-md`}
                                         >
-                                            <FiChevronLeft /> Назад
+                                            <FiChevronLeft /> {t("Назад")}
                                         </Button>
                                     </div>
                                 )}

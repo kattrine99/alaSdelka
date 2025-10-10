@@ -536,7 +536,7 @@ export const MainPage = () => {
                                             key={idx}
                                             className="w-full flex flex-col transition duration-300 ease-in-out bg-[#4f4f4f] text-white py-4 px-6 rounded-[12px] gap-0.5"
                                         >
-                                            <span className="font-openSans font-bold text-2xl max-sm:text-[14px] leading-[150%]">
+                                            <span className="font-openSans font-bold text-xl max-sm:text-[14px] leading-[150%]">
                                                 {lang === "uz" ? city.name_uz : city.name_ru}
                                             </span>
                                             <span className="font-Urbanist font-bold text-[40px] max-sm:text-[28px] leading-[150%]">

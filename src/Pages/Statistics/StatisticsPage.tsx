@@ -191,7 +191,7 @@ export const StatisticsPage = () => {
                         ]} />
                 </div>
                 <div className="mb-6">
-                    <Heading level={2} text={t("Статистика объявления")} className="font-inter font-bold text-xl leading-5 -space-x-[-0.5%]" />
+                    <Heading level={2} text={t("Статистика объявления")} className="font-inter font-bold text-[#4f4f4f] text-xl leading-5 -space-x-[-0.5%]" />
                 </div>
 
                 <div className="flex justify-start flex-wrap md:flex-nowrap gap-6 mb-12">
@@ -246,7 +246,7 @@ const StatsCard = ({ label, value, diff }: { label: string; value?: number; diff
 
     return (
         <div className="w-full py-3.5 border font-inter  border-[#2EAA62] rounded-xl text-center">
-            <Paragraph className="font-bold text-[15px] uppercase mb-1.5">{label}</Paragraph>
+            <Paragraph className="font-bold text-[#4f4f4f] text-[15px] uppercase mb-1.5">{label}</Paragraph>
             <Paragraph className="text-xl font-bold">{value ?? 0}</Paragraph>
             <Paragraph className={`font-inter text-[15px] leading-[100%] ${isPositive ? "text-[#2EAA62]" : "text-red-500"}`}>
                 {isPositive ? "↑" : "↓"} {Math.abs(diff ?? 0)} {t("за неделю")}

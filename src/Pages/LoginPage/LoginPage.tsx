@@ -115,7 +115,7 @@ export const LoginPage = () => {
                 <div className="w-full grid grid-cols-1 lg:grid-cols-2 container mx-auto px-4 xl:px-20 lg:px-10 md:px-4 transition-all duration-500">
                     <div
                         className="w-full flex flex-col items-start text-start transition-all duration-300">
-                        <Heading className="text-[32px] mb-[32px] font-inter font-bold text-[#4f4f4f]"
+                        <Heading className="text-[32px] mb-[32px] font-inter font-bold text-[#4f4f4f] "
                                  text={t('Вход в личный кабинет')} level={1}/>
                         <form onSubmit={handleSubmit(onSubmit)}
                               className="w-full flex flex-col gap-[clamp(14px,1.8vw,28px)]">
@@ -166,19 +166,19 @@ export const LoginPage = () => {
                         <div className='w-full flex flex-col items-center'>
                             <div className='w-[237px] border border-[#DFDFDF] mt-[38px]'></div>
                             {/*<div className="mt-[30px] w-full">*/}
-                            {/*    <Button className="w-[378px] h-[56px] flex items-center gap-x-3 justify-center bg-white border border-[#C9CCCF] rounded-2xl text-[#232323] font-semibold  font-inter leading-[24px] transition-all duration-500 hover:bg-gray-100 hover:shadow-lg active:">*/}
+                            {/*    <Button className="w-[378px] h-[56px] flex items-center gap-x-3 justify-center bg-white border border-[#C9CCCF] rounded-2xl text-[#4f4f4f]  font-semibold  font-inter leading-[24px] transition-all duration-500 hover:bg-gray-100 hover:shadow-lg active:">*/}
                             {/*        <img src="/images/google_icon.png" alt="Google" className="w-[24px] h-[24px]" />*/}
                             {/*        Войти с помощью Google*/}
                             {/*    </Button>*/}
                             {/*</div>*/}
                             <Paragraph
-                                className="w-full text-center text-[16px] font-inter text-[#232323] leading-[130%] mt-10 transition-all duration-300">
+                                className="w-full text-center text-[16px] font-inter text-[#4f4f4f]  leading-[130%] mt-10 transition-all duration-300">
                                 {t("Еще нет аккаунта?")}
                                 <Applink to='/register'
                                          className="text-[#2EAA62] hover:underline ml-1 font-semibold transition duration-500">{t("Зарегистрироваться")}</Applink>
                             </Paragraph>
                             <Paragraph
-                                className="w-full text-center text-[16px] font-inter text-[#232323] leading-[130%] mt-4 transition-all duration-300">
+                                className="w-full text-center text-[16px] font-inter text-[#4f4f4f]  leading-[130%] mt-4 transition-all duration-300">
                                 {t("Забыли пароль?")}
                                 <Applink to='/password-reset'
                                          className="text-[#2EAA62] hover:underline ml-1 font-semibold transition duration-500">{t("Восстановить")}</Applink>

@@ -173,7 +173,7 @@ export const AnnouncemntsPage = () => {
       )}
       <Header navLinksData={profileNavigate} />
       <div className="container mx-auto px-4 xl:px-20 lg:px-10 md:px-4 py-9 flex-1">
-        <Heading text={t("Мои объявления")} level={2} className="font-inter text-xl text-[#4f4f4f] font-bold leading-5 space-x-[-0.5%]" />
+        <Heading text={t("Мои объявления")} level={2} className="font-inter text-xl text-[#4f4f4f]  font-bold leading-5 space-x-[-0.5%]" />
 
         {isLoading ? (
           <div className="h-[400px] flex justify-center items-center">
@@ -289,14 +289,14 @@ export const AnnouncemntsPage = () => {
                         <div className="flex flex-col mb-11">
                           <Applink to={`/${offerTypeToUrlMap[offer.offer_type || 'category']}/card/${offer.slug}`} className="w-full hover:text-[#2EAA62]">
 
-                            <Paragraph className="text-[#232323] text-2xl font-inter font-bold mb-2">
+                            <Paragraph className="text-[#4f4f4f] text-2xl font-inter font-bold mb-2">
                               {formatPrice(offer.price)}
                             </Paragraph>
-                            <Paragraph className="text-[#232323] text-lg font-bold font-inter mb-3 ">{offer.title}</Paragraph>
+                            <Paragraph className="text-[#4f4f4f] text-lg font-bold font-inter mb-3 ">{offer.title}</Paragraph>
                           </Applink>
                           <div className='flex gap-1.5'>
                             <FaLocationDot className="text-[#2EAA62] w-4 h-4" />
-                            <Paragraph className="font-inter font-bold text-sm"><span className="font-medium">{t("Адрес:")} </span>
+                            <Paragraph className="font-inter font-bold text-[#4f4f4f] text-sm"><span className="font-medium">{t("Адрес:")} </span>
                               {offer?.address?.address ?? `${t("Адрес не указан")}`},
                               {lang === "uz"
                                 ? offer?.address?.city?.name_uz ?? ""
@@ -305,7 +305,7 @@ export const AnnouncemntsPage = () => {
                           </div>
                           <div className='flex gap-1.5 items-center'>
                             <GpsIcon className='w-4 h-4' />
-                            <Paragraph className="font-inter font-medium text-sm">{offer.area} {t("кв. м.")}</Paragraph>
+                            <Paragraph className="font-inter font-medium text-[#4f4f4f]  text-sm">{offer.area} {t("кв. м.")}</Paragraph>
 
                           </div>
                         </div>

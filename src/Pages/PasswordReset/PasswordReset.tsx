@@ -128,7 +128,7 @@ export const PasswordReset = () => {
                 <div className="w-full grid grid-cols-1 lg:grid-cols-2 container mx-auto px-4 xl:px-20 lg:px-10 md:px-4 transition-all duration-500">
                     <div
                         className="w-full flex flex-col items-start text-start transition-all duration-300">
-                        <Heading className="text-[32px] mb-[32px] font-inter font-bold text-[#4f4f4f]"
+                        <Heading className="text-[32px] mb-[32px] font-inter font-bold text-[#4f4f4f] "
                                  text={t('Смена пароля')} level={1}/>
                         {(step == 1) && (
                             <form onSubmit={handleRequestSubmit(onRequestSubmit)}
@@ -150,7 +150,7 @@ export const PasswordReset = () => {
                                 <Button
                                     type="submit"
                                     disabled={!requestIsValid}
-                                    className={`w-full h-[56px] text-white rounded-2xl font-bold transition-all duration-500 ${requestIsValid ? 'bg-[#2EAA62]' : 'bg-gray-300 cursor-not-allowed'}`}
+                                    className={`w-full h-[56px] text-white rounded-2xl font-bold text-[#4f4f4f] transition-all duration-500 ${requestIsValid ? 'bg-[#2EAA62]' : 'bg-gray-300 cursor-not-allowed'}`}
                                 >
                                     {t("Продолжить")}
                                 </Button>
@@ -216,7 +216,7 @@ export const PasswordReset = () => {
                                     <Button
                                         type="submit"
                                         disabled={!resetIsValid}
-                                        className={`w-full h-[56px] text-white rounded-2xl font-bold transition-all duration-500 ${resetIsValid ? 'bg-[#2EAA62]' : 'bg-gray-300 cursor-not-allowed'}`}
+                                        className={`w-full h-[56px] text-white rounded-2xl font-bold text-[#4f4f4f] transition-all duration-500 ${resetIsValid ? 'bg-[#2EAA62]' : 'bg-gray-300 cursor-not-allowed'}`}
                                     >
                                         {t("Сменить пароль")}
                                     </Button>

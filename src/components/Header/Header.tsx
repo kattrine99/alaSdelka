@@ -158,7 +158,7 @@ export const Header: React.FC<HeaderProps> = ({
         };
     }, [isMobileMenuOpen]);
     return (
-        <div className={"font-inter font-medium w-full bg-white shadow"}>
+        <div className={"font-inter font-medium text-[#4f4f4f]  w-full bg-white shadow"}>
             {/* Десктопный header */}
             <div className="hidden lg:block bg-white py-[20px] border-b border-[#E9E9E9]">
                 <div className="container mx-auto px-4 lg:px-10 flex justify-between items-center xl:px-20 md:px-4 transition duration-500 ease-in-out">
@@ -177,8 +177,8 @@ export const Header: React.FC<HeaderProps> = ({
                                     ...link,
                                     label: t(link.label),
                                 }))}
-                                className="flex  gap-x-8.5 max-2xl:gap-4 font-medium"
-                                linkClassName="font-inter leading-[100%] text-[#232323] text-[clamp(14px,1.4vw,18px)] hover:text-[#2EAA62] transition-all duration-500"
+                                className="flex  gap-x-8.5 max-2xl:gap-4 font-medium text-[#4f4f4f] "
+                                linkClassName="font-inter leading-[100%] text-[#4f4f4f]  text-[clamp(14px,1.4vw,18px)] hover:text-[#2EAA62] transition-all duration-500"
                             />
                         </nav>
                     )}
@@ -277,7 +277,7 @@ export const Header: React.FC<HeaderProps> = ({
                             }))}
                             onClick={() => setIsMobileMenuOpen(false)}  // Закрываем меню при клике
                             className={"flex-col gap-4" + (isMobileUI ? ' hidden' : ' flex')}
-                            linkClassName={"text-[#232323] font-inter text-lg hover:text-[#2EAA62]"}
+                            linkClassName={"text-[#4f4f4f]  font-inter text-lg hover:text-[#2EAA62]"}
                         />
                         {/* Язык и Валюта */}
                         <div className="flex flex-col gap-3">
@@ -355,7 +355,7 @@ export const Header: React.FC<HeaderProps> = ({
 
                         <div className="flex flex-wrap items-center justify-center md:justify-start gap-4">
                             <Paragraph
-                                className="flex items-center gap-2 text-[#232323] font-openSans text-sm md:text-base">
+                                className="flex items-center gap-2 text-[#4f4f4f]  font-openSans text-sm md:text-base">
                                 <IoIosMail className="text-[#2EAA62]"/>
                                 <a href="mailto:info@invin.uz">info@invin.uz</a>
 

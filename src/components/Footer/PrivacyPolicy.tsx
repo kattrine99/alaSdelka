@@ -12,7 +12,7 @@ const PrivacyPolicy = () => {
                         { label: "Политика конфиденциальности" }
                     ]}
                 />
-                <Heading className="text-2xl font-bold my-4" text={"Политика конфиденциальности"} level={2}></Heading>
+                <Heading className="text-2xl font-bold text-[#4f4f4f] my-4" text={"Политика конфиденциальности"} level={2}></Heading>
                 <Paragraph className="text-base leading-7 text-gray-700 text-justify">
                     Настоящая Политика конфиденциальности определяет порядок сбора, хранения, обработки и использования персональных данных Пользователей сайта [Название проекта] (далее - "Сайт").
                     <br />

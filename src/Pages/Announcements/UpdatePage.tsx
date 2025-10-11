@@ -67,7 +67,7 @@ export const UpdatePage = () => {
                                 {t("Перейти к списку")}
                             </Button>
                         }
-                        HeadingClassName={"font-intere font-bold text-xl"}
+                        HeadingClassName={"font-intere font-bold text-[#4f4f4f] text-xl"}
                     />
                 )}
 

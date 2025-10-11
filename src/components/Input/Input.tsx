@@ -55,7 +55,7 @@ export const Input = forwardRef<HTMLInputElement | HTMLTextAreaElement, InputPro
                         value={value}
                         onChange={onChange}
                         maxLength={3000}
-                        className={`bg-[#F0F1F2]/50 resize-none rounded-[14px] outline-none py-[14px] px-[18px] text-[#101828] font-inter text-sm placeholder:text-[#8A8A8A] w-full h-[150px] ${borderColor}`}
+                        className={`bg-[#F0F1F2]/50 resize-none rounded-[14px] outline-none py-[14px] px-[18px] text-[#4f4f4f]  font-inter text-sm placeholder:text-[#8A8A8A] w-full h-[150px] ${borderColor}`}
                         {...(props as TextareaHTMLAttributes<HTMLTextAreaElement>)}
                     />
                     {isError && (

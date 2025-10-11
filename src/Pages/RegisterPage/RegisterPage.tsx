@@ -184,7 +184,7 @@ export const RegistrationPage = () => {
                         <div className="w-full grid grid-cols-1 lg:grid-cols-2 container mx-auto ppx-4 xl:px-20 lg:px-10 md:px-4 lg:py-15 transition-all duration-500">
                             <div
                                 className="w-full flex max-xl:mt-8 flex-col items-start text-start transition-all duration-300">
-                                <Heading level={2} className="text-[32px] max-xl:text-3xl max-sm:text-2xl font-inter mb-7 font-bold text-black"
+                                <Heading level={2} className="text-[32px] max-xl:text-3xl max-sm:text-2xl font-inter mb-7 font-bold text-[#4f4f4f] "
                                     text={""}>{t("Зарегистрироваться")}</Heading>
                                 <div className="w-full ">
                                     <form className="flex flex-col gap-y-3.5">
@@ -233,13 +233,13 @@ export const RegistrationPage = () => {
                                     <div className='w-full flex flex-col text-center items-center mb-10'>
                                         <div className='w-[237px] border border-[#DFDFDF] mt-[38px]'></div>
                                         {/*<div className="mt-[30px] justify-center">*/}
-                                        {/*    <Button className="w-94.5 h-[56px] flex items-center gap-x-3 justify-center bg-white border border-[#C9CCCF] rounded-2xl text-[#232323] font-semibold  font-inter leading-[24px] transition-all duration-500 hover:bg-gray-100 hover:shadow-lg">*/}
+                                        {/*    <Button className="w-94.5 h-[56px] flex items-center gap-x-3 justify-center bg-white border border-[#C9CCCF] rounded-2xl text-[#4f4f4f]  font-semibold  font-inter leading-[24px] transition-all duration-500 hover:bg-gray-100 hover:shadow-lg">*/}
                                         {/*        <img src="/images/google_icon.png" alt="Google" className="w-6 h-6" />*/}
                                         {/*        Зарегистрироваться через Google*/}
                                         {/*    </Button>*/}
                                         {/*</div>*/}
                                         <Paragraph
-                                            className="text-[16px] font-inter text-[#232323] leading-[130%] mt-10 transition-all duration-300">
+                                            className="text-[16px] font-inter text-[#4f4f4f]  leading-[130%] mt-10 transition-all duration-300">
                                             {t("У вас уже есть аккаунт?")}
                                             <Applink to='/login'
                                                 className="text-[#2EAA62] hover:underline ml-1 font-semibold transition duration-500">{t("Авторизоваться")}</Applink>
@@ -258,10 +258,10 @@ export const RegistrationPage = () => {
                     <div className="grid grid-cols-1 lg:grid-cols-2 text-center lg:pt-20 w-full">
                         <div className="w-full p-[clamp(30px,4vw,70px)] flex flex-col items-start text-start transition-all duration-300">
                             <div className="flex gap-7 items-center mb-[28px]">
-                                <Button onClick={() => setStep(1)} className="hidden md:block text-black outline-none">
+                                <Button onClick={() => setStep(1)} className="hidden md:block text-[#4f4f4f]  outline-none">
                                     <GoArrowLeft className="w-6 h-6" />
                                 </Button>
-                                <Heading level={2} className="md:text-3xl text-2xl text-center font-inter font-bold text-black"
+                                <Heading level={2} className="md:text-3xl text-2xl text-center font-inter font-bold text-[#4f4f4f] "
                                     text={""}>
                                     {t("Мы отправили вам код для подтверждения аккаунта на номер")}
                                 </Heading>
@@ -269,7 +269,7 @@ export const RegistrationPage = () => {
                             <div className="mx-auto flex flex-col items-center gap-6">
                                 <p className="text-sm text-gray-500 w-full text-left">
                                     {t("Введите код, отправленный на номер")} <span
-                                        className="text-black font-semibold">{maskedPhone}</span>
+                                        className="text-[#4f4f4f]  font-semibold">{maskedPhone}</span>
                                 </p>
 
                                 <div className="flex gap-4 justify-between w-full">
@@ -285,7 +285,7 @@ export const RegistrationPage = () => {
                                             onKeyDown={(e) => handleKeyDown(e, index)}
                                             autoFocus={index === 0}
                                             className={`w-15 h-18 text-center text-[32px] rounded-[10px] border ${codeError ? "border-red-500" : "border-[#D9D9D9]"
-                                                } focus:outline-none focus:border-[#2EAA62] font-semibold text-black`}
+                                                } focus:outline-none focus:border-[#2EAA62] font-semibold text-[#4f4f4f] `}
                                             type="text"
                                             isError={false}
                                         />
@@ -313,7 +313,7 @@ export const RegistrationPage = () => {
                                 >
                                     {t("Подтвердить")}
                                 </Button>
-                                <Button onClick={() => setStep(1)} className="block md:hidden text-black outline-none w-full h-14 rounded-2xl text-[16px] ">
+                                <Button onClick={() => setStep(1)} className="block md:hidden text-[#4f4f4f]  outline-none w-full h-14 rounded-2xl text-[16px] ">
                                     {t("Назад")}
                                 </Button>
                             </div>
@@ -336,7 +336,7 @@ export const RegistrationPage = () => {
                     >
                         {t("Подтвердить")}
                     </Button>}
-                    HeadingClassName={"font-bold font-inter text-xl"}
+                    HeadingClassName={"font-bold text-[#4f4f4f] font-inter text-xl"}
                     ModalClassName="w-115" />
             )}
         </>

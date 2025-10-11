@@ -134,7 +134,7 @@ export const ProfilePage = () => {
                     ModalClassName="w-100 p-9"
                     showCloseButton={true}
                     onClose={() => setShowLogoutConfirm(false)}
-                    HeadingClassName="font-inter font-semibold text-[#101828] mt-3 text-3xl leading-[44px]"
+                    HeadingClassName="font-inter font-semibold text-[#4f4f4f]  mt-3 text-3xl leading-[44px]"
                     actions={
                         <div className="flex gap-4 mt-6 ">
                             <Button
@@ -160,7 +160,7 @@ export const ProfilePage = () => {
                     ModalClassName="w-100 p-9"
                     showCloseButton={true}
                     onClose={() => setShowDeleteAccountConfirm(false)}
-                    HeadingClassName="font-inter font-semibold text-[#101828] mt-3 text-3xl leading-[44px]"
+                    HeadingClassName="font-inter font-semibold text-[#4f4f4f]  mt-3 text-3xl leading-[44px]"
                     actions={
                         <div className="flex gap-4 mt-6 ">
                             <Button
@@ -186,7 +186,7 @@ export const ProfilePage = () => {
                     ModalClassName='w-100 p-9'
                     showCloseButton={true}
                     onClose={() => setShowSuccess(false)}
-                    HeadingClassName={"font-inter font-semibold text-[#101828] text-3xl leading-[44px]"} />
+                    HeadingClassName={"font-inter font-semibold text-[#4f4f4f]  text-3xl leading-[44px]"} />
             )}
             <Header navLinksData={profileNavigate} />
             <div className="w-full container mx-auto px-4 xl:px-20 lg:px-10 md:px-4 mt-6 flex-1">
@@ -217,7 +217,7 @@ export const ProfilePage = () => {
                                     </div>
 
                                     <div className="flex flex-col gap-2 w-full">
-                                        <Paragraph className="font-inter font-medium text-xl leading-7  md:text-left tracking-[-1%]">
+                                        <Paragraph className="font-inter font-medium text-[#4f4f4f]  text-xl leading-7  md:text-left tracking-[-1%]">
                                             {data.name}
                                         </Paragraph>
                                         <Paragraph className="font-inter font-semibold text-[14px] md:text-left text-[#667085] leading-5">
@@ -260,7 +260,7 @@ export const ProfilePage = () => {
                             </div>
                         )}
 
-                        <Heading className="text-[#101828] font-inter font-semibold text-xl leading-7 mb-3.5" text={t("Основная информация")} level={3} />
+                        <Heading className="text-[#4f4f4f]  font-inter font-semibold text-xl leading-7 mb-3.5" text={t("Основная информация")} level={3} />
 
                         <div className="flex flex-col gap-y-6">
                             <div className="flex flex-col">

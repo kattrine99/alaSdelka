@@ -86,21 +86,21 @@ export const PromotionCards = () => {
                                     {/* Информация */}
                                     <div className="flex-1 flex flex-col justify-between">
                                         <div>
-                                            <Paragraph className="text-[#232323] text-2xl font-inter font-bold mb-2">
+                                            <Paragraph className="text-[#4f4f4f]  text-2xl font-inter font-bold mb-2">
                                                 {formatPrice(offer.price)}
                                             </Paragraph>
-                                            <Paragraph className="text-[#232323] text-lg font-bold font-inter mb-3">
+                                            <Paragraph className="text-[#4f4f4f]  text-lg font-bold font-inter mb-3">
                                                 {offer.title}
                                             </Paragraph>
                                             <div className="flex gap-1.5 mb-1">
                                                 <FaLocationDot className="text-[#2EAA62] w-4 h-4 mt-[2px]" />
-                                                <Paragraph className="font-inter font-medium text-sm">
+                                                <Paragraph className="font-inter font-medium text-[#4f4f4f]  text-sm">
                                                     {offer?.address?.address ?? t("Адрес не указан")}, {lang === "uz" ? offer?.address?.city?.name_uz : offer?.address?.city?.name_ru ?? ""}
                                                 </Paragraph>
                                             </div>
                                             <div className="flex gap-1.5 items-center">
                                                 <GpsIcon className="w-4 h-4" />
-                                                <Paragraph className="font-inter font-medium text-sm">
+                                                <Paragraph className="font-inter font-medium text-[#4f4f4f]  text-sm">
                                                     {offer.area} кв. м.
                                                 </Paragraph>
                                             </div>

@@ -40,7 +40,7 @@ export const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
                             Войти
                         </Button>
                     }
-                    HeadingClassName="font-inter font-bold text-3xl leading-[150%]"
+                    HeadingClassName="font-inter font-bold text-[#4f4f4f]  text-3xl leading-[150%]"
                     ModalClassName="p-8"
                 />
             </>

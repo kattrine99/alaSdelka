@@ -53,12 +53,12 @@ export const CardPreview: React.FC<CardPreviewProps> = ({ card, onPreview }) => 
             )}
             <div className="flex-1 flex flex-col ">
                 <div>
-                    <Heading text={`${formatCurrency(card.price)}`} level={2} className="font-inter text-[24px] font-bold text-[#232323] mb-2" />
-                    <Paragraph className="font-inter text-[#232323] text-[18px] font-bold">{card.title}</Paragraph>
+                    <Heading text={`${formatCurrency(card.price)}`} level={2} className="font-inter text-[24px] font-bold text-[#4f4f4f]  mb-2" />
+                    <Paragraph className="font-inter text-[#4f4f4f]  text-[18px] font-bold">{card.title}</Paragraph>
 
                     <Paragraph className="flex font-inter font-medium text-[14px] mt-3 text-[#667085]">
                         <FaLocationDot className="text-[#2EAA62] mr-1.5" />
-                        {t("Адрес:")} <span className=" font-bold text-[14px] ml-1.5">{card.address?.address}, {lang === "uz" ? card.address?.city?.name_uz : card.address?.city?.name_ru}</span>
+                        {t("Адрес:")} <span className=" font-bold text-[#4f4f4f] text-[14px] ml-1.5">{card.address?.address}, {lang === "uz" ? card.address?.city?.name_uz : card.address?.city?.name_ru}</span>
                     </Paragraph>
 
                     {card.area ? (

@@ -126,18 +126,18 @@ export const PublicationStep: React.FC<Props> = ({ onPublish, onPreview, onBack 
                 <ModalBase
                     title={t("Что-то пошло не так")}
                     message={
-                        <Paragraph className="text-[#232323] text-base">
+                        <Paragraph className="text-[#4f4f4f]  text-base">
                             {t("Пожалуйста, проверьте информацию в объявлении или повторите попытку позже.")}
                         </Paragraph>
                     }
                     onClose={() => setIsErrorModalOpen(false)}
                     ModalClassName="p-8"
-                    HeadingClassName="text-[#101828] font-bold text-xl"
+                    HeadingClassName="text-[#4f4f4f]  font-bold text-xl"
                 />
             )
             }
             <div className="flex flex-col items-start gap-6 bg-[#F8F8F8] p-5">
-                <Paragraph className="text-3xl font-inter font-semibold text-[#101828] leading-10">
+                <Paragraph className="text-3xl font-inter font-semibold text-[#4f4f4f]  leading-10">
                     {t("Подтвердите и публикуйте")}
                 </Paragraph>
                 <Paragraph className="font-inter text-[#667085] text-[16px] leading-5 max-w-[600px]">

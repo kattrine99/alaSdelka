@@ -70,7 +70,7 @@ export const FilterBar: React.FC<FilterBarProps> = ({
                     <select
                         value={filters.city}
                         onChange={(e) => setFilters((prev) => ({ ...prev, city: e.target.value }))}
-                        className="text-[15px] text-black px-3 py-2 rounded-md focus:outline-none bg-white appearance-none pr-6">
+                        className="text-[15px] text-[#4f4f4f]  px-3 py-2 rounded-md focus:outline-none bg-white appearance-none pr-6">
                         <option value="">{t("Город")}</option>
                         {filterOptions.cities.map((city) => (
                             <option key={city.id} value={String(city.id)}>
@@ -113,7 +113,7 @@ export const FilterBar: React.FC<FilterBarProps> = ({
                             }
                         }}
 
-                        className="text-[15px] text-black px-3 py-2 rounded-md focus:outline-none bg-white appearance-none pr-6 max-h-[200px] overflow-y-auto"
+                        className="text-[15px] text-[#4f4f4f]  px-3 py-2 rounded-md focus:outline-none bg-white appearance-none pr-6 max-h-[200px] overflow-y-auto"
                     >
                         <option value="">{t("Категория")}</option>
                         {filterOptions.categories.map((cat) => (
@@ -132,10 +132,10 @@ export const FilterBar: React.FC<FilterBarProps> = ({
                     <span className="text-[#2EAA62] text-2xl">
                         <HiCurrencyDollar />
                     </span>
-                    <span className="text-[15px] text-black">{t("Цена")}</span>
+                    <span className="text-[15px] text-[#4f4f4f] ">{t("Цена")}</span>
                     <div className="flex gap-2">
                         <div className="flex items-center gap-x-1 px-4 py-1.5 w-44 bg-[#F0F1F2] rounded-[14px]">
-                            <span className="text-[16px] text-black">{t("от")}</span>
+                            <span className="text-[16px] text-[#4f4f4f] ">{t("от")}</span>
                             <Input
                                 type="text"
                                 value={filters.priceMin}
@@ -144,10 +144,10 @@ export const FilterBar: React.FC<FilterBarProps> = ({
                                 className="text-[16px] w-full font-semibold text-[#3C3C3C] bg-transparent outline-none placeholder:text-[#787878]"
                                 isError={false}
                             />
-                            <span className="text-[16px] text-black">{t(currencySymbol)}</span>
+                            <span className="text-[16px] text-[#4f4f4f] ">{t(currencySymbol)}</span>
                         </div>
                         <div className="flex items-center gap-1 px-4 py-1.5 w-44 bg-[#F0F1F2] rounded-[14px]">
-                            <span className="text-[16px] text-black">{t("до")}</span>
+                            <span className="text-[16px] text-[#4f4f4f] ">{t("до")}</span>
                             <Input
                                 type="text"
                                 value={filters.priceMax}
@@ -156,7 +156,7 @@ export const FilterBar: React.FC<FilterBarProps> = ({
                                 className="text-[16px] w-full font-semibold text-[#3C3C3C] bg-transparent outline-none placeholder:text-[#787878]"
                                 isError={false}
                             />
-                            <span className="text-[16px] text-black">{t(currencySymbol)}</span>
+                            <span className="text-[16px] text-[#4f4f4f] ">{t(currencySymbol)}</span>
                         </div>
                     </div>
                 </div>

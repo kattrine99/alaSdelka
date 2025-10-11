@@ -49,7 +49,7 @@ export const NavLinks: React.FC<NavLinksProps> = ({
                     <Applink
                         key={idx}
                         to={link.to}
-                        className={`text-[#232323] hover:text-[#2EAA62] transition-all ${linkClassName}`}
+                        className={`text-[#4f4f4f]  hover:text-[#2EAA62] transition-all ${linkClassName}`}
                     >
                         {link.label}
                     </Applink>

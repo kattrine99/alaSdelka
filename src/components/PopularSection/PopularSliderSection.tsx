@@ -36,7 +36,7 @@ export const PopularSliderSection = () => {
         <Heading
           level={2}
           text={t("Популярное")}
-          className="text-[30px] font-bold text-black"
+          className="text-[30px] font-bold text-[#4f4f4f] "
         />
       </div>
 

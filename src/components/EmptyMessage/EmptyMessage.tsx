@@ -30,7 +30,7 @@ export const EmptyMessage: React.FC<EmptyMessageProps> = ({
                 alt="empty"
                 className={`${centerImageSize} object-contain`}
             />
-            <Paragraph className="font-inter text-lg font-semibold text-[#232323]">
+            <Paragraph className="font-inter text-lg font-semibold text-[#4f4f4f] ">
                 {t(title)}
             </Paragraph>
             {subtitle && (

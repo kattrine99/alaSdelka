@@ -55,7 +55,7 @@ export const SellerInfoCard = ({ card, offer_type, userId }: { card: OfferDetail
                     )}
                 </button>
             )}
-            <Paragraph className="text-[22px] font-bold text-[#101828] text-left">
+            <Paragraph className="text-[22px] font-bold text-[#4f4f4f] text-left">
                 {convertedPrice}
             </Paragraph>
             {card.offer_status !== 'sold' && (
@@ -71,7 +71,7 @@ export const SellerInfoCard = ({ card, offer_type, userId }: { card: OfferDetail
                                 alt="User photo"
                             />
                         </div>
-                        <Paragraph className="text-[#101828] font-semibold">
+                        <Paragraph className="text-[#4f4f4f]  font-semibold">
                             {card.user_name || "Имя продавца"}
                         </Paragraph>
                     </Applink>
@@ -101,7 +101,7 @@ export const SellerInfoCard = ({ card, offer_type, userId }: { card: OfferDetail
                         ? t("Загрузка...")
                         : contactData?.phone || t("Номер не найден")}
                     onClose={() => setContactModalOpen(false)}
-                    showCloseButton={true} HeadingClassName={"font-inter font-bold text-3xl"}
+                    showCloseButton={true} HeadingClassName={"font-inter font-bold text-[#4f4f4f] text-3xl"}
                 />
             )}
 
@@ -127,7 +127,7 @@ export const SellerInfoCard = ({ card, offer_type, userId }: { card: OfferDetail
                         t("Ссылки отсутствуют")
                     )}
                     onClose={() => setLinksModalOpen(false)}
-                    showCloseButton={true} HeadingClassName={"font-inter font-bold text-3xl"}
+                    showCloseButton={true} HeadingClassName={"font-inter font-bold text-[#4f4f4f] text-3xl"}
                 />
             )}
         </div>

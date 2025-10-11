@@ -265,7 +265,7 @@ export const CategoryPage: React.FC<CategoryPageProps> = ({section}) => {
                 <div className="grid grid-cols-3 container mx-auto px-4 xl:px-20 lg:px-10 md:px-4 py-[30px] pb-10 gap-10 items-start">
                     <aside className="hidden lg:flex flex-col col-span-1">
                         <Breadcrumbs category={typeToTitleMap[type]?.[lang] || ""} />
-                        <Heading text={t(pageTitle)} level={2} className="text-[30px] font-bold text-[#4f4f4f]" />
+                        <Heading text={t(pageTitle)} level={2} className="text-[30px] font-bold text-[#4f4f4f] " />
                         <Paragraph className="text-[#787878] font-inter font-medium text-[14px] mt-3.5">
                             {cards.length.toLocaleString("ru-RU")} {t("объявлений")}
                         </Paragraph>
@@ -284,7 +284,7 @@ export const CategoryPage: React.FC<CategoryPageProps> = ({section}) => {
                         <div className="flex justify-between">
                             <aside className="flex lg:hidden flex-col mr-[60px]">
                                 <Breadcrumbs category={type} />
-                                <Heading text={pageTitle} level={2} className="text-[30px] font-bold text-black" />
+                                <Heading text={pageTitle} level={2} className="text-[30px] font-bold text-[#4f4f4f] " />
                                 <Paragraph className="text-[#787878] font-inter font-medium text-[14px] mt-3.5">
                                     {cards.length.toLocaleString("ru-RU")} {t("объявлений")}
                                 </Paragraph>
@@ -349,10 +349,10 @@ export const CategoryPage: React.FC<CategoryPageProps> = ({section}) => {
                         ) : isError ? (
                             <div className="flex flex-col w-full h-full justify-center items-center bg-[url('../../../images/grid.png')] bg-no-repeat  bg-contain">
                                 <div className="w-128 h-100 bg-[url('../../../images/404.png')] bg-contain bg-center bg-no-repeat flex flex-col items-center justify-end">
-                                    <Paragraph className="text-[20px] font-semibold text-black mb-4">{t("Страница не найдена")}</Paragraph>
+                                    <Paragraph className="text-[20px] font-semibold text-[#4f4f4f]  mb-4">{t("Страница не найдена")}</Paragraph>
                                     <Button
                                         onClick={() => navigate(`/${lng}/`)}
-                                        className="bg-[#2EAA62] text-white py-2.5 px-6 rounded-[12px] text-[16px] font-medium"
+                                        className="bg-[#2EAA62] text-white py-2.5 px-6 rounded-[12px] text-[16px] font-medium text-[#4f4f4f] "
                                     >
                                         {t("Перейти на главную")}
                                     </Button>

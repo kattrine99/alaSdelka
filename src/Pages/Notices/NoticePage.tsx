@@ -58,7 +58,7 @@ export const NoticePage = () => {
                 <Heading
                     text={t("Уведомления")}
                     level={2}
-                    className="font-inter text-xl font-bold leading-5 text-[#4f4f4f]"
+                    className="font-inter text-xl font-bold leading-5 text-[#4f4f4f] "
                 />
 
                 {isLoading ? (
@@ -94,11 +94,11 @@ export const NoticePage = () => {
                                         className="w-full mt-5 flex flex-col gap-6 rounded-lg py-6 px-5 shadow-[1px_1px_4.5px_0px] shadow-[#28B13D4D]"
                                     >
                                         <Heading
-                                            className="font-inter font-bold text-lg text-[#232323] mb-3.5"
+                                            className="font-inter font-bold text-lg text-[#4f4f4f]  mb-3.5"
                                             text={lang === "uz" ? item.title_uz : item.title_ru}
                                             level={3}
                                         />
-                                        <Paragraph className="font-inter text-lg text-[#232323] mb-3.5">
+                                        <Paragraph className="font-inter text-lg text-[#4f4f4f]  mb-3.5">
                                             {lang === "uz" ? item.text_uz : item.text_ru}
                                         </Paragraph>
                                         <div className="flex flex-col sm:flex-row justify-between">

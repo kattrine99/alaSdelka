@@ -121,7 +121,7 @@ export const UserAnnouncementPage = () => {
             <div className="flex flex-1 container mx-auto px-4 xl:px-20 lg:px-10 md:px-4 max-xl:flex-col py-[30px] pb-10 gap-10 items-start">
                 <aside className="flex flex-col">
                     <Breadcrumbs category={category} title={t("Объявления пользователя")} />
-                    <Heading text={t("Объявления пользователя")} level={2} className="text-[30px] font-bold text-black mt-4.5" />
+                    <Heading text={t("Объявления пользователя")} level={2} className="text-[30px] font-bold text-[#4f4f4f]  mt-4.5" />
                     {type && (
                         <>
                             {/* Кнопка фильтров (только для mobile) */}
@@ -149,7 +149,7 @@ export const UserAnnouncementPage = () => {
                                 <div className="fixed inset-0 bg-white z-50 p-6 overflow-y-auto">
                                     <button
                                         onClick={() => setIsMobileFiltersOpen(false)}
-                                        className="text-xl font-bold mb-4"
+                                        className="text-xl font-bold text-[#4f4f4f] mb-4"
                                     >
                                         ×
                                     </button>
@@ -206,7 +206,7 @@ export const UserAnnouncementPage = () => {
                                     />
                                 </div>
                                 <div>
-                                    <Paragraph className="font-bold text-[#101828] text-[16px]">{user.name}</Paragraph>
+                                    <Paragraph className="font-bold text-[#4f4f4f]  text-[16px]">{user.name}</Paragraph>
                                 </div>
                             </div>
                             <div className="flex  max-sm:flex-col max-sm:gap-3 justify-between w-full ">
@@ -233,7 +233,7 @@ export const UserAnnouncementPage = () => {
                     ) : isError ? (
                         <div className="flex flex-col w-full h-full justify-center items-center bg-[url('../../../images/grid.png')] bg-no-repeat bg-contain" >
                             <div className="w-128 h-100 bg-[url('../../../images/404.png')] bg-contain bg-center bg-no-repeat flex flex-col items-center justify-end">
-                                <Paragraph className="text-[20px] font-semibold text-black mb-4">{t("Страница не найдена")}</Paragraph>
+                                <Paragraph className="text-[20px] font-semibold text-[#4f4f4f]  mb-4">{t("Страница не найдена")}</Paragraph>
                                 <Button
                                     onClick={() => navigate(`/${lang}/`)}
                                     className="bg-[#2EAA62] text-white py-2.5 px-6 rounded-[12px] text-[16px] font-medium"
@@ -244,7 +244,7 @@ export const UserAnnouncementPage = () => {
                         </div>) : cards.length === 0 ? (
                             <div className="flex flex-col w-full h-full justify-center items-center bg-[url('../../../images/grid.png')] bg-no-repeat bg-contain" >
                                 <div className="w-full h-100 bg-[url('../../../images/404.png')] bg-contain bg-center bg-no-repeat flex flex-col items-center justify-end">
-                                    <Paragraph className="text-[20px] font-semibold text-black mb-4">{t("Страница не найдена")}</Paragraph>
+                                    <Paragraph className="text-[20px] font-semibold text-[#4f4f4f]  mb-4">{t("Страница не найдена")}</Paragraph>
                                     <Button
                                         onClick={() => navigate(`/${lang}/`)}
                                         className="bg-[#2EAA62] text-white py-2.5 px-6 rounded-[12px] text-[16px] font-medium"

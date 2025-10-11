@@ -108,11 +108,11 @@ export const StepsAddingOffer = () => {
                     onClose={() => setShowHelperModal(false)}
                     message={
                         <>
-                            <Heading level={2} text={t("Инструкция по размещению объявления")} className="text-black mb-2" />
+                            <Heading level={2} text={t("Инструкция по размещению объявления")} className="text-[#4f4f4f]  mb-2" />
                             <Paragraph className="mb-4 text-sm leading-[150%] text-[#667085]">
                                  {t("Добро пожаловать! Вот как легко и быстро разместить свое объявление:")}
                             </Paragraph>
-                            <Heading level={3} text= {t("Шаг 1. Раздел объявления")} className="text-black mb-2" />
+                            <Heading level={3} text= {t("Шаг 1. Раздел объявления")} className="text-[#4f4f4f]  mb-2" />
                             <Paragraph className="text-sm leading-[150%] text-[#667085] mb-2">
                                  {t("Выберите, что вы хотите разместить:")}
                                 <ul>
@@ -123,7 +123,7 @@ export const StepsAddingOffer = () => {
                                 </ul>
                                 {t("Нажмите «Дальше»")}
                             </Paragraph>
-                            <Heading level={3} text= {t("Шаг 2. Тип объявления")} className="text-black mb-2" />
+                            <Heading level={3} text= {t("Шаг 2. Тип объявления")} className="text-[#4f4f4f]  mb-2" />
                             <Paragraph className="text-sm leading-[150%] text-[#667085] mb-2">
                                 {t("Выберите действие:")}
                                 <ul>
@@ -132,7 +132,7 @@ export const StepsAddingOffer = () => {
                                 </ul>
                                 {t("Нажмите «Дальше»")}
                             </Paragraph>
-                            <Heading level={3} text={t("Шаг 3. Информация")} className="text-black mb-2" />
+                            <Heading level={3} text={t("Шаг 3. Информация")} className="text-[#4f4f4f]  mb-2" />
                             <Paragraph className="text-sm leading-[150%] text-[#667085] mb-2">
                                 {t("Заполните поля:")}
                                 <ul>
@@ -150,17 +150,17 @@ export const StepsAddingOffer = () => {
                                 </ul>
                                 {t("Заполните все обязательные поля и жмите «Дальше».")}
                             </Paragraph>
-                            <Heading level={3} text= {t("Шаг 4. Черновик")}  className="text-black mb-2" />
+                            <Heading level={3} text= {t("Шаг 4. Черновик")}  className="text-[#4f4f4f]  mb-2" />
                             <Paragraph className="text-sm leading-[150%] text-[#667085] mb-2">
                                 {t("Проверьте все данные. Можете сохранить как черновик или сразу перейти к публикации.")}
                             </Paragraph>
-                            <Heading level={3} text={t("Шаг 5. Публикация")}  className="text-black mb-2" />
+                            <Heading level={3} text={t("Шаг 5. Публикация")}  className="text-[#4f4f4f]  mb-2" />
                             <Paragraph className="text-sm leading-[150%] text-[#667085] mb-2">
                                 {t("Если все верно — нажмите ")} «<b>{t("Опубликовать")}</b>».{t("Ваше объявление станет видно потенциальным покупателям и инвесторам.")}
                             </Paragraph>
                         </>
                     }
-                    HeadingClassName="text-[#101828] text-[20px] font-bold"
+                    HeadingClassName="text-[#4f4f4f]  text-[20px] font-bold"
                 />
             )}
 
@@ -209,7 +209,7 @@ export const StepsAddingOffer = () => {
                                 {/* Умный помощник */}
                                 <div className="mt-6 p-4 w-full bg-gradient-to-r from-[#1CA67A] to-[#24568E] rounded-[10px] flex gap-2 text-white">
                                     <Button onClick={() => setShowHelperModal(true)} className="flex flex-col text-left max-md:w-full cursor-pointer">
-                                        <Paragraph className="font-bold text-sm flex justify-start items-center">
+                                        <Paragraph className="font-bold  text-sm flex justify-start items-center">
                                             {t("Умный помощник")}  <HeadphonesIcon className="w-8.75 h-9.75 ml-2" />
                                         </Paragraph>
                                         <span className="text-xs leading-tight mt-1">
@@ -225,7 +225,7 @@ export const StepsAddingOffer = () => {
                                 {/* Step 0 - категория */}
                                 {step === 0 && (
                                     <div >
-                                        <Heading text={t("Категория объявления")} level={2} className="font-inter font-semibold text-3xl text-[#101828] mb-1.5" />
+                                        <Heading text={t("Категория объявления")} level={2} className="font-inter font-semibold text-3xl text-[#4f4f4f]  mb-1.5" />
                                         <Paragraph className="font-inter text-[16px] text-[#667085] mb-6">{t("Выберите категорию объявления")} </Paragraph>
 
                                         <div className="grid grid-cols-2 xl:grid-cols-4 max-sm:flex max-sm:flex-col gap-3 text-center">
@@ -234,7 +234,7 @@ export const StepsAddingOffer = () => {
                                                 <div
                                                     key={type}
                                                     className={`border rounded-lg w-48.75 max-sm:w-full max-sm:h-33 h-43 cursor-pointer text-center 
-          flex items-center justify-center
+          flex items-center justify-center text-[#4f4f4f] 
           ${offerType === type ? "border-[#2EAA62] bg-[#F5FFFA]" : "border-gray-300"}`}
                                                     onClick={() => {
                                                         setOfferType(type);
@@ -251,14 +251,14 @@ export const StepsAddingOffer = () => {
                                 {/* Step 1 — тип */}
                                 {step === 1 && (
                                     <div>
-                                        <Heading text={t("Категория объявления")} level={2} className="font-inter font-semibold text-3xl text-[#101828] mb-1.5" />
+                                        <Heading text={t("Категория объявления")} level={2} className="font-inter font-semibold text-3xl text-[#4f4f4f]  mb-1.5" />
                                         <Paragraph className="font-inter text-[16px] text-[#667085] mb-6">{t("Выберите категорию объявления")}</Paragraph>
                                         <div className="flex max-sm:flex-col gap-6 text-center ">
 
                                             {listingTypes.map((type, index) => (
                                                 <div
                                                     key={type}
-                                                    className={`  border rounded-lg w-48.75 h-43 max-sm:w-full max-sm:h-33 cursor-pointer text-center 
+                                                    className={`  border rounded-lg w-48.75 h-43 max-sm:w-full max-sm:h-33 cursor-pointer text-center text-[#4f4f4f] 
           flex flex-col items-center justify-center ${listingType === type ? "border-[#2EAA62] bg-[#F5FFFA]" : "border-gray-300"}`}
                                                     onClick={() => {
                                                         setListingType(type as "buy" | "sell");

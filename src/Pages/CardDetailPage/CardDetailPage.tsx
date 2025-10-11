@@ -145,13 +145,13 @@ export const CardDetailPage: React.FC<CardDetailPageProps> = ({ section }) => {
                         {translatedTitle != null ? (<Breadcrumbs category={section} title={translatedTitle} />) : (<Breadcrumbs category={section} title={card.title} />)}
                         <div className='flex flex-wrap xl:flex-nowrap gap-4'>
                             <div className='flex flex-col w-full lg:w-3/4 justify-center'>
-                                {translatedTitle != null ? (<Heading className="text-[24px] md:text-4xl font-inter leading-10 font-bold mt-6 mb-3.5" text={translatedTitle} level={2} />) : (<Heading className="text-[24px] md:text-4xl font-inter leading-10 font-bold mt-6 mb-3.5" text={card.title} level={2} />)}
+                                {translatedTitle != null ? (<Heading className="text-[24px] md:text-4xl font-inter leading-10 font-bold text-[#4f4f4f] mt-6 mb-3.5" text={translatedTitle} level={2} />) : (<Heading className="text-[24px] md:text-4xl font-inter leading-10 font-bold text-[#4f4f4f] mt-6 mb-3.5" text={card.title} level={2} />)}
 
                                 <div className='flex flex-col gap-2 mb-[15px]'>
-                                    <Paragraph className='font-inter font-bold text-[#363636] text-[16px]'>ID {card.id}</Paragraph>
+                                    <Paragraph className='font-inter font-bold text-[#4f4f4f] text-[16px]'>ID {card.id}</Paragraph>
                                     <div className='flex gap-1.5 items-center'>
                                         <GpsIcon className='w-4 h-4' />
-                                        <Paragraph>{card.area == 0 && card.area_from !== null && card.area_to !== null ? (
+                                        <Paragraph className='text-[#4f4f4f]'>{card.area == 0 && card.area_from !== null && card.area_to !== null ? (
                                             <>
                                                 {card.area_from} - {card.area_to} {t("кв. м.")}
                                             </>
@@ -159,7 +159,7 @@ export const CardDetailPage: React.FC<CardDetailPageProps> = ({ section }) => {
                                             <>{card.area} {t("кв. м.")}</>
                                         )}</Paragraph>
                                     </div>
-                                    <div className='flex gap-1.5 items-center'>
+                                    <div className='flex gap-1.5 items-center text-[#4f4f4f]'>
                                         <CategoryIcon className='w-4 h-4 text-[#2EAA62]' />
                                         <Paragraph className="">{lang === "uz" ? card?.category?.title_uz : card?.category?.title_ru ?? ""}</Paragraph>
                                     </div>
@@ -172,7 +172,7 @@ export const CardDetailPage: React.FC<CardDetailPageProps> = ({ section }) => {
                                     </div>
                                     {card.conveniences && card.conveniences.length > 0 && (
                                         <div className='w-[49.63rem]'>
-                                            <Heading text={t('Удобства')} level={3} className='font-inter font-semibold text-xl text-[#3A3A3A]' />
+                                            <Heading text={t('Удобства')} level={3} className='font-inter font-semibold text-xl text-[#4f4f4f] ' />
                                             <div className="mt-3">
                                                 <div className="flex md:flex-row flex-col max-w-full flex-wrap gap-x-12.5 gap-y-4">
                                                     {card.conveniences.map(item => (
@@ -192,7 +192,7 @@ export const CardDetailPage: React.FC<CardDetailPageProps> = ({ section }) => {
                                 </div>
                                 {card.documents && card.documents.length > 0 &&
                                     <div>
-                                        <Heading text={t('Документация')} level={3} className='font-inter font-semibold text-xl mt-7.5 text-[#3A3A3A]' />
+                                        <Heading text={t('Документация')} level={3} className='font-inter font-semibold text-xl mt-7.5 text-[#4f4f4f] ' />
                                         <div className="flex flex-wrap gap-4 mt-3">
                                             {card.documents.map((doc, index) => (
                                                 <a
@@ -221,7 +221,7 @@ export const CardDetailPage: React.FC<CardDetailPageProps> = ({ section }) => {
 
                                 {translatedDescription && (
                                     <div>
-                                        <Heading text={t('Описание')} level={3} className='font-inter font-semibold text-xl mt-7.5 text-[#3A3A3A]' />
+                                        <Heading text={t('Описание')} level={3} className='font-inter font-semibold text-xl mt-7.5 text-[#4f4f4f] ' />
                                         <div className="mt-3">
                                             <Paragraph className="text-gray-700 leading-relaxed whitespace-pre-line">
                                                 {showFullDescription
@@ -241,7 +241,7 @@ export const CardDetailPage: React.FC<CardDetailPageProps> = ({ section }) => {
                                     </div>
                                 )}
                                 <div>
-                                    <Heading text={t('Информация и финансы')} level={3} className='font-inter font-semibold text-xl mt-7.5 text-[#3A3A3A]' />
+                                    <Heading text={t('Информация и финансы')} level={3} className='font-inter font-semibold text-xl mt-7.5 text-[#4f4f4f] ' />
                                     <div className="mt-3 grid grid-cols-1 md:grid-cols-3 gap-x-3 gap-y-4">
                                         <div className="flex w-full gap-2 border border-[#2EAA62] items-center rounded-[10px] py-3 px-4.25">
                                             <WalletIcon className='w-10 h-10' />
@@ -288,10 +288,10 @@ export const CardDetailPage: React.FC<CardDetailPageProps> = ({ section }) => {
                                     </div>
                                 </div>
                                 <div className='flex flex-col gap-3'>
-                                    <Heading text={t('Местоположение')} level={3} className='font-inter font-semibold text-xl mt-7.5 text-[#3A3A3A]' />
+                                    <Heading text={t('Местоположение')} level={3} className='font-inter font-semibold text-xl mt-7.5 text-[#4f4f4f] ' />
                                     <div className='flex gap-1.5'>
                                         <FaLocationDot className="text-[#2EAA62] w-4 h-4" />
-                                        <Paragraph className="">
+                                        <Paragraph className="text-[#4f4f4f]">
                                             {card?.address !== null ? card?.address?.address + ',' : t("Адрес не указан")}
                                             {lang === "uz" ? card?.address?.city?.name_uz : card?.address?.city?.name_ru ?? ""}
                                         </Paragraph>

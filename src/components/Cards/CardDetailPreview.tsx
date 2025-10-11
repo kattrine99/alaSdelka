@@ -88,7 +88,7 @@ export const CardDetailPreview: React.FC<CardDetailPreviewProps> = ({ onBack }) 
         <div className="container mx-auto py-10 max-md:p-4 ">
             <div className="mb-6 flex items-center gap-2 cursor-pointer text-[#28B13D]" onClick={onBack}>
                 <HiOutlineArrowNarrowLeft className="w-5 h-5" />
-                <span className="font-medium text-[15px]">{t("Предварительный просмотр вашего объявления")}</span>
+                <span className="font-medium text-[#4f4f4f]  text-[15px]">{t("Предварительный просмотр вашего объявления")}</span>
             </div>
 
             {/* Основной блок */}
@@ -147,7 +147,7 @@ export const CardDetailPreview: React.FC<CardDetailPreviewProps> = ({ onBack }) 
                 </div>
                 {data.documents && data.documents.length > 0 && (
                     <div>
-                        <Heading text={t('Документация')} level={3} className='font-inter font-semibold text-xl mt-7.5 text-[#3A3A3A]' />
+                        <Heading text={t('Документация')} level={3} className='font-inter font-semibold text-xl mt-7.5 text-[#4f4f4f] ' />
                         <div className="flex flex-wrap gap-4 mt-3">
                             {data.documents.map((doc, index) => (
                                 <a

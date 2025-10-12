@@ -311,25 +311,31 @@ export const AnnouncemntsPage = () => {
                         </div>
                         <div className="flex w-full">
                           <div className="grid grid-cols-1 gap-y-3 gap-x-5 md:grid-cols-2 w-full">
-                            {(offer.offer_status == 'published') && (
-                              <div className="w-full">
-                                {offer.is_paid == true ? (
-                                  <div>
-                                    <div className="bg-[#2EAA62] w-full text-white px-5 h-12 py-1 rounded-md flex items-center gap-2 font-semibold">
-                                      {t("Идет продвижение (осталось {{count}} дней)").replace("{{count}}", String(offer.paid_offer?.promotion_days_left ?? 0))}
-                                      <FireIcon className="z-10 w-5 h-5 text-white" />
-                                    </div>
-                                  </div>
-                                ) : (
-                                  <Button
-                                    className="bg-[#2EAA62] w-full text-white px-5 h-12 rounded-md cursor-pointer"
-                                    onClick={() => navigate(`/promotion/${offer.slug}`)}
-                                  >
-                                    {t("Продвигать объявление")}
-                                  </Button>
-                                )}
-                              </div>
+                            {offer.offer_status === "published" && (
+                                <div className="w-full">
+                                  {(offer.is_paid === true &&
+                                      Number(offer.paid_offer?.promotion_days_left ?? 0) > 0) ? (
+                                      // Продвижение ещё идёт — показываем тот же зелёный бэйдж
+                                      <div className="bg-[#2EAA62] w-full text-white px-5 h-12 py-1 rounded-md flex items-center gap-2 font-semibold">
+                                        {t("Идёт продвижение (осталось {{count}} дней)").replace(
+                                            "{{count}}",
+                                            String(Number(offer.paid_offer?.promotion_days_left ?? 0))
+                                        )}
+                                        <FireIcon className="z-10 w-5 h-5 text-white" />
+                                      </div>
+                                  ) : (
+                                      // Дни закончились ИЛИ продвижения нет — сразу кнопка, как будто продвижения не было
+                                      <Button
+                                          className="bg-[#2EAA62] w-full text-white px-5 h-12 rounded-md cursor-pointer"
+                                          onClick={() => navigate(`/promotion/${offer.slug}`)}
+                                      >
+                                        {t("Продвигать объявление")}
+                                      </Button>
+                                  )}
+                                </div>
                             )}
+
+
                             {(offer.offer_status === 'published') && (
                               <Button className={"text-white bg-[#FF8707] px-4 h-12 rounded-md" + " cursor-pointer"}
                                 onClick={() => {

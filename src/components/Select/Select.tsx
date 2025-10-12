@@ -59,7 +59,7 @@ export default function Select({
             </button>
 
             {open && (
-                <div className="absolute z-10 w-full bg-white rounded-md shadow-md max-h-60 overflow-y-auto">
+                <div className="absolute z-10 w-full bg-white text-[#4f4f4f] rounded-md shadow-md max-h-60 overflow-y-auto">
                     {searchable && (
                         <div className="sticky top-0 bg-white p-2 border-b border-b-[#F2F2F2]">
                             <input

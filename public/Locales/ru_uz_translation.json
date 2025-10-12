@@ -96,8 +96,9 @@
   "франшиза": "Franshiza",
   "инвестиции": "Investitsiyalar",
   "дней)": "kun qoldi)",
+  "Идёт продвижение (осталось {{count}} дней)": "Ilgari surish davom etmoqda (yana {{count}} kun)",
   "Идёт продвижение (осталось ": "Ilgari surish davom etmoqda (yana",
-
+  "promo": { "active": "Идёт продвижение (осталось {{count}} дней)" },
   "— кратко и понятно": "— qisqa va tushunarli",
   "Выберите категорию объявления": "Reklama toifasini tanlang",
   "Стартап": "Startap",

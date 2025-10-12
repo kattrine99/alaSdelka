@@ -100,7 +100,19 @@ export const MainPage = () => {
     const startupType = listingTypes["Стартапы"];
     const [searchInput, setSearchInput] = useState("");
     const { lang, t } = useTranslation();
-
+    const sortedCities = useMemo(() => {
+        if (!cityStats) return [];
+        const isUz = lang === "uz";
+        const field = isUz ? "name_uz" : "name_ru";
+        const collator = new Intl.Collator(isUz ? "uz" : "ru", {
+            sensitivity: "base",
+            numeric: true,
+            ignorePunctuation: true,
+        });
+        return [...cityStats].sort((a, b) =>
+            collator.compare((a?.[field] || "").trim(), (b?.[field] || "").trim())
+        );
+    }, [cityStats, lang]);
     const {
         data: businessOffers,
         isLoading: isLoadingBusiness,
@@ -515,35 +527,36 @@ export const MainPage = () => {
                             />
                             {/* КАТЕГОРИИ */}
                             <NavLinks
-                                links={categories}
+                                links={translatedCategories}
                                 variant="tabs"
-                                activeLabel={selectedCategory}
+                                activeLabel={t(selectedCategory)} // активный ярлык тоже в переводе
                                 onClick={(label) => {
-                                    if (categories.find((cat) => cat.label === label)) {
-                                        setSelectedCategory(label as typeof selectedCategory);
+                                    // Находим оригинальную категорию, у которой переведённый label совпал
+                                    const original = categories.find(cat => t(cat.label) === label);
+                                    if (original) {
+                                        setSelectedCategory(original.label as typeof selectedCategory); // хранить продолжаем "Бизнес" | "Франшиза" | ...
                                     }
                                 }}
                                 className="flex flex-wrap md:flex-nowrap gap-4 text-[24px] text-start font-openSans mb-6.25 font-bold"
                                 activeClassName="w-full px-6 py-4 bg-[#2EAA62] text-white rounded-xl"
-                                inactiveClassName="w-full px-6 py-4 bg-white font-openSans text-[#4f4f4f]  border border-[#2EAA62] rounded-xl hover:bg-[#2EAA62]/10"
+                                inactiveClassName="w-full px-6 py-4 bg-white font-openSans text-[#4f4f4f] border border-[#2EAA62] rounded-xl hover:bg-[#2EAA62]/10"
                             />
 
                             {/* ГОРОДА */}
                             <div className="grid 2xl:grid-cols-7 lg:grid-cols-5 md:grid-cols-4 grid-cols-2 gap-3">
-                                {cityStats &&
-                                    cityStats.map((city, idx) => (
-                                        <div
-                                            key={idx}
-                                            className="w-full flex flex-col transition duration-300 ease-in-out bg-[#4f4f4f] text-white py-4 px-6 rounded-[12px] gap-0.5"
-                                        >
-                                            <span className="font-openSans font-bold text-xl max-sm:text-[14px] leading-[150%]">
-                                                {lang === "uz" ? city.name_uz : city.name_ru}
-                                            </span>
-                                            <span className="font-Urbanist font-bold text-[40px] max-sm:text-[28px] leading-[150%]">
-                                                {city.offers_count.toLocaleString(lang === "uz" ? "uz-UZ" : "ru-RU")}
-                                            </span>
-                                        </div>
-                                    ))}
+                                {sortedCities.map((city, idx) => (
+                                    <div
+                                        key={city.id ?? idx} // если есть id — лучше его
+                                        className="w-full justify-between flex flex-col transition duration-300 ease-in-out bg-[#4f4f4f] text-white py-4 px-6 rounded-[12px] gap-0.5"
+                                    >
+                                      <span className="font-openSans font-bold text-xl max-sm:text-[14px] leading-[150%]">
+                                        {lang === "uz" ? city.name_uz : city.name_ru}
+                                      </span>
+                                        <span className="font-Urbanist font-bold text-[40px] max-sm:text-[28px] leading-[150%]">
+                                            {city.offers_count.toLocaleString(lang === "uz" ? "uz-UZ" : "ru-RU")}
+                                        </span>
+                                    </div>
+                                ))}
                             </div>
                         </div>
                     </div>

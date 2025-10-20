@@ -516,51 +516,51 @@ export const MainPage = () => {
 
                 </section>
                 {/* Города */}
-                <section
-                    className="relative min-h-152.5 w-screen overflow-hidden bg-gradient-to-br from-[#F8FFF5] to-[#FAFFF9]">
-                    <div className="min-h-[610px] bg-[url(./images/Streets.png)] bg-center-bottom bg-no-repeat bg-cover">
-                        <div className="container mx-auto py-[70px] px-4 xl:px-20 lg:px-10 md:px-4">
-                            <Heading
-                                text={t("Города")}
-                                level={2}
-                                className="font-openSans font-bold text-[#4f4f4f]  text-3xl leading-[100%] mb-[25px]"
-                            />
-                            {/* КАТЕГОРИИ */}
-                            <NavLinks
-                                links={translatedCategories}
-                                variant="tabs"
-                                activeLabel={t(selectedCategory)} // активный ярлык тоже в переводе
-                                onClick={(label) => {
-                                    // Находим оригинальную категорию, у которой переведённый label совпал
-                                    const original = categories.find(cat => t(cat.label) === label);
-                                    if (original) {
-                                        setSelectedCategory(original.label as typeof selectedCategory); // хранить продолжаем "Бизнес" | "Франшиза" | ...
-                                    }
-                                }}
-                                className="flex flex-wrap md:flex-nowrap gap-4 text-[24px] text-start font-openSans mb-6.25 font-bold"
-                                activeClassName="w-full px-6 py-4 bg-[#2EAA62] text-white rounded-xl"
-                                inactiveClassName="w-full px-6 py-4 bg-white font-openSans text-[#4f4f4f] border border-[#2EAA62] rounded-xl hover:bg-[#2EAA62]/10"
-                            />
+                {/*<section*/}
+                {/*    className="relative min-h-152.5 w-screen overflow-hidden bg-gradient-to-br from-[#F8FFF5] to-[#FAFFF9]">*/}
+                {/*    <div className="min-h-[610px] bg-[url(./images/Streets.png)] bg-center-bottom bg-no-repeat bg-cover">*/}
+                {/*        <div className="container mx-auto py-[70px] px-4 xl:px-20 lg:px-10 md:px-4">*/}
+                {/*            <Heading*/}
+                {/*                text={t("Города")}*/}
+                {/*                level={2}*/}
+                {/*                className="font-openSans font-bold text-[#4f4f4f]  text-3xl leading-[100%] mb-[25px]"*/}
+                {/*            />*/}
+                {/*            /!* КАТЕГОРИИ *!/*/}
+                {/*            <NavLinks*/}
+                {/*                links={translatedCategories}*/}
+                {/*                variant="tabs"*/}
+                {/*                activeLabel={t(selectedCategory)} // активный ярлык тоже в переводе*/}
+                {/*                onClick={(label) => {*/}
+                {/*                    // Находим оригинальную категорию, у которой переведённый label совпал*/}
+                {/*                    const original = categories.find(cat => t(cat.label) === label);*/}
+                {/*                    if (original) {*/}
+                {/*                        setSelectedCategory(original.label as typeof selectedCategory); // хранить продолжаем "Бизнес" | "Франшиза" | ...*/}
+                {/*                    }*/}
+                {/*                }}*/}
+                {/*                className="flex flex-wrap md:flex-nowrap gap-4 text-[24px] text-start font-openSans mb-6.25 font-bold"*/}
+                {/*                activeClassName="w-full px-6 py-4 bg-[#2EAA62] text-white rounded-xl"*/}
+                {/*                inactiveClassName="w-full px-6 py-4 bg-white font-openSans text-[#4f4f4f] border border-[#2EAA62] rounded-xl hover:bg-[#2EAA62]/10"*/}
+                {/*            />*/}
 
-                            {/* ГОРОДА */}
-                            <div className="grid 2xl:grid-cols-7 lg:grid-cols-5 md:grid-cols-4 grid-cols-2 gap-3">
-                                {sortedCities.map((city, idx) => (
-                                    <div
-                                        key={city.id ?? idx} // если есть id — лучше его
-                                        className="w-full justify-between flex flex-col transition duration-300 ease-in-out bg-[#4f4f4f] text-white py-4 px-6 rounded-[12px] gap-0.5"
-                                    >
-                                      <span className="font-openSans font-bold text-xl max-sm:text-[14px] leading-[150%]">
-                                        {lang === "uz" ? city.name_uz : city.name_ru}
-                                      </span>
-                                        <span className="font-Urbanist font-bold text-[40px] max-sm:text-[28px] leading-[150%]">
-                                            {city.offers_count.toLocaleString(lang === "uz" ? "uz-UZ" : "ru-RU")}
-                                        </span>
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
-                    </div>
-                </section>
+                {/*            /!* ГОРОДА *!/*/}
+                {/*            <div className="grid 2xl:grid-cols-7 lg:grid-cols-5 md:grid-cols-4 grid-cols-2 gap-3">*/}
+                {/*                {sortedCities.map((city, idx) => (*/}
+                {/*                    <div*/}
+                {/*                        key={city.id ?? idx} // если есть id — лучше его*/}
+                {/*                        className="w-full justify-between flex flex-col transition duration-300 ease-in-out bg-[#4f4f4f] text-white py-4 px-6 rounded-[12px] gap-0.5"*/}
+                {/*                    >*/}
+                {/*                      <span className="font-openSans font-bold text-xl max-sm:text-[14px] leading-[150%]">*/}
+                {/*                        {lang === "uz" ? city.name_uz : city.name_ru}*/}
+                {/*                      </span>*/}
+                {/*                        <span className="font-Urbanist font-bold text-[40px] max-sm:text-[28px] leading-[150%]">*/}
+                {/*                            {city.offers_count.toLocaleString(lang === "uz" ? "uz-UZ" : "ru-RU")}*/}
+                {/*                        </span>*/}
+                {/*                    </div>*/}
+                {/*                ))}*/}
+                {/*            </div>*/}
+                {/*        </div>*/}
+                {/*    </div>*/}
+                {/*</section>*/}
 
                 {/*Почему Invest In*/}
                 <section className="relative overflow-hidden w-full bg-[url('/images/Mask.png')] bg-repeat">
@@ -573,7 +573,7 @@ export const MainPage = () => {
                                     {t("Почему")} <span className="text-[#2EAA62]">{t("Invest In")}</span> {t("— лучший инструмент для продажи бизнеса?")}
                                     {/*{t("Почему")} <span className="text-[#2EAA62]">*/}
                                     {/*        /!*<span className="inline-flex items-center">*!/*/}
-                                    {/*        /!*    <img className="h-[1em] w-auto mx-1 object-cover object-center" src="/public/images/investin_logo.png"/>*!/*/}
+                                    {/*        /!*    <img className="h-[1em] w-auto mx-1 object-cover object-center" src="/public/images/investin_v15.png"/>*!/*/}
                                     {/*        /!*</span>*!/*/}
 
                                     {/*</span> {t("— лучший инструмент для продажи бизнеса?")}*/}

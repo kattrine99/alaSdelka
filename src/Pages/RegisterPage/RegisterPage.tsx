@@ -183,7 +183,7 @@ export const RegistrationPage = () => {
                     <>
                         <div className="w-full  grid grid-cols-1 lg:grid-cols-2 container mx-auto ppx-4 xl:px-20 lg:px-10 md:px-4 lg:py-15 transition-all duration-500">
                             <div
-                                className="w-full flex max-xl:mt-8 flex-col items-start text-start transition-all duration-300">
+                                className="w-full flex max-xl:mt-8 flex-col items-start text-start transition-all duration-300  px-7 py-4">
                                 <Heading level={2} className="text-[32px] max-xl:text-3xl max-sm:text-2xl font-inter mb-7 font-bold text-[#4f4f4f] "
                                     text={""}>{t("Зарегистрироваться")}</Heading>
                                 <div className="w-full ">

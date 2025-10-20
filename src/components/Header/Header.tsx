@@ -164,7 +164,7 @@ export const Header: React.FC<HeaderProps> = ({
                 <div className="container mx-auto px-4 lg:px-10 flex justify-between items-center xl:px-20 md:px-4 transition duration-500 ease-in-out">
                     <Applink to="/" className="flex items-center gap-2 shrink-0">
                         <img
-                            src="/images/investin_logo.png"
+                            src="/images/investin_v15.png"
                             alt="Logo"
                             className="h-[56px] w-auto object-contain"
                         />
@@ -254,7 +254,7 @@ export const Header: React.FC<HeaderProps> = ({
                 <div
                     className={"flex justify-between items-center px-7 py-4 border-b border-[#E9E9E9] bg-white" + (isMobileUI ? ' hidden' : '')}>
                     <Applink to="/" className="flex items-center">
-                        <img src="/images/investin_logo.png" alt="Logo" className="h-10 object-contain"/>
+                        <img src="/images/investin_v15.png" alt="Logo" className="h-10 object-contain"/>
                     </Applink>
                     <div className="flex items-center gap-3">
                         <button

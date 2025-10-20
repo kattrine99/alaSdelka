@@ -207,7 +207,7 @@ export const ProfilePage = () => {
                                 text={`${t("Добро пожаловать")}, ${fullName}!`}
                                 level={2} />
                             <div className="flex flex-col md:flex-row justify-center md:justify-between max-w-281.75 mt-6">
-                                <div className="flex gap-x-6 mb-1.5 items-center w-full h-full">
+                                <div className="flex gap-x-6 mb-5 items-center w-full h-full">
                                     <div className="w-[100px] h-[100px] rounded-full overflow-hidden flex items-center justify-center shrink-0">
                                         <img
                                             src={data.photo || ProfilePlaceholder}

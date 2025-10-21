@@ -185,7 +185,7 @@ export const MainPage = () => {
                 region_uz: 'Sirdaryo viloyati'
             },
             'karakalpakstan': {
-                city_ru: 'Нукус', // в вашей БД нет Нукуса, но Каракалпакстан есть
+                city_ru: 'Нукус',
                 city_uz: 'Nukus',
                 region_ru: 'Каракалпакстан',
                 region_uz: 'Qoraqalpogʻiston'
@@ -366,7 +366,7 @@ export const MainPage = () => {
                 <section className="px-4  transition duration-500 ease-in-out relative overflow-hidden bg-gradient-to-tr from-[#16503A] to-[#2EAA62]">
                     <div className="flex justify-end">
                         <div
-                            className="absolute right-[-12rem] bottom-[-5rem] w-96 h-96 md:w-150 md:h-150 lg:w-150 lg:h-150 md:right-[-16rem] lg:right-[-80px] md:bottom-[-5rem] bg-[url('/images/Check.png')] bg-no-repeat bg-contain rotate-[12deg] pointer-events-none z-0"></div>
+                            className="absolute right-[-6rem] bottom-[-2rem] w-80 h-80 md:w-120 md:h-120 lg:w-150 lg:h-150 md:right-[-8rem] lg:right-[-10rem] 2xl:right-[-1rem] md:bottom-[-6rem] bg-[url('/images/Check.png')] bg-no-repeat bg-contain rotate-[12deg] pointer-events-none z-0"></div>
                     </div>
                     {/*absolute right-[-12rem] bottom-[-5rem] w-96 h-96 md:w-150 md:h-150 lg:w-150 lg:h-150 md:right-[-80px] lg:right-[-80px] md:bottom-[-5rem] bg-[url('/images/Check.png')] bg-no-repeat bg-contain rotate-[12deg] pointer-events-none z-0*/}
                     <div className="relative container mx-auto py-17.5 px-4 xl:px-20 lg:px-10 md:px-4 transition duration-500 ease-in-out ">

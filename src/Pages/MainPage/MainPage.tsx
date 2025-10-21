@@ -102,6 +102,179 @@ export const MainPage = () => {
     const { lang, t } = useTranslation();
     const sortedCities = useMemo(() => {
         if (!cityStats) return [];
+
+        // Правила объединения городов и областей
+        const mergeRules: {
+            [key: string]: {
+                city_ru: string;
+                city_uz: string;
+                region_ru: string;
+                region_uz: string;
+            }
+        } = {
+            'tashkent': {
+                city_ru: 'Ташкент',
+                city_uz: 'Toshkent',
+                region_ru: 'Ташкентская область',
+                region_uz: 'Toshkent viloyati'
+            },
+            'samarkand': {
+                city_ru: 'Самарканд',
+                city_uz: 'Samarqand',
+                region_ru: 'Самаркандская область',
+                region_uz: 'Samarqand viloyati'
+            },
+            'bukhara': {
+                city_ru: 'Бухара',
+                city_uz: 'Buxoro',
+                region_ru: 'Бухарская область',
+                region_uz: 'Buxoro viloyati'
+            },
+            'andijan': {
+                city_ru: 'Андижан',
+                city_uz: 'Andijon',
+                region_ru: 'Андижанская область',
+                region_uz: 'Andijon viloyati'
+            },
+            'fergana': {
+                city_ru: 'Фергана',
+                city_uz: "Farg'ona",
+                region_ru: 'Ферганская область',
+                region_uz: "Farg'ona viloyati"
+            },
+            'namangan': {
+                city_ru: 'Наманган',
+                city_uz: 'Namangan',
+                region_ru: 'Наманганская область',
+                region_uz: 'Namangan viloyati'
+            },
+            'jizzakh': {
+                city_ru: 'Джизак',
+                city_uz: 'Jizzax',
+                region_ru: 'Джизакская область',
+                region_uz: 'Jizzax viloyati'
+            },
+            'navoi': {
+                city_ru: 'Навои',
+                city_uz: 'Navoiy',
+                region_ru: 'Навоийская область',
+                region_uz: 'Navoiy viloyati'
+            },
+            'kashkadarya': {
+                city_ru: 'Карши',
+                city_uz: 'Qarshi',
+                region_ru: 'Кашкадарьинская область',
+                region_uz: 'Qashqadaryo viloyati'
+            },
+            'surkhandarya': {
+                city_ru: 'Термез',
+                city_uz: 'Termiz',
+                region_ru: 'Сурхандарьинская область',
+                region_uz: 'Surxondaryo viloyati'
+            },
+            'khorezm': {
+                city_ru: 'Ургенч',
+                city_uz: 'Urganch',
+                region_ru: 'Хорезмская область',
+                region_uz: 'Xorazm viloyati'
+            },
+            'sirdarya': {
+                city_ru: 'Гулистан',
+                city_uz: 'Guliston',
+                region_ru: 'Сырдарьинская область',
+                region_uz: 'Sirdaryo viloyati'
+            },
+            'karakalpakstan': {
+                city_ru: 'Нукус', // в вашей БД нет Нукуса, но Каракалпакстан есть
+                city_uz: 'Nukus',
+                region_ru: 'Каракалпакстан',
+                region_uz: 'Qoraqalpogʻiston'
+            }
+        };
+
+        const regionMap: { [key: string]: any } = {};
+
+        cityStats.forEach(city => {
+            if (!city?.name_ru) return;
+
+            // Ищем к какому региону принадлежит этот город/область
+            let regionKey: string | null = null;
+
+            for (const [key, names] of Object.entries(mergeRules)) {
+                // Проверяем является ли запись городом из правил
+                if (city.name_ru === names.city_ru || city.name_uz === names.city_uz) {
+                    regionKey = key;
+                    break;
+                }
+                // Проверяем является ли запись областью из правил
+                if (city.name_ru === names.region_ru || city.name_uz === names.region_uz) {
+                    regionKey = key;
+                    break;
+                }
+            }
+
+            // Если не нашли в правилах, проверяем специальные случаи
+            if (!regionKey) {
+                // Нурафшан относится к Ташкентской области
+                if (city.name_ru === 'Нурафшан' || city.name_uz === 'Nurafshon') {
+                    regionKey = 'tashkent';
+                }
+                // Каракалпакстан - отдельный регион
+                else if (city.name_ru === 'Каракалпакстан' || city.name_uz?.includes('Qoraqalpogʻiston')) {
+                    regionKey = 'karakalpakstan';
+                }
+                // Если это город, которого нет в правилах, но есть его область - создаем новый регион
+                else {
+                    regionKey = city.name_ru.toLowerCase().replace(/\s+/g, '_');
+                }
+            }
+
+            // Определяем отображаемые названия для региона
+            let displayNameRu, displayNameUz;
+
+            if (regionKey in mergeRules) {
+                // Для объединенных регионов используем название области
+                displayNameRu = mergeRules[regionKey].region_ru;
+                displayNameUz = mergeRules[regionKey].region_uz;
+            } else {
+                // Для одиночных городов используем их оригинальные названия
+                displayNameRu = city.name_ru;
+                displayNameUz = city.name_uz || city.name_ru;
+            }
+
+            // Добавляем или обновляем запись региона
+            if (regionMap[regionKey]) {
+                regionMap[regionKey].offers_count += city.offers_count || 0;
+                regionMap[regionKey].original_ids.push(city.id);
+                // Сохраняем все названия для отладки
+                regionMap[regionKey].all_names = [
+                    ...regionMap[regionKey].all_names,
+                    { ru: city.name_ru, uz: city.name_uz }
+                ];
+            } else {
+                regionMap[regionKey] = {
+                    id: regionKey,
+                    name_ru: displayNameRu,
+                    name_uz: displayNameUz,
+                    offers_count: city.offers_count || 0,
+                    original_ids: [city.id],
+                    all_names: [{ ru: city.name_ru, uz: city.name_uz }],
+                    is_merged: false // установим ниже
+                };
+            }
+        });
+
+        // Помечаем объединенные регионы
+        Object.keys(regionMap).forEach(key => {
+            if (regionMap[key].original_ids.length > 1) {
+                regionMap[key].is_merged = true;
+            }
+        });
+
+        // Преобразуем в массив
+        const mergedRegions = Object.values(regionMap);
+
+        // Сортируем по алфавиту
         const isUz = lang === "uz";
         const field = isUz ? "name_uz" : "name_ru";
         const collator = new Intl.Collator(isUz ? "uz" : "ru", {
@@ -109,7 +282,8 @@ export const MainPage = () => {
             numeric: true,
             ignorePunctuation: true,
         });
-        return [...cityStats].sort((a, b) =>
+
+        return mergedRegions.sort((a, b) =>
             collator.compare((a?.[field] || "").trim(), (b?.[field] || "").trim())
         );
     }, [cityStats, lang]);
@@ -516,51 +690,57 @@ export const MainPage = () => {
 
                 </section>
                 {/* Города */}
-                {/*<section*/}
-                {/*    className="relative min-h-152.5 w-screen overflow-hidden bg-gradient-to-br from-[#F8FFF5] to-[#FAFFF9]">*/}
-                {/*    <div className="min-h-[610px] bg-[url(./images/Streets.png)] bg-center-bottom bg-no-repeat bg-cover">*/}
-                {/*        <div className="container mx-auto py-[70px] px-4 xl:px-20 lg:px-10 md:px-4">*/}
-                {/*            <Heading*/}
-                {/*                text={t("Города")}*/}
-                {/*                level={2}*/}
-                {/*                className="font-openSans font-bold text-[#4f4f4f]  text-3xl leading-[100%] mb-[25px]"*/}
-                {/*            />*/}
-                {/*            /!* КАТЕГОРИИ *!/*/}
-                {/*            <NavLinks*/}
-                {/*                links={translatedCategories}*/}
-                {/*                variant="tabs"*/}
-                {/*                activeLabel={t(selectedCategory)} // активный ярлык тоже в переводе*/}
-                {/*                onClick={(label) => {*/}
-                {/*                    // Находим оригинальную категорию, у которой переведённый label совпал*/}
-                {/*                    const original = categories.find(cat => t(cat.label) === label);*/}
-                {/*                    if (original) {*/}
-                {/*                        setSelectedCategory(original.label as typeof selectedCategory); // хранить продолжаем "Бизнес" | "Франшиза" | ...*/}
-                {/*                    }*/}
-                {/*                }}*/}
-                {/*                className="flex flex-wrap md:flex-nowrap gap-4 text-[24px] text-start font-openSans mb-6.25 font-bold"*/}
-                {/*                activeClassName="w-full px-6 py-4 bg-[#2EAA62] text-white rounded-xl"*/}
-                {/*                inactiveClassName="w-full px-6 py-4 bg-white font-openSans text-[#4f4f4f] border border-[#2EAA62] rounded-xl hover:bg-[#2EAA62]/10"*/}
-                {/*            />*/}
+                <section
+                    className="relative min-h-152.5 w-screen overflow-hidden bg-gradient-to-br from-[#F8FFF5] to-[#FAFFF9]">
+                    <div className="min-h-[610px] bg-[url(./images/Streets.png)] bg-center-bottom bg-no-repeat bg-cover">
+                        <div className="container mx-auto py-[70px] px-4 xl:px-20 lg:px-10 md:px-4">
+                            <Heading
+                                text={t("Города")}
+                                level={2}
+                                className="font-openSans font-bold text-[#4f4f4f]  text-3xl leading-[100%] mb-[25px]"
+                            />
+                            {/* КАТЕГОРИИ */}
+                            <NavLinks
+                                links={translatedCategories}
+                                variant="tabs"
+                                activeLabel={t(selectedCategory)} // активный ярлык тоже в переводе
+                                onClick={(label) => {
+                                    // Находим оригинальную категорию, у которой переведённый label совпал
+                                    const original = categories.find(cat => t(cat.label) === label);
+                                    if (original) {
+                                        setSelectedCategory(original.label as typeof selectedCategory); // хранить продолжаем "Бизнес" | "Франшиза" | ...
+                                    }
+                                }}
+                                className="flex flex-wrap md:flex-nowrap gap-4 text-[24px] text-start font-openSans mb-6.25 font-bold"
+                                activeClassName="w-full px-6 py-4 bg-[#2EAA62] text-white rounded-xl"
+                                inactiveClassName="w-full px-6 py-4 bg-white font-openSans text-[#4f4f4f] border border-[#2EAA62] rounded-xl hover:bg-[#2EAA62]/10"
+                            />
 
-                {/*            /!* ГОРОДА *!/*/}
-                {/*            <div className="grid 2xl:grid-cols-7 lg:grid-cols-5 md:grid-cols-4 grid-cols-2 gap-3">*/}
-                {/*                {sortedCities.map((city, idx) => (*/}
-                {/*                    <div*/}
-                {/*                        key={city.id ?? idx} // если есть id — лучше его*/}
-                {/*                        className="w-full justify-between flex flex-col transition duration-300 ease-in-out bg-[#4f4f4f] text-white py-4 px-6 rounded-[12px] gap-0.5"*/}
-                {/*                    >*/}
-                {/*                      <span className="font-openSans font-bold text-xl max-sm:text-[14px] leading-[150%]">*/}
-                {/*                        {lang === "uz" ? city.name_uz : city.name_ru}*/}
-                {/*                      </span>*/}
-                {/*                        <span className="font-Urbanist font-bold text-[40px] max-sm:text-[28px] leading-[150%]">*/}
-                {/*                            {city.offers_count.toLocaleString(lang === "uz" ? "uz-UZ" : "ru-RU")}*/}
-                {/*                        </span>*/}
-                {/*                    </div>*/}
-                {/*                ))}*/}
-                {/*            </div>*/}
-                {/*        </div>*/}
-                {/*    </div>*/}
-                {/*</section>*/}
+                            {/* ГОРОДА */}
+                            <div className="grid 2xl:grid-cols-7 lg:grid-cols-5 md:grid-cols-4 grid-cols-2 gap-3">
+                                {sortedCities.map((region, idx) => (
+                                    <div
+                                        key={region.id || idx}
+                                        className="w-full justify-between flex flex-col transition duration-300 ease-in-out bg-[#4f4f4f] text-white py-4 px-6 rounded-[12px] gap-0.5"
+                                    >
+                                        <span className="font-openSans font-bold text-md max-sm:text-[14px] leading-[150%]">
+                                            {lang === "uz" ? region.name_uz : region.name_ru}
+                                        </span>
+                                        <span className="font-Urbanist font-bold text-[40px] max-sm:text-[28px] leading-[150%]">
+                                            {region.offers_count.toLocaleString(lang === "uz" ? "uz-UZ" : "ru-RU")}
+                                        </span>
+                {/*                        /!* Для отладки можно показать сколько записей объединено *!/*/}
+                {/*                        {region.original_ids.length > 1 && (*/}
+                {/*                            <span className="font-openSans text-xs opacity-75">*/}
+                {/*    {region.original_ids.length} {t('объединенных записей')}*/}
+                {/*</span>*/}
+                {/*                        )}*/}
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    </div>
+                </section>
 
                 {/*Почему Invest In*/}
                 <section className="relative overflow-hidden w-full bg-[url('/images/Mask.png')] bg-repeat">

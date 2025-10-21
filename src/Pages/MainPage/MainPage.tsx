@@ -721,9 +721,9 @@ export const MainPage = () => {
                                 {sortedCities.map((region, idx) => (
                                     <div
                                         key={region.id || idx}
-                                        className="w-full justify-between flex flex-col transition duration-300 ease-in-out bg-[#4f4f4f] text-white py-4 px-6 rounded-[12px] gap-0.5"
+                                        className="w-full justify-between flex flex-col transition duration-300 ease-in-out bg-[#4f4f4f] text-white py-4 px-4 rounded-[12px] gap-0.5"
                                     >
-                                        <span className="font-openSans font-bold text-md max-sm:text-[14px] leading-[150%]">
+                                        <span className="font-openSans font-bold text-lg max-sm:text-[14px] leading-[150%]">
                                             {lang === "uz" ? region.name_uz : region.name_ru}
                                         </span>
                                         <span className="font-Urbanist font-bold text-[40px] max-sm:text-[28px] leading-[150%]">

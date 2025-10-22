@@ -49,11 +49,11 @@ export const Footer: React.FC<FooterProps> = ({ showSmallFooter }) => {
                         </div>
                     </div></>)}
             {showSmallFooter && (
-                <div className="w-full border-t container mx-auto border-[#E9E9E9] px-4 xl:px-20 lg:px-10 md:px-4 transition-all duration-300 invisible md:block">
-                    <div className="flex flex-col lg:flex-row lg:justify-between lg:items-center gap-6 text-center">
+                <div className="w-full border-t container mx-auto border-[#E9E9E9] px-4 xl:px-20 lg:px-10 md:px-4 transition-all duration-300 invisible lg:visible ">
+                    <div className="flex flex-col lg:flex-row lg:justify-between lg:items-center gap-6 text-center ">
 
                         {/* ЛОГОТИП */}
-                        <div className="flex justify-center lg:justify-start hidden">
+                        <div className="flex justify-center lg:justify-start ">
                             <Applink to={`/`}>
                                 <img
                                     src="/images/investin_v15.png"

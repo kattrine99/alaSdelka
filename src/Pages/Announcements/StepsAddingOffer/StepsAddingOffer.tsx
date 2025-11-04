@@ -63,6 +63,9 @@ export const StepsAddingOffer = () => {
         if (offerType === "investments") {
             return type === "buy" ? t("Поиск инвестора") : t("Поиск инвестпроекта");
         }
+        if (offerType === "startup") {
+            return type === "buy" ? t("Поиск инвестора") : t("Поиск инвестпроекта");
+        }
         return type === "buy" ? "Купить" : "Продать";
     };
 

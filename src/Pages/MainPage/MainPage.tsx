@@ -451,7 +451,7 @@ export const MainPage = () => {
                             <div className="col-span-2 max-lg:mt-2 max-sm:flex-col max-lg:w-full flex justify-center gap-2">
                                 <Button onClick={() => setListingTypes(prev => ({ ...prev, [selectedCategory]: "sell" }))}
                                     className={`flex items-center justify-center gap-x-2 rounded-[8px] h-13  min-w-70 max-"sm: w - full whitespace - nowrap px - 6 border border-[#2EAA62] text-[#2EAA62] text-[16px] hover:bg-[#2EAA62] hover:text-white transition duration - 500 font - inter leading - [150 %] font - semibold
-                        ${businessType === "sell" ? "bg-[#2EAA62] text-white border-[#2EAA62]"
+                                         ${businessType === "sell" ? "bg-[#2EAA62] text-white border-[#2EAA62]"
                                             : "border-[#2EAA62] text-[#2EAA62] hover:bg-[#2EAA62] hover:text-white"
                                         } `}>
                                     <ShopIcon className="w-5 h-5 hover:text-white" />
@@ -460,7 +460,7 @@ export const MainPage = () => {
                                 <Button
                                     onClick={() => setListingTypes(prev => ({ ...prev, [selectedCategory]: "buy" }))}
                                     className={`flex items-center justify-center gap-2 border rounded-[8px] h-13 min-w-70 max-sm:w-full max-sm:mt-1 whitespace-nowrap px-6 text-[16px] font-inter font-semibold transition
-  ${businessType === "buy" ? "bg-[#2EAA62] text-white border-[#2EAA62]" : "border-[#2EAA62] text-[#2EAA62] hover:bg-[#2EAA62] hover:text-white"} `}
+                                    ${businessType === "buy" ? "bg-[#2EAA62] text-white border-[#2EAA62]" : "border-[#2EAA62] text-[#2EAA62] hover:bg-[#2EAA62] hover:text-white"} `}
                                 >
                                     <ShopIcon className="w-5 h-5" />
                                     {t("Покупка бизнеса")}

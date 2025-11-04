@@ -163,7 +163,7 @@ export const Filters: React.FC<FiltersProps> = ({offer_type, filters, setFilters
                             <Button
                                 key={item}
                                 onClick={() => update("paybackPeriod", item)}
-                                className={`px-4 py-2 rounded-lg border ${filters.paybackPeriod === item
+                                className={`px-4 py-2 rounded-lg border hover:bg-[#2EAA62] hover:text-white ${filters.paybackPeriod === item
                                     ? "bg-[#2EAA62] text-white border-[#2EAA62]"
                                     : "bg-white text-[#4f4f4f]  border-gray-300"
                                 }`}
@@ -189,7 +189,7 @@ export const Filters: React.FC<FiltersProps> = ({offer_type, filters, setFilters
                                 type="text"
                                 value={filters.priceMin}
                                 onChange={(e) => update("priceMin", e.target.value)}
-                                placeholder="100 000"
+                                // placeholder="100 000"
                                 className="w-full text-[16px] font-semibold text-[#3C3C3C] bg-transparent outline-none placeholder:text-[#787878]"
                                 isError={false}
                             />
@@ -201,7 +201,7 @@ export const Filters: React.FC<FiltersProps> = ({offer_type, filters, setFilters
                                 type="text"
                                 value={filters.priceMax}
                                 onChange={(e) => update("priceMax", e.target.value)}
-                                placeholder="100 000"
+                                // placeholder="100 000"
                                 className="w-full text-[16px] font-semibold text-[#3C3C3C] bg-transparent outline-none placeholder:text-[#787878]"
                                 isError={false}
                             />
@@ -223,7 +223,7 @@ export const Filters: React.FC<FiltersProps> = ({offer_type, filters, setFilters
                                 type="text"
                                 value={filters.areaFrom}
                                 onChange={(e) => update("areaFrom", e.target.value)}
-                                placeholder="10"
+                                // placeholder="10"
                                 className="w-full text-[16px] font-semibold text-[#3C3C3C] bg-transparent outline-none placeholder:text-[#787878]"
                                 isError={false}
                             />
@@ -234,7 +234,7 @@ export const Filters: React.FC<FiltersProps> = ({offer_type, filters, setFilters
                                 type="text"
                                 value={filters.areaTo}
                                 onChange={(e) => update("areaTo", e.target.value)}
-                                placeholder="100 000"
+                                // placeholder="100 000"
                                 className="w-full text-[16px] font-semibold text-[#3C3C3C] bg-transparent outline-none placeholder:text-[#787878]"
                                 isError={false}
                             />
@@ -257,7 +257,7 @@ export const Filters: React.FC<FiltersProps> = ({offer_type, filters, setFilters
                                 type="text"
                                 value={filters.investmentMin}
                                 onChange={(e) => update("investmentMin", e.target.value)}
-                                placeholder="100 000"
+                                // placeholder="100 000"
                                 className="w-full py-3 text-[16px] font-semibold text-[#3C3C3C] bg-transparent outline-none placeholder:text-[#787878]"
                                 isError={false}
                             />
@@ -268,7 +268,7 @@ export const Filters: React.FC<FiltersProps> = ({offer_type, filters, setFilters
                                 type="text"
                                 value={filters.investmentMax}
                                 onChange={(e) => update("investmentMax", e.target.value)}
-                                placeholder="100 000"
+                                // placeholder="100 000"
                                 className="w-full py-3 text-[16px] font-semibold text-[#3C3C3C] bg-transparent outline-none placeholder:text-[#787878]"
                                 isError={false}
                             />
@@ -292,7 +292,7 @@ export const Filters: React.FC<FiltersProps> = ({offer_type, filters, setFilters
                                 type="text"
                                 value={filters.profitabilityMin}
                                 onChange={(e) => update("profitabilityMin", e.target.value)}
-                                placeholder="100 000"
+                                // placeholder="100 000"
                                 className="w-full text-[16px] font-semibold text-[#3C3C3C] bg-transparent outline-none placeholder:text-[#787878]"
                                 isError={false}
                             />
@@ -304,7 +304,7 @@ export const Filters: React.FC<FiltersProps> = ({offer_type, filters, setFilters
                                 type="text"
                                 value={filters.profitabilityMax}
                                 onChange={(e) => update("profitabilityMax", e.target.value)}
-                                placeholder="100 000"
+                                // placeholder="100 000"
                                 className="w-full text-[16px] font-semibold text-[#3C3C3C] bg-transparent outline-none placeholder:text-[#787878]"
                                 isError={false}
                             />
@@ -344,7 +344,7 @@ export const Filters: React.FC<FiltersProps> = ({offer_type, filters, setFilters
                     }}
                     className="w-full py-3 px-5 border border-[#2EAA62] mb-2.5 hover:bg-[#2EAA62] hover:text-white focus:bg-[#2EAA62] focus:text-white rounded-[6px] font-inter font-semibold text-[15px] leading-5.5 text-[#2EAA62] outline-none"
                 >
-                    {t("Сменить")}
+                    {t("Сбросить")}
                 </Button>
             </div>
         </div>

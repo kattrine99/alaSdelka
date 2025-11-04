@@ -298,7 +298,7 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
                 <Input
                     className="bg-[#b5b5b667]  text-gray-500 cursor-not-allowed w-full rounded-[14px] outline-none py-3.5 px-4.5"
                     LabelClassName="font-inter text-[16px] leading-[130%]"
-                    LabelText={t("Имя Фамилия")}
+                    LabelText={t("Имя")}
                     type="text"
                     placeholder={t("Введите")}
                     isError={false}

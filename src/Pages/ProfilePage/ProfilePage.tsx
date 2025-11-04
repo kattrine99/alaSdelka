@@ -1,6 +1,6 @@
 import { useNavigate, useLocation } from "react-router-dom";
 import { useGetUserInfoQuery, useUpdateUserInfoMutation, useLogoutMutation, useGetFiltersDataQuery, useDeleteAccountMutation } from "../../Store/api/Api";
-import { Heading, Paragraph, Input, Button, Header, Footer, Breadcrumbs, ModalBase } from "../../components";
+import {Heading, Paragraph, Input, Button, Header, Footer, Breadcrumbs, ModalBase, Applink} from "../../components";
 import { useDispatch } from "react-redux";
 import { setIsAuthenticated } from "../../Store/Slices/authSlice";
 import { useEffect, useState } from "react";
@@ -227,6 +227,12 @@ export const ProfilePage = () => {
                                 </div>
 
                                 <div className="flex flex-col w-full md:flex-row gap-x-4 gap-y-4 items-center">
+                                    <Applink
+                                        to="/add-offer"
+                                        className="px-5 h-13.5 text-white bg-[#2EAA62] w-full rounded-[6px] cursor-pointer items-center text-center"
+                                    >
+                                        {t("Разместить объявление")}
+                                    </Applink>
                                     <Button className="px-5 h-13.5 text-white bg-[#2EAA62] w-full rounded-[6px] cursor-pointer" onClick={handleEditClick}>{t("Редактировать личные данные")}</Button>
                                     <Button className="h-13.5 px-5 text-white bg-[#2EAA62] hover:bg-[#DE5151] w-full rounded-[6px] cursor-pointer" onClick={() => setShowLogoutConfirm(true)}
                                     >{t("Выйти из профиля")}</Button>
@@ -264,9 +270,9 @@ export const ProfilePage = () => {
 
                         <div className="flex flex-col gap-y-6">
                             <div className="flex flex-col">
-                                <label className="text-[#121212] text-sm mb-1 block">{t("Имя Фамилия")}</label>
+                                <label className="text-[#121212] text-sm mb-1 block">{t("Имя")}</label>
                                 {editMode ? (<Input
-                                    title={t("Имя Фамилия")}
+                                    title={t("Имя")}
                                     type="text"
                                     value={editMode && fullNameInput}
                                     onChange={e => setFullNameInput(e.target.value)}

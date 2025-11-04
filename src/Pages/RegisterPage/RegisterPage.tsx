@@ -189,7 +189,7 @@ export const RegistrationPage = () => {
                                 <div className="w-full ">
                                     <form className="flex flex-col gap-y-3.5">
                                         <Controller name="username" control={control} render={({ field }) => (
-                                            <Input {...field} placeholder={t("Имя Фамилия")} isError={!!errors.username}
+                                            <Input {...field} placeholder={t("Имя")} isError={!!errors.username}
                                                 errorMessage={t(errors.username?.message || "")}
                                                 className="py-3.5 w-full px-4.5 bg-[#EEEEEE80] outline-none rounded-[14px]" />)} />
                                         <Controller name="userphone" control={control} render={({ field }) => (

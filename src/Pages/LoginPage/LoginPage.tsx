@@ -81,7 +81,7 @@ export const LoginPage = () => {
             } else {
                 setTimeout(() => {
                     setShowModal(false);
-                    navigate(`/${lang}/`);
+                    navigate(`/${lang}/announcements`);
                 }, 2000);
             }
         } catch (error) {

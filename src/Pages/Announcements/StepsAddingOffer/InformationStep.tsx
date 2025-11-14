@@ -273,20 +273,40 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
             </div>
             {/*Категория объявления */}
             <div className="flex flex-col gap-2 w-full max-w-200 relative">
-                <label className="text-[#4f4f4f]  font-inter text-[16px] leading-[130%]">{t("Категория объявления")}</label>
+                <label className="text-[#4f4f4f] font-inter text-[16px] leading-[130%]">{t("Категория объявления")}</label>
                 <select
                     required
-                    className={`bg-[#F0F1F280] w-full max-w-200  rounded-[14px] text-[#686A70] outline-none py-3.5 px-4.5 ${!categoryId ? 'border border-red-500' : ''
-                        }`}
+                    className={`bg-[#F0F1F280] w-full max-w-200 rounded-[14px] text-[#686A70] outline-none py-3.5 px-4.5 ${!categoryId ? 'border border-red-500' : ''}`}
                     value={categoryId}
                     onChange={(e) => setCategoryId(e.target.value)}
                 >
                     <option value="">{t("Выбрать")}</option>
-                    {filtersData?.categories.map((cat) => (
-                        <option key={cat.id} value={String(cat.id)}>
-                            {lang === "uz" ? cat.title_uz : cat.title_ru}
-                        </option>
-                    ))}
+                    {filtersData?.categories
+                        ?.slice() // создаем копию массива чтобы не мутировать оригинал
+                        .sort((a, b) => {
+                            // Определяем названия в зависимости от языка
+                            const titleA = lang === "uz" ? a.title_uz : a.title_ru;
+                            const titleB = lang === "uz" ? b.title_uz : b.title_ru;
+
+                            // Проверяем, является ли категория "Другие" (или "Boshqa" для узбекского)
+                            const isAOther = titleA.toLowerCase().includes('другие') || titleA.toLowerCase().includes('boshqa') || titleA.toLowerCase().includes('other');
+                            const isBOther = titleB.toLowerCase().includes('другие') || titleB.toLowerCase().includes('boshqa') || titleB.toLowerCase().includes('other');
+
+                            // Если обе категории "Другие" - оставляем как есть
+                            if (isAOther && isBOther) return 0;
+                            // Если только A "Другие" - ставим B выше
+                            if (isAOther) return 1;
+                            // Если только B "Другие" - ставим A выше
+                            if (isBOther) return -1;
+
+                            // Для всех остальных категорий - обычная алфавитная сортировка
+                            return titleA.localeCompare(titleB);
+                        })
+                        .map((cat) => (
+                            <option key={cat.id} value={String(cat.id)}>
+                                {lang === "uz" ? cat.title_uz : cat.title_ru}
+                            </option>
+                        ))}
                 </select>
                 {!categoryId && (
                     <p className="text-red-500 text-sm mt-1">{t("Пожалуйста, выберите категорию")}</p>
@@ -345,18 +365,25 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
                 </div>
             }
             {/*Город */}
-            <div className="flex flex-col gap-2 w-full max-w-200  relative">
-                <label className="text-[#4f4f4f]  font-inter text-[16px] leading-[130%]">{t("Город")}</label>
-                <select className={`bg-[#F0F1F280] w-full rounded-[14px] text-[#686A70] outline-none py-3.5 px-4.5 ${!cityId ? 'border border-red-500' : ''
-                    }`}
-                    value={cityId}
-                    onChange={(e) => setCityId(e.target.value)}>
+            <div className="flex flex-col gap-2 w-full max-w-200 relative">
+                <label className="text-[#4f4f4f] font-inter text-[16px] leading-[130%]">{t("Город")}</label>
+                <select className={`bg-[#F0F1F280] w-full rounded-[14px] text-[#686A70] outline-none py-3.5 px-4.5 ${!cityId ? 'border border-red-500' : ''}`}
+                        value={cityId}
+                        onChange={(e) => setCityId(e.target.value)}>
                     <option className="">{t("Выбрать")}</option>
-                    {filtersData?.cities.map((city) => (
-                        <option key={city.id} value={String(city.id)}>
-                            {lang === "uz" ? city.name_uz : city.name_ru}
-                        </option>
-                    ))}
+                    {filtersData?.cities
+                        ?.slice() // создаем копию массива чтобы не мутировать оригинал
+                        .sort((a, b) => {
+                            // Сортируем по алфавиту в зависимости от выбранного языка
+                            const nameA = lang === "uz" ? a.name_uz : a.name_ru;
+                            const nameB = lang === "uz" ? b.name_uz : b.name_ru;
+                            return nameA.localeCompare(nameB);
+                        })
+                        .map((city) => (
+                            <option key={city.id} value={String(city.id)}>
+                                {lang === "uz" ? city.name_uz : city.name_ru}
+                            </option>
+                        ))}
                 </select>
                 {!cityId && (
                     <p className="text-red-500 text-sm mt-1">{t("Пожалуйста, выберите город")}</p>
@@ -437,14 +464,19 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
                 )}
             </div>
             {/*Форма владения помещением */}
-            <div className="flex flex-col gap-2 w-full max-w-98  relative">
-                <label className="text-[#4f4f4f]  font-inter text-[16px] leading-[130%]">{t("Форма владения помещением")}</label>
-                <select className={`bg-[#F0F1F280] w-full rounded-[14px] text-[#686A70] outline-none py-3.5 px-4.5 ${!propertyOwnershipType ? 'border border-red-500' : ''
+            <div className="flex flex-col gap-2 w-full max-w-98 relative">
+                <label className="text-[#4f4f4f] font-inter text-[16px] leading-[130%]">
+                    {t("Форма владения помещением")}
+                </label>
+                <select
+                    className={`bg-[#F0F1F280] w-full rounded-[14px] text-[#686A70] outline-none py-3.5 px-4.5 ${
+                        !propertyOwnershipType ? 'border border-red-500' : ''
                     }`}
                     value={propertyOwnershipType}
                     onChange={(e) => setPropertyOwnershipType(e.target.value)}
+                    required
                 >
-                    <option className="">{t("Выбрать")}</option>
+                    <option value="">{t("Выбрать")}</option>
                     {filtersData?.premises_ownership_form.map((form) => (
                         <option key={form.value} value={String(form.value)}>
                             {lang === "uz" ? form.label_uz : form.label_ru}
@@ -452,7 +484,7 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
                     ))}
                 </select>
                 {!propertyOwnershipType && (
-                    <p className="text-red-500 text-sm mt-1">{t("Пожалуйста, выберите форму")}</p>
+                    <p className="text-red-500 text-sm mt-1">{t("Пожалуйста, выберите форму владения помещением")}</p>
                 )}
             </div>
 

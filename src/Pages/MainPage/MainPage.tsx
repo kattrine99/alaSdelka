@@ -112,7 +112,18 @@ export const MainPage = () => {
                 region_uz: string;
             }
         } = {
-
+            'tashkent_city': { // Отдельно город Ташкент
+                city_ru: 'Ташкент',
+                city_uz: 'Toshkent',
+                region_ru: 'Ташкент',
+                region_uz: 'Toshkent'
+            },
+            'tashkent_region': { // Отдельно Ташкентская область
+                city_ru: '',
+                city_uz: '',
+                region_ru: 'Ташкентская область',
+                region_uz: 'Toshkent viloyati'
+            },
             'samarkand': {
                 city_ru: 'Самарканд',
                 city_uz: 'Samarqand',
@@ -212,7 +223,7 @@ export const MainPage = () => {
             if (!regionKey) {
                 // Нурафшан относится к Ташкентской области
                 if (city.name_ru === 'Нурафшан' || city.name_uz === 'Nurafshon') {
-                    regionKey = 'tashkent';
+                    regionKey = 'tashkent_region';
                 }
                 // Каракалпакстан - отдельный регион
                 else if (city.name_ru === 'Каракалпакстан' || city.name_uz?.includes('Qoraqalpogʻiston')) {
@@ -228,9 +239,15 @@ export const MainPage = () => {
             let displayNameRu, displayNameUz;
 
             if (regionKey in mergeRules) {
-                // Для объединенных регионов используем название области
-                displayNameRu = mergeRules[regionKey].region_ru;
-                displayNameUz = mergeRules[regionKey].region_uz;
+                // Для объединенных регионов используем название из правил
+                if (regionKey === 'tashkent_city') {
+                    // Для города Ташкент используем просто "Ташкент"
+                    displayNameRu = 'Ташкент';
+                    displayNameUz = 'Toshkent';
+                } else {
+                    displayNameRu = mergeRules[regionKey].region_ru;
+                    displayNameUz = mergeRules[regionKey].region_uz;
+                }
             } else {
                 // Для одиночных городов используем их оригинальные названия
                 displayNameRu = city.name_ru;
@@ -269,7 +286,7 @@ export const MainPage = () => {
         // Преобразуем в массив
         const mergedRegions = Object.values(regionMap);
 
-        // Сортируем по алфавиту
+        // Сортируем: сначала Ташкент (город), потом остальные по алфавиту
         const isUz = lang === "uz";
         const field = isUz ? "name_uz" : "name_ru";
         const collator = new Intl.Collator(isUz ? "uz" : "ru", {
@@ -278,9 +295,17 @@ export const MainPage = () => {
             ignorePunctuation: true,
         });
 
-        return mergedRegions.sort((a, b) =>
-            collator.compare((a?.[field] || "").trim(), (b?.[field] || "").trim())
-        );
+        return mergedRegions.sort((a, b) => {
+            // Ташкент (город) всегда первый
+            const isTashkentCityA = a.id === 'tashkent_city';
+            const isTashkentCityB = b.id === 'tashkent_city';
+
+            if (isTashkentCityA && !isTashkentCityB) return -1;
+            if (!isTashkentCityA && isTashkentCityB) return 1;
+
+            // Остальные сортируем по алфавиту (включая Ташкентскую область)
+            return collator.compare((a?.[field] || "").trim(), (b?.[field] || "").trim());
+        });
     }, [cityStats, lang]);
     const {
         data: businessOffers,

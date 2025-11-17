@@ -114,14 +114,29 @@ export const CardDetailPage: React.FC<CardDetailPageProps> = ({ section }) => {
         if (mod10 >= 2 && mod10 <= 4 && (mod100 < 10 || mod100 >= 20)) return few;
         return many;
     }
-    const formatCurrency = (price?: number) => {
+    const formatCurrency = (price?: number, priceCurrency?: "UZS" | "USD") => {
         if (typeof price !== 'number') return "—";
 
+        const offerCurrency = priceCurrency || "UZS";
+        
+        // Если валюта оффера совпадает с выбранной валютой отображения, показываем как есть
+        if (offerCurrency === currencyMode) {
+            if (currencyMode === "USD") {
+                return `${price.toLocaleString()} $`;
+            }
+            return `${price.toLocaleString()} ${t("UZS")}`;
+        }
+
+        // Если валюты не совпадают, конвертируем
         if (currencyMode === "USD") {
+            // Оффер в UZS, показываем в USD
             const converted = Math.round(price / (rate || 1));
             return `${converted.toLocaleString()} $`;
+        } else {
+            // Оффер в USD, показываем в UZS
+            const converted = Math.round(price * (rate || 1));
+            return `${converted.toLocaleString()} ${t("UZS")}`;
         }
-        return `${price.toLocaleString()} ${t("UZS")}`;
     };
     return (
         <>

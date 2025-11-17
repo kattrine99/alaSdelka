@@ -85,6 +85,7 @@ export const UserAnnouncementPage = () => {
         slug: card.slug,
         title: card.title || t("Название не указано"),
         price: card.price ?? t("Цена не указана"),
+        price_currency: card.price_currency,
         photos: card.photos ?? [],
         address: {
             address: card.address?.address || t("Адрес не указан"),

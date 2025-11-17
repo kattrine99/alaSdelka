@@ -11,6 +11,7 @@ export interface ICard {
         order: number;
     }[];
     price: number;
+    price_currency?: "UZS" | "USD";
     title: string;
     description?: string;
     address: {

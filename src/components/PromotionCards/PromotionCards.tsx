@@ -31,16 +31,30 @@ export const PromotionCards = () => {
     const paginatedOffers = offers.slice((page - 1) * perPage, page * perPage);
     const totalPages = Math.ceil(offers.length / perPage); const currencyMode = useSelector((state: RootState) => state.currency.mode);
     const currencyRate = useSelector((state: RootState) => state.currency.rate);
-    const formatPrice = (price?: number | string) => {
+    const formatPrice = (price?: number | string, priceCurrency?: "UZS" | "USD") => {
         const numericPrice = typeof price === "string" ? parseFloat(price) : price;
         if (typeof numericPrice !== "number" || isNaN(numericPrice)) return "—";
 
-        if (currencyMode === "USD") {
-            if (!currencyRate || isNaN(currencyRate)) return "$ —";
-            return `$ ${Math.round(numericPrice / currencyRate).toLocaleString()}`;
+        const offerCurrency = priceCurrency || "UZS";
+        
+        // Если валюта оффера совпадает с выбранной валютой отображения, показываем как есть
+        if (offerCurrency === currencyMode) {
+            if (currencyMode === "USD") {
+                return `$ ${numericPrice.toLocaleString()}`;
+            }
+            return `${numericPrice.toLocaleString()} ${t("UZS")}`;
         }
 
-        return `${numericPrice.toLocaleString()} ${t("UZS")}`;
+        // Если валюты не совпадают, конвертируем
+        if (currencyMode === "USD") {
+            // Оффер в UZS, показываем в USD
+            if (!currencyRate || isNaN(currencyRate)) return "$ —";
+            return `$ ${Math.round(numericPrice / currencyRate).toLocaleString()}`;
+        } else {
+            // Оффер в USD, показываем в UZS
+            if (!currencyRate || isNaN(currencyRate)) return `${t("UZS")} —`;
+            return `${Math.round(numericPrice * currencyRate).toLocaleString()} ${t("UZS")}`;
+        }
     };
     return (
         <div className="w-screen min-h-screen flex-col flex">
@@ -87,7 +101,7 @@ export const PromotionCards = () => {
                                     <div className="flex-1 flex flex-col justify-between">
                                         <div>
                                             <Paragraph className="text-[#232323] text-2xl font-inter font-bold mb-2">
-                                                {formatPrice(offer.price)}
+                                                {formatPrice(offer.price, offer.price_currency)}
                                             </Paragraph>
                                             <Paragraph className="text-[#232323] text-lg font-bold font-inter mb-3">
                                                 {offer.title}

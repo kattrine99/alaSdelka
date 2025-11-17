@@ -60,6 +60,7 @@ export const UpdateInformationPage: React.FC<Props> = ({ onSuccess, id }) => {
     const [propertyOwnershipType, setPropertyOwnershipType] = useState(offerData?.premises_ownership_form || "");
     const [businessOwnership, setBusinessOwnership] = useState(offerData?.business_type || "");
     const [amount, setAmount] = useState(offerData?.price?.toLocaleString("ru-RU").replace(/,/g, " ") || "");
+    const [currency, setCurrency] = useState<"sum" | "dollar">(offerData?.price_currency === "USD" ? "dollar" : "sum");
     const [percentageForSale, setPercentageForSale] = useState(offerData?.percentage_for_sale || 0);
     const [monthlyIncome, setMonthlyIncome] = useState(offerData?.average_monthly_revenue || 0);
     const [profit, setProfit] = useState(offerData?.average_monthly_profit || 0);
@@ -96,6 +97,7 @@ export const UpdateInformationPage: React.FC<Props> = ({ onSuccess, id }) => {
             setPropertyOwnershipType(offerData.premises_ownership_form || "");
             setBusinessOwnership(offerData.business_type || "");
             setAmount(offerData?.price?.toLocaleString("ru-RU").replace(/,/g, " ") || "");
+            setCurrency(offerData?.price_currency === "USD" ? "dollar" : "sum");
             setPercentageForSale(offerData.percentage_for_sale || 0);
             setMonthlyIncome(offerData.average_monthly_revenue || 0);
             setProfit(offerData.average_monthly_profit || 0);
@@ -194,6 +196,7 @@ export const UpdateInformationPage: React.FC<Props> = ({ onSuccess, id }) => {
                 title,
                 description,
                 price: parseInt(amount.replace(/\s/g, "")),
+                price_currency: currency === "dollar" ? "USD" : "UZS",
                 category_id: Number(categoryId),
                 area: Number(area),
                 address: {
@@ -549,23 +552,32 @@ export const UpdateInformationPage: React.FC<Props> = ({ onSuccess, id }) => {
                 </div>
             </div>}
             {/*Сумма */}
-            <div className="flex flex-col gap-2 w-full max-w-98  relative">
-                <Input
-                    className={`bg-[#F0F1F280] w-full rounded-[14px] outline-none py-3.5 px-4.5 ${!amount ? 'border border-red-500' : ''}`}
-                    LabelText={t("Сумма, UZS")}
-                    type="text"
-                    placeholder={t("Введите")}
-                    isError={false}
-                    value={amount}
-                    onChange={(e) => {
-                        const rawValue = e.target.value.replace(/\D/g, "");
-                        const formatted = rawValue.replace(/\B(?=(\d{3})+(?!\d))/g, " ");
-                        setAmount(formatted);
-                    }}
-                />
-                {!amount && (
-                    <p className="text-red-500 text-sm">{t("Пожалуйста, введите сумму")}</p>
-                )}
+            <div className="flex gap-4 items-center">
+                <div className="flex flex-col gap-2 w-full max-w-98  relative">
+                    <Input
+                        className={`bg-[#F0F1F280] w-full rounded-[14px] outline-none py-3.5 px-4.5 ${!amount ? 'border border-red-500' : ''}`}
+                        LabelText={t("Сумма")}
+                        type="text"
+                        placeholder={t("Введите")}
+                        isError={false}
+                        value={amount}
+                        onChange={(e) => {
+                            const rawValue = e.target.value.replace(/\D/g, "");
+                            const formatted = rawValue.replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+                            setAmount(formatted);
+                        }}
+                    />
+                    {!amount && (
+                        <p className="text-red-500 text-sm">{t("Пожалуйста, введите сумму")}</p>
+                    )}
+                </div>
+                <select value={currency}
+                    onChange={(e) => setCurrency(e.target.value as "sum" | "dollar")}
+                    className={`bg-[#F0F1F280] max-w-40 h-full w-full rounded-[14px] text-[#686A70] outline-none py-3.5 px-4.5`}
+                >
+                    <option value="sum">{t("UZS")}</option>
+                    <option value="dollar">{t("Доллар США")}</option>
+                </select>
             </div>
 
             {/*Изображения */}

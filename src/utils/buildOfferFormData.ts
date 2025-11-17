@@ -9,6 +9,7 @@ export const buildOfferFormData = (data: OfferPayload): FormData => {
     formData.append("offer_type", data.offer_type);
     formData.append("category_id", String(data.category_id));
     formData.append("price", String(data.price));
+    formData.append("price_currency", data.price_currency || "UZS");
     formData.append("user_name", data.user_name);
     formData.append("user_phone", data.user_phone);
     formData.append("area", String(data.area));

@@ -62,14 +62,29 @@ export const CardDetailPreview: React.FC<CardDetailPreviewProps> = ({ onBack }) 
             });
         };
     }, [data?.photos]);
-    const formatCurrency = (price?: number) => {
+    const formatCurrency = (price?: number, priceCurrency?: "UZS" | "USD") => {
         if (typeof price !== 'number') return "—";
 
+        const offerCurrency = priceCurrency || "UZS";
+        
+        // Если валюта оффера совпадает с выбранной валютой отображения, показываем как есть
+        if (offerCurrency === currencyMode) {
+            if (currencyMode === "USD") {
+                return `${price.toLocaleString()} $`;
+            }
+            return `${price.toLocaleString()} ${t("UZS")}`;
+        }
+
+        // Если валюты не совпадают, конвертируем
         if (currencyMode === "USD") {
+            // Оффер в UZS, показываем в USD
             const converted = Math.round(price / (rate || 1));
             return `${converted.toLocaleString()} $`;
+        } else {
+            // Оффер в USD, показываем в UZS
+            const converted = Math.round(price * (rate || 1));
+            return `${converted.toLocaleString()} ${t("UZS")}`;
         }
-        return `${price.toLocaleString()} ${t("UZS")}`;
     };
 
 

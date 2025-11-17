@@ -105,6 +105,7 @@ export interface MyOffer {
             slug: string;
             title: string;
             price: number;
+            price_currency?: "UZS" | "USD";
             area: number;
             offer_status: string;
             is_paid: boolean;
@@ -273,6 +274,7 @@ export interface OfferDetail {
         offer_type: "business" | "franchise" | "startup" | "investments";
         premises_ownership_form: string;
         price: number;
+        price_currency?: "UZS" | "USD";
         payback_period: number;
         average_monthly_revenue: number;
         average_monthly_profit: number;
@@ -357,6 +359,7 @@ export interface OfferDetails {
     offer_type: "business" | "franchise" | "startup" | "investments";
     premises_ownership_form: string;
     price: number;
+    price_currency?: "UZS" | "USD";
     payback_period: number;
     average_monthly_revenue: number;
     average_monthly_profit: number;
@@ -429,6 +432,7 @@ export interface Offer {
     slug: string;
     title: string;
     price: number;
+    price_currency?: "UZS" | "USD";
     category: {
         id: number,
         title_ru: string,
@@ -631,6 +635,7 @@ export interface OfferPayload {
     category_id: number;
 
     price: number;
+    price_currency?: "UZS" | "USD";
 
     business_type?: string;
     conveniences: number[];
@@ -760,6 +765,7 @@ export interface UpdateOfferPayload {
     category_id: number;
     project_stage_id: number;
     price: number;
+    price_currency?: "UZS" | "USD";
     average_monthly_revenue: number;
     average_monthly_profit: number;
     average_monthly_expenses: number;

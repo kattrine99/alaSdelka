@@ -85,6 +85,7 @@ const mapApiDataToStore = (apiData: OfferDetail["data"]): OfferPayload => {
         offer_type: apiData.offer_type,
         category_id: apiData.category.id,
         price: apiData.price,
+        price_currency: apiData.price_currency,
         area: apiData.area,
         area_from: apiData.area_from,
         area_to: apiData.area_to,

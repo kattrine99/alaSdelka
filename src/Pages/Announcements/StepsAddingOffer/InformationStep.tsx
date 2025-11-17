@@ -148,16 +148,15 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
     const dispatch = useDispatch();
 
     const handleSubmit = () => {
-        let price = priceInUzs;
-        if (currency == 'dollar') {
-            price = priceInUzs * currencyRate;
-        }
+        const price = priceInUzs;
+        const priceCurrency = currency === 'dollar' ? 'USD' : 'UZS';
         dispatch(setOfferData({
             title,
             description,
             listing_type: listingType,
             offer_type: offerType,
             price: price,
+            price_currency: priceCurrency,
             category_id: Number(categoryId),
             area: Number(Area),
             area_from: Number(areaFrom) || 0,

@@ -35,16 +35,30 @@ export const Card: React.FC<ICardComponent & { forceAllFavorite: boolean }> = ({
     const handleToggle = async (id: number) => {
         handleFavorite(id)
     };
-    const formatPrice = (price?: number | string) => {
+    const formatPrice = (price?: number | string, priceCurrency?: "UZS" | "USD") => {
         const numericPrice = typeof price === "string" ? parseFloat(price) : price;
         if (typeof numericPrice !== "number" || isNaN(numericPrice)) return "—";
 
-        if (currencyMode === "USD") {
-            if (!currencyRate || isNaN(currencyRate)) return "$ —";
-            return `$ ${Math.round(numericPrice / currencyRate).toLocaleString()}`;
+        const offerCurrency = priceCurrency || "UZS";
+        
+        // Если валюта оффера совпадает с выбранной валютой отображения, показываем как есть
+        if (offerCurrency === currencyMode) {
+            if (currencyMode === "USD") {
+                return `$ ${numericPrice.toLocaleString()}`;
+            }
+            return `${numericPrice.toLocaleString()} ${t("UZS")}`;
         }
 
-        return `${numericPrice.toLocaleString()} ${t("UZS")}`;
+        // Если валюты не совпадают, конвертируем
+        if (currencyMode === "USD") {
+            // Оффер в UZS, показываем в USD
+            if (!currencyRate || isNaN(currencyRate)) return "$ —";
+            return `$ ${Math.round(numericPrice / currencyRate).toLocaleString()}`;
+        } else {
+            // Оффер в USD, показываем в UZS
+            if (!currencyRate || isNaN(currencyRate)) return `${t("UZS")} —`;
+            return `${Math.round(numericPrice * currencyRate).toLocaleString()} ${t("UZS")}`;
+        }
     };
     if (card) {
         translationService.translateText(card.title, lang).then(function (value) {
@@ -146,7 +160,7 @@ export const Card: React.FC<ICardComponent & { forceAllFavorite: boolean }> = ({
             <div className="flex flex-col flex-1 justify-between px-[18px] py-[21px] ">
                 <div className="flex flex-col">
                     <Heading
-                        text={formatPrice(card.price)}
+                        text={formatPrice(card.price, card.price_currency)}
                         level={2}
                         className={`text-[16px] leading-[22px] font-bold font-inter text-[#232323] mb-[8px] ${cardHeadingClass ?? ""}`}
                     />

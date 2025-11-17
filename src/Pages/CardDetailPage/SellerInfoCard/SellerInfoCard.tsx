@@ -19,10 +19,33 @@ export const SellerInfoCard = ({ card, offer_type, userId }: { card: OfferDetail
     const [isFavorite, setIsFavorite] = useState(card?.is_favourite ?? false);
     const [toggleFavoriteAPI] = useToggleFavoriteMutation();
     const { mode: currencyMode, rate } = useSelector((state: RootState) => state.currency);
-    const convertedPrice =
-        currencyMode === "USD"
-            ? Math.round((card.price || 0) / (rate || 1)).toLocaleString() + " $"
-            : (card.price || 0).toLocaleString() + t("UZS");
+    
+    const formatPrice = (price?: number, priceCurrency?: "UZS" | "USD") => {
+        if (typeof price !== 'number') return "—";
+        
+        const offerCurrency = priceCurrency || "UZS";
+        
+        // Если валюта оффера совпадает с выбранной валютой отображения, показываем как есть
+        if (offerCurrency === currencyMode) {
+            if (currencyMode === "USD") {
+                return `${price.toLocaleString()} $`;
+            }
+            return `${price.toLocaleString()} ${t("UZS")}`;
+        }
+        
+        // Если валюты не совпадают, конвертируем
+        if (currencyMode === "USD") {
+            // Оффер в UZS, показываем в USD
+            const converted = Math.round(price / (rate || 1));
+            return `${converted.toLocaleString()} $`;
+        } else {
+            // Оффер в USD, показываем в UZS
+            const converted = Math.round(price * (rate || 1));
+            return `${converted.toLocaleString()} ${t("UZS")}`;
+        }
+    };
+    
+    const convertedPrice = formatPrice(card.price, card.price_currency);
 
     const handleToggleFavorite = async () => {
         try {

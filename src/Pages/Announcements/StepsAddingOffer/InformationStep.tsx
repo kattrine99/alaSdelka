@@ -446,8 +446,7 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
             <div className="flex flex-col gap-2 w-full max-w-98 relative">
                 <label className="text-[#4f4f4f]  font-inter text-[16px] leading-[130%]">{t("Форма владения бизнесом")}</label>
                 <select
-                    className={`bg-[#F0F1F280] w-full rounded-[14px] text-[#686A70] outline-none py-3.5 px-4.5 ${!businessOwnership ? 'border border-red-500' : ''
-                        }`}
+                    className={`bg-[#F0F1F280] w-full rounded-[14px] text-[#686A70] outline-none py-3.5 px-4.5`}
                     value={businessOwnership}
                     onChange={(e) => setBusinessOwnership(e.target.value)}
                 >
@@ -458,9 +457,6 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
                         </option>
                     ))}
                 </select>
-                {!businessOwnership && (
-                    <p className="text-red-500 text-sm mt-1">{t("Пожалуйста, выберите форму")}</p>
-                )}
             </div>
             {/*Форма владения помещением */}
             <div className="flex flex-col gap-2 w-full max-w-98 relative">
@@ -468,9 +464,7 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
                     {t("Форма владения помещением")}
                 </label>
                 <select
-                    className={`bg-[#F0F1F280] w-full rounded-[14px] text-[#686A70] outline-none py-3.5 px-4.5 ${
-                        !propertyOwnershipType ? 'border border-red-500' : ''
-                    }`}
+                    className={`bg-[#F0F1F280] w-full rounded-[14px] text-[#686A70] outline-none py-3.5 px-4.5`}
                     value={propertyOwnershipType}
                     onChange={(e) => setPropertyOwnershipType(e.target.value)}
                     required
@@ -482,9 +476,6 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
                         </option>
                     ))}
                 </select>
-                {!propertyOwnershipType && (
-                    <p className="text-red-500 text-sm mt-1">{t("Пожалуйста, выберите форму владения помещением")}</p>
-                )}
             </div>
 
             {isSell &&

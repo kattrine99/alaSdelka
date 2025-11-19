@@ -408,14 +408,14 @@ export const MainPage = () => {
                                 {isAuthenticated ? (
                                     <Applink
                                         to="/add-offer"
-                                        className="bg-[#2EAA62] text-white px-5 py-3 rounded-[10px] hover:bg-[#2EAA62] text-sm font-medium transition duration-600"
+                                        className="inline-block bg-[#2EAA62] text-white px-6 py-4 rounded-[10px] hover:bg-[#259952] hover:shadow-xl text-base font-semibold transition-all duration-300 shadow-lg"
                                     >
                                         {t("Разместить объявление")}
                                     </Applink>
                                 ) : (
                                     <Applink
                                         to="/login?next-step=/add-offer"
-                                        className="bg-[#2EAA62] text-white px-5 py-3 rounded-[10px] hover:bg-[#2EAA62] text-sm font-medium transition duration-600"
+                                        className="inline-block bg-[#2EAA62] text-white px-6 py-4 rounded-[10px] hover:bg-[#259952] hover:shadow-xl text-base font-semibold transition-all duration-300 shadow-lg"
                                     >
                                         {t("Разместить объявление")}
                                     </Applink>

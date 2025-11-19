@@ -127,7 +127,7 @@ export const LoginPage = () => {
                                         {...field}
                                         isError={!!errors.userphone}
                                         errorMessage={t(errors.userphone?.message || "")}
-                                        type="text"
+                                        type="phone"
                                         placeholder={t("Номер телефона")}
                                         className={`w-full px-[18px] py-[17px] border-2 bg-[#EEEEEE80] rounded-[14px] focus:outline-none text-[16px] font-semibold leading-[130%] transition-all duration-500 ${errors.userphone ? 'border-red-500 focus:ring-red-500' : field.value ? 'border-green-500 focus:ring-green-500' : 'border-[#9C9C9C33] focus:ring-[#2EAA62]'}`}
                                     />

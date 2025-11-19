@@ -1,5 +1,5 @@
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState, useRef } from "react";
 import {
     Breadcrumbs,
     CardSection,
@@ -99,6 +99,7 @@ export const CategoryPage: React.FC<CategoryPageProps> = ({section}) => {
     const [searchInput, setSearchInput] = useState(searchParams.get("search") || "");
     const [searchQuery, setSearchQuery] = useState(searchParams.get("search") || "");
     const [isMobileFiltersOpen, setIsMobileFiltersOpen] = useState(false);
+    const isInitialMount = useRef(true);
 
     const itemsPerPage = 20;
     const isNumber = /^\d+$/.test(searchQuery);
@@ -179,6 +180,7 @@ export const CategoryPage: React.FC<CategoryPageProps> = ({section}) => {
         setSearchInput(searchParams.get("search") || "");
         setSearchQuery(searchParams.get("search") || "");
         setCurrentPage(1);
+        isInitialMount.current = true; // Сбрасываем флаг при изменении URL
     }, [searchParams.toString()]);
 
     useEffect(() => {
@@ -196,6 +198,50 @@ export const CategoryPage: React.FC<CategoryPageProps> = ({section}) => {
         });
         navigate(`/${lang}/${categoryKey}?${query.toString()}`);
     }
+
+    // Автоматическое применение фильтров с debounce для текстовых полей
+    useEffect(() => {
+        // Пропускаем первый рендер (инициализацию)
+        if (isInitialMount.current) {
+            isInitialMount.current = false;
+            return;
+        }
+
+        // Поля, которые требуют debounce (текстовые поля ввода)
+        const textFields: (keyof FiltersState)[] = ['priceMin', 'priceMax', 'areaFrom', 'areaTo', 'investmentMin', 'investmentMax', 'profitabilityMin', 'profitabilityMax'];
+        const isTextFieldChanged = textFields.some(field => localFilters[field] !== appliedFilters[field]);
+        
+        // Для текстовых полей используем debounce
+        if (isTextFieldChanged) {
+            const timer = setTimeout(() => {
+                setAppliedFilters(localFilters);
+                const query = new URLSearchParams();
+                if (searchInput) query.append("search", searchInput);
+                Object.entries(localFilters).forEach(([key, value]) => {
+                    if (value) query.append(key, String(value));
+                });
+                navigate(`/${lang}/${categoryKey}?${query.toString()}`);
+            }, 500); // 500ms задержка для текстовых полей
+            
+            return () => clearTimeout(timer);
+        } else {
+            // Для остальных полей применяем сразу
+            const otherFieldsChanged = Object.keys(localFilters).some(key => {
+                const field = key as keyof FiltersState;
+                return !textFields.includes(field) && localFilters[field] !== appliedFilters[field];
+            });
+            
+            if (otherFieldsChanged) {
+                setAppliedFilters(localFilters);
+                const query = new URLSearchParams();
+                if (searchInput) query.append("search", searchInput);
+                Object.entries(localFilters).forEach(([key, value]) => {
+                    if (value) query.append(key, String(value));
+                });
+                navigate(`/${lang}/${categoryKey}?${query.toString()}`);
+            }
+        }
+    }, [localFilters, lang, categoryKey, searchInput]);
 
     let categorySeo: CategorySeo | null = null;
     let citySeo: CitySeo | null = null;

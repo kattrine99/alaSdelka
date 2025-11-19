@@ -18,10 +18,10 @@ interface FiltersProps {
     offer_type: "business" | "startup" | "franchise" | "investments" | "бизнес" | "франшиза" | "стартапы" | "инвстиции";
     filters: FiltersState;
     setFilters: React.Dispatch<React.SetStateAction<FiltersState>>;
-    onApplyFilters: () => void;
+    onApplyFilters?: () => void; // Оставлено для обратной совместимости, но больше не используется
 }
 
-export const Filters: React.FC<FiltersProps> = ({offer_type, filters, setFilters, onApplyFilters}) => {
+export const Filters: React.FC<FiltersProps> = ({offer_type, filters, setFilters}) => {
     const {data: filterOptions, isLoading, isError} = useGetFiltersDataQuery();
     const buttonsData = ["Не важно", "До 6 месяцев", "До 1 года", "До 3 лет"];
     const selectedCurrency = useSelector((state: RootState) => state.currency.mode);
@@ -314,18 +314,13 @@ export const Filters: React.FC<FiltersProps> = ({offer_type, filters, setFilters
                 </div>
             )}
 
-            {/* Кнопки */}
+            {/* Кнопка сброса */}
             <div className="mt-4">
-                <Button
-                    onClick={onApplyFilters}
-                    className="w-full py-3 px-5 border border-[#2EAA62] mb-2.5 hover:bg-[#2EAA62] hover:text-white focus:bg-[#2EAA62] focus:text-white rounded-[6px] font-inter font-semibold text-[15px] leading-5.5 text-[#2EAA62] outline-none"
-                >
-                    {t("Найти")}
-                </Button>
                 <Button
                     onClick={() => {
                         const cleared: FiltersState = {
                             category_id: undefined,
+                            categorySlug: "",
                             city: "",
                             stage: "",
                             paybackPeriod: "",

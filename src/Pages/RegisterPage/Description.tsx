@@ -20,33 +20,33 @@ export const Description: React.FC<Descriptionprops> = ({
                         <h3 className="text-[#252525] font-inter text-[24px] font-semibold mb-[15px] relative z-10">{t("Начни свой бизнес легко!")}</h3>
                         <p className="text-[#252525] font-inter font-normal text-[16px] text-sm relative z-10">
                             {t("Выберите готовый бизнес, франшизу или инвестиционный проект. Простая регистрация, удобный поиск, множество актуальных предложений от собственников и инвесторов")}                        </p>
-                        <span className="absolute top-[387px] text-[160px] leading-[105%] opacity-[10%] font-bold text-[#252525] z-0" style={{ fontFamily: "Actay Wide Bd" }}>01</span>
+                        <span className="absolute top-[450px] text-[160px] leading-[105%] opacity-[10%] font-bold text-[#252525] z-0" style={{ fontFamily: "Actay Wide Bd" }}>01</span>
                     </div>
 
                 </div>
                 {/* Card 02 */}
                 <div className="relative flex flex-col mt-[154px] text-left">
-                    <div className="mx-8.25 mb-7.75">
+                    <div className="w-[152px] flex justify-center items-center mx-auto ml-3 mb-7.75">
                         <img src="/images/benefits-img-2.png" className="w-[250px] h-auto mb-4 relative z-10" />
                     </div>
                     <div>
                         <h3 className="text-[#252525] text-inter text-[24px] font-semibold mb-[15px] relative z-10">{t("Развивайся вместе с нами!")}</h3>
                         <p className="text-[#252525] font-inter font-normal text-[16px] text-sm relative z-10">
                             {t("У нас вы найдете надежных партнеров, инвесторов и готовые решения для роста вашего бизнеса. Инвестируйте или привлекайте капитал легко и быстро через нашу платформу.")}                        </p>
-                        <span className="absolute bottom-[340px] right-[33px] text-[160px] font-bold text-[#252525] leading-[105%] opacity-[10%] z-0" style={{ fontFamily: "Actay Wide Bd" }}>02</span>
+                        <span className="absolute bottom-[410px] right-[0px] text-[160px] font-bold text-[#252525] leading-[105%] opacity-[10%] z-0" style={{ fontFamily: "Actay Wide Bd" }}>02</span>
 
                     </div>
 
                 </div>
                 {/* Card 03 */}
-                <div className="relative flex flex-col text-left">
-                    <div className="mx-8.25 mb-7.75">
+                <div className="relative flex items-center flex-col text-left">
+                    <div className="w-[152px] mb-7.75 ml-0 flex justify-center mx-auto">
                         <img src="/images/benefits-img-3.png" className="w-[250px] h-auto mb-4 relative z-10" />
                     </div>
                     <h3 className="text-[#252525] text-inter text-[24px] font-semibold mb-[15px] relative z-10">{t("Инвестируй с умом!")}</h3>
                     <p className="text-[#252525] font-inter font-normal text-[16px] text-sm relative z-10">
                         {("Платформа объединяет предпринимателей и инвесторов. Здесь каждый может найти выгодный проект, купить готовый бизнес или вложиться в перспективную франшизу.")}                    </p>
-                    <span className="absolute top-[397px] right-[9px] text-[160px] font-bold text-[#252525] leading-[105%] opacity-[10%] z-0" style={{ fontFamily: "Actay Wide Bd" }}>03</span>
+                    <span className="absolute top-[450px] right-[0px] text-[160px] font-bold text-[#252525] leading-[105%] opacity-[10%] z-0" style={{ fontFamily: "Actay Wide Bd" }}>03</span>
 
                 </div>
             </div>)}

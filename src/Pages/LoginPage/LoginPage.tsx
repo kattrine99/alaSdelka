@@ -114,10 +114,10 @@ export const LoginPage = () => {
                         }}>Подтвердить</Button>}/>}
             </div>
             <Header showNavLinks={false} showAuthButtons={false}/>
-            <div className=" flex flex-1 items-center justify-center py-[62px] transition-all duration-300  px-7 py-4">
+            <div className=" flex flex-1 items-center justify-center py-[62px] transition-all duration-300">
                 <div className="w-full grid grid-cols-1 lg:grid-cols-2 container mx-auto px-4 xl:px-20 lg:px-10 md:px-4 transition-all duration-500">
                     <div
-                        className="w-full flex flex-col items-start text-start transition-all duration-300">
+                        className="w-full flex flex-col items-start text-start transition-all duration-300 px-7 py-4">
                         <Heading className="text-[32px] mb-[32px] font-inter font-bold text-[#4f4f4f] "
                                  text={t('Вход в личный кабинет')} level={1}/>
                         <form onSubmit={handleSubmit(onSubmit)}

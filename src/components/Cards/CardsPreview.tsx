@@ -68,7 +68,7 @@ export const CardPreview: React.FC<CardPreviewProps> = ({ card, onPreview }) => 
             )}
             <div className="flex-1 flex flex-col ">
                 <div>
-                    <Heading text={`${formatCurrency(card.price, card.price_currency)}`} level={2} className="font-inter text-[24px] font-bold text-[#4f4f4f] mb-2" />
+                    <Heading text={`${numberWithSpaces(card.price)} ${card.price_currency}`} level={2} className="font-inter text-[24px] font-bold text-[#4f4f4f] mb-2" />
                     <Paragraph className="font-inter text-[#4f4f4f] text-[18px] font-bold">{card.title}</Paragraph>
 
                     <Paragraph className="flex font-inter font-medium text-[14px] mt-3 text-[#667085]">

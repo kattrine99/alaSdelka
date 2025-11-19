@@ -69,8 +69,8 @@ export const NoticePage = () => {
                     <p className="text-red-500">{t("Ошибка загрузки")}</p>
                 ) : notifications.length === 0 ? (
                     <EmptyMessage
-                        title="Нет уведомлений"
-                        subtitle="Здесь будут отображаться ваши уведомления"
+                        title={t("Нет уведомлений")}
+                        subtitle={t("Здесь будут отображаться ваши уведомления")}
                         hideButton
                     />
                 ) : (

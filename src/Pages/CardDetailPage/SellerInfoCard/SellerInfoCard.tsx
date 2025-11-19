@@ -2,20 +2,32 @@ import { useEffect, useState } from "react";
 import { ModalBase, Button, Paragraph, Applink } from "../../../components";
 import { BiHeart, BiSolidHeart } from "react-icons/bi";
 import { OfferDetail } from "../../../Store/api/types";
-import { Link, useParams } from "react-router-dom";
 import { useGetOfferContactViewQuery, useToggleFavoriteMutation } from "../../../Store/api/Api";
 import { skipToken } from "@reduxjs/toolkit/query";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../Store/store";
 import { useTranslation } from "../../../../public/Locales/context/TranslationContext";
+import { FaTelegram, FaWhatsapp } from "react-icons/fa";
+import { FaInstagram } from "react-icons/fa6";
 
 export const SellerInfoCard = ({ card, offer_type, userId }: { card: OfferDetail['data'], userId: number, offer_type?: string }) => {
     const [isContactModalOpen, setContactModalOpen] = useState(false);
-    const [isLinksModalOpen, setLinksModalOpen] = useState(false);
     const { data: contactData, isLoading: isContactLoading } = useGetOfferContactViewQuery(
         isContactModalOpen ? card.id : skipToken
     );
-    const { t, lang } = useTranslation()
+    const { t } = useTranslation()
+    
+    const getChannelIcon = (channelName: string) => {
+        const name = channelName.toLowerCase();
+        if (name.includes('telegram')) {
+            return <FaTelegram className="w-6 h-6 text-[#229ED9]" />;
+        } else if (name.includes('instagram')) {
+            return <FaInstagram className="w-6 h-6 text-[#E4405F]" />;
+        } else if (name.includes('whatsapp')) {
+            return <FaWhatsapp className="w-6 h-6 text-[#25D366]" />;
+        }
+        return null;
+    };
     const [isFavorite, setIsFavorite] = useState(card?.is_favourite ?? false);
     const [toggleFavoriteAPI] = useToggleFavoriteMutation();
     const { mode: currencyMode, rate } = useSelector((state: RootState) => state.currency);
@@ -85,7 +97,6 @@ export const SellerInfoCard = ({ card, offer_type, userId }: { card: OfferDetail
                 <div className="flex items-center bg-[#E9F7F1] rounded-md p-3 gap-3">
                     <Applink
                         to={`/users/${userId}/${offer_type}`}
-                        state={{ category: offer_type }}
                         className="flex gap-5 items-center">
                         <div className="rounded-full">
                             <img
@@ -109,48 +120,59 @@ export const SellerInfoCard = ({ card, offer_type, userId }: { card: OfferDetail
                     {t("Контакты продавца")}
                 </Button>
             )}
-            <Button
-                className="w-full bg-[#E9F7F1] text-[#2EAA62] font-semibold py-2 rounded-md hover:bg-[#d1f0e3] transition"
-                onClick={() => setLinksModalOpen(true)}
-            >
-                {t("Ссылки")}
-            </Button>
 
             {isContactModalOpen && (
                 <ModalBase
                     title={t("Контакты продавца")}
                     ModalClassName="w-100 p-9"
-                    message={isContactLoading
-                        ? t("Загрузка...")
-                        : contactData?.phone || t("Номер не найден")}
-                    onClose={() => setContactModalOpen(false)}
-                    showCloseButton={true} HeadingClassName={"font-inter font-bold text-[#4f4f4f] text-3xl"}
-                />
-            )}
-
-            {isLinksModalOpen && (
-                <ModalBase
-                    title={t("Ссылки")}
-                    ModalClassName="w-100 p-9"
-                    message={card.communication_channels?.length ? (
-                        <div className="flex flex-col gap-2">
-                            {card.communication_channels.map((channel, idx) => (
-                                <a
-                                    key={idx}
-                                    href={channel.link}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="text-[#2EAA62] underline"
-                                >
-                                    {channel.channel_name}
-                                </a>
-                            ))}
+                    message={
+                        <div className="flex flex-col gap-6">
+                            {/* Телефон */}
+                            <div className="flex flex-col gap-2">
+                                <Paragraph className="text-[#4f4f4f] font-semibold text-lg">
+                                    {t("Телефон")}
+                                </Paragraph>
+                                {isContactLoading ? (
+                                    <Paragraph className="text-[#667085]">{t("Загрузка...")}</Paragraph>
+                                ) : (
+                                    <a
+                                        href={`tel:${contactData?.phone || ''}`}
+                                        className="text-[#2EAA62] text-lg font-medium hover:underline"
+                                    >
+                                        {contactData?.phone || t("Номер не найден")}
+                                    </a>
+                                )}
+                            </div>
+                            
+                            {/* Ссылки на каналы коммуникации */}
+                            {card.communication_channels && card.communication_channels.length > 0 && (
+                                <div className="flex flex-col gap-2">
+                                    <Paragraph className="text-[#4f4f4f] font-semibold text-lg">
+                                        {t("Ссылки")}
+                                    </Paragraph>
+                                    <div className="flex flex-col gap-3">
+                                        {card.communication_channels.map((channel, idx) => (
+                                            <a
+                                                key={idx}
+                                                href={channel.link}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="flex items-center gap-3 p-3 rounded-lg hover:bg-[#F0F1F2] transition-colors"
+                                            >
+                                                {getChannelIcon(channel.channel_name)}
+                                                <span className="text-[#4f4f4f] font-medium">
+                                                    {channel.channel_name}
+                                                </span>
+                                            </a>
+                                        ))}
+                                    </div>
+                                </div>
+                            )}
                         </div>
-                    ) : (
-                        t("Ссылки отсутствуют")
-                    )}
-                    onClose={() => setLinksModalOpen(false)}
-                    showCloseButton={true} HeadingClassName={"font-inter font-bold text-[#4f4f4f] text-3xl"}
+                    }
+                    onClose={() => setContactModalOpen(false)}
+                    showCloseButton={true}
+                    HeadingClassName={"font-inter font-bold text-[#4f4f4f] text-3xl"}
                 />
             )}
         </div>

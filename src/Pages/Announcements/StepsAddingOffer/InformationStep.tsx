@@ -612,14 +612,16 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
 
                     {links.map((item, index) => (
                         <div key={index} className="flex max-md:flex-col max-md:items-start items-center gap-3">
-                            <Input
-                                type="text"
+                            <select
                                 value={item.channel_name}
-                                placeholder={t("Например: Telegram")}
                                 onChange={(e) => handleChannelNameChange(index, e.target.value)}
-                                className="bg-[#F0F1F280] w-full rounded-[14px] outline-none py-3.5 px-4.5"
-                                isError={false}
-                            />
+                                className="bg-[#F0F1F280] w-full rounded-[14px] outline-none py-3.5 px-4.5 text-[#686A70]"
+                            >
+                                <option value="">{t("Выбрать")}</option>
+                                <option value="Telegram">{t("Telegram")}</option>
+                                <option value="Instagram">{t("Instagram")}</option>
+                                <option value="WhatsApp">{t("WhatsApp")}</option>
+                            </select>
                             <Input
                                 type="url"
                                 value={item.link}

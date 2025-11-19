@@ -3,7 +3,6 @@ import * as yup from "yup";
 import {Controller, useForm} from "react-hook-form";
 import {yupResolver} from "@hookform/resolvers/yup";
 import {useState} from "react";
-import './LoginPage.css';
 import {FaRegEye, FaRegEyeSlash} from "react-icons/fa";
 import {Description} from '../RegisterPage/Description';
 import {useLoginUserMutation} from '../../Store/api/Api';
@@ -11,6 +10,9 @@ import {useDispatch} from 'react-redux';
 import {setAccessToken, setIsAuthenticated, setLogoutReason} from '../../Store/Slices/authSlice';
 import {useNavigate, useSearchParams} from 'react-router-dom';
 import {useTranslation} from '../../../public/Locales/context/TranslationContext';
+import PhoneInput from 'react-phone-input-2';
+import 'react-phone-input-2/lib/style.css';
+import './LoginPage.css';
 
 interface LoginFormInputs {
     userphone: string;
@@ -20,7 +22,8 @@ interface LoginFormInputs {
 const loginFormschema = yup.object({
     userphone: yup
         .string()
-        .required("Введите номер телефона"),
+        .required("Введите номер телефона")
+        .min(10, "Введите корректный номер телефона"),
     userpassword: yup
         .string()
         .required("Обязательное поле")
@@ -55,7 +58,7 @@ export const LoginPage = () => {
     const onSubmit = async (data: LoginFormInputs) => {
         try {
             const response = await loginUser({
-                phone: data.userphone,
+                phone: `+${data.userphone}`,
                 password: data.userpassword,
             }).unwrap();
 
@@ -123,14 +126,31 @@ export const LoginPage = () => {
                                 name="userphone"
                                 control={control}
                                 render={({field}) => (
-                                    <Input
-                                        {...field}
-                                        isError={!!errors.userphone}
-                                        errorMessage={t(errors.userphone?.message || "")}
-                                        type="phone"
-                                        placeholder={t("Номер телефона")}
-                                        className={`w-full px-[18px] py-[17px] border-2 bg-[#EEEEEE80] rounded-[14px] focus:outline-none text-[16px] font-semibold leading-[130%] transition-all duration-500 ${errors.userphone ? 'border-red-500 focus:ring-red-500' : field.value ? 'border-green-500 focus:ring-green-500' : 'border-[#9C9C9C33] focus:ring-[#2EAA62]'}`}
-                                    />
+                                    <div className="w-full">
+                                        <PhoneInput
+                                            country={'uz'}
+                                            value={field.value}
+                                            onChange={(value) => field.onChange(value)}
+                                            onBlur={field.onBlur}
+                                            inputProps={{
+                                                name: field.name,
+                                                required: true,
+                                                autoFocus: false,
+                                            }}
+                                            containerClass={`flex-1 flex-col ${errors.userphone ? 'error' : field.value ? 'success' : ''}`}
+                                            inputClass="w-full"
+                                            buttonClass="phone-input-button"
+                                            dropdownClass="phone-input-dropdown"
+                                            placeholder={t("Номер телефона")}
+                                            countryCodeEditable={false}
+                                            specialLabel=""
+                                        />
+                                        {errors.userphone && (
+                                            <Paragraph className="text-sm text-red-500 mt-1">
+                                                {t(errors.userphone?.message || "")}
+                                            </Paragraph>
+                                        )}
+                                    </div>
                                 )}
                             />
                             <Controller
@@ -144,7 +164,7 @@ export const LoginPage = () => {
                                             errorMessage={t(errors.userpassword?.message || "")}
                                             type={isPasswordVisible ? "text" : "password"}
                                             placeholder={t("Пароль")}
-                                            className={`w-full px-[18px] py-[17px] border-2 bg-[#EEEEEE80] rounded-[14px] focus:outline-none text-[16px] font-semibold leading-[130%] transition-all duration-500 ${errors.userpassword ? 'border-red-500 focus:ring-red-500' : field.value ? 'border-green-500 focus:ring-green-500' : 'border-[#9C9C9C33] focus:ring-[#2EAA62]'}`}
+                                            className={`w-full px-[18px] py-[17px] bg-[#EEEEEE80] rounded-[14px] focus:outline-none text-[16px] font-semibold leading-[130%] transition-all duration-500 ${errors.userpassword ? 'border-red-500 focus:ring-red-500' : field.value ? 'border-green-500 focus:ring-green-500' : 'border-[#9C9C9C33] focus:ring-[#2EAA62]'}`}
                                         />
                                         <span
                                             onClick={togglePasswordVisibility}

@@ -15,6 +15,9 @@ import { setIsAuthenticated } from "../../Store/Slices/authSlice";
 import { Description } from '../RegisterPage/Description';
 import { RegistrationUserPayload } from "../../Store/api/types"
 import { useTranslation } from "../../../public/Locales/context/TranslationContext";
+import PhoneInput from 'react-phone-input-2';
+import 'react-phone-input-2/lib/style.css';
+import '../LoginPage/LoginPage.css';
 interface RegistrationFormInputs {
     username: string;
     userphone: string;
@@ -35,7 +38,7 @@ interface ApiError {
 
 const stepOneSchema = yup.object({
     username: yup.string().required("Введите имя").min(2, "Минимум 2 буквы").matches(/^[a-zA-Zа-яА-ЯёЁ\s]+$/, "Только буквы"),
-    userphone: yup.string().required("Введите телефон"),
+    userphone: yup.string().required("Введите телефон").min(10, "Введите корректный номер телефона"),
     userpassword: yup.string().required("Введите пароль").min(8, "Минимум 8 символов"),
     confirmPassword: yup.string().required("Подтвердите пароль").oneOf([yup.ref("userpassword")], "Пароли должны совпадать")
 });
@@ -68,7 +71,7 @@ export const RegistrationPage = () => {
     });
 
     const phone = watch("userphone");
-    const maskedPhone = phone ? `+998******${phone.slice(-4)}` : "";
+    const maskedPhone = phone ? `+${phone.slice(0, 3)}******${phone.slice(-4)}` : "";
     const [isPasswordVisible, setIsPasswordVisible] = useState(false);
     const [isConfirmPasswordVisible, setIsConfirmPasswordVisible] = useState(false);
     const [registrationUser] = useRegistrationUserMutation();
@@ -95,7 +98,7 @@ export const RegistrationPage = () => {
     const handleRegistration = async (data: RegistrationFormInputs) => {
         const payload: RegistrationUserPayload = {
             name: data.username,
-            phone: data.userphone,
+            phone: `+${data.userphone}`,
             password: data.userpassword,
             password_confirmation: data.confirmPassword
         };
@@ -123,7 +126,7 @@ export const RegistrationPage = () => {
 
         try {
             const response = await verifyCode({
-                phone: formData.phone,
+                phone: formData.phone.startsWith('+') ? formData.phone : `+${formData.phone}`,
                 code
             }).unwrap();
 
@@ -192,15 +195,37 @@ export const RegistrationPage = () => {
                                             <Input {...field} placeholder={t("Имя")} isError={!!errors.username}
                                                 errorMessage={t(errors.username?.message || "")}
                                                 className="py-3.5 w-full px-4.5 bg-[#EEEEEE80] outline-none rounded-[14px]" />)} />
-                                        <Controller name="userphone" control={control} render={({ field }) => (
-                                            <Input
-                                                {...field}
-                                                placeholder={t("Телефон (+998...)")}
-                                                isError={!!errors.userphone}
-                                                errorMessage={t(errors.userphone?.message || "")}
-                                                className="py-3.5 w-full px-4.5 bg-[#EEEEEE80] outline-none rounded-[14px]"
-                                            />
-                                        )} />
+                                        <Controller
+                                            name="userphone"
+                                            control={control}
+                                            render={({ field }) => (
+                                                <div className="w-full">
+                                                    <PhoneInput
+                                                        country={'uz'}
+                                                        value={field.value}
+                                                        onChange={(value) => field.onChange(value)}
+                                                        onBlur={field.onBlur}
+                                                        inputProps={{
+                                                            name: field.name,
+                                                            required: true,
+                                                            autoFocus: false,
+                                                        }}
+                                                        containerClass={`flex-1 flex-col ${errors.userphone ? 'error' : field.value ? 'success' : ''}`}
+                                                        inputClass="w-full"
+                                                        buttonClass="phone-input-button"
+                                                        dropdownClass="phone-input-dropdown"
+                                                        placeholder={t("Телефон")}
+                                                        countryCodeEditable={false}
+                                                        specialLabel=""
+                                                    />
+                                                    {errors.userphone && (
+                                                        <Paragraph className="text-sm text-red-500 mt-1">
+                                                            {t(errors.userphone?.message || "")}
+                                                        </Paragraph>
+                                                    )}
+                                                </div>
+                                            )}
+                                        />
                                         <Controller name="userpassword" control={control} render={({ field }) => (
                                             <div className="relative w-full">
                                                 <Input {...field} placeholder={t("Пароль")}

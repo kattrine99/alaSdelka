@@ -36,11 +36,13 @@ export const Header: React.FC<HeaderProps> = ({
     const [searchParams] = useSearchParams();
     const navigate = useNavigate();
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+    const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false);
     const dispatch = useDispatch();
     const selectedCurrency = useSelector((state: RootState) => state.currency.mode);
     const {lang, setLang, t} = useTranslation();
     const location = useLocation();
     const menuRef = useRef<HTMLDivElement>(null)
+    const profileDropdownRef = useRef<HTMLDivElement>(null)
     const {data, refetch} = useGetNotificationsQuery({page: 1, per_page: 1000},
         {pollingInterval: 10000}
     );
@@ -103,6 +105,7 @@ export const Header: React.FC<HeaderProps> = ({
 
     useEffect(() => {
         setIsMobileMenuOpen(false);
+        setIsProfileDropdownOpen(false);
     }, [location.pathname]);
     useEffect(() => {
         let scrollY = 0;
@@ -145,9 +148,15 @@ export const Header: React.FC<HeaderProps> = ({
             ) {
                 setIsMobileMenuOpen(false);
             }
+            if (
+                profileDropdownRef.current &&
+                !profileDropdownRef.current.contains(event.target as Node)
+            ) {
+                setIsProfileDropdownOpen(false);
+            }
         };
 
-        if (isMobileMenuOpen) {
+        if (isMobileMenuOpen || isProfileDropdownOpen) {
             document.addEventListener("mousedown", handleClickOutside);
         } else {
             document.removeEventListener("mousedown", handleClickOutside);
@@ -156,7 +165,7 @@ export const Header: React.FC<HeaderProps> = ({
         return () => {
             document.removeEventListener("mousedown", handleClickOutside);
         };
-    }, [isMobileMenuOpen]);
+    }, [isMobileMenuOpen, isProfileDropdownOpen]);
     return (
         <div className={"font-inter font-medium text-[#4f4f4f]  w-full bg-white shadow"}>
             {/* Десктопный header */}
@@ -171,7 +180,9 @@ export const Header: React.FC<HeaderProps> = ({
                     </Applink>
 
                     {showNavLinks && (
+                        
                         <nav className="flex gap-8.5 max-2xl:gap-4 items-center flex-wrap">
+                        
                             <NavLinks
                                 links={(navLinksData ?? categories).map(link => ({
                                     ...link,
@@ -226,7 +237,54 @@ export const Header: React.FC<HeaderProps> = ({
 
                                     <Button onClick={() => navigate(`/${lang}/favorites`)}
                                             className={undefined}><FavIcon/></Button>
-                                    <Applink to="/profile"><ProfileIcon/></Applink>
+                                    <div 
+                                        ref={profileDropdownRef} 
+                                        className="relative"
+                                        onMouseEnter={() => setIsProfileDropdownOpen(true)}
+                                        onMouseLeave={() => setIsProfileDropdownOpen(false)}
+                                    >
+                                        <button
+                                            className="cursor-pointer flex items-center justify-center"
+                                        >
+                                            <ProfileIcon/>
+                                        </button>
+                                        {isProfileDropdownOpen && (
+                                            <div className="absolute right-0 w-48 bg-white rounded-[10px] shadow-lg border border-[#E9E9E9] z-50">
+                                                <div className="py-2">
+                                                    <Applink
+                                                        to={`/${lang}/announcements`}
+                                                        className="block px-4 py-2 text-sm text-[#4f4f4f] hover:bg-[#F2F2F2] hover:text-[#2EAA62] transition-colors"
+                                                    >
+                                                        {t("Мои объявления")}
+                                                    </Applink>
+                                                    <Applink
+                                                        to={`/${lang}/notices`}
+                                                        className="block px-4 py-2 text-sm text-[#4f4f4f] hover:bg-[#F2F2F2] hover:text-[#2EAA62] transition-colors"
+                                                    >
+                                                        {t("Уведомления")}
+                                                    </Applink>
+                                                    <Applink
+                                                        to={`/${lang}/favorites`}
+                                                        className="block px-4 py-2 text-sm text-[#4f4f4f] hover:bg-[#F2F2F2] hover:text-[#2EAA62] transition-colors"
+                                                    >
+                                                        {t("Избранное")}
+                                                    </Applink>
+                                                    <Applink
+                                                        to={`/${lang}/promotion`}
+                                                        className="block px-4 py-2 text-sm text-[#4f4f4f] hover:bg-[#F2F2F2] hover:text-[#2EAA62] transition-colors"
+                                                    >
+                                                        {t("Продвижение")}
+                                                    </Applink>
+                                                    <Applink
+                                                        to={`/${lang}/profile`}
+                                                        className="block px-4 py-2 text-sm text-[#4f4f4f] hover:bg-[#F2F2F2] hover:text-[#2EAA62] transition-colors border-t border-[#E9E9E9] mt-1"
+                                                    >
+                                                        {t("Профиль")}
+                                                    </Applink>
+                                                </div>
+                                            </div>
+                                        )}
+                                    </div>
                                 </div>
                             ) : (
                                 <div className="flex gap-2">
@@ -328,12 +386,67 @@ export const Header: React.FC<HeaderProps> = ({
                                 }} className={undefined}>
                                     <FavIcon className="cursor-pointer"/>
                                 </Button>
-                                <Button onClick={() => {
-                                    navigate(`/${lang}/profile`);
-                                    setIsMobileMenuOpen(false);
-                                }} className={undefined}>
-                                    <ProfileIcon className="cursor-pointer"/>
-                                </Button>
+                                <div className="relative">
+                                    <Button onClick={() => setIsProfileDropdownOpen(!isProfileDropdownOpen)} className={undefined}>
+                                        <ProfileIcon className="cursor-pointer"/>
+                                    </Button>
+                                    {isProfileDropdownOpen && (
+                                        <div className="absolute left-0 mt-2 w-48 bg-white rounded-[10px] shadow-lg border border-[#E9E9E9] z-50">
+                                            <div className="py-2">
+                                                <button
+                                                    onClick={() => {
+                                                        navigate(`/${lang}/announcements`);
+                                                        setIsProfileDropdownOpen(false);
+                                                        setIsMobileMenuOpen(false);
+                                                    }}
+                                                    className="w-full text-left px-4 py-2 text-sm text-[#4f4f4f] hover:bg-[#F2F2F2] hover:text-[#2EAA62] transition-colors"
+                                                >
+                                                    {t("Мои объявления")}
+                                                </button>
+                                                <button
+                                                    onClick={() => {
+                                                        navigate(`/${lang}/notices`);
+                                                        setIsProfileDropdownOpen(false);
+                                                        setIsMobileMenuOpen(false);
+                                                    }}
+                                                    className="w-full text-left px-4 py-2 text-sm text-[#4f4f4f] hover:bg-[#F2F2F2] hover:text-[#2EAA62] transition-colors"
+                                                >
+                                                    {t("Уведомления")}
+                                                </button>
+                                                <button
+                                                    onClick={() => {
+                                                        navigate(`/${lang}/favorites`);
+                                                        setIsProfileDropdownOpen(false);
+                                                        setIsMobileMenuOpen(false);
+                                                    }}
+                                                    className="w-full text-left px-4 py-2 text-sm text-[#4f4f4f] hover:bg-[#F2F2F2] hover:text-[#2EAA62] transition-colors"
+                                                >
+                                                    {t("Избранное")}
+                                                </button>
+                                                <button
+                                                    onClick={() => {
+                                                        navigate(`/${lang}/promotion`);
+                                                        setIsProfileDropdownOpen(false);
+                                                        setIsMobileMenuOpen(false);
+                                                    }}
+                                                    className="w-full text-left px-4 py-2 text-sm text-[#4f4f4f] hover:bg-[#F2F2F2] hover:text-[#2EAA62] transition-colors"
+                                                >
+                                                    {t("Продвижение")}
+                                                </button>
+                                                <button
+                                                    onClick={() => {
+                                                        navigate(`/${lang}/profile`);
+                                                        setIsProfileDropdownOpen(false);
+                                                        setIsMobileMenuOpen(false);
+                                                    }}
+                                                    className="w-full text-left px-4 py-2 text-sm text-[#4f4f4f] hover:bg-[#F2F2F2] hover:text-[#2EAA62] transition-colors border-t border-[#E9E9E9] mt-1"
+                                                >
+                                                    {t("Профиль")}
+                                                </button>
+                                            </div>
+                                        </div>
+                                    )}
+                                </div>
                             </div>
                         ) : (
                             <div className="flex flex-col gap-3">

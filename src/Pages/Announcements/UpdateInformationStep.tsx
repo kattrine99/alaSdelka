@@ -462,7 +462,8 @@ export const UpdateInformationPage: React.FC<Props> = ({ onSuccess, id }) => {
             <div className="flex flex-col gap-2 w-full max-w-98 relative">
                 <label className="text-[#4f4f4f]  font-inter text-[16px] leading-[130%]">{t("Форма владения бизнесом")}</label>
                 <select
-                    className={`bg-[#F0F1F280] w-full rounded-[14px] text-[#686A70] outline-none py-3.5 px-4.5`}
+                    className={`bg-[#F0F1F280] w-full rounded-[14px] text-[#686A70] outline-none py-3.5 px-4.5 ${!businessOwnership ? 'border border-red-500' : ''
+                        }`}
                     value={businessOwnership}
                     onChange={(e) => setBusinessOwnership(e.target.value)}
                 >
@@ -473,6 +474,9 @@ export const UpdateInformationPage: React.FC<Props> = ({ onSuccess, id }) => {
                         </option>
                     ))}
                 </select>
+                {!businessOwnership && (
+                    <p className="text-red-500 text-sm mt-1">{t("Пожалуйста, выберите форму")}</p>
+                )}
             </div>
             {/*Форма владения помещением */}
             <div className="flex flex-col gap-2 w-full max-w-98  relative">

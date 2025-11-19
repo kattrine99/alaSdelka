@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../../Store/store";
 import { OfferPayload } from "../../../Store/api/types";
 import { ICard } from "../../../components/Cards/Interfaces";
-import { useCreateOfferMutation } from "../../../Store/api/Api";
+import { useCreateOfferMutation, useGetFiltersDataQuery } from "../../../Store/api/Api";
 import { useState } from "react";
 import { clearOfferData } from "../../../Store/tempStorage";
 import { useTranslation } from "../../../../public/Locales/context/TranslationContext";
@@ -15,25 +15,33 @@ interface Props {
     onBack: () => void;
 }
 
-const mapOfferToCard = (data: OfferPayload): ICard => ({
-    id: data.id ?? 0,
-    slug: data.slug,
-    title: data.title,
-    description: data.description,
-    price: data.price,
-    price_currency: data.price_currency,
-    address: {
-        address: data.address?.address || "Адрес не указан",
-        city: {
-            name_ru: data.city_name || "Город не указан",
-            name_uz: data.city_name || "Город не указан"
-        },
-    }, area: data.area || 0,
-    image: data.photos?.[0]?.preview ?? null,
-    is_favourite: false,
-    offer_type: data.offer_type,
-    listing_type: data.listing_type,
-});
+const mapOfferToCard = (data: OfferPayload, cities: [ {
+    id: number,
+    name_ru: string,
+    name_uz: string,
+    slug: string,
+}] | undefined): ICard => {
+    const city = cities?.find(city => city.id === data.address?.city_id);
+    return {
+        id: data.id ?? 0,
+        slug: data.slug,
+        title: data.title,
+        description: data.description,
+        price: data.price,
+        price_currency: data.price_currency,
+        address: {
+            address: data.address?.address || "Адрес не указан",
+            city: {
+                name_ru: city?.name_ru || "Город не указан",
+                name_uz: city?.name_uz || "Город не указан"
+            },
+        }, area: data.area || 0,
+        image: data.photos?.[0]?.preview ?? null,
+        is_favourite: false,
+        offer_type: data.offer_type,
+        listing_type: data.listing_type,
+    }
+};
 
 export const PublicationStep: React.FC<Props> = ({ onPublish, onPreview, onBack }) => {
     const cardData = useSelector((state: RootState) => state.tempOffer.offerData);
@@ -45,9 +53,10 @@ export const PublicationStep: React.FC<Props> = ({ onPublish, onPreview, onBack 
     const [, setError] = useState(false);
     const [isErrorModalOpen, setIsErrorModalOpen] = useState(false);
     const { t } = useTranslation()
+    const { data: filtersData } = useGetFiltersDataQuery();
     if (!cardData) return null;
 
-    const card = mapOfferToCard(cardData);
+    const card = mapOfferToCard(cardData, filtersData?.cities);
 
     const handlePublish = async () => {
         setIsPublishing(true);

@@ -24,7 +24,7 @@ export default function Select({
                                          placeholder = "Выберите значение",
                                          searchable = false,
                                    wrapperClassName = 'relative mt-2 mb-4',
-    selectClassName = 'bg-[#F2F2F2] w-full h-[42.4px] rounded-[8px] pl-4 pr-8 text-left text-black',
+    selectClassName = 'bg-[#F2F2F2] w-full h-[42.4px] rounded-[8px] pl-4 pr-8 text-left text-[#4f4f4f] ',
                                      }: Props) {
     const [open, setOpen] = useState(false);
     const [query, setQuery] = useState("");
@@ -59,7 +59,7 @@ export default function Select({
             </button>
 
             {open && (
-                <div className="absolute z-10 w-full bg-white rounded-md shadow-md max-h-60 overflow-y-auto">
+                <div className="absolute z-10 w-full bg-white text-[#4f4f4f] rounded-md shadow-md max-h-60 overflow-y-auto">
                     {searchable && (
                         <div className="sticky top-0 bg-white p-2 border-b border-b-[#F2F2F2]">
                             <input

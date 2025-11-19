@@ -44,7 +44,7 @@ export const Input = forwardRef<HTMLInputElement | HTMLTextAreaElement, InputPro
         const borderColor =
             inputStatus === "error"
                 ? "border border-red-500 focus:ring-red-500"
-                : inputStatus === "success" && "border border-[#2EAA7B] focus:ring-[#2EAA7B]"
+                : inputStatus === "success" && "border border-[#2EAA62] focus:ring-[#2EAA62]"
         if (isTextArea) {
             return (
                 <div className="w-full relative flex flex-col gap-2.5">
@@ -55,7 +55,7 @@ export const Input = forwardRef<HTMLInputElement | HTMLTextAreaElement, InputPro
                         value={value}
                         onChange={onChange}
                         maxLength={3000}
-                        className={`bg-[#F0F1F2]/50 resize-none rounded-[14px] outline-none py-[14px] px-[18px] text-[#101828] font-inter text-sm placeholder:text-[#8A8A8A] w-full h-[150px] ${borderColor}`}
+                        className={`bg-[#F0F1F2]/50 resize-none rounded-[14px] outline-none py-[14px] px-[18px] text-[#4f4f4f]  font-inter text-sm placeholder:text-[#8A8A8A] w-full h-[150px] ${borderColor}`}
                         {...(props as TextareaHTMLAttributes<HTMLTextAreaElement>)}
                     />
                     {isError && (

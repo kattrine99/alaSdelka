@@ -65,7 +65,7 @@ export const SellerInfoCard = ({ card, offer_type, userId }: { card: OfferDetail
     }, [card?.is_favourite]);
 
     return (
-        <div className="xl:max-w-113 w-full p-4 rounded-md shadow-md shadow-[#2EAA7B2E] flex flex-col gap-4 relative">
+        <div className="xl:max-w-113 w-full p-4 rounded-md shadow-md shadow-[#2EAA622E] flex flex-col gap-4 relative">
             {card.offer_status !== 'sold' && (
                 <button
                     onClick={handleToggleFavorite}
@@ -78,7 +78,7 @@ export const SellerInfoCard = ({ card, offer_type, userId }: { card: OfferDetail
                     )}
                 </button>
             )}
-            <Paragraph className="text-[22px] font-bold text-[#101828] text-left">
+            <Paragraph className="text-[22px] font-bold text-[#4f4f4f] text-left">
                 {convertedPrice}
             </Paragraph>
             {card.offer_status !== 'sold' && (
@@ -94,7 +94,7 @@ export const SellerInfoCard = ({ card, offer_type, userId }: { card: OfferDetail
                                 alt="User photo"
                             />
                         </div>
-                        <Paragraph className="text-[#101828] font-semibold">
+                        <Paragraph className="text-[#4f4f4f]  font-semibold">
                             {card.user_name || "Имя продавца"}
                         </Paragraph>
                     </Applink>
@@ -103,14 +103,14 @@ export const SellerInfoCard = ({ card, offer_type, userId }: { card: OfferDetail
 
             {card.offer_status !== 'sold' && (
                 <Button
-                    className="w-full bg-[#2EAA7B] text-white font-semibold py-2 rounded-md hover:bg-[#31B683] transition"
+                    className="w-full bg-[#2EAA62] text-white font-semibold py-2 rounded-md hover:bg-[#2EAA62] transition"
                     onClick={() => setContactModalOpen(true)}
                 >
                     {t("Контакты продавца")}
                 </Button>
             )}
             <Button
-                className="w-full bg-[#E9F7F1] text-[#2EAA7B] font-semibold py-2 rounded-md hover:bg-[#d1f0e3] transition"
+                className="w-full bg-[#E9F7F1] text-[#2EAA62] font-semibold py-2 rounded-md hover:bg-[#d1f0e3] transition"
                 onClick={() => setLinksModalOpen(true)}
             >
                 {t("Ссылки")}
@@ -124,7 +124,7 @@ export const SellerInfoCard = ({ card, offer_type, userId }: { card: OfferDetail
                         ? t("Загрузка...")
                         : contactData?.phone || t("Номер не найден")}
                     onClose={() => setContactModalOpen(false)}
-                    showCloseButton={true} HeadingClassName={"font-inter font-bold text-3xl"}
+                    showCloseButton={true} HeadingClassName={"font-inter font-bold text-[#4f4f4f] text-3xl"}
                 />
             )}
 
@@ -140,7 +140,7 @@ export const SellerInfoCard = ({ card, offer_type, userId }: { card: OfferDetail
                                     href={channel.link}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="text-[#2EAA7B] underline"
+                                    className="text-[#2EAA62] underline"
                                 >
                                     {channel.channel_name}
                                 </a>
@@ -150,7 +150,7 @@ export const SellerInfoCard = ({ card, offer_type, userId }: { card: OfferDetail
                         t("Ссылки отсутствуют")
                     )}
                     onClose={() => setLinksModalOpen(false)}
-                    showCloseButton={true} HeadingClassName={"font-inter font-bold text-3xl"}
+                    showCloseButton={true} HeadingClassName={"font-inter font-bold text-[#4f4f4f] text-3xl"}
                 />
             )}
         </div>

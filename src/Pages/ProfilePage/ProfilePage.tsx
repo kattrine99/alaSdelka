@@ -1,6 +1,6 @@
 import { useNavigate, useLocation } from "react-router-dom";
 import { useGetUserInfoQuery, useUpdateUserInfoMutation, useLogoutMutation, useGetFiltersDataQuery, useDeleteAccountMutation } from "../../Store/api/Api";
-import { Heading, Paragraph, Input, Button, Header, Footer, Breadcrumbs, ModalBase } from "../../components";
+import {Heading, Paragraph, Input, Button, Header, Footer, Breadcrumbs, ModalBase, Applink} from "../../components";
 import { useDispatch } from "react-redux";
 import { setIsAuthenticated } from "../../Store/Slices/authSlice";
 import { useEffect, useState } from "react";
@@ -47,7 +47,7 @@ export const ProfilePage = () => {
     }, [location.pathname]);
 
     if (isLoading) return <div className="w-screen h-[670px] flex justify-center items-center py-[30px]">
-        <div className="w-30 h-30 border-10 border-[#2EAA7B] border-t-transparent rounded-full animate-spin"></div>
+        <div className="w-30 h-30 border-10 border-[#2EAA62] border-t-transparent rounded-full animate-spin"></div>
     </div>;
     if (error) return <div className="w-screen h-[670px] flex flex-col justify-center items-center py-[30px]">
         <div className="w-12 h-12 flex items-center justify-center rounded-full bg-red-100 mb-3">
@@ -134,7 +134,7 @@ export const ProfilePage = () => {
                     ModalClassName="w-100 p-9"
                     showCloseButton={true}
                     onClose={() => setShowLogoutConfirm(false)}
-                    HeadingClassName="font-inter font-semibold text-[#101828] mt-3 text-3xl leading-[44px]"
+                    HeadingClassName="font-inter font-semibold text-[#4f4f4f]  mt-3 text-3xl leading-[44px]"
                     actions={
                         <div className="flex gap-4 mt-6 ">
                             <Button
@@ -144,7 +144,7 @@ export const ProfilePage = () => {
                                 {t("Выйти")}
                             </Button>
                             <Button
-                                className="border border-[#2EAA7B] w-full text-[#2EAA7B] px-6 py-3 rounded-[10px]"
+                                className="border border-[#2EAA62] w-full text-[#2EAA62] px-6 py-3 rounded-[10px]"
                                 onClick={() => setShowLogoutConfirm(false)}
                             >
                                 {t("Отмена")}
@@ -160,7 +160,7 @@ export const ProfilePage = () => {
                     ModalClassName="w-100 p-9"
                     showCloseButton={true}
                     onClose={() => setShowDeleteAccountConfirm(false)}
-                    HeadingClassName="font-inter font-semibold text-[#101828] mt-3 text-3xl leading-[44px]"
+                    HeadingClassName="font-inter font-semibold text-[#4f4f4f]  mt-3 text-3xl leading-[44px]"
                     actions={
                         <div className="flex gap-4 mt-6 ">
                             <Button
@@ -170,7 +170,7 @@ export const ProfilePage = () => {
                                 {t("Удалить")}
                             </Button>
                             <Button
-                                className="border border-[#2EAA7B] w-full text-[#2EAA7B] px-6 py-3 rounded-[10px]"
+                                className="border border-[#2EAA62] w-full text-[#2EAA62] px-6 py-3 rounded-[10px]"
                                 onClick={() => setShowDeleteAccountConfirm(false)}
                             >
                                 {t("Отмена")}
@@ -186,7 +186,7 @@ export const ProfilePage = () => {
                     ModalClassName='w-100 p-9'
                     showCloseButton={true}
                     onClose={() => setShowSuccess(false)}
-                    HeadingClassName={"font-inter font-semibold text-[#101828] text-3xl leading-[44px]"} />
+                    HeadingClassName={"font-inter font-semibold text-[#4f4f4f]  text-3xl leading-[44px]"} />
             )}
             <Header navLinksData={profileNavigate} />
             <div className="w-full container mx-auto px-4 xl:px-20 lg:px-10 md:px-4 mt-6 flex-1">
@@ -207,7 +207,7 @@ export const ProfilePage = () => {
                                 text={`${t("Добро пожаловать")}, ${fullName}!`}
                                 level={2} />
                             <div className="flex flex-col md:flex-row justify-center md:justify-between max-w-281.75 mt-6">
-                                <div className="flex gap-x-6 mb-1.5 items-center w-full h-full">
+                                <div className="flex gap-x-6 mb-5 items-center w-full h-full">
                                     <div className="w-[100px] h-[100px] rounded-full overflow-hidden flex items-center justify-center shrink-0">
                                         <img
                                             src={data.photo || ProfilePlaceholder}
@@ -217,7 +217,7 @@ export const ProfilePage = () => {
                                     </div>
 
                                     <div className="flex flex-col gap-2 w-full">
-                                        <Paragraph className="font-inter font-medium text-xl leading-7  md:text-left tracking-[-1%]">
+                                        <Paragraph className="font-inter font-medium text-[#4f4f4f]  text-xl leading-7  md:text-left tracking-[-1%]">
                                             {data.name}
                                         </Paragraph>
                                         <Paragraph className="font-inter font-semibold text-[14px] md:text-left text-[#667085] leading-5">
@@ -227,8 +227,14 @@ export const ProfilePage = () => {
                                 </div>
 
                                 <div className="flex flex-col w-full md:flex-row gap-x-4 gap-y-4 items-center">
-                                    <Button className="px-5 h-13.5 text-white bg-[#31B683] w-full rounded-[6px] cursor-pointer" onClick={handleEditClick}>{t("Редактировать личные данные")}</Button>
-                                    <Button className="h-13.5 px-5 text-white bg-[#31B683] hover:bg-[#DE5151] w-full rounded-[6px] cursor-pointer" onClick={() => setShowLogoutConfirm(true)}
+                                    <Applink
+                                        to="/add-offer"
+                                        className="px-5 h-13.5 text-white bg-[#2EAA62] w-full rounded-[6px] cursor-pointer items-center text-center"
+                                    >
+                                        {t("Разместить объявление")}
+                                    </Applink>
+                                    <Button className="px-5 h-13.5 text-white bg-[#2EAA62] w-full rounded-[6px] cursor-pointer" onClick={handleEditClick}>{t("Редактировать личные данные")}</Button>
+                                    <Button className="h-13.5 px-5 text-white bg-[#2EAA62] hover:bg-[#DE5151] w-full rounded-[6px] cursor-pointer" onClick={() => setShowLogoutConfirm(true)}
                                     >{t("Выйти из профиля")}</Button>
                                 </div>
                             </div>
@@ -253,20 +259,20 @@ export const ProfilePage = () => {
                                     )}
                                 </div>
 
-                                <label className="absolute bottom-0 right-0 bg-white border border-[#2EAA7B] rounded-full w-7 h-7 flex items-center justify-center cursor-pointer">
-                                    <FiEdit2 className="text-[#2EAA7B] text-sm" />
+                                <label className="absolute bottom-0 right-0 bg-white border border-[#2EAA62] rounded-full w-7 h-7 flex items-center justify-center cursor-pointer">
+                                    <FiEdit2 className="text-[#2EAA62] text-sm" />
                                     <input type="file" accept="image/*" onChange={handlePhotoChange} className="hidden" />
                                 </label>
                             </div>
                         )}
 
-                        <Heading className="text-[#101828] font-inter font-semibold text-xl leading-7 mb-3.5" text={t("Основная информация")} level={3} />
+                        <Heading className="text-[#4f4f4f]  font-inter font-semibold text-xl leading-7 mb-3.5" text={t("Основная информация")} level={3} />
 
                         <div className="flex flex-col gap-y-6">
                             <div className="flex flex-col">
-                                <label className="text-[#121212] text-sm mb-1 block">{t("Имя Фамилия")}</label>
+                                <label className="text-[#121212] text-sm mb-1 block">{t("Имя")}</label>
                                 {editMode ? (<Input
-                                    title={t("Имя Фамилия")}
+                                    title={t("Имя")}
                                     type="text"
                                     value={editMode && fullNameInput}
                                     onChange={e => setFullNameInput(e.target.value)}
@@ -365,8 +371,8 @@ export const ProfilePage = () => {
 
                         {editMode && (
                             <div className="flex gap-4 mt-6">
-                                <Button className="text-white bg-[#2EAA7B] px-6 py-3 rounded-[10px] cursor-pointer" onClick={handleSave}>{t("Сохранить")}</Button>
-                                <Button className="border border-[#2EAA7B] text-[#2EAA7B] px-6 py-3 rounded-[10px] cursor-pointer" onClick={handleCancel}>{t("Отменить")}</Button>
+                                <Button className="text-white bg-[#2EAA62] px-6 py-3 rounded-[10px] cursor-pointer" onClick={handleSave}>{t("Сохранить")}</Button>
+                                <Button className="border border-[#2EAA62] text-[#2EAA62] px-6 py-3 rounded-[10px] cursor-pointer" onClick={handleCancel}>{t("Отменить")}</Button>
                             </div>
                         )}
                     </div>

@@ -60,7 +60,7 @@ export const StatisticsPage = () => {
                 fontFamily: "Inter, sans-serif",
                 animations: { enabled: true },
             },
-            colors: ["#2EAA7B"],
+            colors: ["#2EAA62"],
             stroke: {
                 curve: "straight" as const,
                 width: 4,
@@ -96,7 +96,7 @@ export const StatisticsPage = () => {
             },
             markers: {
                 size: 0,
-                strokeColor: "#2EAA7B",
+                strokeColor: "#2EAA62",
                 strokeWidth: 3,
                 shape: "circle" as const,
                 colors: ["#ffffff"],
@@ -136,7 +136,7 @@ export const StatisticsPage = () => {
                 },
                 fill: {
                     type: 'solid',
-                    color: '#2EAA7B',
+                    color: '#2EAA62',
                     opacity: 1,
                 },
             },
@@ -163,7 +163,7 @@ export const StatisticsPage = () => {
     if (isLoading) {
         return (
             <div className="flex justify-center items-center py-7.5">
-                <div className="w-10 h-10 border-4 border-[#2EAA7B] border-t-transparent rounded-full animate-spin"></div>
+                <div className="w-10 h-10 border-4 border-[#2EAA62] border-t-transparent rounded-full animate-spin"></div>
             </div>
         );
     }
@@ -191,7 +191,7 @@ export const StatisticsPage = () => {
                         ]} />
                 </div>
                 <div className="mb-6">
-                    <Heading level={2} text={t("Статистика объявления")} className="font-inter font-bold text-xl leading-5 -space-x-[-0.5%]" />
+                    <Heading level={2} text={t("Статистика объявления")} className="font-inter font-bold text-[#4f4f4f] text-xl leading-5 -space-x-[-0.5%]" />
                 </div>
 
                 <div className="flex justify-start flex-wrap md:flex-nowrap gap-6 mb-12">
@@ -245,10 +245,10 @@ const StatsCard = ({ label, value, diff }: { label: string; value?: number; diff
     const { t } = useTranslation()
 
     return (
-        <div className="w-full py-3.5 border font-inter  border-[#2EAA7B] rounded-xl text-center">
-            <Paragraph className="font-bold text-[15px] uppercase mb-1.5">{label}</Paragraph>
+        <div className="w-full py-3.5 border font-inter  border-[#2EAA62] rounded-xl text-center">
+            <Paragraph className="font-bold text-[#4f4f4f] text-[15px] uppercase mb-1.5">{label}</Paragraph>
             <Paragraph className="text-xl font-bold">{value ?? 0}</Paragraph>
-            <Paragraph className={`font-inter text-[15px] leading-[100%] ${isPositive ? "text-[#2EAA7B]" : "text-red-500"}`}>
+            <Paragraph className={`font-inter text-[15px] leading-[100%] ${isPositive ? "text-[#2EAA62]" : "text-red-500"}`}>
                 {isPositive ? "↑" : "↓"} {Math.abs(diff ?? 0)} {t("за неделю")}
             </Paragraph>
         </div>

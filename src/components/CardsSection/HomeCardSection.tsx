@@ -36,7 +36,7 @@ export const HomeCardSection: React.FC<CardSectionProps> = ({
         allViewLink={allViewLink}
         cardIconClass="rounded-t-xl max-h-48 max-lg:h-full bg-center overflow-hidden"
         cardWrapperClass="rounded-xl w-auto flex-col shadow-lg"
-        WhatchButtonClass="py-3 px-5 w-full bg-[#2EAA7B] text-white font-medium rounded-md flex justify-center hover:bg-[#31B683] transition duration-300 cursor-pointer"
+        WhatchButtonClass="py-3 px-5 w-full bg-[#2EAA62] text-white font-medium rounded-md flex justify-center hover:bg-[#2EAA62] transition duration-300 cursor-pointer"
         initialFavorites={initialFavorites}
         onFavoritesChanged={onFavoritesChanged}
       />

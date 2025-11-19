@@ -77,12 +77,12 @@ export const FavoritePage = () => {
         <Heading
           text={t("Избранное")}
           level={2}
-          className="font-inter text-xl font-bold leading-5 mb-10 text-[#4f4f4f]"
+          className="font-inter text-xl font-bold leading-5 mb-10 text-[#4f4f4f] "
         />
 
         {isLoading ? (
           <div className="flex justify-center items-center py-[30px]">
-            <div className="w-10 h-10 border-4 border-[#2EAA7B] border-t-transparent rounded-full animate-spin"></div>
+            <div className="w-10 h-10 border-4 border-[#2EAA62] border-t-transparent rounded-full animate-spin"></div>
           </div>
         ) : isError ? (
           <p className="text-red-500">{t('Ошибка загрузки')}</p>
@@ -101,7 +101,7 @@ export const FavoritePage = () => {
               containerClass="flex flex-col gap-7.5 rounded-xl w-full"
               cardIconClass="lg:w-85 max-w-full m-3"
               cardWrapperClass="max-lg:flex max-lg:flex-col shadow-[1px_1px_4.5px_0px] shadow-[#28B13D4D] transition duration-500 ease-in-out"
-              WhatchButtonClass="py-3 px-5 w-79.5 max-lg:w-full bg-[#2EAA7B] text-white font-medium rounded-md flex justify-center hover:bg-[#31B683] transition duration-300 cursor-pointer"
+              WhatchButtonClass="py-3 px-5 w-79.5 max-lg:w-full bg-[#2EAA62] text-white font-medium rounded-md flex justify-center hover:bg-[#2EAA62] transition duration-300 cursor-pointer"
             />
 
             {meta && meta.last_page > 1 && (

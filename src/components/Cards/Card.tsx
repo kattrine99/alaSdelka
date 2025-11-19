@@ -162,17 +162,17 @@ export const Card: React.FC<ICardComponent & { forceAllFavorite: boolean }> = ({
                     <Heading
                         text={formatPrice(card.price, card.price_currency)}
                         level={2}
-                        className={`text-[16px] leading-[22px] font-bold font-inter text-[#232323] mb-[8px] ${cardHeadingClass ?? ""}`}
+                        className={`text-[16px] leading-[22px] font-bold font-inter text-[#4f4f4f]  mb-[8px] ${cardHeadingClass ?? ""}`}
                     />
                     <Heading
                         text={translaedTitle}
                         level={3}
-                        className={`text-[14px] truncate line-clamp-2 leading-[22px] font-bold font-inter mb-[12px] ${cardHeadingClass ?? ""}`}
+                        className={`text-[14px] truncate line-clamp-2 leading-[22px] font-bold text-[#4f4f4f] font-inter mb-[12px] ${cardHeadingClass ?? ""}`}
                     />
                     <Paragraph
-                        className={`text-gray-600 flex gap-x-2 font-inter text-[14px] font-medium mb-[6px] ${cardTextClass ?? ""}`}
+                        className={`text-gray-600 flex gap-x-2 font-inter text-[14px] font-medium text-[#4f4f4f]  mb-[6px] ${cardTextClass ?? ""}`}
                     >
-                        <span className="font-bold text-[12px]">
+                        <span className="font-bold text-[#4f4f4f] text-[12px]">
                             {lang === "uz" ? card.address?.city?.name_uz : card.address?.city?.name_ru ?? ""}
                         </span>
                         <span className="text-neutral-400 truncate text-[12px]">{lang === 'uz' ? card.category?.title_uz : card.category?.title_ru}</span>
@@ -190,7 +190,7 @@ export const Card: React.FC<ICardComponent & { forceAllFavorite: boolean }> = ({
                             handleConfirmRemove(card.id);
                             setShowModal(false);
                         }} className="w-full py-4 rounded-xl bg-red-500 text-white">{t("Удалить")}</Button>
-                        <Button onClick={() => setShowModal(false)} className="w-full py-4 rounded-xl bg-[#2EAA7B] text-white">{t("Отмена")}</Button>
+                        <Button onClick={() => setShowModal(false)} className="w-full py-4 rounded-xl bg-[#2EAA62] text-white">{t("Отмена")}</Button>
                     </div>} HeadingClassName={"font-inter font-semibold text-4xl leading-11"} />
             )}
         </Applink>

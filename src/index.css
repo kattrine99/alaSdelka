@@ -55,7 +55,7 @@ body {
 }
 
 .custom-bullet-active {
-    @apply w-full h-1 bg-[#2EAA7B] rounded-sm;
+    @apply w-full h-1 bg-[#2EAA62] rounded-sm;
 }
 
 .swiper-pagination {

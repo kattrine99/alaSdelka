@@ -64,13 +64,13 @@ export const FilterBar: React.FC<FilterBarProps> = ({
             <div className="w-full flex max-xl:flex-wrap items-center rounded-xl rounded-r-2xl  border border-[#EAEBF0] bg-white">
                 {/* Город */}
                 <div className=" relative flex items-center gap-2 px-2 py-2">
-                    <span className="text-[#2EAA7B] text-lg h-[16px]">
+                    <span className="text-[#2EAA62] text-lg h-[16px]">
                         <FaLocationDot />
                     </span>
                     <select
                         value={filters.city}
                         onChange={(e) => setFilters((prev) => ({ ...prev, city: e.target.value }))}
-                        className="text-[15px] text-black px-3 py-2 rounded-md focus:outline-none bg-white appearance-none pr-6">
+                        className="text-[15px] text-[#4f4f4f]  px-3 py-2 rounded-md focus:outline-none bg-white appearance-none pr-6">
                         <option value="">{t("Город")}</option>
                         {filterOptions.cities.map((city) => (
                             <option key={city.id} value={String(city.id)}>
@@ -85,8 +85,8 @@ export const FilterBar: React.FC<FilterBarProps> = ({
 
                 {/* Категория */}
                 <div className="relative flex items-center gap-2 px-2 py-2">
-                    <span className="text-[#2EAA7B] text-lg">
-                        <FrameIcon className="text-[#2EAA7B]" />
+                    <span className="text-[#2EAA62] text-lg">
+                        <FrameIcon className="text-[#2EAA62]" />
                     </span>
                     <select
                         value={filters.category_id || ""}
@@ -113,7 +113,7 @@ export const FilterBar: React.FC<FilterBarProps> = ({
                             }
                         }}
 
-                        className="text-[15px] text-black px-3 py-2 rounded-md focus:outline-none bg-white appearance-none pr-6 max-h-[200px] overflow-y-auto"
+                        className="text-[15px] text-[#4f4f4f]  px-3 py-2 rounded-md focus:outline-none bg-white appearance-none pr-6 max-h-[200px] overflow-y-auto"
                     >
                         <option value="">{t("Категория")}</option>
                         {filterOptions.categories.map((cat) => (
@@ -129,13 +129,13 @@ export const FilterBar: React.FC<FilterBarProps> = ({
 
                 {/* Цена */}
                 <div className="flex items-center gap-2 px-2 py-2">
-                    <span className="text-[#2EAA7B] text-2xl">
+                    <span className="text-[#2EAA62] text-2xl">
                         <HiCurrencyDollar />
                     </span>
-                    <span className="text-[15px] text-black">{t("Цена")}</span>
+                    <span className="text-[15px] text-[#4f4f4f] ">{t("Цена")}</span>
                     <div className="flex gap-2">
                         <div className="flex items-center gap-x-1 px-4 py-1.5 w-44 bg-[#F0F1F2] rounded-[14px]">
-                            <span className="text-[16px] text-black">{t("от")}</span>
+                            <span className="text-[16px] text-[#4f4f4f] ">{t("от")}</span>
                             <Input
                                 type="text"
                                 value={filters.priceMin}
@@ -144,10 +144,10 @@ export const FilterBar: React.FC<FilterBarProps> = ({
                                 className="text-[16px] w-full font-semibold text-[#3C3C3C] bg-transparent outline-none placeholder:text-[#787878]"
                                 isError={false}
                             />
-                            <span className="text-[16px] text-black">{t(currencySymbol)}</span>
+                            <span className="text-[16px] text-[#4f4f4f] ">{t(currencySymbol)}</span>
                         </div>
                         <div className="flex items-center gap-1 px-4 py-1.5 w-44 bg-[#F0F1F2] rounded-[14px]">
-                            <span className="text-[16px] text-black">{t("до")}</span>
+                            <span className="text-[16px] text-[#4f4f4f] ">{t("до")}</span>
                             <Input
                                 type="text"
                                 value={filters.priceMax}
@@ -156,7 +156,7 @@ export const FilterBar: React.FC<FilterBarProps> = ({
                                 className="text-[16px] w-full font-semibold text-[#3C3C3C] bg-transparent outline-none placeholder:text-[#787878]"
                                 isError={false}
                             />
-                            <span className="text-[16px] text-black">{t(currencySymbol)}</span>
+                            <span className="text-[16px] text-[#4f4f4f] ">{t(currencySymbol)}</span>
                         </div>
                     </div>
                 </div>
@@ -165,9 +165,9 @@ export const FilterBar: React.FC<FilterBarProps> = ({
             {/* Поиск и кнопка перехода */}
             <div className="w-full flex gap-2.5 h-[54px] justify-end">
                 {/* Поисковая строка + кнопка */}
-                <div className="flex w-full border border-[#2EAA7B] rounded-xl overflow-hidden bg-white">
+                <div className="flex w-full border border-[#2EAA62] rounded-xl overflow-hidden bg-white">
                     <div className="flex items-center px-3">
-                        <FiSearch className="text-[#2EAA7B] h-5 w-5" />
+                        <FiSearch className="text-[#2EAA62] h-5 w-5" />
                     </div>
                     <Input
                         type="text"
@@ -179,7 +179,7 @@ export const FilterBar: React.FC<FilterBarProps> = ({
                     />
                     <Button
                         onClick={onSearch}
-                        className="px-5 text-sm font-semibold bg-[#2EAA7B] hover:bg-[#31B683] text-white transition duration-500 rounded-none"
+                        className="px-5 text-sm font-semibold bg-[#2EAA62] hover:bg-[#2EAA62] text-white transition duration-500 rounded-none"
                     >
                         {t("Поиск")}
                     </Button>
@@ -188,7 +188,7 @@ export const FilterBar: React.FC<FilterBarProps> = ({
                 {/* Кнопка перехода */}
                 <Button
                     onClick={handleNavigateToCategory}
-                    className="text-[#2EAA7B] py-1 px-5 border rounded-xl font-semibold hover:bg-[#2EAA7B] hover:text-white transition text-[15px] duration-500"
+                    className="text-[#2EAA62] py-1 px-5 border rounded-xl font-semibold hover:bg-[#2EAA62] hover:text-white transition text-[15px] duration-500"
                 >
                     {t("Перейти к категории")}
                 </Button>

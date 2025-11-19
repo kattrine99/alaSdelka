@@ -209,24 +209,24 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
     }, [offerData?.communication_channels]);
 
     return (
-        <div className="flex flex-col gap-6 p-10 max-md:p-4 bg-[#F8F8F8]">
+        <div className="flex flex-col gap-6 p-10 max-md:p-4 bg-[#F8F8F8] text-[#4f4f4f] ">
             {/*Хединги для всех типов */}
             <div>
                 {/*Для бизнеса */}
                 {isBusiness &&
-                    <Heading className="text-3xl font-inter text-[#101828] mb-1.5 font-semibold leading-10 space-x-[-1%]" text={t("Информация о бизнесе")} level={2} />
+                    <Heading className="text-3xl font-inter text-[#4f4f4f]  mb-1.5 font-semibold leading-10 space-x-[-1%]" text={t("Информация о бизнесе")} level={2} />
                 }
                 {/*Для Франшизы */}
                 {isFranchise &&
-                    <Heading className="text-3xl font-inter text-[#101828] mb-1.5 font-semibold leading-10 space-x-[-1%]" text={t("Информация о франшизе")} level={2} />
+                    <Heading className="text-3xl font-inter text-[#4f4f4f]  mb-1.5 font-semibold leading-10 space-x-[-1%]" text={t("Информация о франшизе")} level={2} />
                 }
                 {/*Для Инвестиций */}
                 {isInvestments &&
-                    <Heading className="text-3xl font-inter text-[#101828] mb-1.5 font-semibold leading-10 space-x-[-1%]" text={t("Информация об инвестициях")} level={2} />
+                    <Heading className="text-3xl font-inter text-[#4f4f4f]  mb-1.5 font-semibold leading-10 space-x-[-1%]" text={t("Информация об инвестициях")} level={2} />
                 }
                 {/*Для стартапа */}
                 {isStartup &&
-                    <Heading className="text-3xl font-inter text-[#101828] mb-1.5 font-semibold leading-10 space-x-[-1%]" text={t("Информация о стартапе")} level={2} />
+                    <Heading className="text-3xl font-inter text-[#4f4f4f]  mb-1.5 font-semibold leading-10 space-x-[-1%]" text={t("Информация о стартапе")} level={2} />
                 }
                 <Paragraph className="text-[#667085] font-inter text-[16px] leading-5 space-x-3.5">{t("Заполните все необходимые данные для добавления нового объявления")}</Paragraph>
             </div>
@@ -272,20 +272,40 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
             </div>
             {/*Категория объявления */}
             <div className="flex flex-col gap-2 w-full max-w-200 relative">
-                <label className="text-[#101828] font-inter text-[16px] leading-[130%]">{t("Категория объявления")}</label>
+                <label className="text-[#4f4f4f] font-inter text-[16px] leading-[130%]">{t("Категория объявления")}</label>
                 <select
                     required
-                    className={`bg-[#F0F1F280] w-full max-w-200  rounded-[14px] text-[#686A70] outline-none py-3.5 px-4.5 ${!categoryId ? 'border border-red-500' : ''
-                        }`}
+                    className={`bg-[#F0F1F280] w-full max-w-200 rounded-[14px] text-[#686A70] outline-none py-3.5 px-4.5 ${!categoryId ? 'border border-red-500' : ''}`}
                     value={categoryId}
                     onChange={(e) => setCategoryId(e.target.value)}
                 >
                     <option value="">{t("Выбрать")}</option>
-                    {filtersData?.categories.map((cat) => (
-                        <option key={cat.id} value={String(cat.id)}>
-                            {lang === "uz" ? cat.title_uz : cat.title_ru}
-                        </option>
-                    ))}
+                    {filtersData?.categories
+                        ?.slice() // создаем копию массива чтобы не мутировать оригинал
+                        .sort((a, b) => {
+                            // Определяем названия в зависимости от языка
+                            const titleA = lang === "uz" ? a.title_uz : a.title_ru;
+                            const titleB = lang === "uz" ? b.title_uz : b.title_ru;
+
+                            // Проверяем, является ли категория "Другие" (или "Boshqa" для узбекского)
+                            const isAOther = titleA.toLowerCase().includes('другие') || titleA.toLowerCase().includes('boshqa') || titleA.toLowerCase().includes('other');
+                            const isBOther = titleB.toLowerCase().includes('другие') || titleB.toLowerCase().includes('boshqa') || titleB.toLowerCase().includes('other');
+
+                            // Если обе категории "Другие" - оставляем как есть
+                            if (isAOther && isBOther) return 0;
+                            // Если только A "Другие" - ставим B выше
+                            if (isAOther) return 1;
+                            // Если только B "Другие" - ставим A выше
+                            if (isBOther) return -1;
+
+                            // Для всех остальных категорий - обычная алфавитная сортировка
+                            return titleA.localeCompare(titleB);
+                        })
+                        .map((cat) => (
+                            <option key={cat.id} value={String(cat.id)}>
+                                {lang === "uz" ? cat.title_uz : cat.title_ru}
+                            </option>
+                        ))}
                 </select>
                 {!categoryId && (
                     <p className="text-red-500 text-sm mt-1">{t("Пожалуйста, выберите категорию")}</p>
@@ -297,7 +317,7 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
                 <Input
                     className="bg-[#b5b5b667]  text-gray-500 cursor-not-allowed w-full rounded-[14px] outline-none py-3.5 px-4.5"
                     LabelClassName="font-inter text-[16px] leading-[130%]"
-                    LabelText={t("Имя Фамилия")}
+                    LabelText={t("Имя")}
                     type="text"
                     placeholder={t("Введите")}
                     isError={false}
@@ -307,7 +327,7 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
             </div>
             {/*Номер телефона */}
             <div className="flex flex-col gap-2 w-full max-w-200  relative ">
-                <label className="text-[#101828] font-inter text-[16px] leading-[130%] mb-2.5 block">{t("Номер телефона")}</label>
+                <label className="text-[#4f4f4f]  font-inter text-[16px] leading-[130%] mb-2.5 block">{t("Номер телефона")}</label>
                 <div className="bg-[#b5b5b667] w-full rounded-[14px] flex items-center p-1 ">
                     <div className="w-12 h-12 p-1 rounded-[10px] bg-[#b4b8cc] flex items-center justify-center mr-3">
                         <FlagIcon className="w-[25px] h-[25px] object-contain" />
@@ -326,7 +346,7 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
             {/*Стадия */}
             {isSell && isStartup &&
                 <div className="flex flex-col gap-2 w-full max-w-200  relative">
-                    <label className="text-[#101828] font-inter text-[16px] leading-[130%]">{t("Стадия")}</label>
+                    <label className="text-[#4f4f4f]  font-inter text-[16px] leading-[130%]">{t("Стадия")}</label>
                     <select className={`bg-[#F0F1F280] w-full rounded-[14px] text-[#686A70] outline-none py-3.5 px-4.5 ${!projectStageId ? 'border border-red-500' : ''
                         }`}
                         value={projectStageId}
@@ -344,18 +364,25 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
                 </div>
             }
             {/*Город */}
-            <div className="flex flex-col gap-2 w-full max-w-200  relative">
-                <label className="text-[#101828] font-inter text-[16px] leading-[130%]">{t("Город")}</label>
-                <select className={`bg-[#F0F1F280] w-full rounded-[14px] text-[#686A70] outline-none py-3.5 px-4.5 ${!cityId ? 'border border-red-500' : ''
-                    }`}
-                    value={cityId}
-                    onChange={(e) => setCityId(e.target.value)}>
+            <div className="flex flex-col gap-2 w-full max-w-200 relative">
+                <label className="text-[#4f4f4f] font-inter text-[16px] leading-[130%]">{t("Город")}</label>
+                <select className={`bg-[#F0F1F280] w-full rounded-[14px] text-[#686A70] outline-none py-3.5 px-4.5 ${!cityId ? 'border border-red-500' : ''}`}
+                        value={cityId}
+                        onChange={(e) => setCityId(e.target.value)}>
                     <option className="">{t("Выбрать")}</option>
-                    {filtersData?.cities.map((city) => (
-                        <option key={city.id} value={String(city.id)}>
-                            {lang === "uz" ? city.name_uz : city.name_ru}
-                        </option>
-                    ))}
+                    {filtersData?.cities
+                        ?.slice() // создаем копию массива чтобы не мутировать оригинал
+                        .sort((a, b) => {
+                            // Сортируем по алфавиту в зависимости от выбранного языка
+                            const nameA = lang === "uz" ? a.name_uz : a.name_ru;
+                            const nameB = lang === "uz" ? b.name_uz : b.name_ru;
+                            return nameA.localeCompare(nameB);
+                        })
+                        .map((city) => (
+                            <option key={city.id} value={String(city.id)}>
+                                {lang === "uz" ? city.name_uz : city.name_ru}
+                            </option>
+                        ))}
                 </select>
                 {!cityId && (
                     <p className="text-red-500 text-sm mt-1">{t("Пожалуйста, выберите город")}</p>
@@ -417,7 +444,7 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
             )}
             {/*Форма владения бизнесом */}
             <div className="flex flex-col gap-2 w-full max-w-98 relative">
-                <label className="text-[#101828] font-inter text-[16px] leading-[130%]">{t("Форма владения бизнесом")}</label>
+                <label className="text-[#4f4f4f]  font-inter text-[16px] leading-[130%]">{t("Форма владения бизнесом")}</label>
                 <select
                     className={`bg-[#F0F1F280] w-full rounded-[14px] text-[#686A70] outline-none py-3.5 px-4.5 ${!businessOwnership ? 'border border-red-500' : ''
                         }`}
@@ -436,14 +463,19 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
                 )}
             </div>
             {/*Форма владения помещением */}
-            <div className="flex flex-col gap-2 w-full max-w-98  relative">
-                <label className="text-[#101828] font-inter text-[16px] leading-[130%]">{t("Форма владения помещением")}</label>
-                <select className={`bg-[#F0F1F280] w-full rounded-[14px] text-[#686A70] outline-none py-3.5 px-4.5 ${!propertyOwnershipType ? 'border border-red-500' : ''
+            <div className="flex flex-col gap-2 w-full max-w-98 relative">
+                <label className="text-[#4f4f4f] font-inter text-[16px] leading-[130%]">
+                    {t("Форма владения помещением")}
+                </label>
+                <select
+                    className={`bg-[#F0F1F280] w-full rounded-[14px] text-[#686A70] outline-none py-3.5 px-4.5 ${
+                        !propertyOwnershipType ? 'border border-red-500' : ''
                     }`}
                     value={propertyOwnershipType}
                     onChange={(e) => setPropertyOwnershipType(e.target.value)}
+                    required
                 >
-                    <option className="">{t("Выбрать")}</option>
+                    <option value="">{t("Выбрать")}</option>
                     {filtersData?.premises_ownership_form.map((form) => (
                         <option key={form.value} value={String(form.value)}>
                             {lang === "uz" ? form.label_uz : form.label_ru}
@@ -451,13 +483,13 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
                     ))}
                 </select>
                 {!propertyOwnershipType && (
-                    <p className="text-red-500 text-sm mt-1">{t("Пожалуйста, выберите форму")}</p>
+                    <p className="text-red-500 text-sm mt-1">{t("Пожалуйста, выберите форму владения помещением")}</p>
                 )}
             </div>
 
             {isSell &&
                 <div className="flex flex-col gap-2">
-                    <label className="text-[#101828] font-inter text-[16px] leading-[130%] mb-2.5">
+                    <label className="text-[#4f4f4f]  font-inter text-[16px] leading-[130%] mb-2.5">
                         {t("Документы и лицензии")}
                     </label>
 
@@ -465,7 +497,7 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
                         {files.map((file, idx) => (
                             <div
                                 key={idx}
-                                className="relative border border-dashed border-[#2EAA7B] rounded-[16px] px-6 py-4 w-[260px] h-[120px] flex flex-col items-center justify-center text-center"
+                                className="relative border border-dashed border-[#2EAA62] rounded-[16px] px-6 py-4 w-[260px] h-[120px] flex flex-col items-center justify-center text-center"
                             >
                                 <button
                                     onClick={() => handleRemove(idx)}
@@ -474,7 +506,7 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
                                     <HiX className="text-gray-500 text-sm" />
                                 </button>
                                 <PdfIcon className="w-9 h-9 mb-2" />
-                                <p className="text-[#232323] font-medium text-sm truncate w-full">{file.name}</p>
+                                <p className="text-[#4f4f4f]  font-medium text-sm truncate w-full">{file.name}</p>
                                 <p className="text-[#667085] text-sm">{(file.size / 1024 / 1024).toFixed(1)} МБ</p>
                             </div>
                         ))}
@@ -482,12 +514,12 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
                         <button
                             type="button"
                             onClick={() => inputRef.current?.click()}
-                            className="border border-dashed border-[#2EAA7B] rounded-[16px] px-6 py-4 w-[260px] h-[120px] flex flex-col items-center justify-center text-center"
+                            className="border border-dashed border-[#2EAA62] rounded-[16px] px-6 py-4 w-[260px] h-[120px] flex flex-col items-center justify-center text-center"
                         >
                             <div className="bg-[#EBF9F5] w-9 h-9 rounded-full flex items-center justify-center mb-2">
-                                <HiPlus className="text-[#2EAA7B] text-lg" />
+                                <HiPlus className="text-[#2EAA62] text-lg" />
                             </div>
-                            <p className="text-[#232323] font-medium">{t("Загрузить документ")}</p>
+                            <p className="text-[#4f4f4f]  font-medium">{t("Загрузить документ")}</p>
                             <p className="text-[#667085] text-sm">{t("Формат")}: PDF, Excel</p>
                             <input
                                 ref={inputRef}
@@ -533,7 +565,7 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
             {/*Изображения */}
             {isSell &&
                 <div className="flex flex-col gap-2">
-                    <label className="text-[#101828] font-inter text-[16px] leading-[130%] mb-2.5">
+                    <label className="text-[#4f4f4f]  font-inter text-[16px] leading-[130%] mb-2.5">
                         {t("Изображение")}
                     </label>
 
@@ -541,7 +573,7 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
                         {photos.map((file, idx) => (
                             <div
                                 key={idx}
-                                className="relative border border-dashed border-[#2EAA7B] rounded-[16px] px-6 py-4 w-[260px] h-[120px] flex flex-col items-center justify-center text-center"
+                                className="relative border border-dashed border-[#2EAA62] rounded-[16px] px-6 py-4 w-[260px] h-[120px] flex flex-col items-center justify-center text-center"
                             >
                                 <button
                                     onClick={() => handleImageRemove(idx)}
@@ -551,19 +583,19 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
                                 </button>
 
                                 <GalleryIcon className="w-9 h-9 mb-2" />
-                                <p className="text-[#232323] font-medium text-sm truncate w-full">{file.photo.name}</p>
+                                <p className="text-[#4f4f4f]  font-medium text-sm truncate w-full">{file.photo.name}</p>
                                 <p className="text-[#667085] text-sm">{(file.photo.size / 1024 / 1024).toFixed(1)} МБ</p>
                             </div>
                         ))}
                         <button
                             type="button"
                             onClick={() => imageInputRef.current?.click()}
-                            className="border border-dashed border-[#2EAA7B] rounded-[16px] px-6 py-4 w-[260px] h-[120px] flex flex-col items-center justify-center text-center"
+                            className="border border-dashed border-[#2EAA62] rounded-[16px] px-6 py-4 w-[260px] h-[120px] flex flex-col items-center justify-center text-center"
                         >
                             <div className="bg-[#EBF9F5] w-9 h-9 rounded-full flex items-center justify-center mb-2">
-                                <HiPlus className="text-[#2EAA7B] text-lg" />
+                                <HiPlus className="text-[#2EAA62] text-lg" />
                             </div>
-                            <p className="text-[#232323] font-medium">{t("Загрузить изображение")}</p>
+                            <p className="text-[#4f4f4f]  font-medium">{t("Загрузить изображение")}</p>
                             <p className="text-[#667085] text-sm">620×220 px</p>
 
                             <Input
@@ -581,7 +613,7 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
             {/*Ссылки */}
             {isSell && (
                 <div className="flex flex-col w-full max-w-200 ">
-                    <label className="text-[#101828] font-inter text-[16px] leading-[130%]">{t("Ссылка на официальные каналы коммуникации")}</label>
+                    <label className="text-[#4f4f4f]  font-inter text-[16px] leading-[130%]">{t("Ссылка на официальные каналы коммуникации")}</label>
 
                     {links.map((item, index) => (
                         <div key={index} className="flex max-md:flex-col max-md:items-start items-center gap-3">
@@ -606,7 +638,7 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
 
                     <button
                         onClick={handleAddLink}
-                        className="text-[#2EAA7B] font-inter font-semibold text-[16px] leading-[130%] underline text-left w-max mt-2"
+                        className="text-[#2EAA62] font-inter font-semibold text-[16px] leading-[130%] underline text-left w-max mt-2"
                     >
                         + {t("Добавить доп. канал")}
                     </button>
@@ -687,7 +719,7 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
                             onChange={(e) => handleNumericInput(e, setPaybackPeriod)} />
                     </div>
                     <div className="flex flex-col gap-2 w-full max-w-98 relative">
-                        <label className="text-[#101828] font-inter text-[16px] leading-[130%]">{t("Год основания бизнеса")}</label>
+                        <label className="text-[#4f4f4f]  font-inter text-[16px] leading-[130%]">{t("Год основания бизнеса")}</label>
                         <select
                             className="bg-[#F0F1F280] w-full rounded-[14px] text-[#686A70] outline-none py-3.5 px-4.5"
                             value={String(FoundationYear)}
@@ -703,7 +735,7 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
                     </div>
                 </>}
             {/* Детали объявления (переключатели) */}
-            <Heading text={t("Детали объявления")} level={3} className="font-inter font-semibold text-[#232323] text-xl leading-[130%]" />
+            <Heading text={t("Детали объявления")} level={3} className="font-inter font-semibold text-[#4f4f4f]  text-xl leading-[130%]" />
             <div className="flex flex-col w-full max-w-98 gap-6">
                 {conveniences.map(({ id, name_ru, name_uz }) => {
                     const isFranchiseOnly = [10, 11].includes(id);
@@ -714,7 +746,7 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
 
                     return (
                         <label key={id} className="flex items-center justify-between cursor-pointer">
-                            <span className="text-[#101828] w-full font-inter text-[16px] leading-[130%]">
+                            <span className="text-[#4f4f4f]  w-full font-inter text-[16px] leading-[130%]">
                                 {lang === "uz" ? name_uz : name_ru}
                             </span>
                             <Input
@@ -722,7 +754,7 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
                                 isError={false}
                                 checked={selectedConveniences.includes(id)}
                                 onChange={() => toggleConvenience(id)}
-                                className="appearance-none w-[44px] h-[24px] bg-gray-300 rounded-full relative transition-all duration-300 checked:bg-[#2EAA7B]
+                                className="appearance-none w-[44px] h-[24px] bg-gray-300 rounded-full relative transition-all duration-300 checked:bg-[#2EAA62]
             before:content-[''] before:absolute before:top-[2px] before:left-[2px] before:w-[20px] before:h-[20px]
             before:bg-white before:rounded-full before:transition-all before:duration-300 checked:before:translate-x-[20px]"
                             />
@@ -736,16 +768,16 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
                 <div className="mt-10">
                     <Button
                         onClick={handleBack}
-                        className={`flex items-center gap-2 bg-[#2EAA7B] text-white px-6 py-2 rounded-md`}
+                        className={`flex items-center gap-2 bg-[#2EAA62] text-white px-6 py-2 rounded-md`}
                     >
-                        <FiChevronLeft /> Назад
+                        <FiChevronLeft /> {t("Назад")}
                     </Button>
                 </div>
                 <div className="mt-10">
                     <Button
                         onClick={handleSubmit}
                         disabled={isNextDisabled()}
-                        className={`flex items-center gap-2 ${isNextDisabled() ? "bg-gray-300 cursor-not-allowed" : "bg-[#2EAA7B] text-white"
+                        className={`flex items-center gap-2 ${isNextDisabled() ? "bg-gray-300 cursor-not-allowed" : "bg-[#2EAA62] text-white"
                             } px-6 py-2 rounded-md`}
                     >
                         {t("Дальше")} <FiChevronRight />

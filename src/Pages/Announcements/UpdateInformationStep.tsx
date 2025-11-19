@@ -273,7 +273,7 @@ export const UpdateInformationPage: React.FC<Props> = ({ onSuccess, id }) => {
         });
     };
     return (
-        <div className="flex flex-col gap-6 p-10 max-md:p-4 bg-[#F8F8F8]">
+        <div className="flex flex-col gap-6 p-10 max-md:p-4 bg-[#F8F8F8] text-[#4f4f4f] ">
             <Heading text={t("Обновление объявления")} level={2} className="text-3xl font-inter font-semibold" />
             <Paragraph>{t("Заполните или обновите данные для редактирования объявления.")}</Paragraph>
 
@@ -319,7 +319,7 @@ export const UpdateInformationPage: React.FC<Props> = ({ onSuccess, id }) => {
             </div>
             {/*Категория объявления */}
             <div className="flex flex-col gap-2 w-full max-w-200 relative">
-                <label className="text-[#101828] font-inter text-[16px] leading-[130%]">{t("Категория объявления")}</label>
+                <label className="text-[#4f4f4f]  font-inter text-[16px] leading-[130%]">{t("Категория объявления")}</label>
                 <select
                     required
                     className={`bg-[#F0F1F280] w-full max-w-200  rounded-[14px] text-[#686A70] outline-none py-3.5 px-4.5 ${!categoryId ? 'border border-red-500' : ''
@@ -344,7 +344,7 @@ export const UpdateInformationPage: React.FC<Props> = ({ onSuccess, id }) => {
                 <Input
                     className="bg-[#b5b5b667]  text-gray-500 cursor-not-allowed w-full rounded-[14px] outline-none py-3.5 px-4.5"
                     LabelClassName="font-inter text-[16px] leading-[130%]"
-                    LabelText={t("Имя Фамилия")}
+                    LabelText={t("Имя")}
                     type="text"
                     placeholder={t("Введите")}
                     isError={false}
@@ -354,7 +354,7 @@ export const UpdateInformationPage: React.FC<Props> = ({ onSuccess, id }) => {
             </div>
             {/*Номер телефона */}
             <div className="flex flex-col gap-2 w-full max-w-200  relative ">
-                <label className="text-[#101828] font-inter text-[16px] leading-[130%] mb-2.5 block">{t("Номер телефона")}</label>
+                <label className="text-[#4f4f4f]  font-inter text-[16px] leading-[130%] mb-2.5 block">{t("Номер телефона")}</label>
                 <div className="bg-[#b5b5b667] w-full rounded-[14px] flex items-center p-1 ">
                     <div className="w-12 h-12 p-1 rounded-[10px] bg-[#b4b8cc] flex items-center justify-center mr-3">
                         <FlagIcon className="w-[25px] h-[25px] object-contain" />
@@ -372,7 +372,7 @@ export const UpdateInformationPage: React.FC<Props> = ({ onSuccess, id }) => {
             </div>
             {/*Стадия */}
             <div className="flex flex-col gap-2 w-full max-w-200  relative">
-                <label className="text-[#101828] font-inter text-[16px] leading-[130%]">{t("Стадия")}</label>
+                <label className="text-[#4f4f4f]  font-inter text-[16px] leading-[130%]">{t("Стадия")}</label>
                 <select className={`bg-[#F0F1F280] w-full rounded-[14px] text-[#686A70] outline-none py-3.5 px-4.5 ${!projectStageId ? 'border border-red-500' : ''
                     }`}
                     value={projectStageId}
@@ -391,7 +391,7 @@ export const UpdateInformationPage: React.FC<Props> = ({ onSuccess, id }) => {
 
             {/*Город */}
             <div className="flex flex-col gap-2 w-full max-w-200  relative">
-                <label className="text-[#101828] font-inter text-[16px] leading-[130%]">{t("Город")}</label>
+                <label className="text-[#4f4f4f]  font-inter text-[16px] leading-[130%]">{t("Город")}</label>
                 <select className={`bg-[#F0F1F280] w-full rounded-[14px] text-[#686A70] outline-none py-3.5 px-4.5 ${!cityId ? 'border border-red-500' : ''
                     }`}
                     value={cityId}
@@ -463,7 +463,7 @@ export const UpdateInformationPage: React.FC<Props> = ({ onSuccess, id }) => {
             )}
             {/*Форма владения бизнесом */}
             <div className="flex flex-col gap-2 w-full max-w-98 relative">
-                <label className="text-[#101828] font-inter text-[16px] leading-[130%]">{t("Форма владения бизнесом")}</label>
+                <label className="text-[#4f4f4f]  font-inter text-[16px] leading-[130%]">{t("Форма владения бизнесом")}</label>
                 <select
                     className={`bg-[#F0F1F280] w-full rounded-[14px] text-[#686A70] outline-none py-3.5 px-4.5 ${!businessOwnership ? 'border border-red-500' : ''
                         }`}
@@ -483,7 +483,7 @@ export const UpdateInformationPage: React.FC<Props> = ({ onSuccess, id }) => {
             </div>
             {/*Форма владения помещением */}
             <div className="flex flex-col gap-2 w-full max-w-98  relative">
-                <label className="text-[#101828] font-inter text-[16px] leading-[130%]">{t("Форма владения помещением")}</label>
+                <label className="text-[#4f4f4f]  font-inter text-[16px] leading-[130%]">{t("Форма владения помещением")}</label>
                 <select className={`bg-[#F0F1F280] w-full rounded-[14px] text-[#686A70] outline-none py-3.5 px-4.5 ${!propertyOwnershipType ? 'border border-red-500' : ''
                     }`}
                     value={propertyOwnershipType}
@@ -501,7 +501,7 @@ export const UpdateInformationPage: React.FC<Props> = ({ onSuccess, id }) => {
                 )}
             </div>
             {isSell && <div className="flex flex-col gap-2">
-                <label className="text-[#101828] font-inter text-[16px] leading-[130%] mb-2.5">
+                <label className="text-[#4f4f4f]  font-inter text-[16px] leading-[130%] mb-2.5">
                     {t("Документы и лицензии")}
                 </label>
 
@@ -509,7 +509,7 @@ export const UpdateInformationPage: React.FC<Props> = ({ onSuccess, id }) => {
                     {existingDocuments.map((doc, idx) => (
                         <div
                             key={idx}
-                            className="relative border border-dashed border-[#2EAA7B] rounded-[16px] px-6 py-4 w-[260px] h-[120px] flex flex-col items-center justify-center text-center"
+                            className="relative border border-dashed border-[#2EAA62] rounded-[16px] px-6 py-4 w-[260px] h-[120px] flex flex-col items-center justify-center text-center"
                         >
                             <button
                                 onClick={() => handleRemoveDocument(idx)}
@@ -519,7 +519,7 @@ export const UpdateInformationPage: React.FC<Props> = ({ onSuccess, id }) => {
                             </button>
 
                             <PdfIcon className="w-9 h-9 mb-2" />
-                            <p className="text-[#232323] font-medium text-sm truncate w-full">
+                            <p className="text-[#4f4f4f]  font-medium text-sm truncate w-full">
                                 {doc.name}
                             </p>
                             <p className="text-[#667085] text-sm">
@@ -533,12 +533,12 @@ export const UpdateInformationPage: React.FC<Props> = ({ onSuccess, id }) => {
                     <button
                         type="button"
                         onClick={() => inputRef.current?.click()}
-                        className="border border-dashed border-[#2EAA7B] rounded-[16px] px-6 py-4 w-[260px] h-[120px] flex flex-col items-center justify-center text-center"
+                        className="border border-dashed border-[#2EAA62] rounded-[16px] px-6 py-4 w-[260px] h-[120px] flex flex-col items-center justify-center text-center"
                     >
                         <div className="bg-[#EBF9F5] w-9 h-9 rounded-full flex items-center justify-center mb-2">
-                            <HiPlus className="text-[#2EAA7B] text-lg" />
+                            <HiPlus className="text-[#2EAA62] text-lg" />
                         </div>
-                        <p className="text-[#232323] font-medium">{t("Загрузить документ")}</p>
+                        <p className="text-[#4f4f4f]  font-medium">{t("Загрузить документ")}</p>
                         <p className="text-[#667085] text-sm">{t("Формат")}: PDF, Excel</p>
                         <input
                             ref={inputRef}
@@ -583,7 +583,7 @@ export const UpdateInformationPage: React.FC<Props> = ({ onSuccess, id }) => {
             {/*Изображения */}
 
             {isSell && <div className="flex flex-col gap-2">
-                <label className="text-[#101828] font-inter text-[16px] leading-[130%] mb-2.5">
+                <label className="text-[#4f4f4f]  font-inter text-[16px] leading-[130%] mb-2.5">
                     {t("Изображение")}
                 </label>
 
@@ -591,7 +591,7 @@ export const UpdateInformationPage: React.FC<Props> = ({ onSuccess, id }) => {
                     {photos.map((file, idx) => (
                         <div
                             key={idx}
-                            className="relative border border-dashed border-[#2EAA7B] rounded-[16px] px-6 py-4 w-[260px] h-[120px] flex flex-col items-center justify-center text-center"
+                            className="relative border border-dashed border-[#2EAA62] rounded-[16px] px-6 py-4 w-[260px] h-[120px] flex flex-col items-center justify-center text-center"
                         >
                             <button
                                 onClick={() => handleRemovePhoto(idx)}
@@ -601,7 +601,7 @@ export const UpdateInformationPage: React.FC<Props> = ({ onSuccess, id }) => {
                             </button>
 
                             <GalleryIcon className="w-9 h-9 mb-2" />
-                            <p className="text-[#232323] font-medium text-sm truncate w-full">
+                            <p className="text-[#4f4f4f]  font-medium text-sm truncate w-full">
                                 {typeof file.photo === 'string' ? file.photo : file.photo.name}
                             </p>
                             <p className="text-[#667085] text-sm">
@@ -612,12 +612,12 @@ export const UpdateInformationPage: React.FC<Props> = ({ onSuccess, id }) => {
                     <button
                         type="button"
                         onClick={() => imageInputRef.current?.click()}
-                        className="border border-dashed border-[#2EAA7B] rounded-[16px] px-6 py-4 w-[260px] h-[120px] flex flex-col items-center justify-center text-center"
+                        className="border border-dashed border-[#2EAA62] rounded-[16px] px-6 py-4 w-[260px] h-[120px] flex flex-col items-center justify-center text-center"
                     >
                         <div className="bg-[#EBF9F5] w-9 h-9 rounded-full flex items-center justify-center mb-2">
-                            <HiPlus className="text-[#2EAA7B] text-lg" />
+                            <HiPlus className="text-[#2EAA62] text-lg" />
                         </div>
-                        <p className="text-[#232323] font-medium">{t("Загрузить изображение")}</p>
+                        <p className="text-[#4f4f4f]  font-medium">{t("Загрузить изображение")}</p>
                         <p className="text-[#667085] text-sm">620×220 px</p>
 
                         <Input
@@ -634,7 +634,7 @@ export const UpdateInformationPage: React.FC<Props> = ({ onSuccess, id }) => {
 
             {/*Ссылки */}
             {isSell && <div className="flex flex-col w-full max-w-200 ">
-                <label className="text-[#101828] font-inter text-[16px] leading-[130%]">{t("Ссылка на официальные каналы коммуникации")}</label>
+                <label className="text-[#4f4f4f]  font-inter text-[16px] leading-[130%]">{t("Ссылка на официальные каналы коммуникации")}</label>
 
                 {links.map((item, index) => (
                     <div key={index} className="flex max-md:flex-col max-md:items-start items-center gap-3">
@@ -659,7 +659,7 @@ export const UpdateInformationPage: React.FC<Props> = ({ onSuccess, id }) => {
 
                 <button
                     onClick={handleAddLink}
-                    className="text-[#2EAA7B] font-inter font-semibold text-[16px] leading-[130%] underline text-left w-max mt-2"
+                    className="text-[#2EAA62] font-inter font-semibold text-[16px] leading-[130%] underline text-left w-max mt-2"
                 >
                     + {t("Добавить доп. канал")}
                 </button>
@@ -738,7 +738,7 @@ export const UpdateInformationPage: React.FC<Props> = ({ onSuccess, id }) => {
                         onChange={(e) => handleNumericInput(e, setPaybackPeriod)} />
                 </div>
                 <div className="flex flex-col gap-2 w-full max-w-98 relative">
-                    <label className="text-[#101828] font-inter text-[16px] leading-[130%]">{t("Год основания бизнеса")}</label>
+                    <label className="text-[#4f4f4f]  font-inter text-[16px] leading-[130%]">{t("Год основания бизнеса")}</label>
                     <select
                         className="bg-[#F0F1F280] w-full rounded-[14px] text-[#686A70] outline-none py-3.5 px-4.5"
                         value={String(foundationYear)}
@@ -754,7 +754,7 @@ export const UpdateInformationPage: React.FC<Props> = ({ onSuccess, id }) => {
                 </div>
             </>}
             {/* Детали объявления (переключатели) */}
-            <Heading text={t("Детали объявления")} level={3} className="font-inter font-semibold text-[#232323] text-xl leading-[130%]" />
+            <Heading text={t("Детали объявления")} level={3} className="font-inter font-semibold text-[#4f4f4f]  text-xl leading-[130%]" />
             <div className="flex flex-col w-full max-w-98 gap-6">
                 {conveniences.map(({ id, name_ru, name_uz }) => {
                     const isFranchiseOnly = [10, 11].includes(id);
@@ -765,7 +765,7 @@ export const UpdateInformationPage: React.FC<Props> = ({ onSuccess, id }) => {
 
                     return (
                         <label key={id} className="flex items-center justify-between cursor-pointer">
-                            <span className="text-[#101828] w-full font-inter text-[16px] leading-[130%]">
+                            <span className="text-[#4f4f4f]  w-full font-inter text-[16px] leading-[130%]">
                                 {lang === "uz" ? name_uz : name_ru}
                             </span>
                             <Input
@@ -773,7 +773,7 @@ export const UpdateInformationPage: React.FC<Props> = ({ onSuccess, id }) => {
                                 isError={false}
                                 checked={selectedConveniences.includes(id)}
                                 onChange={() => toggleConvenience(id)}
-                                className="appearance-none w-[44px] h-[24px] bg-gray-300 rounded-full relative transition-all duration-300 checked:bg-[#2EAA7B]
+                                className="appearance-none w-[44px] h-[24px] bg-gray-300 rounded-full relative transition-all duration-300 checked:bg-[#2EAA62]
             before:content-[''] before:absolute before:top-[2px] before:left-[2px] before:w-[20px] before:h-[20px]
             before:bg-white before:rounded-full before:transition-all before:duration-300 checked:before:translate-x-[20px]"
                             />
@@ -784,7 +784,7 @@ export const UpdateInformationPage: React.FC<Props> = ({ onSuccess, id }) => {
             <Button
                 onClick={handleUpdate}
                 disabled={isUpdating}
-                className={`flex items-center max-w-60 gap-2 ${isUpdating ? "bg-gray-300 cursor-not-allowed" : "bg-[#2EAA7B] text-white"} px-6 py-2 rounded-md`}
+                className={`flex items-center max-w-60 gap-2 ${isUpdating ? "bg-gray-300 cursor-not-allowed" : "bg-[#2EAA62] text-white"} px-6 py-2 rounded-md`}
             >
                 {(isUpdating ? t("Сохраняем...") : t("Сохранить изменения")) as string} <FiChevronRight />
             </Button>

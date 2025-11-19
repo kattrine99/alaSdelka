@@ -265,7 +265,7 @@ export const CategoryPage: React.FC<CategoryPageProps> = ({section}) => {
                 <div className="grid grid-cols-3 container mx-auto px-4 xl:px-20 lg:px-10 md:px-4 py-[30px] pb-10 gap-10 items-start">
                     <aside className="hidden lg:flex flex-col col-span-1">
                         <Breadcrumbs category={typeToTitleMap[type]?.[lang] || ""} />
-                        <Heading text={t(pageTitle)} level={2} className="text-[30px] font-bold text-[#4f4f4f]" />
+                        <Heading text={t(pageTitle)} level={2} className="text-[30px] font-bold text-[#4f4f4f] " />
                         <Paragraph className="text-[#787878] font-inter font-medium text-[14px] mt-3.5">
                             {cards.length.toLocaleString("ru-RU")} {t("объявлений")}
                         </Paragraph>
@@ -284,7 +284,7 @@ export const CategoryPage: React.FC<CategoryPageProps> = ({section}) => {
                         <div className="flex justify-between">
                             <aside className="flex lg:hidden flex-col mr-[60px]">
                                 <Breadcrumbs category={type} />
-                                <Heading text={pageTitle} level={2} className="text-[30px] font-bold text-black" />
+                                <Heading text={pageTitle} level={2} className="text-[30px] font-bold text-[#4f4f4f] " />
                                 <Paragraph className="text-[#787878] font-inter font-medium text-[14px] mt-3.5">
                                     {cards.length.toLocaleString("ru-RU")} {t("объявлений")}
                                 </Paragraph>
@@ -292,7 +292,7 @@ export const CategoryPage: React.FC<CategoryPageProps> = ({section}) => {
                             <div className="flex items-center">
                                 {type && (
                                     <>
-                                        <button onClick={() => setIsMobileFiltersOpen(true)} className="btn btn-primary px-5 py-3 bg-[#2EAA7B] text-white rounded-[6px] hover:bg-[#31B683] transition duration-300 lg:hidden">
+                                        <button onClick={() => setIsMobileFiltersOpen(true)} className="btn btn-primary px-5 py-3 bg-[#2EAA62] text-white rounded-[6px] hover:bg-[#2EAA62] transition duration-300 lg:hidden">
                                             {t("Фильтры")}
                                         </button>
                                         {isMobileFiltersOpen && (
@@ -315,8 +315,8 @@ export const CategoryPage: React.FC<CategoryPageProps> = ({section}) => {
                         <div className="hidden lg:flex justify-end gap-x-4">
                             
                             <div
-                                className="flex items-center border border-[#2EAA7B] rounded-xl pl-5 w-[450px] bg-white overflow-hidden">
-                                <div className="text-[#2EAA7B]">
+                                className="flex items-center border border-[#2EAA62] rounded-xl pl-5 w-[450px] bg-white overflow-hidden">
+                                <div className="text-[#2EAA62]">
                                     <FiSearch className="w-[24px] h-[24px]" />
                                 </div>
                                 <Input
@@ -328,7 +328,7 @@ export const CategoryPage: React.FC<CategoryPageProps> = ({section}) => {
                                     className="flex-1 w-full px-2.5 text-[#787878] placeholder-[#787878] bg-white outline-none"
                                 />
                                 <Button
-                                    className="h-full bg-[#2EAA7B] text-white text-sm font-semibold py-3 px-5 hover:bg-[#31B683] transition duration-300 rounded-none"
+                                    className="h-full bg-[#2EAA62] text-white text-sm font-semibold py-3 px-5 hover:bg-[#2EAA62] transition duration-300 rounded-none"
                                     onClick={() => {
                                         if (searchInput.trim() === "") {
                                             setSearchQuery("");
@@ -344,15 +344,15 @@ export const CategoryPage: React.FC<CategoryPageProps> = ({section}) => {
 
                         {isLoading ? (
                             <div className="flex justify-center items-center py-[30px]">
-                                <div className="w-10 h-10 border-4 border-[#2EAA7B] border-t-transparent rounded-full animate-spin"></div>
+                                <div className="w-10 h-10 border-4 border-[#2EAA62] border-t-transparent rounded-full animate-spin"></div>
                             </div>
                         ) : isError ? (
                             <div className="flex flex-col w-full h-full justify-center items-center bg-[url('../../../images/grid.png')] bg-no-repeat  bg-contain">
                                 <div className="w-128 h-100 bg-[url('../../../images/404.png')] bg-contain bg-center bg-no-repeat flex flex-col items-center justify-end">
-                                    <Paragraph className="text-[20px] font-semibold text-black mb-4">{t("Страница не найдена")}</Paragraph>
+                                    <Paragraph className="text-[20px] font-semibold text-[#4f4f4f]  mb-4">{t("Страница не найдена")}</Paragraph>
                                     <Button
                                         onClick={() => navigate(`/${lng}/`)}
-                                        className="bg-[#2EAA7B] text-white py-2.5 px-6 rounded-[12px] text-[16px] font-medium"
+                                        className="bg-[#2EAA62] text-white py-2.5 px-6 rounded-[12px] text-[16px] font-medium text-[#4f4f4f] "
                                     >
                                         {t("Перейти на главную")}
                                     </Button>

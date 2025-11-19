@@ -35,12 +35,12 @@ export const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
                     actions={
                         <Button
                             onClick={handleLogin}
-                            className="bg-[#2EAA7B] w-full text-white px-6 py-2 rounded-lg"
+                            className="bg-[#2EAA62] w-full text-white px-6 py-2 rounded-lg"
                         >
                             Войти
                         </Button>
                     }
-                    HeadingClassName="font-inter font-bold text-3xl leading-[150%]"
+                    HeadingClassName="font-inter font-bold text-[#4f4f4f]  text-3xl leading-[150%]"
                     ModalClassName="p-8"
                 />
             </>

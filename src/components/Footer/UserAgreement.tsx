@@ -4,14 +4,14 @@ const UserAgreement = () => {
     return (
         <div className="w-screen min-h-screen flex-col flex">
             <Header />
-            <main className="container mx-auto px-4 py-3 flex-1">
+            <main className="container mx-auto px-4 py-3 flex-1 xl:px-20 md:px-4">
                 <Breadcrumbs
                     links={[
                         { label: "Главная", href: "/" },
                         { label: "Пользовательское соглашение" }
                     ]}
                 />
-                <Heading className="text-2xl font-bold my-4" text={"Пользовательское соглашение"} level={2}></Heading>
+                <Heading className="text-2xl font-bold text-[#4f4f4f]  my-4" text={"Пользовательское соглашение"} level={2}></Heading>
                 <Paragraph className="text-base leading-7 text-gray-700 text-justify">
                     Настоящее Пользовательское соглашение (далее - "Соглашение") регулирует отношения между Администрацией сайта (далее - "Администрация") и физическим или юридическим лицом (далее - "Пользователь") по использованию веб-сайта [Название проекта] (далее - "Сайт").
                     <br/>

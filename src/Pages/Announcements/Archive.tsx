@@ -41,8 +41,8 @@ export const ArchivePage = () => {
         if (typeof numericPrice !== "number" || isNaN(numericPrice)) return "—";
 
         if (currencyMode === "USD") {
-            if (!currencyRate || isNaN(currencyRate)) return "$ —";
-            return `$ ${Math.round(numericPrice / currencyRate).toLocaleString()}`;
+            if (!currencyRate || isNaN(currencyRate)) return "USD —";
+            return `${Math.round(numericPrice / currencyRate).toLocaleString()} USD`;
         }
 
         return `${numericPrice.toLocaleString()} UZS`;
@@ -64,10 +64,10 @@ export const ArchivePage = () => {
         <div className="w-screen min-h-screen flex-col flex">
             <Header navLinksData={profileNavigate} />
             <div className="container mx-auto px-4 xl:px-20 lg:px-10 md:px-4 py-9 flex-1">
-                <Heading text={t("Мой архив")} level={2} className="font-inter text-[#4f4f4f] text-xl font-bold leading-5 space-x-[-0.5%]" />
+                <Heading text={t("Мой архив")} level={2} className="font-inter text-[#4f4f4f]  text-xl font-bold leading-5 space-x-[-0.5%]" />
                 {isLoading ? (
                     <div className="h-[400px] flex justify-center items-center">
-                        <div className="w-10 h-10 border-4 border-[#2EAA7B] border-t-transparent rounded-full animate-spin" />
+                        <div className="w-10 h-10 border-4 border-[#2EAA62] border-t-transparent rounded-full animate-spin" />
                     </div>
                 ) : isError ? (
                     <div className="text-center text-red-500 text-lg">{t("Ошибка загрузки объявлений")}</div>
@@ -80,7 +80,7 @@ export const ArchivePage = () => {
                     <div>
                         <div className="flex md:justify-end mt-5 gap-3">
                             <Button
-                                className="bg-[#2EAA7B] text-white rounded-md px-5 py-3"
+                                className="bg-[#2EAA62] text-white rounded-md px-5 py-3"
                                 onClick={() => navigate(`/${lang}/announcements`)}
                             >
                                 {t("Вернуться")}
@@ -98,9 +98,9 @@ export const ArchivePage = () => {
                                                         onClick={() => navigate(`/${lang}/edit/${offer.slug}`)}
                                                         className="p-2 bg-white border border-[#F8F8F8] rounded-full shadow hover:bg-gray-100 transition cursor-pointer"
                                                     >
-                                                        <FiEdit className="w-5 h-5 text-[#2EAA7B]" />
+                                                        <FiEdit className="w-5 h-5 text-[#2EAA62]" />
                                                     </button>
-                                                    <div className="absolute top-full mt-2 -right-2.5 bg-[#F8F8F8] text-[#2EAA7B] text-xs rounded px-2 py-1 opacity-0 group-hover:opacity-100 transition">
+                                                    <div className="absolute top-full mt-2 -right-2.5 bg-[#F8F8F8] text-[#2EAA62] text-xs rounded px-2 py-1 opacity-0 group-hover:opacity-100 transition">
                                                         {t("Изменить")}
                                                     </div>
                                                 </div>
@@ -143,16 +143,16 @@ export const ArchivePage = () => {
                                             </div>
                                             <div className="flex flex-3/4 flex-col gap-1 py-9.5 px-7 md:col-span-2">
                                                 <div className="flex flex-col mb-11">
-                                                    <Applink to={`/${offerTypeToUrlMap[offer.offer_type || 'category']}/card/${offer.slug}`} className="w-full hover:text-[#2EAA7B]">
+                                                    <Applink to={`/${offerTypeToUrlMap[offer.offer_type || 'category']}/card/${offer.slug}`} className="w-full hover:text-[#2EAA62]">
 
-                                                        <Paragraph className="text-[#232323] text-2xl font-inter font-bold mb-2">
+                                                        <Paragraph className="text-[#4f4f4f]  text-2xl font-inter font-bold mb-2">
                                                             {formatPrice(offer.price)}
                                                         </Paragraph>
-                                                        <Paragraph className="text-[#232323] text-lg font-bold font-inter mb-3 ">{offer.title}</Paragraph>
+                                                        <Paragraph className="text-[#4f4f4f]  text-lg font-bold font-inter mb-3 ">{offer.title}</Paragraph>
                                                     </Applink>
                                                     <div className='flex gap-1.5'>
-                                                        <FaLocationDot className="text-[#2EAA7B] w-4 h-4" />
-                                                        <Paragraph className="font-inter font-bold text-sm"><span className="font-medium">{t("Адрес:")} </span>
+                                                        <FaLocationDot className="text-[#2EAA62] w-4 h-4" />
+                                                        <Paragraph className="font-inter font-bold text-[#4f4f4f] text-sm"><span className="font-medium">{t("Адрес:")} </span>
                                                             {offer?.address?.address ?? `${t("Адрес не указан")}`},
                                                             {lang === "uz"
                                                                 ? offer?.address?.city?.name_uz ?? ""
@@ -161,14 +161,14 @@ export const ArchivePage = () => {
                                                     </div>
                                                     <div className='flex gap-1.5 items-center'>
                                                         <GpsIcon className='w-4 h-4' />
-                                                        <Paragraph className="font-inter font-medium text-sm">{offer.area} {t("кв. м.")}</Paragraph>
+                                                        <Paragraph className="font-inter font-medium text-[#4f4f4f]  text-sm">{offer.area} {t("кв. м.")}</Paragraph>
 
                                                     </div>
                                                 </div>
                                                 <div className="flex w-full">
                                                     <div className="grid grid-cols-1 gap-y-3 gap-x-5 md:grid-cols-2 w-full">
                                                         <Button
-                                                            className="bg-[#2EAA7B] text-white px-5 h-12 rounded-md cursor-pointer"
+                                                            className="bg-[#2EAA62] text-white px-5 h-12 rounded-md cursor-pointer"
                                                             onClick={() => {
                                                                 setSelectedOfferId(offer.id);
                                                                 setSelectedOfferSlug(offer.slug)
@@ -178,7 +178,7 @@ export const ArchivePage = () => {
                                                             {t("Опубликовать")}
                                                         </Button>
                                                         {/* <Button
-                                                            className="bg-[#2EAA7B] text-white px-5 h-12 rounded-md cursor-pointer"
+                                                            className="bg-[#2EAA62] text-white px-5 h-12 rounded-md cursor-pointer"
                                                             onClick={() => navigate(`/${lang}/promotion/${offer.slug}`)}
                                                         >
                                                             {t("Опубликовать")}
@@ -215,13 +215,13 @@ export const ArchivePage = () => {
                     actions={
                         <div className="flex gap-2 lg:gap-11">
                             <Button
-                                className="border bg-orange-500 hover:bg-[#31B683] w-full text-white px-5 py-3 rounded-md"
+                                className="border bg-orange-500 hover:bg-[#2EAA62] w-full text-white px-5 py-3 rounded-md"
                                 onClick={() => setShowPublishModal(false)}
                             >
                                 {t("Отменить")}
                             </Button>
                             <Button
-                                className="bg-[#2EAA7B] text-white w-full px-5 py-3 rounded-md"
+                                className="bg-[#2EAA62] text-white w-full px-5 py-3 rounded-md"
                                 onClick={() => {navigate('/add-offer?offerSlug=' + selectedOfferSlug)}}
                             >
                                 {t("Опубликовать")}
@@ -240,7 +240,7 @@ export const ArchivePage = () => {
                     onClose={() => setSuccessModal({ isOpen: false, message: "" })}
                     actions={
                         <Button
-                            className="bg-[#2EAA7B] hover:bg-[#31B683] text-white px-6 py-3 rounded-md w-full"
+                            className="bg-[#2EAA62] hover:bg-[#2EAA62] text-white px-6 py-3 rounded-md w-full"
                             onClick={() => setSuccessModal({ isOpen: false, message: "" })}
                         >
                             {t("Понятно")}

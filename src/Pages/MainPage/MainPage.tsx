@@ -2,7 +2,7 @@ import { Header, Heading, Paragraph, NavLinks, CardSection, FilterBar, categorie
 import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ShopIcon from '../../assets/shop.svg?react';
-import InvestInIcon from '../../assets/investin_v15.svg?react';
+// import InvestInIcon from '../../assets/investin_v15.svg?react';
 import { useGetFavoritesQuery, useGetHomeOffersQuery, useGetCurrencyRateQuery } from "../../Store/api/Api";
 import { useGetMainStatisticsQuery } from "../../Store/api/Api";
 import { FiltersState } from "../../utils/variables";
@@ -13,7 +13,7 @@ import { useTranslation } from "../../../public/Locales/context/TranslationConte
 import { useSelector } from "react-redux";
 import { RootState } from "../../Store/store";
 import { MetaTags } from "../../components/MetaTags";
-import { FaArrowRight } from "react-icons/fa6";
+// import { FaArrowRight } from "react-icons/fa6";
 
 export const MainPage = () => {
     const [selectedCategory, setSelectedCategory] = useState<"Бизнес" | "Франшиза" | "Стартапы" | "Инвестиции">("Бизнес");
@@ -100,7 +100,213 @@ export const MainPage = () => {
     const startupType = listingTypes["Стартапы"];
     const [searchInput, setSearchInput] = useState("");
     const { lang, t } = useTranslation();
+    const sortedCities = useMemo(() => {
+        if (!cityStats) return [];
 
+        // Правила объединения городов и областей
+        const mergeRules: {
+            [key: string]: {
+                city_ru: string;
+                city_uz: string;
+                region_ru: string;
+                region_uz: string;
+            }
+        } = {
+            'tashkent_city': { // Отдельно город Ташкент
+                city_ru: 'Ташкент',
+                city_uz: 'Toshkent',
+                region_ru: 'Ташкент',
+                region_uz: 'Toshkent'
+            },
+            'tashkent_region': { // Отдельно Ташкентская область
+                city_ru: '',
+                city_uz: '',
+                region_ru: 'Ташкентская область',
+                region_uz: 'Toshkent viloyati'
+            },
+            'samarkand': {
+                city_ru: 'Самарканд',
+                city_uz: 'Samarqand',
+                region_ru: 'Самаркандская область',
+                region_uz: 'Samarqand viloyati'
+            },
+            'bukhara': {
+                city_ru: 'Бухара',
+                city_uz: 'Buxoro',
+                region_ru: 'Бухарская область',
+                region_uz: 'Buxoro viloyati'
+            },
+            'andijan': {
+                city_ru: 'Андижан',
+                city_uz: 'Andijon',
+                region_ru: 'Андижанская область',
+                region_uz: 'Andijon viloyati'
+            },
+            'fergana': {
+                city_ru: 'Фергана',
+                city_uz: "Farg'ona",
+                region_ru: 'Ферганская область',
+                region_uz: "Farg'ona viloyati"
+            },
+            'namangan': {
+                city_ru: 'Наманган',
+                city_uz: 'Namangan',
+                region_ru: 'Наманганская область',
+                region_uz: 'Namangan viloyati'
+            },
+            'jizzakh': {
+                city_ru: 'Джизак',
+                city_uz: 'Jizzax',
+                region_ru: 'Джизакская область',
+                region_uz: 'Jizzax viloyati'
+            },
+            'navoi': {
+                city_ru: 'Навои',
+                city_uz: 'Navoiy',
+                region_ru: 'Навоийская область',
+                region_uz: 'Navoiy viloyati'
+            },
+            'kashkadarya': {
+                city_ru: 'Карши',
+                city_uz: 'Qarshi',
+                region_ru: 'Кашкадарьинская область',
+                region_uz: 'Qashqadaryo viloyati'
+            },
+            'surkhandarya': {
+                city_ru: 'Термез',
+                city_uz: 'Termiz',
+                region_ru: 'Сурхандарьинская область',
+                region_uz: 'Surxondaryo viloyati'
+            },
+            'khorezm': {
+                city_ru: 'Ургенч',
+                city_uz: 'Urganch',
+                region_ru: 'Хорезмская область',
+                region_uz: 'Xorazm viloyati'
+            },
+            'sirdarya': {
+                city_ru: 'Гулистан',
+                city_uz: 'Guliston',
+                region_ru: 'Сырдарьинская область',
+                region_uz: 'Sirdaryo viloyati'
+            },
+            'karakalpakstan': {
+                city_ru: 'Нукус',
+                city_uz: 'Nukus',
+                region_ru: 'Каракалпакстан',
+                region_uz: 'Qoraqalpogʻiston'
+            }
+        };
+
+        const regionMap: { [key: string]: any } = {};
+
+        cityStats.forEach(city => {
+            if (!city?.name_ru) return;
+
+            // Ищем к какому региону принадлежит этот город/область
+            let regionKey: string | null = null;
+
+            for (const [key, names] of Object.entries(mergeRules)) {
+                // Проверяем является ли запись городом из правил
+                if (city.name_ru === names.city_ru || city.name_uz === names.city_uz) {
+                    regionKey = key;
+                    break;
+                }
+                // Проверяем является ли запись областью из правил
+                if (city.name_ru === names.region_ru || city.name_uz === names.region_uz) {
+                    regionKey = key;
+                    break;
+                }
+            }
+
+            // Если не нашли в правилах, проверяем специальные случаи
+            if (!regionKey) {
+                // Нурафшан относится к Ташкентской области
+                if (city.name_ru === 'Нурафшан' || city.name_uz === 'Nurafshon') {
+                    regionKey = 'tashkent_region';
+                }
+                // Каракалпакстан - отдельный регион
+                else if (city.name_ru === 'Каракалпакстан' || city.name_uz?.includes('Qoraqalpogʻiston')) {
+                    regionKey = 'karakalpakstan';
+                }
+                // Если это город, которого нет в правилах, но есть его область - создаем новый регион
+                else {
+                    regionKey = city.name_ru.toLowerCase().replace(/\s+/g, '_');
+                }
+            }
+
+            // Определяем отображаемые названия для региона
+            let displayNameRu, displayNameUz;
+
+            if (regionKey in mergeRules) {
+                // Для объединенных регионов используем название из правил
+                if (regionKey === 'tashkent_city') {
+                    // Для города Ташкент используем просто "Ташкент"
+                    displayNameRu = 'Ташкент';
+                    displayNameUz = 'Toshkent';
+                } else {
+                    displayNameRu = mergeRules[regionKey].region_ru;
+                    displayNameUz = mergeRules[regionKey].region_uz;
+                }
+            } else {
+                // Для одиночных городов используем их оригинальные названия
+                displayNameRu = city.name_ru;
+                displayNameUz = city.name_uz || city.name_ru;
+            }
+
+            // Добавляем или обновляем запись региона
+            if (regionMap[regionKey]) {
+                regionMap[regionKey].offers_count += city.offers_count || 0;
+                regionMap[regionKey].original_ids.push(city.id);
+                // Сохраняем все названия для отладки
+                regionMap[regionKey].all_names = [
+                    ...regionMap[regionKey].all_names,
+                    { ru: city.name_ru, uz: city.name_uz }
+                ];
+            } else {
+                regionMap[regionKey] = {
+                    id: regionKey,
+                    name_ru: displayNameRu,
+                    name_uz: displayNameUz,
+                    offers_count: city.offers_count || 0,
+                    original_ids: [city.id],
+                    all_names: [{ ru: city.name_ru, uz: city.name_uz }],
+                    is_merged: false // установим ниже
+                };
+            }
+        });
+
+        // Помечаем объединенные регионы
+        Object.keys(regionMap).forEach(key => {
+            if (regionMap[key].original_ids.length > 1) {
+                regionMap[key].is_merged = true;
+            }
+        });
+
+        // Преобразуем в массив
+        const mergedRegions = Object.values(regionMap);
+
+        // Сортируем: сначала Ташкент (город), потом остальные по алфавиту
+        const isUz = lang === "uz";
+        const field = isUz ? "name_uz" : "name_ru";
+        const collator = new Intl.Collator(isUz ? "uz" : "ru", {
+            sensitivity: "base",
+            numeric: true,
+            ignorePunctuation: true,
+        });
+
+        return mergedRegions.sort((a, b) => {
+            // Ташкент (город) всегда первый
+            const isTashkentCityA = a.id === 'tashkent_city';
+            const isTashkentCityB = b.id === 'tashkent_city';
+
+            if (isTashkentCityA && !isTashkentCityB) return -1;
+            if (!isTashkentCityA && isTashkentCityB) return 1;
+
+            // Остальные сортируем по алфавиту (включая Ташкентскую область)
+            return collator.compare((a?.[field] || "").trim(), (b?.[field] || "").trim());
+        });
+    }, [cityStats, lang]);
     const {
         data: businessOffers,
         isLoading: isLoadingBusiness,
@@ -177,11 +383,12 @@ export const MainPage = () => {
             )}
             <div className="font-openSans min-h-screen w-screen overflow-x-hidden">
                 <Header />
-                <section className="px-4  transition duration-500 ease-in-out relative overflow-hidden bg-gradient-to-tr from-[#16503A] to-[#31B683]">
+                <section className="px-4  transition duration-500 ease-in-out relative overflow-hidden bg-gradient-to-tr from-[#16503A] to-[#2EAA62]">
                     <div className="flex justify-end">
                         <div
-                            className="absolute right-[-12rem] bottom-[-5rem] w-96 h-96 md:w-150 md:h-150 lg:w-178 lg:h-178 md:right-[-16rem] lg:right-[-80px] md:bottom-[-9rem] bg-[url('/images/Check.png')] bg-no-repeat bg-contain rotate-[12deg] pointer-events-none z-0"></div>
+                            className="absolute right-[-5rem] bottom-[-1rem] w-75 h-75 md:w-110 md:h-110 lg:w-150 lg:h-150 md:right-[-8rem] lg:right-[-10rem] 2xl:right-[-1rem] md:bottom-[-6rem] bg-[url('/images/Check.png')] bg-no-repeat bg-contain rotate-[12deg] pointer-events-none z-0"></div>
                     </div>
+                    {/*absolute right-[-12rem] bottom-[-5rem] w-96 h-96 md:w-150 md:h-150 lg:w-150 lg:h-150 md:right-[-80px] lg:right-[-80px] md:bottom-[-5rem] bg-[url('/images/Check.png')] bg-no-repeat bg-contain rotate-[12deg] pointer-events-none z-0*/}
                     <div className="relative container mx-auto py-17.5 px-4 xl:px-20 lg:px-10 md:px-4 transition duration-500 ease-in-out ">
                         {/* Текст */}
                         <div className="order-2 lg:order-1 flex flex-col gap-6 max-w-3xl w-full">
@@ -201,14 +408,14 @@ export const MainPage = () => {
                                 {isAuthenticated ? (
                                     <Applink
                                         to="/add-offer"
-                                        className="bg-[#2EAA7B] text-white px-5 py-3 rounded-[10px] hover:bg-[#31B683] text-sm font-medium transition duration-600"
+                                        className="bg-[#2EAA62] text-white px-5 py-3 rounded-[10px] hover:bg-[#2EAA62] text-sm font-medium transition duration-600"
                                     >
                                         {t("Разместить объявление")}
                                     </Applink>
                                 ) : (
                                     <Applink
                                         to="/login?next-step=/add-offer"
-                                        className="bg-[#2EAA7B] text-white px-5 py-3 rounded-[10px] hover:bg-[#31B683] text-sm font-medium transition duration-600"
+                                        className="bg-[#2EAA62] text-white px-5 py-3 rounded-[10px] hover:bg-[#2EAA62] text-sm font-medium transition duration-600"
                                     >
                                         {t("Разместить объявление")}
                                     </Applink>
@@ -236,9 +443,9 @@ export const MainPage = () => {
                                         }
                                     }}
                                     className="flex text-[18px] font-openSans font-semibold"
-                                    activeClassName="text-[#2EAA7B] w-34 py-3.5 px-4.25  border-b"
-                                    inactiveClassName="text-[#787878] w-34 py-3.5 px-4.25 hover:text-[#2EAA7B] "
-                                    underlineColor="bg-[#2EAA7B]"
+                                    activeClassName="text-[#2EAA62] w-34 py-3.5 px-4.25  border-b"
+                                    inactiveClassName="text-[#787878] w-34 py-3.5 px-4.25 hover:text-[#2EAA62] "
+                                    underlineColor="bg-[#2EAA62]"
                                 />
                             </div> */}
 
@@ -263,14 +470,14 @@ export const MainPage = () => {
                                 <Button onClick={() => {
                                     navigate(`$/{lang}/business`)
                                 }} className={""}>
-                                    <Heading level={2} text={t("Бизнес")} className="font-openSans font-bold text-[#4f4f4f] hover:text-[#2EAA7B] hover:underline hover:decoration-1 transition duration-500 text-3xl cursor-pointer" />
+                                    <Heading level={2} text={t("Бизнес")} className="font-openSans font-bold text-[#4f4f4f]  hover:text-[#2EAA62] hover:underline hover:decoration-1 transition duration-500 text-3xl cursor-pointer" />
                                 </Button>
                             </div>
                             <div className="col-span-2 max-lg:mt-2 max-sm:flex-col max-lg:w-full flex justify-center gap-2">
                                 <Button onClick={() => setListingTypes(prev => ({ ...prev, [selectedCategory]: "sell" }))}
-                                    className={`flex items-center justify-center gap-x-2 rounded-[8px] h-13  min-w-70 max-"sm: w - full whitespace - nowrap px - 6 border border-[#2EAA7B] text-[#2EAA7B] text-[16px] hover:bg-[#2EAA7B] hover:text-white transition duration - 500 font - inter leading - [150 %] font - semibold
-                        ${businessType === "sell" ? "bg-[#2EAA7B] text-white border-[#2EAA7B]"
-                                            : "border-[#2EAA7B] text-[#2EAA7B] hover:bg-[#2EAA7B] hover:text-white"
+                                    className={`flex items-center justify-center gap-x-2 rounded-[8px] h-13  min-w-70 max-"sm: w - full whitespace - nowrap px - 6 border border-[#2EAA62] text-[#2EAA62] text-[16px] hover:bg-[#2EAA62] hover:text-white transition duration - 500 font - inter leading - [150 %] font - semibold
+                                         ${businessType === "sell" ? "bg-[#2EAA62] text-white border-[#2EAA62]"
+                                            : "border-[#2EAA62] text-[#2EAA62] hover:bg-[#2EAA62] hover:text-white"
                                         } `}>
                                     <ShopIcon className="w-5 h-5 hover:text-white" />
                                     {t("Продажа бизнеса")}
@@ -278,7 +485,7 @@ export const MainPage = () => {
                                 <Button
                                     onClick={() => setListingTypes(prev => ({ ...prev, [selectedCategory]: "buy" }))}
                                     className={`flex items-center justify-center gap-2 border rounded-[8px] h-13 min-w-70 max-sm:w-full max-sm:mt-1 whitespace-nowrap px-6 text-[16px] font-inter font-semibold transition
-  ${businessType === "buy" ? "bg-[#2EAA7B] text-white border-[#2EAA7B]" : "border-[#2EAA7B] text-[#2EAA7B] hover:bg-[#2EAA7B] hover:text-white"} `}
+                                    ${businessType === "buy" ? "bg-[#2EAA62] text-white border-[#2EAA62]" : "border-[#2EAA62] text-[#2EAA62] hover:bg-[#2EAA62] hover:text-white"} `}
                                 >
                                     <ShopIcon className="w-5 h-5" />
                                     {t("Покупка бизнеса")}
@@ -292,7 +499,7 @@ export const MainPage = () => {
                         isLoadingBusiness ? (
                             <div className="flex justify-center items-center py-7.5">
                                 <div
-                                    className="w-10 h-10 border-4 border-[#2EAA7B] border-t-transparent rounded-full animate-spin"></div>
+                                    className="w-10 h-10 border-4 border-[#2EAA62] border-t-transparent rounded-full animate-spin"></div>
                             </div>
                         ) : ((() => {
                             const businessCards = Object.values(businessOffers?.business || {});
@@ -316,7 +523,7 @@ export const MainPage = () => {
                                     initialFavorites={favoriteIds}
                                     onFavoritesChanged={handleFavoritesChanged}
                                     maxVisible={8}
-                                    Class="grid grid-cols-1 2xl:grid-cols-5 xl:grid-cols-5 lg:grid-cols-2 gap-y-10 gap-x-2 transition duration-300 ease-in-out"
+                                    Class="grid w-full grid-cols-1 2xl:grid-cols-5 xl:grid-cols-5 lg:grid-cols-2 gap-y-10 gap-x-2 transition duration-300 ease-in-out"
                                     ClassName="container mx-auto py-7.5"
                                 />
                             );
@@ -330,19 +537,19 @@ export const MainPage = () => {
                                 <Button onClick={() => {
                                     navigate(`$/{lang}/franchise`)
                                 }} className={""}>
-                                    <Heading level={2} text={t("Франшиза")} className="font-openSans font-bold text-[#4f4f4f] hover:text-[#2EAA7B] hover:underline hover:decoration-1 transition duration-500 text-3xl cursor-pointer" />
+                                    <Heading level={2} text={t("Франшиза")} className="font-openSans font-bold text-[#4f4f4f]  hover:text-[#2EAA62] hover:underline hover:decoration-1 transition duration-500 text-3xl cursor-pointer" />
                                 </Button>
                             </div>
                             <div className="col-span-1 max-lg:mt-2 max-sm:flex-col max-lg:w-full flex justify-center gap-2">
-                                <Button onClick={() => setListingTypes(prev => ({ ...prev, Франшиза: "sell" }))} className={`flex items-center justify-center gap-x-2 rounded-[8px] h-13  min-w-70 max-sm:w-full whitespace-nowrap px-6 border border-[#2EAA7B] text-[#2EAA7B] text-[16px] hover:bg-[#2EAA7B] hover:text-white transition duration-500 font-inter leading-[150 %] font-semibold
-                        ${franchiseType === "sell" ? "bg-[#2EAA7B] text-white border-[#2EAA7B]"
-                                        : "border-[#2EAA7B] text-[#2EAA7B] hover:bg-[#2EAA7B] hover:text-white"
+                                <Button onClick={() => setListingTypes(prev => ({ ...prev, Франшиза: "sell" }))} className={`flex items-center justify-center gap-x-2 rounded-[8px] h-13  min-w-70 max-sm:w-full whitespace-nowrap px-6 border border-[#2EAA62] text-[#2EAA62] text-[16px] hover:bg-[#2EAA62] hover:text-white transition duration-500 font-inter leading-[150 %] font-semibold
+                        ${franchiseType === "sell" ? "bg-[#2EAA62] text-white border-[#2EAA62]"
+                                        : "border-[#2EAA62] text-[#2EAA62] hover:bg-[#2EAA62] hover:text-white"
                                     } `}>
                                     <ShopIcon className="w-5 h-5 hover:text-white" />
                                     {t("Продажа франшизы")}
                                 </Button>
                                 <Button onClick={() => setListingTypes(prev => ({ ...prev, Франшиза: "buy" }))} className={`flex items-center justify-center gap-2 border rounded-[8px] h-13 min-w-70 max-sm:w-full max-sm:mt-1 whitespace-nowrap px-6 text-[16px] font-inter font-semibold transition
-  ${franchiseType === "buy" ? "bg-[#2EAA7B] text-white border-[#2EAA7B]" : "border-[#2EAA7B] text-[#2EAA7B] hover:bg-[#2EAA7B] hover:text-white"} `}>
+  ${franchiseType === "buy" ? "bg-[#2EAA62] text-white border-[#2EAA62]" : "border-[#2EAA62] text-[#2EAA62] hover:bg-[#2EAA62] hover:text-white"} `}>
                                     <ShopIcon className="w-5 h-5 hover:text-white" />
                                     {t("Покупка франшизы")}
                                 </Button>
@@ -353,7 +560,7 @@ export const MainPage = () => {
                     {isLoadingFranchise ? (
                         <div className="flex justify-center items-center py-[30px]">
                             <div
-                                className="w-10 h-10 border-4 border-[#2EAA7B] border-t-transparent rounded-full animate-spin"></div>
+                                className="w-10 h-10 border-4 border-[#2EAA62] border-t-transparent rounded-full animate-spin"></div>
                         </div>
                     ) : (
                         ((() => {
@@ -377,7 +584,7 @@ export const MainPage = () => {
                                     allViewLink="/franchise"
                                     initialFavorites={favoriteIds}
                                     maxVisible={8}
-                                    Class="grid grid-cols-1 2xl:grid-cols-5 xl:grid-cols-5 lg:grid-cols-2 gap-y-10 gap-x-8 transition duration-300 ease-in-out"
+                                    Class="grid w-full grid-cols-1 2xl:grid-cols-5 xl:grid-cols-5 lg:grid-cols-2 gap-y-10 gap-x-2 transition duration-300 ease-in-out"
                                     ClassName="container mx-auto py-7.5"
                                 />
                             );
@@ -392,19 +599,19 @@ export const MainPage = () => {
                                 <Button onClick={() => {
                                     navigate(`/${lang}/startup`)
                                 }} className={""}>
-                                    <Heading level={2} text={t("Стартапы")} className="font-openSans font-bold text-[#4f4f4f] hover:text-[#2EAA7B] hover:underline hover:decoration-1 transition duration-500 text-3xl cursor-pointer" />
+                                    <Heading level={2} text={t("Стартапы")} className="font-openSans font-bold text-[#4f4f4f]  hover:text-[#2EAA62] hover:underline hover:decoration-1 transition duration-500 text-3xl cursor-pointer" />
                                 </Button>
                             </div>
                             <div className="col-span-1 max-lg:mt-2 max-sm:flex-col max-lg:w-full flex justify-center gap-2">
-                                <Button onClick={() => setListingTypes(prev => ({ ...prev, Стартапы: "sell" }))} className={`flex items-center justify-center gap-x-2 rounded-[8px] h-13  min-w-70 max-sm:w-full whitespace-nowrap px-6 border border-[#2EAA7B] text-[#2EAA7B] text-[16px] hover:bg-[#2EAA7B] hover:text-white transition duration-500 font-inter leading-[150%] font-semibold
-                        ${startupType === "sell" ? "bg-[#2EAA7B] text-white border-[#2EAA7B]"
-                                        : "border-[#2EAA7B] text-[#2EAA7B] hover:bg-[#2EAA7B] hover:text-white"
+                                <Button onClick={() => setListingTypes(prev => ({ ...prev, Стартапы: "sell" }))} className={`flex items-center justify-center gap-x-2 rounded-[8px] h-13  min-w-70 max-sm:w-full whitespace-nowrap px-6 border border-[#2EAA62] text-[#2EAA62] text-[16px] hover:bg-[#2EAA62] hover:text-white transition duration-500 font-inter leading-[150%] font-semibold
+                        ${startupType === "sell" ? "bg-[#2EAA62] text-white border-[#2EAA62]"
+                                        : "border-[#2EAA62] text-[#2EAA62] hover:bg-[#2EAA62] hover:text-white"
                                     } `}>
                                     <ShopIcon className="w-5 h-5 hover:text-white" />
                                     {t("Поиск инвестора")}
                                 </Button>
                                 <Button onClick={() => setListingTypes(prev => ({ ...prev, Стартапы: "buy" }))} className={`flex items-center justify-center gap-2 border rounded-[8px] h-13 min-w-70 max-sm:w-full max-sm:mt-1 whitespace-nowrap px-6 text-[16px] font-inter font-semibold transition
-  ${startupType === "buy" ? "bg-[#2EAA7B] text-white border-[#2EAA7B]" : "border-[#2EAA7B] text-[#2EAA7B] hover:bg-[#2EAA7B] hover:text-white"} `}>
+  ${startupType === "buy" ? "bg-[#2EAA62] text-white border-[#2EAA62]" : "border-[#2EAA62] text-[#2EAA62] hover:bg-[#2EAA62] hover:text-white"} `}>
                                     <ShopIcon className="w-5 h-5 hover:text-white" />
                                     {t("Поиск инвестпроекта")}
                                 </Button>
@@ -415,7 +622,7 @@ export const MainPage = () => {
                     {isLoadingStartup ? (
                         <div className="flex justify-center items-center py-[30px]">
                             <div
-                                className="w-10 h-10 border-4 border-[#2EAA7B] border-t-transparent rounded-full animate-spin"></div>
+                                className="w-10 h-10 border-4 border-[#2EAA62] border-t-transparent rounded-full animate-spin"></div>
                         </div>
                     ) :
                         ((() => {
@@ -439,7 +646,7 @@ export const MainPage = () => {
                                     initialFavorites={favoriteIds}
                                     maxVisible={8}
                                     allViewLink="/startup"
-                                    Class="grid grid-cols-1 2xl:grid-cols-5 xl:grid-cols-5 lg:grid-cols-2 gap-y-10 gap-x-4 md:gap-x-8 transition duration-300 ease-in-out"
+                                    Class="grid w-full grid-cols-1 2xl:grid-cols-5 xl:grid-cols-5 lg:grid-cols-2 gap-y-10 gap-x-2 transition duration-300 ease-in-out"
                                     ClassName="container mx-auto py-7.5"
                                 />
                             );
@@ -454,19 +661,19 @@ export const MainPage = () => {
                                     navigate(`/${lang}/investments`)
                                 }} className={""}>
                                     <Heading level={2} text={t("Инвестиции")}
-                                        className="font-openSans font-bold text-3xl text-[#4f4f4f] hover:text-[#2EAA7B] hover:underline hover:decoration-1 transition duration-500 cursor-pointer" />
+                                        className="font-openSans font-bold text-3xl text-[#4f4f4f]  hover:text-[#2EAA62] hover:underline hover:decoration-1 transition duration-500 cursor-pointer" />
                                 </Button>
                             </div>
                             <div className="col-span-1 max-lg:mt-2 max-sm:flex-col max-lg:w-full flex justify-center gap-2">
-                                <Button onClick={() => setListingTypes(prev => ({ ...prev, Инвестиции: "sell" }))} className={`flex items-center justify-center gap-x-2 rounded-[8px] h-13  min-w-70 max-sm:w-full whitespace-nowrap px-6 border border-[#2EAA7B] text-[#2EAA7B] text-[16px] hover:bg-[#2EAA7B] hover:text-white transition duration-500 font-inter leading-[150%] font-semibold
-                        ${investmentType === "sell" ? "bg-[#2EAA7B] text-white border-[#2EAA7B]"
-                                        : "border-[#2EAA7B] text-[#2EAA7B] hover:bg-[#2EAA7B] hover:text-white"
+                                <Button onClick={() => setListingTypes(prev => ({ ...prev, Инвестиции: "sell" }))} className={`flex items-center justify-center gap-x-2 rounded-[8px] h-13  min-w-70 max-sm:w-full whitespace-nowrap px-6 border border-[#2EAA62] text-[#2EAA62] text-[16px] hover:bg-[#2EAA62] hover:text-white transition duration-500 font-inter leading-[150%] font-semibold
+                        ${investmentType === "sell" ? "bg-[#2EAA62] text-white border-[#2EAA62]"
+                                        : "border-[#2EAA62] text-[#2EAA62] hover:bg-[#2EAA62] hover:text-white"
                                     } `}>
                                     <ShopIcon className="w-5 h-5 hover:text-white" />
                                     {t("Поиск инвестора")}
                                 </Button>
                                 <Button onClick={() => setListingTypes(prev => ({ ...prev, Инвестиции: "buy" }))} className={`flex items-center justify-center gap-2 border rounded-[8px] h-13 min-w-70 max-sm:w-full col-span-1 max-lg:mt-2 max-sm:flex-row max-lg:w-full flex justify-center gap-4 whitespace-nowrap px-6 text-[16px] font-inter font-semibold transition
-  ${investmentType === "buy" ? "bg-[#2EAA7B] text-white border-[#2EAA7B]" : "border-[#2EAA7B] text-[#2EAA7B] hover:bg-[#2EAA7B] hover:text-white"} `}>
+  ${investmentType === "buy" ? "bg-[#2EAA62] text-white border-[#2EAA62]" : "border-[#2EAA62] text-[#2EAA62] hover:bg-[#2EAA62] hover:text-white"} `}>
                                     <ShopIcon className="w-5 h-5 hover:text-white" />
                                     {t("Поиск инвестпроекта")}
                                 </Button>
@@ -477,7 +684,7 @@ export const MainPage = () => {
                     {isLoadingInvestment ? (
                         <div className="flex justify-center items-center py-[30px]">
                             <div
-                                className="w-10 h-10 border-4 border-[#2EAA7B] border-t-transparent rounded-full animate-spin"></div>
+                                className="w-10 h-10 border-4 border-[#2EAA62] border-t-transparent rounded-full animate-spin"></div>
                         </div>
                     ) : ((() => {
                         const investmentsCards = Object.values(investmentOffers?.investments || {});
@@ -497,7 +704,7 @@ export const MainPage = () => {
                             cards={investmentOffers?.investments || []} maxVisible={4}
                             initialFavorites={favoriteIds}
                             allViewLink="/investments"
-                            Class="grid grid-cols-1 2xl:grid-cols-5 xl:grid-cols-5 lg:grid-cols-2 gap-y-10 gap-x-8 transition duration-300 ease-in-out" ClassName={"container mx-auto py-7.5"} />
+                            Class="grid w-full grid-cols-1 2xl:grid-cols-5 xl:grid-cols-5 lg:grid-cols-2 gap-y-10 gap-x-2 transition duration-300 ease-in-out" ClassName={"container mx-auto py-7.5"} />
                         );
                     })())}
 
@@ -510,39 +717,46 @@ export const MainPage = () => {
                             <Heading
                                 text={t("Города")}
                                 level={2}
-                                className="font-openSans font-bold text-[#4f4f4f] text-3xl leading-[100%] mb-[25px]"
+                                className="font-openSans font-bold text-[#4f4f4f]  text-3xl leading-[100%] mb-[25px]"
                             />
                             {/* КАТЕГОРИИ */}
                             <NavLinks
-                                links={categories}
+                                links={translatedCategories}
                                 variant="tabs"
-                                activeLabel={selectedCategory}
+                                activeLabel={t(selectedCategory)} // активный ярлык тоже в переводе
                                 onClick={(label) => {
-                                    if (categories.find((cat) => cat.label === label)) {
-                                        setSelectedCategory(label as typeof selectedCategory);
+                                    // Находим оригинальную категорию, у которой переведённый label совпал
+                                    const original = categories.find(cat => t(cat.label) === label);
+                                    if (original) {
+                                        setSelectedCategory(original.label as typeof selectedCategory); // хранить продолжаем "Бизнес" | "Франшиза" | ...
                                     }
                                 }}
                                 className="flex flex-wrap md:flex-nowrap gap-4 text-[24px] text-start font-openSans mb-6.25 font-bold"
-                                activeClassName="w-full px-6 py-4 bg-[#2EAA7B] text-white rounded-xl"
-                                inactiveClassName="w-full px-6 py-4 bg-white font-openSans text-[#4f4f4f] border border-[#2EAA7B] rounded-xl hover:bg-[#31B683]/10"
+                                activeClassName="w-full px-6 py-4 bg-[#2EAA62] text-white rounded-xl"
+                                inactiveClassName="w-full px-6 py-4 bg-white font-openSans text-[#4f4f4f] border border-[#2EAA62] rounded-xl hover:bg-[#2EAA62]/10"
                             />
 
                             {/* ГОРОДА */}
                             <div className="grid 2xl:grid-cols-7 lg:grid-cols-5 md:grid-cols-4 grid-cols-2 gap-3">
-                                {cityStats &&
-                                    cityStats.map((city, idx) => (
-                                        <div
-                                            key={idx}
-                                            className="w-full flex flex-col transition duration-300 ease-in-out bg-[#4f4f4f] text-white py-4 px-6 rounded-[12px] gap-0.5"
-                                        >
-                                            <span className="font-openSans font-bold text-2xl max-sm:text-[14px] leading-[150%]">
-                                                {lang === "uz" ? city.name_uz : city.name_ru}
-                                            </span>
-                                            <span className="font-Urbanist font-bold text-[40px] max-sm:text-[28px] leading-[150%]">
-                                                {city.offers_count.toLocaleString(lang === "uz" ? "uz-UZ" : "ru-RU")}
-                                            </span>
-                                        </div>
-                                    ))}
+                                {sortedCities.map((region, idx) => (
+                                    <div
+                                        key={region.id || idx}
+                                        className="w-full justify-between flex flex-col transition duration-300 ease-in-out bg-[#4f4f4f] text-white py-4 px-4 rounded-[12px] gap-0.5"
+                                    >
+                                        <span className="font-openSans font-bold text-lg max-sm:text-[14px] leading-[150%]">
+                                            {lang === "uz" ? region.name_uz : region.name_ru}
+                                        </span>
+                                        <span className="font-Urbanist font-bold text-[40px] max-sm:text-[28px] leading-[150%]">
+                                            {region.offers_count.toLocaleString(lang === "uz" ? "uz-UZ" : "ru-RU")}
+                                        </span>
+                {/*                        /!* Для отладки можно показать сколько записей объединено *!/*/}
+                {/*                        {region.original_ids.length > 1 && (*/}
+                {/*                            <span className="font-openSans text-xs opacity-75">*/}
+                {/*    {region.original_ids.length} {t('объединенных записей')}*/}
+                {/*</span>*/}
+                {/*                        )}*/}
+                                    </div>
+                                ))}
                             </div>
                         </div>
                     </div>
@@ -555,50 +769,50 @@ export const MainPage = () => {
                             <div className="flex flex-col gap-6 max-w-2xl w-full">
                                 <Heading
                                     level={1}
-                                    className="text-[24px] md:text-[32px] font-bold leading-tight text-black" text={""}>
-                                    {t("Почему")} <span className="text-[#31B683]">{t("Invest In")}</span> {t("— лучший инструмент для продажи бизнеса?")}
-                                    {/*{t("Почему")} <span className="text-[#31B683]">*/}
+                                    className="text-[24px] md:text-[32px] font-bold leading-tight text-[#4f4f4f] " text={""}>
+                                    {t("Почему")} <span className="text-[#2EAA62]">{t("Invest In")}</span> {t("— лучший инструмент для продажи бизнеса?")}
+                                    {/*{t("Почему")} <span className="text-[#2EAA62]">*/}
                                     {/*        /!*<span className="inline-flex items-center">*!/*/}
-                                    {/*        /!*    <img className="h-[1em] w-auto mx-1 object-cover object-center" src="/public/images/investin_logo.png"/>*!/*/}
+                                    {/*        /!*    <img className="h-[1em] w-auto mx-1 object-cover object-center" src="/public/images/investin_v15.png"/>*!/*/}
                                     {/*        /!*</span>*!/*/}
 
                                     {/*</span> {t("— лучший инструмент для продажи бизнеса?")}*/}
                                 </Heading>
 
                                 <Paragraph
-                                    className=" mt-[12px] w-full text-[#232323] font-inter font-normal leading-[125%] text-[16px] md:text-3xl">
+                                    className=" mt-[12px] w-full text-[#4f4f4f]  font-inter font-normal leading-[125%] text-[16px] md:text-3xl">
                                     {t("С Invest In благодаря поддержке на всех этапах сделки вы сможете продать свой бизнес на условиях, которые будут выгодны и удобны для вас. На нашем сайте уже:")}
                                 </Paragraph>
                             </div>
                             {/*Цифры*/}
                             <div className="flex justify-start gap-5 mt-[58px]">
                                 <div className="grid grid-cols-2 gap-[20px] md:max-w-2xl w-full">
-                                    <div className="bg-white w-full font-inter text-black flex flex-col items-center rounded-[30px] py-6 shadow-[0px_4px_21.2px_rgba(46,170,123,0.2)]">
+                                    <div className="bg-white w-full font-inter text-[#4f4f4f]  flex flex-col items-center rounded-[30px] py-6 shadow-[0px_4px_21.2px_rgba(46,170,123,0.2)]">
                                         <Paragraph className="font-inter text-[40px] max-sm:text-3xl text-center font-bold leading-none transition duration-300">
                                             {mainStats?.offers_count?.toLocaleString("ru-RU")}<span
-                                                className="text-[#2EAA7B]">+</span>
+                                                className="text-[#2EAA62]">+</span>
                                         </Paragraph>
                                         <Paragraph className="font-inter text-2xl max-sm:text-[16px] leading-[100%] mt-2">{t("объявлений")}</Paragraph>
                                     </div>
 
-                                    <div className="bg-white w-full font-inter text-black flex flex-col items-center rounded-[30px] py-6 shadow-[0px_4px_21.2px_rgba(46,170,123,0.2)]">
+                                    <div className="bg-white w-full font-inter text-[#4f4f4f]  flex flex-col items-center rounded-[30px] py-6 shadow-[0px_4px_21.2px_rgba(46,170,123,0.2)]">
                                         <Paragraph className="text-[40px] max-sm:text-3xl text-center font-bold leading-none transition duration-300">
                                             {mainStats?.deals_count?.toLocaleString("ru-RU")}<span
-                                                className="text-[#2EAA7B]">+</span>
+                                                className="text-[#2EAA62]">+</span>
                                         </Paragraph>
                                         <Paragraph className="font-inter text-2xl max-sm:text-[16px] leading-[100%] mt-2">{t("сделок")}</Paragraph>
                                     </div>
                                     <div
-                                        className="bg-white font-inter text-black flex flex-col items-center rounded-[30px] py-6 shadow-[0px_4px_21.2px_rgba(46,170,123,0.2)]">
+                                        className="bg-white font-inter text-[#4f4f4f]  flex flex-col items-center rounded-[30px] py-6 shadow-[0px_4px_21.2px_rgba(46,170,123,0.2)]">
                                         <Paragraph className="text-[40px] max-sm:text-3xl text-center font-bold leading-none transition duration-300">
                                             {(mainStats?.partners_count+35)?.toLocaleString("ru-RU")}
                                         </Paragraph>
                                         <Paragraph className="font-inter text-2xl max-sm:text-[16px] leading-[100%] mt-2">{t("пользователей")}</Paragraph>
                                     </div>
                                     <div
-                                        className="bg-white font-inter text-black flex flex-col items-center text-center rounded-[30px] py-6 shadow-[0px_4px_21.2px_rgba(46,170,123,0.2)]">
+                                        className="bg-white font-inter text-[#4f4f4f]  flex flex-col items-center text-center rounded-[30px] py-6 shadow-[0px_4px_21.2px_rgba(46,170,123,0.2)]">
                                         <Paragraph className="text-[40px] max-sm:text-3xl text-center font-bold leading-none transition duration-300">
-                                            <span className="text-[#2EAA7B]">$</span>{displayAmount}
+                                            {displayAmount}<span className="text-[#2EAA62]"> USD</span>
                                         </Paragraph>
                                         <Paragraph className="font-inter text-2xl max-sm:text-[16px] leading-[100%] mt-2">{t("продано бизнесов")}</Paragraph>
                                     </div>
@@ -606,7 +820,7 @@ export const MainPage = () => {
                             </div>
                         </div>
                         <div className="mt-6">
-                            <img src="/images/WhyInvestIn.png" alt="" className="w-full max-w-xl" />
+                            <img src="/images/WhyInvestIn.png" alt="" className="w-full max-w-lg" />
                         </div>
                     </div>
                 </section>

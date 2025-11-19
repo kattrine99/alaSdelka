@@ -170,7 +170,7 @@ export const PromotionPage = () => {
                                 {t("Поздравляем,")} <span className="font-bold">{t("оплата прошла успешно!")}</span> {t("Вы можете снова перейти к вашим объявлениям")}
                             </Heading>
                             <Button
-                                className="mt-16 w-full max-w-83 px-5 py-3 bg-[#2EAA7B] shadow-[0px_1px_2px] shadow-[#1018280A] rounded-lg text-white font-inter font-semibold text-2xl max-md:text-xl duration-300 ease-in-out"
+                                className="mt-16 w-full max-w-83 px-5 py-3 bg-[#2EAA62] shadow-[0px_1px_2px] shadow-[#1018280A] rounded-lg text-white font-inter font-semibold text-2xl max-md:text-xl duration-300 ease-in-out"
                                 onClick={() => navigate(`/${lang}/announcements`, { state: { promotionSuccess: true } })}
                             >
                                 {t("Вернуться к объявлениям")}
@@ -184,7 +184,7 @@ export const PromotionPage = () => {
                     <div className="flex max-xl:flex-wrap gap-10 mt-10 justify-between bg-[url('/images/grid.png')] bg-contain bg-no-repeat bg-right ">
                         <div className="flex max-w-150 flex-col  items-start text-start">
                             <Heading className="font-inter text-4xl max-lg:text-2xl duration-300 ease-in-out" text={""} level={2}><span className="font-bold">{t("Что-то пошло не так.")}</span>{t("Попробуйте оплатить ещё раз.")}</Heading>
-                            <Button className="mt-16 w-full max-w-83 px-5 py-3 bg-[#2EAA7B] shadow-[0px_1px_2px] shadow-[#1018280A] rounded-lg text-white font-inter font-semibold text-2xl max-md:text-xl duration-300 ease-in-out" onClick={() => navigate(`/${lang}/announcements`)}
+                            <Button className="mt-16 w-full max-w-83 px-5 py-3 bg-[#2EAA62] shadow-[0px_1px_2px] shadow-[#1018280A] rounded-lg text-white font-inter font-semibold text-2xl max-md:text-xl duration-300 ease-in-out" onClick={() => navigate(`/${lang}/announcements`)}
                             >{t("Вернуться")}</Button>
                         </div>
                         <div className="max-w-90 max-md:hidden duration-300 ease-in-out">
@@ -222,14 +222,14 @@ export const PromotionPage = () => {
                         <div className="w-full mt-8 px-4 max-sm:px-0">
                             {/* Тарифы */}
                             <div className="flex gap-8.25 items-center mb-5">
-                                <Paragraph className="border py-3 px-5 w-12.5 h-12.5 flex items-center justify-center text-base border-[#2EAA7B] rounded-full">
+                                <Paragraph className="border py-3 px-5 w-12.5 h-12.5 flex items-center justify-center text-base border-[#2EAA62] rounded-full">
                                     1
                                 </Paragraph>
                                 <Heading className="text-xl font-inter w-full" text={t("Выберите количество дней для продвижения вашего объявления")} level={3} />
                             </div>
                             <div className="flex flex-wrap gap-6.75 mt-5.5 w-full max-md:flex-col">
                                 {isTariffsLoading ? <Paragraph>{t("Загрузка тарифов...")}</Paragraph> : filtersData?.tariffs?.map((tariff) => (
-                                    <Button key={tariff.id} className={`flex flex-col border items-start border-[#2EAA7B] px-6 py-4 rounded-lg ${selectedTariff === tariff.id ? "bg-[#2EAA7B] text-white" : "bg-white"}`} onClick={() => setSelectedTariff(tariff.id)}>
+                                    <Button key={tariff.id} className={`flex flex-col border items-start border-[#2EAA62] px-6 py-4 rounded-lg ${selectedTariff === tariff.id ? "bg-[#2EAA62] text-white" : "bg-white"}`} onClick={() => setSelectedTariff(tariff.id)}>
                                         <Paragraph className="font-inter font-semibold text-xl">{tariff.duration} {t("дней")}</Paragraph>
                                         <Paragraph>{tariff.price.toLocaleString()} {t("UZS")}</Paragraph>
                                     </Button>
@@ -237,7 +237,7 @@ export const PromotionPage = () => {
                             </div>
 
                             <div className="flex gap-8.25 items-center mb-5 mt-9.25">
-                                <Paragraph className="border py-3 px-5 w-12.5 h-12.5 items-center border-[#2EAA7B] rounded-full">2</Paragraph>
+                                <Paragraph className="border py-3 px-5 w-12.5 h-12.5 items-center border-[#2EAA62] rounded-full">2</Paragraph>
                                 <Heading level={3} className="text-xl font-inter w-full" text={t("Выберите карту для оплаты или введите данные новой карты")} />
                             </div>
 
@@ -246,7 +246,7 @@ export const PromotionPage = () => {
                                 <div className="mt-10 px-4 sm:px-0 ">
                                     <div className="flex flex-wrap max-md:flex-col gap-6.75">
                                         {cards.map((card) => (
-                                            <Button key={card.id} onClick={() => handleCardSelect(card)} className={`flex flex-col border items-start border-[#2EAA7B] px-6 py-4 rounded-lg ${selectedCardId === card.id ? "bg-[#2EAA7B] text-white" : "bg-white"}`}>
+                                            <Button key={card.id} onClick={() => handleCardSelect(card)} className={`flex flex-col border items-start border-[#2EAA62] px-6 py-4 rounded-lg ${selectedCardId === card.id ? "bg-[#2EAA62] text-white" : "bg-white"}`}>
                                                 <Paragraph className="font-inter font-semibold text-xl">{card.masked_number}</Paragraph>
                                                 <Paragraph>{t("Срок:")} {card.expire.slice(0, 2)}/{card.expire.slice(2, 4)}</Paragraph>
                                             </Button>
@@ -290,7 +290,7 @@ export const PromotionPage = () => {
                             </div>
 
                             <div className="flex gap-8.25 items-center mb-5 mt-9.25">
-                                <Paragraph className="border py-3 px-5 w-12.5 h-12.5 items-center border-[#2EAA7B] rounded-full">3</Paragraph>
+                                <Paragraph className="border py-3 px-5 w-12.5 h-12.5 items-center border-[#2EAA62] rounded-full">3</Paragraph>
                                 <Heading className=" w-full text-xl font-inter" level={3} text={t("После ввода данных, нажмите Оплатить и подтвердите через SMS")} />
                             </div>
                         </div>
@@ -317,7 +317,7 @@ export const PromotionPage = () => {
                                             !selectedCardId &&
                                             (!cardNumber || !expiryMonth || !expiryYear)
                                         )
-                                    } className="w-full text-[18px] md:text-[25px] px-5 py-3 rounded-lg bg-[#2EAA7B] text-white cursor-pointer"
+                                    } className="w-full text-[18px] md:text-[25px] px-5 py-3 rounded-lg bg-[#2EAA62] text-white cursor-pointer"
                                 >
                                     {t("Оплатить")}
                                 </Button>
@@ -343,7 +343,7 @@ export const PromotionPage = () => {
                                         value={codeInput[index]}
                                         onChange={(e) => handleCodeChange(e.target.value, index)}
                                         onKeyDown={(e) => handleKeyDown(e, index)}
-                                        className="rounded-2xl border border-[#2EAA7B] w-20 h-20 text-center font-inter font-semibold text-3xl"
+                                        className="rounded-2xl border border-[#2EAA62] w-20 h-20 text-center font-inter font-semibold text-3xl"
                                         type="text"
                                         isError={false}
                                     />
@@ -373,7 +373,7 @@ export const PromotionPage = () => {
                                         setShowResultModal(true);
                                     }
                                 }}
-                                className="w-full mt-5 bg-[#2EAA7B] text-white py-6 rounded-lg cursor-pointer"
+                                className="w-full mt-5 bg-[#2EAA62] text-white py-6 rounded-lg cursor-pointer"
                             >
                                 {t("Подтвердить")}
                             </Button>

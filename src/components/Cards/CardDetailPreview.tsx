@@ -103,14 +103,14 @@ export const CardDetailPreview: React.FC<CardDetailPreviewProps> = ({ onBack }) 
         <div className="container mx-auto py-10 max-md:p-4 ">
             <div className="mb-6 flex items-center gap-2 cursor-pointer text-[#28B13D]" onClick={onBack}>
                 <HiOutlineArrowNarrowLeft className="w-5 h-5" />
-                <span className="font-medium text-[15px]">{t("Предварительный просмотр вашего объявления")}</span>
+                <span className="font-medium text-[#4f4f4f]  text-[15px]">{t("Предварительный просмотр вашего объявления")}</span>
             </div>
 
             {/* Основной блок */}
             <div className="bg-[#F8F8F8] p-10 max-md:p-4">
                 <Heading level={2} text={data.title || t("Название")} className="text-2xl mb-3.75" />
                 <div className='flex gap-1.5'>
-                    <FaLocationDot className="text-[#2EAA7B] w-4 h-4" />
+                    <FaLocationDot className="text-[#2EAA62] w-4 h-4" />
                     <Paragraph className="text-[#667085] text-sm mb-2">
                         {data.city_name ?? ""}, {data.address?.address ?? t("Адрес не указан")}
                     </Paragraph>
@@ -120,7 +120,7 @@ export const CardDetailPreview: React.FC<CardDetailPreviewProps> = ({ onBack }) 
                     <Paragraph>{data.area} {t("кв. м.")}</Paragraph>
                 </div>
                 <div className='flex gap-1.5 items-center mb-3.75'>
-                    <CategoryIcon className='w-4 h-4 text-[#2EAA7B]' />
+                    <CategoryIcon className='w-4 h-4 text-[#2EAA62]' />
                     <Paragraph className="">{categoryName}</Paragraph>
 
                 </div>
@@ -152,7 +152,7 @@ export const CardDetailPreview: React.FC<CardDetailPreviewProps> = ({ onBack }) 
                                     {conveniencesIcons[name] ?? <span className="w-[40px] h-[40px]" />}
                                     <div className="flex flex-col">
                                         <span>{name}</span>
-                                        <span className='font-inter font-bold text-xl text-[#2EAA7B]'>{t("Есть")}</span>
+                                        <span className='font-inter font-bold text-xl text-[#2EAA62]'>{t("Есть")}</span>
                                     </div>
                                 </div>
                             );
@@ -162,7 +162,7 @@ export const CardDetailPreview: React.FC<CardDetailPreviewProps> = ({ onBack }) 
                 </div>
                 {data.documents && data.documents.length > 0 && (
                     <div>
-                        <Heading text={t('Документация')} level={3} className='font-inter font-semibold text-xl mt-7.5 text-[#3A3A3A]' />
+                        <Heading text={t('Документация')} level={3} className='font-inter font-semibold text-xl mt-7.5 text-[#4f4f4f] ' />
                         <div className="flex flex-wrap gap-4 mt-3">
                             {data.documents.map((doc, index) => (
                                 <a
@@ -170,7 +170,7 @@ export const CardDetailPreview: React.FC<CardDetailPreviewProps> = ({ onBack }) 
                                     href={URL.createObjectURL(doc)}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className=" w-65.75 border border-[#2EAA7B] text-[#191919] rounded-lg py-3 px-4 text-center hover:bg-[#2EAA7B] hover:text-white transition"
+                                    className=" w-65.75 border border-[#2EAA62] text-[#191919] rounded-lg py-3 px-4 text-center hover:bg-[#2EAA62] hover:text-white transition"
                                 >
                                     {doc.name}
                                 </a>
@@ -192,7 +192,7 @@ export const CardDetailPreview: React.FC<CardDetailPreviewProps> = ({ onBack }) 
                         {data.description.length > 300 && (
                             <Button
                                 onClick={() => setShowFullDescription(!showFullDescription)}
-                                className="text-[#2EAA7B] mt-2 font-semibold hover:underline transition"
+                                className="text-[#2EAA62] mt-2 font-semibold hover:underline transition"
                             >
                                 {showFullDescription ? t("Скрыть") : t("Читать дальше")}
                             </Button>
@@ -205,46 +205,46 @@ export const CardDetailPreview: React.FC<CardDetailPreviewProps> = ({ onBack }) 
                     <div className="mb-6">
                         <Heading level={3} text={t("Информация и финансы")} className="text-[18px] mb-2" />
                         <div className="mt-3 max-w-203.25 max-md:w-full flex flex-wrap gap-x-3 gap-y-4">
-                            <div className="flex w-65.75 gap-2 border border-[#2EAA7B] items-center rounded-[10px] py-3 px-4.25">
+                            <div className="flex w-65.75 gap-2 border border-[#2EAA62] items-center rounded-[10px] py-3 px-4.25">
                                 <WalletIcon className='w-10 h-10' />
                                 <div className='flex flex-col'>
                                     <Paragraph className="font-inter text-[13px] leading-5 text-[#7D7D7D]">{t("Среднемесячная выручка")}</Paragraph>
-                                    <Paragraph className="font-inter text-xl font-bold text-[#2EAA7B]">{formatCurrency(data.average_monthly_revenue)}</Paragraph>
+                                    <Paragraph className="font-inter text-xl font-bold text-[#2EAA62]">{formatCurrency(data.average_monthly_revenue)}</Paragraph>
                                 </div>
                             </div>
-                            <div className="flex gap-2 w-65.75 border border-[#2EAA7B] items-center rounded-[10px] py-3 px-4.25">
+                            <div className="flex gap-2 w-65.75 border border-[#2EAA62] items-center rounded-[10px] py-3 px-4.25">
                                 <ReceiptIcon className='w-10 h-10' />
                                 <div className='flex flex-col'>
                                     <Paragraph className="font-inter text-[13px] leading-5 text-[#7D7D7D]">{t("Среднемесячные расходы")}</Paragraph>
-                                    <Paragraph className="font-inter text-xl font-bold text-[#2EAA7B]">{formatCurrency(data.average_monthly_expenses)}</Paragraph>
+                                    <Paragraph className="font-inter text-xl font-bold text-[#2EAA62]">{formatCurrency(data.average_monthly_expenses)}</Paragraph>
                                 </div>
                             </div>
-                            <div className="flex gap-2 w-65.75 border border-[#2EAA7B] items-center rounded-[10px] py-3 px-4.25">
+                            <div className="flex gap-2 w-65.75 border border-[#2EAA62] items-center rounded-[10px] py-3 px-4.25">
                                 <CalendarIcon className='w-10 h-10' />
                                 <div className='flex flex-col'>
                                     <Paragraph className="font-inter text-[13px] leading-5 text-[#7D7D7D]">{t("Дата основания")}</Paragraph>
-                                    <Paragraph className="font-inter text-xl font-bold text-[#2EAA7B]">{data.foundation_year} {t("год")}</Paragraph>
+                                    <Paragraph className="font-inter text-xl font-bold text-[#2EAA62]">{data.foundation_year} {t("год")}</Paragraph>
                                 </div>
                             </div>
-                            <div className="flex gap-2 w-65.75 border border-[#2EAA7B] items-center rounded-[10px] py-3 px-4.25">
+                            <div className="flex gap-2 w-65.75 border border-[#2EAA62] items-center rounded-[10px] py-3 px-4.25">
                                 <DollarCircleIcon className='w-10 h-10' />
                                 <div className='flex flex-col'>
                                     <Paragraph className="font-inter text-[13px] leading-5 text-[#7D7D7D]">{t("Среднемесячная прибыль")}</Paragraph>
-                                    <Paragraph className="font-inter text-xl font-bold text-[#2EAA7B]">{formatCurrency(data.average_monthly_profit)}</Paragraph>
+                                    <Paragraph className="font-inter text-xl font-bold text-[#2EAA62]">{formatCurrency(data.average_monthly_profit)}</Paragraph>
                                 </div>
                             </div>
-                            <div className="flex gap-2 w-65.75 border border-[#2EAA7B] items-center rounded-[10px] py-3 px-4.25">
+                            <div className="flex gap-2 w-65.75 border border-[#2EAA62] items-center rounded-[10px] py-3 px-4.25">
                                 <MoneySendIcon className='w-10 h-10' />
                                 <div className='flex flex-col'>
                                     <Paragraph className="font-inter text-[13px] leading-5 text-[#7D7D7D]">{t("Окупаемость")}</Paragraph>
-                                    <Paragraph className="font-inter text-xl font-bold text-[#2EAA7B]">{data.payback_period} {t("месяцев")}</Paragraph>
+                                    <Paragraph className="font-inter text-xl font-bold text-[#2EAA62]">{data.payback_period} {t("месяцев")}</Paragraph>
                                 </div>
                             </div>
-                            <div className="flex gap-2 w-65.75 border border-[#2EAA7B] items-center rounded-[10px] py-3 px-4.25">
+                            <div className="flex gap-2 w-65.75 border border-[#2EAA62] items-center rounded-[10px] py-3 px-4.25">
                                 <PercentIcon className='w-10 h-10' />
                                 <div className='flex flex-col'>
                                     <Paragraph className="font-inter text-[13px] leading-5 text-[#7D7D7D]">{t("Доля к продаже")}</Paragraph>
-                                    <Paragraph className="font-inter text-xl font-bold text-[#2EAA7B]">{data.percentage_for_sale} %</Paragraph>
+                                    <Paragraph className="font-inter text-xl font-bold text-[#2EAA62]">{data.percentage_for_sale} %</Paragraph>
                                 </div>
                             </div>
                         </div>
@@ -255,7 +255,7 @@ export const CardDetailPreview: React.FC<CardDetailPreviewProps> = ({ onBack }) 
                 <div>
                     <Heading level={3} text={t("Местоположение")} className="text-[18px] mb-2" />
                     <Paragraph className="flex items-center text-[#667085] text-[14px] mb-2">
-                        <FaLocationDot className="text-[#2EAA7B] mr-2" />
+                        <FaLocationDot className="text-[#2EAA62] mr-2" />
                         {data.city_name}, {data.address?.address}
                     </Paragraph>
                     {data.address?.latitude && data.address?.longitude ? (
@@ -263,7 +263,7 @@ export const CardDetailPreview: React.FC<CardDetailPreviewProps> = ({ onBack }) 
                             src={`https://maps.google.com/maps?q=${data.address.latitude},${data.address.longitude}&z=15&output=embed`}
                             width="100%"
                             height="350"
-                            className="rounded-lg border border-[#2EAA7B]"
+                            className="rounded-lg border border-[#2EAA62]"
                             allowFullScreen
                             loading="eager"
                         />
@@ -272,7 +272,7 @@ export const CardDetailPreview: React.FC<CardDetailPreviewProps> = ({ onBack }) 
                             src={`https://maps.google.com/maps?q=${encodeURIComponent(data.address.address)}&z=15&output=embed`}
                             width="100%"
                             height="350"
-                            className="rounded-lg border border-[#2EAA7B]"
+                            className="rounded-lg border border-[#2EAA62]"
                             allowFullScreen
                             loading="eager"
                         />

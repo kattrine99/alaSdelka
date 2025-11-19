@@ -36,7 +36,7 @@ export const PopularSliderSection = () => {
         <Heading
           level={2}
           text={t("Популярное")}
-          className="text-[30px] font-bold text-black"
+          className="text-[30px] font-bold text-[#4f4f4f] "
         />
       </div>
 
@@ -62,7 +62,7 @@ export const PopularSliderSection = () => {
                 cards={[card]}
                 cardIconClass="rounded-t-xl overflow-hidden"
                 cardWrapperClass="rounded-xl flex-col justify-between my-10 shadow-lg"
-                WhatchButtonClass="py-3 px-5 w-full bg-[#2EAA7B] text-white font-medium rounded-md flex justify-center hover:bg-[#31B683] transition duration-300 cursor-pointer"
+                WhatchButtonClass="py-3 px-5 w-full bg-[#2EAA62] text-white font-medium rounded-md flex justify-center hover:bg-[#2EAA62] transition duration-300 cursor-pointer"
               />
             </SwiperSlide>
           ))}

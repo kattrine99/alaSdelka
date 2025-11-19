@@ -3,13 +3,13 @@
 }
 
 .apexcharts-xcrosshairs {
-    stroke: #2EAA7B !important;
+    stroke: #2EAA62 !important;
     stroke-width: 2px !important;
     stroke-dasharray: 0 !important;
 }
 
 .apexcharts-tooltip-marker {
-    background-color: #2EAA7B !important;
+    background-color: #2EAA62 !important;
     border: 2px solid white !important;
 }
 
@@ -26,14 +26,14 @@
 }
 
 .react-datepicker__navigation-icon::before {
-    border-color: #2EAA7B;
+    border-color: #2EAA62;
 }
 
 /* Шапка месяца */
 .react-datepicker__current-month,
 .react-datepicker__month-dropdown,
 .react-datepicker__year-dropdown {
-    color: #2EAA7B;
+    color: #2EAA62;
     font-weight: bold;
 }
 
@@ -41,7 +41,7 @@
 .react-datepicker__day--in-range,
 .react-datepicker__day--selected,
 .react-datepicker__day--in-selecting-range {
-    background-color: #2EAA7B !important;
+    background-color: #2EAA62 !important;
     color: white;
     border-radius: 9999px;
 }

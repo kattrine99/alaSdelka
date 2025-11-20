@@ -63,7 +63,7 @@ export const Header: React.FC<HeaderProps> = ({
         })
     }, []);
 
-    function onLangChange(newLang: "ru" | "uz") {
+    function onLangChange(newLang: "ru" | "uz" | "en") {
         setLang(newLang);
 
         const { pathname, search, hash } = location;
@@ -72,15 +72,19 @@ export const Header: React.FC<HeaderProps> = ({
 
         // Если первый сегмент — язык, убираем его, иначе оставляем как есть
         const withoutLang =
-            segments[0] === "ru" || segments[0] === "uz" ? segments.slice(1) : segments;
+            segments[0] === "ru" || segments[0] === "uz" || segments[0] === "en" ? segments.slice(1) : segments;
 
         const currentPath = withoutLang.join("/"); // может быть "" для главной
 
         // Формируем новый путь с учётом выбранного языка
-        const nextPath =
-            newLang === "uz"
-                ? currentPath ? `/uz/${currentPath}` : `/uz`
-                : currentPath ? `/${currentPath}` : `/`;
+        let nextPath: string;
+        if (newLang === "uz") {
+            nextPath = currentPath ? `/uz/${currentPath}` : `/uz`;
+        } else if (newLang === "en") {
+            nextPath = currentPath ? `/en/${currentPath}` : `/en`;
+        } else {
+            nextPath = currentPath ? `/${currentPath}` : `/`;
+        }
 
         // Сохраняем query и hash
         navigate(`${nextPath}${search ?? ""}${hash ?? ""}`);
@@ -197,7 +201,7 @@ export const Header: React.FC<HeaderProps> = ({
                     <div className="flex items-center gap-4 ml-4 shrink-0">
                         <Select wrapperClassName={"relative w-[139px] h-[49px]"}
                                 selectClassName="w-full h-full px-4 border border-[#C9CCCF] rounded-[10px] outline-none text-[#191919] font-medium appearance-none"
-                                value={lang} onChange={(value) => onLangChange(value as "ru" | "uz")} options={[
+                                value={lang} onChange={(value) => onLangChange(value as "ru" | "uz" | "en")} options={[
                             {
                                 value: "ru",
                                 label: "Русский",
@@ -205,6 +209,10 @@ export const Header: React.FC<HeaderProps> = ({
                             {
                                 value: "uz",
                                 label: "O'zbek"
+                            },
+                            {
+                                value: "en",
+                                label: "English"
                             }
                         ]}/>
 
@@ -343,13 +351,14 @@ export const Header: React.FC<HeaderProps> = ({
                                 <select
                                     value={lang}
                                     onChange={(e) => {
-                                        onLangChange(e.target.value as "ru" | "uz");
+                                        onLangChange(e.target.value as "ru" | "uz" | "en");
                                         setIsMobileMenuOpen(false);
                                     }}
                                     className="w-full h-full px-4 pr-10 border border-[#C9CCCF] rounded-[10px] outline-none text-[#191919] font-medium appearance-none"
                                 >
                                     <option value="ru">Русский</option>
                                     <option value="uz">O&#39;zbek</option>
+                                    <option value="en">English</option>
                                 </select>
                                 <MdOutlineArrowDropDown
                                     className="absolute right-3 top-1/2 -translate-y-1/2 text-xl text-[#191919] pointer-events-none"/>

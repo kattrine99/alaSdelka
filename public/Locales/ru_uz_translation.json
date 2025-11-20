@@ -1,390 +1,1925 @@
 {
-  "Купите, продайте или инвестируйте в бизнес": "Biznes sotib oling, soting yoki investitsiya qiling",
-  "первая в Узбекистане специализированная площадка для размещения объявлений о продаже готового бизнеса, стартапов, франшиз и инвестиционных проектов": "Oʻzbekistondagi tayyor biznes, startaplar, franshizalar va investitsiya loyihalarini sotish eʼlonlarini joylashtirish uchun birinchi ixtisoslashgan platforma",
-  "Сессия завершена": "Sessiya tugadi",
-  "Ваша сессия истекла. Пожалуйста, войдите снова.": "Sessiyangiz muddati tugadi. Iltimos, qaytadan kiring.",
-  "Бизнес": "Biznes",
-  "Франшиза": "Franshiza",
-  "Стартапы": "Startaplar",
-  "Инвестиции": "Investitsiyalar",
-  "business": "Biznes",
-  "franchise": "Franshiza",
-  "startups": "Startaplar",
-  "investments": "Investitsiyalar",
-  "Мои объявления": "Mening eʼlonlarim",
-  "Уведомления": "Bildirishnomalar",
-  "Нет уведомлений": "Bildirishnomalar yo'q",
-  "Здесь будут отображаться ваши уведомления": "Bu yerda sizning bildirishnomalaringiz ko'rsatiladi",
-  "Избранное": "Sevimlilar",
-  "Продвижение": "Reklama",
-  "Войти": "Kirish",
-  "Зарегистрироваться": "Roʻyxatdan oʻtish",
-  "Продажа": "Sotish",
-  "Покупка": "Sotib olish",
-  "Покупка бизнеса": "Biznes sotib olish",
-  "Продажа бизнеса": "Biznes sotish",
-  "Покупка франшизы": "Franshiza sotib olish",
-  "Продажа франшизы": "Franshiza sotish",
-  "Покупка стартапа": "Startap sotib olish",
-  "Продажа стартапа": "Startap sotish",
-  "Просмотреть": "Koʻrish",
-  "Категория проекта": "Loyiha kategoriyasi",
-  "Все категории": "Barcha kategoriyalar",
-  "До 3 месяцев": "3 oygacha",
-  "До 6 месяцев": "6 oygacha",
-  "До 1 года": "1 yilgacha",
-  "До 3 лет": "3 yilgacha",
-  "Удобства": "Qulayliklar",
-  "Прочитано": "O‘qilgan",
-  "Поиск": "Qidiruv",
-  "Перейти к категории": "Kategoriyaga oʻtish",
-  "Подтвердить": "Tasdiqlash",
-  "Отмена": "Bekor qilish",
-  "Отменить": "Bekor qilish",
-  "Удалить": "Oʻchirish",
-  "Назад": "Orqaga",
-  "Оплатить": "Toʻlash",
-  "Период окупаемости": "Oʻzini oqlash davri",
-  "Не важно": "Farqi yoʻq",
-  "Выбрать": "Tanlash",
-  "Разместить объявление": "Eʼlon qoʻshish",
-  "Продано": "Sotildi",
-  "Архивировать": "Arxivlash",
-  "Понятно": "Tushundim",
-  "Редактировать личные данные": "Shaxsiy maʼlumotlarni tahrirlash",
-  "Выйти из профиля": "Profildan chiqish",
-  "Сохранить": "Saqlash",
-  "Выйти": "Chiqish",
-  "Вход в личный кабинет": "Shaxsiy kabinetga kirish",
-  "Начни свой бизнес легко!": "Biznesingizni oson boshlang!",
-  "Выберите готовый бизнес, франшизу или инвестиционный проект. Простая регистрация, удобный поиск, множество актуальных предложений от собственников и инвесторов": "Tayyor biznes, franshiza yoki investitsiya loyihasini tanlang. Oddiy ro‘yxatdan o‘tish, qulay qidiruv va egalar hamda investorlardan ko‘plab dolzarb takliflar.",
-  "Развивайся вместе с нами!": "Biz bilan birga rivojlaning!",
-  "У нас вы найдете надежных партнеров, инвесторов и готовые решения для роста вашего бизнеса. Инвестируйте или привлекайте капитал легко и быстро через нашу платформу.": "Bizda siz ishonchli hamkorlar, investorlar va biznesingiz o‘sishi uchun tayyor yechimlarni topasiz. Platformamiz orqali oson va tez sarmoya qiling yoki kapital jalb qiling.",
-  "Инвестируй с умом!": "Aql bilan sarmoya qiling!",
-  "Платформа объединяет предпринимателей и инвесторов. Здесь каждый может найти выгодный проект, купить готовый бизнес или вложиться в перспективную франшизу.": "Platforma tadbirkorlar va investorlarni birlashtiradi. Bu yerda har kim foydali loyiha topishi, tayyor biznesni sotib olishi yoki istiqbolli franshizaga sarmoya kiritishi mumkin.",
-  "Номер телефона": "Telefon raqami",
-  "Введите текст": "Matn kiriting",
-  "Пароль": "Parol",
-  "Забыли пароль?": "Parolni unutdingizmi?",
-  "Восстановить": "Tiklash",
-  "Смена пароля": "Parolni o‘zgartirish",
-  "Продолжить": "Davom etish",
-  "Посмотреть все": "Barchasini ko‘rish",
-  "Удалить аккаунт": "Hisobni o‘chirish",
-  "Создать объявление": "E’lon yaratish",
-  "Архив": "Arxiv",
-  "Опубликовано": "Nashr qilingan",
-  "Черновик": "Qoralama",
-  "Площадь от, кв. м.": "Maydon (kamida), kv.m",
-  "Площадь до, кв. м.": "Maydon (ko‘pi bilan), kv.m",
-  "Сохранить изменения": "O‘zgarishlarni saqlash",
-  "Обновление объявления": "E’lonni yangilash",
-  "Заполните или обновите данные для редактирования объявления.": "E’londagi ma’lumotlarni tahrirlash uchun to‘ldiring yoki yangilang.",
-  "Изменение объявления": "E’lonni o‘zgartirish",
-  "Раздел объявления": "E’lon bo‘limi",
-  "Тип объявления": "E’lon turi",
-  "Информация": "Ma’lumot",
-  "Оплата": "To‘lov",
-  "Публикация": "Nashr",
-  "Готово": "Tayyor",
-  "Умный помощник": "Aqlli yordamchi",
-  "Здесь вы найдете инструкцию по размещению объявлений": "Bu yerda e’lon joylashtirish bo‘yicha qo‘llanmani topasiz.",
-  "Посмотреть": "Ko‘rish",
-
-  "Первая в Узбекистане специализированная площадка для размещения объявлений о продаже готового бизнеса, стартапов, франшиз и инвестиционных проектов": "O‘zbekistondagi birinchi ixtisoslashgan platforma: tayyor bizneslar, startaplar, franshizalar va investitsiya loyihalarini sotish bo‘yicha e’lonlarni joylashtirish uchun.",
-  "Нет продвигаемых объявлений": "Ilgari surilgan e’lonlar yo‘q",
-  "Здесь будут отображаться все активные продвигаемые объявления": "Bu yerda barcha faol ilgari surilgan e’lonlar ko‘rsatiladi",
-  "Продвигаемые объявления": "Ilgari surilgan e’lonlar",
-  "стартап": "Startaplar",
-  "бизнес": "Biznes",
-  "франшиза": "Franshiza",
-  "инвестиции": "Investitsiyalar",
-  "дней)": "kun qoldi)",
-  "Идёт продвижение (осталось {{count}} дней)": "Ilgari surish davom etmoqda (yana {{count}} kun)",
-  "Идёт продвижение (осталось ": "Ilgari surish davom etmoqda (yana",
-  "promo": { "active": "Идёт продвижение (осталось {{count}} дней)" },
-  "— кратко и понятно": "— qisqa va tushunarli",
-  "Выберите категорию объявления": "Reklama toifasini tanlang",
-  "Стартап": "Startap",
-  "Купить": "Sotib olish",
-  "Продать": "Sotish",
-  "Сумма": "narxi",
-  "Нажмите «Дальше»": "Keyingi Tugmasini Bosing",
-  "Добро пожаловать! Вот как легко и быстро разместить свое объявление:": "Xush kelibsiz! E'loningizni qanday qilib oson va tez joylashtirishingiz mumkin:",
-  "Выберите, что вы хотите разместить:": "Nimani joylashtirmoqchi ekanligingizni tanlang:",
-  "— продажа или покупка готового бизнеса": "- tayyor biznesni sotish yoki sotib olish",
-  "— покупка или продажа франшизы": "- franchayzani sotib olish yoki sotish",
-  "— поиск инвестиций для стартапа": "- startap uchun investitsiyalarni qidirish",
-  "— проекты для привлечения инвестиций": "- investitsiyalarni jalb qilish loyihalari",
-  "Выберите действие:": "Amalni tanlang:",
-  "Проверьте все данные. Можете сохранить как черновик или сразу перейти к публикации.": "Barcha ma'lumotlarni tekshiring. Siz uni qoralama sifatida saqlashingiz yoki darhol nashrga o'tishingiz mumkin.",
-  "Если все верно — нажмите ": "Agar hamma narsa to'g'ri bo'lsa, bosing",
-  "Шаг 1. Раздел объявления": "Qadam 1. Reklama bo'limi",
-  "Инструкция по размещению объявления": "E'lonni joylashtirish bo'yicha ko'rsatmalar",
-  "Шаг 2. Тип объявления": "Qadam 2. Reklama turi",
-  "Шаг 4. Черновик": "Qadam 4. Qoralama",
-  "Шаг 5. Публикация": "Qadam 5. Nashr",
-  "Шаг 3. Информация": "Qadam 3. Ma'lumot",
-  "Ваше объявление станет видно потенциальным покупателям и инвесторам.": "Sizning reklamangiz potentsial xaridorlar va investorlarga ko'rinadi.",
-  "Заполните поля:": "Maydonlarni to'ldiring:",
-  "— опишите, что продаете или ищете": "- nima sotayotganingizni yoki qidirayotganingizni tasvirlab bering",
-  "— выберите из списка": "- ro'yxatdan tanlang",
-  "— для связи": "— aloqa uchun",
-  "— где находится бизнес или проект": "— biznes yoki loyiha qayerda joylashgan",
-  "— местоположение бизнеса или объекта": "— biznes yoki obyektning joylashuvi",
-  "— укажите площадь помещения (если применимо).": "— (tegishli bo‘lsa) xonaning maydonini ko‘rsating.",
-  "— выберите из списка: ИП, ООО и т.д.": "— ro‘yxatdan tanlang: YTT, MChJ va h.k.",
-  "— собственность, аренда и др.": "— mulk, ijara va boshqalar",
-  "(формат PDF или Excel) — если есть.": "(PDF yoki Excel formatida) — bo‘lsa.",
-  "— в национальной валюте.": "— milliy valyutada.",
-  "Площадь, кв.м.": "Maydon, kv.m",
-  "Заполните все обязательные поля и жмите «Дальше».": "Barcha majburiy maydonlarni to‘ldirib, «Keyingi» tugmasini bosing.",
-  "Дальше": "Keyingi",
-  "К оплате:": "To‘lov summasi:",
-  "Выберите количество дней для публикации вашего объявления": "E’loningizni nashr qilish kunlarini tanlang",
-  "Выберите карту для оплаты или введите данные новой карты": "To‘lov uchun kartani tanlang yoki yangi karta ma’lumotlarini kiriting",
-  "Настоящее Пользовательское соглашение (далее - \"Соглашение\") регулирует отношения между Администрацией сайта (далее - \"Администрация\") и физическим или юридическим лицом (далее - \"Пользователь\") по использованию веб-сайта [Название проекта] (далее - \"Сайт\").": "Ushbu Foydalanuvchi kelishuvi (keyingi o‘rinlarda — \"Kelishuv\") veb-sayt ma’muriyati (keyingi o‘rinlarda — \"Ma’muriyat\") va jismoniy yoki yuridik shaxs (keyingi o‘rinlarda — \"Foydalanuvchi\") o‘rtasida [Loyiha nomi] veb-saytidan (keyingi o‘rinlarda — \"Sayt\") foydalanish bo‘yicha munosabatlarni tartibga soladi.",
-  "1. Предмет соглашения": "1. Kelishuv predmeti",
-  "1.1. Администрация предоставляет Пользователю доступ к функционалу Сайта: размещение и просмотр объявлений о продаже бизнеса, франшиз и инвестиционных проектов.": "1.1. Ma’muriyat Foydalanuvchiga Sayt funksiyalariga kirish imkonini beradi: bizneslar, franshizalar va investitsiya loyihalarini sotish bo‘yicha e’lonlarni joylashtirish va ko‘rish.",
-  "1.2. Пользователь обязуется использовать Сайт в соответствии с настоящим Соглашением и действующим законодательством Республики Узбекистан.": "1.2. Foydalanuvchi Saytdan ushbu Kelishuv va O‘zbekiston Respublikasi amaldagi qonunchiligiga muvofiq foydalanishga majbur.",
-  "2. Регистрация и учетная запись": "2. Ro‘yxatdan o‘tish va hisob",
-  "2.1. Для доступа к полному функционалу Сайта требуется регистрация.": "2.1. Saytning to‘liq funksiyalaridan foydalanish uchun ro‘yxatdan o‘tish talab etiladi.",
-  "2.2. Пользователь обязан предоставить достоверную и актуальную информацию.": "2.2. Foydalanuvchi ishonchli va dolzarb ma’lumotlarni taqdim etishi shart.",
-  "2.3. Пользователь несет ответственность за сохранность своих регистрационных данных.": "2.3. Foydalanuvchi o‘z ro‘yxatdan o‘tish ma’lumotlarining saqlanishi uchun shaxsan javobgar.",
-  "3. Размещение объявлений": "3. E’lonlarni joylashtirish",
-  "3.1. Пользователь имеет право размещать объявления, соответствующие тематике Сайта.": "3.1. Foydalanuvchi Sayt mavzusiga mos e’lonlarni joylashtirish huquqiga ega.",
-  "3.2. Администрация оставляет за собой право модерации, изменения или удаления объявлений, не соответствующих правилам или законодательству.": "3.2. Qoidalarga yoki qonunchilikka mos kelmaydigan e’lonlarni moderatsiya qilish, o‘zgartirish yoki o‘chirish huquqi Ma’muriyatda saqlanadi.",
-  "4. Ответственность": "4. Mas’uliyat",
-  "4.1. Администрация не несет ответственности за достоверность информации, размещенной Пользователями.": "4.1. Ma’muriyat Foydalanuvchilar tomonidan joylashtirilgan ma’lumotlarning haqqoniyligi uchun javobgar emas.",
-  "4.2. Пользователь самостоятельно несет ответственность за размещенные материалы и действия на Сайте.": "4.2. Foydalanuvchi Saytdagi joylashtirilgan materiallar va o‘z harakatlari uchun mustaqil ravishda javobgar.",
-  "5. Ограничение доступа": "5. Kirishni cheklash",
-  "5.1. Администрация имеет право ограничить или заблокировать доступ Пользователя при нарушении условий Соглашения.": "5.1. Kelishuv shartlari buzilgan taqdirda Ma’muriyat Foydalanuvchining kirishini cheklash yoki bloklash huquqiga ega.",
-  "6. Изменения соглашения": "6. Kelishuvga o‘zgartirishlar",
-  "6.1. Администрация вправе изменять настоящее Соглашение без предварительного уведомления. Новая редакция вступает в силу с момента публикации.": "6.1. Ma’muriyat ushbu Kelishuvni oldindan xabardor qilmasdan o‘zgartirish huquqiga ega. Yangi tahrir e’lon qilingan paytdan boshlab kuchga kiradi.",
-  "7. Заключительные положения": "7. Yakuniy qoidalar",
-  "7.1. Настоящее Соглашение регулируется законодательством Республики Узбекистан.": "7.1. Ushbu Kelishuv O‘zbekiston Respublikasining qonunchiligi bilan tartibga solinadi.",
-  "7.2. Все споры решаются путем переговоров или в судебном порядке.": "7.2. Barcha nizolar muzokaralar yo‘li bilan, kelishuvga erishilmagan taqdirda esa sud tartibida hal etiladi.",
-
-  "Подтверждение пароля": "Parolni tasdiqlash",
-  "Имя": "Ism",
-  "Телефон (+998...)": "Telefon (+998...)",
-  "Поиск по названию или ID": "Nom yoki ID boʻyicha qidiruv",
-  "Введите": "Kiriting",
-  "Название бизнеса": "Biznes nomi",
-  "Электронная почта": "Elektron pochta",
-  "Город": "Shahar",
-  "Введите номер телефона": "Telefon raqamini kiriting",
-  "Формат: +998xxxxxxxxx": "Format: +998xxxxxxxxx",
-  "Обязательное поле": "Majburiy maydon",
-  "Минимум 8 символов": "Kamida 8 ta belgi",
-  "Введите имя": "Ismni kiriting",
-  "Минимум 2 буквы": "Kamida 2 ta harf",
-  "Только буквы": "Faqat harflar",
-  "Введите телефон": "Telefonni kiriting",
-  "Введите пароль": "Parolni kiriting",
-  "Подтвердите пароль": "Parolni tasdiqlang",
-  "Пароли должны совпадать": "Parollar mos kelishi kerak",
-  "Этот номер уже зарегистрирован": "Bu raqam allaqachon roʻyxatdan oʻtgan",
-  "Неверный номер или пароль": "Notoʻgʻri raqam yoki parol",
-  "Ошибка загрузки объявлений": "Eʼlonlarni yuklashda xatolik",
-  "Пожалуйста, введите название бизнеса": "Iltimos, biznes nomini kiriting",
-  "Произошла ошибка при загрузке": "Yuklashda xatolik yuz berdi",
-  "Нет данных": "Maʼlumot yoʻq",
-  "Ошибка при сохранении": "Saqlashda xatolik",
-  "Ошибка при выходе": "Chiqishda xatolik",
-  "Ошибка при обновлении избранного": "Sevimlilarni yangilashda xatolik",
-  "Ошибка загрузки": "Yuklash xatoligi",
-  "Добро пожаловать!": "Xush kelibsiz!",
-  "Вы успешно вошли в аккаунт": "Siz muvaffaqiyatli akkauntga kirdingiz",
-  "Упс!": "Voy!",
-  "Успешно!": "Muvaffaqiyatli!",
-  "Удалить из избранного?": "Sevimlilardan oʻchirilsinmi?",
-  "Статистика": "Statistika",
-  "Изменить": "Tahrirlash",
-  "Вы действительно хотите исключить это объявление из избранного?": "Haqiqatan ham bu eʼlonni sevimlilardan oʻchirishni xohlaysizmi?",
-  "Вы уверены, что хотите отметить объявление как проданное?": "Eʼlonni sotilgan deb belgilashga ishonchingiz komilmi?",
-  "После подтверждения объявление будет исключено из общего каталога, и пользователи, добавившие его в избранное, получат уведомление о продаже.": "Tasdiqlagandan soʻng eʼlon umumiy katalogdan chiqariladi va uni sevimlilariga qoʻshgan foydalanuvchilar sotish haqida bildirishnoma oladi.",
-  "Вы уверены, что хотите поместить объявление в архив?": "Eʼlonni arxivga joylashtirishga ishonchingiz komilmi?",
-  "После подтверждения объявление будет перемещено в архив": "Tasdiqlagandan soʻng eʼlon arxivga koʻchiriladi",
-  "Объявление успешно отмечено как проданное!": "Eʼlon muvaffaqiyatli sotilgan deb belgilandi!",
-  "Объявление успешно перемещено в архив!": "Eʼlon muvaffaqiyatli arxivga koʻchirildi!",
-  "Подтвердите действие": "Harakatni tasdiqlang",
-  "Вы действительно хотите выйти из профиля?": "Haqiqatan ham profildan chiqishni xohlaysizmi?",
-  "Данные успешно обновлены": "Maʼlumotlar muvaffaqiyatli yangilandi",
-  "Мы отправили вам код для подтверждения аккаунта на номер": "Biz sizga akkauntni tasdiqlash uchun kod yubordik",
-  "Введите код, отправленный на номер": "Raqamga yuborilgan kodni kiriting",
-  "Отправить снова": "Qayta yuborish",
-  "или": "yoki",
-  "Обращайтесь по номеру": "Quyidagi raqam orqali murojaat qiling",
-  "напишите нам на почту": "Bizga elektron pochta orqali yozing",
-  "Отправить снова через": "Qayta yuborish",
-  "Вложения": "Sarmoyalar",
-  "Рентабельность": "Rentabellik",
-  "Стадия проекта": "Loyiha bosqichi",
-  "объявлений": "eʼlonlar",
-  "сделок": "bitimlar",
-  "пользователей": "hamkorlar",
-  "продано бизнесов": "bizneslar sotildi",
-  "Города": "Shaharlar",
-  "Категория": "Kategoriya",
-  "Цена": "Narx",
-  "от": "dan",
-  "до": "gacha",
-  "UZS": "UZS",
-  "Фильтры": "Filtrlar",
-  "Популярное": "Mashhur",
-  "Адрес не указан": "Manzil koʻrsatilmagan",
-  "Адрес:": "Manzil:",
-  "Адрес": "Manzil",
-  "кв. м.": "kv. m.",
-  "Здесь еще нет объявлений": "Bu yerda hali eʼlonlar yoʻq",
-  "Ваше может стать первым!": "Sizniki birinchi boʻlishi mumkin!",
-  "Ошибка загрузки данных": "Maʼlumotlarni yuklashda xatolik",
-  "Нет объявлений": "Eʼlonlar yoʻq",
-  "Здесь будут отображаться ваши объявления": "Bu yerda sizning eʼlonlaringiz koʻrsatiladi",
-  "Нет избранных": "Sevimlilar yoʻq",
-  "Здесь будут отображаться ваши избранные": "Bu yerda sizning sevimlilaringiz koʻrsatiladi",
-  "Контакты продавца": "Sotuvchi kontaktlari",
-  "Загрузка...": "Yuklanmoqda...",
-  "Ссылки": "Havolalar",
-  "Номер отсутствует": "Raqam mavjud emas",
-  "Объявления пользователя": "Foydalanuvchi eʼlonlari",
-  "Количество объявлений": "Eʼlonlar soni",
-  "На сайте с": "Saytda",
-  "Посмотреть контакты": "Kontaktlarni koʻrish",
-  "Страница не найдена": "Sahifa topilmadi",
-  "Перейти на главную": "Bosh sahifaga oʻtish",
-  "Статистика объявления": "Eʼlon statistikasi",
-  "Всего посещений": "Jami tashriflar",
-  "Найти": "Topish",
-  "Сбросить": "Bekor qilish",
-  "Всего добавлено в избранное": "Jami sevimlilarga qoʻshildi",
-  "Всего просмотров контактов": "Jami kontaktlar koʻrildi",
-  "Посещения страницы": "Sahifa tashrifi",
-  "Добавлено в избранное": "Sevimlilarga qoʻshildi",
-  "Контакты просмотрены": "Kontaktlar koʻrildi",
-  "за неделю": "hafta davomida",
-  "Продвигать объявление": "Eʼlonni reklama qilish",
-  "Поздравляем,": "Tabriklaymiz,",
-  "оплата прошла успешно!": "toʻlov muvaffaqiyatli amalga oshirildi!",
-  "Вы можете снова перейти к вашим объявлениям": "Eʼlonlaringizga yana qaytishingiz mumkin",
-  "Вернуться к объявлениям": "Eʼlonlarga qaytish",
-  "Что-то пошло не так.": "Nimadir noto'g'ri ketdi.",
-  "Попробуйте оплатить ещё раз.": "Yana toʻlashga harakat qiling.",
-  "Вернуться": "Qaytish",
-  "Введите код из SMS для подтверждения карты": "Kartani tasdiqlash uchun SMS dan kodni kiriting",
-  "Код из SMS": "SMS dan kod",
-  "Подтвердить и оплатить": "Tasdiqlash va toʻlash",
-  "Выберите количество дней для продвижения вашего объявления": "Eʼloningizni reklama qilish uchun kunlar sonini tanlang",
-  "дней": "kun",
-  "Загрузка тарифов...": "Tariflar yuklanmoqda...",
-  "Выберите карту для оплаты": "Toʻlov uchun kartani tanlang",
-  "Срок": "Muddat",
-  "Или введите данные новой карты": "Yoki yangi karta maʼlumotlarini kiriting",
-  "Номер карты": "Karta raqami",
-  "Срок действия": "Amal qilish muddati",
-  "После ввода данных, нажмите Оплатить и подтвердите через SMS": "Maʼlumotlarni kiritgandan soʻng, Toʻlash tugmasini bosing va SMS orqali tasdiqlang",
-  "К оплате": "Toʻlov uchun",
-  "UZS": "UZS",
-  "млн": "mln",
-  "млрд": "mlrd",
-  "трлн": "trl",
-  "Пользовательское соглашение": "Foydalanuvchi shartnomasi",
-  "Политика конфиденциальности": "Maxfiylik siyosati",
-  "Почему": "Nega",
-  "— лучший инструмент для продажи бизнеса?": "— biznes sotish uchun eng yaxshi vosita?",
-  "Invest In": "Invest In",
-  "С Invest In благодаря поддержке на всех этапах сделки вы сможете продать свой бизнес на условиях, которые будут выгодны и удобны для вас. На нашем сайте уже:": "Invest In bilan bitimning barcha bosqichlarida qoʻllab-quvvatlash tufayli siz oʻz biznesingizni siz uchun foydali va qulay shartlarda sotishingiz mumkin. Bizning saytimizda allaqachon:",
-  "Еще нет аккаунта?": "Hali akkauntingiz yoʻqmi?",
-  "У вас уже есть аккаунт?": "Sizda allaqachon akkount bormi?",
-  "Есть": "Mavjud",
-  "Авторизоваться": "Avtorizatsiya qilish",
-  "Описание": "Tavsif",
-  "Выберите диапазон": "Oraliqni tanlang",
-  "Итого по всем метрикам": "Barcha koʻrsatkichlar boʻyicha jami",
-  "Название не указано": "Nom koʻrsatilmagan",
-  "Не указано": "Ko‘rsatilmagan",
-  "Нет данных для предпросмотра": "Ko‘rib chiqish uchun maʼlumotlar mavjud emas",
-  "Категория не указана": "Kategoriya ko‘rsatilmagan",
-  "Предварительный просмотр вашего объявления": "Eʼloningizning oldindan koʻrish oynasi",
-  "Цена не указана": "Narx koʻrsatilmagan",
-  "Площадь не указана": "Maydon koʻrsatilmagan",
-  "Площадь, кв. м.": "Maydon, kv.m",
-  "Добро пожаловать": "Xush kelibsiz",
-  "Основная информация": "Asosiy maʼlumot",
-  "Главная": "Bosh sahifa",
-  "Профиль": "Profil",
-  "Идет продвижение (осталось {{count}} дней)": "Reklama davom etmoqda (yana {{count}} kun qoldi)",
-  "Изображение отсутствует": "Rasm mavjud emas",
-  "Изображение": "Rasm",
-  "Посмотреть статистику": "Statistikani ko‘rish",
-  "Поместить в архив": "Arxivga joylash",
-  "Пожалуйста, введите описание": "Iltimos, tavsif kiriting",
-  "Категория объявления": "Eʼlon kategoriyasi",
-  "Пожалуйста, выберите категорию": "Iltimos, kategoriya tanlang",
-  "Пожалуйста, выберите стадию проекта": "Iltimos, loyiha bosqichini tanlang",
-  "Пожалуйста, выберите город": "Iltimos, shahar tanlang",
-  "Пожалуйста, введите Адрес": "Iltimos, manzil kiriting",
-  "Стадия": "Bosqich",
-  "Форма владения бизнесом": "Biznesga egalik shakli",
-  "Форма владения помещением": "Binoga egalik shakli",
-  "Документы и лицензии": "Hujjatlar va litsenziyalar",
-  "Загрузить документ": "Hujjat yuklash",
-  "Формат": "Format",
-  "Сумма, UZS": "Summasi, UZS",
-  "Пожалуйста, введите сумму": "Iltimos, summani kiriting",
-  "Загрузить изображение": "Rasm yuklash",
-  "Ссылка на официальные каналы коммуникации": "Rasmiy aloqa kanallari havolasi",
-  "Например: Телеграм": "Masalan: Telegram",
-  "Доля продаваемого бизнеса": "Sotilayotgan biznes ulushi",
-  "Сумма среднемесячного дохода": "Oʻrtacha oylik daromad summasi",
-  "Сумма среднемесячного расхода": "Oʻrtacha oylik xarajat summasi",
-  "Сумма прибыли": "Foyda summasi",
-  "Окупаемость (месяц)": "Oʻzini oqlash muddati (oy)",
-  "Год основания бизнеса": "Biznes tashkil etilgan yil",
-  "Детали объявления": "Eʼlon tafsilotlari",
-  "Парковка": "Avtoturargoh",
-  "База клиентов": "Mijozlar bazasi",
-  "База поставщиков": "Yetkazib beruvchilar bazasi",
-  "Оборудование и активы": "Jihozlar va aktivlar",
-  "Поставки из-за рубежа": "Chet eldan yetkazib berishlar",
-  "Контракты на экспорт": "Eksport shartnomalari",
-  "Отсутствие кредита": "Kredit yoʻqligi",
-  "Наличие мастер франшизы": "Master franshizaga ega",
-  "Информация о бизнесе": "Biznes haqida ma'lumot",
-  "Заполните все необходимые данные для добавления нового объявления": "Yangi eʼlon qoʻshish uchun barcha kerakli maʼlumotlarni kiriting",
-  "Информация о франшизе": "Franshiza haqida ma'lumot",
-  "Информация об инвестициях": "Investitsiyalar haqida ma'lumot",
-  "Информация о стартапе": "Startap haqida ma'lumot",
-  "Например: Telegram": "Masalan: Telegram",
-  "Добавить доп. канал": "Qoʻshimcha kanal qoʻshish",
-  "Подтвердите и публикуйте": "Tasdiqlang va e'lon qiling",
-  "Вы почти у цели! Посмотрите, как будет выглядеть ваш готовый листинг после окончательного одобрения.": "Siz deyarli maqsadga yetdingiz! Yakuniy tasdiqlangandan so‘ng eʼloningiz qanday ko‘rinishini ko‘ring.",
-  "Публикация...": "Eʼlon qilish",
-  "Опубликовать": "Eʼlon qilish",
-  "Пожалуйста, проверьте информацию в объявлении или повторите попытку позже.": "Iltimos, eʼlon maʼlumotlarini tekshiring yoki keyinroq urinib koʻring.",
-  "Что-то пошло не так": "Nimadir notoʻgʻri ketdi",
-  "Город не указан": "Shahar ko‘rsatilmagan",
-  "Среднемесячная выручка": "O'rtacha oylik tushum",
-  "Информация и финансы": "Ma'lumot va moliya",
-  "Среднемесячные расходы": "O'rtacha oylik xarajatlar",
-  "Дата основания": "Tashkil etilgan sana",
-  "год": "yil",
-  "года": "yil",
-  "лет": "yil",
-  "Среднемесячная прибыль": "O'rtacha oylik foyda",
-  "Окупаемость": "O'zini oqlash",
-  "месяц": "oy",
-  "месяца": "oy",
-  "месяцев": "oy",
-  "Доля к продаже": "Sotilayotgan ulush",
-  "Местоположение": "Joylashuv",
-  "Адрес недоступен": "Manzil mavjud emas",
-  "Количество объявлений:": "Eʼlonlar soni:",
-  "Поиск инвестора": "Investorni topish",
-  "Поиск инвестпроекта": "Investitsiya loyihasini qidirish",
-  "Все": "Hammasi",
-  "Telegram": "Telegram",
-  "Instagram": "Instagram",
-  "WhatsApp": "WhatsApp"
+  "Купите, продайте или инвестируйте в бизнес": {
+    "ru": "Купите, продайте или инвестируйте в бизнес",
+    "uz": "Biznes sotib oling, soting yoki investitsiya qiling",
+    "en": "Buy, sell or invest in business"
+  },
+  "первая в Узбекистане специализированная площадка для размещения объявлений о продаже готового бизнеса, стартапов, франшиз и инвестиционных проектов": {
+    "ru": "первая в Узбекистане специализированная площадка для размещения объявлений о продаже готового бизнеса, стартапов, франшиз и инвестиционных проектов",
+    "uz": "Oʻzbekistondagi tayyor biznes, startaplar, franshizalar va investitsiya loyihalarini sotish eʼlonlarini joylashtirish uchun birinchi ixtisoslashgan platforma",
+    "en": "The first specialized platform in Uzbekistan for placing ads for the sale of ready-made businesses, startups, franchises and investment projects"
+  },
+  "Сессия завершена": {
+    "ru": "Сессия завершена",
+    "uz": "Sessiya tugadi",
+    "en": "Session ended"
+  },
+  "Ваша сессия истекла. Пожалуйста, войдите снова.": {
+    "ru": "Ваша сессия истекла. Пожалуйста, войдите снова.",
+    "uz": "Sessiyangiz muddati tugadi. Iltimos, qaytadan kiring.",
+    "en": "Your session has expired. Please log in again."
+  },
+  "Бизнес": {
+    "ru": "Бизнес",
+    "uz": "Biznes",
+    "en": "Business"
+  },
+  "Франшиза": {
+    "ru": "Франшиза",
+    "uz": "Franshiza",
+    "en": "Franchise"
+  },
+  "Стартапы": {
+    "ru": "Стартапы",
+    "uz": "Startaplar",
+    "en": "Startups"
+  },
+  "Инвестиции": {
+    "ru": "Инвестиции",
+    "uz": "Investitsiyalar",
+    "en": "Investments"
+  },
+  "business": {
+    "ru": "business",
+    "uz": "Biznes",
+    "en": "Business"
+  },
+  "franchise": {
+    "ru": "franchise",
+    "uz": "Franshiza",
+    "en": "Franchise"
+  },
+  "startups": {
+    "ru": "startups",
+    "uz": "Startaplar",
+    "en": "Startups"
+  },
+  "investments": {
+    "ru": "investments",
+    "uz": "Investitsiyalar",
+    "en": "Investments"
+  },
+  "Мои объявления": {
+    "ru": "Мои объявления",
+    "uz": "Mening eʼlonlarim",
+    "en": "My announcements"
+  },
+  "Уведомления": {
+    "ru": "Уведомления",
+    "uz": "Bildirishnomalar",
+    "en": "Notifications"
+  },
+  "Нет уведомлений": {
+    "ru": "Нет уведомлений",
+    "uz": "Bildirishnomalar yo'q",
+    "en": "No notifications"
+  },
+  "Здесь будут отображаться ваши уведомления": {
+    "ru": "Здесь будут отображаться ваши уведомления",
+    "uz": "Bu yerda sizning bildirishnomalaringiz ko'rsatiladi",
+    "en": "Your notifications will be displayed here"
+  },
+  "Избранное": {
+    "ru": "Избранное",
+    "uz": "Sevimlilar",
+    "en": "Favorites"
+  },
+  "Продвижение": {
+    "ru": "Продвижение",
+    "uz": "Reklama",
+    "en": "Promotion"
+  },
+  "Войти": {
+    "ru": "Войти",
+    "uz": "Kirish",
+    "en": "Login"
+  },
+  "Зарегистрироваться": {
+    "ru": "Зарегистрироваться",
+    "uz": "Roʻyxatdan oʻtish",
+    "en": "Register"
+  },
+  "Продажа": {
+    "ru": "Продажа",
+    "uz": "Sotish",
+    "en": "Sale"
+  },
+  "Покупка": {
+    "ru": "Покупка",
+    "uz": "Sotib olish",
+    "en": "Purchase"
+  },
+  "Покупка бизнеса": {
+    "ru": "Покупка бизнеса",
+    "uz": "Biznes sotib olish",
+    "en": "Buying a business"
+  },
+  "Продажа бизнеса": {
+    "ru": "Продажа бизнеса",
+    "uz": "Biznes sotish",
+    "en": "Selling a business"
+  },
+  "Покупка франшизы": {
+    "ru": "Покупка франшизы",
+    "uz": "Franshiza sotib olish",
+    "en": "Buying a franchise"
+  },
+  "Продажа франшизы": {
+    "ru": "Продажа франшизы",
+    "uz": "Franshiza sotish",
+    "en": "Selling a franchise"
+  },
+  "Покупка стартапа": {
+    "ru": "Покупка стартапа",
+    "uz": "Startap sotib olish",
+    "en": "Buying a startup"
+  },
+  "Продажа стартапа": {
+    "ru": "Продажа стартапа",
+    "uz": "Startap sotish",
+    "en": "Selling a startup"
+  },
+  "Просмотреть": {
+    "ru": "Просмотреть",
+    "uz": "Koʻrish",
+    "en": "View"
+  },
+  "Категория проекта": {
+    "ru": "Категория проекта",
+    "uz": "Loyiha kategoriyasi",
+    "en": "Project category"
+  },
+  "Все категории": {
+    "ru": "Все категории",
+    "uz": "Barcha kategoriyalar",
+    "en": "All categories"
+  },
+  "До 3 месяцев": {
+    "ru": "До 3 месяцев",
+    "uz": "3 oygacha",
+    "en": "Up to 3 months"
+  },
+  "До 6 месяцев": {
+    "ru": "До 6 месяцев",
+    "uz": "6 oygacha",
+    "en": "Up to 6 months"
+  },
+  "До 1 года": {
+    "ru": "До 1 года",
+    "uz": "1 yilgacha",
+    "en": "Up to 1 year"
+  },
+  "До 3 лет": {
+    "ru": "До 3 лет",
+    "uz": "3 yilgacha",
+    "en": "Up to 3 years"
+  },
+  "Удобства": {
+    "ru": "Удобства",
+    "uz": "Qulayliklar",
+    "en": "Amenities"
+  },
+  "Прочитано": {
+    "ru": "Прочитано",
+    "uz": "O‘qilgan",
+    "en": "Read"
+  },
+  "Поиск": {
+    "ru": "Поиск",
+    "uz": "Qidiruv",
+    "en": "Search"
+  },
+  "Перейти к категории": {
+    "ru": "Перейти к категории",
+    "uz": "Kategoriyaga oʻtish",
+    "en": "Go to category"
+  },
+  "Подтвердить": {
+    "ru": "Подтвердить",
+    "uz": "Tasdiqlash",
+    "en": "Confirm"
+  },
+  "Отмена": {
+    "ru": "Отмена",
+    "uz": "Bekor qilish",
+    "en": "Cancel"
+  },
+  "Отменить": {
+    "ru": "Отменить",
+    "uz": "Bekor qilish",
+    "en": "Cancel"
+  },
+  "Удалить": {
+    "ru": "Удалить",
+    "uz": "Oʻchirish",
+    "en": "Delete"
+  },
+  "Назад": {
+    "ru": "Назад",
+    "uz": "Orqaga",
+    "en": "Back"
+  },
+  "Оплатить": {
+    "ru": "Оплатить",
+    "uz": "Toʻlash",
+    "en": "Pay"
+  },
+  "Период окупаемости": {
+    "ru": "Период окупаемости",
+    "uz": "Oʻzini oqlash davri",
+    "en": "Payback period"
+  },
+  "Не важно": {
+    "ru": "Не важно",
+    "uz": "Farqi yoʻq",
+    "en": "Not important"
+  },
+  "Выбрать": {
+    "ru": "Выбрать",
+    "uz": "Tanlash",
+    "en": "Select"
+  },
+  "Разместить объявление": {
+    "ru": "Разместить объявление",
+    "uz": "Eʼlon qoʻshish",
+    "en": "Place an ad"
+  },
+  "Продано": {
+    "ru": "Продано",
+    "uz": "Sotildi",
+    "en": "Sold"
+  },
+  "Архивировать": {
+    "ru": "Архивировать",
+    "uz": "Arxivlash",
+    "en": "Archive"
+  },
+  "Понятно": {
+    "ru": "Понятно",
+    "uz": "Tushundim",
+    "en": "Got it"
+  },
+  "Редактировать личные данные": {
+    "ru": "Редактировать личные данные",
+    "uz": "Shaxsiy maʼlumotlarni tahrirlash",
+    "en": "Edit personal data"
+  },
+  "Выйти из профиля": {
+    "ru": "Выйти из профиля",
+    "uz": "Profildan chiqish",
+    "en": "Log out of profile"
+  },
+  "Сохранить": {
+    "ru": "Сохранить",
+    "uz": "Saqlash",
+    "en": "Save"
+  },
+  "Выйти": {
+    "ru": "Выйти",
+    "uz": "Chiqish",
+    "en": "Exit"
+  },
+  "Вход в личный кабинет": {
+    "ru": "Вход в личный кабинет",
+    "uz": "Shaxsiy kabinetga kirish",
+    "en": "Login to personal account"
+  },
+  "Начни свой бизнес легко!": {
+    "ru": "Начни свой бизнес легко!",
+    "uz": "Biznesingizni oson boshlang!",
+    "en": "Start your business easily!"
+  },
+  "Выберите готовый бизнес, франшизу или инвестиционный проект. Простая регистрация, удобный поиск, множество актуальных предложений от собственников и инвесторов": {
+    "ru": "Выберите готовый бизнес, франшизу или инвестиционный проект. Простая регистрация, удобный поиск, множество актуальных предложений от собственников и инвесторов",
+    "uz": "Tayyor biznes, franshiza yoki investitsiya loyihasini tanlang. Oddiy ro‘yxatdan o‘tish, qulay qidiruv va egalar hamda investorlardan ko‘plab dolzarb takliflar.",
+    "en": "Choose a ready-made business, franchise or investment project. Simple registration, convenient search, many current offers from owners and investors"
+  },
+  "Развивайся вместе с нами!": {
+    "ru": "Развивайся вместе с нами!",
+    "uz": "Biz bilan birga rivojlaning!",
+    "en": "Grow with us!"
+  },
+  "У нас вы найдете надежных партнеров, инвесторов и готовые решения для роста вашего бизнеса. Инвестируйте или привлекайте капитал легко и быстро через нашу платформу.": {
+    "ru": "У нас вы найдете надежных партнеров, инвесторов и готовые решения для роста вашего бизнеса. Инвестируйте или привлекайте капитал легко и быстро через нашу платформу.",
+    "uz": "Bizda siz ishonchli hamkorlar, investorlar va biznesingiz o‘sishi uchun tayyor yechimlarni topasiz. Platformamiz orqali oson va tez sarmoya qiling yoki kapital jalb qiling.",
+    "en": "You will find reliable partners, investors and ready-made solutions for your business growth. Invest or attract capital easily and quickly through our platform."
+  },
+  "Инвестируй с умом!": {
+    "ru": "Инвестируй с умом!",
+    "uz": "Aql bilan sarmoya qiling!",
+    "en": "Invest wisely!"
+  },
+  "Платформа объединяет предпринимателей и инвесторов. Здесь каждый может найти выгодный проект, купить готовый бизнес или вложиться в перспективную франшизу.": {
+    "ru": "Платформа объединяет предпринимателей и инвесторов. Здесь каждый может найти выгодный проект, купить готовый бизнес или вложиться в перспективную франшизу.",
+    "uz": "Platforma tadbirkorlar va investorlarni birlashtiradi. Bu yerda har kim foydali loyiha topishi, tayyor biznesni sotib olishi yoki istiqbolli franshizaga sarmoya kiritishi mumkin.",
+    "en": "The platform brings together entrepreneurs and investors. Here everyone can find a profitable project, buy a ready-made business or invest in a promising franchise."
+  },
+  "Номер телефона": {
+    "ru": "Номер телефона",
+    "uz": "Telefon raqami",
+    "en": "Phone number"
+  },
+  "Введите текст": {
+    "ru": "Введите текст",
+    "uz": "Matn kiriting",
+    "en": "Enter text"
+  },
+  "Пароль": {
+    "ru": "Пароль",
+    "uz": "Parol",
+    "en": "Password"
+  },
+  "Забыли пароль?": {
+    "ru": "Забыли пароль?",
+    "uz": "Parolni unutdingizmi?",
+    "en": "Forgot password?"
+  },
+  "Восстановить": {
+    "ru": "Восстановить",
+    "uz": "Tiklash",
+    "en": "Restore"
+  },
+  "Смена пароля": {
+    "ru": "Смена пароля",
+    "uz": "Parolni o‘zgartirish",
+    "en": "Change password"
+  },
+  "Продолжить": {
+    "ru": "Продолжить",
+    "uz": "Davom etish",
+    "en": "Continue"
+  },
+  "Посмотреть все": {
+    "ru": "Посмотреть все",
+    "uz": "Barchasini ko‘rish",
+    "en": "View all"
+  },
+  "Удалить аккаунт": {
+    "ru": "Удалить аккаунт",
+    "uz": "Hisobni o‘chirish",
+    "en": "Delete account"
+  },
+  "Создать объявление": {
+    "ru": "Создать объявление",
+    "uz": "E’lon yaratish",
+    "en": "Create announcement"
+  },
+  "Архив": {
+    "ru": "Архив",
+    "uz": "Arxiv",
+    "en": "Archive"
+  },
+  "Опубликовано": {
+    "ru": "Опубликовано",
+    "uz": "Nashr qilingan",
+    "en": "Published"
+  },
+  "Черновик": {
+    "ru": "Черновик",
+    "uz": "Qoralama",
+    "en": "Draft"
+  },
+  "Площадь от, кв. м.": {
+    "ru": "Площадь от, кв. м.",
+    "uz": "Maydon (kamida), kv.m",
+    "en": "Area from, sq. m."
+  },
+  "Площадь до, кв. м.": {
+    "ru": "Площадь до, кв. м.",
+    "uz": "Maydon (ko‘pi bilan), kv.m",
+    "en": "Area to, sq. m."
+  },
+  "Сохранить изменения": {
+    "ru": "Сохранить изменения",
+    "uz": "O‘zgarishlarni saqlash",
+    "en": "Save changes"
+  },
+  "Обновление объявления": {
+    "ru": "Обновление объявления",
+    "uz": "E’lonni yangilash",
+    "en": "Update announcement"
+  },
+  "Заполните или обновите данные для редактирования объявления.": {
+    "ru": "Заполните или обновите данные для редактирования объявления.",
+    "uz": "E’londagi ma’lumotlarni tahrirlash uchun to‘ldiring yoki yangilang.",
+    "en": "Fill in or update data to edit the announcement."
+  },
+  "Изменение объявления": {
+    "ru": "Изменение объявления",
+    "uz": "E’lonni o‘zgartirish",
+    "en": "Edit announcement"
+  },
+  "Раздел объявления": {
+    "ru": "Раздел объявления",
+    "uz": "E’lon bo‘limi",
+    "en": "Announcement section"
+  },
+  "Тип объявления": {
+    "ru": "Тип объявления",
+    "uz": "E’lon turi",
+    "en": "Announcement type"
+  },
+  "Информация": {
+    "ru": "Информация",
+    "uz": "Ma’lumot",
+    "en": "Information"
+  },
+  "Оплата": {
+    "ru": "Оплата",
+    "uz": "To‘lov",
+    "en": "Payment"
+  },
+  "Публикация": {
+    "ru": "Публикация",
+    "uz": "Nashr",
+    "en": "Publication"
+  },
+  "Готово": {
+    "ru": "Готово",
+    "uz": "Tayyor",
+    "en": "Done"
+  },
+  "Умный помощник": {
+    "ru": "Умный помощник",
+    "uz": "Aqlli yordamchi",
+    "en": "Smart assistant"
+  },
+  "Здесь вы найдете инструкцию по размещению объявлений": {
+    "ru": "Здесь вы найдете инструкцию по размещению объявлений",
+    "uz": "Bu yerda e’lon joylashtirish bo‘yicha qo‘llanmani topasiz.",
+    "en": "Here you will find instructions for placing announcements"
+  },
+  "Посмотреть": {
+    "ru": "Посмотреть",
+    "uz": "Ko‘rish",
+    "en": "View"
+  },
+  "Первая в Узбекистане специализированная площадка для размещения объявлений о продаже готового бизнеса, стартапов, франшиз и инвестиционных проектов": {
+    "ru": "Первая в Узбекистане специализированная площадка для размещения объявлений о продаже готового бизнеса, стартапов, франшиз и инвестиционных проектов",
+    "uz": "O‘zbekistondagi birinchi ixtisoslashgan platforma: tayyor bizneslar, startaplar, franshizalar va investitsiya loyihalarini sotish bo‘yicha e’lonlarni joylashtirish uchun.",
+    "en": "The first specialized platform in Uzbekistan for placing ads for the sale of ready-made businesses, startups, franchises and investment projects"
+  },
+  "Нет продвигаемых объявлений": {
+    "ru": "Нет продвигаемых объявлений",
+    "uz": "Ilgari surilgan e’lonlar yo‘q",
+    "en": "No promoted announcements"
+  },
+  "Здесь будут отображаться все активные продвигаемые объявления": {
+    "ru": "Здесь будут отображаться все активные продвигаемые объявления",
+    "uz": "Bu yerda barcha faol ilgari surilgan e’lonlar ko‘rsatiladi",
+    "en": "All active promoted announcements will be displayed here"
+  },
+  "Продвигаемые объявления": {
+    "ru": "Продвигаемые объявления",
+    "uz": "Ilgari surilgan e’lonlar",
+    "en": "Promoted announcements"
+  },
+  "стартап": {
+    "ru": "стартап",
+    "uz": "Startaplar",
+    "en": "Startups"
+  },
+  "бизнес": {
+    "ru": "бизнес",
+    "uz": "Biznes",
+    "en": "Business"
+  },
+  "франшиза": {
+    "ru": "франшиза",
+    "uz": "Franshiza",
+    "en": "Franchise"
+  },
+  "инвестиции": {
+    "ru": "инвестиции",
+    "uz": "Investitsiyalar",
+    "en": "Investments"
+  },
+  "дней)": {
+    "ru": "дней)",
+    "uz": "kun qoldi)",
+    "en": "days left)"
+  },
+  "Идёт продвижение (осталось {{count}} дней)": {
+    "ru": "Идёт продвижение (осталось {{count}} дней)",
+    "uz": "Ilgari surish davom etmoqda (yana {{count}} kun)",
+    "en": "Promotion in progress ({{count}} days left)"
+  },
+  "Идёт продвижение (осталось ": {
+    "ru": "Идёт продвижение (осталось ",
+    "uz": "Ilgari surish davom etmoqda (yana",
+    "en": "Promotion in progress ("
+  },
+  "promo": {
+    "active": "Идёт продвижение (осталось {{count}} дней)"
+  },
+  "— кратко и понятно": {
+    "ru": "— кратко и понятно",
+    "uz": "— qisqa va tushunarli",
+    "en": "— brief and clear"
+  },
+  "Выберите категорию объявления": {
+    "ru": "Выберите категорию объявления",
+    "uz": "Reklama toifasini tanlang",
+    "en": "Select announcement category"
+  },
+  "Стартап": {
+    "ru": "Стартап",
+    "uz": "Startap",
+    "en": "Startup"
+  },
+  "Купить": {
+    "ru": "Купить",
+    "uz": "Sotib olish",
+    "en": "Buy"
+  },
+  "Продать": {
+    "ru": "Продать",
+    "uz": "Sotish",
+    "en": "Sell"
+  },
+  "Сумма": {
+    "ru": "Сумма",
+    "uz": "narxi",
+    "en": "Amount"
+  },
+  "Нажмите «Дальше»": {
+    "ru": "Нажмите «Дальше»",
+    "uz": "Keyingi Tugmasini Bosing",
+    "en": "Click \"Next\""
+  },
+  "Добро пожаловать! Вот как легко и быстро разместить свое объявление:": {
+    "ru": "Добро пожаловать! Вот как легко и быстро разместить свое объявление:",
+    "uz": "Xush kelibsiz! E'loningizni qanday qilib oson va tez joylashtirishingiz mumkin:",
+    "en": "Welcome! Here's how to easily and quickly place your announcement:"
+  },
+  "Выберите, что вы хотите разместить:": {
+    "ru": "Выберите, что вы хотите разместить:",
+    "uz": "Nimani joylashtirmoqchi ekanligingizni tanlang:",
+    "en": "Choose what you want to place:"
+  },
+  "— продажа или покупка готового бизнеса": {
+    "ru": "— продажа или покупка готового бизнеса",
+    "uz": "- tayyor biznesni sotish yoki sotib olish",
+    "en": "— sale or purchase of a ready-made business"
+  },
+  "— покупка или продажа франшизы": {
+    "ru": "— покупка или продажа франшизы",
+    "uz": "- franchayzani sotib olish yoki sotish",
+    "en": "— purchase or sale of a franchise"
+  },
+  "— поиск инвестиций для стартапа": {
+    "ru": "— поиск инвестиций для стартапа",
+    "uz": "- startap uchun investitsiyalarni qidirish",
+    "en": "— search for investments for a startup"
+  },
+  "— проекты для привлечения инвестиций": {
+    "ru": "— проекты для привлечения инвестиций",
+    "uz": "- investitsiyalarni jalb qilish loyihalari",
+    "en": "— projects to attract investments"
+  },
+  "Выберите действие:": {
+    "ru": "Выберите действие:",
+    "uz": "Amalni tanlang:",
+    "en": "Choose an action:"
+  },
+  "Проверьте все данные. Можете сохранить как черновик или сразу перейти к публикации.": {
+    "ru": "Проверьте все данные. Можете сохранить как черновик или сразу перейти к публикации.",
+    "uz": "Barcha ma'lumotlarni tekshiring. Siz uni qoralama sifatida saqlashingiz yoki darhol nashrga o'tishingiz mumkin.",
+    "en": "Check all data. You can save as a draft or go directly to publication."
+  },
+  "Если все верно — нажмите ": {
+    "ru": "Если все верно — нажмите ",
+    "uz": "Agar hamma narsa to'g'ri bo'lsa, bosing",
+    "en": "If everything is correct — click "
+  },
+  "Шаг 1. Раздел объявления": {
+    "ru": "Шаг 1. Раздел объявления",
+    "uz": "Qadam 1. Reklama bo'limi",
+    "en": "Step 1. Announcement section"
+  },
+  "Инструкция по размещению объявления": {
+    "ru": "Инструкция по размещению объявления",
+    "uz": "E'lonni joylashtirish bo'yicha ko'rsatmalar",
+    "en": "Instructions for placing an announcement"
+  },
+  "Шаг 2. Тип объявления": {
+    "ru": "Шаг 2. Тип объявления",
+    "uz": "Qadam 2. Reklama turi",
+    "en": "Step 2. Announcement type"
+  },
+  "Шаг 4. Черновик": {
+    "ru": "Шаг 4. Черновик",
+    "uz": "Qadam 4. Qoralama",
+    "en": "Step 4. Draft"
+  },
+  "Шаг 5. Публикация": {
+    "ru": "Шаг 5. Публикация",
+    "uz": "Qadam 5. Nashr",
+    "en": "Step 5. Publication"
+  },
+  "Шаг 3. Информация": {
+    "ru": "Шаг 3. Информация",
+    "uz": "Qadam 3. Ma'lumot",
+    "en": "Step 3. Information"
+  },
+  "Ваше объявление станет видно потенциальным покупателям и инвесторам.": {
+    "ru": "Ваше объявление станет видно потенциальным покупателям и инвесторам.",
+    "uz": "Sizning reklamangiz potentsial xaridorlar va investorlarga ko'rinadi.",
+    "en": "Your announcement will be visible to potential buyers and investors."
+  },
+  "Заполните поля:": {
+    "ru": "Заполните поля:",
+    "uz": "Maydonlarni to'ldiring:",
+    "en": "Fill in the fields:"
+  },
+  "— опишите, что продаете или ищете": {
+    "ru": "— опишите, что продаете или ищете",
+    "uz": "- nima sotayotganingizni yoki qidirayotganingizni tasvirlab bering",
+    "en": "— describe what you are selling or looking for"
+  },
+  "— выберите из списка": {
+    "ru": "— выберите из списка",
+    "uz": "- ro'yxatdan tanlang",
+    "en": "— select from the list"
+  },
+  "— для связи": {
+    "ru": "— для связи",
+    "uz": "— aloqa uchun",
+    "en": "— for contact"
+  },
+  "— где находится бизнес или проект": {
+    "ru": "— где находится бизнес или проект",
+    "uz": "— biznes yoki loyiha qayerda joylashgan",
+    "en": "— where the business or project is located"
+  },
+  "— местоположение бизнеса или объекта": {
+    "ru": "— местоположение бизнеса или объекта",
+    "uz": "— biznes yoki obyektning joylashuvi",
+    "en": "— location of the business or object"
+  },
+  "— укажите площадь помещения (если применимо).": {
+    "ru": "— укажите площадь помещения (если применимо).",
+    "uz": "— (tegishli bo‘lsa) xonaning maydonini ko‘rsating.",
+    "en": "— specify the area of the premises (if applicable)."
+  },
+  "— выберите из списка: ИП, ООО и т.д.": {
+    "ru": "— выберите из списка: ИП, ООО и т.д.",
+    "uz": "— ro‘yxatdan tanlang: YTT, MChJ va h.k.",
+    "en": "— select from the list: Sole Proprietorship, LLC, etc."
+  },
+  "— собственность, аренда и др.": {
+    "ru": "— собственность, аренда и др.",
+    "uz": "— mulk, ijara va boshqalar",
+    "en": "— ownership, rent, etc."
+  },
+  "(формат PDF или Excel) — если есть.": {
+    "ru": "(формат PDF или Excel) — если есть.",
+    "uz": "(PDF yoki Excel formatida) — bo‘lsa.",
+    "en": "(PDF or Excel format) — if available."
+  },
+  "— в национальной валюте.": {
+    "ru": "— в национальной валюте.",
+    "uz": "— milliy valyutada.",
+    "en": "— in national currency."
+  },
+  "Площадь, кв.м.": {
+    "ru": "Площадь, кв.м.",
+    "uz": "Maydon, kv.m",
+    "en": "Area, sq.m."
+  },
+  "Заполните все обязательные поля и жмите «Дальше».": {
+    "ru": "Заполните все обязательные поля и жмите «Дальше».",
+    "uz": "Barcha majburiy maydonlarni to‘ldirib, «Keyingi» tugmasini bosing.",
+    "en": "Fill in all required fields and click \"Next\"."
+  },
+  "Дальше": {
+    "ru": "Дальше",
+    "uz": "Keyingi",
+    "en": "Next"
+  },
+  "К оплате:": {
+    "ru": "К оплате:",
+    "uz": "To‘lov summasi:",
+    "en": "To pay:"
+  },
+  "Выберите количество дней для публикации вашего объявления": {
+    "ru": "Выберите количество дней для публикации вашего объявления",
+    "uz": "E’loningizni nashr qilish kunlarini tanlang",
+    "en": "Select the number of days to publish your announcement"
+  },
+  "Выберите карту для оплаты или введите данные новой карты": {
+    "ru": "Выберите карту для оплаты или введите данные новой карты",
+    "uz": "To‘lov uchun kartani tanlang yoki yangi karta ma’lumotlarini kiriting",
+    "en": "Select a card for payment or enter new card details"
+  },
+  "Настоящее Пользовательское соглашение (далее - \"Соглашение\") регулирует отношения между Администрацией сайта (далее - \"Администрация\") и физическим или юридическим лицом (далее - \"Пользователь\") по использованию веб-сайта [Название проекта] (далее - \"Сайт\").": {
+    "ru": "Настоящее Пользовательское соглашение (далее - \"Соглашение\") регулирует отношения между Администрацией сайта (далее - \"Администрация\") и физическим или юридическим лицом (далее - \"Пользователь\") по использованию веб-сайта [Название проекта] (далее - \"Сайт\").",
+    "uz": "Ushbu Foydalanuvchi kelishuvi (keyingi o‘rinlarda — \"Kelishuv\") veb-sayt ma’muriyati (keyingi o‘rinlarda — \"Ma’muriyat\") va jismoniy yoki yuridik shaxs (keyingi o‘rinlarda — \"Foydalanuvchi\") o‘rtasida [Loyiha nomi] veb-saytidan (keyingi o‘rinlarda — \"Sayt\") foydalanish bo‘yicha munosabatlarni tartibga soladi.",
+    "en": "This User Agreement (hereinafter - \"Agreement\") governs the relationship between the Site Administration (hereinafter - \"Administration\") and an individual or legal entity (hereinafter - \"User\") regarding the use of the website [Project Name] (hereinafter - \"Site\")."
+  },
+  "1. Предмет соглашения": {
+    "ru": "1. Предмет соглашения",
+    "uz": "1. Kelishuv predmeti",
+    "en": "1. Subject of the agreement"
+  },
+  "1.1. Администрация предоставляет Пользователю доступ к функционалу Сайта: размещение и просмотр объявлений о продаже бизнеса, франшиз и инвестиционных проектов.": {
+    "ru": "1.1. Администрация предоставляет Пользователю доступ к функционалу Сайта: размещение и просмотр объявлений о продаже бизнеса, франшиз и инвестиционных проектов.",
+    "uz": "1.1. Ma’muriyat Foydalanuvchiga Sayt funksiyalariga kirish imkonini beradi: bizneslar, franshizalar va investitsiya loyihalarini sotish bo‘yicha e’lonlarni joylashtirish va ko‘rish.",
+    "en": "1.1. The Administration provides the User with access to the Site functionality: placement and viewing of announcements for the sale of businesses, franchises and investment projects."
+  },
+  "1.2. Пользователь обязуется использовать Сайт в соответствии с настоящим Соглашением и действующим законодательством Республики Узбекистан.": {
+    "ru": "1.2. Пользователь обязуется использовать Сайт в соответствии с настоящим Соглашением и действующим законодательством Республики Узбекистан.",
+    "uz": "1.2. Foydalanuvchi Saytdan ushbu Kelishuv va O‘zbekiston Respublikasi amaldagi qonunchiligiga muvofiq foydalanishga majbur.",
+    "en": "1.2. The User undertakes to use the Site in accordance with this Agreement and the current legislation of the Republic of Uzbekistan."
+  },
+  "2. Регистрация и учетная запись": {
+    "ru": "2. Регистрация и учетная запись",
+    "uz": "2. Ro‘yxatdan o‘tish va hisob",
+    "en": "2. Registration and account"
+  },
+  "2.1. Для доступа к полному функционалу Сайта требуется регистрация.": {
+    "ru": "2.1. Для доступа к полному функционалу Сайта требуется регистрация.",
+    "uz": "2.1. Saytning to‘liq funksiyalaridan foydalanish uchun ro‘yxatdan o‘tish talab etiladi.",
+    "en": "2.1. Registration is required to access the full functionality of the Site."
+  },
+  "2.2. Пользователь обязан предоставить достоверную и актуальную информацию.": {
+    "ru": "2.2. Пользователь обязан предоставить достоверную и актуальную информацию.",
+    "uz": "2.2. Foydalanuvchi ishonchli va dolzarb ma’lumotlarni taqdim etishi shart.",
+    "en": "2.2. The User is obliged to provide reliable and up-to-date information."
+  },
+  "2.3. Пользователь несет ответственность за сохранность своих регистрационных данных.": {
+    "ru": "2.3. Пользователь несет ответственность за сохранность своих регистрационных данных.",
+    "uz": "2.3. Foydalanuvchi o‘z ro‘yxatdan o‘tish ma’lumotlarining saqlanishi uchun shaxsan javobgar.",
+    "en": "2.3. The User is responsible for the safety of their registration data."
+  },
+  "3. Размещение объявлений": {
+    "ru": "3. Размещение объявлений",
+    "uz": "3. E’lonlarni joylashtirish",
+    "en": "3. Placement of announcements"
+  },
+  "3.1. Пользователь имеет право размещать объявления, соответствующие тематике Сайта.": {
+    "ru": "3.1. Пользователь имеет право размещать объявления, соответствующие тематике Сайта.",
+    "uz": "3.1. Foydalanuvchi Sayt mavzusiga mos e’lonlarni joylashtirish huquqiga ega.",
+    "en": "3.1. The User has the right to place announcements that correspond to the theme of the Site."
+  },
+  "3.2. Администрация оставляет за собой право модерации, изменения или удаления объявлений, не соответствующих правилам или законодательству.": {
+    "ru": "3.2. Администрация оставляет за собой право модерации, изменения или удаления объявлений, не соответствующих правилам или законодательству.",
+    "uz": "3.2. Qoidalarga yoki qonunchilikka mos kelmaydigan e’lonlarni moderatsiya qilish, o‘zgartirish yoki o‘chirish huquqi Ma’muriyatda saqlanadi.",
+    "en": "3.2. The Administration reserves the right to moderate, change or delete announcements that do not comply with the rules or legislation."
+  },
+  "4. Ответственность": {
+    "ru": "4. Ответственность",
+    "uz": "4. Mas’uliyat",
+    "en": "4. Responsibility"
+  },
+  "4.1. Администрация не несет ответственности за достоверность информации, размещенной Пользователями.": {
+    "ru": "4.1. Администрация не несет ответственности за достоверность информации, размещенной Пользователями.",
+    "uz": "4.1. Ma’muriyat Foydalanuvchilar tomonidan joylashtirilgan ma’lumotlarning haqqoniyligi uchun javobgar emas.",
+    "en": "4.1. The Administration is not responsible for the accuracy of information posted by Users."
+  },
+  "4.2. Пользователь самостоятельно несет ответственность за размещенные материалы и действия на Сайте.": {
+    "ru": "4.2. Пользователь самостоятельно несет ответственность за размещенные материалы и действия на Сайте.",
+    "uz": "4.2. Foydalanuvchi Saytdagi joylashtirilgan materiallar va o‘z harakatlari uchun mustaqil ravishda javobgar.",
+    "en": "4.2. The User is independently responsible for posted materials and actions on the Site."
+  },
+  "5. Ограничение доступа": {
+    "ru": "5. Ограничение доступа",
+    "uz": "5. Kirishni cheklash",
+    "en": "5. Access restriction"
+  },
+  "5.1. Администрация имеет право ограничить или заблокировать доступ Пользователя при нарушении условий Соглашения.": {
+    "ru": "5.1. Администрация имеет право ограничить или заблокировать доступ Пользователя при нарушении условий Соглашения.",
+    "uz": "5.1. Kelishuv shartlari buzilgan taqdirda Ma’muriyat Foydalanuvchining kirishini cheklash yoki bloklash huquqiga ega.",
+    "en": "5.1. The Administration has the right to restrict or block User access in case of violation of the Agreement terms."
+  },
+  "6. Изменения соглашения": {
+    "ru": "6. Изменения соглашения",
+    "uz": "6. Kelishuvga o‘zgartirishlar",
+    "en": "6. Agreement changes"
+  },
+  "6.1. Администрация вправе изменять настоящее Соглашение без предварительного уведомления. Новая редакция вступает в силу с момента публикации.": {
+    "ru": "6.1. Администрация вправе изменять настоящее Соглашение без предварительного уведомления. Новая редакция вступает в силу с момента публикации.",
+    "uz": "6.1. Ma’muriyat ushbu Kelishuvni oldindan xabardor qilmasdan o‘zgartirish huquqiga ega. Yangi tahrir e’lon qilingan paytdan boshlab kuchga kiradi.",
+    "en": "6.1. The Administration has the right to change this Agreement without prior notice. The new version comes into force from the moment of publication."
+  },
+  "7. Заключительные положения": {
+    "ru": "7. Заключительные положения",
+    "uz": "7. Yakuniy qoidalar",
+    "en": "7. Final provisions"
+  },
+  "7.1. Настоящее Соглашение регулируется законодательством Республики Узбекистан.": {
+    "ru": "7.1. Настоящее Соглашение регулируется законодательством Республики Узбекистан.",
+    "uz": "7.1. Ushbu Kelishuv O‘zbekiston Respublikasining qonunchiligi bilan tartibga solinadi.",
+    "en": "7.1. This Agreement is governed by the legislation of the Republic of Uzbekistan."
+  },
+  "7.2. Все споры решаются путем переговоров или в судебном порядке.": {
+    "ru": "7.2. Все споры решаются путем переговоров или в судебном порядке.",
+    "uz": "7.2. Barcha nizolar muzokaralar yo‘li bilan, kelishuvga erishilmagan taqdirda esa sud tartibida hal etiladi.",
+    "en": "7.2. All disputes are resolved through negotiations or in court."
+  },
+  "Подтверждение пароля": {
+    "ru": "Подтверждение пароля",
+    "uz": "Parolni tasdiqlash",
+    "en": "Password confirmation"
+  },
+  "Имя": {
+    "ru": "Имя",
+    "uz": "Ism",
+    "en": "Name"
+  },
+  "Телефон (+998...)": {
+    "ru": "Телефон (+998...)",
+    "uz": "Telefon (+998...)",
+    "en": "Phone (+998...)"
+  },
+  "Поиск по названию или ID": {
+    "ru": "Поиск по названию или ID",
+    "uz": "Nom yoki ID boʻyicha qidiruv",
+    "en": "Search by name or ID"
+  },
+  "Введите": {
+    "ru": "Введите",
+    "uz": "Kiriting",
+    "en": "Enter"
+  },
+  "Название бизнеса": {
+    "ru": "Название бизнеса",
+    "uz": "Biznes nomi",
+    "en": "Business name"
+  },
+  "Электронная почта": {
+    "ru": "Электронная почта",
+    "uz": "Elektron pochta",
+    "en": "Email"
+  },
+  "Город": {
+    "ru": "Город",
+    "uz": "Shahar",
+    "en": "City"
+  },
+  "Введите номер телефона": {
+    "ru": "Введите номер телефона",
+    "uz": "Telefon raqamini kiriting",
+    "en": "Enter phone number"
+  },
+  "Формат: +998xxxxxxxxx": {
+    "ru": "Формат: +998xxxxxxxxx",
+    "uz": "Format: +998xxxxxxxxx",
+    "en": "Format: +998xxxxxxxxx"
+  },
+  "Обязательное поле": {
+    "ru": "Обязательное поле",
+    "uz": "Majburiy maydon",
+    "en": "Required field"
+  },
+  "Минимум 8 символов": {
+    "ru": "Минимум 8 символов",
+    "uz": "Kamida 8 ta belgi",
+    "en": "Minimum 8 characters"
+  },
+  "Введите имя": {
+    "ru": "Введите имя",
+    "uz": "Ismni kiriting",
+    "en": "Enter name"
+  },
+  "Минимум 2 буквы": {
+    "ru": "Минимум 2 буквы",
+    "uz": "Kamida 2 ta harf",
+    "en": "Minimum 2 letters"
+  },
+  "Только буквы": {
+    "ru": "Только буквы",
+    "uz": "Faqat harflar",
+    "en": "Letters only"
+  },
+  "Введите телефон": {
+    "ru": "Введите телефон",
+    "uz": "Telefonni kiriting",
+    "en": "Enter phone"
+  },
+  "Введите пароль": {
+    "ru": "Введите пароль",
+    "uz": "Parolni kiriting",
+    "en": "Enter password"
+  },
+  "Подтвердите пароль": {
+    "ru": "Подтвердите пароль",
+    "uz": "Parolni tasdiqlang",
+    "en": "Confirm password"
+  },
+  "Пароли должны совпадать": {
+    "ru": "Пароли должны совпадать",
+    "uz": "Parollar mos kelishi kerak",
+    "en": "Passwords must match"
+  },
+  "Этот номер уже зарегистрирован": {
+    "ru": "Этот номер уже зарегистрирован",
+    "uz": "Bu raqam allaqachon roʻyxatdan oʻtgan",
+    "en": "This number is already registered"
+  },
+  "Неверный номер или пароль": {
+    "ru": "Неверный номер или пароль",
+    "uz": "Notoʻgʻri raqam yoki parol",
+    "en": "Incorrect number or password"
+  },
+  "Ошибка загрузки объявлений": {
+    "ru": "Ошибка загрузки объявлений",
+    "uz": "Eʼlonlarni yuklashda xatolik",
+    "en": "Error loading announcements"
+  },
+  "Пожалуйста, введите название бизнеса": {
+    "ru": "Пожалуйста, введите название бизнеса",
+    "uz": "Iltimos, biznes nomini kiriting",
+    "en": "Please enter business name"
+  },
+  "Произошла ошибка при загрузке": {
+    "ru": "Произошла ошибка при загрузке",
+    "uz": "Yuklashda xatolik yuz berdi",
+    "en": "An error occurred while loading"
+  },
+  "Нет данных": {
+    "ru": "Нет данных",
+    "uz": "Maʼlumot yoʻq",
+    "en": "No data"
+  },
+  "Ошибка при сохранении": {
+    "ru": "Ошибка при сохранении",
+    "uz": "Saqlashda xatolik",
+    "en": "Error saving"
+  },
+  "Ошибка при выходе": {
+    "ru": "Ошибка при выходе",
+    "uz": "Chiqishda xatolik",
+    "en": "Error logging out"
+  },
+  "Ошибка при обновлении избранного": {
+    "ru": "Ошибка при обновлении избранного",
+    "uz": "Sevimlilarni yangilashda xatolik",
+    "en": "Error updating favorites"
+  },
+  "Ошибка загрузки": {
+    "ru": "Ошибка загрузки",
+    "uz": "Yuklash xatoligi",
+    "en": "Loading error"
+  },
+  "Добро пожаловать!": {
+    "ru": "Добро пожаловать!",
+    "uz": "Xush kelibsiz!",
+    "en": "Welcome!"
+  },
+  "Вы успешно вошли в аккаунт": {
+    "ru": "Вы успешно вошли в аккаунт",
+    "uz": "Siz muvaffaqiyatli akkauntga kirdingiz",
+    "en": "You have successfully logged into your account"
+  },
+  "Упс!": {
+    "ru": "Упс!",
+    "uz": "Voy!",
+    "en": "Oops!"
+  },
+  "Успешно!": {
+    "ru": "Успешно!",
+    "uz": "Muvaffaqiyatli!",
+    "en": "Success!"
+  },
+  "Удалить из избранного?": {
+    "ru": "Удалить из избранного?",
+    "uz": "Sevimlilardan oʻchirilsinmi?",
+    "en": "Remove from favorites?"
+  },
+  "Статистика": {
+    "ru": "Статистика",
+    "uz": "Statistika",
+    "en": "Statistics"
+  },
+  "Изменить": {
+    "ru": "Изменить",
+    "uz": "Tahrirlash",
+    "en": "Edit"
+  },
+  "Вы действительно хотите исключить это объявление из избранного?": {
+    "ru": "Вы действительно хотите исключить это объявление из избранного?",
+    "uz": "Haqiqatan ham bu eʼlonni sevimlilardan oʻchirishni xohlaysizmi?",
+    "en": "Do you really want to remove this announcement from favorites?"
+  },
+  "Вы уверены, что хотите отметить объявление как проданное?": {
+    "ru": "Вы уверены, что хотите отметить объявление как проданное?",
+    "uz": "Eʼlonni sotilgan deb belgilashga ishonchingiz komilmi?",
+    "en": "Are you sure you want to mark the announcement as sold?"
+  },
+  "После подтверждения объявление будет исключено из общего каталога, и пользователи, добавившие его в избранное, получат уведомление о продаже.": {
+    "ru": "После подтверждения объявление будет исключено из общего каталога, и пользователи, добавившие его в избранное, получат уведомление о продаже.",
+    "uz": "Tasdiqlagandan soʻng eʼlon umumiy katalogdan chiqariladi va uni sevimlilariga qoʻshgan foydalanuvchilar sotish haqida bildirishnoma oladi.",
+    "en": "After confirmation, the announcement will be excluded from the general catalog, and users who added it to favorites will receive a notification about the sale."
+  },
+  "Вы уверены, что хотите поместить объявление в архив?": {
+    "ru": "Вы уверены, что хотите поместить объявление в архив?",
+    "uz": "Eʼlonni arxivga joylashtirishga ishonchingiz komilmi?",
+    "en": "Are you sure you want to move the announcement to archive?"
+  },
+  "После подтверждения объявление будет перемещено в архив": {
+    "ru": "После подтверждения объявление будет перемещено в архив",
+    "uz": "Tasdiqlagandan soʻng eʼlon arxivga koʻchiriladi",
+    "en": "After confirmation, the announcement will be moved to archive"
+  },
+  "Объявление успешно отмечено как проданное!": {
+    "ru": "Объявление успешно отмечено как проданное!",
+    "uz": "Eʼlon muvaffaqiyatli sotilgan deb belgilandi!",
+    "en": "Announcement successfully marked as sold!"
+  },
+  "Объявление успешно перемещено в архив!": {
+    "ru": "Объявление успешно перемещено в архив!",
+    "uz": "Eʼlon muvaffaqiyatli arxivga koʻchirildi!",
+    "en": "Announcement successfully moved to archive!"
+  },
+  "Подтвердите действие": {
+    "ru": "Подтвердите действие",
+    "uz": "Harakatni tasdiqlang",
+    "en": "Confirm action"
+  },
+  "Вы действительно хотите выйти из профиля?": {
+    "ru": "Вы действительно хотите выйти из профиля?",
+    "uz": "Haqiqatan ham profildan chiqishni xohlaysizmi?",
+    "en": "Do you really want to log out of your profile?"
+  },
+  "Данные успешно обновлены": {
+    "ru": "Данные успешно обновлены",
+    "uz": "Maʼlumotlar muvaffaqiyatli yangilandi",
+    "en": "Data successfully updated"
+  },
+  "Мы отправили вам код для подтверждения аккаунта на номер": {
+    "ru": "Мы отправили вам код для подтверждения аккаунта на номер",
+    "uz": "Biz sizga akkauntni tasdiqlash uchun kod yubordik",
+    "en": "We sent you a code to confirm your account to the number"
+  },
+  "Введите код, отправленный на номер": {
+    "ru": "Введите код, отправленный на номер",
+    "uz": "Raqamga yuborilgan kodni kiriting",
+    "en": "Enter the code sent to the number"
+  },
+  "Отправить снова": {
+    "ru": "Отправить снова",
+    "uz": "Qayta yuborish",
+    "en": "Send again"
+  },
+  "или": {
+    "ru": "или",
+    "uz": "yoki",
+    "en": "or"
+  },
+  "Обращайтесь по номеру": {
+    "ru": "Обращайтесь по номеру",
+    "uz": "Quyidagi raqam orqali murojaat qiling",
+    "en": "Contact us at"
+  },
+  "напишите нам на почту": {
+    "ru": "напишите нам на почту",
+    "uz": "Bizga elektron pochta orqali yozing",
+    "en": "write to us at"
+  },
+  "Отправить снова через": {
+    "ru": "Отправить снова через",
+    "uz": "Qayta yuborish",
+    "en": "Send again in"
+  },
+  "Вложения": {
+    "ru": "Вложения",
+    "uz": "Sarmoyalar",
+    "en": "Investments"
+  },
+  "Рентабельность": {
+    "ru": "Рентабельность",
+    "uz": "Rentabellik",
+    "en": "Profitability"
+  },
+  "Стадия проекта": {
+    "ru": "Стадия проекта",
+    "uz": "Loyiha bosqichi",
+    "en": "Project stage"
+  },
+  "объявлений": {
+    "ru": "объявлений",
+    "uz": "eʼlonlar",
+    "en": "announcements"
+  },
+  "сделок": {
+    "ru": "сделок",
+    "uz": "bitimlar",
+    "en": "deals"
+  },
+  "пользователей": {
+    "ru": "пользователей",
+    "uz": "hamkorlar",
+    "en": "users"
+  },
+  "продано бизнесов": {
+    "ru": "продано бизнесов",
+    "uz": "bizneslar sotildi",
+    "en": "businesses sold"
+  },
+  "Города": {
+    "ru": "Города",
+    "uz": "Shaharlar",
+    "en": "Cities"
+  },
+  "Категория": {
+    "ru": "Категория",
+    "uz": "Kategoriya",
+    "en": "Category"
+  },
+  "Цена": {
+    "ru": "Цена",
+    "uz": "Narx",
+    "en": "Price"
+  },
+  "от": {
+    "ru": "от",
+    "uz": "dan",
+    "en": "from"
+  },
+  "до": {
+    "ru": "до",
+    "uz": "gacha",
+    "en": "to"
+  },
+  "UZS": {
+    "ru": "UZS",
+    "uz": "UZS",
+    "en": "UZS"
+  },
+  "Фильтры": {
+    "ru": "Фильтры",
+    "uz": "Filtrlar",
+    "en": "Filters"
+  },
+  "Популярное": {
+    "ru": "Популярное",
+    "uz": "Mashhur",
+    "en": "Popular"
+  },
+  "Адрес не указан": {
+    "ru": "Адрес не указан",
+    "uz": "Manzil koʻrsatilmagan",
+    "en": "Address not specified"
+  },
+  "Адрес:": {
+    "ru": "Адрес:",
+    "uz": "Manzil:",
+    "en": "Address:"
+  },
+  "Адрес": {
+    "ru": "Адрес",
+    "uz": "Manzil",
+    "en": "Address"
+  },
+  "кв. м.": {
+    "ru": "кв. м.",
+    "uz": "kv. m.",
+    "en": "sq. m."
+  },
+  "Здесь еще нет объявлений": {
+    "ru": "Здесь еще нет объявлений",
+    "uz": "Bu yerda hali eʼlonlar yoʻq",
+    "en": "No announcements yet"
+  },
+  "Ваше может стать первым!": {
+    "ru": "Ваше может стать первым!",
+    "uz": "Sizniki birinchi boʻlishi mumkin!",
+    "en": "Yours could be the first!"
+  },
+  "Ошибка загрузки данных": {
+    "ru": "Ошибка загрузки данных",
+    "uz": "Maʼlumotlarni yuklashda xatolik",
+    "en": "Error loading data"
+  },
+  "Нет объявлений": {
+    "ru": "Нет объявлений",
+    "uz": "Eʼlonlar yoʻq",
+    "en": "No announcements"
+  },
+  "Здесь будут отображаться ваши объявления": {
+    "ru": "Здесь будут отображаться ваши объявления",
+    "uz": "Bu yerda sizning eʼlonlaringiz koʻrsatiladi",
+    "en": "Your announcements will be displayed here"
+  },
+  "Нет избранных": {
+    "ru": "Нет избранных",
+    "uz": "Sevimlilar yoʻq",
+    "en": "No favorites"
+  },
+  "Здесь будут отображаться ваши избранные": {
+    "ru": "Здесь будут отображаться ваши избранные",
+    "uz": "Bu yerda sizning sevimlilaringiz koʻrsatiladi",
+    "en": "Your favorites will be displayed here"
+  },
+  "Контакты продавца": {
+    "ru": "Контакты продавца",
+    "uz": "Sotuvchi kontaktlari",
+    "en": "Seller contacts"
+  },
+  "Загрузка...": {
+    "ru": "Загрузка...",
+    "uz": "Yuklanmoqda...",
+    "en": "Loading..."
+  },
+  "Ссылки": {
+    "ru": "Ссылки",
+    "uz": "Havolalar",
+    "en": "Links"
+  },
+  "Номер отсутствует": {
+    "ru": "Номер отсутствует",
+    "uz": "Raqam mavjud emas",
+    "en": "Number not available"
+  },
+  "Объявления пользователя": {
+    "ru": "Объявления пользователя",
+    "uz": "Foydalanuvchi eʼlonlari",
+    "en": "User announcements"
+  },
+  "Количество объявлений": {
+    "ru": "Количество объявлений",
+    "uz": "Eʼlonlar soni",
+    "en": "Number of announcements"
+  },
+  "На сайте с": {
+    "ru": "На сайте с",
+    "uz": "Saytda",
+    "en": "On the site since"
+  },
+  "Посмотреть контакты": {
+    "ru": "Посмотреть контакты",
+    "uz": "Kontaktlarni koʻrish",
+    "en": "View contacts"
+  },
+  "Страница не найдена": {
+    "ru": "Страница не найдена",
+    "uz": "Sahifa topilmadi",
+    "en": "Page not found"
+  },
+  "Перейти на главную": {
+    "ru": "Перейти на главную",
+    "uz": "Bosh sahifaga oʻtish",
+    "en": "Go to home"
+  },
+  "Статистика объявления": {
+    "ru": "Статистика объявления",
+    "uz": "Eʼlon statistikasi",
+    "en": "Announcement statistics"
+  },
+  "Всего посещений": {
+    "ru": "Всего посещений",
+    "uz": "Jami tashriflar",
+    "en": "Total visits"
+  },
+  "Найти": {
+    "ru": "Найти",
+    "uz": "Topish",
+    "en": "Find"
+  },
+  "Сбросить": {
+    "ru": "Сбросить",
+    "uz": "Bekor qilish",
+    "en": "Reset"
+  },
+  "Всего добавлено в избранное": {
+    "ru": "Всего добавлено в избранное",
+    "uz": "Jami sevimlilarga qoʻshildi",
+    "en": "Total added to favorites"
+  },
+  "Всего просмотров контактов": {
+    "ru": "Всего просмотров контактов",
+    "uz": "Jami kontaktlar koʻrildi",
+    "en": "Total contact views"
+  },
+  "Посещения страницы": {
+    "ru": "Посещения страницы",
+    "uz": "Sahifa tashrifi",
+    "en": "Page visits"
+  },
+  "Добавлено в избранное": {
+    "ru": "Добавлено в избранное",
+    "uz": "Sevimlilarga qoʻshildi",
+    "en": "Added to favorites"
+  },
+  "Контакты просмотрены": {
+    "ru": "Контакты просмотрены",
+    "uz": "Kontaktlar koʻrildi",
+    "en": "Contacts viewed"
+  },
+  "за неделю": {
+    "ru": "за неделю",
+    "uz": "hafta davomida",
+    "en": "per week"
+  },
+  "Продвигать объявление": {
+    "ru": "Продвигать объявление",
+    "uz": "Eʼlonni reklama qilish",
+    "en": "Promote announcement"
+  },
+  "Поздравляем,": {
+    "ru": "Поздравляем,",
+    "uz": "Tabriklaymiz,",
+    "en": "Congratulations,"
+  },
+  "оплата прошла успешно!": {
+    "ru": "оплата прошла успешно!",
+    "uz": "toʻlov muvaffaqiyatli amalga oshirildi!",
+    "en": "payment was successful!"
+  },
+  "Вы можете снова перейти к вашим объявлениям": {
+    "ru": "Вы можете снова перейти к вашим объявлениям",
+    "uz": "Eʼlonlaringizga yana qaytishingiz mumkin",
+    "en": "You can go back to your announcements"
+  },
+  "Вернуться к объявлениям": {
+    "ru": "Вернуться к объявлениям",
+    "uz": "Eʼlonlarga qaytish",
+    "en": "Back to announcements"
+  },
+  "Что-то пошло не так.": {
+    "ru": "Что-то пошло не так.",
+    "uz": "Nimadir noto'g'ri ketdi.",
+    "en": "Something went wrong."
+  },
+  "Попробуйте оплатить ещё раз.": {
+    "ru": "Попробуйте оплатить ещё раз.",
+    "uz": "Yana toʻlashga harakat qiling.",
+    "en": "Try paying again."
+  },
+  "Вернуться": {
+    "ru": "Вернуться",
+    "uz": "Qaytish",
+    "en": "Back"
+  },
+  "Введите код из SMS для подтверждения карты": {
+    "ru": "Введите код из SMS для подтверждения карты",
+    "uz": "Kartani tasdiqlash uchun SMS dan kodni kiriting",
+    "en": "Enter the code from SMS to confirm the card"
+  },
+  "Код из SMS": {
+    "ru": "Код из SMS",
+    "uz": "SMS dan kod",
+    "en": "Code from SMS"
+  },
+  "Подтвердить и оплатить": {
+    "ru": "Подтвердить и оплатить",
+    "uz": "Tasdiqlash va toʻlash",
+    "en": "Confirm and pay"
+  },
+  "Выберите количество дней для продвижения вашего объявления": {
+    "ru": "Выберите количество дней для продвижения вашего объявления",
+    "uz": "Eʼloningizni reklama qilish uchun kunlar sonini tanlang",
+    "en": "Select the number of days to promote your announcement"
+  },
+  "дней": {
+    "ru": "дней",
+    "uz": "kun",
+    "en": "days"
+  },
+  "Загрузка тарифов...": {
+    "ru": "Загрузка тарифов...",
+    "uz": "Tariflar yuklanmoqda...",
+    "en": "Loading rates..."
+  },
+  "Выберите карту для оплаты": {
+    "ru": "Выберите карту для оплаты",
+    "uz": "Toʻlov uchun kartani tanlang",
+    "en": "Select a card for payment"
+  },
+  "Срок": {
+    "ru": "Срок",
+    "uz": "Muddat",
+    "en": "Term"
+  },
+  "Или введите данные новой карты": {
+    "ru": "Или введите данные новой карты",
+    "uz": "Yoki yangi karta maʼlumotlarini kiriting",
+    "en": "Or enter new card details"
+  },
+  "Номер карты": {
+    "ru": "Номер карты",
+    "uz": "Karta raqami",
+    "en": "Card number"
+  },
+  "Срок действия": {
+    "ru": "Срок действия",
+    "uz": "Amal qilish muddati",
+    "en": "Expiry date"
+  },
+  "После ввода данных, нажмите Оплатить и подтвердите через SMS": {
+    "ru": "После ввода данных, нажмите Оплатить и подтвердите через SMS",
+    "uz": "Maʼlumotlarni kiritgandan soʻng, Toʻlash tugmasini bosing va SMS orqali tasdiqlang",
+    "en": "After entering the data, click Pay and confirm via SMS"
+  },
+  "К оплате": {
+    "ru": "К оплате",
+    "uz": "Toʻlov uchun",
+    "en": "To pay"
+  },
+  "млн": {
+    "ru": "млн",
+    "uz": "mln",
+    "en": "million"
+  },
+  "млрд": {
+    "ru": "млрд",
+    "uz": "mlrd",
+    "en": "billion"
+  },
+  "трлн": {
+    "ru": "трлн",
+    "uz": "trl",
+    "en": "trillion"
+  },
+  "Пользовательское соглашение": {
+    "ru": "Пользовательское соглашение",
+    "uz": "Foydalanuvchi shartnomasi",
+    "en": "User agreement"
+  },
+  "Политика конфиденциальности": {
+    "ru": "Политика конфиденциальности",
+    "uz": "Maxfiylik siyosati",
+    "en": "Privacy policy"
+  },
+  "Почему": {
+    "ru": "Почему",
+    "uz": "Nega",
+    "en": "Why"
+  },
+  "— лучший инструмент для продажи бизнеса?": {
+    "ru": "— лучший инструмент для продажи бизнеса?",
+    "uz": "— biznes sotish uchun eng yaxshi vosita?",
+    "en": "— is the best tool for selling a business?"
+  },
+  "Invest In": {
+    "ru": "Invest In",
+    "uz": "Invest In",
+    "en": "Invest In"
+  },
+  "С Invest In благодаря поддержке на всех этапах сделки вы сможете продать свой бизнес на условиях, которые будут выгодны и удобны для вас. На нашем сайте уже:": {
+    "ru": "С Invest In благодаря поддержке на всех этапах сделки вы сможете продать свой бизнес на условиях, которые будут выгодны и удобны для вас. На нашем сайте уже:",
+    "uz": "Invest In bilan bitimning barcha bosqichlarida qoʻllab-quvvatlash tufayli siz oʻz biznesingizni siz uchun foydali va qulay shartlarda sotishingiz mumkin. Bizning saytimizda allaqachon:",
+    "en": "With Invest In, thanks to support at all stages of the deal, you will be able to sell your business on terms that will be profitable and convenient for you. On our site already:"
+  },
+  "Еще нет аккаунта?": {
+    "ru": "Еще нет аккаунта?",
+    "uz": "Hali akkauntingiz yoʻqmi?",
+    "en": "Don't have an account yet?"
+  },
+  "У вас уже есть аккаунт?": {
+    "ru": "У вас уже есть аккаунт?",
+    "uz": "Sizda allaqachon akkount bormi?",
+    "en": "Do you already have an account?"
+  },
+  "Есть": {
+    "ru": "Есть",
+    "uz": "Mavjud",
+    "en": "Yes"
+  },
+  "Авторизоваться": {
+    "ru": "Авторизоваться",
+    "uz": "Avtorizatsiya qilish",
+    "en": "Log in"
+  },
+  "Описание": {
+    "ru": "Описание",
+    "uz": "Tavsif",
+    "en": "Description"
+  },
+  "Выберите диапазон": {
+    "ru": "Выберите диапазон",
+    "uz": "Oraliqni tanlang",
+    "en": "Select range"
+  },
+  "Итого по всем метрикам": {
+    "ru": "Итого по всем метрикам",
+    "uz": "Barcha koʻrsatkichlar boʻyicha jami",
+    "en": "Total for all metrics"
+  },
+  "Название не указано": {
+    "ru": "Название не указано",
+    "uz": "Nom koʻrsatilmagan",
+    "en": "Name not specified"
+  },
+  "Не указано": {
+    "ru": "Не указано",
+    "uz": "Ko‘rsatilmagan",
+    "en": "Not specified"
+  },
+  "Нет данных для предпросмотра": {
+    "ru": "Нет данных для предпросмотра",
+    "uz": "Ko‘rib chiqish uchun maʼlumotlar mavjud emas",
+    "en": "No data for preview"
+  },
+  "Категория не указана": {
+    "ru": "Категория не указана",
+    "uz": "Kategoriya ko‘rsatilmagan",
+    "en": "Category not specified"
+  },
+  "Предварительный просмотр вашего объявления": {
+    "ru": "Предварительный просмотр вашего объявления",
+    "uz": "Eʼloningizning oldindan koʻrish oynasi",
+    "en": "Preview of your announcement"
+  },
+  "Цена не указана": {
+    "ru": "Цена не указана",
+    "uz": "Narx koʻrsatilmagan",
+    "en": "Price not specified"
+  },
+  "Площадь не указана": {
+    "ru": "Площадь не указана",
+    "uz": "Maydon koʻrsatilmagan",
+    "en": "Area not specified"
+  },
+  "Площадь, кв. м.": {
+    "ru": "Площадь, кв. м.",
+    "uz": "Maydon, kv.m",
+    "en": "Area, sq. m."
+  },
+  "Добро пожаловать": {
+    "ru": "Добро пожаловать",
+    "uz": "Xush kelibsiz",
+    "en": "Welcome"
+  },
+  "Основная информация": {
+    "ru": "Основная информация",
+    "uz": "Asosiy maʼlumot",
+    "en": "Basic information"
+  },
+  "Главная": {
+    "ru": "Главная",
+    "uz": "Bosh sahifa",
+    "en": "Home"
+  },
+  "Профиль": {
+    "ru": "Профиль",
+    "uz": "Profil",
+    "en": "Profile"
+  },
+  "Идет продвижение (осталось {{count}} дней)": {
+    "ru": "Идет продвижение (осталось {{count}} дней)",
+    "uz": "Reklama davom etmoqda (yana {{count}} kun qoldi)",
+    "en": "Promotion in progress ({{count}} days left)"
+  },
+  "Изображение отсутствует": {
+    "ru": "Изображение отсутствует",
+    "uz": "Rasm mavjud emas",
+    "en": "Image not available"
+  },
+  "Изображение": {
+    "ru": "Изображение",
+    "uz": "Rasm",
+    "en": "Image"
+  },
+  "Посмотреть статистику": {
+    "ru": "Посмотреть статистику",
+    "uz": "Statistikani ko‘rish",
+    "en": "View statistics"
+  },
+  "Поместить в архив": {
+    "ru": "Поместить в архив",
+    "uz": "Arxivga joylash",
+    "en": "Move to archive"
+  },
+  "Пожалуйста, введите описание": {
+    "ru": "Пожалуйста, введите описание",
+    "uz": "Iltimos, tavsif kiriting",
+    "en": "Please enter description"
+  },
+  "Категория объявления": {
+    "ru": "Категория объявления",
+    "uz": "Eʼlon kategoriyasi",
+    "en": "Announcement category"
+  },
+  "Пожалуйста, выберите категорию": {
+    "ru": "Пожалуйста, выберите категорию",
+    "uz": "Iltimos, kategoriya tanlang",
+    "en": "Please select category"
+  },
+  "Пожалуйста, выберите стадию проекта": {
+    "ru": "Пожалуйста, выберите стадию проекта",
+    "uz": "Iltimos, loyiha bosqichini tanlang",
+    "en": "Please select project stage"
+  },
+  "Пожалуйста, выберите город": {
+    "ru": "Пожалуйста, выберите город",
+    "uz": "Iltimos, shahar tanlang",
+    "en": "Please select city"
+  },
+  "Пожалуйста, введите Адрес": {
+    "ru": "Пожалуйста, введите Адрес",
+    "uz": "Iltimos, manzil kiriting",
+    "en": "Please enter address"
+  },
+  "Стадия": {
+    "ru": "Стадия",
+    "uz": "Bosqich",
+    "en": "Stage"
+  },
+  "Форма владения бизнесом": {
+    "ru": "Форма владения бизнесом",
+    "uz": "Biznesga egalik shakli",
+    "en": "Business ownership form"
+  },
+  "Форма владения помещением": {
+    "ru": "Форма владения помещением",
+    "uz": "Binoga egalik shakli",
+    "en": "Premises ownership form"
+  },
+  "Документы и лицензии": {
+    "ru": "Документы и лицензии",
+    "uz": "Hujjatlar va litsenziyalar",
+    "en": "Documents and licenses"
+  },
+  "Загрузить документ": {
+    "ru": "Загрузить документ",
+    "uz": "Hujjat yuklash",
+    "en": "Upload document"
+  },
+  "Формат": {
+    "ru": "Формат",
+    "uz": "Format",
+    "en": "Format"
+  },
+  "Сумма, UZS": {
+    "ru": "Сумма, UZS",
+    "uz": "Summasi, UZS",
+    "en": "Amount, UZS"
+  },
+  "Пожалуйста, введите сумму": {
+    "ru": "Пожалуйста, введите сумму",
+    "uz": "Iltimos, summani kiriting",
+    "en": "Please enter amount"
+  },
+  "Загрузить изображение": {
+    "ru": "Загрузить изображение",
+    "uz": "Rasm yuklash",
+    "en": "Upload image"
+  },
+  "Ссылка на официальные каналы коммуникации": {
+    "ru": "Ссылка на официальные каналы коммуникации",
+    "uz": "Rasmiy aloqa kanallari havolasi",
+    "en": "Link to official communication channels"
+  },
+  "Например: Телеграм": {
+    "ru": "Например: Телеграм",
+    "uz": "Masalan: Telegram",
+    "en": "For example: Telegram"
+  },
+  "Доля продаваемого бизнеса": {
+    "ru": "Доля продаваемого бизнеса",
+    "uz": "Sotilayotgan biznes ulushi",
+    "en": "Share of business for sale"
+  },
+  "Сумма среднемесячного дохода": {
+    "ru": "Сумма среднемесячного дохода",
+    "uz": "Oʻrtacha oylik daromad summasi",
+    "en": "Average monthly income amount"
+  },
+  "Сумма среднемесячного расхода": {
+    "ru": "Сумма среднемесячного расхода",
+    "uz": "Oʻrtacha oylik xarajat summasi",
+    "en": "Average monthly expense amount"
+  },
+  "Сумма прибыли": {
+    "ru": "Сумма прибыли",
+    "uz": "Foyda summasi",
+    "en": "Profit amount"
+  },
+  "Окупаемость (месяц)": {
+    "ru": "Окупаемость (месяц)",
+    "uz": "Oʻzini oqlash muddati (oy)",
+    "en": "Payback period (months)"
+  },
+  "Год основания бизнеса": {
+    "ru": "Год основания бизнеса",
+    "uz": "Biznes tashkil etilgan yil",
+    "en": "Business foundation year"
+  },
+  "Детали объявления": {
+    "ru": "Детали объявления",
+    "uz": "Eʼlon tafsilotlari",
+    "en": "Announcement details"
+  },
+  "Парковка": {
+    "ru": "Парковка",
+    "uz": "Avtoturargoh",
+    "en": "Parking"
+  },
+  "База клиентов": {
+    "ru": "База клиентов",
+    "uz": "Mijozlar bazasi",
+    "en": "Client base"
+  },
+  "База поставщиков": {
+    "ru": "База поставщиков",
+    "uz": "Yetkazib beruvchilar bazasi",
+    "en": "Supplier base"
+  },
+  "Оборудование и активы": {
+    "ru": "Оборудование и активы",
+    "uz": "Jihozlar va aktivlar",
+    "en": "Equipment and assets"
+  },
+  "Поставки из-за рубежа": {
+    "ru": "Поставки из-за рубежа",
+    "uz": "Chet eldan yetkazib berishlar",
+    "en": "Foreign supplies"
+  },
+  "Контракты на экспорт": {
+    "ru": "Контракты на экспорт",
+    "uz": "Eksport shartnomalari",
+    "en": "Export contracts"
+  },
+  "Отсутствие кредита": {
+    "ru": "Отсутствие кредита",
+    "uz": "Kredit yoʻqligi",
+    "en": "No credit"
+  },
+  "Наличие мастер франшизы": {
+    "ru": "Наличие мастер франшизы",
+    "uz": "Master franshizaga ega",
+    "en": "Master franchise available"
+  },
+  "Информация о бизнесе": {
+    "ru": "Информация о бизнесе",
+    "uz": "Biznes haqida ma'lumot",
+    "en": "Business information"
+  },
+  "Заполните все необходимые данные для добавления нового объявления": {
+    "ru": "Заполните все необходимые данные для добавления нового объявления",
+    "uz": "Yangi eʼlon qoʻshish uchun barcha kerakli maʼlumotlarni kiriting",
+    "en": "Fill in all necessary data to add a new announcement"
+  },
+  "Информация о франшизе": {
+    "ru": "Информация о франшизе",
+    "uz": "Franshiza haqida ma'lumot",
+    "en": "Franchise information"
+  },
+  "Информация об инвестициях": {
+    "ru": "Информация об инвестициях",
+    "uz": "Investitsiyalar haqida ma'lumot",
+    "en": "Investment information"
+  },
+  "Информация о стартапе": {
+    "ru": "Информация о стартапе",
+    "uz": "Startap haqida ma'lumot",
+    "en": "Startup information"
+  },
+  "Например: Telegram": {
+    "ru": "Например: Telegram",
+    "uz": "Masalan: Telegram",
+    "en": "For example: Telegram"
+  },
+  "Добавить доп. канал": {
+    "ru": "Добавить доп. канал",
+    "uz": "Qoʻshimcha kanal qoʻshish",
+    "en": "Add additional channel"
+  },
+  "Подтвердите и публикуйте": {
+    "ru": "Подтвердите и публикуйте",
+    "uz": "Tasdiqlang va e'lon qiling",
+    "en": "Confirm and publish"
+  },
+  "Вы почти у цели! Посмотрите, как будет выглядеть ваш готовый листинг после окончательного одобрения.": {
+    "ru": "Вы почти у цели! Посмотрите, как будет выглядеть ваш готовый листинг после окончательного одобрения.",
+    "uz": "Siz deyarli maqsadga yetdingiz! Yakuniy tasdiqlangandan so‘ng eʼloningiz qanday ko‘rinishini ko‘ring.",
+    "en": "You are almost there! See what your finished listing will look like after final approval."
+  },
+  "Публикация...": {
+    "ru": "Публикация...",
+    "uz": "Eʼlon qilish",
+    "en": "Publishing..."
+  },
+  "Опубликовать": {
+    "ru": "Опубликовать",
+    "uz": "Eʼlon qilish",
+    "en": "Publish"
+  },
+  "Пожалуйста, проверьте информацию в объявлении или повторите попытку позже.": {
+    "ru": "Пожалуйста, проверьте информацию в объявлении или повторите попытку позже.",
+    "uz": "Iltimos, eʼlon maʼlumotlarini tekshiring yoki keyinroq urinib koʻring.",
+    "en": "Please check the information in the announcement or try again later."
+  },
+  "Что-то пошло не так": {
+    "ru": "Что-то пошло не так",
+    "uz": "Nimadir notoʻgʻri ketdi",
+    "en": "Something went wrong"
+  },
+  "Город не указан": {
+    "ru": "Город не указан",
+    "uz": "Shahar ko‘rsatilmagan",
+    "en": "City not specified"
+  },
+  "Среднемесячная выручка": {
+    "ru": "Среднемесячная выручка",
+    "uz": "O'rtacha oylik tushum",
+    "en": "Average monthly revenue"
+  },
+  "Информация и финансы": {
+    "ru": "Информация и финансы",
+    "uz": "Ma'lumot va moliya",
+    "en": "Information and finance"
+  },
+  "Среднемесячные расходы": {
+    "ru": "Среднемесячные расходы",
+    "uz": "O'rtacha oylik xarajatlar",
+    "en": "Average monthly expenses"
+  },
+  "Дата основания": {
+    "ru": "Дата основания",
+    "uz": "Tashkil etilgan sana",
+    "en": "Foundation date"
+  },
+  "год": {
+    "ru": "год",
+    "uz": "yil",
+    "en": "year"
+  },
+  "года": {
+    "ru": "года",
+    "uz": "yil",
+    "en": "years"
+  },
+  "лет": {
+    "ru": "лет",
+    "uz": "yil",
+    "en": "years"
+  },
+  "Среднемесячная прибыль": {
+    "ru": "Среднемесячная прибыль",
+    "uz": "O'rtacha oylik foyda",
+    "en": "Average monthly profit"
+  },
+  "Окупаемость": {
+    "ru": "Окупаемость",
+    "uz": "O'zini oqlash",
+    "en": "Payback"
+  },
+  "месяц": {
+    "ru": "месяц",
+    "uz": "oy",
+    "en": "month"
+  },
+  "месяца": {
+    "ru": "месяца",
+    "uz": "oy",
+    "en": "months"
+  },
+  "месяцев": {
+    "ru": "месяцев",
+    "uz": "oy",
+    "en": "months"
+  },
+  "Доля к продаже": {
+    "ru": "Доля к продаже",
+    "uz": "Sotilayotgan ulush",
+    "en": "Share for sale"
+  },
+  "Местоположение": {
+    "ru": "Местоположение",
+    "uz": "Joylashuv",
+    "en": "Location"
+  },
+  "Адрес недоступен": {
+    "ru": "Адрес недоступен",
+    "uz": "Manzil mavjud emas",
+    "en": "Address not available"
+  },
+  "Количество объявлений:": {
+    "ru": "Количество объявлений:",
+    "uz": "Eʼlonlar soni:",
+    "en": "Number of announcements:"
+  },
+  "Поиск инвестора": {
+    "ru": "Поиск инвестора",
+    "uz": "Investorni topish",
+    "en": "Search for investor"
+  },
+  "Поиск инвестпроекта": {
+    "ru": "Поиск инвестпроекта",
+    "uz": "Investitsiya loyihasini qidirish",
+    "en": "Search for investment project"
+  },
+  "Все": {
+    "ru": "Все",
+    "uz": "Hammasi",
+    "en": "All"
+  },
+  "Telegram": {
+    "ru": "Telegram",
+    "uz": "Telegram",
+    "en": "Telegram"
+  },
+  "Instagram": {
+    "ru": "Instagram",
+    "uz": "Instagram",
+    "en": "Instagram"
+  },
+  "WhatsApp": {
+    "ru": "WhatsApp",
+    "uz": "WhatsApp",
+    "en": "WhatsApp"
+  }
 }

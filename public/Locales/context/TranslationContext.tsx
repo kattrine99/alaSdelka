@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import translations from "../ru_uz_translation.json";
 
-type LangType = "ru" | "uz";
+type LangType = "ru" | "uz" | "en";
 
 interface ITranslationContext {
     lang: LangType;
@@ -22,7 +22,7 @@ export const TranslationProvider: React.FC<{ children: React.ReactNode }> = ({ c
 
     useEffect(() => {
         const urlLang = window.location.pathname.split("/")[1] as LangType;
-        if (urlLang === "ru" || urlLang === "uz") {
+        if (urlLang === "ru" || urlLang === "uz" || urlLang === "en") {
             setLang(urlLang);
         } else {
             setLang("ru");
@@ -30,9 +30,28 @@ export const TranslationProvider: React.FC<{ children: React.ReactNode }> = ({ c
     }, []);
 
     const t = (text: string) => {
-        if (lang === "uz") {
-            return (translations as Record<string, string>)[text] || text;
+        const translation = (translations as Record<string, string | { ru: string; uz: string; en: string }>)[text];
+        
+        if (!translation) {
+            return text;
         }
+        
+        // Если перевод - объект с тремя языками
+        if (typeof translation === "object" && "ru" in translation && "uz" in translation && "en" in translation) {
+            return translation[lang] || translation.ru || text;
+        }
+        
+        // Если перевод - строка (старый формат для обратной совместимости)
+        if (typeof translation === "string") {
+            if (lang === "uz") {
+                return translation;
+            } else if (lang === "en") {
+                // Для английского пока возвращаем русский текст как fallback
+                return text;
+            }
+            return text;
+        }
+        
         return text;
     };
 

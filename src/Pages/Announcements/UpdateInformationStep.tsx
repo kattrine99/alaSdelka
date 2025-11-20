@@ -330,7 +330,7 @@ export const UpdateInformationPage: React.FC<Props> = ({ onSuccess, id }) => {
                     <option value="">{t("Выбрать")}</option>
                     {filtersData?.categories.map((cat) => (
                         <option key={cat.id} value={String(cat.id)}>
-                            {lang === "uz" ? cat.title_uz : cat.title_ru}
+                            {lang === "uz" ? cat.title_uz : lang === "en" ? ((cat as any).title_en || cat.title_ru) : cat.title_ru}
                         </option>
                     ))}
                 </select>
@@ -380,7 +380,7 @@ export const UpdateInformationPage: React.FC<Props> = ({ onSuccess, id }) => {
                     <option className="">{t("Выбрать")}</option>
                     {filtersData?.project_stages.map((stage) => (
                         <option key={stage.id} value={String(stage.id)}>
-                            {lang === "uz" ? stage.name_uz : stage.name_ru}
+                            {lang === "uz" ? stage.name_uz : lang === "en" ? ((stage as any).name_en || stage.name_ru) : stage.name_ru}
                         </option>
                     ))}
                 </select>
@@ -396,7 +396,7 @@ export const UpdateInformationPage: React.FC<Props> = ({ onSuccess, id }) => {
                     <option className="">{t("Выбрать")}</option>
                     {filtersData?.cities.map((city) => (
                         <option key={city.id} value={String(city.id)}>
-                            {lang === "uz" ? city.name_uz : city.name_ru}
+                            {lang === "uz" ? city.name_uz : lang === "en" ? ((city as any).name_en || city.name_ru) : city.name_ru}
                         </option>
                     ))}
                 </select>
@@ -470,7 +470,7 @@ export const UpdateInformationPage: React.FC<Props> = ({ onSuccess, id }) => {
                     <option value="">{t("Выбрать")}</option>
                     {filtersData?.business_types.map((type) => (
                         <option key={type.value} value={type.value}>
-                            {lang === "uz" ? type.label_uz : type.label_ru}
+                            {lang === "uz" ? type.label_uz : lang === "en" ? ((type as any).label_en || type.label_ru) : type.label_ru}
                         </option>
                     ))}
                 </select>
@@ -488,7 +488,7 @@ export const UpdateInformationPage: React.FC<Props> = ({ onSuccess, id }) => {
                     <option className="">{t("Выбрать")}</option>
                     {filtersData?.premises_ownership_form.map((form) => (
                         <option key={form.value} value={String(form.value)}>
-                            {lang === "uz" ? form.label_uz : form.label_ru}
+                            {lang === "uz" ? form.label_uz : lang === "en" ? ((form as any).label_en || form.label_ru) : form.label_ru}
                         </option>
                     ))}
                 </select>
@@ -761,7 +761,7 @@ export const UpdateInformationPage: React.FC<Props> = ({ onSuccess, id }) => {
                     return (
                         <label key={id} className="flex items-center justify-between cursor-pointer">
                             <span className="text-[#4f4f4f]  w-full font-inter text-[16px] leading-[130%]">
-                                {lang === "uz" ? name_uz : name_ru}
+                                {lang === "uz" ? name_uz : lang === "en" ? ((conveniences.find(c => c.id === id) as any)?.name_en || name_ru) : name_ru}
                             </span>
                             <Input
                                 type="checkbox"

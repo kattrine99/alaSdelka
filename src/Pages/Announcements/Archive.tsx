@@ -9,6 +9,7 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../Store/store";
 import { useTranslation } from "../../../public/Locales/context/TranslationContext";
+import { getLocalizedValue } from "../../utils/localization";
 import GalleryIcon from '../../assets/gallery.svg?react';
 import { FiEdit } from "react-icons/fi";
 
@@ -154,9 +155,7 @@ export const ArchivePage = () => {
                                                         <FaLocationDot className="text-[#2EAA62] w-4 h-4" />
                                                         <Paragraph className="font-inter font-bold text-[#4f4f4f] text-sm"><span className="font-medium">{t("Адрес:")} </span>
                                                             {offer?.address?.address ?? `${t("Адрес не указан")}`},
-                                                            {lang === "uz"
-                                                                ? offer?.address?.city?.name_uz ?? ""
-                                                                : offer?.address?.city?.name_ru ?? ""}
+                                                            {getLocalizedValue(offer?.address?.city, lang, "name")}
                                                         </Paragraph>
                                                     </div>
                                                     <div className='flex gap-1.5 items-center'>

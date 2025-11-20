@@ -13,6 +13,7 @@ import {useSelector} from "react-redux";
 import {RootState} from "../../Store/store";
 import GpsIcon from '../../assets/gps.svg?react'
 import Select from "../Select/Select.tsx";
+import { getLocalizedValue } from "../../utils/localization";
 
 interface FiltersProps {
     offer_type: "business" | "startup" | "franchise" | "investments" | "бизнес" | "франшиза" | "стартапы" | "инвстиции";
@@ -105,7 +106,7 @@ export const Filters: React.FC<FiltersProps> = ({offer_type, filters, setFilters
                             },
                             ...filterOptions.categories.map((cat) => ({
                                 value: cat.slug,
-                                label: lang === "uz" ? cat.title_uz : cat.title_ru,
+                                label: getLocalizedValue(cat, lang, "title"),
                             }))
                         ]}/>
             </div>
@@ -125,7 +126,7 @@ export const Filters: React.FC<FiltersProps> = ({offer_type, filters, setFilters
                             },
                             ...filterOptions.cities.map((city) => ({
                                 value: city.slug,
-                                label: lang === "uz" ? city.name_uz : city.name_ru,
+                                label: getLocalizedValue(city, lang, "name"),
                             }))
                         ]}/>
             </div>
@@ -145,7 +146,7 @@ export const Filters: React.FC<FiltersProps> = ({offer_type, filters, setFilters
                                 },
                                 ...filterOptions.project_stages.map((el) => ({
                                     value: el.id.toString(),
-                                    label: lang === "uz" ? el.name_uz : el.name_ru,
+                                    label: getLocalizedValue(el, lang, "name"),
                                 }))
                             ]}/>
                 </div>

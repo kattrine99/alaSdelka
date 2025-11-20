@@ -20,6 +20,7 @@ import { FiltersState } from "../../utils/variables";
 import { FiSearch } from "react-icons/fi";
 import { urlToTypeMap, ruToApiOfferTypeMap } from "../../utils/categoryMap";
 import { useTranslation } from "../../../public/Locales/context/TranslationContext";
+import { getLocalizedValue } from "../../utils/localization";
 
 export const UserAnnouncementPage = () => {
     const { category, userId } = useParams();
@@ -92,6 +93,7 @@ export const UserAnnouncementPage = () => {
             city: {
                 name_ru: card.address?.city?.name_ru || "",
                 name_uz: card.address?.city?.name_uz || "",
+                name_en: card.address?.city?.name_en || "",
             },
         },
         area: card.area ? `${card.area} ${t("кв. м.")}` : t("Площадь не указана"),

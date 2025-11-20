@@ -16,6 +16,7 @@ import { IoMdTime } from "react-icons/io";
 import CheckedAllIcon from "../../assets/check2-all.svg?react";
 import { useTranslation } from "../../../public/Locales/context/TranslationContext";
 import { useNavigate } from "react-router-dom";
+import { getLocalizedValue } from "../../utils/localization";
 
 export const NoticePage = () => {
     const [page, setPage] = useState(1);
@@ -95,11 +96,11 @@ export const NoticePage = () => {
                                     >
                                         <Heading
                                             className="font-inter font-bold text-lg text-[#4f4f4f]  mb-3.5"
-                                            text={lang === "uz" ? item.title_uz : item.title_ru}
+                                            text={getLocalizedValue(item, lang, "title")}
                                             level={3}
                                         />
                                         <Paragraph className="font-inter text-lg text-[#4f4f4f]  mb-3.5">
-                                            {lang === "uz" ? item.text_uz : item.text_ru}
+                                            {getLocalizedValue(item, lang, "text")}
                                         </Paragraph>
                                         <div className="flex flex-col sm:flex-row justify-between">
                                             <div className="text-[#727272] text-sm flex gap-3 items-center">

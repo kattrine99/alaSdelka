@@ -8,6 +8,7 @@ import { useState } from "react";
 import { clearOfferData } from "../../../Store/tempStorage";
 import { useTranslation } from "../../../../public/Locales/context/TranslationContext";
 import { FiChevronLeft } from "react-icons/fi";
+import { getLocalizedValue } from "../../../utils/localization";
 
 interface Props {
     onPublish: (offerSlug: string) => void;
@@ -19,8 +20,9 @@ const mapOfferToCard = (data: OfferPayload, cities: [ {
     id: number,
     name_ru: string,
     name_uz: string,
+    name_en: string,
     slug: string,
-}] | undefined): ICard => {
+}] | undefined, lang: "ru" | "uz" | "en"): ICard => {
     const city = cities?.find(city => city.id === data.address?.city_id);
     return {
         id: data.id ?? 0,
@@ -33,7 +35,8 @@ const mapOfferToCard = (data: OfferPayload, cities: [ {
             address: data.address?.address || "Адрес не указан",
             city: {
                 name_ru: city?.name_ru || "Город не указан",
-                name_uz: city?.name_uz || "Город не указан"
+                name_uz: city?.name_uz || "Город не указан",
+                name_en: city?.name_en || "Город не указан"
             },
         }, area: data.area || 0,
         image: data.photos?.[0]?.preview ?? null,
@@ -52,11 +55,11 @@ export const PublicationStep: React.FC<Props> = ({ onPublish, onPreview, onBack 
     const [, setIsPublished] = useState(false);
     const [, setError] = useState(false);
     const [isErrorModalOpen, setIsErrorModalOpen] = useState(false);
-    const { t } = useTranslation()
+    const { t, lang } = useTranslation()
     const { data: filtersData } = useGetFiltersDataQuery();
     if (!cardData) return null;
 
-    const card = mapOfferToCard(cardData, filtersData?.cities);
+    const card = mapOfferToCard(cardData, filtersData?.cities, lang);
 
     const handlePublish = async () => {
         setIsPublishing(true);

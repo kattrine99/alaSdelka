@@ -17,6 +17,7 @@ import PercentIcon from "../../assets/percentage-square.svg?react"
 import ReceiptIcon from "../../assets/receipt-item.svg?react"
 import WalletIcon from "../../assets/wallet-add.svg?react"
 import { useTranslation } from "../../../public/Locales/context/TranslationContext";
+import { getLocalizedValue } from "../../utils/localization";
 
 interface CardDetailPreviewProps {
     onBack: () => void;
@@ -92,13 +93,11 @@ export const CardDetailPreview: React.FC<CardDetailPreviewProps> = ({ onBack }) 
     if (!data) return <Paragraph>{t("Нет данных для предпросмотра")}</Paragraph>;
     const conveniences = data.conveniences ?? [];
     const convenienceMap = filtersData?.conveniences?.reduce((acc, item) => {
-        acc[item.id] = item.name_ru;
+        acc[item.id] = getLocalizedValue(item, lang, "name");
         return acc;
     }, {} as Record<number, string>) ?? {};
-    const categoryName =
-        filtersData?.categories?.find((c) => c.id === Number(data?.category_id))?.[
-        lang === "uz" ? "title_uz" : "title_ru"
-        ] || t("Категория не указана");
+    const category = filtersData?.categories?.find((c) => c.id === Number(data?.category_id));
+    const categoryName = getLocalizedValue(category, lang, "title") || t("Категория не указана");
     return (
         <div className="container mx-auto py-10 max-md:p-4 ">
             <div className="mb-6 flex items-center gap-2 cursor-pointer text-[#28B13D]" onClick={onBack}>

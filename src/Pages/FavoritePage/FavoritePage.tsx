@@ -12,6 +12,7 @@ import { useGetFavoritesQuery, useToggleFavoriteMutation } from "../../Store/api
 import { profileNavigate } from "../../utils/categoryMap";
 import { Offer } from "../../Store/api/types";
 import { useTranslation } from "../../../public/Locales/context/TranslationContext";
+import { getLocalizedValue } from "../../utils/localization";
 
 export const FavoritePage = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -40,6 +41,8 @@ export const FavoritePage = () => {
           address: offer.address?.address || "Адрес не указан",
           city: {
             name_ru: offer.address?.city?.name_ru || "",
+            name_uz: offer.address?.city?.name_uz || "",
+            name_en: offer.address?.city?.name_en || "",
           },
         },
         area: typeof offer.area === "number" ? offer.area : Number(offer.area ?? 0),

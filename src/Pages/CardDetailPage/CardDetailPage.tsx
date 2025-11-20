@@ -21,6 +21,7 @@ import { RootState } from "../../Store/store";
 import { useTranslation } from '../../../public/Locales/context/TranslationContext';
 import { translationService } from '../../utils/googleTranslate';
 import { MetaTags } from '../../components/MetaTags';
+import { getLocalizedValue } from '../../utils/localization';
 
 interface CardDetailPageProps {
     section?: string
@@ -34,7 +35,7 @@ export const CardDetailPage: React.FC<CardDetailPageProps> = ({ section }) => {
     const card = data?.data;
     const metaTitle = `${card?.title} - ${card?.price} UZS | Invest In`;
     const metaDescription = card?.description?.substring(0, 160) ||
-        `${card?.title} в ${card?.address?.city?.name_ru}. Цена: ${card?.price} UZS`;
+        `${card?.title} в ${getLocalizedValue(card?.address?.city, lang, "name")}. Цена: ${card?.price} UZS`;
     const [showFullDescription, setShowFullDescription] = useState(false);
     const [translatedTitle, setTranslatedTitle] = useState(card?.title)
     const [translatedDescription, setTranslaedDescription] = useState(card?.description)
@@ -143,7 +144,7 @@ export const CardDetailPage: React.FC<CardDetailPageProps> = ({ section }) => {
             <MetaTags
                 title={metaTitle}
                 description={metaDescription}
-                keywords={`${card?.title}, ${card?.category?.title_ru}, ${card?.address?.city?.name_ru}`}
+                keywords={`${card?.title}, ${getLocalizedValue(card?.category, lang, "title")}, ${getLocalizedValue(card?.address?.city, lang, "name")}`}
                 ogTitle={card?.title}
                 ogDescription={metaDescription}
                 ogImage={card?.photos?.[0]?.photo}
@@ -176,7 +177,7 @@ export const CardDetailPage: React.FC<CardDetailPageProps> = ({ section }) => {
                                     </div>
                                     <div className='flex gap-1.5 items-center text-[#4f4f4f]'>
                                         <CategoryIcon className='w-4 h-4 text-[#2EAA62]' />
-                                        <Paragraph className="">{lang === "uz" ? card?.category?.title_uz : card?.category?.title_ru ?? ""}</Paragraph>
+                                        <Paragraph className="">{getLocalizedValue(card?.category, lang, "title")}</Paragraph>
                                     </div>
                                 </div>
                                 <div className="flex flex-col gap-6">
@@ -194,7 +195,7 @@ export const CardDetailPage: React.FC<CardDetailPageProps> = ({ section }) => {
                                                         <div key={item.id} className="flex items-center gap-3 text-sm text-gray-700">
                                                             {conveniencesIcons[item.name_ru] || <span className="w-5 h-5" />}
                                                             <div className="flex flex-col">
-                                                                <span>{lang === "uz" ? item.name_uz : item.name_ru}</span>
+                                                                <span>{getLocalizedValue(item, lang, "name")}</span>
                                                                 <span className='font-inter font-bold text-xl text-[#2EAA62]'>{t("Есть")}</span>
                                                             </div>
                                                         </div>
@@ -308,7 +309,7 @@ export const CardDetailPage: React.FC<CardDetailPageProps> = ({ section }) => {
                                         <FaLocationDot className="text-[#2EAA62] w-4 h-4" />
                                         <Paragraph className="text-[#4f4f4f]">
                                             {card?.address !== null ? card?.address?.address + ',' : t("Адрес не указан")}
-                                            {lang === "uz" ? card?.address?.city?.name_uz : card?.address?.city?.name_ru ?? ""}
+                                            {getLocalizedValue(card?.address?.city, lang, "name")}
                                         </Paragraph>
                                     </div>
                                     {card.address?.latitude && card.address?.longitude ? (

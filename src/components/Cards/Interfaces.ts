@@ -19,6 +19,7 @@ export interface ICard {
         city: {
             name_ru: string;
             name_uz: string;
+            name_en: string;
         };
         longitude?: number;
         latitude?: number;
@@ -30,7 +31,8 @@ export interface ICard {
     category?: {
         id: number,
         title_ru: string,
-        title_uz: string
+        title_uz: string,
+        title_en: string
     },
     is_favourite?: boolean;
     listing_type?: string;

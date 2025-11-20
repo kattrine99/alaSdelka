@@ -109,7 +109,7 @@ export const PromotionCards = () => {
                                             <div className="flex gap-1.5 mb-1">
                                                 <FaLocationDot className="text-[#2EAA62] w-4 h-4 mt-[2px]" />
                                                 <Paragraph className="font-inter font-medium text-[#4f4f4f]  text-sm">
-                                                    {offer?.address?.address ?? t("Адрес не указан")}, {lang === "uz" ? offer?.address?.city?.name_uz : offer?.address?.city?.name_ru ?? ""}
+                                                    {offer?.address?.address ?? t("Адрес не указан")}, {getLocalizedValue(offer?.address?.city, lang, "name")}
                                                 </Paragraph>
                                             </div>
                                             <div className="flex gap-1.5 items-center">

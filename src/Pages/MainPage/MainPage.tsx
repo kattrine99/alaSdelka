@@ -744,7 +744,7 @@ export const MainPage = () => {
                                         className="w-full justify-between flex flex-col transition duration-300 ease-in-out bg-[#4f4f4f] text-white py-4 px-4 rounded-[12px] gap-0.5"
                                     >
                                         <span className="font-openSans font-bold text-lg max-sm:text-[14px] leading-[150%]">
-                                            {lang === "uz" ? region.name_uz : region.name_ru}
+                                            {lang === "uz" ? region.name_uz : lang === "en" ? (region.name_en || region.name_ru) : region.name_ru}
                                         </span>
                                         <span className="font-Urbanist font-bold text-[40px] max-sm:text-[28px] leading-[150%]">
                                             {region.offers_count.toLocaleString(lang === "uz" ? "uz-UZ" : "ru-RU")}

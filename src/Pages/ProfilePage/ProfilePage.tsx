@@ -10,6 +10,7 @@ import { FiAlertCircle } from "react-icons/fi";
 import FlagIcon from '../../assets/Flag.svg?react'
 import ProfilePlaceholder from '../../assets/profile-circle.svg';
 import { useTranslation } from "../../../public/Locales/context/TranslationContext";
+import { getLocalizedValue } from "../../utils/localization";
 
 
 export const ProfilePage = () => {
@@ -329,14 +330,14 @@ export const ProfilePage = () => {
                                             ) : (
                                                 filtersData?.cities?.map((city) => (
                                                     <option key={city.id} value={city.id}>
-                                                        {lang === "uz" ? city.name_uz : city.name_ru}
+                                                        {getLocalizedValue(city, lang, "name")}
                                                     </option>
                                                 ))
                                             )}
                                         </select>
                                     ) : (
                                         <div className="bg-[#F2F2F2] rounded-[10px] h-14 px-4 py-3.5 text-[#121212] text-[16px]">
-                                            {lang === "uz" ? data.city?.name_uz : data.city?.name_ru || " "}
+                                            {getLocalizedValue(data.city, lang, "name") || " "}
                                         </div>
                                     )}
                                 </div>

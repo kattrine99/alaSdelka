@@ -11,6 +11,7 @@ import { setOfferData } from "../../../Store/tempStorage";
 import { useGetUserInfoQuery } from "../../../Store/api/Api";
 import { RootState } from "../../../Store/store";
 import { useTranslation } from "../../../../public/Locales/context/TranslationContext";
+import { getLocalizedValue } from "../../../utils/localization";
 
 interface Props {
     offerType: "business" | "franchise" | "startup" | "investments";
@@ -284,8 +285,8 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
                         ?.slice() // создаем копию массива чтобы не мутировать оригинал
                         .sort((a, b) => {
                             // Определяем названия в зависимости от языка
-                            const titleA = lang === "uz" ? a.title_uz : lang === "en" ? ((a as any).title_en || a.title_ru) : a.title_ru;
-                            const titleB = lang === "uz" ? b.title_uz : lang === "en" ? ((b as any).title_en || b.title_ru) : b.title_ru;
+                            const titleA = getLocalizedValue(a, lang, "title");
+                            const titleB = getLocalizedValue(b, lang, "title");
 
                             // Проверяем, является ли категория "Другие" (или "Boshqa" для узбекского)
                             const isAOther = titleA.toLowerCase().includes('другие') || titleA.toLowerCase().includes('boshqa') || titleA.toLowerCase().includes('other');
@@ -303,7 +304,7 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
                         })
                         .map((cat) => (
                             <option key={cat.id} value={String(cat.id)}>
-                                {lang === "uz" ? cat.title_uz : lang === "en" ? ((cat as any).title_en || cat.title_ru) : cat.title_ru}
+                                {getLocalizedValue(cat, lang, "title")}
                             </option>
                         ))}
                 </select>
@@ -354,7 +355,7 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
                         <option className="">{t("Выбрать")}</option>
                         {filtersData?.project_stages.map((stage) => (
                             <option key={stage.id} value={String(stage.id)}>
-                                {lang === "uz" ? stage.name_uz : lang === "en" ? ((stage as any).name_en || stage.name_ru) : stage.name_ru}
+                                {getLocalizedValue(stage, lang, "name")}
                             </option>
                         ))}
                     </select>
@@ -374,13 +375,13 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
                         ?.slice() // создаем копию массива чтобы не мутировать оригинал
                         .sort((a, b) => {
                             // Сортируем по алфавиту в зависимости от выбранного языка
-                            const nameA = lang === "uz" ? a.name_uz : lang === "en" ? ((a as any).name_en || a.name_ru) : a.name_ru;
-                            const nameB = lang === "uz" ? b.name_uz : lang === "en" ? ((b as any).name_en || b.name_ru) : b.name_ru;
+                            const nameA = getLocalizedValue(a, lang, "name");
+                            const nameB = getLocalizedValue(b, lang, "name");
                             return nameA.localeCompare(nameB);
                         })
                         .map((city) => (
                             <option key={city.id} value={String(city.id)}>
-                                {lang === "uz" ? city.name_uz : lang === "en" ? ((city as any).name_en || city.name_ru) : city.name_ru}
+                                {getLocalizedValue(city, lang, "name")}
                             </option>
                         ))}
                 </select>
@@ -454,7 +455,7 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
                     <option value="">{t("Выбрать")}</option>
                     {filtersData?.business_types.map((type) => (
                         <option key={type.value} value={type.value}>
-                            {lang === "uz" ? type.label_uz : lang === "en" ? ((type as any).label_en || type.label_ru) : type.label_ru}
+                            {getLocalizedValue(type, lang, "label")}
                         </option>
                     ))}
                 </select>
@@ -476,7 +477,7 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
                     <option value="">{t("Выбрать")}</option>
                     {filtersData?.premises_ownership_form.map((form) => (
                         <option key={form.value} value={String(form.value)}>
-                            {lang === "uz" ? form.label_uz : lang === "en" ? ((form as any).label_en || form.label_ru) : form.label_ru}
+                            {getLocalizedValue(form, lang, "label")}
                         </option>
                     ))}
                 </select>
@@ -744,7 +745,7 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
                     return (
                         <label key={id} className="flex items-center justify-between cursor-pointer">
                             <span className="text-[#4f4f4f]  w-full font-inter text-[16px] leading-[130%]">
-                                {lang === "uz" ? name_uz : lang === "en" ? ((conveniences.find(c => c.id === id) as any)?.name_en || name_ru) : name_ru}
+                                {getLocalizedValue(conveniences.find(c => c.id === id), lang, "name")}
                             </span>
                             <Input
                                 type="checkbox"

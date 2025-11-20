@@ -9,6 +9,7 @@ import { useTranslation } from "../../../public/Locales/context/TranslationConte
 import { ICardComponent } from "./Interfaces";
 import { useRef, useState } from "react";
 import { translationService } from "../../utils/googleTranslate";
+import { getLocalizedValue } from "../../utils/localization";
 
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css"; // стили свайпера
@@ -173,9 +174,9 @@ export const Card: React.FC<ICardComponent & { forceAllFavorite: boolean }> = ({
                         className={`text-gray-600 flex gap-x-2 font-inter text-[14px] font-medium text-[#4f4f4f]  mb-[6px] ${cardTextClass ?? ""}`}
                     >
                         <span className="font-bold text-[#4f4f4f] text-[12px]">
-                            {lang === "uz" ? card.address?.city?.name_uz : lang === "en" ? ((card.address?.city as any)?.name_en || card.address?.city?.name_ru) : card.address?.city?.name_ru ?? ""}
+                            {getLocalizedValue(card.address?.city, lang, "name")}
                         </span>
-                        <span className="text-neutral-400 truncate text-[12px]">{lang === 'uz' ? card.category?.title_uz : lang === 'en' ? ((card.category as any)?.title_en || card.category?.title_ru) : card.category?.title_ru}</span>
+                        <span className="text-neutral-400 truncate text-[12px]">{getLocalizedValue(card.category, lang, "title")}</span>
                     </Paragraph>
                 </div>
             </div>

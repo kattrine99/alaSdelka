@@ -76,6 +76,7 @@ export interface GetUserInfoResponse {
         id: number;
         name_ru: string;
         name_uz: string;
+        name_en: string;
     };
     id: number;
     name: string;
@@ -94,6 +95,7 @@ export interface UpdateUserInfoResponse {
         id: number;
         name_ru: string;
         name_uz: string;
+        name_en: string;
     };
 }
 
@@ -123,6 +125,7 @@ export interface MyOffer {
                     id?: number;
                     name_ru: string;
                     name_uz: string;
+                    name_en: string;
                 };
             };
             photos: { photo: string }[];
@@ -184,6 +187,7 @@ interface CityStats {
     city_id: number;
     name_ru: string;
     name_uz: string;
+    name_en: string;
     offers_count: number;
 }
 
@@ -316,24 +320,28 @@ export interface OfferDetail {
             city: {
                 id: number,
                 name_ru: string,
-                name_uz: string
+                name_uz: string,
+                name_en: string
             }
         }
         category: {
             id: number,
             title_ru: string,
-            title_uz: string
+            title_uz: string,
+            title_en: string
         },
         project_stage: {
             id: number,
             name_ru: string,
-            name_uz: string
+            name_uz: string,
+            name_en: string
         },
         conveniences: [
             {
                 id: number,
                 name_ru: string,
-                name_uz: string
+                name_uz: string,
+                name_en: string
             }
         ],
         communication_channels: [
@@ -398,24 +406,28 @@ export interface OfferDetails {
         city: {
             id: number,
             name_ru: string,
-            name_uz: string
+            name_uz: string,
+            name_en: string
         }
     }
     category: {
         id: number,
         title_ru: string,
-        title_uz: string
+        title_uz: string,
+        title_en: string
     },
     project_stage: {
         id: number,
         name_ru: string,
-        name_uz: string
+        name_uz: string,
+        name_en: string
     },
     conveniences: [
         {
             id: number,
             name_ru: string,
-            name_uz: string
+            name_uz: string,
+            name_en: string
         }
     ],
     communication_channels: [
@@ -436,14 +448,15 @@ export interface Offer {
     category: {
         id: number,
         title_ru: string,
-        title_uz: string
+        title_uz: string,
+        title_en: string
     },
     area: number;
     offer_type: "business" | "franchise" | "startup" | "investments";
     photos?: { id: number; photo: string; order: number }[];
     address?: {
         address: string;
-        city?: { name_ru: string };
+        city?: { name_ru: string; name_uz: string; name_en: string };
     };
     offer_status?: string;
 }
@@ -465,6 +478,7 @@ export interface FilterData {
             id: number,
             name_ru: string,
             name_uz: string,
+            name_en: string,
             slug: string,
         }
     ],
@@ -473,6 +487,7 @@ export interface FilterData {
             id: number,
             title_ru: string,
             title_uz: string,
+            title_en: string,
             slug: string,
         }
     ],
@@ -480,14 +495,16 @@ export interface FilterData {
         {
             id: number,
             name_ru: string,
-            name_uz: string
+            name_uz: string,
+            name_en: string
         }
     ],
     conveniences: [
         {
             id: number,
             name_ru: string,
-            name_uz: string
+            name_uz: string,
+            name_en: string
         }
     ],
     business_types: [
@@ -495,6 +512,7 @@ export interface FilterData {
             value: string,
             label_ru: string,
             label_uz: string,
+            label_en: string,
         }
     ],
     listing_types: [
@@ -502,6 +520,7 @@ export interface FilterData {
             value: string,
             label_ru: string,
             label_uz: string,
+            label_en: string,
         }
     ],
     offer_types: [
@@ -509,6 +528,7 @@ export interface FilterData {
             value: string,
             label_ru: string,
             label_uz: string,
+            label_en: string,
         }
     ],
     offer_statuses: [
@@ -516,6 +536,7 @@ export interface FilterData {
             value: string,
             label_ru: string,
             label_uz: string,
+            label_en: string,
         }
     ],
     tariffs: [
@@ -538,7 +559,8 @@ export interface FilterData {
         {
             value: string,
             label_ru: string,
-            label_uz: string
+            label_uz: string,
+            label_en: string
         }
     ]
 }
@@ -546,8 +568,10 @@ export interface Notification {
     id: number;
     title_ru: string;
     title_uz: string;
+    title_en: string;
     text_ru: string;
     text_uz: string;
+    text_en: string;
     is_read: boolean;
     type: string;
     offer_id: number;

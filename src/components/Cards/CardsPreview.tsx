@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { useTranslation } from "../../../public/Locales/context/TranslationContext";
 import { useSelector } from "react-redux";
 import { RootState } from "../../Store/store";
+import { getLocalizedValue } from "../../utils/localization";
 
 interface CardPreviewProps {
     card: ICard;
@@ -73,7 +74,7 @@ export const CardPreview: React.FC<CardPreviewProps> = ({ card, onPreview }) => 
 
                     <Paragraph className="flex font-inter font-medium text-[14px] mt-3 text-[#667085]">
                         <FaLocationDot className="text-[#2EAA62] mr-1.5" />
-                        {t("Адрес:")} <span className=" font-bold text-[#4f4f4f] text-[14px] ml-1.5">{card.address?.address}, {lang === "uz" ? card.address?.city?.name_uz : card.address?.city?.name_ru}</span>
+                        {t("Адрес:")} <span className=" font-bold text-[#4f4f4f] text-[14px] ml-1.5">{card.address?.address}, {getLocalizedValue(card.address?.city, lang, "name")}</span>
                     </Paragraph>
 
                     {card.area ? (

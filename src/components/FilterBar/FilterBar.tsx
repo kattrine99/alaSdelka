@@ -10,6 +10,7 @@ import FrameIcon from "../../assets/frame.svg?react";
 import { useTranslation } from "../../../public/Locales/context/TranslationContext";
 import { useSelector } from "react-redux";
 import { RootState } from "../../Store/store";
+import { getLocalizedValue } from "../../utils/localization";
 
 
 interface FilterBarProps {
@@ -74,7 +75,7 @@ export const FilterBar: React.FC<FilterBarProps> = ({
                         <option value="">{t("Город")}</option>
                         {filterOptions.cities.map((city) => (
                             <option key={city.id} value={String(city.id)}>
-                                {lang === "uz" ? city.name_uz : city.name_ru}
+                                {getLocalizedValue(city, lang, "name")}
                             </option>
                         ))}
                     </select>
@@ -118,7 +119,7 @@ export const FilterBar: React.FC<FilterBarProps> = ({
                         <option value="">{t("Категория")}</option>
                         {filterOptions.categories.map((cat) => (
                             <option key={cat.id} value={String(cat.id)}>
-                                {lang === "uz" ? cat.title_uz : cat.title_ru}
+                                {getLocalizedValue(cat, lang, "title")}
                             </option>
                         ))}
                     </select>

@@ -57,7 +57,7 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
         offerData?.communication_channels || [{ channel_name: "", link: "" }]
     );
     const fullName = userInfo?.name?.trim() || "";
-    const phoneNumber = userInfo?.phone?.replace("+998", "") || "";
+    const phoneNumber = userInfo?.phone;
     const inputRef = useRef<HTMLInputElement>(null);
     const imageInputRef = useRef<HTMLInputElement>(null);
     const [addressText, setAddressText] = useState(offerData?.address?.address || "");
@@ -163,7 +163,7 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
             area_from: Number(areaFrom) || 0,
             area_to: Number(areaTo) || 0,
             user_name: fullName,
-            user_phone: "+998" + phoneNumber,
+            user_phone: phoneNumber || "",
             address: {
                 address: addressText.trim(),
                 latitude: 0,
@@ -330,14 +330,14 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
             <div className="flex flex-col gap-2 w-full max-w-200  relative ">
                 <label className="text-[#4f4f4f]  font-inter text-[16px] leading-[130%] mb-2.5 block">{t("Номер телефона")}</label>
                 <div className="bg-[#b5b5b667] w-full rounded-[14px] flex items-center p-1 ">
-                    <div className="w-12 h-12 p-1 rounded-[10px] bg-[#b4b8cc] flex items-center justify-center mr-3">
+                    {/* <div className="w-12 h-12 p-1 rounded-[10px] bg-[#b4b8cc] flex items-center justify-center mr-3">
                         <FlagIcon className="w-[25px] h-[25px] object-contain" />
                     </div>
-                    <span className="text-gray-500 font-inter text-[16px] mr-2">+998</span>
+                    <span className="text-gray-500 font-inter text-[16px] mr-2">+998</span> */}
                     <Input
                         type="tel"
                         placeholder="90 000 00 00"
-                        className="placeholder:text-[#8A8A8A] disabled:text-gray-500 input-no-border cursor-not-allowed"
+                        className="placeholder:text-[#8A8A8A] disabled:text-gray-500 input-no-border cursor-not-allowed py-3.5 px-3.5"
                         isError={false}
                         value={phoneNumber}
                         disabled
@@ -374,9 +374,25 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
                     {filtersData?.cities
                         ?.slice() // создаем копию массива чтобы не мутировать оригинал
                         .sort((a, b) => {
-                            // Сортируем по алфавиту в зависимости от выбранного языка
                             const nameA = getLocalizedValue(a, lang, "name");
                             const nameB = getLocalizedValue(b, lang, "name");
+                            
+                            // Проверяем, является ли город Ташкентом (городом) или Ташкентской областью
+                            // Используем проверку по русскому названию как основному
+                            const isTashkentCityA = a.name_ru === 'Ташкент';
+                            const isTashkentRegionA = a.name_ru === 'Ташкентская область';
+                            const isTashkentCityB = b.name_ru === 'Ташкент';
+                            const isTashkentRegionB = b.name_ru === 'Ташкентская область';
+                            
+                            // Ташкент (город) всегда первый
+                            if (isTashkentCityA && !isTashkentCityB) return -1;
+                            if (!isTashkentCityA && isTashkentCityB) return 1;
+                            
+                            // Ташкентская область всегда вторая (после города Ташкент)
+                            if (isTashkentRegionA && !isTashkentRegionB && !isTashkentCityB) return -1;
+                            if (!isTashkentRegionA && isTashkentRegionB && !isTashkentCityA) return 1;
+                            
+                            // Остальные города сортируем по алфавиту
                             return nameA.localeCompare(nameB);
                         })
                         .map((city) => (

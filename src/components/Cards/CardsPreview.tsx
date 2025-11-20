@@ -77,15 +77,10 @@ export const CardPreview: React.FC<CardPreviewProps> = ({ card, onPreview }) => 
                         {t("Адрес:")} <span className=" font-bold text-[#4f4f4f] text-[14px] ml-1.5">{card.address?.address}, {getLocalizedValue(card.address?.city, lang, "name")}</span>
                     </Paragraph>
 
-                    {card.area ? (
+                    {card.area != null && card.area !== 0 && (
                         <Paragraph className="flex items-center font-inter font-medium text-[14px] mt-3 text-[#667085]">
                             <FaLocationCrosshairs className="text-[#2EAA62] mr-1.5" />
                             {card.area} {t("кв. м.")}
-                        </Paragraph>
-                    ) : (
-                        <Paragraph className="flex items-center font-inter font-medium text-[14px] mt-3 text-[#667085]">
-                            <FaLocationCrosshairs className="text-[#2EAA62] mr-1.5" />
-                            {t("Не указано")}
                         </Paragraph>
                     )}
                 </div>

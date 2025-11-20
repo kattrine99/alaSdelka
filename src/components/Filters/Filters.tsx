@@ -24,17 +24,33 @@ interface FiltersProps {
 
 export const Filters: React.FC<FiltersProps> = ({offer_type, filters, setFilters}) => {
     const {data: filterOptions, isLoading, isError} = useGetFiltersDataQuery();
-    const buttonsData = ["Не важно", "До 6 месяцев", "До 1 года", "До 3 лет"];
+    const buttonsData = {'': 'Не важно', 6: 'До 6 месяцев', 12: 'До 1 года', 36: 'До 3 лет'};
     const selectedCurrency = useSelector((state: RootState) => state.currency.mode);
     const currencySymbol = selectedCurrency === "UZS" ? "UZS" : "USD";
 
-    const showPayback = ["business", "franchise"].includes(offer_type);
+    const showPayback = ["business", "franchise", "investments", "startup"].includes(offer_type);
     const showStage = offer_type === "startup";
     const showProfit = offer_type === "franchise";
     const showInvestments = ["franchise", "startup"].includes(offer_type);
     const showPrice = ["business", "investments"].includes(offer_type);
     const showAreaFilters = ["business"].includes(offer_type);
     const {lang, t} = useTranslation()
+    
+    // Функция для форматирования числа с пробелами (разделение тысяч)
+    const formatNumberWithSpaces = (value: string): string => {
+        // Убираем все нецифровые символы кроме пробелов
+        const numbersOnly = value.replace(/[^\d]/g, '');
+        if (!numbersOnly) return '';
+        // Форматируем с пробелами для разделения тысяч
+        return numbersOnly.replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+    };
+    
+    // Функция для обновления поля с форматированием
+    const updatePriceField = (field: 'priceMin' | 'priceMax', value: string) => {
+        const formatted = formatNumberWithSpaces(value);
+        setFilters(prev => ({...prev, [field]: formatted}));
+    };
+    
     const update = (field: keyof FiltersState, value: string) => {
         setFilters(prev => ({...prev, [field]: value}));
     };
@@ -160,16 +176,16 @@ export const Filters: React.FC<FiltersProps> = ({offer_type, filters, setFilters
                         <Paragraph>{t("Период окупаемости")}</Paragraph>
                     </div>
                     <div className="flex flex-wrap gap-2 mt-2 mb-4">
-                        {buttonsData.map(item => (
+                        {Object.entries(buttonsData).sort((a, b) => Number(a[0]) - Number(b[0])).map(([key, value]) => (
                             <Button
-                                key={item}
-                                onClick={() => update("paybackPeriod", item)}
-                                className={`px-4 py-2 rounded-lg border hover:bg-[#2EAA62] hover:text-white ${filters.paybackPeriod === item
+                                key={key}
+                                onClick={() => update("paybackPeriod", key)}
+                                className={`px-4 py-2 rounded-lg border hover:bg-[#2EAA62] hover:text-white ${filters.paybackPeriod === key
                                     ? "bg-[#2EAA62] text-white border-[#2EAA62]"
                                     : "bg-white text-[#4f4f4f]  border-gray-300"
                                 }`}
                             >
-                                {t(item)}
+                                {t(value)}
                             </Button>
                         ))}
                     </div>
@@ -189,7 +205,7 @@ export const Filters: React.FC<FiltersProps> = ({offer_type, filters, setFilters
                             <Input
                                 type="text"
                                 value={filters.priceMin}
-                                onChange={(e) => update("priceMin", e.target.value)}
+                                onChange={(e) => updatePriceField("priceMin", e.target.value)}
                                 // placeholder="100 000"
                                 className="w-full text-[16px] font-semibold text-[#3C3C3C] bg-transparent outline-none placeholder:text-[#787878]"
                                 isError={false}
@@ -201,7 +217,7 @@ export const Filters: React.FC<FiltersProps> = ({offer_type, filters, setFilters
                             <Input
                                 type="text"
                                 value={filters.priceMax}
-                                onChange={(e) => update("priceMax", e.target.value)}
+                                onChange={(e) => updatePriceField("priceMax", e.target.value)}
                                 // placeholder="100 000"
                                 className="w-full text-[16px] font-semibold text-[#3C3C3C] bg-transparent outline-none placeholder:text-[#787878]"
                                 isError={false}

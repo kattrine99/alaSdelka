@@ -47,6 +47,7 @@ export const RegistrationPage = () => {
     const [step, setStep] = useState<number>(1);
     const [timer, setTimer] = useState<number>(60);
     const [codeError, setCodeError] = useState(false);
+    const [selectedCountry, setSelectedCountry] = useState('uz');
 
     const { lang } = useTranslation();
 
@@ -72,6 +73,19 @@ export const RegistrationPage = () => {
 
     const phone = watch("userphone");
     const maskedPhone = phone ? `+${phone.slice(0, 3)}******${phone.slice(-4)}` : "";
+
+    // Принудительно устанавливаем Казахстан, если код +7
+    useEffect(() => {
+        if (phone && phone.startsWith('7')) {
+            // Используем небольшую задержку, чтобы перехватить изменение после определения библиотекой
+            const timer = setTimeout(() => {
+                if (selectedCountry === 'ru') {
+                    setSelectedCountry('kz');
+                }
+            }, 10);
+            return () => clearTimeout(timer);
+        }
+    }, [phone, selectedCountry]);
     const [isPasswordVisible, setIsPasswordVisible] = useState(false);
     const [isConfirmPasswordVisible, setIsConfirmPasswordVisible] = useState(false);
     const [registrationUser] = useRegistrationUserMutation();
@@ -201,9 +215,33 @@ export const RegistrationPage = () => {
                                             render={({ field }) => (
                                                 <div className="w-full">
                                                     <PhoneInput
-                                                        country={'uz'}
+                                                        country={selectedCountry}
                                                         value={field.value}
-                                                        onChange={(value) => field.onChange(value)}
+                                                        onChange={(value, country) => {
+                                                            field.onChange(value);
+                                                            // Если выбран код +7, приоритет Казахстану
+                                                            if (country && typeof country === 'object' && 'dialCode' in country && 'countryCode' in country) {
+                                                                // Если код +7 и выбрана Россия, принудительно ставим Казахстан
+                                                                if (country.dialCode === '7') {
+                                                                    if (country.countryCode === 'ru') {
+                                                                        // Используем setTimeout для принудительного обновления после определения библиотекой
+                                                                        setTimeout(() => setSelectedCountry('kz'), 0);
+                                                                    } else if (country.countryCode === 'kz') {
+                                                                        setSelectedCountry('kz');
+                                                                    }
+                                                                } else if (country.countryCode) {
+                                                                    setSelectedCountry(country.countryCode as string);
+                                                                }
+                                                            }
+                                                            // Дополнительная проверка: если значение начинается с 7, принудительно ставим Казахстан
+                                                            if (value && value.startsWith('7')) {
+                                                                setTimeout(() => {
+                                                                    if (selectedCountry === 'ru') {
+                                                                        setSelectedCountry('kz');
+                                                                    }
+                                                                }, 0);
+                                                            }
+                                                        }}
                                                         onBlur={field.onBlur}
                                                         inputProps={{
                                                             name: field.name,
@@ -217,6 +255,9 @@ export const RegistrationPage = () => {
                                                         placeholder={t("Телефон")}
                                                         countryCodeEditable={false}
                                                         specialLabel=""
+                                                        preferredCountries={['kz', 'uz', 'ru']}
+                                                        disableCountryGuess={false}
+                                                        key={selectedCountry}
                                                     />
                                                     {errors.userphone && (
                                                         <Paragraph className="text-sm text-red-500 mt-1">

@@ -408,14 +408,14 @@ export const MainPage = () => {
                                 {isAuthenticated ? (
                                     <Applink
                                         to="/add-offer"
-                                        className="inline-block bg-[#2EAA62] text-white px-6 py-4 rounded-[10px] hover:bg-[#259952] hover:shadow-xl text-base font-semibold transition-all duration-300 shadow-lg"
+                                        className="inline-block text-[#2EAA62] bg-white px-6 py-4 rounded-[10px] hover:bg-[#259952] hover:shadow-xl text-base font-semibold transition-all duration-300 shadow-lg"
                                     >
                                         {t("Разместить объявление")}
                                     </Applink>
                                 ) : (
                                     <Applink
                                         to="/login?next-step=/add-offer"
-                                        className="inline-block bg-[#2EAA62] text-white px-6 py-4 rounded-[10px] hover:bg-[#259952] hover:shadow-xl text-base font-semibold transition-all duration-300 shadow-lg"
+                                        className="inline-block text-[#2EAA62] bg-white px-6 py-4 rounded-[10px] hover:bg-[#259952] hover:shadow-xl text-base font-semibold transition-all duration-300 shadow-lg"
                                     >
                                         {t("Разместить объявление")}
                                     </Applink>
@@ -468,7 +468,7 @@ export const MainPage = () => {
                         <div className="flex items-center justify-between  max-lg:flex max-lg:flex-col max-sm:justify-center w-full mb-0 md:mb-6">
                             <div >
                                 <Button onClick={() => {
-                                    navigate(`$/{lang}/business`)
+                                    navigate(`/${lang}/business`)
                                 }} className={""}>
                                     <Heading level={2} text={t("Бизнес")} className="font-openSans font-bold text-[#4f4f4f]  hover:text-[#2EAA62] hover:underline hover:decoration-1 transition duration-500 text-3xl cursor-pointer" />
                                 </Button>
@@ -535,7 +535,7 @@ export const MainPage = () => {
                         <div className="flex justify-between items-center max-lg:flex max-lg:flex-col max-sm:justify-center w-full mb-0 md:mb-6">
                             <div>
                                 <Button onClick={() => {
-                                    navigate(`$/{lang}/franchise`)
+                                    navigate(`/${lang}/franchise`)
                                 }} className={""}>
                                     <Heading level={2} text={t("Франшиза")} className="font-openSans font-bold text-[#4f4f4f]  hover:text-[#2EAA62] hover:underline hover:decoration-1 transition duration-500 text-3xl cursor-pointer" />
                                 </Button>

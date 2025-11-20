@@ -39,6 +39,14 @@ interface CategoryPageProps {
     section?: string;
 }
 
+// Функция для форматирования числа с пробелами (разделение тысяч)
+const formatNumberWithSpaces = (value: string): string => {
+    if (!value) return '';
+    const numbersOnly = value.replace(/[^\d]/g, '');
+    if (!numbersOnly) return '';
+    return numbersOnly.replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+};
+
 export const CategoryPage: React.FC<CategoryPageProps> = ({section}) => {
     const { category, city, lng } = useParams();
     const [searchParams] = useSearchParams();
@@ -66,8 +74,8 @@ export const CategoryPage: React.FC<CategoryPageProps> = ({section}) => {
         city: city || searchParams.get("city") || "",
         stage: searchParams.get("stage") || "",
         paybackPeriod: searchParams.get("paybackPeriod") || "",
-        priceMin: searchParams.get("priceMin") || "",
-        priceMax: searchParams.get("priceMax") || "",
+        priceMin: formatNumberWithSpaces(searchParams.get("priceMin") || ""),
+        priceMax: formatNumberWithSpaces(searchParams.get("priceMax") || ""),
         areaFrom: searchParams.get("areaFrom") || "",
         areaTo: searchParams.get("areaTo") || "",
         investmentMin: searchParams.get("investmentMin") || "",
@@ -82,8 +90,8 @@ export const CategoryPage: React.FC<CategoryPageProps> = ({section}) => {
         stage: searchParams.get("stage") || "",
         listing_type: searchParams.get("listing_type") as "buy" | "sell" | null || "sell",
         paybackPeriod: searchParams.get("paybackPeriod") || "",
-        priceMin: searchParams.get("priceMin") || "",
-        priceMax: searchParams.get("priceMax") || "",
+        priceMin: formatNumberWithSpaces(searchParams.get("priceMin") || ""),
+        priceMax: formatNumberWithSpaces(searchParams.get("priceMax") || ""),
         areaFrom: searchParams.get("areaFrom") || "",
         areaTo: searchParams.get("areaTo") || "",
         investmentMin: searchParams.get("investmentMin") || "",
@@ -106,8 +114,9 @@ export const CategoryPage: React.FC<CategoryPageProps> = ({section}) => {
 
     const selectedCurrency = useSelector((state: RootState) => state.currency.mode);
 
-    let convertedPriceFrom = Number(appliedFilters.priceMin);
-    let convertedPriceTo = Number(appliedFilters.priceMax);
+    // Убираем пробелы перед конвертацией в число
+    let convertedPriceFrom = Number(appliedFilters.priceMin.replace(/\s/g, ''));
+    let convertedPriceTo = Number(appliedFilters.priceMax.replace(/\s/g, ''));
     const currencyRate = useSelector((state: RootState) => state.currency.rate);
 
     if (selectedCurrency === "USD" && currencyRate != null && !isNaN(currencyRate)) {
@@ -166,8 +175,8 @@ export const CategoryPage: React.FC<CategoryPageProps> = ({section}) => {
             paybackPeriod: searchParams.get("paybackPeriod") || "",
             areaFrom: searchParams.get("areaFrom") || "",
             areaTo: searchParams.get("areaTo") || "",
-            priceMin: searchParams.get("priceMin") || "",
-            priceMax: searchParams.get("priceMax") || "",
+            priceMin: formatNumberWithSpaces(searchParams.get("priceMin") || ""),
+            priceMax: formatNumberWithSpaces(searchParams.get("priceMax") || ""),
             investmentMin: searchParams.get("investmentMin") || "",
             investmentMax: searchParams.get("investmentMax") || "",
             profitabilityMin: searchParams.get("profitabilityMin") || "",
@@ -194,7 +203,14 @@ export const CategoryPage: React.FC<CategoryPageProps> = ({section}) => {
         const query = new URLSearchParams();
         if (searchInput) query.append("search", searchInput);
         Object.entries(localFilters).forEach(([key, value]) => {
-            if (value) query.append(key, String(value));
+            if (value) {
+                // Убираем пробелы из priceMin и priceMax перед отправкой на бэкенд
+                if (key === 'priceMin' || key === 'priceMax') {
+                    query.append(key, String(value).replace(/\s/g, ''));
+                } else {
+                    query.append(key, String(value));
+                }
+            }
         });
         navigate(`/${lang}/${categoryKey}?${query.toString()}`);
     }
@@ -218,7 +234,14 @@ export const CategoryPage: React.FC<CategoryPageProps> = ({section}) => {
                 const query = new URLSearchParams();
                 if (searchInput) query.append("search", searchInput);
                 Object.entries(localFilters).forEach(([key, value]) => {
-                    if (value) query.append(key, String(value));
+                    if (value) {
+                        // Убираем пробелы из priceMin и priceMax перед отправкой на бэкенд
+                        if (key === 'priceMin' || key === 'priceMax') {
+                            query.append(key, String(value).replace(/\s/g, ''));
+                        } else {
+                            query.append(key, String(value));
+                        }
+                    }
                 });
                 navigate(`/${lang}/${categoryKey}?${query.toString()}`);
             }, 500); // 500ms задержка для текстовых полей
@@ -236,7 +259,14 @@ export const CategoryPage: React.FC<CategoryPageProps> = ({section}) => {
                 const query = new URLSearchParams();
                 if (searchInput) query.append("search", searchInput);
                 Object.entries(localFilters).forEach(([key, value]) => {
-                    if (value) query.append(key, String(value));
+                    if (value) {
+                        // Убираем пробелы из priceMin и priceMax перед отправкой на бэкенд
+                        if (key === 'priceMin' || key === 'priceMax') {
+                            query.append(key, String(value).replace(/\s/g, ''));
+                        } else {
+                            query.append(key, String(value));
+                        }
+                    }
                 });
                 navigate(`/${lang}/${categoryKey}?${query.toString()}`);
             }

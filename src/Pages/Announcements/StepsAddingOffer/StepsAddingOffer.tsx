@@ -236,7 +236,7 @@ export const StepsAddingOffer = () => {
                                             {offerTypes.map((type) => (
                                                 <div
                                                     key={type}
-                                                    className={`border rounded-lg w-48.75 max-sm:w-full max-sm:h-33 h-43 cursor-pointer text-center 
+                                                    className={`border rounded-lg max-sm:w-full max-sm:h-33 h-43 cursor-pointer text-center 
           flex items-center justify-center text-[#4f4f4f] 
           ${offerType === type ? "border-[#2EAA62] bg-[#F5FFFA]" : "border-gray-300"}`}
                                                     onClick={() => {

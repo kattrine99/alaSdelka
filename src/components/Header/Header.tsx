@@ -18,6 +18,7 @@ import {setRefetchNotifications} from "../../utils/notificationRefetch";
 import {useTranslation} from "../../../public/Locales/context/TranslationContext";
 import {setIsMobileUi} from "../../Store/Slices/uiSlice";
 import Select from "../Select/Select.tsx";
+import { logout } from "../../Store/Slices/authSlice.ts";
 
 interface HeaderProps {
     showNavLinks?: boolean;
@@ -289,6 +290,9 @@ export const Header: React.FC<HeaderProps> = ({
                                                     >
                                                         {t("Профиль")}
                                                     </Applink>
+                                                    <Button onClick={() => dispatch(logout())} className="w-full text-left block px-4 py-2 text-sm text-[#4f4f4f] hover:bg-[#F2F2F2] hover:text-[#2EAA62] transition-colors mt-1">
+                                                        {t("Выйти")}
+                                                    </Button>
                                                 </div>
                                             </div>
                                         )}

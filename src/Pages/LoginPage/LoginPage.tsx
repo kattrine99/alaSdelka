@@ -40,6 +40,7 @@ export const LoginPage = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const [loginUser] = useLoginUserMutation();
+    const [selectedCountry, setSelectedCountry] = useState('uz');
 
     const {
         control,
@@ -128,9 +129,19 @@ export const LoginPage = () => {
                                 render={({field}) => (
                                     <div className="w-full">
                                         <PhoneInput
-                                            country={'uz'}
+                                            country={selectedCountry}
                                             value={field.value}
-                                            onChange={(value) => field.onChange(value)}
+                                            onChange={(value, country) => {
+                                                field.onChange(value);
+                                                // Если выбран код +7, приоритет Казахстану
+                                                if (country && typeof country === 'object' && 'dialCode' in country && 'countryCode' in country) {
+                                                    if (country.dialCode === '7' && country.countryCode === 'ru') {
+                                                        setSelectedCountry('kz');
+                                                    } else if (country.countryCode) {
+                                                        setSelectedCountry(country.countryCode as string);
+                                                    }
+                                                }
+                                            }}
                                             onBlur={field.onBlur}
                                             inputProps={{
                                                 name: field.name,
@@ -144,6 +155,7 @@ export const LoginPage = () => {
                                             placeholder={t("Номер телефона")}
                                             countryCodeEditable={false}
                                             specialLabel=""
+                                            preferredCountries={['kz', 'uz', 'ru']}
                                         />
                                         {errors.userphone && (
                                             <Paragraph className="text-sm text-red-500 mt-1">

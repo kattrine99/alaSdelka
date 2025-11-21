@@ -750,7 +750,7 @@ export const InformationStep: React.FC<Props> = ({ offerType, listingType, onNex
                 </>}
             {/* Детали объявления (переключатели) */}
             <Heading text={t("Детали объявления")} level={3} className="font-inter font-semibold text-[#4f4f4f]  text-xl leading-[130%]" />
-            <div className="flex flex-col w-full max-w-98 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 w-full max-w-160 gap-6">
                 {conveniences.map(({ id, name_ru, name_uz }) => {
                     const isFranchiseOnly = [10, 11].includes(id);
                     const isInvestmentOnly = [9].includes(id);

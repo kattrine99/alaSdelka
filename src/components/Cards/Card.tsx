@@ -168,7 +168,7 @@ export const Card: React.FC<ICardComponent & { forceAllFavorite: boolean }> = ({
                     <Heading
                         text={translaedTitle}
                         level={3}
-                        className={`text-[14px] truncate line-clamp-2 leading-[22px] font-bold text-[#4f4f4f] font-inter mb-[12px] ${cardHeadingClass ?? ""}`}
+                        className={`text-[14px] truncate line-clamp-2 leading-[22px] font-bold text-[#4f4f4f] font-inter mb-[1px] ${cardHeadingClass ?? ""}`}
                     />
                     <Paragraph
                         className={`text-gray-600 flex gap-x-2 font-inter text-[14px] font-medium text-[#4f4f4f]  mb-[6px] ${cardTextClass ?? ""}`}

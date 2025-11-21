@@ -731,7 +731,7 @@ export const MainPage = () => {
                                         setSelectedCategory(original.label as typeof selectedCategory); // хранить продолжаем "Бизнес" | "Франшиза" | ...
                                     }
                                 }}
-                                className="flex flex-wrap md:flex-nowrap gap-4 text-[24px] text-start font-openSans mb-6.25 font-bold"
+                                className="flex flex-wrap md:flex-nowrap gap-4 text-xl text-start font-openSans mb-6.25 font-bold"
                                 activeClassName="w-full px-6 py-4 bg-[#2EAA62] text-white rounded-xl"
                                 inactiveClassName="w-full px-6 py-4 bg-white font-openSans text-[#4f4f4f] border border-[#2EAA62] rounded-xl hover:bg-[#2EAA62]/10"
                             />
@@ -746,7 +746,7 @@ export const MainPage = () => {
                                         <span className="font-openSans font-bold text-lg max-sm:text-[14px] leading-[150%]">
                                             {lang === "uz" ? region.name_uz : lang === "en" ? (region.name_en || region.name_ru) : region.name_ru}
                                         </span>
-                                        <span className="font-Urbanist font-bold text-[40px] max-sm:text-[28px] leading-[150%]">
+                                        <span className="font-Urbanist font-bold text-[35px] max-sm:text-[28px] leading-[150%]">
                                             {region.offers_count.toLocaleString(lang === "uz" ? "uz-UZ" : "ru-RU")}
                                         </span>
                 {/*                        /!* Для отладки можно показать сколько записей объединено *!/*/}

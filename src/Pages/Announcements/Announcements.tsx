@@ -227,9 +227,10 @@ export const AnnouncemntsPage = () => {
                         <div className="absolute top-3 right-3 z-20 group">
                           <button
                             onClick={() => navigate(`/${lang}/edit/${offer.slug}`)}
-                            className="p-2 bg-white border border-[#F8F8F8] rounded-full shadow hover:bg-gray-100 transition cursor-pointer"
+                            className="flex items-center justify-between gap-3 p-2 px-4 bg-white border border-[#F8F8F8] rounded-full shadow hover:bg-gray-100 transition cursor-pointer w-full max-w-[150px]"
                           >
                             <FiEdit className="w-5 h-5 text-[#2EAA62]" />
+                            <span className=" text-[#4f4f4f] text-lg font-bold font-inter ">{t("Изменить")}</span>
                           </button>
                           <div className="absolute top-full mt-2 -right-2.5 bg-[#F8F8F8] text-[#2EAA62] text-xs rounded px-2 py-1 opacity-0 group-hover:opacity-100 transition">
                             {t("Изменить")}

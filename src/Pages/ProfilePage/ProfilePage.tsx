@@ -207,7 +207,7 @@ export const ProfilePage = () => {
                                 className="text-[#121212] font-inter font-bold text-4xl leading-10"
                                 text={`${t("Добро пожаловать")}, ${fullName}!`}
                                 level={2} />
-                            <div className="flex flex-col md:flex-row justify-center md:justify-between max-w-281.75 mt-6">
+                            <div className="flex flex-col md:flex-row justify-center md:justify-between  mt-6">
                                 <div className="flex gap-x-6 mb-5 items-center w-full h-full">
                                     <div className="w-[100px] h-[100px] rounded-full overflow-hidden flex items-center justify-center shrink-0">
                                         <img
@@ -230,7 +230,7 @@ export const ProfilePage = () => {
                                 <div className="flex flex-col w-full md:flex-row gap-x-4 gap-y-4 items-center">
                                     <Applink
                                         to="/add-offer"
-                                        className="px-5 h-13.5 text-white bg-[#2EAA62] w-full rounded-[6px] cursor-pointer items-center text-center"
+                                        className="px-5 h-13.5 content-center text-white bg-[#2EAA62] w-full rounded-[6px] cursor-pointer items-center text-center"
                                     >
                                         {t("Разместить объявление")}
                                     </Applink>
@@ -242,7 +242,7 @@ export const ProfilePage = () => {
                         </>
                     )}
 
-                    <div className="bg-[#F8F8F8] max-w-281.75 mt-6 p-10">
+                    <div className="bg-[#F8F8F8]  mt-6 p-10">
                         {editMode && (
                             <div className="relative w-max mb-6 ">
                                 <div className="w-[100px] h-[100px] rounded-full overflow-hidden flex items-center justify-center shrink-0">
